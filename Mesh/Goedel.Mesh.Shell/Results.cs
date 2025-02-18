@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:25 AM
+//  This file was automatically generated at 2/18/2025 4:27:56 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -155,6 +155,7 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// Placeholder class to allow insertion of application specific properties.
@@ -229,6 +230,7 @@ public partial class Result : ShellResult {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -359,6 +361,7 @@ public partial class ResultAbout : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultFail : Result {
@@ -431,6 +434,7 @@ public partial class ResultFail : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -520,6 +524,7 @@ public partial class ResultHello : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultInfo : Result {
@@ -600,6 +605,7 @@ public partial class ResultInfo : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -693,6 +699,7 @@ public partial class ResultKey : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -788,6 +795,7 @@ public partial class ResultDigest : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultFile : Result {
@@ -881,6 +889,7 @@ public partial class ResultFile : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -983,6 +992,7 @@ public partial class ResultKeyFile : ResultFile {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultListLog : Result {
@@ -1070,6 +1080,7 @@ public partial class ResultListLog : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultLog : Result {
@@ -1149,6 +1160,7 @@ public partial class ResultLog : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1251,6 +1263,7 @@ public partial class ResultArchive : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultFileDare : ResultFile {
@@ -1331,6 +1344,7 @@ public partial class ResultFileDare : ResultFile {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1426,6 +1440,7 @@ public partial class ResultFileEARL : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultDump : Result {
@@ -1506,6 +1521,7 @@ public partial class ResultDump : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1595,6 +1611,7 @@ public partial class ResultList : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultAccountConnect : Result {
@@ -1676,6 +1693,7 @@ public partial class ResultAccountConnect : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultPublish : ResultCreateDevice {
@@ -1755,6 +1773,7 @@ public partial class ResultPublish : ResultCreateDevice {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1859,6 +1878,7 @@ public partial class ResultPublishDevice : ResultCreateDevice {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultCreateDevice : Result {
@@ -1954,6 +1974,7 @@ public partial class ResultCreateDevice : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultCreatePersonal : ResultCreateAccount {
@@ -2033,6 +2054,7 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2123,6 +2145,7 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultDeleteAccount : ResultCreateDevice {
@@ -2202,6 +2225,7 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2283,6 +2307,7 @@ public partial class ResultRegisterService : ResultCreateAccount {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultRecover : ResultCreatePersonal {
@@ -2355,6 +2380,7 @@ public partial class ResultRecover : ResultCreatePersonal {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2436,6 +2462,7 @@ public partial class ResultStatus : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2532,6 +2559,7 @@ public partial class ResultSync : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultEscrow : Result {
@@ -2618,6 +2646,7 @@ public partial class ResultEscrow : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultMachine : Result {
@@ -2697,6 +2726,7 @@ public partial class ResultMachine : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2786,6 +2816,7 @@ public partial class ResultPIN : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultSequence : Result {
@@ -2866,6 +2897,7 @@ public partial class ResultSequence : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2988,6 +3020,7 @@ public partial class LogEntry : MeshmanShellResult {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultEntry : Result {
@@ -3068,6 +3101,7 @@ public partial class ResultEntry : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -3158,6 +3192,7 @@ public partial class ResultEntrySent : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultMail : ResultEntry {
@@ -3230,6 +3265,7 @@ public partial class ResultMail : ResultEntry {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -3304,6 +3340,7 @@ public partial class ResultSSH : ResultEntry {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultGroupCreate : ResultEntry {
@@ -3376,6 +3413,7 @@ public partial class ResultGroupCreate : ResultEntry {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -3465,6 +3503,7 @@ public partial class ResultSent : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultPending : Result {
@@ -3544,6 +3583,7 @@ public partial class ResultPending : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -3626,6 +3666,7 @@ public partial class ResultAuthorize : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultProcess : Result {
@@ -3706,6 +3747,7 @@ public partial class ResultProcess : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -3836,6 +3878,7 @@ public partial class ResultConnect : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultTransactionRequest : Result {
@@ -3915,6 +3958,7 @@ public partial class ResultTransactionRequest : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -4004,6 +4048,7 @@ public partial class ResultReceived : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultApplication : Result {
@@ -4085,6 +4130,7 @@ public partial class ResultApplication : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultApplicationList : Result {
@@ -4165,6 +4211,7 @@ public partial class ResultApplicationList : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -4255,6 +4302,7 @@ public partial class ResultCallsign : Result {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ResultCallsignResolution : Result {
@@ -4343,6 +4391,7 @@ public partial class ResultCallsignResolution : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:21 AM
+//  This file was automatically generated at 2/18/2025 4:27:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -118,6 +118,7 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// A DARE envelope containing Header, EDS and Trailer in JSON object encoding.
@@ -224,6 +225,7 @@ public partial class DareEnvelopeSequence : Dare {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -348,6 +350,7 @@ public partial class DareSignatureHeader : Dare {
 
 	}
 
+
 	/// <summary>
 	///
 	/// A DARE envelope Trailer
@@ -467,6 +470,7 @@ public partial class DareTrailer : DareSignatureHeader {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -689,6 +693,7 @@ public partial class DareHeader : DareTrailer {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ContentMeta : Dare {
@@ -872,6 +877,7 @@ public partial class ContentMeta : Dare {
 
 	}
 
+
 	/// <summary>
 	///
 	/// The signature value
@@ -1014,6 +1020,7 @@ public partial class DareSignature : Dare {
 
 	}
 
+
 	/// <summary>
 	///
 	/// A digital signature over one or more envelopes consisting of an apex signature value 
@@ -1105,6 +1112,7 @@ public partial class IntervalSignature : Dare {
 
 	}
 
+
 	/// <summary>
 	///
 	/// An entry describing one signed envelope within an IntervalSignature
@@ -1194,6 +1202,7 @@ public partial class SignedEnvelope : Dare {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class X509Certificate : Dare {
@@ -1281,6 +1290,7 @@ public partial class X509Certificate : Dare {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -1397,6 +1407,7 @@ public partial class DareRecipient : Dare {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1548,6 +1559,7 @@ public partial class DarePolicy : Dare {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class FileEntry : Dare {
@@ -1660,6 +1672,7 @@ public partial class FileEntry : Dare {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Entry containing the latest apex value of a specified append only log.
@@ -1765,6 +1778,7 @@ public partial class Witness : Dare {
 
 
 	}
+
 
 	/// <summary>
 	///

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:20 AM
+//  This file was automatically generated at 2/18/2025 4:27:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -125,6 +125,7 @@ public abstract partial class Jose : global::Goedel.Protocol.JsonObject {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// A signed JOSE data object. The data contents are all binary encoded to 
@@ -224,6 +225,7 @@ public partial class JoseWebSignature : Jose {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -356,6 +358,7 @@ public partial class JoseWebEncryption : JoseWebSignature {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Compact representation for signed data
@@ -453,6 +456,7 @@ public partial class Signed : Jose {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -560,6 +564,7 @@ public partial class Encrypted : Jose {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -699,6 +704,7 @@ public partial class KeyCore : Jose {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -841,6 +847,7 @@ public partial class Header : KeyCore {
 
 	}
 
+
 	/// <summary>
 	///
 	/// The signature value
@@ -940,6 +947,7 @@ public partial class Signature : Jose {
 
 	}
 
+
 	/// <summary>
 	///
 	/// A wrapper object for storing key data.
@@ -1029,6 +1037,7 @@ public partial class KeyContainer : Jose {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -1147,6 +1156,7 @@ public partial class Key : KeyCore {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Recipient information
@@ -1238,6 +1248,7 @@ public partial class Recipient : Jose {
 
 	}
 
+
 	/// <summary>
 	///
 	/// An RSA Public key
@@ -1328,6 +1339,7 @@ public partial class PublicKeyRSA : Key {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -1452,6 +1464,7 @@ public partial class PrivateKeyRSA : PublicKeyRSA {
 
 	}
 
+
 	/// <summary>
 	///
 	/// A Diffie Helllman Public key
@@ -1543,6 +1556,7 @@ public partial class PublicKeyDH : Key {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Diffie Helllman private key parameters
@@ -1625,6 +1639,7 @@ public partial class PrivateKeyDH : PublicKeyDH {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -1717,6 +1732,7 @@ public partial class PublicKeyECDH : Key {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Diffie Helllman private key parameters
@@ -1799,6 +1815,7 @@ public partial class PrivateKeyECDH : PublicKeyECDH {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -1922,6 +1939,7 @@ public partial class PrivateKeyUDF : Key {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Result of applying a key agreement.
@@ -1995,6 +2013,7 @@ public partial class KeyAgreement : Jose {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -2078,6 +2097,7 @@ public partial class KeyAgreementDH : KeyAgreement {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -2170,6 +2190,7 @@ public partial class KeyAgreementECDH : KeyAgreement {
 
 	}
 
+
 	/// <summary>
 	///
 	/// A public key represented as a binary blob whose type is specified
@@ -2253,6 +2274,7 @@ public partial class PublicKeyBinary : Key {
 
 
 	}
+
 
 	/// <summary>
 	///

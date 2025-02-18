@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:21 AM
+//  This file was automatically generated at 2/18/2025 4:27:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -124,6 +124,7 @@ public abstract partial class Oauth : global::Goedel.Protocol.JsonObject {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	/// </summary>
 public partial class ResourceServerMetadata : Oauth {
@@ -227,6 +228,7 @@ public partial class ResourceServerMetadata : Oauth {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -477,6 +479,7 @@ public partial class AuthorizationServerMetadata : Oauth {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Authorization Request
@@ -632,6 +635,7 @@ public partial class AuthorizationRequest : Oauth {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class AuthorizationRequest2 : Oauth {
@@ -719,6 +723,7 @@ public partial class AuthorizationRequest2 : Oauth {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -815,6 +820,7 @@ public partial class PushedAuthorizationResponse : Oauth {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -919,6 +925,7 @@ public partial class AuthorizationResponse : Oauth {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1054,6 +1061,7 @@ public partial class ErrorResponse : Oauth {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1230,6 +1238,7 @@ public partial class ClientMetadata : Oauth {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class DidDocument : Oauth {
@@ -1334,6 +1343,7 @@ public partial class DidDocument : Oauth {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1441,6 +1451,7 @@ public partial class AuthorizationCodeGrant : Oauth {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ClientCredentialsGrant : Oauth {
@@ -1520,6 +1531,7 @@ public partial class ClientCredentialsGrant : Oauth {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1616,6 +1628,7 @@ public partial class RefreshTokenGrant : Oauth {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1717,6 +1730,7 @@ public partial class DidVerificationMethod : Oauth {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class DidService : Oauth {
@@ -1809,6 +1823,7 @@ public partial class DidService : Oauth {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1903,6 +1918,7 @@ public partial class AuthenticationResponse : Oauth {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class JWKS : Oauth {
@@ -1981,6 +1997,7 @@ public partial class JWKS : Oauth {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2103,6 +2120,7 @@ public partial class JWK : Oauth {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class JwtHeader : Oauth {
@@ -2199,6 +2217,7 @@ public partial class JwtHeader : Oauth {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2340,6 +2359,7 @@ public partial class DpopPayload : Oauth {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class DpopConfirmation : Oauth {
@@ -2422,6 +2442,7 @@ public partial class DpopConfirmation : Oauth {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>

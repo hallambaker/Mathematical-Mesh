@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:23 AM
+//  This file was automatically generated at 2/18/2025 4:27:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -221,6 +221,7 @@ public partial class PresenceServiceDirect: PresenceServiceClient {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// Base class for all requests made to a registrar
@@ -312,6 +313,7 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Register connection request. 
@@ -387,6 +389,7 @@ public partial class PresenceConnectRequest : PresenceFromClient {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class PresenceHeartbeat : PresenceFromClient {
@@ -459,6 +462,7 @@ public partial class PresenceHeartbeat : PresenceFromClient {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -533,6 +537,7 @@ public partial class PresenceEndpointRequest : PresenceFromClient {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class PresenceAcknowledge : PresenceFromClient {
@@ -605,6 +610,7 @@ public partial class PresenceAcknowledge : PresenceFromClient {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -685,6 +691,7 @@ public partial class PresenceResolveRequest : PresenceFromClient {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -784,6 +791,7 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Return the result of a connection request
@@ -868,6 +876,7 @@ public partial class PresenceConnectResponse : PresenceFromService {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class PresenceErrorInvalidSerial : PresenceFromService {
@@ -948,6 +957,7 @@ public partial class PresenceErrorInvalidSerial : PresenceFromService {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class PresenceStatus : PresenceFromService {
@@ -1021,6 +1031,7 @@ public partial class PresenceStatus : PresenceFromService {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class PresenceEndpointResponse : PresenceFromService {
@@ -1093,6 +1104,7 @@ public partial class PresenceEndpointResponse : PresenceFromService {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1181,6 +1193,7 @@ public partial class PresenceNotify : PresenceFromService {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class PresenceResolveResponse : PresenceFromService {
@@ -1260,6 +1273,7 @@ public partial class PresenceResolveResponse : PresenceFromService {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1362,6 +1376,7 @@ public partial class SessionRequest : Message {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class SessionResponse : Message {
@@ -1463,6 +1478,7 @@ public partial class SessionResponse : Message {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class SessionEndpoint : PresenceProtocol {
@@ -1561,6 +1577,7 @@ public partial class SessionEndpoint : PresenceProtocol {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>

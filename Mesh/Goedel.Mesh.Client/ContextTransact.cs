@@ -502,7 +502,7 @@ public abstract class Transaction<TAccount> : Disposable
     /// <param name="contact">The contact to add as an update.</param>
     public void CatalogUpdate(
             CatalogContact catalog,
-            Contact contact) {
+            JsContact contact) {
         var cataloged = new CatalogedContact(contact);
         CatalogUpdate(catalog, cataloged);
         }

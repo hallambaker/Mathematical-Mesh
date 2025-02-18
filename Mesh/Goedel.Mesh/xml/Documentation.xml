@@ -800,7 +800,7 @@
             Default constructor for serialization.
             </summary>     
         </member>
-        <member name="M:Goedel.Mesh.CatalogedGroup.#ctor(Goedel.Mesh.ProfileGroup,Goedel.Mesh.ActivationCommon,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Mesh.CatalogedGroup.#ctor(Goedel.Mesh.ProfileGroup,Goedel.Mesh.ActivationCommon,Goedel.Cryptography.CryptographicKey)">
             <summary>
             Create and return a new catalog entry for <paramref name="profileGroup"/> with
             the activation data <paramref name="activationAccount"/>.
@@ -2213,7 +2213,7 @@
             </summary>
             <param name="catalogEntry">The entry to add.</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog`1.Update(`0,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Mesh.Catalog`1.Update(`0,Goedel.Cryptography.CryptographicKey)">
             <summary>
             Update <paramref name="catalogEntry"/> in the catalog.
             </summary>
@@ -2423,7 +2423,7 @@
             creations to.</param>
             <returns>The entry created.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogAccess.MakeKeyData(Goedel.Mesh.Right,Goedel.Cryptography.CryptoKey,System.String,Goedel.Mesh.ITransactContextAccount)">
+        <member name="M:Goedel.Mesh.CatalogAccess.MakeKeyData(Goedel.Mesh.Right,Goedel.Cryptography.CryptographicKey,System.String,Goedel.Mesh.ITransactContextAccount)">
             <summary>
             Make a key data entry granting the key <paramref name="keyPair"/> according to
             the right <paramref name="right"/>. If a threshold share is created, create
@@ -3157,7 +3157,7 @@
             </summary>
             <param name="catalogedContact">The new catalog values.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogContact.TryAdd(Goedel.Mesh.Contact,System.String,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogContact.TryAdd(Goedel.Contacts.JsContact,System.String,System.Boolean)">
             <summary>
             Add <paramref name="contact"/> to the catalog. If <paramref name="self"/> is true, this
             is the user's own contact.
@@ -3167,7 +3167,7 @@
             <returns>The CatalogedContact entry.</returns>
             <param name="self">If true, mark as the user's own contact.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogContact.GetUpdated(Goedel.Mesh.Contact,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogContact.GetUpdated(Goedel.Contacts.JsContact,System.Boolean)">
             <summary>
             Fetch the existing contact from the catalog and merge with values from
             <paramref name="contact"/>. 
@@ -3176,7 +3176,7 @@
             <param name="self">If true set the self marker.</param>
             <returns>The updated contact.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogContact.Add(Goedel.Mesh.Contact,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogContact.Add(Goedel.Contacts.JsContact,System.Boolean)">
             <summary>
             Add <paramref name="contact"/> to the catalog. If <paramref name="self"/> is true, this
             is the user's own contact.
@@ -3248,7 +3248,7 @@
             Default constructor for deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedContact.#ctor(Goedel.Mesh.Contact,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedContact.#ctor(Goedel.Contacts.JsContact,System.Boolean)">
             <summary>
             Create a cataloged contact from <paramref name="contact"/>.
             </summary>
@@ -3327,26 +3327,6 @@
             
              Base class for contact entries.
              </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Contact.EnvelopedContact">
-            <summary>Typed enveloped data</summary> 
-        </member>
-        <member name="M:Goedel.Mesh.Contact.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.Dare.IKeyCollection)">
-            <summary>
-            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.Contact"/>
-            </summary>
-            <param name="envelope">The envelope to decode.</param>
-            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-            <returns>The decoded profile.</returns>
-            <remarks>Keep this convenience decoder because it is necessary to decode contacts
-            from EARL envelopes.</remarks>
-        </member>
-        <member name="M:Goedel.Mesh.Contact.CatalogedContact(System.Boolean)">
-            <summary>
-            Convenience constructor, wrap a cataloged contact arround this contact.
-            </summary>
-            <param name="self">If true, the contact is for the owner of the account.</param>
-            <returns>The cataloged contact.</returns>
         </member>
         <member name="P:Goedel.Mesh.Contact.Id">
              <summary>
@@ -8020,7 +8000,7 @@
         <member name="F:Goedel.Mesh.Message.MessageStatus">
             <summary>The message status.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Message.Envelope(Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey,Goedel.Protocol.ObjectEncoding)">
+        <member name="M:Goedel.Mesh.Message.Envelope(Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Protocol.ObjectEncoding)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Message.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.Dare.IKeyCollection)">
@@ -13942,7 +13922,7 @@
             Default Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.KeyData.#ctor(Goedel.Cryptography.CryptoKey,System.Boolean)">
+        <member name="M:Goedel.Mesh.KeyData.#ctor(Goedel.Cryptography.CryptographicKey,System.Boolean)">
             <summary>
             Constructor for the key <paramref name="cryptoKey"/>.
             </summary>
@@ -14434,7 +14414,7 @@
         <member name="P:Goedel.Mesh.MeshItem.EnvelopeId">
             <summary>The envelope Identifier.</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MeshItem.Envelope(Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey,Goedel.Protocol.ObjectEncoding)">
+        <member name="M:Goedel.Mesh.MeshItem.Envelope(Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Protocol.ObjectEncoding)">
             <summary>
             Sign the profile under <paramref name="signingKey"/>.
             </summary>
@@ -14444,7 +14424,7 @@
             <returns>Envelope containing the signed profile. Also updates the property
             <see cref="P:Goedel.Mesh.MeshItem.DareEnvelope"/></returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshItem.Envelope(System.Collections.Generic.List{Goedel.Cryptography.CryptoKey},System.Collections.Generic.List{Goedel.Cryptography.CryptoKey},Goedel.Protocol.ObjectEncoding,System.Boolean)">
+        <member name="M:Goedel.Mesh.MeshItem.Envelope(System.Collections.Generic.List{Goedel.Cryptography.CryptographicKey},System.Collections.Generic.List{Goedel.Cryptography.CryptographicKey},Goedel.Protocol.ObjectEncoding,System.Boolean)">
             <summary>
             Sign the profile under <paramref name="signingKeys"/>.
             </summary>

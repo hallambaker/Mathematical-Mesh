@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:23 AM
+//  This file was automatically generated at 2/18/2025 4:27:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -206,6 +206,7 @@ public partial class CarnetServiceDirect: CarnetServiceClient {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// Describes a carnet issuer.
@@ -280,6 +281,7 @@ public partial class ProfileCarnet : ProfileService {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -388,6 +390,7 @@ public partial class CatalogedCarnet : CatalogedEntry {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Base class for all requests made to a registrar
@@ -462,6 +465,7 @@ public partial class CarnetRequest : Goedel.Protocol.Request {
 
 
 	}
+
 
 	/// <summary>
 	///

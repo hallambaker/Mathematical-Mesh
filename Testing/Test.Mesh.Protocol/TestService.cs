@@ -103,34 +103,36 @@ public partial class TestService {
         var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
         var machineAdminBob = new MeshMachineTest(testEnvironmentCommon, DeviceBobAdmin);
 
-        // first device
-        var contextAccountAlice_1_a = machineAdminAlice.MeshHost.ConfigureMeshAsync(AccountAlice, "personal").Sync();
-        contextAccountAlice_1_a.SetContactSelfAsync(ContactAlice).Sync();
+        throw new NYI();
 
-        var profileAlice = contextAccountAlice_1_a.ProfileUser;
+        //// first device
+        //var contextAccountAlice_1_a = machineAdminAlice.MeshHost.ConfigureMeshAsync(AccountAlice, "personal").Sync();
+        //contextAccountAlice_1_a.SetContactSelfAsync(ContactAlice).Sync();
 
-        using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
-            var catalogCredential = transaction1.GetCatalogCredential();
-            transaction1.CatalogUpdate(catalogCredential, password1);
-            transaction1.TransactAsync().Sync();
+        //var profileAlice = contextAccountAlice_1_a.ProfileUser;
 
-
-            VerifyStoreEncrypted(catalogCredential, profileAlice.AccountEncryptionKey);
-            catalogCredential.Dump();
-            }
+        //using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
+        //    var catalogCredential = transaction1.GetCatalogCredential();
+        //    transaction1.CatalogUpdate(catalogCredential, password1);
+        //    transaction1.TransactAsync().Sync();
 
 
-        // second device
-        var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
-        var boundPin = contextAccountAlice_1_a.GetPinAsync(MeshConstants.MessagePINActionDevice).Sync();
-        var contextAccountAlice_2 = machineAlice2.MeshHost.ConnectAsync(AccountAlice, pin: boundPin.Pin).Sync();
-        var sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
-        var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
-        contextAccountAlice_1_a.ProcessAsync(connectRequest, roles: RightsDirect).Sync();
-        contextAccountAlice_2.CompleteAsync().Sync();
+        //    VerifyStoreEncrypted(catalogCredential, profileAlice.AccountEncryptionKey);
+        //    catalogCredential.Dump();
+        //    }
 
 
-        CheckPinMessageSignedEncrypted(contextAccountAlice_1_a);
+        //// second device
+        //var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
+        //var boundPin = contextAccountAlice_1_a.GetPinAsync(MeshConstants.MessagePINActionDevice).Sync();
+        //var contextAccountAlice_2 = machineAlice2.MeshHost.ConnectAsync(AccountAlice, pin: boundPin.Pin).Sync();
+        //var sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
+        //var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
+        //contextAccountAlice_1_a.ProcessAsync(connectRequest, roles: RightsDirect).Sync();
+        //contextAccountAlice_2.CompleteAsync().Sync();
+
+
+        //CheckPinMessageSignedEncrypted(contextAccountAlice_1_a);
         }
 
 
@@ -151,102 +153,105 @@ public partial class TestService {
         machineAdminAlice.CheckHostCatalogExtended();
 
 
-        // Perform some offline operations on the account catalogs
-        contextAccountAlice_1_a.SetContactSelfAsync(ContactAlice).Sync();
-
-        // Check we can read the data from a second context
-        var contextAccountAlice_1_b = machineAdminAlice.GetContextAccount();
-        Verify(contextAccountAlice_1_a, contextAccountAlice_1_b);
-
-        // Check that we can read back from the data stored on disk.
-        var machineAdmin_3 = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
-        var contextAccountAlice_1_c = machineAdmin_3.GetContextAccount();
+        throw new NYI();
 
 
-        // ****  Multiple device tests
+        //// Perform some offline operations on the account catalogs
+        //contextAccountAlice_1_a.SetContactSelfAsync(ContactAlice).Sync();
 
-        // Connect a second device using the PIN connection mechanism
-        var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
-        machineAlice2.CheckHostCatalogExtended(); // initial
+        //// Check we can read the data from a second context
+        //var contextAccountAlice_1_b = machineAdminAlice.GetContextAccount();
+        //Verify(contextAccountAlice_1_a, contextAccountAlice_1_b);
 
-        var boundPin = contextAccountAlice_1_a.GetPinAsync(MeshConstants.MessagePINActionDevice).Sync();
-        var contextAccountAlice_2 = machineAlice2.MeshHost.ConnectAsync(AccountAlice, pin: boundPin.Pin).Sync();
-        machineAlice2.CheckHostCatalogExtended(); // Connect pending
-
-        // Still have to process of course to get the data
-        var sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
+        //// Check that we can read back from the data stored on disk.
+        //var machineAdmin_3 = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+        //var contextAccountAlice_1_c = machineAdmin_3.GetContextAccount();
 
 
-        var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
-        contextAccountAlice_1_a.ProcessAsync(connectRequest, roles: RightsDirect).Sync();
+        //// ****  Multiple device tests
 
-        contextAccountAlice_2.CompleteAsync().Sync();
-        machineAlice2.CheckHostCatalogExtended(); // Complete
+        //// Connect a second device using the PIN connection mechanism
+        //var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
+        //machineAlice2.CheckHostCatalogExtended(); // initial
 
+        //var boundPin = contextAccountAlice_1_a.GetPinAsync(MeshConstants.MessagePINActionDevice).Sync();
+        //var contextAccountAlice_2 = machineAlice2.MeshHost.ConnectAsync(AccountAlice, pin: boundPin.Pin).Sync();
+        //machineAlice2.CheckHostCatalogExtended(); // Connect pending
 
-        // Do some catalog updates and check the results
-
-        using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
-            var catalogCredential = transaction1.GetCatalogCredential();
-            transaction1.CatalogUpdate(catalogCredential, password1);
-            transaction1.TransactAsync().Sync();
-
-
-            catalogCredential.Dump();
-            }
-
-        // Connect a third device by approving a request
-        var machineAlice3 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice3);
-        var contextAccount3 = machineAlice3.MeshHost.ConnectAsync(AccountAlice).Sync();
-
-        sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
-        var connectRequest3 = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
-        contextAccountAlice_1_a.ProcessAsync(connectRequest3, roles: RightsThreshold).Sync();
-
-        contextAccount3.CompleteAsync().Sync();
+        //// Still have to process of course to get the data
+        //var sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
 
 
-        // Do some catalog updates and check the results
-        using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
-            var catalogCredential = transaction1.GetCatalogCredential();
-            transaction1.CatalogUpdate(catalogCredential, password2);
-            transaction1.TransactAsync().Sync();
-            }
+        //var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
+        //contextAccountAlice_1_a.ProcessAsync(connectRequest, roles: RightsDirect).Sync();
 
-        // Check message handling - introduce Bob
-        var contextAccountBob = machineAdminBob.MeshHost.ConfigureMeshAsync(AccountBob, "personal").Sync();
+        //contextAccountAlice_2.CompleteAsync().Sync();
+        //machineAlice2.CheckHostCatalogExtended(); // Complete
 
 
-        //var contactCatalogBob = contextAccountBob.GetCatalogContact();
-        contextAccountBob.SetContactSelfAsync(ContactBob).Sync();
+        //// Do some catalog updates and check the results
 
-        // **** Contact testing
-        contextAccountBob.ContactRequestAsync(AccountAlice).Sync();
-
-        sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
-        var contactRequest = contextAccountAlice_1_a.GetPendingMessageContactRequest();
-        contextAccountAlice_1_a.ProcessAsync(contactRequest).Sync();
-
-        // GetUnique the response back
-        sync = contextAccountBob.SynchronizeAsync().Sync();
-        var contactResponseBob = contextAccountBob.GetPendingMessageContactRequest();
-
-        contextAccountBob.ProcessAsync(contactResponseBob).Sync();
+        //using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
+        //    var catalogCredential = transaction1.GetCatalogCredential();
+        //    transaction1.CatalogUpdate(catalogCredential, password1);
+        //    transaction1.TransactAsync().Sync();
 
 
-        //// **** Confirmation testing
+        //    catalogCredential.Dump();
+        //    }
 
-        // Ask Alice to add our credential
-        contextAccountBob.ConfirmationRequestAsync(AccountAlice, "Dinner tonight").Sync();
+        //// Connect a third device by approving a request
+        //var machineAlice3 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice3);
+        //var contextAccount3 = machineAlice3.MeshHost.ConnectAsync(AccountAlice).Sync();
 
-        sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
-        var confirmRequest = contextAccountAlice_1_a.GetPendingMessageConfirmationRequest();
-        contextAccountAlice_1_a.ProcessAsync(confirmRequest).Sync();
+        //sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
+        //var connectRequest3 = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
+        //contextAccountAlice_1_a.ProcessAsync(connectRequest3, roles: RightsThreshold).Sync();
 
-        // GetUnique the response back
-        sync = contextAccountBob.SynchronizeAsync().Sync();
-        var confirmResponseBob = contextAccountBob.GetPendingMessageConfirmationResponse();
-        contextAccountAlice_1_a.ProcessAsync(confirmResponseBob).Sync();
+        //contextAccount3.CompleteAsync().Sync();
+
+
+        //// Do some catalog updates and check the results
+        //using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
+        //    var catalogCredential = transaction1.GetCatalogCredential();
+        //    transaction1.CatalogUpdate(catalogCredential, password2);
+        //    transaction1.TransactAsync().Sync();
+        //    }
+
+        //// Check message handling - introduce Bob
+        //var contextAccountBob = machineAdminBob.MeshHost.ConfigureMeshAsync(AccountBob, "personal").Sync();
+
+
+        ////var contactCatalogBob = contextAccountBob.GetCatalogContact();
+        //contextAccountBob.SetContactSelfAsync(ContactBob).Sync();
+
+        //// **** Contact testing
+        //contextAccountBob.ContactRequestAsync(AccountAlice).Sync();
+
+        //sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
+        //var contactRequest = contextAccountAlice_1_a.GetPendingMessageContactRequest();
+        //contextAccountAlice_1_a.ProcessAsync(contactRequest).Sync();
+
+        //// GetUnique the response back
+        //sync = contextAccountBob.SynchronizeAsync().Sync();
+        //var contactResponseBob = contextAccountBob.GetPendingMessageContactRequest();
+
+        //contextAccountBob.ProcessAsync(contactResponseBob).Sync();
+
+
+        ////// **** Confirmation testing
+
+        //// Ask Alice to add our credential
+        //contextAccountBob.ConfirmationRequestAsync(AccountAlice, "Dinner tonight").Sync();
+
+        //sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
+        //var confirmRequest = contextAccountAlice_1_a.GetPendingMessageConfirmationRequest();
+        //contextAccountAlice_1_a.ProcessAsync(confirmRequest).Sync();
+
+        //// GetUnique the response back
+        //sync = contextAccountBob.SynchronizeAsync().Sync();
+        //var confirmResponseBob = contextAccountBob.GetPendingMessageConfirmationResponse();
+        //contextAccountAlice_1_a.ProcessAsync(confirmResponseBob).Sync();
         }
 
 

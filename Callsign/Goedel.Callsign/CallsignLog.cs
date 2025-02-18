@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:24 AM
+//  This file was automatically generated at 2/18/2025 4:27:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -124,6 +124,7 @@ public abstract partial class CallsignEntry : global::Goedel.Protocol.JsonObject
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// Describes a callsign registry.
@@ -198,6 +199,7 @@ public partial class ProfileRegistry : ProfileAccount {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -282,6 +284,7 @@ public partial class ProfileResolver : ProfileService {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -407,6 +410,7 @@ public partial class Registration : CallsignEntry {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CatalogedRegistration : CatalogedEntry {
@@ -505,6 +509,7 @@ public partial class CatalogedRegistration : CatalogedEntry {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class Page : CallsignEntry {
@@ -601,6 +606,7 @@ public partial class Page : CallsignEntry {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CharacterSpan : CallsignEntry {
@@ -690,6 +696,7 @@ public partial class CharacterSpan : CallsignEntry {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Canonical character span.
@@ -764,6 +771,7 @@ public partial class Canonical : CharacterSpan {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -849,6 +857,7 @@ public partial class MapChar : CharacterSpan {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Specifies a mapping of non canonical characters in the range specified by 
@@ -933,6 +942,7 @@ public partial class MapString : CharacterSpan {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1024,6 +1034,7 @@ public partial class Notarization : CallsignEntry {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Registers a challenge to one or more callsigns that have been registered.
@@ -1112,6 +1123,7 @@ public partial class Challenge : Assertion {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -1205,6 +1217,7 @@ public partial class CallsignRegistrationRequest : MessageValidated {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1313,6 +1326,7 @@ public partial class CallsignRegistrationResponse : Message {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ProcessResultCallsignRegistration : ProcessResult {
@@ -1393,6 +1407,7 @@ public partial class ProcessResultCallsignRegistration : ProcessResult {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -1510,6 +1525,7 @@ public partial class CatalogedApplicationCallsign : CatalogedApplication {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>

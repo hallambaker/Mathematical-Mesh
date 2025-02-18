@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:21 AM
+//  This file was automatically generated at 2/18/2025 4:27:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -109,6 +109,7 @@ public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject 
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// Information that describes the relationship of the envelope to its
@@ -257,6 +258,7 @@ public partial class SequenceInfo : SequenceData {
 
 	}
 
+
 	/// <summary>
 	///
 	/// A record providing an index to the sequence.
@@ -349,6 +351,7 @@ public partial class SequenceIndex : SequenceData {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -448,6 +451,7 @@ public partial class IndexPosition : SequenceData {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Specifies a key/value entry
@@ -537,6 +541,7 @@ public partial class KeyValue : SequenceData {
 
 
 	}
+
 
 	/// <summary>
 	///

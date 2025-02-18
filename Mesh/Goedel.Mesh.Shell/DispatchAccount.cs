@@ -61,35 +61,35 @@ public partial class Shell {
         account.AssertNotNull(NYI.Throw);
 
         string serviceAddress = null;
+        throw new NYI();
+        //var handle = new ParsedHandle(account);
+        //if (handle.HandleType == HandleType.LocalName) {
+        //    var contextAccount = GetContextUser(options);
+        //    contextAccount.AssertNotNull(NYI.Throw); // Cannot have a local name without an account
 
-        var handle = new ParsedHandle(account);
-        if (handle.HandleType == HandleType.LocalName) {
-            var contextAccount = GetContextUser(options);
-            contextAccount.AssertNotNull(NYI.Throw); // Cannot have a local name without an account
+        //    if (!contextAccount.TryFindContactLocal(handle.Name, out var contact)) {
+        //        throw new NYI(); // Should report local name not found
+        //        }
+        //    // here we are going to do a local name lookup
+        //    if (contact.Contact?.TryGetMeshAccount(out  handle) != true) {
+        //        throw new NYI(); // Should report local name not found
+        //        }
 
-            if (!contextAccount.TryFindContactLocal(handle.Name, out var contact)) {
-                throw new NYI(); // Should report local name not found
-                }
-            // here we are going to do a local name lookup
-            if (contact.Contact?.TryGetMeshAccount(out  handle) != true) {
-                throw new NYI(); // Should report local name not found
-                }
+        //    // We have substituted the handle obtained from the local address
+        //    }
 
-            // We have substituted the handle obtained from the local address
-            }
+        //serviceAddress = handle.ResolveMeshService().Sync();
+        //var meshClient = GetMeshClient(options, serviceAddress);
 
-        serviceAddress = handle.ResolveMeshService().Sync();
-        var meshClient = GetMeshClient(options, serviceAddress);
+        //var helloRequest = new HelloRequest();
+        //var response = meshClient.Hello(helloRequest);
 
-        var helloRequest = new HelloRequest();
-        var response = meshClient.Hello(helloRequest);
-
-        // need to stuff additional information in here
-        return new ResultHello() {
-            Success = true,
-            ServiceAddress = serviceAddress,
-            Response = response,
-            };
+        //// need to stuff additional information in here
+        //return new ResultHello() {
+        //    Success = true,
+        //    ServiceAddress = serviceAddress,
+        //    Response = response,
+        //    };
         }
 
 

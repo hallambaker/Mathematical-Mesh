@@ -4770,6 +4770,25 @@
         <member name="M:Goedel.Protocol.PropertyString.IsNull(Goedel.Protocol.IBinding)">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Protocol.PropertyStringTag">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyStringTag.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.String},System.Func{Goedel.Protocol.IBinding,System.String})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyStringTag.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Protocol.PropertyListString">
             <summary>
             Metadata record representing a property.

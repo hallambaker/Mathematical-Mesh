@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:23 AM
+//  This file was automatically generated at 2/18/2025 4:27:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -112,6 +112,7 @@ public abstract partial class HostCatalogItem : global::Goedel.Protocol.JsonObje
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// Describes a current or pending connection to a Mesh
@@ -246,6 +247,7 @@ public partial class CatalogedMachine : HostCatalogItem {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Describes an ordinary device connected to a Mesh
@@ -374,6 +376,7 @@ public partial class CatalogedService : CatalogedMachine {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Describes an ordinary device connected to a Mesh
@@ -448,6 +451,7 @@ public partial class CatalogedStandard : CatalogedMachine {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -558,6 +562,7 @@ public partial class CatalogedPending : CatalogedMachine {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -694,6 +699,7 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ShellDispatch : HostCatalogItem {
@@ -789,6 +795,7 @@ public partial class ShellDispatch : HostCatalogItem {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>

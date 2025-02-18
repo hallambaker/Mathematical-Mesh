@@ -29,6 +29,7 @@ global using Goedel.Protocol.Service;
 global using Goedel.Protocol.GenericHost;
 global using Goedel.Protocol.Presentation;
 global using Goedel.Utilities;
+global using Goedel.Contacts;
 
 global using Microsoft.Extensions.Logging;
 

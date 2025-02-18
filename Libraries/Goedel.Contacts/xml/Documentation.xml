@@ -3388,51 +3388,51 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Contacts.CryptoResource">
+        <member name="T:Goedel.Contacts.CryptoKey">
              <summary>
             
              The cryptographic resources such as public keys and certificates associated 
               with the entity represented by the Card.
              </summary>
         </member>
-        <member name="P:Goedel.Contacts.CryptoResource._Binding">
+        <member name="P:Goedel.Contacts.CryptoKey._Binding">
             <summary>Implement IBinding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.CryptoResource._binding">
+        <member name="F:Goedel.Contacts.CryptoKey._binding">
             <summary>Binding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.CryptoResource._StaticProperties">
+        <member name="F:Goedel.Contacts.CryptoKey._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="F:Goedel.Contacts.CryptoResource._StaticAllProperties">
+        <member name="F:Goedel.Contacts.CryptoKey._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="P:Goedel.Contacts.CryptoResource._AllProperties">
+        <member name="P:Goedel.Contacts.CryptoKey._AllProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.CryptoResource._Properties">
+        <member name="P:Goedel.Contacts.CryptoKey._Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.CryptoResource._ParentProperties">
+        <member name="P:Goedel.Contacts.CryptoKey._ParentProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.CryptoResource._Tag">
+        <member name="P:Goedel.Contacts.CryptoKey._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Contacts.CryptoResource.__Tag">
+        <member name="F:Goedel.Contacts.CryptoKey.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Contacts.CryptoResource._Factory">
+        <member name="M:Goedel.Contacts.CryptoKey._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.CryptoResource.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Contacts.CryptoKey.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -3440,7 +3440,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Contacts.Directory">
+        <member name="T:Goedel.Contacts.ContactDirectory">
              <summary>
             
               The directories containing information about the entity represented by the Card.
@@ -3451,48 +3451,48 @@
               implementation-specific.
              </summary>
         </member>
-        <member name="P:Goedel.Contacts.Directory.ListAs">
+        <member name="P:Goedel.Contacts.ContactDirectory.ListAs">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Directory._Binding">
+        <member name="P:Goedel.Contacts.ContactDirectory._Binding">
             <summary>Implement IBinding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Directory._binding">
+        <member name="F:Goedel.Contacts.ContactDirectory._binding">
             <summary>Binding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Directory._StaticProperties">
+        <member name="F:Goedel.Contacts.ContactDirectory._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Directory._StaticAllProperties">
+        <member name="F:Goedel.Contacts.ContactDirectory._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="P:Goedel.Contacts.Directory._AllProperties">
+        <member name="P:Goedel.Contacts.ContactDirectory._AllProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Directory._Properties">
+        <member name="P:Goedel.Contacts.ContactDirectory._Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Directory._ParentProperties">
+        <member name="P:Goedel.Contacts.ContactDirectory._ParentProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Directory._Tag">
+        <member name="P:Goedel.Contacts.ContactDirectory._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Contacts.Directory.__Tag">
+        <member name="F:Goedel.Contacts.ContactDirectory.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Contacts.Directory._Factory">
+        <member name="M:Goedel.Contacts.ContactDirectory._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Directory.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Contacts.ContactDirectory.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -4050,22 +4050,22 @@
             Extension methods
             </summary>
         </member>
-        <member name="T:Goedel.Contacts.NamespaceDoc">
-            <summary>
-            Additional support library for command line parsers generated with Goedel Command tool.
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.Initialization">
+        <member name="T:Goedel.Contacts.Initialization">
             <summary>Static class whose only function is to contain the initialization 
             routine.</summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.Initialization.Initialized">
+        <member name="P:Goedel.Contacts.Initialization.Initialized">
             <summary>Initialization witness flag. This may be used to force initialization
             of the module prior to other modules being initialized.</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Initialization.Initialize">
+        <member name="M:Goedel.Contacts.Initialization.Initialize">
             <summary>
             Initialization routine for cryptographic functions on the dotNet Core platform.
+            </summary>
+        </member>
+        <member name="T:Goedel.Contacts.NamespaceDoc">
+            <summary>
+            Additional support library for command line parsers generated with Goedel Command tool.
             </summary>
         </member>
     </members>

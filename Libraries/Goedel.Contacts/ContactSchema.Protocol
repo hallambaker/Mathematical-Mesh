@@ -166,7 +166,7 @@
 				| with the entity represented by the Card.
 
 		// 2.6.2.  directories
-		Struct Directory		Directories
+		Struct ContactDirectory		Directories
 			Dictionary
 			Description
 				| The directories containing information about the entity represented  
@@ -642,7 +642,8 @@
 			| with the entity represented by the Card.
 		
 	// 2.6.2.  directories
-	Structure Directory
+	Structure ContactDirectory 
+		Tag "Directory"
 		Inherits				Resource
 		Description
 			| The directories containing information about the entity represented by the Card.

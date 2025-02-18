@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:26 AM
+//  This file was automatically generated at 2/18/2025 4:27:57 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -106,6 +106,7 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// Contains one instance of each type of field.
@@ -215,6 +216,7 @@ public partial class MultiInstance : TestSchema {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class MultiArray : MultiInstance {
@@ -317,6 +319,7 @@ public partial class MultiArray : MultiInstance {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>

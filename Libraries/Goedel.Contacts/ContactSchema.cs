@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 12:54:14 PM
+//  This file was automatically generated at 2/18/2025 4:27:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -92,7 +92,7 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	    {"Address", Address._Factory},
 	    {"AddressComponent", AddressComponent._Factory},
 	    {"CryptoKey", CryptoKey._Factory},
-	    {"Directory", Directory._Factory},
+	    {"Directory", ContactDirectory._Factory},
 	    {"ResourceLink", ResourceLink._Factory},
 	    {"Media", Media._Factory},
 	    {"PatchObject", PatchObject._Factory},
@@ -261,7 +261,7 @@ public partial class JsContact : JmapBase {
         /// by the Card.
         /// </summary>
 
-	public virtual Dictionary<string,Directory>?					Directories  {get; set;}
+	public virtual Dictionary<string,ContactDirectory>?					Directories  {get; set;}
 
         /// <summary>
         /// The links to resources that do not fit any of the other  
@@ -404,11 +404,11 @@ public partial class JsContact : JmapBase {
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,CryptoKey>).Add (key as string,value as CryptoKey);})},
 			{ "directories", new PropertyDictionaryStruct ("directories", 
-					(IBinding data, object? value) => {(data as JsContact).Directories = value as Dictionary<string,Directory>;}, (IBinding data) => (data as JsContact).Directories,
-					false, ()=>new  Dictionary<string,Directory>(), ()=>new Directory(),
+					(IBinding data, object? value) => {(data as JsContact).Directories = value as Dictionary<string,ContactDirectory>;}, (IBinding data) => (data as JsContact).Directories,
+					false, ()=>new  Dictionary<string,ContactDirectory>(), ()=>new ContactDirectory(),
 					(IBinding data) => (data as JsContact).Directories.GetEnumerable(),
 					(object dictionary, object key, object value) =>
-						 {(dictionary as Dictionary<string,Directory>).Add (key as string,value as Directory);})},
+						 {(dictionary as Dictionary<string,ContactDirectory>).Add (key as string,value as ContactDirectory);})},
 			{ "links", new PropertyDictionaryStruct ("links", 
 					(IBinding data, object? value) => {(data as JsContact).Links = value as Dictionary<string,ResourceLink>;}, (IBinding data) => (data as JsContact).Links,
 					false, ()=>new  Dictionary<string,ResourceLink>(), ()=>new ResourceLink(),
@@ -2657,7 +2657,7 @@ public partial class CryptoKey : Resource {
 	///  listAs property value or none. Sorting such same-valued entries is 
 	///  implementation-specific.
 	/// </summary>
-public partial class Directory : Resource {
+public partial class ContactDirectory : Resource {
         /// <summary>
         /// </summary>
 
@@ -2673,8 +2673,8 @@ public partial class Directory : Resource {
 			new() {
 
 			{ "listAs", new PropertyInteger32 ("listAs", 
-					(IBinding data, int? value) => {(data as Directory).ListAs = value;}, (IBinding data) => (data as Directory).ListAs )}
-        }, __Tag,() => new Directory(), Resource._binding);
+					(IBinding data, int? value) => {(data as ContactDirectory).ListAs = value;}, (IBinding data) => (data as ContactDirectory).ListAs )}
+        }, __Tag,() => new ContactDirectory(), Resource._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2709,7 +2709,7 @@ public partial class Directory : Resource {
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Directory();
+	public static new JsonObject _Factory () => new ContactDirectory();
 
 
     /// <summary>
@@ -2718,15 +2718,15 @@ public partial class Directory : Resource {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new Directory FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new ContactDirectory FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Directory;
+			return Out as ContactDirectory;
 			}
-		var Result = new Directory ();
+		var Result = new ContactDirectory ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

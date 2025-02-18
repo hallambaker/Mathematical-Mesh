@@ -31,7 +31,7 @@ CalendarSchema.cs : CalendarSchema.Protocol
 	protogen CalendarSchema.Protocol  /cs  CalendarSchema.cs
 
 ContactSchema.cs : ContactSchema.Protocol 
-#	protogen ContactSchema.Protocol  /cs  ContactSchema.cs
+	protogen ContactSchema.Protocol  /cs  ContactSchema.cs
 
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs

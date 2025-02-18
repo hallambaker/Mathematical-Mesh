@@ -24,7 +24,7 @@ using System.Runtime.CompilerServices;
 
 #pragma warning disable IDE0079
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
-namespace Goedel.Cryptography.Dare;
+namespace Goedel.Contacts;
 
 ///<summary>Static class whose only function is to contain the initialization 
 ///routine.</summary>

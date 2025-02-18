@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:22 AM
+//  This file was automatically generated at 2/18/2025 4:27:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -791,6 +791,7 @@ public partial class MeshServiceDirect: MeshServiceClient {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// Base class for all request messages.
@@ -865,6 +866,7 @@ public partial class MeshRequest : Goedel.Protocol.Request {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -967,6 +969,7 @@ public partial class MeshRequestUser : MeshRequest {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Base class for all response messages. Contains only the
@@ -1042,6 +1045,7 @@ public partial class MeshResponse : Goedel.Protocol.Response {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -1133,6 +1137,7 @@ public partial class KeyValue : MeshProtocol {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -1266,6 +1271,7 @@ public partial class ConstraintsSelect : MeshProtocol {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Specifies constraints on the data to be sent.
@@ -1389,6 +1395,7 @@ public partial class ConstraintsData : MeshProtocol {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Describes the account creation policy including constraints on 
@@ -1491,6 +1498,7 @@ public partial class PolicyAccount : MeshProtocol {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class StoreStatus : MeshProtocol {
@@ -1585,6 +1593,7 @@ public partial class StoreStatus : MeshProtocol {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1685,6 +1694,7 @@ public partial class StoreUpdate : StoreStatus {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
@@ -1766,6 +1776,7 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1886,6 +1897,7 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Request binding of an account to a service address.
@@ -1985,6 +1997,7 @@ public partial class BindRequest : MeshRequest {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -2088,6 +2101,7 @@ public partial class BindResponse : MeshResponse {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Request creation of a new portal account. The request specifies
@@ -2165,6 +2179,7 @@ public partial class UnbindRequest : MeshRequestUser {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Reports the success or failure of a Delete transaction.
@@ -2239,6 +2254,7 @@ public partial class UnbindResponse : MeshResponse {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2328,6 +2344,7 @@ public partial class ConnectRequest : MeshRequest {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2420,6 +2437,7 @@ public partial class ConnectResponse : MeshResponse {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CompleteRequest : StatusRequest {
@@ -2506,6 +2524,7 @@ public partial class CompleteRequest : StatusRequest {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2598,6 +2617,7 @@ public partial class CompleteResponse : MeshResponse {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2710,6 +2730,7 @@ public partial class StatusRequest : MeshRequestUser {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2848,6 +2869,7 @@ public partial class StatusResponse : MeshResponse {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class DeviceStatus : MeshProtocol {
@@ -2947,6 +2969,7 @@ public partial class DeviceStatus : MeshProtocol {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -3067,6 +3090,7 @@ public partial class DownloadRequest : MeshRequestUser {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Return the set of objects requested.
@@ -3170,6 +3194,7 @@ public partial class DownloadResponse : MeshResponse {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Uploads a data object to be retrievable from the specified account
@@ -3261,6 +3286,7 @@ public partial class UploadRequest : MeshRequestUser {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Reports success or failure of an upload request
@@ -3335,6 +3361,7 @@ public partial class UploadResponse : MeshResponse {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -3419,6 +3446,7 @@ public partial class GetDataRequest : MeshRequest {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Returns a data object uploaded to the specified account.
@@ -3501,6 +3529,7 @@ public partial class GetDataResponse : MeshResponse {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -3620,6 +3649,7 @@ public partial class TransactRequest : MeshRequestUser {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Response to an upload request. 
@@ -3720,6 +3750,7 @@ public partial class TransactResponse : MeshResponse {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -3830,6 +3861,7 @@ public partial class EntryResponse : MeshProtocol {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Request download from a public store (which may be encrypted).
@@ -3904,6 +3936,7 @@ public partial class PublicRequest : DownloadRequest {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -3995,6 +4028,7 @@ public partial class PostRequest : MeshRequest {
 
 	}
 
+
 	/// <summary>
 	///
 	/// 
@@ -4069,6 +4103,7 @@ public partial class PostResponse : TransactResponse {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -4152,6 +4187,7 @@ public partial class ClaimRequest : MeshRequest {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ClaimResponse : MeshResponse {
@@ -4233,6 +4269,7 @@ public partial class ClaimResponse : MeshResponse {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -4323,6 +4360,7 @@ public partial class PollClaimRequest : MeshRequest {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class PollClaimResponse : MeshResponse {
@@ -4404,6 +4442,7 @@ public partial class PollClaimResponse : MeshResponse {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -4489,6 +4528,7 @@ abstract public partial class CryptographicOperation : MeshProtocol {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -4579,6 +4619,7 @@ public partial class CryptographicOperationSign : CryptographicOperation {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CryptographicOperationKeyAgreement : CryptographicOperation {
@@ -4661,6 +4702,7 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CryptographicOperationGenerate : CryptographicOperation {
@@ -4733,6 +4775,7 @@ public partial class CryptographicOperationGenerate : CryptographicOperation {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -4821,6 +4864,7 @@ public partial class CryptographicOperationShare : CryptographicOperation {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CryptographicResult : MeshProtocol {
@@ -4899,6 +4943,7 @@ public partial class CryptographicResult : MeshProtocol {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -4981,6 +5026,7 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CryptographicResultShare : CryptographicResult {
@@ -5053,6 +5099,7 @@ public partial class CryptographicResultShare : CryptographicResult {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -5142,6 +5189,7 @@ public partial class OperateRequest : MeshRequest {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>

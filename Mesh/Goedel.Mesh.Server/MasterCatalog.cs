@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:25 AM
+//  This file was automatically generated at 2/18/2025 4:27:55 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -107,6 +107,7 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// Represents a Mesh Account.
@@ -218,6 +219,7 @@ abstract public partial class AccountEntry : CatalogedEntry {
 
 
 	}
+
 
 	/// <summary>
 	///

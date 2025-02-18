@@ -807,7 +807,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// address entry for this mesh and mesh account. 
     /// </summary>
     /// <returns>The default contact.</returns>
-    public virtual Contact CreateContact(
+    public virtual JsContact CreateContact(
             List<CryptographicCapability> capabilities = null,
             ContactPerson? contact = null, string dnsHandle = null) {
 
@@ -847,8 +847,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             contact.NetworkAddresses = new List<NetworkAddress>() { address };
             }
 
+        throw new NYI();
 
-        return contact;
+        //return contact;
         }
 
     static (string, List<string>) GetAliases(

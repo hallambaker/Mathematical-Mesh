@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:23 AM
+//  This file was automatically generated at 2/18/2025 4:27:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -247,6 +247,7 @@ public partial class RepositoryServiceDirect: RepositoryServiceClient {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// Describes a Repository issuer.
@@ -321,6 +322,7 @@ public partial class ProfileRepository : ProfileAccount {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -421,6 +423,7 @@ public partial class CatalogedRepository : CatalogedApplication {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -523,6 +526,7 @@ public partial class ActivationApplicationRepository : ActivationApplication {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntryRepository : ApplicationEntry {
@@ -604,6 +608,7 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Base class for all requests made to a registrar
@@ -678,6 +683,7 @@ public partial class PersistanceRequest : Goedel.Protocol.Request {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -755,6 +761,7 @@ public partial class PersistanceResponse : Goedel.Protocol.Response {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Register connection request. 
@@ -829,6 +836,7 @@ public partial class QueryRequest : PersistanceRequest {
 
 
 	}
+
 
 	/// <summary>
 	///

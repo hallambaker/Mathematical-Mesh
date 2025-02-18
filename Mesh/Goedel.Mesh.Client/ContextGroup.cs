@@ -187,39 +187,41 @@ public partial class ContextGroup : ContextAccount {
 
         var listCapability = new List<CryptographicCapability> { capabilityMember };
 
-        var contact = CreateContact(listCapability);
+        throw new NotImplementedException();
 
-        var groupInvitation = new GroupInvitation() {
-            Sender = ContextUser.ServiceAddress,
-            Recipient = memberAddress,
-            Text = text,
-            Contact = contact
-            };
+        //var contact = CreateContact(listCapability);
 
-        var catalogedMember = new CatalogedMember() {
-            ContactAddress = memberAddress,
-            MemberCapabilityId = capabilityMember.Id,
-            ServiceCapabilityId = capabilityService.Id,
-            };
+        //var groupInvitation = new GroupInvitation() {
+        //    Sender = ContextUser.ServiceAddress,
+        //    Recipient = memberAddress,
+        //    Text = text,
+        //    Contact = contact
+        //    };
 
-        transactInvitation.OutboundMessage(networkProtocolEntry, groupInvitation);
+        //var catalogedMember = new CatalogedMember() {
+        //    ContactAddress = memberAddress,
+        //    MemberCapabilityId = capabilityMember.Id,
+        //    ServiceCapabilityId = capabilityService.Id,
+        //    };
 
-        // update the capabilities catalog to add the service capability
-        var catalogAccess = transactGroup.GetCatalogAccess();
-        var catalogedCapability = new CatalogedAccess(capabilityService);
-        transactGroup.CatalogUpdate(catalogAccess, catalogedCapability);
+        //transactInvitation.OutboundMessage(networkProtocolEntry, groupInvitation);
 
-        // update the members catalog to add the member entry
-        transactGroup.CatalogUpdate(catalogMember, catalogedMember);
+        //// update the capabilities catalog to add the service capability
+        //var catalogAccess = transactGroup.GetCatalogAccess();
+        //var catalogedCapability = new CatalogedAccess(capabilityService);
+        //transactGroup.CatalogUpdate(catalogAccess, catalogedCapability);
 
-        //// commit the transactions
-        //Transact(transactGroup);
-        //Transact(transactInvitation);
+        //// update the members catalog to add the member entry
+        //transactGroup.CatalogUpdate(catalogMember, catalogedMember);
 
-        await transactGroup.TransactAsync();
-        await transactInvitation.TransactAsync();
+        ////// commit the transactions
+        ////Transact(transactGroup);
+        ////Transact(transactInvitation);
 
-        return catalogedMember;
+        //await transactGroup.TransactAsync();
+        //await transactInvitation.TransactAsync();
+
+        //return catalogedMember;
 
 
         }
@@ -229,7 +231,7 @@ public partial class ContextGroup : ContextAccount {
     /// address entry for this mesh and mesh account. 
     /// </summary>
     /// <returns>The default contact.</returns>
-    public override Contact CreateContact(
+    public override JsContact CreateContact(
                 List<CryptographicCapability> capabilities = null, ContactPerson contact = null, string dnsHandle = null) {
 
 
@@ -237,24 +239,27 @@ public partial class ContextGroup : ContextAccount {
             Udf = ProfileGroup.UdfString,
             Validation = "Self"
             };
+
+        throw new NotImplementedException();
+
         // ContextMesh.ProfileMesh.UDF 
 
-        contact ??= new ContactPerson() {
-            Anchors = [anchorAccount]
-            };
+        //contact ??= new ContactPerson() {
+        //    Anchors = [anchorAccount]
+        //    };
 
-        if (capabilities is null) {
-            var address = new NetworkProfile(ServiceAddress, Profile as ProfileAccount);
-            contact.NetworkAddresses = new List<NetworkAddress>() { address };
-            }
-        else {
-            var address = new NetworkCapability(ServiceAddress, Profile as ProfileAccount) {
-                Capabilities = capabilities
-                };
-            contact.NetworkAddresses = new List<NetworkAddress>() { address };
-            }
+        //if (capabilities is null) {
+        //    var address = new NetworkProfile(ServiceAddress, Profile as ProfileAccount);
+        //    contact.NetworkAddresses = new List<NetworkAddress>() { address };
+        //    }
+        //else {
+        //    var address = new NetworkCapability(ServiceAddress, Profile as ProfileAccount) {
+        //        Capabilities = capabilities
+        //        };
+        //    contact.NetworkAddresses = new List<NetworkAddress>() { address };
+        //    }
 
-        return contact;
+        //return contact;
         }
 
 

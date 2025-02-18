@@ -312,7 +312,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="dnsHandle"></param>
     public async Task SetServiceAsync(
                 string accountAddress,
-                ContactPerson? contact = null,
+                JsContact? contact = null,
                 string localName = null, string dnsHandle = null) {
 
         KeyProfileSigners.AssertNotNull(NotSuperAdministrator.Throw);
@@ -335,9 +335,11 @@ public partial class ContextUser : ContextAccount {
 
         ActivationCommon.BindService(ProfileService);
 
+        throw new NotImplementedException();
+
         // Generate a contact and self-sign
-        var contact2 = CreateContact(contact: contact, dnsHandle: dnsHandle);
-        await SetContactSelfAsync(contact2, localName);
+        //var contact2 = CreateContact(contact: contact, dnsHandle: dnsHandle);
+        //await SetContactSelfAsync(contact2, localName);
         }
 
 
@@ -463,33 +465,36 @@ public partial class ContextUser : ContextAccount {
     /// <param name="contact">The contact parameters.</param>
     /// <param name="localname">Short name to apply to the signed contact info</param>
     public async Task<CatalogedContact> SetContactSelfAsync(
-                Contact contact, 
+                JsContact contact, 
                 string localname = null) {
         KeyCommonSignature.AssertNotNull(NotAdministrator.Throw);
-        contact.Envelope(KeyCommonSignature);
 
-        contact.Sources ??= new List<TaggedSource>() { };
-        var tagged = new TaggedSource() {
-            LocalName = localname,
-            Validation = "Self",
-            EnvelopedSource = contact.EnvelopedContact
-            };
-        contact.Sources.Add(tagged);
+        throw new NYI();
 
-        contact.Id = ProfileUser.UdfString;
+        //contact.Envelope(KeyCommonSignature);
 
-        var transact = TransactBegin();
-        var catalog = transact.GetCatalogContact();
+        //contact.Sources ??= new List<TaggedSource>() { };
+        //var tagged = new TaggedSource() {
+        //    LocalName = localname,
+        //    Validation = "Self",
+        //    EnvelopedSource = contact.EnvelopedContact
+        //    };
+        //contact.Sources.Add(tagged);
 
-        var (cataloged, success) = catalog.TryAdd(contact, localname, true);
+        //contact.Id = ProfileUser.UdfString;
 
-        if (!success) {
-            cataloged.Contact = contact;
-            transact.CatalogUpdate(catalog, cataloged);
-            await transact.TransactAsync();
-            }
+        //var transact = TransactBegin();
+        //var catalog = transact.GetCatalogContact();
 
-        return cataloged;
+        //var (cataloged, success) = catalog.TryAdd(contact, localname, true);
+
+        //if (!success) {
+        //    cataloged.Contact = contact;
+        //    transact.CatalogUpdate(catalog, cataloged);
+        //    await transact.TransactAsync();
+        //    }
+
+        //return cataloged;
         }
 
 
@@ -1191,11 +1196,13 @@ public partial class ContextUser : ContextAccount {
         var transaction = TransactBegin();
         var catalogContact = transaction.GetCatalogContact();
 
-        transaction.CatalogUpdate(catalogContact, request.Contact);
-        transaction.InboundComplete(StateSpoolMessage.Closed, request);
-        await transaction.TransactAsync();
+        throw new NotImplementedException();
 
-        return new ResultGroupInvitation(request);
+        //transaction.CatalogUpdate(catalogContact, request.Contact);
+        //transaction.InboundComplete(StateSpoolMessage.Closed, request);
+        //await transaction.TransactAsync();
+
+        //return new ResultGroupInvitation(request);
         }
 
 
@@ -1423,18 +1430,20 @@ public partial class ContextUser : ContextAccount {
             return new ResultMessageContact(requestContact, null);
             }
 
+
+        throw new NotImplementedException();
         // Add the requestContact.Self contact to the catalog
-        if (requestContact.AuthenticatedData != null) {
-            var contact = MeshItem.Decode(requestContact.AuthenticatedData) as Contact;
-            var cataloged = contact.CatalogedContact();
+        //if (requestContact.AuthenticatedData != null) {
+        //    var contact = MeshItem.Decode(requestContact.AuthenticatedData) as Contact;
+        //    var cataloged = contact.CatalogedContact();
 
-            using var transaction = TransactBegin();
-            var catalog = transaction.GetCatalogContact();
+        //    using var transaction = TransactBegin();
+        //    var catalog = transaction.GetCatalogContact();
 
-            transaction.CatalogUpdate(catalog, cataloged);
-            transaction.InboundComplete(StateSpoolMessage.Closed, requestContact);
-            await transaction.TransactAsync();
-            }
+        //    transaction.CatalogUpdate(catalog, cataloged);
+        //    transaction.InboundComplete(StateSpoolMessage.Closed, requestContact);
+        //    await transaction.TransactAsync();
+        //    }
 
         // Get the reply (if required)
         var reply = requestContact.Reply == true ?
@@ -1519,17 +1528,17 @@ public partial class ContextUser : ContextAccount {
     /// </summary>
     /// <param name="localName">Local name for the contact</param>
     /// <returns></returns>
-    public Enveloped<Contact> GetSelf(string localName) {
-        var self = GetContact(ProfileUser.UdfString);
+    public Enveloped<JsContact> GetSelf(string localName) {
+        //var self = GetContact(ProfileUser.UdfString);
 
-        foreach (var tagged in self.Contact.Sources) {
-            if (tagged.EnvelopedSource == null) {
-                // skip entries that don't have an enveloped source.
-                }
-            else if (localName == null || tagged.LocalName == localName) {
-                return tagged.EnvelopedSource;
-                }
-            }
+        //foreach (var tagged in self.Contact.Sources) {
+        //    if (tagged.EnvelopedSource == null) {
+        //        // skip entries that don't have an enveloped source.
+        //        }
+        //    else if (localName == null || tagged.LocalName == localName) {
+        //        return tagged.EnvelopedSource;
+        //        }
+        //    }
 
         throw new NYI();
         }
@@ -1664,21 +1673,22 @@ public partial class ContextUser : ContextAccount {
 
         // Add to the catalog
 
-        var contact = MeshItem.Decode(envelope) as Contact;
-        var cataloged = contact.CatalogedContact();
+        throw new NYI();
+        //var contact = MeshItem.Decode(envelope) as Contact;
+        //var cataloged = contact.CatalogedContact();
 
-        var transaction = TransactBegin();
-        var catalog = transaction.GetCatalogContact();
-        transaction.CatalogUpdate(catalog, cataloged);
-        await transaction.TransactAsync();
+        //var transaction = TransactBegin();
+        //var catalog = transaction.GetCatalogContact();
+        //transaction.CatalogUpdate(catalog, cataloged);
+        //await transaction.TransactAsync();
 
-        if (reciprocate) {
-            (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
-            cataloged.Message = await ContactRequestAsync(targetAccountAddress, pin, localname) as Message;
-            }
+        //if (reciprocate) {
+        //    (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
+        //    cataloged.Message = await ContactRequestAsync(targetAccountAddress, pin, localname) as Message;
+        //    }
 
 
-        return cataloged;
+        //return cataloged;
         }
     #endregion
     #region // Confirmation Processing

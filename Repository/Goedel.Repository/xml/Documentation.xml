@@ -164,7 +164,7 @@
             Default constructor for serialization.
             </summary>     
         </member>
-        <member name="M:Goedel.Repository.CatalogedRepository.#ctor(Goedel.Repository.ProfileRepository,Goedel.Mesh.ActivationCommon,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Repository.CatalogedRepository.#ctor(Goedel.Repository.ProfileRepository,Goedel.Mesh.ActivationCommon,Goedel.Cryptography.CryptographicKey)">
             <summary>
             Create and return a new catalog entry for <paramref name="profileGroup"/> with
             the activation data <paramref name="activationAccount"/>.

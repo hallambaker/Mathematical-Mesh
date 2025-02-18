@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:24 AM
+//  This file was automatically generated at 2/18/2025 4:27:55 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -110,6 +110,7 @@ public abstract partial class CallsignRegistry : global::Goedel.Protocol.JsonObj
 
 
 	// Transaction Classes
+
 	/// <summary>
 	/// </summary>
 public partial class CatalogedRegistry : CatalogedApplication {
@@ -224,6 +225,7 @@ public partial class CatalogedRegistry : CatalogedApplication {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ActivationApplicationRegistry : ActivationApplication {
@@ -314,6 +316,7 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>

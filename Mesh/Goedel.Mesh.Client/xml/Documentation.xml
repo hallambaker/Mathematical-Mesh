@@ -532,7 +532,7 @@
         <member name="M:Goedel.Mesh.Client.ContextAccount.TryResolveCallsignAsync(System.String)">
             <inheritdoc cref="M:Goedel.Mesh.IResolver.ResolveCallsignAsync(System.String)"/>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPinAsync(System.String,System.Boolean,System.Int32,System.Int64,System.Boolean,Goedel.Cryptography.CryptoKey,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPinAsync(System.String,System.Boolean,System.Int32,System.Int64,System.Boolean,Goedel.Cryptography.CryptographicKey,System.Collections.Generic.List{System.String})">
             <summary>
             Create a PIN value of length <paramref name="bits"/> bits valid for 
             <paramref name="validity"/> minutes.
@@ -716,7 +716,7 @@
             Force generation of all stores.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeyEncryption(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeyEncryption(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Resolve a public encryption key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
@@ -725,7 +725,7 @@
             <param name="cryptoKey">The found key </param>
             <returns>The identifier.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindPublicKey(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindPublicKey(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Resolve a public encryption key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
@@ -734,7 +734,7 @@
             <param name="cryptoKey">The found key </param>
             <returns>The identifier.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.LocatePrivateKeyPair(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.LocatePrivateKeyPair(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Attempt to obtain a private key with identifier <paramref name="keyId"/>.
             </summary>
@@ -750,7 +750,7 @@
             <param name="cryptoKey">The found key </param>
             <returns>The key pair if found.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeySignature(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeySignature(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Resolve a private key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
@@ -773,7 +773,7 @@
             </summary>
             <param name="keyPair">The key to persist.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.ValidateTrustAnchor(Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ValidateTrustAnchor(Goedel.Cryptography.CryptographicKey)">
             <summary>
             Resolve a public signature key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
@@ -1298,7 +1298,7 @@
             <exception cref="T:Goedel.Mesh.NoMeshSecret">Is thrown if the private key cannot be found.</exception>
             <returns>The encrypted escrow entry and the key shares.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.SetServiceAsync(System.String,Goedel.Mesh.ContactPerson,System.String,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.SetServiceAsync(System.String,Goedel.Contacts.JsContact,System.String,System.String)">
             <summary>
             Set the initial Mesh Service. This MUST be called before devices are added to the 
             personal mesh. This method does not support transfer of the Mesh Service.
@@ -1329,7 +1329,7 @@
             <param name="activationAccount">The account activation</param>
             <param name="keyLocate">the key locator.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.SetContactSelfAsync(Goedel.Mesh.Contact,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.SetContactSelfAsync(Goedel.Contacts.JsContact,System.String)">
             <summary>
             Create a contact entry for self using the parameters specified in <paramref name="contact"/>.
             </summary>
@@ -1339,7 +1339,7 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.DictionaryCatalogDelegates">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.TryFindKeyEncryption(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.TryFindKeyEncryption(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Resolve a public key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
@@ -1348,7 +1348,7 @@
             <param name="cryptoKey">The found key </param>
             <returns>The identifier.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.TryFindKeySignature(System.String,Goedel.Cryptography.CryptoKey@)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.TryFindKeySignature(System.String,Goedel.Cryptography.CryptographicKey@)">
             <summary>
             Resolve a public key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
@@ -1924,7 +1924,7 @@
             <param name="recipient">The message recipient</param>
             <param name="message">The message to send</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.Transaction`1.OutboundMessage(System.String,Goedel.Cryptography.CryptoKey,Goedel.Mesh.Message,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.Transaction`1.OutboundMessage(System.String,Goedel.Cryptography.CryptographicKey,Goedel.Mesh.Message,System.Boolean)">
             <summary>
             Add the message <paramref name="message"/> to <paramref name="recipientAddress"/> 
             encrypted under <paramref name="recipientEncryptionKey"/> as an
@@ -1942,7 +1942,7 @@
             </summary>
             <param name="message">The message to append to the inbound spool.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.Transaction`1.LocalMessage(Goedel.Mesh.Message,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Mesh.Client.Transaction`1.LocalMessage(Goedel.Mesh.Message,Goedel.Cryptography.CryptographicKey)">
             <summary>
             Add the message <paramref name="message"/> to the local pickup spool.
             local message.
@@ -1979,7 +1979,7 @@
             <param name="catalogedEntry">The entry to add as an update.</param>
             <typeparam name="TEntry">The entry type.</typeparam>
         </member>
-        <member name="M:Goedel.Mesh.Client.Transaction`1.CatalogUpdate(Goedel.Mesh.CatalogContact,Goedel.Mesh.Contact)">
+        <member name="M:Goedel.Mesh.Client.Transaction`1.CatalogUpdate(Goedel.Mesh.CatalogContact,Goedel.Contacts.JsContact)">
             <summary>
             Append a request to append <paramref name="contact"/> to the catalog
             <paramref name="catalog"/> to the transaction.

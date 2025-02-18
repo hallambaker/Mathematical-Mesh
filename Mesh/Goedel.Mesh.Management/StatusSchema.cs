@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:27 AM
+//  This file was automatically generated at 2/18/2025 4:27:57 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -282,6 +282,7 @@ public partial class ServiceManagementServiceDirect: ServiceManagementServiceCli
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// Base class for all request messages.
@@ -356,6 +357,7 @@ public partial class WsmpRequest : Goedel.Protocol.Request {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -433,6 +435,7 @@ public partial class WsmpResponse : Goedel.Protocol.Response {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ServiceConfigRequest : WsmpRequest {
@@ -505,6 +508,7 @@ public partial class ServiceConfigRequest : WsmpRequest {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -579,6 +583,7 @@ public partial class ServiceConfigResponse : WsmpResponse {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ServiceStatusRequest : WsmpRequest {
@@ -651,6 +656,7 @@ public partial class ServiceStatusRequest : WsmpRequest {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:22 AM
+//  This file was automatically generated at 2/18/2025 4:27:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -218,6 +218,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// The KeyData class is used to describe public key pairs and 
@@ -360,6 +361,7 @@ public partial class KeyData : MeshItem {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class KeyShare : Key {
@@ -469,6 +471,7 @@ public partial class KeyShare : Key {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CompositePrivate : Key {
@@ -567,6 +570,7 @@ public partial class CompositePrivate : Key {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -675,6 +679,7 @@ abstract public partial class Assertion : MeshItem {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Parent class from which all condition classes are derived.
@@ -745,6 +750,7 @@ abstract public partial class Condition : MeshItem {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -838,6 +844,7 @@ public partial class Activation : Assertion {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -946,6 +953,7 @@ public partial class ActivationEntry : MeshItem {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Parent class from which all profile classes are derived
@@ -1034,6 +1042,7 @@ abstract public partial class Profile : Assertion {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -1140,6 +1149,7 @@ public partial class ProfileDevice : Profile {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -1273,6 +1283,7 @@ public partial class ProfileAccount : Profile {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Account assertion. This is signed by the service hosting the account.
@@ -1356,6 +1367,7 @@ public partial class ProfileUser : ProfileAccount {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -1442,6 +1454,7 @@ public partial class ProfileGroup : ProfileAccount {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -1545,6 +1558,7 @@ public partial class ProfileService : Profile {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Profile of a Mesh Service
@@ -1620,6 +1634,7 @@ public partial class ProfileMeshService : ProfileService {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Profile of a Mesh Host providing one or more Mesh Services.
@@ -1694,6 +1709,7 @@ public partial class ProfileHost : ProfileDevice {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1792,6 +1808,7 @@ public partial class Connection : Assertion {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1942,6 +1959,7 @@ public partial class CallsignBinding : Assertion {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Registration of a trusted third party accreditation of a callsign/profile binding.
@@ -2080,6 +2098,7 @@ public partial class Accreditation : Assertion {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Asserts that a profile is connected to an account address.
@@ -2164,6 +2183,7 @@ public partial class ConnectionStripped : Connection {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Asserts that a device is connected to an account profile
@@ -2246,6 +2266,7 @@ public partial class ConnectionService : Connection {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -2346,6 +2367,7 @@ public partial class ConnectionDevice : ConnectionService {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Connection assertion stating that a particular device is 
@@ -2421,6 +2443,7 @@ public partial class ConnectionApplication : Connection {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Describes the connection of a member to a group.
@@ -2495,6 +2518,7 @@ public partial class ConnectionGroup : Connection {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2611,6 +2635,7 @@ public partial class AccountHostAssignment : Assertion {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ConnectionHost : Connection {
@@ -2683,6 +2708,7 @@ public partial class ConnectionHost : Connection {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -2768,6 +2794,7 @@ public partial class ActivationAccount : Activation {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Contains activation data for device specific keys used in the context of a 
@@ -2843,6 +2870,7 @@ public partial class ActivationHost : ActivationAccount {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -2963,6 +2991,7 @@ public partial class ActivationCommon : Activation {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ActivationApplication : Activation {
@@ -3035,6 +3064,7 @@ public partial class ActivationApplication : Activation {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -3117,6 +3147,7 @@ public partial class ActivationApplicationSsh : ActivationApplication {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -3226,6 +3257,7 @@ public partial class ActivationApplicationMail : ActivationApplication {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -3339,6 +3371,7 @@ public partial class ActivationApplicationGroup : ActivationApplication {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 abstract public partial class ApplicationEntry : MeshItem {
@@ -3414,6 +3447,7 @@ abstract public partial class ApplicationEntry : MeshItem {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -3496,6 +3530,7 @@ public partial class ApplicationEntrySsh : ApplicationEntry {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntryGroup : ApplicationEntry {
@@ -3577,6 +3612,7 @@ public partial class ApplicationEntryGroup : ApplicationEntry {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntryMail : ApplicationEntry {
@@ -3657,6 +3693,7 @@ public partial class ApplicationEntryMail : ApplicationEntry {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -3787,6 +3824,7 @@ abstract public partial class Contact : Assertion {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Trust anchor
@@ -3876,6 +3914,7 @@ public partial class Anchor : MeshItem {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -3985,6 +4024,7 @@ public partial class TaggedSource : MeshItem {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Contact for a group, including encryption groups.
@@ -4059,6 +4099,7 @@ public partial class ContactGroup : Contact {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -4143,6 +4184,7 @@ public partial class ContactPerson : Contact {
 
 	}
 
+
 	/// <summary>
 	///
 	/// 		
@@ -4225,6 +4267,7 @@ public partial class ContactOrganization : Contact {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -4324,6 +4367,7 @@ public partial class OrganizationName : MeshItem {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -4462,6 +4506,7 @@ public partial class PersonName : MeshItem {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Provides all means of contacting the individual according to a
@@ -4569,6 +4614,7 @@ public partial class NetworkAddress : MeshItem {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class NetworkCredential : NetworkAddress {
@@ -4658,6 +4704,7 @@ public partial class NetworkCredential : NetworkAddress {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class NetworkProfile : NetworkAddress {
@@ -4739,6 +4786,7 @@ public partial class NetworkProfile : NetworkAddress {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -4822,6 +4870,7 @@ public partial class NetworkCapability : NetworkProfile {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class NetworkProtocol : MeshItem {
@@ -4902,6 +4951,7 @@ public partial class NetworkProtocol : MeshItem {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -4997,6 +5047,7 @@ public partial class Role : MeshItem {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -5119,6 +5170,7 @@ public partial class Location : MeshItem {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class Bookmark : MeshItem {
@@ -5210,6 +5262,7 @@ public partial class Bookmark : MeshItem {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -5306,6 +5359,7 @@ public partial class Reference : MeshItem {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -5469,6 +5523,7 @@ public partial class Engagement : MeshItem {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class WorkTask : Engagement {
@@ -5547,6 +5602,7 @@ public partial class WorkTask : Engagement {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -5650,6 +5706,7 @@ abstract public partial class CatalogedEntry : MeshItem {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -5839,6 +5896,7 @@ public partial class CatalogedDevice : CatalogedEntry {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class DeviceDescription : MeshItem {
@@ -5967,6 +6025,7 @@ public partial class DeviceDescription : MeshItem {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Cataloged Signature
@@ -6041,6 +6100,7 @@ public partial class CatalogedSignature : CatalogedEntry {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -6192,6 +6252,7 @@ public partial class CatalogedDocument : CatalogedEntry {
 
 	}
 
+
 	/// <summary>
 	///
 	/// A publication.
@@ -6300,6 +6361,7 @@ public partial class CatalogedPublication : CatalogedEntry {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -6418,6 +6480,7 @@ public partial class CatalogedCredential : CatalogedEntry {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CatalogedNetwork : CatalogedEntry {
@@ -6519,6 +6582,7 @@ public partial class CatalogedNetwork : CatalogedEntry {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CatalogedContact : CatalogedEntry {
@@ -6617,6 +6681,7 @@ public partial class CatalogedContact : CatalogedEntry {
 
 	}
 
+
 	/// <summary>
 	///
 	/// 
@@ -6700,6 +6765,7 @@ public partial class CatalogedAccess : CatalogedEntry {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -6820,6 +6886,7 @@ abstract public partial class Capability : MeshItem {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class NullCapability : Capability {
@@ -6892,6 +6959,7 @@ public partial class NullCapability : Capability {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -6989,6 +7057,7 @@ public partial class AccessCapability : Capability {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -7090,6 +7159,7 @@ public partial class PublicationCapability : Capability {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -7193,6 +7263,7 @@ abstract public partial class CryptographicCapability : Capability {
 
 	}
 
+
 	/// <summary>
 	///
 	/// The corresponding key is a decryption key
@@ -7268,6 +7339,7 @@ public partial class CapabilityDecrypt : CryptographicCapability {
 
 	}
 
+
 	/// <summary>
 	///
 	/// The corresponding key is an encryption key
@@ -7342,6 +7414,7 @@ public partial class CapabilityDecryptPartial : CapabilityDecrypt {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -7427,6 +7500,7 @@ public partial class CapabilityDecryptServiced : CapabilityDecrypt {
 
 	}
 
+
 	/// <summary>
 	///
 	/// The corresponding key is an administration key
@@ -7502,6 +7576,7 @@ public partial class CapabilitySign : CryptographicCapability {
 
 	}
 
+
 	/// <summary>
 	///
 	/// The corresponding key is a key that may be used to generate key shares.
@@ -7576,6 +7651,7 @@ public partial class CapabilityKeyGenerate : CryptographicCapability {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -7653,6 +7729,7 @@ public partial class CapabilityFairExchange : CryptographicCapability {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -7751,6 +7828,7 @@ public partial class NamedService : MeshItem {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class ServiceAccessToken : NamedService {
@@ -7839,6 +7917,7 @@ public partial class ServiceAccessToken : NamedService {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -7934,6 +8013,7 @@ public partial class CatalogedBookmark : CatalogedEntry {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CatalogedTask : CatalogedEntry {
@@ -8021,6 +8101,7 @@ public partial class CatalogedTask : CatalogedEntry {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -8134,6 +8215,7 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CatalogedMember : CatalogedEntry {
@@ -8227,6 +8309,7 @@ public partial class CatalogedMember : CatalogedEntry {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -8328,6 +8411,7 @@ public partial class CatalogedGroup : CatalogedApplication {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CatalogedFeed : CatalogedBookmark {
@@ -8407,6 +8491,7 @@ public partial class CatalogedFeed : CatalogedBookmark {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -8538,6 +8623,7 @@ public partial class CatalogedApplicationMail : CatalogedApplication {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CatalogedApplicationPkix : CatalogedApplication {
@@ -8611,6 +8697,7 @@ public partial class CatalogedApplicationPkix : CatalogedApplication {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CatalogedApplicationOpenPgp : CatalogedApplication {
@@ -8683,6 +8770,7 @@ public partial class CatalogedApplicationOpenPgp : CatalogedApplication {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -8766,6 +8854,7 @@ public partial class CatalogedApplicationSsh : CatalogedApplication {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CatalogedApplicationGit : CatalogedApplication {
@@ -8838,6 +8927,7 @@ public partial class CatalogedApplicationGit : CatalogedApplication {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -8912,6 +9002,7 @@ public partial class CatalogedApplicationDeveloper : CatalogedApplication {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class MessageInvoice : Message {
@@ -8984,6 +9075,7 @@ public partial class MessageInvoice : Message {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -9058,6 +9150,7 @@ public partial class CatalogedReceipt : CatalogedEntry {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CatalogedTicket : CatalogedEntry {
@@ -9130,6 +9223,7 @@ public partial class CatalogedTicket : CatalogedEntry {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -9221,6 +9315,7 @@ public partial class DevicePreconfigurationPublic : MeshItem {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -9333,6 +9428,7 @@ public partial class DevicePreconfigurationPrivate : DevicePreconfigurationPubli
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class Message : MeshItem {
@@ -9429,6 +9525,7 @@ public partial class Message : MeshItem {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class MessageError : Message {
@@ -9509,6 +9606,7 @@ public partial class MessageError : Message {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class MessageComplete : Message {
@@ -9588,6 +9686,7 @@ public partial class MessageComplete : Message {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -9694,6 +9793,7 @@ public partial class MessageValidated : Message {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -9814,6 +9914,7 @@ public partial class MessagePin : Message {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Connection request message. This message contains the information
@@ -9896,6 +9997,7 @@ public partial class RequestConnection : MessageValidated {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -9998,6 +10100,7 @@ public partial class AcknowledgeConnection : Message {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Respond to RequestConnection message to grant or refuse the connection
@@ -10091,6 +10194,7 @@ public partial class RespondConnection : Message {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -10191,6 +10295,7 @@ public partial class MessageContact : MessageValidated {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class GroupInvitation : Message {
@@ -10280,6 +10385,7 @@ public partial class GroupInvitation : Message {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class MessageMail : Message {
@@ -10360,6 +10466,7 @@ public partial class MessageMail : Message {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class RequestConfirmation : Message {
@@ -10439,6 +10546,7 @@ public partial class RequestConfirmation : Message {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -10528,6 +10636,7 @@ public partial class ResponseConfirmation : Message {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class RequestTask : Message {
@@ -10600,6 +10709,7 @@ public partial class RequestTask : Message {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -10702,6 +10812,7 @@ public partial class MessageClaim : Message {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Report result of message processing.	
@@ -10792,6 +10903,7 @@ public partial class ProcessResult : Message {
 
 	}
 
+
 	/// <summary>
 	///
 	/// The message type is not supported.
@@ -10866,6 +10978,7 @@ public partial class ProcessResultNotSupported : ProcessResult {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>

@@ -411,30 +411,32 @@ public class MeshHost : Disposable {
                 deviceDescription: deviceDescription);
 
         // here we create the prototype contact.
-        var contact = new ContactPerson {
+
+        throw new NotImplementedException();
+        //var contact = new ContactPerson {
             
-            //Local = localName,
-            CommonNames = new List<PersonName> { personName }
-            };
+        //    //Local = localName,
+        //    CommonNames = new List<PersonName> { personName }
+        //    };
 
-        await contextUser.SetServiceAsync(
-                    accountAddress, contact: contact, localName: localName, dnsHandle: dnsHandle);
+        //await contextUser.SetServiceAsync(
+        //            accountAddress, contact: contact, localName: localName, dnsHandle: dnsHandle);
 
 
-        if (create) {
-            await contextUser.BindServiceAsync(accountAddress);
-            }
-        else {
-            await contextUser.SynchronizeAsync();
-            }
-        await contextUser.MakeAdministratorAsync(rights);
+        //if (create) {
+        //    await contextUser.BindServiceAsync(accountAddress);
+        //    }
+        //else {
+        //    await contextUser.SynchronizeAsync();
+        //    }
+        //await contextUser.MakeAdministratorAsync(rights);
 
-        // Return to normal privilege.
-        contextUser.MeshClient = null;
+        //// Return to normal privilege.
+        //contextUser.MeshClient = null;
 
-        var result = GetContext(contextUser.CatalogedMachine) as ContextUser;
+        //var result = GetContext(contextUser.CatalogedMachine) as ContextUser;
 
-        return result;
+        //return result;
         }
 
 

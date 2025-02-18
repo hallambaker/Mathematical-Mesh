@@ -247,13 +247,15 @@ public static class Extensions {
             this ContextUser contextAccount,
             string callsign,
             string recipient) {
+        throw new NYI();
 
-        // pull the contact entry for the recipient
-        var contact = contextAccount.GetContact(recipient);
 
-        var profile = GetProfile(contact.Contact, recipient);
-        // create the transfer request
-        return await contextAccount.CallsignRequestAsync(callsign, bind: false, transfer: profile);
+        //// pull the contact entry for the recipient
+        //var contact = contextAccount.GetContact(recipient);
+
+        //var profile = GetProfile(contact.Contact, recipient);
+        //// create the transfer request
+        //return await contextAccount.CallsignRequestAsync(callsign, bind: false, transfer: profile);
 
         }
 

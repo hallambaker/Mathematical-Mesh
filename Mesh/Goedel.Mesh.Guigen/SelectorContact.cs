@@ -258,31 +258,33 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
         }
 
     public static BoundContactPerson Convert(CatalogedContact input) {
-        var contact = input.Contact as ContactPerson;
+        throw new NYI();
 
-        if (contact == null) {
-            return null!; // should never happen
-            }
+        //var contact = input.Contact as ContactPerson;
 
-        var name = contact.CommonNames?.FirstOrDefault();
+        //if (contact == null) {
+        //    return null!; // should never happen
+        //    }
 
-        if (name is not null) {
-            name.SetFullName();
-            return new BoundContactPerson() {
-                FullName = name.FullName,
-                First = name.First,
-                Last = name.Last,
-                Prefix = name.Prefix,
-                Suffix = name.Suffix,
-                NetworkAddresses = Bind(contact.NetworkAddresses)
-                };
-            }
+        //var name = contact.CommonNames?.FirstOrDefault();
 
-        var address = contact.NetworkAddresses?.FirstOrDefault();
-        return new BoundContactPerson() {
-            Local = address?.Address,
-            NetworkAddresses = Bind(contact.NetworkAddresses)
-            };
+        //if (name is not null) {
+        //    name.SetFullName();
+        //    return new BoundContactPerson() {
+        //        FullName = name.FullName,
+        //        First = name.First,
+        //        Last = name.Last,
+        //        Prefix = name.Prefix,
+        //        Suffix = name.Suffix,
+        //        NetworkAddresses = Bind(contact.NetworkAddresses)
+        //        };
+        //    }
+
+        //var address = contact.NetworkAddresses?.FirstOrDefault();
+        //return new BoundContactPerson() {
+        //    Local = address?.Address,
+        //    NetworkAddresses = Bind(contact.NetworkAddresses)
+        //    };
 
         }
 
@@ -322,13 +324,15 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
         var addresses = FillNetworkAddress(NetworkAddresses);
         var locations = FillLocations(PhysicalAddresses);
 
-        var contact = new ContactPerson() {
-            CommonNames = new List<PersonName>() { personName },
-            NetworkAddresses = addresses,
-            Locations = locations
-            };
+        throw new NYI();
 
-        bound.Contact = contact;
+        //var contact = new ContactPerson() {
+        //    CommonNames = new List<PersonName>() { personName },
+        //    NetworkAddresses = addresses,
+        //    Locations = locations
+        //    };
+
+        //bound.Contact = contact;
         }
 
 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:29 AM
+//  This file was automatically generated at 2/18/2025 4:27:59 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -108,6 +108,7 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// An entry in the test log
@@ -194,6 +195,7 @@ abstract public partial class TestEntry : TestSchema {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -295,6 +297,7 @@ public partial class TestItem : TestEntry {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -421,6 +424,7 @@ public partial class MessageTest : Goedel.Mesh.Message {
 
 
 	}
+
 
 	/// <summary>
 	///

@@ -120,37 +120,40 @@ public class CatalogContact : Catalog<CatalogedContact> {
         var catalogedContact = catalogedEntry as CatalogedContact;
         var contact = catalogedContact.Contact;
 
-        if (contact.NetworkAddresses != null) {
-            foreach (var networkAddress in contact.NetworkAddresses) {
-                if (networkAddress.Address is not null) {
-                    DictionaryByNetworkAddress.AddSafe(networkAddress.Address,
-                        new NetworkProtocolEntry(catalogedContact, networkAddress));
-                    }
-                if (networkAddress is NetworkCapability networkCapability) {
-                    foreach (var capability in networkCapability.Capabilities) {
-                        capability.KeyCollection = KeyCollection;
-                        switch (capability) {
-                            case CapabilityDecrypt capabilityDecrypt: {
-                                //Console.WriteLine($"Key {networkAddress.Address} -> {capability.Id}");
 
-                                if (DictionaryDecryptByKeyId.TryGetValue(capability.Id, out var existing)) {
-                                    if (capabilityDecrypt.Issued > existing.Issued) {
-                                        DictionaryDecryptByKeyId.Remove(capability.Id);
-                                        DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
-                                        }
-                                    }
-                                else {
-                                    DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
-                                    }
 
-                                //DictionaryDecryptByKeyId.Replace(capability.Id, capabilityDecrypt);
-                                break;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+
+        //if (contact.NetworkAddresses != null) {
+        //    foreach (var networkAddress in contact.NetworkAddresses) {
+        //        if (networkAddress.Address is not null) {
+        //            DictionaryByNetworkAddress.AddSafe(networkAddress.Address,
+        //                new NetworkProtocolEntry(catalogedContact, networkAddress));
+        //            }
+        //        if (networkAddress is NetworkCapability networkCapability) {
+        //            foreach (var capability in networkCapability.Capabilities) {
+        //                capability.KeyCollection = KeyCollection;
+        //                switch (capability) {
+        //                    case CapabilityDecrypt capabilityDecrypt: {
+        //                        //Console.WriteLine($"Key {networkAddress.Address} -> {capability.Id}");
+
+        //                        if (DictionaryDecryptByKeyId.TryGetValue(capability.Id, out var existing)) {
+        //                            if (capabilityDecrypt.Issued > existing.Issued) {
+        //                                DictionaryDecryptByKeyId.Remove(capability.Id);
+        //                                DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
+        //                                }
+        //                            }
+        //                        else {
+        //                            DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
+        //                            }
+
+        //                        //DictionaryDecryptByKeyId.Replace(capability.Id, capabilityDecrypt);
+        //                        break;
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
         }
 
     /// <summary>
@@ -168,12 +171,12 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <returns>The CatalogedContact entry.</returns>
     /// <param name="self">If true, mark as the user's own contact.</param>
     public (CatalogedContact, bool) TryAdd(
-                    Contact contact,
+                    JsContact contact,
                     string localname = null,
                     bool self = false) {
 
-        if (contact.Id != null) {
-            var existing = Locate(contact.Id);
+        if (contact.Uid != null) {
+            var existing = Locate(contact.Uid);
             if (existing != null) {
                 return (existing, false);
                 }
@@ -194,7 +197,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="contact">The contact whose values are to be merged.</param>
     /// <param name="self">If true set the self marker.</param>
     /// <returns>The updated contact.</returns>
-    public static CatalogedContact GetUpdated(Contact contact, bool self = false) {
+    public static CatalogedContact GetUpdated(JsContact contact, bool self = false) {
         var cataloged = new CatalogedContact(contact, self);
 
         "Need to merge catalog data intelligently".TaskFunctionality();
@@ -211,7 +214,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="contact">The contact to add.</param>
     /// <param name="self">If true, mark as the user's own contact.</param>
     /// <returns>The CatalogedContact entry.</returns>
-    public CatalogedContact Add(Contact contact, bool self = false) {
+    public CatalogedContact Add(JsContact contact, bool self = false) {
         var cataloged = new CatalogedContact(contact, self);
         New(cataloged);
         return cataloged;
@@ -224,8 +227,10 @@ public class CatalogContact : Catalog<CatalogedContact> {
 
     /// <returns>The CatalogedContact entry.</returns>
     public CatalogedContact Add(DareEnvelope envelope) {
-        var contact = Contact.Decode(envelope); // hack: should check the contact info.
-        return Add(contact);
+        throw new NYI();
+
+        //var contact = Contact.Decode(envelope); // hack: should check the contact info.
+        //return Add(contact);
         }
 
     /// <summary>
@@ -340,9 +345,9 @@ public partial class CatalogedContact {
     /// <param name="self">If true, mark as the user's own contact.</param>
     /// <param name="contact">Dare Envelope containing the contact to create a catalog wrapper for.</param>
 
-    public CatalogedContact(Contact contact, bool self = false) {
+    public CatalogedContact(JsContact contact, bool self = false) {
         Contact = contact;
-        Key = contact.Id ?? Udf.Nonce();
+        Key = contact.Uid ?? Udf.Nonce();
         }
 
     #endregion
@@ -360,26 +365,26 @@ public partial class CatalogedContact {
             return;
             }
 
-        switch (Contact) {
-            case ContactPerson contactPerson: {
-                builder.AppendLine($"  Person {contactPerson.Id}");
-                break;
-                }
-            case ContactOrganization contactOrganization: {
-                builder.AppendLine($"  Organization {contactOrganization.Id}");
-                break;
-                }
-            case ContactGroup ContactGroup: {
-                builder.AppendLine($"  Group {ContactGroup.Id}");
-                break;
-                }
-            }
-        foreach (var anchor in Contact.Anchors) {
-            builder.AppendLine($"  Anchor {anchor.Udf}");
-            }
-        foreach (var address in Contact.NetworkAddresses) {
-            builder.AppendLine($"  Address {address.Address}");
-            }
+        //switch (Contact) {
+        //    case ContactPerson contactPerson: {
+        //        builder.AppendLine($"  Person {contactPerson.Id}");
+        //        break;
+        //        }
+        //    case ContactOrganization contactOrganization: {
+        //        builder.AppendLine($"  Organization {contactOrganization.Id}");
+        //        break;
+        //        }
+        //    case ContactGroup ContactGroup: {
+        //        builder.AppendLine($"  Group {ContactGroup.Id}");
+        //        break;
+        //        }
+        //    }
+        //foreach (var anchor in Contact.Anchors) {
+        //    builder.AppendLine($"  Anchor {anchor.Udf}");
+        //    }
+        //foreach (var address in Contact.NetworkAddresses) {
+        //    builder.AppendLine($"  Address {address.Address}");
+        //    }
 
 
         }
@@ -391,65 +396,65 @@ public partial class CatalogedContact {
 
 public partial class Contact {
 
-    ///<summary>Typed enveloped data</summary> 
-    public Enveloped<Contact> EnvelopedContact =>
-        new(DareEnvelope);
+    /////<summary>Typed enveloped data</summary> 
+    //public Enveloped<Contact> EnvelopedContact =>
+    //    new(DareEnvelope);
 
-    /// <summary>
-    /// Decode <paramref name="envelope"/> and return the inner <see cref="Contact"/>
-    /// </summary>
-    /// <param name="envelope">The envelope to decode.</param>
-    /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-    /// <returns>The decoded profile.</returns>
-    /// <remarks>Keep this convenience decoder because it is necessary to decode contacts
-    /// from EARL envelopes.</remarks>
-    public static new Contact Decode(DareEnvelope envelope,
-                IKeyCollection keyCollection = null) =>
-                    MeshItem.Decode(envelope, keyCollection) as Contact;
+    ///// <summary>
+    ///// Decode <paramref name="envelope"/> and return the inner <see cref="Contact"/>
+    ///// </summary>
+    ///// <param name="envelope">The envelope to decode.</param>
+    ///// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+    ///// <returns>The decoded profile.</returns>
+    ///// <remarks>Keep this convenience decoder because it is necessary to decode contacts
+    ///// from EARL envelopes.</remarks>
+    //public static new Contact Decode(DareEnvelope envelope,
+    //            IKeyCollection keyCollection = null) =>
+    //                MeshItem.Decode(envelope, keyCollection) as Contact;
 
-    /// <summary>
-    /// Convenience constructor, wrap a cataloged contact arround this contact.
-    /// </summary>
-    /// <param name="self">If true, the contact is for the owner of the account.</param>
-    /// <returns>The cataloged contact.</returns>
-    public CatalogedContact CatalogedContact(bool self = false) =>
-        new(this, self);
-
-
+    ///// <summary>
+    ///// Convenience constructor, wrap a cataloged contact arround this contact.
+    ///// </summary>
+    ///// <param name="self">If true, the contact is for the owner of the account.</param>
+    ///// <returns>The cataloged contact.</returns>
+    //public CatalogedContact CatalogedContact(bool self = false) =>
+    //    new(this, self);
 
 
 
-    public bool TryGetMeshAccount(out ParsedHandle? accountAddress, int maxRedirect = 5) {
-        while (maxRedirect-- > 0) {
-            if (!TryGetProtocol("mesh", out var address)) {
-                accountAddress = null;
-                return false;
-                }
-
-            accountAddress = new ParsedHandle(address.Address);
-            if (accountAddress.HandleType != HandleType.LocalName) {
-                return true;
-                }
-            }
-        accountAddress = null;
-        return false;
-        }
 
 
-    public bool TryGetProtocol(string protocol, out NetworkAddress result) {
-        result = null;
-        if (NetworkAddresses is null) {
-            return false;
-            }
-        foreach (var address in NetworkAddresses) {
-            if (address.Protocol == protocol) {
-                result = address;
-                return true;
-                }
+    //public bool TryGetMeshAccount(out ParsedHandle? accountAddress, int maxRedirect = 5) {
+    //    while (maxRedirect-- > 0) {
+    //        if (!TryGetProtocol("mesh", out var address)) {
+    //            accountAddress = null;
+    //            return false;
+    //            }
 
-            }
-        return false;
-        }
+    //        accountAddress = new ParsedHandle(address.Address);
+    //        if (accountAddress.HandleType != HandleType.LocalName) {
+    //            return true;
+    //            }
+    //        }
+    //    accountAddress = null;
+    //    return false;
+    //    }
+
+
+    //public bool TryGetProtocol(string protocol, out NetworkAddress result) {
+    //    result = null;
+    //    if (NetworkAddresses is null) {
+    //        return false;
+    //        }
+    //    foreach (var address in NetworkAddresses) {
+    //        if (address.Protocol == protocol) {
+    //            result = address;
+    //            return true;
+    //            }
+
+    //        }
+    //    return false;
+    //    }
 
 
     }

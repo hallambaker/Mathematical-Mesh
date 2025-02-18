@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 12:30:18 PM
+//  This file was automatically generated at 2/18/2025 4:27:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -109,6 +109,7 @@ public abstract partial class BaseMessage : global::Goedel.Protocol.JsonObject {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// Base class for all request messages.
@@ -196,6 +197,7 @@ abstract public partial class Request : BaseMessage {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -307,6 +309,7 @@ abstract public partial class Response : BaseMessage {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Describes a protocol version.
@@ -415,6 +418,7 @@ public partial class Version : BaseMessage {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Describes a message content encoding.
@@ -505,6 +509,7 @@ public partial class Encoding : BaseMessage {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Request service description.
@@ -579,6 +584,7 @@ public partial class HelloRequest : Request {
 
 
 	}
+
 
 	/// <summary>
 	///

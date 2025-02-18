@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:28 AM
+//  This file was automatically generated at 2/18/2025 4:27:58 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -110,6 +110,7 @@ public abstract partial class MeshhostShellResult : global::Goedel.Protocol.Json
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// Placeholder class to allow insertion of application specific properties.
@@ -184,6 +185,7 @@ public partial class Result : ShellResult {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -313,6 +315,7 @@ public partial class ResultAbout : Result {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>

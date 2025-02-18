@@ -213,17 +213,20 @@ public partial class StoreTests {
 
         var catalog = new CatalogContact(directory, file, keyCollection: KeyCollection);
 
+
+        throw new NYI();
+
         // Alice
-        var contactAlice = new ContactPerson("Alice", "Example");
-        var catalogedAlice = new CatalogedContact(contactAlice, false);
+        //var contactAlice = new ContactPerson("Alice", "Example");
+        //var catalogedAlice = new CatalogedContact(contactAlice, false);
 
-        catalog.New(catalogedAlice);
+        //catalog.New(catalogedAlice);
 
-        // Bob
-        var contactBob = new ContactPerson("Alice", "Example");
-        var catalogedBob = new CatalogedContact(contactBob, false);
+        //// Bob
+        //var contactBob = new ContactPerson("Alice", "Example");
+        //var catalogedBob = new CatalogedContact(contactBob, false);
 
-        catalog.New(catalogedBob);
+        //catalog.New(catalogedBob);
 
 
         // try to read back.

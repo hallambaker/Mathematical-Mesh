@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:23 AM
+//  This file was automatically generated at 2/18/2025 4:27:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -212,6 +212,7 @@ public partial class CarnetServiceDirect: CarnetServiceClient {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	///
 	/// Describes a anything service provider
@@ -286,6 +287,7 @@ public partial class ProfileAnything : ProfileService {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -374,6 +376,7 @@ public partial class CatalogedIdentity : CatalogedEntry {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 abstract public partial class Identity : AnythingProtocol {
@@ -450,6 +453,7 @@ abstract public partial class Identity : AnythingProtocol {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class DnsIdentity : Identity {
@@ -522,6 +526,7 @@ public partial class DnsIdentity : Identity {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -596,6 +601,7 @@ public partial class LocalIdentity : Identity {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class CallsignIdentity : Identity {
@@ -668,6 +674,7 @@ public partial class CallsignIdentity : Identity {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -760,6 +767,7 @@ public partial class CatalogedThing : CatalogedEntry {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -868,6 +876,7 @@ public partial class CatalogedAnything : CatalogedEntry {
 
 	}
 
+
 	/// <summary>
 	///
 	/// Base class for all requests made to a registrar
@@ -942,6 +951,7 @@ public partial class AnythingRequest : Goedel.Protocol.Request {
 
 
 	}
+
 
 	/// <summary>
 	///

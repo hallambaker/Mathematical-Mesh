@@ -135,24 +135,29 @@ public partial class RegistrationTests {
         return ValidContact(resultDump.CatalogedEntries, accountAddress);
         }
     static bool ValidContact(List<CatalogedEntry> catalogedEntries, params string[] accountAddress) {
-        var dictionary = new Dictionary<string, NetworkAddress>();
-        foreach (var catalogedEntry in catalogedEntries) {
-            var contactEntry = catalogedEntry as CatalogedContact;
-            var contact = contactEntry.Contact;
 
-            foreach (var address in contact.NetworkAddresses) {
-                dictionary.Add(address.Address.ToLower(), address);
-                // don't need to add safe because we want an error if there is a double entry.
-                }
-            }
 
-        (dictionary.Count == accountAddress.Length).TestTrue();
-        foreach (var address in accountAddress) {
-            dictionary.ContainsKey(address.ToLower()).TestTrue();
-            //Screen.WriteLine($"Found contact: {address}");
-            }
+        throw new NYI();
 
-        return true;
+
+        //var dictionary = new Dictionary<string, NetworkAddress>();
+        //foreach (var catalogedEntry in catalogedEntries) {
+        //    var contactEntry = catalogedEntry as CatalogedContact;
+        //    var contact = contactEntry.Contact;
+
+        //    foreach (var address in contact.NetworkAddresses) {
+        //        dictionary.Add(address.Address.ToLower(), address);
+        //        // don't need to add safe because we want an error if there is a double entry.
+        //        }
+        //    }
+
+        //(dictionary.Count == accountAddress.Length).TestTrue();
+        //foreach (var address in accountAddress) {
+        //    dictionary.ContainsKey(address.ToLower()).TestTrue();
+        //    //Screen.WriteLine($"Found contact: {address}");
+        //    }
+
+        //return true;
         }
 
 

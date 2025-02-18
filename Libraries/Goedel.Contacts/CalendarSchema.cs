@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 10:46:20 AM
+//  This file was automatically generated at 2/18/2025 4:27:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -117,6 +117,7 @@ public abstract partial class Calandars : global::Goedel.Protocol.JsonObject {
 
 
 	// Transaction Classes
+
 	/// <summary>
 	/// </summary>
 public partial class JmapBase : Calandars {
@@ -248,6 +249,7 @@ public partial class JmapBase : Calandars {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -700,6 +702,7 @@ public partial class JsCalendarEntry : JmapBase {
 
 	}
 
+
 	/// <summary>
 	///
 	///  In addition to the common JSCalendar object properties (Section 4), 
@@ -805,6 +808,7 @@ public partial class JsEvent : JsCalendarEntry {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -936,6 +940,7 @@ public partial class JsTask : JsCalendarEntry {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class JsGroup : JsCalendarEntry {
@@ -1026,6 +1031,7 @@ public partial class JsGroup : JsCalendarEntry {
 
 
 	}
+
 
 	/// <summary>
 	/// </summary>
@@ -1179,6 +1185,7 @@ public partial class Location : Calandars {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class Link : Calandars {
@@ -1318,6 +1325,7 @@ public partial class Link : Calandars {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class VirtualLocation : Calandars {
@@ -1431,6 +1439,7 @@ public partial class VirtualLocation : Calandars {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -1753,6 +1762,7 @@ public partial class Participant : Calandars {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class RecurrenceRule : Calandars {
@@ -2006,6 +2016,7 @@ public partial class RecurrenceRule : Calandars {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class NDay : Calandars {
@@ -2094,6 +2105,7 @@ public partial class NDay : Calandars {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -2223,6 +2235,7 @@ public partial class Alert : Calandars {
 
 	}
 
+
 	/// <summary>
 	/// </summary>
 public partial class Trigger : Calandars {
@@ -2330,6 +2343,7 @@ public partial class Trigger : Calandars {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -2476,6 +2490,7 @@ public partial class TimeZone : Calandars {
 
 
 	}
+
 
 	/// <summary>
 	///
@@ -2627,6 +2642,7 @@ public partial class TimeZoneRule : Calandars {
 
 
 	}
+
 
 	/// <summary>
 	///
