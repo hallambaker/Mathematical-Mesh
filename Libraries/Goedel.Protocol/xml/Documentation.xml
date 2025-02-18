@@ -3073,6 +3073,15 @@
         <member name="F:Goedel.Protocol.JsonObject._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
+        <member name="M:Goedel.Protocol.JsonObject.Combine(Goedel.Protocol.Binding,Goedel.Protocol.Binding)">
+            <summary>
+            Combine contents of the properties dictionaries <paramref name="first"/> and
+            <paramref name="second"/>.
+            </summary>
+            <param name="first">The first dictionary to add.</param>
+            <param name="second">The second dictionary to add.</param>
+            <returns>The combined dictionary.</returns>
+        </member>
         <member name="M:Goedel.Protocol.JsonObject.Combine(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property})">
             <summary>
             Combine contents of the properties dictionaries <paramref name="first"/> and
@@ -4787,6 +4796,9 @@
             <param name="Get">Return the value of the property.</param>
         </member>
         <member name="M:Goedel.Protocol.PropertyStringTag.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyStringTag.IsNull(Goedel.Protocol.IBinding)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Protocol.PropertyListString">

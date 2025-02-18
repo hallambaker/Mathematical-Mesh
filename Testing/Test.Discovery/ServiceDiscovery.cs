@@ -48,7 +48,6 @@ public partial class Jmap {
 
         var contact = new JsContact() {
             Version = "1.0",
-            Type = "card",
             Created = DateTime.Now,
             Updated = DateTime.Now,
 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 4:27:50 PM
+//  This file was automatically generated at 2/18/2025 5:27:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -174,7 +174,7 @@ public partial class JmapBase : Calandars {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as JmapBase).Type = value;}, (IBinding data) => (data as JmapBase).Type )},
 			{ "uid", new PropertyString ("uid", 
 					(IBinding data, string? value) => {(data as JmapBase).Uid = value;}, (IBinding data) => (data as JmapBase).Uid )},

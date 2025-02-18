@@ -188,6 +188,19 @@ public abstract partial class JsonObject : IBinding {
     public readonly static Dictionary<string, Property> _StaticAllProperties = new() {
         };
 
+
+    /// <summary>
+    /// Combine contents of the properties dictionaries <paramref name="first"/> and
+    /// <paramref name="second"/>.
+    /// </summary>
+    /// <param name="first">The first dictionary to add.</param>
+    /// <param name="second">The second dictionary to add.</param>
+    /// <returns>The combined dictionary.</returns>
+    public static Dictionary<string, Property> Combine(Binding first,
+            Binding second) => Combine(first.Properties, second.Properties);
+
+
+
     /// <summary>
     /// Combine contents of the properties dictionaries <paramref name="first"/> and
     /// <paramref name="second"/>.

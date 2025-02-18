@@ -10,6 +10,7 @@
 	// 2. Card
 	Structure JsContact
 		Inherits JmapBase
+		Tag "Card"
 
 		Description
 			| Metadata, see section 2.1
@@ -262,6 +263,7 @@
 			|A Name object
 		String					Type
 			Tag "@type" //  MUST be "Name" if set
+			TypeTag
 		Struct NameComponent	Components 
 			Multiple
 			Description
@@ -307,6 +309,7 @@
 			|A NameComponent object
 		String					Type
 			Tag "@type" //  MUST be "NameComponent" if set
+			TypeTag
 		String					Value
 			Required
 			Description
@@ -327,6 +330,7 @@
 	Structure NickName
 		String					Type
 			Tag "@type" //  MUST be "Nickname" if set
+			TypeTag
 		String					Name
 			Description
 				| The nickname.
@@ -342,6 +346,7 @@
 	Structure Organization
 		String					Type
 			Tag "@type" //  MUST be "Organization" if set
+			TypeTag
 		String					Name
 			Description
 				| The name of the organization.
@@ -380,6 +385,7 @@
 	Structure SpeakToAs
 		String					Type
 			Tag "@type" //  MUST be "SpeakToAs" if set
+			TypeTag
 		String					grammaticalGender
 			Description
 				| The grammatical gender to use in salutations and other grammatical 
@@ -394,6 +400,7 @@
 	Structure Pronouns
 		String					Type
 			Tag "@type" //  MUST be "Pronouns" if set
+			TypeTag
 		String					Values
 			Tag "pronouns"
 			Description
@@ -413,6 +420,7 @@
 	Structure Title
 		String					Type
 			Tag "@type" //  MUST be "Title" if set
+			TypeTag
 		String					Name
 			Description
 				| The title or role name of the entity represented by the Card.
@@ -430,6 +438,7 @@
 	Structure EmailAddress
 		String					Type
 			Tag "@type" //  MUST be "EmailAddress" if set
+			TypeTag
 		String					Address
 			Description
 				| The email address. This MUST be an addr-spec value as defined in Section 3.4.1 of [RFC5322].
@@ -449,6 +458,7 @@
 	Structure OnlineService
 		String					Type
 			Tag "@type" //  MUST be "OnlineService" if set
+			TypeTag
 		String					Service
 			Description
 				| The name of the online service or protocol. The name MAY be capitalized the 
@@ -479,6 +489,7 @@
 	Structure Phone
 		String					Type
 			Tag "@type" //  MUST be "Phone" if set
+			TypeTag
 		String					Number
 			Description
 				| The phone number as either a URI or free text. Typical URI schemes are 
@@ -515,6 +526,7 @@
 	Structure LanguagePref
 		String					Type
 			Tag "@type" //  MUST be "LanguagePref" if set
+			TypeTag
 		String					Language
 			Description
 				| The preferred language. This MUST be a language tag as defined in [RFC5646] .
@@ -542,6 +554,7 @@
 			| The scheduling addresses by which the entity may receive calendar scheduling invitations.
 		String					Type
 			Tag "@type" //  MUST be "SchedulingAddress" if set
+			TypeTag
 		String					Uri
 			Required
 			Description
@@ -567,6 +580,7 @@
 			| addresses or geographic locations.
 		String					Type
 			Tag "@type" //  MUST be "Address" if set
+			TypeTag
 		Struct AddressComponent Components
 			Multiple
 			Description
@@ -619,6 +633,7 @@
 			| 
 		String					Type
 			Tag "@type" //  MUST be "AddressComponent" if set
+			TypeTag
 		String					Value
 			Description
 				| The value of the address component.
@@ -683,6 +698,7 @@
 			| The memorable dates and events for the entity represented by the Card.
 		String					Type
 			Tag "@type" //  MUST be "Anniversary" if set
+			TypeTag
 		String					Kind
 			Description
 				| The kind of anniversary.
@@ -701,6 +717,7 @@
 			| 
 		String					Type
 			Tag "@type" //  MUST be "PartialDate" or "Timestamp" if set
+			TypeTag
 
 		Integer					Year
 			Description
@@ -732,6 +749,7 @@
 			| A free-text note that is associated with the Card.
 		String					Type
 			Tag "@type" //  MUST be "Note" if set
+			TypeTag
 		String					Value
 			Tag "Note"
 			Description
@@ -762,6 +780,7 @@
 			| The personal information of the entity represented by the Card.
 		String					Type
 			Tag "@type" //  MUST be "PersonalInfo" if set
+			TypeTag
 		String					Kind
 			Description
 				| The kind of personal information

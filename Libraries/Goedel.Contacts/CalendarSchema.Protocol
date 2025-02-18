@@ -5,6 +5,7 @@
 		// 4.1.1. @type
 		String					Type
 			Tag "@type"
+			TypeTag
 			Required
 			Description
 				| This specifies the type that this object represents. The allowed value 

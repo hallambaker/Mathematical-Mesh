@@ -212,7 +212,8 @@ public record PropertyStringTag(
         }
 
 
-
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => false;
     }
 
 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 4:27:50 PM
+//  This file was automatically generated at 2/18/2025 5:27:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -72,7 +72,7 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
 			new () {
 
-	    {"JsContact", JsContact._Factory},
+	    {"Card", JsContact._Factory},
 	    {"Relation", Relation._Factory},
 	    {"Resource", Resource._Factory},
 	    {"Name", Name._Factory},
@@ -476,7 +476,7 @@ public partial class JsContact : JmapBase {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "JsContact";
+	public new const string __Tag = "Card";
 
 	/// <summary>
     /// Factory method
@@ -786,7 +786,7 @@ public partial class Name : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as Name).Type = value;}, (IBinding data) => (data as Name).Type )},
 			{ "components", new PropertyListStruct ("components", 
 					(IBinding data, object? value) => {(data as Name).Components = value as List<NameComponent>;}, (IBinding data) => (data as Name).Components,
@@ -907,7 +907,7 @@ public partial class NameComponent : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as NameComponent).Type = value;}, (IBinding data) => (data as NameComponent).Type )},
 			{ "value", new PropertyString ("value", 
 					(IBinding data, string? value) => {(data as NameComponent).Value = value;}, (IBinding data) => (data as NameComponent).Value )},
@@ -1011,7 +1011,7 @@ public partial class NickName : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as NickName).Type = value;}, (IBinding data) => (data as NickName).Type )},
 			{ "name", new PropertyString ("name", 
 					(IBinding data, string? value) => {(data as NickName).Name = value;}, (IBinding data) => (data as NickName).Name )},
@@ -1126,7 +1126,7 @@ public partial class Organization : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as Organization).Type = value;}, (IBinding data) => (data as Organization).Type )},
 			{ "name", new PropertyString ("name", 
 					(IBinding data, string? value) => {(data as Organization).Name = value;}, (IBinding data) => (data as Organization).Name )},
@@ -1324,7 +1324,7 @@ public partial class SpeakToAs : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as SpeakToAs).Type = value;}, (IBinding data) => (data as SpeakToAs).Type )},
 			{ "grammaticalGender", new PropertyString ("grammaticalGender", 
 					(IBinding data, string? value) => {(data as SpeakToAs).grammaticalGender = value;}, (IBinding data) => (data as SpeakToAs).grammaticalGender )},
@@ -1432,7 +1432,7 @@ public partial class Pronouns : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as Pronouns).Type = value;}, (IBinding data) => (data as Pronouns).Type )},
 			{ "pronouns", new PropertyString ("pronouns", 
 					(IBinding data, string? value) => {(data as Pronouns).Values = value;}, (IBinding data) => (data as Pronouns).Values )},
@@ -1538,7 +1538,7 @@ public partial class Title : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as Title).Type = value;}, (IBinding data) => (data as Title).Type )},
 			{ "name", new PropertyString ("name", 
 					(IBinding data, string? value) => {(data as Title).Name = value;}, (IBinding data) => (data as Title).Name )},
@@ -1649,7 +1649,7 @@ public partial class EmailAddress : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as EmailAddress).Type = value;}, (IBinding data) => (data as EmailAddress).Type )},
 			{ "address", new PropertyString ("address", 
 					(IBinding data, string? value) => {(data as EmailAddress).Address = value;}, (IBinding data) => (data as EmailAddress).Address )},
@@ -1778,7 +1778,7 @@ public partial class OnlineService : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as OnlineService).Type = value;}, (IBinding data) => (data as OnlineService).Type )},
 			{ "service", new PropertyString ("service", 
 					(IBinding data, string? value) => {(data as OnlineService).Service = value;}, (IBinding data) => (data as OnlineService).Service )},
@@ -1913,7 +1913,7 @@ public partial class Phone : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as Phone).Type = value;}, (IBinding data) => (data as Phone).Type )},
 			{ "number", new PropertyString ("number", 
 					(IBinding data, string? value) => {(data as Phone).Number = value;}, (IBinding data) => (data as Phone).Number )},
@@ -2021,7 +2021,7 @@ public partial class LanguagePref : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as LanguagePref).Type = value;}, (IBinding data) => (data as LanguagePref).Type )},
 			{ "language", new PropertyString ("language", 
 					(IBinding data, string? value) => {(data as LanguagePref).Language = value;}, (IBinding data) => (data as LanguagePref).Language )},
@@ -2210,7 +2210,7 @@ public partial class SchedulingAddress : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as SchedulingAddress).Type = value;}, (IBinding data) => (data as SchedulingAddress).Type )},
 			{ "uri", new PropertyString ("uri", 
 					(IBinding data, string? value) => {(data as SchedulingAddress).Uri = value;}, (IBinding data) => (data as SchedulingAddress).Uri )},
@@ -2377,7 +2377,7 @@ public partial class Address : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as Address).Type = value;}, (IBinding data) => (data as Address).Type )},
 			{ "components", new PropertyListStruct ("components", 
 					(IBinding data, object? value) => {(data as Address).Components = value as List<AddressComponent>;}, (IBinding data) => (data as Address).Components,
@@ -2502,7 +2502,7 @@ public partial class AddressComponent : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as AddressComponent).Type = value;}, (IBinding data) => (data as AddressComponent).Type )},
 			{ "value", new PropertyString ("value", 
 					(IBinding data, string? value) => {(data as AddressComponent).Value = value;}, (IBinding data) => (data as AddressComponent).Value )},
@@ -3005,7 +3005,7 @@ public partial class Anniversary : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as Anniversary).Type = value;}, (IBinding data) => (data as Anniversary).Type )},
 			{ "kind", new PropertyString ("kind", 
 					(IBinding data, string? value) => {(data as Anniversary).Kind = value;}, (IBinding data) => (data as Anniversary).Kind )},
@@ -3133,7 +3133,7 @@ public partial class TimeStamp : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as TimeStamp).Type = value;}, (IBinding data) => (data as TimeStamp).Type )},
 			{ "year", new PropertyInteger32 ("year", 
 					(IBinding data, int? value) => {(data as TimeStamp).Year = value;}, (IBinding data) => (data as TimeStamp).Year )},
@@ -3243,7 +3243,7 @@ public partial class Note : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as Note).Type = value;}, (IBinding data) => (data as Note).Type )},
 			{ "Note", new PropertyString ("Note", 
 					(IBinding data, string? value) => {(data as Note).Value = value;}, (IBinding data) => (data as Note).Value )},
@@ -3465,7 +3465,7 @@ public partial class PersonalInfo : Contacts {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "@type", new PropertyString ("@type", 
+			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as PersonalInfo).Type = value;}, (IBinding data) => (data as PersonalInfo).Type )},
 			{ "kind", new PropertyString ("kind", 
 					(IBinding data, string? value) => {(data as PersonalInfo).Kind = value;}, (IBinding data) => (data as PersonalInfo).Kind )},
