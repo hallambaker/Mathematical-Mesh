@@ -5630,6 +5630,11 @@
             Action info for contact PIN
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshProfile">
+            <summary>
+            The proposed IANA Media Type for a Mesh Profile
+            </summary>
+        </member>
         <member name="F:Goedel.Mesh.MeshConstants.IanaTypeMeshMessage">
             <summary>
             The proposed IANA content identifier for the Mesh message type.

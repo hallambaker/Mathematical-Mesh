@@ -182,7 +182,7 @@ public static partial class Extensions {
         contact.Update();
         }
 
-    public static void AddMesh(this JsContact contact, string dnsHandle) {
+    public static void AddMesh(this JsContact contact, Profile profile, string dnsHandle) {
         if (dnsHandle is null) {
             return;
             }
@@ -195,8 +195,17 @@ public static partial class Extensions {
         contact.OnlineServices ??= [];
         contact.OnlineServices.Add("mesh0", service);
 
+        var uri = profile.DataUri();
+
+        var cryptoKey = new CryptoKey() {
+            Uri = uri,
+            MediaType = profile.IanaMediaType,
+            Kind = profile._Tag
+            };
 
 
+        contact.CryptoKeys ??= [];
+        contact.CryptoKeys.Add("mesh0", cryptoKey);
 
         contact.Update();
         }

@@ -35,6 +35,9 @@ public partial class Profile {
 
     #region // Properties
 
+    public override string IanaMediaType => MeshConstants.IanaTypeMeshProfile;
+
+
     ///<summary>List of signing keys used to sign the profile.</summary> 
     public List<CryptographicKey> KeyProfileSigners { get; protected set; } 
 

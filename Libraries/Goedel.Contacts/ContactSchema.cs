@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 5:52:48 PM
+//  This file was automatically generated at 2/19/2025 6:44:13 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -594,12 +594,16 @@ public partial class Relation : Contacts {
 	/// </summary>
 public partial class Resource : Contacts {
         /// <summary>
+        /// The JSContact type of the object. The value MUST NOT be "Resource"; 
+        /// instead, the value MUST be the name of a concrete resource type
         /// </summary>
 
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
-        /// 
+        /// The kind of the resource. The allowed values are defined in the 
+        /// property definition that makes use of the Resource type. Some 
+        /// property definitions may change this property from being optional to mandatory.
         /// </summary>
 
 	public virtual string?					Kind  {get; set;}
@@ -611,19 +615,25 @@ public partial class Resource : Contacts {
 	public virtual string?					Uri  {get; set;}
 
         /// <summary>
-        /// 
+        /// The media type [RFC2046] of the resource identified by the uri property value.
+        /// </summary>
+
+	public virtual string?					MediaType  {get; set;}
+
+        /// <summary>
+        /// The contexts in which to use this resource. 
         /// </summary>
 
 	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
-        /// 
+        /// The preference of the resource in relation to other resources.
         /// </summary>
 
 	public virtual int?					Pref  {get; set;}
 
         /// <summary>
-        /// 
+        /// A custom label for the value. 
         /// </summary>
 
 	public virtual string?					Label  {get; set;}
@@ -643,6 +653,8 @@ public partial class Resource : Contacts {
 					(IBinding data, string? value) => {(data as Resource).Kind = value;}, (IBinding data) => (data as Resource).Kind )},
 			{ "uri", new PropertyString ("uri", 
 					(IBinding data, string? value) => {(data as Resource).Uri = value;}, (IBinding data) => (data as Resource).Uri )},
+			{ "mediaType", new PropertyString ("mediaType", 
+					(IBinding data, string? value) => {(data as Resource).MediaType = value;}, (IBinding data) => (data as Resource).MediaType )},
 			{ "contexts", new PropertyDictionaryBoolean ("contexts", 
 					(IBinding data, Dictionary<string,bool>? value) => {(data as Resource).Contexts = value;}, (IBinding data) => (data as Resource).Contexts )},
 			{ "pref", new PropertyInteger32 ("pref", 

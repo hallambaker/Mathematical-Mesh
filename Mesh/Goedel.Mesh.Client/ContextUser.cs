@@ -340,7 +340,7 @@ public partial class ContextUser : ContextAccount {
         //var contact2 = CreateContact(contact: contact, dnsHandle: dnsHandle);
 
         contact ??= JsContact.Create();
-        contact.AddMesh(AccountAddressUdf);
+        contact.AddMesh(ProfileUser, AccountAddressUdf);
         await SetContactSelfAsync(contact, localName);
         }
 

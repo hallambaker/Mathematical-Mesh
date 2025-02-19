@@ -2075,11 +2075,15 @@
         </member>
         <member name="P:Goedel.Contacts.Resource.Type">
             <summary>
+            The JSContact type of the object. The value MUST NOT be "Resource"; 
+            instead, the value MUST be the name of a concrete resource type
             </summary>
         </member>
         <member name="P:Goedel.Contacts.Resource.Kind">
             <summary>
-            
+            The kind of the resource. The allowed values are defined in the 
+            property definition that makes use of the Resource type. Some 
+            property definitions may change this property from being optional to mandatory.
             </summary>
         </member>
         <member name="P:Goedel.Contacts.Resource.Uri">
@@ -2087,19 +2091,24 @@
             
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Resource.MediaType">
+            <summary>
+            The media type [RFC2046] of the resource identified by the uri property value.
+            </summary>
+        </member>
         <member name="P:Goedel.Contacts.Resource.Contexts">
             <summary>
-            
+            The contexts in which to use this resource. 
             </summary>
         </member>
         <member name="P:Goedel.Contacts.Resource.Pref">
             <summary>
-            
+            The preference of the resource in relation to other resources.
             </summary>
         </member>
         <member name="P:Goedel.Contacts.Resource.Label">
             <summary>
-            
+            A custom label for the value. 
             </summary>
         </member>
         <member name="P:Goedel.Contacts.Resource._Binding">

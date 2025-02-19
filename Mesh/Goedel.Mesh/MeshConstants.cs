@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 2/19/2025 5:52:50 PM
+//  This file was automatically generated at 2/19/2025 6:44:15 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -488,6 +488,11 @@ public static partial class MeshConstants {
     public const string MessagePINActionContact = "Contact";
 
     // File: MiscUnsorted
+
+    ///<summary>
+    ///The proposed IANA Media Type for a Mesh Profile
+    ///</summary>
+    public const string IanaTypeMeshProfile = "application/mmm/profile";
 
     ///<summary>
     ///The proposed IANA content identifier for the Mesh message type.

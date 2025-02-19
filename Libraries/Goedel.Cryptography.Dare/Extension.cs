@@ -29,6 +29,29 @@ namespace Goedel.Cryptography.Dare;
 /// </summary>
 public static partial class Extension {
 
+
+    public static string DataUri(this JsonObject jsonObject) {
+
+        var enveloped = jsonObject.Enveloped as DareEnvelope;
+        enveloped.AssertNotNull(NYI.Throw);
+
+
+        var builder = new StringBuilder();
+
+        builder.Append("data:");
+        builder.Append(jsonObject.IanaMediaType);
+        builder.Append(";base64,");
+
+        //var bytes = enveloped.GetBytes();
+        builder.Append(enveloped.GetBytes().ToStringBase64url());
+
+
+        return builder.ToString();
+        }
+
+
+
+
     /// <summary>
     /// Sign and encrypt the JsonObject under <paramref name="signingKey"/> and
     /// <paramref name="encryptionKey"/>..
@@ -50,29 +73,6 @@ public static partial class Extension {
         return Envelope(jsonObject, cryptoParameters, objectEncoding);
         }
         
-        
-        
-        //{
-        
-
-        //jsonObject.Normalize();
-
-        //var contentMeta = new ContentMeta() {
-        //    UniqueId = jsonObject._PrimaryKey,
-        //    Created = System.DateTime.Now,
-        //    ContentType = jsonObject.IanaMediaType,
-        //    MessageType = jsonObject._Tag
-        //    };
-
-        //var enveloped = new EnvelopedJson(jsonObject,
-        //    signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta,
-        //    objectEncoding: objectEncoding);
-
-        //enveloped.Header.EnvelopeId = jsonObject._PrimaryKey;
-        //jsonObject.Enveloped = enveloped;
-
-        //return enveloped;
-        //}
 
 
     /// <summary>
@@ -98,28 +98,7 @@ public static partial class Extension {
         return Envelope( jsonObject, cryptoParameters, objectEncoding );
 
         }
-        //{
-        //jsonObject.Normalize();
 
-        //var contentMeta = new ContentMeta() {
-        //    UniqueId = jsonObject._PrimaryKey,
-        //    Created = System.DateTime.Now,
-        //    ContentType = jsonObject.IanaMediaType,
-        //    MessageType = jsonObject._Tag
-        //    };
-
-        //var cryptoParameters = new CryptoParameters(encryptionKeys, signingKeys) {
-        //    IncludeSignatureKey = includeSignatureKey
-        //};
-
-        //var bytes = jsonObject.GetBytes(objectEncoding: objectEncoding);
-
-        //var enveloped = new DareEnvelope(cryptoParameters, bytes, contentMeta: contentMeta);
-        //enveloped.Header.EnvelopeId = jsonObject._PrimaryKey;
-        //jsonObject.Enveloped = enveloped;
-
-        //return enveloped;
-        //}
 
     /// <summary>
     /// Sign the profile under <paramref name="signingKeys"/>.

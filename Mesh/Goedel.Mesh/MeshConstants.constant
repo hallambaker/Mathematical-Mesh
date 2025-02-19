@@ -132,7 +132,9 @@ File PinActionCodes
 
 
 File MiscUnsorted
-
+	String IanaTypeMeshProfile "application/mmm/profile"
+		Description
+			|The proposed IANA Media Type for a Mesh Profile
 	String IanaTypeMeshMessage "application/mmm/message"
 		Description
 			|The proposed IANA content identifier for the Mesh message type.

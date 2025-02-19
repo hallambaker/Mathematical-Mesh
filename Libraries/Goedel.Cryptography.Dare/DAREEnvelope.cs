@@ -457,6 +457,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
 
 
 
+
     #endregion
     #region // Deserialization methods
     /// <summary>

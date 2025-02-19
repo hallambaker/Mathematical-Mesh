@@ -237,23 +237,32 @@
 		String					Type
 			Tag "@type" //  MUST NOT be "Resource" if set
 			TypeTag
+			Description
+				| The JSContact type of the object. The value MUST NOT be "Resource"; 
+				| instead, the value MUST be the name of a concrete resource type
 		String					Kind
 			Description
-				| 
+				| The kind of the resource. The allowed values are defined in the 
+				| property definition that makes use of the Resource type. Some 
+				| property definitions may change this property from being optional to mandatory.
 		String					Uri
 			Description
 				| 
 			Required
+		String					MediaType
+			Description
+				| The media type [RFC2046] of the resource identified by the uri property value.
+
 		Boolean					Contexts
 			Dictionary 
 			Description
-				| 
+				| The contexts in which to use this resource. 
 		Integer					Pref
 			Description
-				| 
+				| The preference of the resource in relation to other resources.
 		String					Label
 			Description
-				| 
+				| A custom label for the value. 
 
 
 
