@@ -322,7 +322,7 @@ public class ContextRegistry : ContextAccount {
                 PriorId = previous?.Id
                 };
 
-            var enveloped = registration.Enveloped(KeyAdministratorSign);
+            var enveloped = registration.Envelope(KeyAdministratorSign);
             var catalogedRegistration = new CatalogedRegistration() {
                 Canonical = canonical,
                 Id = id,

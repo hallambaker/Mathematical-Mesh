@@ -54,7 +54,7 @@ public partial class Jmap {
             Kind = "individual",
             Language = "en",
             SpeakToAs = new() {
-                grammaticalGender = "feminine",
+                GrammaticalGender = "feminine",
                 Pronouns = new() {
                     { "p1", new() {
                         Values = "she/her"

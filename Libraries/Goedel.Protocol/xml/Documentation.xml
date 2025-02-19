@@ -3020,6 +3020,9 @@
         <member name="F:Goedel.Protocol.JsonObject.KeyLocate">
             <summary>Key collection to be used to decrypt enveloped data within the object.</summary> 
         </member>
+        <member name="P:Goedel.Protocol.JsonObject.IanaMediaType">
+            <summary>The IANA content type to use for encoding</summary> 
+        </member>
         <member name="P:Goedel.Protocol.JsonObject._KeyValues">
             <summary>
             Secondary key/values pairs describing the object
@@ -3103,6 +3106,11 @@
         <member name="M:Goedel.Protocol.JsonObject.#ctor">
             <summary>
             Base constructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.Normalize">
+            <summary>
+            Normalize the structure prior to signature or encryption operations.
             </summary>
         </member>
         <member name="M:Goedel.Protocol.JsonObject.DeepCopy">
@@ -3210,13 +3218,6 @@
             <param name="jsonReader">Input data</param>
             <param name="tag">Input tag</param>
         </member>
-        <member name="M:Goedel.Protocol.JsonObject.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Deserialize the input stream to populate this object having recieved the specified tag.
-            </summary>
-            <param name="jsonReader">Input data</param>
-            <param name="tag">Input tag</param>
-        </member>
         <member name="M:Goedel.Protocol.JsonObject.ToFile(System.String,Goedel.Protocol.DataEncoding,System.Boolean)">
             <summary>
             Write the object out to a file.
@@ -3224,15 +3225,6 @@
             <param name="fileName">Name of the file to create.</param>
             <param name="dataEncoding">The encoding to use</param>
             <param name="tagged">If true, tag the output with the object type</param>
-        </member>
-        <member name="M:Goedel.Protocol.JsonObject.Merge(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate},System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate},System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate})">
-            <summary>
-            Merge two or more token dictionaries to produce a combined dictionary.
-            </summary>
-            <param name="Dictionary1">First dictionary to merge</param>
-            <param name="Dictionary2">Second dictionary to merge</param>
-            <param name="Dictionary3">Third dictionary to merge</param>
-            <returns>Merged dictionaries</returns>
         </member>
         <member name="M:Goedel.Protocol.JsonObject.Append(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate},System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate})">
             <summary>

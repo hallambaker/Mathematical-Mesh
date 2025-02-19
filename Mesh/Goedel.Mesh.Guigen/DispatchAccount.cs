@@ -1,4 +1,7 @@
-﻿namespace Goedel.Everything;
+﻿using Goedel.Contacts;
+using Goedel.Mesh;
+
+namespace Goedel.Everything;
 
 
 
@@ -64,16 +67,18 @@ public partial class EverythingMaui {
             var deviceDescription = GetDeviceDescription();
             var localName = data.LocalName.IsBlank() ? data.ServiceAddress.GetAccount() : data.LocalName;
 
-            PersonName? personName = null;
-            // lets pars person name here.
-            if (!data.ContactName.IsBlank()) {
-                personName = new PersonName(data.ContactName);
-                }
+            //PersonName? personName = null;
+            //// lets pars person name here.
+            //if (!data.ContactName.IsBlank()) {
+            //    personName = new PersonName(data.ContactName);
+            //    }
+            var contact = data.ContactName is null ? null : JsContact.Individual(data.ContactName, null);
+
 
             var contextUser = await MeshHost.ConfigureMeshAsync(
                         data.ServiceAddress, localName,
                         deviceDescription: deviceDescription,
-                        personName: personName);
+                        contact: contact);
 
             // Make this the current account!
             var bound = GetBoundAccount(contextUser);

@@ -393,7 +393,7 @@ public class MeshHost : Disposable {
     /// service.</param>
     /// <param name="deviceDescription">User readable name for the group.</param>
     /// <returns>Context for administering the Mesh</returns>
-    /// <param name="personName">User's name.</param>
+    /// <param name="contact">Contact template for the user..</param>
     public virtual async Task<ContextUser> ConfigureMeshAsync(
             string accountAddress,
             string localName = null,
@@ -402,41 +402,33 @@ public class MeshHost : Disposable {
             ProfileDevice profileDevice = null,
             List<string> rights = null,
             bool create = true, 
-            DeviceDescription deviceDescription = null, 
-            PersonName personName = null) {
+            DeviceDescription deviceDescription = null,
+            JsContact contact = null) {
+
 
 
         using var contextUser = InitializeAdminContext(accountAddress, localName,
             ref accountSeed, ref profileDevice, ref rights, // out var _,
                 deviceDescription: deviceDescription);
 
-        // here we create the prototype contact.
-
-        throw new NotImplementedException();
-        //var contact = new ContactPerson {
-            
-        //    //Local = localName,
-        //    CommonNames = new List<PersonName> { personName }
-        //    };
-
-        //await contextUser.SetServiceAsync(
-        //            accountAddress, contact: contact, localName: localName, dnsHandle: dnsHandle);
+        await contextUser.SetServiceAsync(
+                    accountAddress, contact: contact, localName: localName, dnsHandle: dnsHandle);
 
 
-        //if (create) {
-        //    await contextUser.BindServiceAsync(accountAddress);
-        //    }
-        //else {
-        //    await contextUser.SynchronizeAsync();
-        //    }
-        //await contextUser.MakeAdministratorAsync(rights);
+        if (create) {
+            await contextUser.BindServiceAsync(accountAddress);
+            }
+        else {
+            await contextUser.SynchronizeAsync();
+            }
+        await contextUser.MakeAdministratorAsync(rights);
 
-        //// Return to normal privilege.
-        //contextUser.MeshClient = null;
+        // Return to normal privilege.
+        contextUser.MeshClient = null;
 
-        //var result = GetContext(contextUser.CatalogedMachine) as ContextUser;
+        var result = GetContext(contextUser.CatalogedMachine) as ContextUser;
 
-        //return result;
+        return result;
         }
 
 

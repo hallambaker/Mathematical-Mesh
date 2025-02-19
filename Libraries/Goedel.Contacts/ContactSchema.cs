@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2025 5:27:54 PM
+//  This file was automatically generated at 2/19/2025 4:49:30 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1307,7 +1307,7 @@ public partial class SpeakToAs : Contacts {
         /// (masculine)
         /// </summary>
 
-	public virtual string?					grammaticalGender  {get; set;}
+	public virtual string?					GrammaticalGender  {get; set;}
 
         /// <summary>
         /// The pronouns that the contact chooses to use for themselves.
@@ -1327,7 +1327,7 @@ public partial class SpeakToAs : Contacts {
 			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as SpeakToAs).Type = value;}, (IBinding data) => (data as SpeakToAs).Type )},
 			{ "grammaticalGender", new PropertyString ("grammaticalGender", 
-					(IBinding data, string? value) => {(data as SpeakToAs).grammaticalGender = value;}, (IBinding data) => (data as SpeakToAs).grammaticalGender )},
+					(IBinding data, string? value) => {(data as SpeakToAs).GrammaticalGender = value;}, (IBinding data) => (data as SpeakToAs).GrammaticalGender )},
 			{ "pronouns", new PropertyDictionaryStruct ("pronouns", 
 					(IBinding data, object? value) => {(data as SpeakToAs).Pronouns = value as Dictionary<string,Pronouns>;}, (IBinding data) => (data as SpeakToAs).Pronouns,
 					false, ()=>new  Dictionary<string,Pronouns>(), ()=>new Pronouns(),

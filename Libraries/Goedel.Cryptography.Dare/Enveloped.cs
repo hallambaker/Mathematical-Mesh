@@ -41,15 +41,72 @@ public enum EnvelopeValidation {
     Trusted
     }
 
+
+
 /// <summary>
 /// Typed DareEnvelope.
 /// </summary>
 /// <typeparam name="T">The type of the wrapped data item.</typeparam>
-public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
+public partial class EnvelopedJson : DareEnvelope {
+
+    public EnvelopedJson() {
+        }
+
+    /// <summary>
+    /// Constructor returining an envelope containing the object <paramref name="data"/>
+    /// optionally encrypted under <paramref name="encryptionKey"/> and signed under
+    /// <paramref name="signingKey"/>.
+    /// </summary>
+    /// <param name="data">The object to be enveloped.</param>
+    /// <param name="signingKey">The signature key.</param>
+    /// <param name="encryptionKey">The encryption key.</param>
+    /// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
+    /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
+    public EnvelopedJson(
+                JsonObject data,
+                CryptographicKey signingKey = null,
+                CryptographicKey encryptionKey = null,
+                ContentMeta contentMeta = null,
+                ObjectEncoding objectEncoding = ObjectEncoding.JSON) : base(
+                    new CryptoParameters(signer: signingKey, recipient: encryptionKey),
+                    data.GetBytes(objectEncoding: objectEncoding), contentMeta: contentMeta) {
+        data.Enveloped = this;
+        }
+
+    ///// <summary>
+    ///// Constructor returining an envelope containing the object <paramref name="data"/>
+    ///// optionally enhanced unde <paramref name="cryptoParameters"/>.
+    ///// </summary>
+    ///// <param name="data">The object to be enveloped.</param>
+    ///// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
+    ///// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
+    ///// <param name="cryptoParameters">The cryptographic enhancement parameters.</param>
+    //public EnvelopedJson(
+    //            JsonObject data,
+    //            CryptoParameters cryptoParameters,
+    //            ContentMeta contentMeta = null,
+    //            ObjectEncoding objectEncoding = ObjectEncoding.JSON) : base(cryptoParameters,
+    //                data.GetBytes(objectEncoding: objectEncoding), contentMeta: contentMeta) {
+    //    data.Enveloped = this;
+    //    }
+
+    }
+
+
+/// <summary>
+/// Typed DareEnvelope.
+/// </summary>
+/// <typeparam name="T">The type of the wrapped data item.</typeparam>
+public partial class Enveloped<T> : EnvelopedJson where T : JsonObject {
 
     DareEnvelope Untyped;
 
     byte[] bodyValue;
+
+
+
+
+
 
 
     ///<inheritdoc/>
@@ -85,25 +142,6 @@ public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
         }
 
 
-    /// <summary>
-    /// Constructor returning a typed envelope. 
-    /// </summary>
-    /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
-    /// be applied to this message.</param>
-    /// <param name="contentMeta">The content metadata</param>
-    /// <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
-    /// create the message body. Otherwise the body is specified by calls to the Process method.</param>
-    /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-    /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-    ///     as an EDSS header entry.</param>
-    public Enveloped(
-                CryptoParameters cryptoParameters,
-                byte[] plaintext,
-                ContentMeta contentMeta = null,
-                byte[] cloaked = null,
-                List<byte[]> dataSequences = null
-                ) : base(cryptoParameters, plaintext, contentMeta, cloaked, dataSequences) {
-        }
 
     /// <summary>
     /// Constructor returining an envelope containing the object <paramref name="data"/>
@@ -116,35 +154,18 @@ public partial class Enveloped<T> : DareEnvelope where T : JsonObject {
     /// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
     /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
     public Enveloped(
-                T data,
+                JsonObject data,
                 CryptographicKey signingKey = null,
                 CryptographicKey encryptionKey = null,
                 ContentMeta contentMeta = null,
-                ObjectEncoding objectEncoding = ObjectEncoding.JSON) : base(
-                    new CryptoParameters(signer: signingKey, recipient: encryptionKey),
-                    data.GetBytes(objectEncoding: objectEncoding), contentMeta: contentMeta) {
-        data.Enveloped = this;
-        //this.JsonObject = data;
-        }
-
-    /// <summary>
-    /// Constructor returining an envelope containing the object <paramref name="data"/>
-    /// optionally enhanced unde <paramref name="cryptoParameters"/>.
-    /// </summary>
-    /// <param name="data">The object to be enveloped.</param>
-    /// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
-    /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
-    /// <param name="cryptoParameters">The cryptographic enhancement parameters.</param>
-    public Enveloped(
-                T data,
-                CryptoParameters cryptoParameters,
-                ContentMeta contentMeta = null,
-                ObjectEncoding objectEncoding = ObjectEncoding.JSON) : base(cryptoParameters,
-                    data.GetBytes(objectEncoding: objectEncoding), contentMeta: contentMeta) {
-        data.Enveloped = this;
+                ObjectEncoding objectEncoding = ObjectEncoding.JSON) : base (
+                    data, signingKey, encryptionKey, contentMeta, objectEncoding) {
+        
+        //base(
+        //            new CryptoParameters(signer: signingKey, recipient: encryptionKey),
+        //            data.GetBytes(objectEncoding: objectEncoding), contentMeta: contentMeta) 
 
         }
-
 
 
     /// <summary>

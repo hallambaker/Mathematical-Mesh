@@ -61,84 +61,83 @@ public partial class MeshItem {
         }
 
 
-
-
-
     ///<summary>The key collection that was used to decode this object instance.</summary>
     public virtual IKeyCollection KeyCollection {
         get => KeyLocate as IKeyCollection;
         set => KeyLocate = value;
         }
 
+    ///<inheritdoc/>
+    public override string? IanaMediaType => MeshConstants.IanaTypeMeshObject;
 
     ///<summary>The envelope Identifier.</summary> 
     public virtual string EnvelopeId => _PrimaryKey;
 
-    /// <summary>
-    /// Sign the profile under <paramref name="signingKey"/>.
-    /// </summary>
-    /// <param name="signingKey">Optional signature key.</param>
-    /// <param name="encryptionKey">Optional encryption key.</param>
-    /// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
-    /// <returns>Envelope containing the signed profile. Also updates the property
-    /// <see cref="DareEnvelope"/></returns>
-    public virtual DareEnvelope Envelope(
-                CryptographicKey signingKey = null,
-                CryptographicKey encryptionKey = null,
-                ObjectEncoding objectEncoding = ObjectEncoding.JSON
-                ) {
+    ///// <summary>
+    ///// Sign the profile under <paramref name="signingKey"/>.
+    ///// </summary>
+    ///// <param name="signingKey">Optional signature key.</param>
+    ///// <param name="encryptionKey">Optional encryption key.</param>
+    ///// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
+    ///// <returns>Envelope containing the signed profile. Also updates the property
+    ///// <see cref="DareEnvelope"/></returns>
+    //public virtual DareEnvelope Envelope(
+    //            CryptographicKey signingKey = null,
+    //            CryptographicKey encryptionKey = null,
+    //            ObjectEncoding objectEncoding = ObjectEncoding.JSON
+    //            ) {
 
-        var contentMeta = new ContentMeta() {
-            //UniqueId = base._PrimaryKey,
-            UniqueId = _PrimaryKey,
-            Created = System.DateTime.Now,
-            ContentType = MeshConstants.IanaTypeMeshObject,
-            MessageType = _Tag
-            };
+    //    var contentMeta = new ContentMeta() {
+    //        //UniqueId = base._PrimaryKey,
+    //        UniqueId = _PrimaryKey,
+    //        Created = System.DateTime.Now,
+    //        ContentType = MeshConstants.IanaTypeMeshObject,
+    //        MessageType = _Tag
+    //        };
 
-        Enveloped = new Enveloped<MeshItem>(this,
-                    signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta,
-                    objectEncoding: objectEncoding);
-        DareEnvelope.Header.EnvelopeId = EnvelopeId;
+    //    Enveloped = new Enveloped<MeshItem>(this,
+    //                signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta,
+    //                objectEncoding: objectEncoding);
+    //    DareEnvelope.Header.EnvelopeId = EnvelopeId;
 
-        return DareEnvelope;
-        }
+    //    return DareEnvelope;
+    //    }
 
-    /// <summary>
-    /// Sign the profile under <paramref name="signingKeys"/>.
-    /// </summary>
-    /// <param name="signingKeys">Optional list of signature keys.</param>
-    /// <param name="encryptionKeys">Optional list of encryption keys.</param>
-    /// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
-    /// <param name="includeSignatureKey">If true include the public key parameters in the
-    /// signature.</param>
-    /// <returns>Envelope containing the signed profile. Also updates the property
-    /// <see cref="DareEnvelope"/></returns>
-    public virtual DareEnvelope Envelope(
-                List<CryptographicKey> signingKeys,
-                List<CryptographicKey> encryptionKeys = null,
-                ObjectEncoding objectEncoding = ObjectEncoding.JSON,
-                bool includeSignatureKey = false
-                ) {
+    ///// <summary>
+    ///// Sign the profile under <paramref name="signingKeys"/>.
+    ///// </summary>
+    ///// <param name="signingKeys">Optional list of signature keys.</param>
+    ///// <param name="encryptionKeys">Optional list of encryption keys.</param>
+    ///// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
+    ///// <param name="includeSignatureKey">If true include the public key parameters in the
+    ///// signature.</param>
+    ///// <returns>Envelope containing the signed profile. Also updates the property
+    ///// <see cref="DareEnvelope"/></returns>
+    //public virtual DareEnvelope Envelope(
+    //            List<CryptographicKey> signingKeys,
+    //            List<CryptographicKey> encryptionKeys = null,
+    //            ObjectEncoding objectEncoding = ObjectEncoding.JSON,
+    //            bool includeSignatureKey = false
+    //            ) {
 
-        var contentMeta = new ContentMeta() {
-            //UniqueId = base._PrimaryKey,
-            UniqueId = _PrimaryKey,
-            Created = System.DateTime.Now,
-            ContentType = MeshConstants.IanaTypeMeshObject,
-            MessageType = _Tag
-        };
+    //    var contentMeta = new ContentMeta() {
+    //        //UniqueId = base._PrimaryKey,
+    //        UniqueId = _PrimaryKey,
+    //        Created = System.DateTime.Now,
+    //        ContentType = MeshConstants.IanaTypeMeshObject,
+    //        MessageType = _Tag
+    //    };
 
-        var cryptoParameters = new CryptoParameters(encryptionKeys, signingKeys) {
-            IncludeSignatureKey = includeSignatureKey
-            };
+    //    var cryptoParameters = new CryptoParameters(encryptionKeys, signingKeys) {
+    //        IncludeSignatureKey = includeSignatureKey
+    //        };
 
-        Enveloped = new Enveloped<MeshItem>(this, cryptoParameters, contentMeta: contentMeta,
-                    objectEncoding: objectEncoding);
-        DareEnvelope.Header.EnvelopeId = EnvelopeId;
+    //    Enveloped = new Enveloped<MeshItem>(this, cryptoParameters, contentMeta: contentMeta,
+    //                objectEncoding: objectEncoding);
+    //    DareEnvelope.Header.EnvelopeId = EnvelopeId;
 
-        return DareEnvelope;
-        }
+    //    return DareEnvelope;
+    //    }
 
 
 

@@ -3362,7 +3362,7 @@
             </summary>
             <param name="key">The profile to delete</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.ConfigureMeshAsync(System.String,System.String,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String},System.Boolean,Goedel.Mesh.DeviceDescription,Goedel.Mesh.PersonName)">
+        <member name="M:Goedel.Mesh.Client.MeshHost.ConfigureMeshAsync(System.String,System.String,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String},System.Boolean,Goedel.Mesh.DeviceDescription,Goedel.Contacts.JsContact)">
              <summary>
              Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
              </summary>
@@ -3377,7 +3377,7 @@
              service.</param>
              <param name="deviceDescription">User readable name for the group.</param>
              <returns>Context for administering the Mesh</returns>
-             <param name="personName">User's name.</param>
+             <param name="contact">Contact template for the user..</param>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.GetContextMesh(System.String,System.Boolean)">
             <summary>

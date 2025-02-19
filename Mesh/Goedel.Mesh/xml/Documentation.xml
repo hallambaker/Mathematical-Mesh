@@ -8000,8 +8000,12 @@
         <member name="F:Goedel.Mesh.Message.MessageStatus">
             <summary>The message status.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Message.Envelope(Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Protocol.ObjectEncoding)">
-            <inheritdoc/>
+        <member name="M:Goedel.Mesh.Message.Normalize">
+            <summary>
+            Normalize the structure prior to signature or encryption operations.
+            Every message MUST have a unique ID if <see cref="P:Goedel.Mesh.Message.MessageId"/> is null,
+            it is set to a random nonce value.
+            </summary>
         </member>
         <member name="M:Goedel.Mesh.Message.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
@@ -14411,30 +14415,11 @@
         <member name="P:Goedel.Mesh.MeshItem.KeyCollection">
             <summary>The key collection that was used to decode this object instance.</summary>
         </member>
+        <member name="P:Goedel.Mesh.MeshItem.IanaMediaType">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.MeshItem.EnvelopeId">
             <summary>The envelope Identifier.</summary> 
-        </member>
-        <member name="M:Goedel.Mesh.MeshItem.Envelope(Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Protocol.ObjectEncoding)">
-            <summary>
-            Sign the profile under <paramref name="signingKey"/>.
-            </summary>
-            <param name="signingKey">Optional signature key.</param>
-            <param name="encryptionKey">Optional encryption key.</param>
-            <param name="objectEncoding">The encoding to use to compute the inner object.</param>
-            <returns>Envelope containing the signed profile. Also updates the property
-            <see cref="P:Goedel.Mesh.MeshItem.DareEnvelope"/></returns>
-        </member>
-        <member name="M:Goedel.Mesh.MeshItem.Envelope(System.Collections.Generic.List{Goedel.Cryptography.CryptographicKey},System.Collections.Generic.List{Goedel.Cryptography.CryptographicKey},Goedel.Protocol.ObjectEncoding,System.Boolean)">
-            <summary>
-            Sign the profile under <paramref name="signingKeys"/>.
-            </summary>
-            <param name="signingKeys">Optional list of signature keys.</param>
-            <param name="encryptionKeys">Optional list of encryption keys.</param>
-            <param name="objectEncoding">The encoding to use to compute the inner object.</param>
-            <param name="includeSignatureKey">If true include the public key parameters in the
-            signature.</param>
-            <returns>Envelope containing the signed profile. Also updates the property
-            <see cref="P:Goedel.Mesh.MeshItem.DareEnvelope"/></returns>
         </member>
         <member name="M:Goedel.Mesh.MeshItem.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>

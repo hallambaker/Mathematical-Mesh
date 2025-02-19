@@ -50,7 +50,7 @@ public partial class ProfileCarnet {
                 bool persist = false) : base(secretSeed, keyCollection, persist) {
 
         //EnvelopedProfileRegistry = envelopedProfileRegistry;
-        Envelope(KeyProfileSigners);
+        this.Envelope(KeyProfileSigners);
 
         }
 

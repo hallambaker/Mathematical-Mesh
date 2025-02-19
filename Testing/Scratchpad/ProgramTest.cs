@@ -60,10 +60,10 @@ partial class Program {
         //Trace.Listeners.Add(new GoedelTraceListener());
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
+        TestService.Test().TestCredentialAccount();
 
 
-
-        Jmap.Test().TestContactAlice();
+        //Jmap.Test().TestContactAlice();
         //ShellTests.Test().TestHandleThing();
         //ShellTests.Test().TestHandleCallsign();
         //ServiceAnything.Test().TestOnboadDevice();

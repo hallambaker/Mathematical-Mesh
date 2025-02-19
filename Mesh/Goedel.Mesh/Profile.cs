@@ -112,7 +112,7 @@ public partial class Profile {
     /// </summary>
     public void SignProfile() {
         // sign the profile.
-        Envelope(KeyProfileSigners, includeSignatureKey: true);
+        this.Envelope(KeyProfileSigners, includeSignatureKey: true);
         }
 
 

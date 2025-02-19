@@ -175,4 +175,23 @@ public static partial class Extensions {
         }
 
 
+
+
+
+    public static void AddMail(this JsContact contact) {
+        contact.Update();
+        }
+
+    public static void AddMesh(this JsContact contact, string dnsHandle) {
+        contact.Update();
+        }
+
+    public static void AddDeveloper(this JsContact contact) {
+        contact.Update();
+        }
+
+    public static void AddSsh(this JsContact contact) {
+        contact.Update();
+        }
+
     }

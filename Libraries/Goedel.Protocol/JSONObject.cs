@@ -25,6 +25,7 @@
 #pragma warning disable IDE1006
 
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 
 namespace Goedel.Protocol;
 
@@ -96,36 +97,13 @@ public abstract partial class JsonObject : IBinding {
     ///<summary>Key collection to be used to decrypt enveloped data within the object.</summary> 
     public object KeyLocate;
 
-
-    /////<summary>The parser data binding.</summary> 
-    //public JbcdValueObject JbcdElementObject { get; set; }
-
-    ///// <summary>
-    ///// Secondary keys describing the object
-    ///// </summary>
-    //public virtual List<string> _Keys => null;
+    ///<summary>The IANA content type to use for encoding</summary> 
+    public virtual string? IanaMediaType => null;
 
     /// <summary>
     /// Secondary key/values pairs describing the object
     /// </summary>
     public virtual List<KeyValuePair<string, string>> _KeyValues => null;
-
-    ///// <summary>
-    ///// Metadata header describing use in persistence store.
-    ///// </summary>
-    //public virtual JsonObject _Metadata { get; set; }
-
-
-    /////<summary>Link to the parent metadata dictionary.</summary> 
-    //public virtual Dictionary<string, MetaData> _MetaDataParent => null;
-
-
-    ///// <summary>
-    ///// The Metadata dictionary for the serializable data.
-    ///// </summary>
-    //public virtual Dictionary<string, MetaData> _MetaData => new() { };
-
-
 
     /// <summary>
     /// Tag values used as substitute for reflection internally.
@@ -237,6 +215,11 @@ public abstract partial class JsonObject : IBinding {
         //_Initialize();
         }
 
+    /// <summary>
+    /// Normalize the structure prior to signature or encryption operations.
+    /// </summary>
+    public virtual void Normalize () {
+        }
 
 
     /// <summary>
@@ -334,30 +317,10 @@ public abstract partial class JsonObject : IBinding {
             var tag = entry.Key;
             var property = entry.Value;
 
-
-
-            //property.Serialize(this, writer);
-
-
-
-            //var value = Getter(tag);
-
-            //Console.WriteLine($"Tag {tag} = {values.IsEmpty}");
-
-
             if (!property.IsNull(this)) {
                 writer.WriteObjectSeparator(ref first);
                 writer.WriteToken(tag, 1);
                 property.Serialize(this, writer);
-                //if (value is TokenValueStruct x) {
-                //    x.Serialize(writer, property.Tagged);
-                //    }
-                //else if(value is TokenValueListStruct lx) {
-                //    lx.Serialize(writer, property.Tagged);
-                //    }
-                //else {
-                //    value.Serialize(writer);
-                //    }
                 }
 
             }
@@ -397,7 +360,6 @@ public abstract partial class JsonObject : IBinding {
         using var reader = input.JsonReader();
         return FromJson(reader, true);
         }
-
 
     /// <summary>
     /// Deserialize a tagged stream.
@@ -753,181 +715,6 @@ public abstract partial class JsonObject : IBinding {
 
         }
 
-
-
-
-    ///// <summary>
-    ///// Deserialize the input stream to populate this object having recieved the specified tag.
-    ///// </summary>
-    ///// <param name="jsonReader">Input data</param>
-    ///// <param name="tag">Input tag</param>
-    //public void DeserializeToken2(JsonReader jsonReader, string tag) {
-
-    //    if (_AllProperties.TryGetValue(tag, out var property)) {
-    //        if (property.Multiple) {
-    //            if (property.TokenType == typeof(TokenValueListBoolean)) {
-    //                bool going = jsonReader.StartArray();
-    //                var array = new List<bool?>();
-    //                while (going) {
-    //                    var value = jsonReader.ReadBoolean();
-    //                    array.Add(value);
-    //                    going = jsonReader.NextArray();
-    //                    }
-
-
-
-    //                Setter(tag, new TokenValueListBoolean(array));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueListString)) {
-    //                bool going = jsonReader.StartArray();
-    //                var array = new List<string?>();
-    //                while (going) {
-    //                    var value = jsonReader.ReadString();
-    //                    array.Add(value);
-    //                    going = jsonReader.NextArray();
-    //                    }
-    //                Setter(tag, new TokenValueListString(array));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueListBinary)) {
-    //                bool going = jsonReader.StartArray();
-    //                var array = new List<byte[]>();
-    //                while (going) {
-    //                    var value = jsonReader.ReadBinary();
-    //                    array.Add(value);
-    //                    going = jsonReader.NextArray();
-    //                    }
-    //                Setter(tag, new TokenValueListBinary(array));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueListDateTime)) {
-    //                bool going = jsonReader.StartArray();
-    //                var array = new List<System.DateTime?>();
-    //                while (going) {
-    //                    var value = jsonReader.ReadDateTime();
-    //                    array.Add(value);
-    //                    going = jsonReader.NextArray();
-    //                    }
-    //                Setter(tag, new TokenValueListDateTime(array));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueListInteger32)) {
-    //                bool going = jsonReader.StartArray();
-    //                var array = new List<int?>();
-    //                while (going) {
-    //                    var value = jsonReader.ReadInteger32();
-    //                    array.Add(value);
-    //                    going = jsonReader.NextArray();
-    //                    }
-    //                Setter(tag, new TokenValueListInteger32(array));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueListInteger64)) {
-    //                bool going = jsonReader.StartArray();
-    //                var array = new List<long?>();
-    //                while (going) {
-    //                    var value = jsonReader.ReadInteger64();
-    //                    array.Add(value);
-    //                    going = jsonReader.NextArray();
-    //                    }
-    //                Setter(tag, new TokenValueListInteger64(array));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueListReal32)) {
-    //                bool going = jsonReader.StartArray();
-    //                var array = new List<float?>();
-    //                while (going) {
-    //                    var value = jsonReader.ReadFloat32();
-    //                    array.Add(value);
-    //                    going = jsonReader.NextArray();
-    //                    }
-    //                Setter(tag, new TokenValueListReal32(array));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueListReal64)) {
-    //                bool going = jsonReader.StartArray();
-    //                var array = new List<double?>();
-    //                while (going) {
-    //                    var value = jsonReader.ReadFloat64();
-    //                    array.Add(value);
-    //                    going = jsonReader.NextArray();
-    //                    }
-    //                Setter(tag, new TokenValueListReal64(array));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueListStruct)) {
-    //                var array = property.Factory() as System.Collections.IList;
-    //                bool going = jsonReader.StartArray();
-    //                while (going) {
-    //                    if (property.Tagged) {
-    //                        var value = jsonReader.ReadTaggedObject(TagDictionary);
-    //                        array.Add(value);
-    //                        }
-    //                    else {
-    //                        var value = property.IFactory() as JsonObject;
-    //                        value.Deserialize(jsonReader);
-    //                        array.Add(value);
-    //                        }
-    //                    going = jsonReader.NextArray();
-    //                    }
-    //                Setter(tag, new TokenValueListStructObject(array));
-    //                }
-    //            }
-    //        else {
-    //            if (property.TokenType == typeof(TokenValueBoolean)) {
-    //                var value = jsonReader.ReadBoolean();
-    //                Setter(tag, new TokenValueBoolean(value));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueString)) {
-    //                var value = jsonReader.ReadString();
-    //                Setter(tag, new TokenValueString(value));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueBinary)) {
-    //                var value = jsonReader.ReadBinary();
-    //                Setter(tag, new TokenValueBinary(value));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueDateTime)) {
-    //                var value = jsonReader.ReadDateTime();
-    //                Setter(tag, new TokenValueDateTime(value));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueInteger32)) {
-    //                var value = jsonReader.ReadInteger32();
-    //                Setter(tag, new TokenValueInteger32(value));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueInteger64)) {
-    //                var value = jsonReader.ReadInteger64();
-    //                Setter(tag, new TokenValueInteger64(value));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueReal32)) {
-    //                var value = jsonReader.ReadFloat32();
-    //                Setter(tag, new TokenValueReal32(value));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueReal64)) {
-    //                var value = jsonReader.ReadFloat64();
-    //                Setter(tag, new TokenValueReal64(value));
-    //                }
-    //            else if (property.TokenType == typeof(TokenValueStruct)) {
-    //                if (property.Tagged) {
-    //                    var value = jsonReader.ReadTaggedObject(TagDictionary);
-    //                    Setter(tag, new TokenValueStructObject(value));
-    //                    }
-    //                else {
-    //                    var value = property.Factory() as JsonObject;
-    //                    value.Deserialize(jsonReader);
-    //                    Setter(tag, new TokenValueStructObject(value));
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    else {
-    //        throw new UnknownTag(); // NYI: should modify this to allow arbitrary values
-    //        }
-
-    //    }
-
-
-    /// <summary>
-    /// Deserialize the input stream to populate this object having recieved the specified tag.
-    /// </summary>
-    /// <param name="jsonReader">Input data</param>
-    /// <param name="tag">Input tag</param>
-    public virtual void DeserializeToken(JsonReader jsonReader, string tag) {
-        }
-
-
     /// <summary>
     /// Write the object out to a file.
     /// </summary>
@@ -940,32 +727,6 @@ public abstract partial class JsonObject : IBinding {
         Serialize(writer, tagged);
         }
 
-
-
-    /// <summary>
-    /// Merge two or more token dictionaries to produce a combined dictionary.
-    /// </summary>
-    /// <param name="Dictionary1">First dictionary to merge</param>
-    /// <param name="Dictionary2">Second dictionary to merge</param>
-    /// <param name="Dictionary3">Third dictionary to merge</param>
-    /// <returns>Merged dictionaries</returns>
-    public static Dictionary<string, JsonFactoryDelegate> Merge(
-                Dictionary<string, JsonFactoryDelegate> Dictionary1,
-                Dictionary<string, JsonFactoryDelegate> Dictionary2 = null,
-                Dictionary<string, JsonFactoryDelegate> Dictionary3 = null) {
-        var Result = new Dictionary<string, JsonFactoryDelegate>();
-
-        foreach (var Entry in Dictionary1) {
-            Result.Add(Entry.Key, Entry.Value);
-            }
-        if (Dictionary2 != null) {
-            Append(Result, Dictionary2);
-            }
-        if (Dictionary3 != null) {
-            Append(Result, Dictionary3);
-            }
-        return Result;
-        }
 
     /// <summary>
     /// Append elements of one dictionary to another.

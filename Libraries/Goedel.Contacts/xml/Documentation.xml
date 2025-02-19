@@ -2548,7 +2548,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.SpeakToAs.grammaticalGender">
+        <member name="P:Goedel.Contacts.SpeakToAs.GrammaticalGender">
             <summary>
             The grammatical gender to use in salutations and other grammatical 
             constructs. For example, the German language distinguishes by grammatical

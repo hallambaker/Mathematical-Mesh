@@ -687,14 +687,18 @@
 
 
 <reference  anchor='RFC6892' target='https://www.rfc-editor.org/info/rfc6892'>
-<front>
-<title>The 'describes' Link Relation Type</title>
-<author initials='E.' surname='Wilde' fullname='E. Wilde'><organization /></author>
-<date year='2013' month='March' />
-<abstract><t>This specification defines the 'describes' link relation type that allows resource representations to indicate that they are describing another resource.  In contexts where applications want to associate described resources and description resources, and want to build services based on these associations, the 'describes' link relation type provides the opposite direction of the 'describedby' link relation type, which already is a registered link relation type.</t></abstract>
-</front>
-<seriesInfo name='RFC' value='6892'/>
-<seriesInfo name='DOI' value='10.17487/RFC6892'/>
+	<front>
+		<title>The 'describes' Link Relation Type</title>
+		<author initials='E.' surname='Wilde' fullname='E. Wilde'>
+			<organization />
+		</author>
+		<date year='2013' month='March' />
+		<abstract>
+			<t>This specification defines the 'describes' link relation type that allows resource representations to indicate that they are describing another resource.  In contexts where applications want to associate described resources and description resources, and want to build services based on these associations, the 'describes' link relation type provides the opposite direction of the 'describedby' link relation type, which already is a registered link relation type.</t>
+		</abstract>
+	</front>
+	<seriesInfo name='RFC' value='6892'/>
+	<seriesInfo name='DOI' value='10.17487/RFC6892'/>
 </reference>
 
 <reference anchor="atproto">
@@ -702,8 +706,10 @@
 		<title>
 			AT Protocol
 		</title>
-
-		<date month='January' year='2025' />
+		<author fullname='Blue Sky'>
+			<organization />
+		</author>
+		<date day="1" month='January' year='2025' />
 	</front>
 	<format type="html" target="https://atproto.com/specs/atp"/>
 </reference>
@@ -713,7 +719,9 @@
 		<title>
 			Decentralized Identifiers (DIDs) v1.0
 		</title>
-
+		<author fullname='Blue Sky'>
+			<organization />
+		</author>
 		<date day="19" month='July' year='2022' />
 	</front>
 	<format type="html" target="https://www.w3.org/TR/did-core/"/>
@@ -724,8 +732,10 @@
 		<title>
 			DID Method PLC
 		</title>
-
-		<date month='January' year='2025' />
+		<author fullname='Blue Sky'>
+			<organization />
+		</author>
+		<date day="1" month='January' year='2025' />
 	</front>
 	<format type="html" target="https://github.com/did-method-plc/did-method-plc"/>
 </reference>

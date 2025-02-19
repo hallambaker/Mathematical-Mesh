@@ -20,12 +20,143 @@
 //  THE SOFTWARE.
 #endregion
 
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace Goedel.Cryptography.Dare;
 
 /// <summary>
 /// Extension methods
 /// </summary>
 public static partial class Extension {
+
+    /// <summary>
+    /// Sign and encrypt the JsonObject under <paramref name="signingKey"/> and
+    /// <paramref name="encryptionKey"/>..
+    /// </summary>
+    /// <param name="jsonObject">The object to sign.</param>
+    /// <param name="signingKey">Optional signature key.</param>
+    /// <param name="encryptionKey">Optional encryption key.</param>
+    /// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
+    /// <returns>Envelope containing the signed profile. Also updates the property
+    /// <see cref="DareEnvelope"/></returns>
+    public static DareEnvelope Envelope(
+                this JsonObject jsonObject,
+                CryptographicKey signingKey = null,
+                CryptographicKey encryptionKey = null,
+                ObjectEncoding objectEncoding = ObjectEncoding.JSON
+                ) {
+
+        var cryptoParameters = new CryptoParameters(signer: signingKey, recipient: encryptionKey);
+        return Envelope(jsonObject, cryptoParameters, objectEncoding);
+        }
+        
+        
+        
+        //{
+        
+
+        //jsonObject.Normalize();
+
+        //var contentMeta = new ContentMeta() {
+        //    UniqueId = jsonObject._PrimaryKey,
+        //    Created = System.DateTime.Now,
+        //    ContentType = jsonObject.IanaMediaType,
+        //    MessageType = jsonObject._Tag
+        //    };
+
+        //var enveloped = new EnvelopedJson(jsonObject,
+        //    signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta,
+        //    objectEncoding: objectEncoding);
+
+        //enveloped.Header.EnvelopeId = jsonObject._PrimaryKey;
+        //jsonObject.Enveloped = enveloped;
+
+        //return enveloped;
+        //}
+
+
+    /// <summary>
+    /// Sign the profile under <paramref name="signingKeys"/>.
+    /// </summary>
+    /// <param name="signingKeys">Optional list of signature keys.</param>
+    /// <param name="encryptionKeys">Optional list of encryption keys.</param>
+    /// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
+    /// <param name="includeSignatureKey">If true include the public key parameters in the
+    /// signature.</param>
+    /// <returns>Envelope containing the signed profile. Also updates the property
+    /// <see cref="DareEnvelope"/></returns>
+    public static DareEnvelope Envelope(
+                this JsonObject jsonObject,
+                List<CryptographicKey> signingKeys,
+                List<CryptographicKey> encryptionKeys = null,
+                ObjectEncoding objectEncoding = ObjectEncoding.JSON,
+                bool includeSignatureKey = false
+                ) {
+        var cryptoParameters = new CryptoParameters(encryptionKeys, signingKeys) {
+            IncludeSignatureKey = includeSignatureKey
+            };
+        return Envelope( jsonObject, cryptoParameters, objectEncoding );
+
+        }
+        //{
+        //jsonObject.Normalize();
+
+        //var contentMeta = new ContentMeta() {
+        //    UniqueId = jsonObject._PrimaryKey,
+        //    Created = System.DateTime.Now,
+        //    ContentType = jsonObject.IanaMediaType,
+        //    MessageType = jsonObject._Tag
+        //    };
+
+        //var cryptoParameters = new CryptoParameters(encryptionKeys, signingKeys) {
+        //    IncludeSignatureKey = includeSignatureKey
+        //};
+
+        //var bytes = jsonObject.GetBytes(objectEncoding: objectEncoding);
+
+        //var enveloped = new DareEnvelope(cryptoParameters, bytes, contentMeta: contentMeta);
+        //enveloped.Header.EnvelopeId = jsonObject._PrimaryKey;
+        //jsonObject.Enveloped = enveloped;
+
+        //return enveloped;
+        //}
+
+    /// <summary>
+    /// Sign the profile under <paramref name="signingKeys"/>.
+    /// </summary>
+    /// <param name="signingKeys">Optional list of signature keys.</param>
+    /// <param name="encryptionKeys">Optional list of encryption keys.</param>
+    /// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
+    /// <param name="includeSignatureKey">If true include the public key parameters in the
+    /// signature.</param>
+    /// <returns>Envelope containing the signed profile. Also updates the property
+    /// <see cref="DareEnvelope"/></returns>
+    public static DareEnvelope Envelope(
+                this JsonObject jsonObject,
+                CryptoParameters cryptoParameters,
+                ObjectEncoding objectEncoding = ObjectEncoding.JSON
+                ) {
+        jsonObject.Normalize();
+
+        var contentMeta = new ContentMeta() {
+            UniqueId = jsonObject._PrimaryKey,
+            Created = System.DateTime.Now,
+            ContentType = jsonObject.IanaMediaType,
+            MessageType = jsonObject._Tag
+            };
+
+        var bytes = jsonObject.GetBytes(objectEncoding: objectEncoding);
+
+        var enveloped = new DareEnvelope(cryptoParameters, bytes, contentMeta: contentMeta);
+        enveloped.Header.EnvelopeId = jsonObject._PrimaryKey;
+        jsonObject.Enveloped = enveloped;
+
+        return enveloped;
+        }
+
+
+
+
 
     /// <summary>
     /// Returns a new typed envelope containing the object <paramref name="data"/>
@@ -38,7 +169,7 @@ public static partial class Extension {
     /// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
     /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
     /// <returns>The enveloped data</returns>
-    public static Enveloped<T> Enveloped<T>(this T data,
+    public static Enveloped<T> Envelope<T>(this T data,
                 CryptographicKey signingKey = null,
                 CryptographicKey encryptionKey = null,
                 ContentMeta contentMeta = null,

@@ -386,7 +386,7 @@
 		String					Type
 			Tag "@type" //  MUST be "SpeakToAs" if set
 			TypeTag
-		String					grammaticalGender
+		String					GrammaticalGender
 			Description
 				| The grammatical gender to use in salutations and other grammatical 
 				| constructs. For example, the German language distinguishes by grammatical

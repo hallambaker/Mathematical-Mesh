@@ -335,11 +335,13 @@ public partial class ContextUser : ContextAccount {
 
         ActivationCommon.BindService(ProfileService);
 
-        throw new NotImplementedException();
 
         // Generate a contact and self-sign
         //var contact2 = CreateContact(contact: contact, dnsHandle: dnsHandle);
-        //await SetContactSelfAsync(contact2, localName);
+
+        contact ??= new();
+        contact.AddMesh(dnsHandle);
+        await SetContactSelfAsync(contact, localName);
         }
 
 
@@ -469,9 +471,7 @@ public partial class ContextUser : ContextAccount {
                 string localname = null) {
         KeyCommonSignature.AssertNotNull(NotAdministrator.Throw);
 
-        throw new NYI();
-
-        //contact.Envelope(KeyCommonSignature);
+        contact.Envelope(KeyCommonSignature);
 
         //contact.Sources ??= new List<TaggedSource>() { };
         //var tagged = new TaggedSource() {
@@ -495,6 +495,8 @@ public partial class ContextUser : ContextAccount {
         //    }
 
         //return cataloged;
+
+        throw new NYI();
         }
 
 

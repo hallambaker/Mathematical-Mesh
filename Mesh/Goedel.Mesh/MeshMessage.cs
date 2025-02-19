@@ -52,17 +52,24 @@ public partial class Message {
     ///<summary>The message status.</summary>
     public StateSpoolMessage MessageStatus;
 
-
-
-    ///<inheritdoc/>
-    public override DareEnvelope Envelope(
-                CryptographicKey signingKey = null,
-                CryptographicKey encryptionKey = null,
-                ObjectEncoding objectEncoding = ObjectEncoding.JSON) {
-
-        MessageId ??= Udf.Nonce(); // Add a message ID unless one is already defined.
-        return base.Envelope(signingKey, encryptionKey, objectEncoding);
+    /// <summary>
+    /// Normalize the structure prior to signature or encryption operations.
+    /// Every message MUST have a unique ID if <see cref="MessageId"/> is null,
+    /// it is set to a random nonce value.
+    /// </summary>
+    public override void Normalize() {
+        MessageId ??= Udf.Nonce();
         }
+
+    /////<inheritdoc/>
+    //public override DareEnvelope Envelope(
+    //            CryptographicKey signingKey = null,
+    //            CryptographicKey encryptionKey = null,
+    //            ObjectEncoding objectEncoding = ObjectEncoding.JSON) {
+
+    //    MessageId ??= Udf.Nonce(); // Add a message ID unless one is already defined.
+    //    return base.Envelope(signingKey, encryptionKey, objectEncoding);
+    //    }
 
     /// <summary>
     /// Decode <paramref name="envelope"/> and return the inner <see cref="Message"/>
