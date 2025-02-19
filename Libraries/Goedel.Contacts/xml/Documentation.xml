@@ -2838,7 +2838,7 @@
         </member>
         <member name="P:Goedel.Contacts.OnlineService.Uri">
             <summary>
-            he identifier for the entity represented by the Card at the online service. 
+            The identifier for the entity represented by the Card at the online service. 
             This MUST be a URI as defined in Section 3 of [RFC3986].
             </summary>
         </member>

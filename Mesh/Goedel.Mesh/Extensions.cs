@@ -183,6 +183,21 @@ public static partial class Extensions {
         }
 
     public static void AddMesh(this JsContact contact, string dnsHandle) {
+        if (dnsHandle is null) {
+            return;
+            }
+
+        var service = new OnlineService() {
+            Service = "Mesh",
+            User = dnsHandle
+            };
+
+        contact.OnlineServices ??= [];
+        contact.OnlineServices.Add("mesh0", service);
+
+
+
+
         contact.Update();
         }
 

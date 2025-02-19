@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 4:49:30 PM
+//  This file was automatically generated at 2/19/2025 5:52:48 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1738,7 +1738,7 @@ public partial class OnlineService : Contacts {
 	public virtual string?					Service  {get; set;}
 
         /// <summary>
-        /// he identifier for the entity represented by the Card at the online service. 
+        /// The identifier for the entity represented by the Card at the online service. 
         /// This MUST be a URI as defined in Section 3 of [RFC3986].
         /// </summary>
 

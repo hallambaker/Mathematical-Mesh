@@ -467,7 +467,7 @@
 				| "kakao", and "Mastodon"
 		String					Uri
 			Description
-				| he identifier for the entity represented by the Card at the online service. 
+				| The identifier for the entity represented by the Card at the online service. 
 				| This MUST be a URI as defined in Section 3 of [RFC3986].
 		String					User
 			Description

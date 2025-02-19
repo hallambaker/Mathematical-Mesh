@@ -339,8 +339,8 @@ public partial class ContextUser : ContextAccount {
         // Generate a contact and self-sign
         //var contact2 = CreateContact(contact: contact, dnsHandle: dnsHandle);
 
-        contact ??= new();
-        contact.AddMesh(dnsHandle);
+        contact ??= JsContact.Create();
+        contact.AddMesh(AccountAddressUdf);
         await SetContactSelfAsync(contact, localName);
         }
 
@@ -470,7 +470,6 @@ public partial class ContextUser : ContextAccount {
                 JsContact contact, 
                 string localname = null) {
         KeyCommonSignature.AssertNotNull(NotAdministrator.Throw);
-
         contact.Envelope(KeyCommonSignature);
 
         //contact.Sources ??= new List<TaggedSource>() { };
@@ -483,20 +482,18 @@ public partial class ContextUser : ContextAccount {
 
         //contact.Id = ProfileUser.UdfString;
 
-        //var transact = TransactBegin();
-        //var catalog = transact.GetCatalogContact();
+        var transact = TransactBegin();
+        var catalog = transact.GetCatalogContact();
 
-        //var (cataloged, success) = catalog.TryAdd(contact, localname, true);
+        var (cataloged, success) = catalog.TryAdd(contact, localname, true);
 
-        //if (!success) {
-        //    cataloged.Contact = contact;
-        //    transact.CatalogUpdate(catalog, cataloged);
-        //    await transact.TransactAsync();
-        //    }
+        if (!success) {
+            cataloged.Contact = contact;
+            transact.CatalogUpdate(catalog, cataloged);
+            await transact.TransactAsync();
+            }
 
-        //return cataloged;
-
-        throw new NYI();
+        return cataloged;
         }
 
 

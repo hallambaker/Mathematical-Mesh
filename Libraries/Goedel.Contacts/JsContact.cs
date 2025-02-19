@@ -15,6 +15,22 @@ public partial class JsContact {
         }
 
 
+
+    public static JsContact Create(
+            string kind=null) {
+
+        return new JsContact() {
+            Version = "1.0",
+            Created = DateTime.Now,
+            Updated = DateTime.Now,
+            Kind = kind,
+
+            Uid = Udf.Nonce(),
+            Language = "en",
+            };
+        }
+
+
     public static JsContact Individual(
             string fullname, string gender) {
 
@@ -24,18 +40,10 @@ public partial class JsContact {
             _ => "they/them"
             };
 
-        var result = new JsContact() {
-            Version = "1.0",
-            Created = DateTime.Now,
-            Updated = DateTime.Now,
-            Kind = "individual",
+        var result = Create("individual");
 
-            Uid = Udf.Nonce(),
-            Language = "en",
-
-            Name = new() {
-                Full = fullname
-                }
+        result.Name = new() {
+            Full = fullname
             };
 
         if (pronouns != null) {
