@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/20/2025 6:03:39 PM
+//  This file was automatically generated at 2/20/2025 6:54:05 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -164,7 +164,6 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"CatalogedApplicationSsh", CatalogedApplicationSsh._Factory},
 	    {"CatalogedApplicationPkix", CatalogedApplicationPkix._Factory},
 	    {"CatalogedApplicationOpenPgp", CatalogedApplicationOpenPgp._Factory},
-	    {"CatalogedApplicationGit", CatalogedApplicationGit._Factory},
 	    {"CatalogedApplicationDeveloper", CatalogedApplicationDeveloper._Factory},
 	    {"MessageInvoice", MessageInvoice._Factory},
 	    {"CatalogedReceipt", CatalogedReceipt._Factory},
@@ -8641,7 +8640,7 @@ public partial class CatalogedApplicationSsh : CatalogedApplication {
 	public virtual string?					AccountAddress  {get; set;}
 
         /// <summary>
-        ///The S/Mime encryption key
+        ///The Client authentication key
         /// </summary>
 
 	public virtual KeyData?					ClientKey  {get; set;}
@@ -8725,6 +8724,26 @@ public partial class CatalogedApplicationSsh : CatalogedApplication {
 	/// <summary>
 	/// </summary>
 public partial class CatalogedApplicationPkix : CatalogedApplication {
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					AccountAddress  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					Kind  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					Contexts  {get; set;}
+        /// <summary>
+        ///The S/Mime signature key
+        /// </summary>
+
+	public virtual KeyData?					Certificate  {get; set;}
+
 
 
     ///<summary>Implement IBinding</summary> 
@@ -8734,6 +8753,15 @@ public partial class CatalogedApplicationPkix : CatalogedApplication {
 	static protected new Binding _binding = new (
 			new() {
 
+			{ "AccountAddress", new PropertyString ("AccountAddress", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationPkix).AccountAddress = value;}, (IBinding data) => (data as CatalogedApplicationPkix).AccountAddress )},
+			{ "Kind", new PropertyString ("Kind", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationPkix).Kind = value;}, (IBinding data) => (data as CatalogedApplicationPkix).Kind )},
+			{ "Contexts", new PropertyListString ("Contexts", 
+					(IBinding data, List<string>? value) => {(data as CatalogedApplicationPkix).Contexts = value;}, (IBinding data) => (data as CatalogedApplicationPkix).Contexts )},
+			{ "Certificate", new PropertyStruct ("Certificate", 
+					(IBinding data, object? value) => {(data as CatalogedApplicationPkix).Certificate = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationPkix).Certificate,
+					false, ()=>new  KeyData(), ()=>new KeyData())}
         }, __Tag,() => new CatalogedApplicationPkix(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -8799,6 +8827,31 @@ public partial class CatalogedApplicationPkix : CatalogedApplication {
 	/// <summary>
 	/// </summary>
 public partial class CatalogedApplicationOpenPgp : CatalogedApplication {
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					AccountAddress  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					Kind  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					Contexts  {get; set;}
+        /// <summary>
+        ///The primary public key used to sign subkeys
+        /// </summary>
+
+	public virtual KeyData?					Public  {get; set;}
+
+        /// <summary>
+        ///The subkeys
+        /// </summary>
+
+	public virtual List<KeyData>?					SubKey  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -8808,6 +8861,18 @@ public partial class CatalogedApplicationOpenPgp : CatalogedApplication {
 	static protected new Binding _binding = new (
 			new() {
 
+			{ "AccountAddress", new PropertyString ("AccountAddress", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationOpenPgp).AccountAddress = value;}, (IBinding data) => (data as CatalogedApplicationOpenPgp).AccountAddress )},
+			{ "Kind", new PropertyString ("Kind", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationOpenPgp).Kind = value;}, (IBinding data) => (data as CatalogedApplicationOpenPgp).Kind )},
+			{ "Contexts", new PropertyListString ("Contexts", 
+					(IBinding data, List<string>? value) => {(data as CatalogedApplicationOpenPgp).Contexts = value;}, (IBinding data) => (data as CatalogedApplicationOpenPgp).Contexts )},
+			{ "Public", new PropertyStruct ("Public", 
+					(IBinding data, object? value) => {(data as CatalogedApplicationOpenPgp).Public = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationOpenPgp).Public,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
+			{ "SubKey", new PropertyListStruct ("SubKey", 
+					(IBinding data, object? value) => {(data as CatalogedApplicationOpenPgp).SubKey = value as List<KeyData>;}, (IBinding data) => (data as CatalogedApplicationOpenPgp).SubKey,
+					false, ()=>new  List<KeyData>(), ()=>new KeyData())}
         }, __Tag,() => new CatalogedApplicationOpenPgp(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -8872,81 +8937,39 @@ public partial class CatalogedApplicationOpenPgp : CatalogedApplication {
 
 	/// <summary>
 	/// </summary>
-public partial class CatalogedApplicationGit : CatalogedApplication {
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
-			new() {
-
-        }, __Tag,() => new CatalogedApplicationGit(), CatalogedApplication._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(CatalogedApplication._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "CatalogedApplicationGit";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new CatalogedApplicationGit();
-
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CatalogedApplicationGit FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedApplicationGit;
-			}
-		var Result = new CatalogedApplicationGit ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-
-	}
-
-
-	/// <summary>
-	/// </summary>
 public partial class CatalogedApplicationDeveloper : CatalogedApplication {
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					AccountAddress  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					Kind  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual List<string>?					Contexts  {get; set;}
+        /// <summary>
+        /// Unique identifier of the SSH keys used to authenticate to remote repositories 
+        /// under this persona
+        /// </summary>
+
+	public virtual List<string>?					Ssh  {get; set;}
+        /// <summary>
+        /// Unique identifier of the OpenPGP keys to sign repository commits
+        /// under this persona
+        /// </summary>
+
+	public virtual List<string>?					Commit  {get; set;}
+        /// <summary>
+        /// Unique identifier of the PKIX keys to sign code
+        /// under this persona
+        /// </summary>
+
+	public virtual List<string>?					Sign  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -8956,6 +8979,18 @@ public partial class CatalogedApplicationDeveloper : CatalogedApplication {
 	static protected new Binding _binding = new (
 			new() {
 
+			{ "AccountAddress", new PropertyString ("AccountAddress", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationDeveloper).AccountAddress = value;}, (IBinding data) => (data as CatalogedApplicationDeveloper).AccountAddress )},
+			{ "Kind", new PropertyString ("Kind", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationDeveloper).Kind = value;}, (IBinding data) => (data as CatalogedApplicationDeveloper).Kind )},
+			{ "Contexts", new PropertyListString ("Contexts", 
+					(IBinding data, List<string>? value) => {(data as CatalogedApplicationDeveloper).Contexts = value;}, (IBinding data) => (data as CatalogedApplicationDeveloper).Contexts )},
+			{ "Ssh", new PropertyListString ("Ssh", 
+					(IBinding data, List<string>? value) => {(data as CatalogedApplicationDeveloper).Ssh = value;}, (IBinding data) => (data as CatalogedApplicationDeveloper).Ssh )},
+			{ "Commit", new PropertyListString ("Commit", 
+					(IBinding data, List<string>? value) => {(data as CatalogedApplicationDeveloper).Commit = value;}, (IBinding data) => (data as CatalogedApplicationDeveloper).Commit )},
+			{ "Sign", new PropertyListString ("Sign", 
+					(IBinding data, List<string>? value) => {(data as CatalogedApplicationDeveloper).Sign = value;}, (IBinding data) => (data as CatalogedApplicationDeveloper).Sign )}
         }, __Tag,() => new CatalogedApplicationDeveloper(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

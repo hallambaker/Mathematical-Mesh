@@ -1289,7 +1289,7 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogedApplicationSsh.ClientKey">
              <summary>
-            The S/Mime encryption key
+            The Client authentication key
              </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedApplicationSsh._Binding">
@@ -2733,6 +2733,23 @@
         <member name="M:Goedel.Mesh.CatalogedApplicationPkix.ToBuilder(System.Text.StringBuilder)">
             <inheritdoc/>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationPkix.AccountAddress">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationPkix.Kind">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationPkix.Contexts">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationPkix.Certificate">
+             <summary>
+            The S/Mime signature key
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedApplicationPkix._Binding">
             <summary>Implement IBinding</summary> 
         </member>
@@ -2793,6 +2810,28 @@
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationOpenPgp.ToBuilder(System.Text.StringBuilder)">
             <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationOpenPgp.AccountAddress">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationOpenPgp.Kind">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationOpenPgp.Contexts">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationOpenPgp.Public">
+             <summary>
+            The primary public key used to sign subkeys
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationOpenPgp.SubKey">
+             <summary>
+            The subkeys
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedApplicationOpenPgp._Binding">
             <summary>Implement IBinding</summary> 
@@ -2855,6 +2894,36 @@
         <member name="M:Goedel.Mesh.CatalogedApplicationDeveloper.ToBuilder(System.Text.StringBuilder)">
             <inheritdoc/>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationDeveloper.AccountAddress">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationDeveloper.Kind">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationDeveloper.Contexts">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationDeveloper.Ssh">
+            <summary>
+            Unique identifier of the SSH keys used to authenticate to remote repositories 
+            under this persona
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationDeveloper.Commit">
+            <summary>
+            Unique identifier of the OpenPGP keys to sign repository commits
+            under this persona
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationDeveloper.Sign">
+            <summary>
+            Unique identifier of the PKIX keys to sign code
+            under this persona
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedApplicationDeveloper._Binding">
             <summary>Implement IBinding</summary> 
         </member>
@@ -2893,67 +2962,6 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationDeveloper.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="T:Goedel.Mesh.CatalogedApplicationGit">
-            <summary>
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationGit.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationGit.GetEscrow">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationGit.GetActivation(Goedel.Mesh.CatalogedDevice)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationGit.ToBuilder(System.Text.StringBuilder)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationGit._Binding">
-            <summary>Implement IBinding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedApplicationGit._binding">
-            <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedApplicationGit._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedApplicationGit._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationGit._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationGit._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationGit._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationGit._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedApplicationGit.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationGit._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationGit.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

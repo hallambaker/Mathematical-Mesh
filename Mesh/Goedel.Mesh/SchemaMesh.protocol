@@ -1218,25 +1218,57 @@
 				|The OpenPGP encryption key
 
 	Structure CatalogedApplicationSsh
-		Inherits CatalogedApplication
 		String AccountAddress
+		Inherits CatalogedApplication
 		Struct KeyData ClientKey
 			Description
-				|The S/Mime encryption key
-
+				|The Client authentication key
 
 	Structure CatalogedApplicationPkix
 		Inherits CatalogedApplication
+		String AccountAddress
+		String Kind
+		String Contexts
+			Multiple
+		Struct KeyData Certificate
+			Description
+				|The S/Mime signature key
 
 	Structure CatalogedApplicationOpenPgp
 		Inherits CatalogedApplication
-
-
-	Structure CatalogedApplicationGit
-		Inherits CatalogedApplication
+		String AccountAddress
+		String Kind
+		String Contexts
+			Multiple
+		Struct KeyData Public
+			Description
+				|The primary public key used to sign subkeys
+		Struct KeyData SubKey
+			Multiple
+			Description
+				|The subkeys
 
 	Structure CatalogedApplicationDeveloper
 		Inherits CatalogedApplication
+		String AccountAddress
+		String Kind
+		String Contexts
+			Multiple
+		String Ssh
+			Multiple
+			Description
+				| Unique identifier of the SSH keys used to authenticate to remote repositories 
+				| under this persona
+		String Commit
+			Multiple
+			Description
+				| Unique identifier of the OpenPGP keys to sign repository commits
+				| under this persona
+		String Sign
+			Multiple
+			Description
+				| Unique identifier of the PKIX keys to sign code
+				| under this persona
 
 
 	// For the future wallet catalog

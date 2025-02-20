@@ -23,6 +23,7 @@
 
 
 using Goedel.Contacts;
+using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.KeyFile;
 
 namespace Goedel.Mesh;
@@ -258,10 +259,7 @@ public static partial class Extensions {
                 AddSsh(contact, catalogedSsh);
                 break;
                 }
-            case CatalogedApplicationGit catalogedGit: {
-                AddGit(contact, catalogedGit);
-                break;
-                }
+
             }
         }
 
@@ -289,30 +287,45 @@ public static partial class Extensions {
 
     public static void AddSsh(this JsContact contact, CatalogedApplicationSsh application) {
         contact.AddKeyData(application.ClientKey, "Ssh", application.AccountAddress);
-
         contact.Update();
         }
 
     public static void AddPkix(this JsContact contact, CatalogedApplicationPkix application) {
+        contact.AddKeyData(application.Certificate, application.Kind, application.AccountAddress, application.Contexts);
         contact.Update();
         }
 
     public static void AddOpenPgp(this JsContact contact, CatalogedApplicationOpenPgp application) {
+        contact.AddKeyData(application.Public, application.Kind, application.AccountAddress, application.Contexts);
+        foreach (var key in application.SubKey) {
+            contact.AddKeyData(key, application.Kind, application.AccountAddress, application.Contexts);
+            }
+
         contact.Update();
         }
 
-    public static void AddGit(this JsContact contact, CatalogedApplicationGit application) {
-        contact.Update();
+    public static void AddDeveloper(this JsContact contact, CatalogedApplicationDeveloper application) {
+        contact.AddServices(application.Kind, application.AccountAddress, application.Ssh);
+        contact.AddServices(application.Kind, application.AccountAddress, application.Commit);
+        contact.AddServices(application.Kind, application.AccountAddress, application.Sign);
         }
 
-    public static void AddKeyData(
-                    this JsContact contact, 
-                    KeyData keyData, 
-                    string serviceId,
-                    string accountAddress,
-                    string[] contexts = null) {
-        var key = "udf:" + keyData.Udf;
 
+    public static void AddServices(
+                this JsContact contact,
+                string serviceId,
+                string accountAddress,
+                List<string> keys) {
+        if (keys is not null) {
+            }
+        }
+
+
+    public static void AddService(
+                this JsContact contact,
+                string serviceId,
+                string accountAddress,
+                string key) {
         var service = new OnlineService() {
             Service = serviceId,
             User = accountAddress,
@@ -320,6 +333,21 @@ public static partial class Extensions {
             };
         contact.OnlineServices ??= [];
         contact.OnlineServices.AddUniqueKeyed(serviceId, service);
+        }
+
+    public static void AddKeyData(
+                    this JsContact contact, 
+                    KeyData keyData, 
+                    string serviceId,
+                    string accountAddress,
+                    List<string> contexts = null) {
+        if (keyData is null) {
+            return;
+            }
+
+        var key = "udf:" + keyData.Udf;
+
+        contact.AddService(serviceId, accountAddress, key);
 
         var (media, uri) = keyData.GetDataUri();
         var cryptoKey = new CryptoKey() {
@@ -331,13 +359,10 @@ public static partial class Extensions {
                 cryptoKey.Contexts.Add(context, true);
                 }
             }
-
         contact.CryptoKeys ??= [];
         contact.CryptoKeys.Add(key, cryptoKey);
 
-        if (keyData is null) {
-            return;
-            }
+
         }
 
 
