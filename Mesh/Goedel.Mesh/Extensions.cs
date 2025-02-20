@@ -22,6 +22,7 @@
 
 
 
+using Goedel.Contacts;
 using Goedel.Cryptography.KeyFile;
 
 namespace Goedel.Mesh;
@@ -176,37 +177,47 @@ public static partial class Extensions {
 
 
 
+    public static void AddUniqueKeyed<T>(this Dictionary<string, T> dictionary, string tagBase, T value) {
+        var i = 1;
 
-
-    public static void AddMail(this JsContact contact) {
-        contact.Update();
+        while (true) {
+            var tag = $"{tagBase}{i}";
+            if (!dictionary.ContainsKey(tag)) {
+                dictionary.Add(tag, value);
+                return;
+                };
+            i++;
+            }
         }
 
-    public static void AddMesh(this JsContact contact, ProfileAccount profile) {
+
+
+    public static void AddMesh(this JsContact contact, ProfileAccount profile, string serviceId="Mesh") {
 
         if (profile is null) {
             return;
             }
 
+        var serviceTag = serviceId.ToLower();
         var directUri = profile.DirectAddressUri;
 
         var service = new OnlineService() {
-            Service = "Mesh",
+            Service = serviceId,
             User = profile.AccountAddress,
-            Uri = "mesh:" + profile.DirectAddress
+            Uri = directUri
             };
 
         contact.OnlineServices ??= [];
-        contact.OnlineServices.Add("mesh0", service);
+        contact.OnlineServices.AddUniqueKeyed(serviceTag, service);
 
         if (profile.AccountHandle is not null) {
             var servicehandle = new OnlineService() {
-                Service = "Mesh",
+                Service = serviceId,
                 User = profile.AccountHandle,
                 Uri = directUri
                 };
 
-            contact.OnlineServices.Add("mesh1", servicehandle);
+            contact.OnlineServices.AddUniqueKeyed(serviceTag, servicehandle);
             }
 
         var uri = profile.DataUri();
@@ -223,16 +234,112 @@ public static partial class Extensions {
         contact.Update();
 
         var asString = contact.ToString();
-
-
         }
 
-    public static void AddDeveloper(this JsContact contact) {
+    public static void AddApplication(this JsContact contact, CatalogedApplication application) {
+        switch (application) {
+            case CatalogedGroup catalogedGroup: {
+                AddGroup (contact, catalogedGroup); 
+                break;
+                }
+            case CatalogedApplicationPkix catalogedPkix: {
+                AddPkix(contact, catalogedPkix);
+                break;
+                }
+            case CatalogedApplicationMail catalogedmail: {
+                AddMail(contact, catalogedmail);
+                break;
+                }
+            case CatalogedApplicationOpenPgp catalogedOpenPgp: {
+                AddOpenPgp(contact, catalogedOpenPgp);
+                break;
+                }
+            case CatalogedApplicationSsh catalogedSsh: {
+                AddSsh(contact, catalogedSsh);
+                break;
+                }
+            case CatalogedApplicationGit catalogedGit: {
+                AddGit(contact, catalogedGit);
+                break;
+                }
+            }
+        }
+
+    public static void AddGroup(this JsContact contact, CatalogedGroup application) {
+        var profile = application.EnvelopedProfileGroup.EnvelopedObject;
+        contact.AddMesh(profile);
+        }
+
+    public static void AddMail(this JsContact contact, CatalogedApplicationMail application) {
+
+        // add Email entry for application.AccountAddress
+        var emailAddress = new EmailAddress() {
+            Address = application.AccountAddress
+            };
+        contact.Emails ??= [];
+        contact.Emails.AddUniqueKeyed("mail", emailAddress);
+
+        contact.AddKeyData(application.SmimeSign, "S/Mime", application.AccountAddress, ["sign"]);
+        contact.AddKeyData(application.SmimeEncrypt, "S/Mime", application.AccountAddress,["encrypt"]);
+        contact.AddKeyData(application.OpenpgpSign, "OpenPGP", application.AccountAddress, ["sign"]);
+        contact.AddKeyData(application.OpenpgpEncrypt, "OpenPGP", application.AccountAddress, ["encrypt"]);
+
         contact.Update();
         }
 
-    public static void AddSsh(this JsContact contact) {
+    public static void AddSsh(this JsContact contact, CatalogedApplicationSsh application) {
+        contact.AddKeyData(application.ClientKey, "Ssh", application.AccountAddress);
+
         contact.Update();
         }
+
+    public static void AddPkix(this JsContact contact, CatalogedApplicationPkix application) {
+        contact.Update();
+        }
+
+    public static void AddOpenPgp(this JsContact contact, CatalogedApplicationOpenPgp application) {
+        contact.Update();
+        }
+
+    public static void AddGit(this JsContact contact, CatalogedApplicationGit application) {
+        contact.Update();
+        }
+
+    public static void AddKeyData(
+                    this JsContact contact, 
+                    KeyData keyData, 
+                    string serviceId,
+                    string accountAddress,
+                    string[] contexts = null) {
+        var key = "udf:" + keyData.Udf;
+
+        var service = new OnlineService() {
+            Service = serviceId,
+            User = accountAddress,
+            Uri = key
+            };
+        contact.OnlineServices ??= [];
+        contact.OnlineServices.AddUniqueKeyed(serviceId, service);
+
+        var (media, uri) = keyData.GetDataUri();
+        var cryptoKey = new CryptoKey() {
+            Uri = uri,
+            MediaType = media
+            };
+        if (contexts != null) {
+            foreach (var context in contexts) {
+                cryptoKey.Contexts.Add(context, true);
+                }
+            }
+
+        contact.CryptoKeys ??= [];
+        contact.CryptoKeys.Add(key, cryptoKey);
+
+        if (keyData is null) {
+            return;
+            }
+        }
+
+
 
     }

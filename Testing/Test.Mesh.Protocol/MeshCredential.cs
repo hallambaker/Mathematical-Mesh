@@ -65,7 +65,7 @@ public partial class TestService {
     public void TestCredentialAccount() {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
         var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceAliceAdmin, AccountAlice, HandleAlice, "main");
+                DeviceAliceAdmin, AccountAlice, "main", HandleAlice);
         var credentialTempPrivate = contextAccountAlice.GetMeshCredentialPrivate();
         var credentialTemp = GetMeshCredentialPublic(credentialTempPrivate);
 

@@ -209,7 +209,7 @@ public partial class ContextUser : ContextAccount {
         if (catalogedMachine?.CatalogedDevice?.EnvelopedConnectionDevice != null) {
             //Logger.ActivateConnection("Signature", ConnectionDevice.Signature.CryptoKey.KeyIdentifier);
             //Logger.ActivateConnection("Encryption", ConnectionDevice.Encryption.CryptoKey.KeyIdentifier);
-            Logger.ActivateConnection("Authentication", ConnectionAccount.Authentication.CryptoKey.KeyIdentifier);
+            //Logger.ActivateConnection("Authentication", ConnectionAccount.Authentication.CryptoKey.KeyIdentifier);
 
             // Some validation checks
             (AccountSignature.KeyIdentifier).AssertEqual(ConnectionAccount.Signature.CryptoKey.KeyIdentifier,

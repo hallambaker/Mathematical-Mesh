@@ -112,7 +112,7 @@ public class MeshMachineTest : MeshMachineCore {
                 string localName = null, string dnsHandle = null) {
 
         var result = new MeshMachineTest(testEnvironmentCommon, machineName);
-        var contextUser = result.MeshHost.ConfigureMeshAsync(accountAddress, localName, 
+        var contextUser = result.MeshHost.ConfigureMeshAsync(accountAddress, localName: localName, 
             dnsHandle: dnsHandle).Sync();
         return contextUser;
         }

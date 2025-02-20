@@ -181,7 +181,9 @@ public abstract partial class JsonObject : IBinding {
         first.ChildClasses ??= new();
         first.ChildClasses.Add(second.Tag, second);
 
-        return Combine(first.Properties, second.Properties);
+        second.AllProperties = Combine(first.FullProperties, second.Properties);
+
+        return second.AllProperties;
         }
 
 

@@ -1283,6 +1283,10 @@
         <member name="M:Goedel.Mesh.CatalogedApplicationSsh.ToBuilder(System.Text.StringBuilder)">
             <inheritdoc/>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationSsh.AccountAddress">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedApplicationSsh.ClientKey">
              <summary>
             The S/Mime encryption key

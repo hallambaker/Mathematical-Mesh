@@ -50,7 +50,7 @@ public static partial class Extension {
         }
 
 
-
+    
 
     /// <summary>
     /// Sign and encrypt the JsonObject under <paramref name="signingKey"/> and

@@ -1217,18 +1217,20 @@
 			Description
 				|The OpenPGP encryption key
 
+	Structure CatalogedApplicationSsh
+		Inherits CatalogedApplication
+		String AccountAddress
+		Struct KeyData ClientKey
+			Description
+				|The S/Mime encryption key
+
+
 	Structure CatalogedApplicationPkix
 		Inherits CatalogedApplication
 
 	Structure CatalogedApplicationOpenPgp
 		Inherits CatalogedApplication
 
-	Structure CatalogedApplicationSsh
-		Inherits CatalogedApplication
-
-		Struct KeyData ClientKey
-			Description
-				|The S/Mime encryption key
 
 	Structure CatalogedApplicationGit
 		Inherits CatalogedApplication

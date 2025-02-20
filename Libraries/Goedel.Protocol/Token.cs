@@ -53,7 +53,9 @@ public record Binding(
 
     ///<summary>Dictionary binding sub classes to binding descriptions</summary> 
     public Dictionary<string, Binding>? ChildClasses = null;
+    public Dictionary<string, Property> AllProperties = null;
 
+    public Dictionary<string, Property> FullProperties => AllProperties ?? Properties;
     }
 
 
@@ -883,6 +885,7 @@ public record PropertyDictionaryStruct(
             if (Enumerator is not null) {
                 foreach (var entry in Enumerator(data)) {
                     if (entry.Value is JsonObject typed) {
+                        writer.WriteObjectSeparator(ref first);
                         writer.WriteToken(entry.Key, 1);
                         typed.Serialize(writer, Tagged);
                         }

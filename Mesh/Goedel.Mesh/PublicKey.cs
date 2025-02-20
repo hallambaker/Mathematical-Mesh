@@ -199,4 +199,28 @@ public partial class KeyData {
         }
 
 
+
+    public (string, string) GetDataUri() {
+        if (X509Certificate is not null) {
+            return GetDataUri("application/pkix-cert", X509Certificate);
+            }
+        if (PublicParameters is not null) {
+            return GetDataUri("application/jwk+json", PublicParameters.ToJson(false));
+            }
+
+        throw new NotImplementedException();
+        }
+
+
+
+    (string, string) GetDataUri(string media, byte[] data) {
+        var builder = new StringBuilder();
+
+        builder.Append("data:");
+        builder.Append(media);
+        builder.Append(";base64,");
+        builder.Append(data);
+
+        return (media, builder.ToString());
+        }
     }
