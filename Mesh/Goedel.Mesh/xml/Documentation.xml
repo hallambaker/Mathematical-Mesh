@@ -9603,8 +9603,13 @@
         </member>
         <member name="P:Goedel.Mesh.ProfileAccount.AccountAddress">
              <summary>
-            The account address. This is either a DNS service address 
-            (e.g. alice@example.com) or a Mesh Name (@alice).
+            The account address. This is an account service address 
+            (e.g. alice@example.com).
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileAccount.AccountHandle">
+             <summary>
+            The canonical DNS handle for the account (e.g. @alice.alt).
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ProfileAccount.ServiceUdf">

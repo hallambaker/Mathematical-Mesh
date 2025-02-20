@@ -50,6 +50,10 @@ public record Binding(
             Func<object> Factory,
             Binding Parent = null
             ) {
+
+    ///<summary>Dictionary binding sub classes to binding descriptions</summary> 
+    public Dictionary<string, Binding>? ChildClasses = null;
+
     }
 
 

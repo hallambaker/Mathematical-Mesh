@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:22 PM
+//  This file was automatically generated at 2/20/2025 1:44:28 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -244,7 +244,7 @@ public partial class TestItem : TestEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, TestEntry._StaticAllProperties);
+			Combine(TestEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -371,7 +371,7 @@ public partial class MessageTest : Goedel.Mesh.Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Mesh.Message._StaticAllProperties);
+			Combine(Goedel.Mesh.Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -498,7 +498,7 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Mesh.CatalogedEntry._StaticAllProperties);
+			Combine(Goedel.Mesh.CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>

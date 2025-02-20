@@ -175,7 +175,14 @@ public abstract partial class JsonObject : IBinding {
     /// <param name="second">The second dictionary to add.</param>
     /// <returns>The combined dictionary.</returns>
     public static Dictionary<string, Property> Combine(Binding first,
-            Binding second) => Combine(first.Properties, second.Properties);
+            Binding second) {
+
+        // attach the description of the child to the parent.
+        first.ChildClasses ??= new();
+        first.ChildClasses.Add(second.Tag, second);
+
+        return Combine(first.Properties, second.Properties);
+        }
 
 
 

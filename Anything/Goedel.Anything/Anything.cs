@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:17 PM
+//  This file was automatically generated at 2/20/2025 1:45:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -234,7 +234,7 @@ public partial class ProfileAnything : ProfileService {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ProfileService._StaticAllProperties);
+			Combine(ProfileService._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -322,7 +322,7 @@ public partial class CatalogedIdentity : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -473,7 +473,7 @@ public partial class DnsIdentity : Identity {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Identity._StaticAllProperties);
+			Combine(Identity._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -547,7 +547,7 @@ public partial class LocalIdentity : Identity {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Identity._StaticAllProperties);
+			Combine(Identity._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -621,7 +621,7 @@ public partial class CallsignIdentity : Identity {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Identity._StaticAllProperties);
+			Combine(Identity._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -714,7 +714,7 @@ public partial class CatalogedThing : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -822,7 +822,7 @@ public partial class CatalogedAnything : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -898,7 +898,7 @@ public partial class AnythingRequest : Goedel.Protocol.Request {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Protocol.Request._StaticAllProperties);
+			Combine(Goedel.Protocol.Request._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -975,7 +975,7 @@ public partial class AnythingResponse : Goedel.Protocol.Response {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Protocol.Response._StaticAllProperties);
+			Combine(Goedel.Protocol.Response._binding, _binding);
 
 
     ///<inheritdoc/>

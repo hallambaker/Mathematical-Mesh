@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:17 PM
+//  This file was automatically generated at 2/20/2025 1:45:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -269,7 +269,7 @@ public partial class ProfileRepository : ProfileAccount {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ProfileAccount._StaticAllProperties);
+			Combine(ProfileAccount._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -370,7 +370,7 @@ public partial class CatalogedRepository : CatalogedApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+			Combine(CatalogedApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -472,7 +472,7 @@ public partial class ActivationApplicationRepository : ActivationApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ActivationApplication._StaticAllProperties);
+			Combine(ActivationApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -554,7 +554,7 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ApplicationEntry._StaticAllProperties);
+			Combine(ApplicationEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -630,7 +630,7 @@ public partial class PersistanceRequest : Goedel.Protocol.Request {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Protocol.Request._StaticAllProperties);
+			Combine(Goedel.Protocol.Request._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -707,7 +707,7 @@ public partial class PersistanceResponse : Goedel.Protocol.Response {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Protocol.Response._StaticAllProperties);
+			Combine(Goedel.Protocol.Response._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -783,7 +783,7 @@ public partial class QueryRequest : PersistanceRequest {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PersistanceRequest._StaticAllProperties);
+			Combine(PersistanceRequest._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -859,7 +859,7 @@ public partial class QueryResponse : PersistanceResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PersistanceResponse._StaticAllProperties);
+			Combine(PersistanceResponse._binding, _binding);
 
 
     ///<inheritdoc/>

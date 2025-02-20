@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:16 PM
+//  This file was automatically generated at 2/20/2025 1:45:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -322,7 +322,7 @@ public partial class CatalogedService : CatalogedMachine {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedMachine._StaticAllProperties);
+			Combine(CatalogedMachine._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -398,7 +398,7 @@ public partial class CatalogedStandard : CatalogedMachine {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedMachine._StaticAllProperties);
+			Combine(CatalogedMachine._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -509,7 +509,7 @@ public partial class CatalogedPending : CatalogedMachine {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedMachine._StaticAllProperties);
+			Combine(CatalogedMachine._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -645,7 +645,7 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedMachine._StaticAllProperties);
+			Combine(CatalogedMachine._binding, _binding);
 
 
     ///<inheritdoc/>

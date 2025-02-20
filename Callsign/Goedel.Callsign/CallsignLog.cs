@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:17 PM
+//  This file was automatically generated at 2/20/2025 1:45:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -146,7 +146,7 @@ public partial class ProfileRegistry : ProfileAccount {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ProfileAccount._StaticAllProperties);
+			Combine(ProfileAccount._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -231,7 +231,7 @@ public partial class ProfileResolver : ProfileService {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ProfileService._StaticAllProperties);
+			Combine(ProfileService._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -455,7 +455,7 @@ public partial class CatalogedRegistration : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -718,7 +718,7 @@ public partial class Canonical : CharacterSpan {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CharacterSpan._StaticAllProperties);
+			Combine(CharacterSpan._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -803,7 +803,7 @@ public partial class MapChar : CharacterSpan {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CharacterSpan._StaticAllProperties);
+			Combine(CharacterSpan._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -889,7 +889,7 @@ public partial class MapString : CharacterSpan {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CharacterSpan._StaticAllProperties);
+			Combine(CharacterSpan._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1070,7 +1070,7 @@ public partial class Challenge : Assertion {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Assertion._StaticAllProperties);
+			Combine(Assertion._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1164,7 +1164,7 @@ public partial class CallsignRegistrationRequest : MessageValidated {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MessageValidated._StaticAllProperties);
+			Combine(MessageValidated._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1272,7 +1272,7 @@ public partial class CallsignRegistrationResponse : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1354,7 +1354,7 @@ public partial class ProcessResultCallsignRegistration : ProcessResult {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ProcessResult._StaticAllProperties);
+			Combine(ProcessResult._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1472,7 +1472,7 @@ public partial class CatalogedApplicationCallsign : CatalogedApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+			Combine(CatalogedApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1555,7 +1555,7 @@ public partial class ProcessResultCallsign : ProcessResult {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ProcessResult._StaticAllProperties);
+			Combine(ProcessResult._binding, _binding);
 
 
     ///<inheritdoc/>

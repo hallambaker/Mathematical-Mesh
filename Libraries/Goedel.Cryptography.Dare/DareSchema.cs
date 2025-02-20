@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:13 PM
+//  This file was automatically generated at 2/20/2025 1:45:24 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -417,7 +417,7 @@ public partial class DareTrailer : DareSignatureHeader {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, DareSignatureHeader._StaticAllProperties);
+			Combine(DareSignatureHeader._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -639,7 +639,7 @@ public partial class DareHeader : DareTrailer {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, DareTrailer._StaticAllProperties);
+			Combine(DareTrailer._binding, _binding);
 
 
     ///<inheritdoc/>

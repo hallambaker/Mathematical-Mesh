@@ -4620,6 +4620,9 @@
         <member name="P:Goedel.Protocol.Binding.Parent">
             <summary>Parent the object inherits from.</summary>
         </member>
+        <member name="F:Goedel.Protocol.Binding.ChildClasses">
+            <summary>Dictionary binding sub classes to binding descriptions</summary> 
+        </member>
         <member name="T:Goedel.Protocol.Property">
             <summary>
             Metadate record representing a property.

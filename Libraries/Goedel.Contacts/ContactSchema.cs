@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:13 PM
+//  This file was automatically generated at 2/20/2025 1:45:23 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -454,7 +454,7 @@ public partial class JsContact : JmapBase {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, JmapBase._StaticAllProperties);
+			Combine(JmapBase._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2124,7 +2124,7 @@ public partial class Calendar : Resource {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Resource._StaticAllProperties);
+			Combine(Resource._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2605,7 +2605,7 @@ public partial class CryptoKey : Resource {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Resource._StaticAllProperties);
+			Combine(Resource._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2693,7 +2693,7 @@ public partial class ContactDirectory : Resource {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Resource._StaticAllProperties);
+			Combine(Resource._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2769,7 +2769,7 @@ public partial class ResourceLink : Resource {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Resource._StaticAllProperties);
+			Combine(Resource._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2846,7 +2846,7 @@ public partial class Media : Resource {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Resource._StaticAllProperties);
+			Combine(Resource._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2922,7 +2922,7 @@ public partial class PatchObject : JmapBase {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, JmapBase._StaticAllProperties);
+			Combine(JmapBase._binding, _binding);
 
 
     ///<inheritdoc/>

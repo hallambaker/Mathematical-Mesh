@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:18 PM
+//  This file was automatically generated at 2/20/2025 1:44:23 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -171,7 +171,7 @@ public partial class CatalogedRegistry : CatalogedApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+			Combine(CatalogedApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -263,7 +263,7 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ActivationApplication._StaticAllProperties);
+			Combine(ActivationApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -355,7 +355,7 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ApplicationEntry._StaticAllProperties);
+			Combine(ApplicationEntry._binding, _binding);
 
 
     ///<inheritdoc/>

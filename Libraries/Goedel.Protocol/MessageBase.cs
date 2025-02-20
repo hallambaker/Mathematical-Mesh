@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:12 PM
+//  This file was automatically generated at 2/20/2025 1:45:23 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -531,7 +531,7 @@ public partial class HelloRequest : Request {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Request._StaticAllProperties);
+			Combine(Request._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -624,7 +624,7 @@ public partial class HelloResponse : Response {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Response._StaticAllProperties);
+			Combine(Response._binding, _binding);
 
 
     ///<inheritdoc/>

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:15 PM
+//  This file was automatically generated at 2/20/2025 1:45:25 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -813,7 +813,7 @@ public partial class MeshRequest : Goedel.Protocol.Request {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Protocol.Request._StaticAllProperties);
+			Combine(Goedel.Protocol.Request._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -915,7 +915,7 @@ public partial class MeshRequestUser : MeshRequest {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshRequest._StaticAllProperties);
+			Combine(MeshRequest._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -992,7 +992,7 @@ public partial class MeshResponse : Goedel.Protocol.Response {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Protocol.Response._StaticAllProperties);
+			Combine(Goedel.Protocol.Response._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1640,7 +1640,7 @@ public partial class StoreUpdate : StoreStatus {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, StoreStatus._StaticAllProperties);
+			Combine(StoreStatus._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1723,7 +1723,7 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Protocol.HelloRequest._StaticAllProperties);
+			Combine(Goedel.Protocol.HelloRequest._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1843,7 +1843,7 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Protocol.HelloResponse._StaticAllProperties);
+			Combine(Goedel.Protocol.HelloResponse._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1944,7 +1944,7 @@ public partial class BindRequest : MeshRequest {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshRequest._StaticAllProperties);
+			Combine(MeshRequest._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2047,7 +2047,7 @@ public partial class BindResponse : MeshResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshResponse._StaticAllProperties);
+			Combine(MeshResponse._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2125,7 +2125,7 @@ public partial class UnbindRequest : MeshRequestUser {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshRequestUser._StaticAllProperties);
+			Combine(MeshRequestUser._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2201,7 +2201,7 @@ public partial class UnbindResponse : MeshResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshResponse._StaticAllProperties);
+			Combine(MeshResponse._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2291,7 +2291,7 @@ public partial class ConnectRequest : MeshRequest {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshRequest._StaticAllProperties);
+			Combine(MeshRequest._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2383,7 +2383,7 @@ public partial class ConnectResponse : MeshResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshResponse._StaticAllProperties);
+			Combine(MeshResponse._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2471,7 +2471,7 @@ public partial class CompleteRequest : StatusRequest {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, StatusRequest._StaticAllProperties);
+			Combine(StatusRequest._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2564,7 +2564,7 @@ public partial class CompleteResponse : MeshResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshResponse._StaticAllProperties);
+			Combine(MeshResponse._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2677,7 +2677,7 @@ public partial class StatusRequest : MeshRequestUser {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshRequestUser._StaticAllProperties);
+			Combine(MeshRequestUser._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2815,7 +2815,7 @@ public partial class StatusResponse : MeshResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshResponse._StaticAllProperties);
+			Combine(MeshResponse._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3036,7 +3036,7 @@ public partial class DownloadRequest : MeshRequestUser {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshRequestUser._StaticAllProperties);
+			Combine(MeshRequestUser._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3140,7 +3140,7 @@ public partial class DownloadResponse : MeshResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshResponse._StaticAllProperties);
+			Combine(MeshResponse._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3232,7 +3232,7 @@ public partial class UploadRequest : MeshRequestUser {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshRequestUser._StaticAllProperties);
+			Combine(MeshRequestUser._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3308,7 +3308,7 @@ public partial class UploadResponse : MeshResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshResponse._StaticAllProperties);
+			Combine(MeshResponse._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3392,7 +3392,7 @@ public partial class GetDataRequest : MeshRequest {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshRequest._StaticAllProperties);
+			Combine(MeshRequest._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3476,7 +3476,7 @@ public partial class GetDataResponse : MeshResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshResponse._StaticAllProperties);
+			Combine(MeshResponse._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3595,7 +3595,7 @@ public partial class TransactRequest : MeshRequestUser {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshRequestUser._StaticAllProperties);
+			Combine(MeshRequestUser._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3697,7 +3697,7 @@ public partial class TransactResponse : MeshResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshResponse._StaticAllProperties);
+			Combine(MeshResponse._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3883,7 +3883,7 @@ public partial class PublicRequest : DownloadRequest {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, DownloadRequest._StaticAllProperties);
+			Combine(DownloadRequest._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3974,7 +3974,7 @@ public partial class PostRequest : MeshRequest {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshRequest._StaticAllProperties);
+			Combine(MeshRequest._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4050,7 +4050,7 @@ public partial class PostResponse : TransactResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, TransactResponse._StaticAllProperties);
+			Combine(TransactResponse._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4133,7 +4133,7 @@ public partial class ClaimRequest : MeshRequest {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshRequest._StaticAllProperties);
+			Combine(MeshRequest._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4216,7 +4216,7 @@ public partial class ClaimResponse : MeshResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshResponse._StaticAllProperties);
+			Combine(MeshResponse._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4306,7 +4306,7 @@ public partial class PollClaimRequest : MeshRequest {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshRequest._StaticAllProperties);
+			Combine(MeshRequest._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4389,7 +4389,7 @@ public partial class PollClaimResponse : MeshResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshResponse._StaticAllProperties);
+			Combine(MeshResponse._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4565,7 +4565,7 @@ public partial class CryptographicOperationSign : CryptographicOperation {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CryptographicOperation._StaticAllProperties);
+			Combine(CryptographicOperation._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4648,7 +4648,7 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CryptographicOperation._StaticAllProperties);
+			Combine(CryptographicOperation._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4722,7 +4722,7 @@ public partial class CryptographicOperationGenerate : CryptographicOperation {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CryptographicOperation._StaticAllProperties);
+			Combine(CryptographicOperation._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4810,7 +4810,7 @@ public partial class CryptographicOperationShare : CryptographicOperation {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CryptographicOperation._StaticAllProperties);
+			Combine(CryptographicOperation._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4972,7 +4972,7 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CryptographicResult._StaticAllProperties);
+			Combine(CryptographicResult._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -5046,7 +5046,7 @@ public partial class CryptographicResultShare : CryptographicResult {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CryptographicResult._StaticAllProperties);
+			Combine(CryptographicResult._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -5136,7 +5136,7 @@ public partial class OperateRequest : MeshRequest {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshRequest._StaticAllProperties);
+			Combine(MeshRequest._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -5218,7 +5218,7 @@ public partial class OperateResponse : MeshResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MeshResponse._StaticAllProperties);
+			Combine(MeshResponse._binding, _binding);
 
 
     ///<inheritdoc/>

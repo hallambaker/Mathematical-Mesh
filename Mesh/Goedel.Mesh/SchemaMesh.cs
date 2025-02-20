@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:15 PM
+//  This file was automatically generated at 2/20/2025 1:45:25 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -417,7 +417,7 @@ public partial class KeyShare : Key {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Key._StaticAllProperties);
+			Combine(Key._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -517,7 +517,7 @@ public partial class CompositePrivate : Key {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Key._StaticAllProperties);
+			Combine(Key._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -791,7 +791,7 @@ public partial class Activation : Assertion {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Assertion._StaticAllProperties);
+			Combine(Assertion._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -992,7 +992,7 @@ abstract public partial class Profile : Assertion {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Assertion._StaticAllProperties);
+			Combine(Assertion._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1096,7 +1096,7 @@ public partial class ProfileDevice : Profile {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Profile._StaticAllProperties);
+			Combine(Profile._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1158,11 +1158,17 @@ public partial class ProfileDevice : Profile {
 	/// </summary>
 public partial class ProfileAccount : Profile {
         /// <summary>
-        ///The account address. This is either a DNS service address 
-        ///(e.g. alice@example.com) or a Mesh Name (@alice).
+        ///The account address. This is an account service address 
+        ///(e.g. alice@example.com).
         /// </summary>
 
 	public virtual string?					AccountAddress  {get; set;}
+
+        /// <summary>
+        ///The canonical DNS handle for the account (e.g. @alice.alt).
+        /// </summary>
+
+	public virtual string?					AccountHandle  {get; set;}
 
         /// <summary>
         ///The fingerprint of the service profile to which the account is
@@ -1208,6 +1214,8 @@ public partial class ProfileAccount : Profile {
 
 			{ "AccountAddress", new PropertyString ("AccountAddress", 
 					(IBinding data, string? value) => {(data as ProfileAccount).AccountAddress = value;}, (IBinding data) => (data as ProfileAccount).AccountAddress )},
+			{ "AccountHandle", new PropertyString ("AccountHandle", 
+					(IBinding data, string? value) => {(data as ProfileAccount).AccountHandle = value;}, (IBinding data) => (data as ProfileAccount).AccountHandle )},
 			{ "ServiceUdf", new PropertyString ("ServiceUdf", 
 					(IBinding data, string? value) => {(data as ProfileAccount).ServiceUdf = value;}, (IBinding data) => (data as ProfileAccount).ServiceUdf )},
 			{ "EscrowEncryption", new PropertyStruct ("EscrowEncryption", 
@@ -1229,7 +1237,7 @@ public partial class ProfileAccount : Profile {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Profile._StaticAllProperties);
+			Combine(Profile._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1314,7 +1322,7 @@ public partial class ProfileUser : ProfileAccount {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ProfileAccount._StaticAllProperties);
+			Combine(ProfileAccount._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1401,7 +1409,7 @@ public partial class ProfileGroup : ProfileAccount {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ProfileAccount._StaticAllProperties);
+			Combine(ProfileAccount._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1504,7 +1512,7 @@ public partial class ProfileService : Profile {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Profile._StaticAllProperties);
+			Combine(Profile._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1580,7 +1588,7 @@ public partial class ProfileMeshService : ProfileService {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ProfileService._StaticAllProperties);
+			Combine(ProfileService._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1656,7 +1664,7 @@ public partial class ProfileHost : ProfileDevice {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ProfileDevice._StaticAllProperties);
+			Combine(ProfileDevice._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1755,7 +1763,7 @@ public partial class Connection : Assertion {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Assertion._StaticAllProperties);
+			Combine(Assertion._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1905,7 +1913,7 @@ public partial class CallsignBinding : Assertion {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Assertion._StaticAllProperties);
+			Combine(Assertion._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2044,7 +2052,7 @@ public partial class Accreditation : Assertion {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Assertion._StaticAllProperties);
+			Combine(Assertion._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2129,7 +2137,7 @@ public partial class ConnectionStripped : Connection {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Connection._StaticAllProperties);
+			Combine(Connection._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2213,7 +2221,7 @@ public partial class ConnectionService : Connection {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Connection._StaticAllProperties);
+			Combine(Connection._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2313,7 +2321,7 @@ public partial class ConnectionDevice : ConnectionService {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ConnectionService._StaticAllProperties);
+			Combine(ConnectionService._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2389,7 +2397,7 @@ public partial class ConnectionApplication : Connection {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Connection._StaticAllProperties);
+			Combine(Connection._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2465,7 +2473,7 @@ public partial class ConnectionGroup : Connection {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Connection._StaticAllProperties);
+			Combine(Connection._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2581,7 +2589,7 @@ public partial class AccountHostAssignment : Assertion {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Assertion._StaticAllProperties);
+			Combine(Assertion._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2655,7 +2663,7 @@ public partial class ConnectionHost : Connection {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Connection._StaticAllProperties);
+			Combine(Connection._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2740,7 +2748,7 @@ public partial class ActivationAccount : Activation {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Activation._StaticAllProperties);
+			Combine(Activation._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2817,7 +2825,7 @@ public partial class ActivationHost : ActivationAccount {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ActivationAccount._StaticAllProperties);
+			Combine(ActivationAccount._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2937,7 +2945,7 @@ public partial class ActivationCommon : Activation {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Activation._StaticAllProperties);
+			Combine(Activation._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3011,7 +3019,7 @@ public partial class ActivationApplication : Activation {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Activation._StaticAllProperties);
+			Combine(Activation._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3094,7 +3102,7 @@ public partial class ActivationApplicationSsh : ActivationApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ActivationApplication._StaticAllProperties);
+			Combine(ActivationApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3204,7 +3212,7 @@ public partial class ActivationApplicationMail : ActivationApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ActivationApplication._StaticAllProperties);
+			Combine(ActivationApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3317,7 +3325,7 @@ public partial class ActivationApplicationGroup : ActivationApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ActivationApplication._StaticAllProperties);
+			Combine(ActivationApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3476,7 +3484,7 @@ public partial class ApplicationEntrySsh : ApplicationEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ApplicationEntry._StaticAllProperties);
+			Combine(ApplicationEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3558,7 +3566,7 @@ public partial class ApplicationEntryGroup : ApplicationEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ApplicationEntry._StaticAllProperties);
+			Combine(ApplicationEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3640,7 +3648,7 @@ public partial class ApplicationEntryMail : ApplicationEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ApplicationEntry._StaticAllProperties);
+			Combine(ApplicationEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3773,7 +3781,7 @@ abstract public partial class Contact : Assertion {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Assertion._StaticAllProperties);
+			Combine(Assertion._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4046,7 +4054,7 @@ public partial class ContactGroup : Contact {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Contact._StaticAllProperties);
+			Combine(Contact._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4130,7 +4138,7 @@ public partial class ContactPerson : Contact {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Contact._StaticAllProperties);
+			Combine(Contact._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4214,7 +4222,7 @@ public partial class ContactOrganization : Contact {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Contact._StaticAllProperties);
+			Combine(Contact._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4650,7 +4658,7 @@ public partial class NetworkCredential : NetworkAddress {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, NetworkAddress._StaticAllProperties);
+			Combine(NetworkAddress._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4733,7 +4741,7 @@ public partial class NetworkProfile : NetworkAddress {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, NetworkAddress._StaticAllProperties);
+			Combine(NetworkAddress._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4816,7 +4824,7 @@ public partial class NetworkCapability : NetworkProfile {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, NetworkProfile._StaticAllProperties);
+			Combine(NetworkProfile._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -5549,7 +5557,7 @@ public partial class WorkTask : Engagement {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Engagement._StaticAllProperties);
+			Combine(Engagement._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -5842,7 +5850,7 @@ public partial class CatalogedDevice : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -6047,7 +6055,7 @@ public partial class CatalogedSignature : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -6198,7 +6206,7 @@ public partial class CatalogedDocument : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -6308,7 +6316,7 @@ public partial class CatalogedPublication : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -6426,7 +6434,7 @@ public partial class CatalogedCredential : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -6528,7 +6536,7 @@ public partial class CatalogedNetwork : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -6627,7 +6635,7 @@ public partial class CatalogedContact : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -6712,7 +6720,7 @@ public partial class CatalogedAccess : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -6906,7 +6914,7 @@ public partial class NullCapability : Capability {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Capability._StaticAllProperties);
+			Combine(Capability._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -7004,7 +7012,7 @@ public partial class AccessCapability : Capability {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Capability._StaticAllProperties);
+			Combine(Capability._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -7106,7 +7114,7 @@ public partial class PublicationCapability : Capability {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Capability._StaticAllProperties);
+			Combine(Capability._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -7212,7 +7220,7 @@ abstract public partial class CryptographicCapability : Capability {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Capability._StaticAllProperties);
+			Combine(Capability._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -7285,7 +7293,7 @@ public partial class CapabilityDecrypt : CryptographicCapability {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CryptographicCapability._StaticAllProperties);
+			Combine(CryptographicCapability._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -7361,7 +7369,7 @@ public partial class CapabilityDecryptPartial : CapabilityDecrypt {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CapabilityDecrypt._StaticAllProperties);
+			Combine(CapabilityDecrypt._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -7446,7 +7454,7 @@ public partial class CapabilityDecryptServiced : CapabilityDecrypt {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CapabilityDecrypt._StaticAllProperties);
+			Combine(CapabilityDecrypt._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -7522,7 +7530,7 @@ public partial class CapabilitySign : CryptographicCapability {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CryptographicCapability._StaticAllProperties);
+			Combine(CryptographicCapability._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -7598,7 +7606,7 @@ public partial class CapabilityKeyGenerate : CryptographicCapability {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CryptographicCapability._StaticAllProperties);
+			Combine(CryptographicCapability._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -7676,7 +7684,7 @@ public partial class CapabilityFairExchange : CryptographicCapability {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CryptographicCapability._StaticAllProperties);
+			Combine(CryptographicCapability._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -7864,7 +7872,7 @@ public partial class ServiceAccessToken : NamedService {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, NamedService._StaticAllProperties);
+			Combine(NamedService._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -7959,7 +7967,7 @@ public partial class CatalogedBookmark : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -8048,7 +8056,7 @@ public partial class CatalogedTask : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -8164,7 +8172,7 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -8256,7 +8264,7 @@ public partial class CatalogedMember : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -8357,7 +8365,7 @@ public partial class CatalogedGroup : CatalogedApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+			Combine(CatalogedApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -8438,7 +8446,7 @@ public partial class CatalogedFeed : CatalogedBookmark {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedBookmark._StaticAllProperties);
+			Combine(CatalogedBookmark._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -8569,7 +8577,7 @@ public partial class CatalogedApplicationMail : CatalogedApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+			Combine(CatalogedApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -8643,7 +8651,7 @@ public partial class CatalogedApplicationPkix : CatalogedApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+			Combine(CatalogedApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -8717,7 +8725,7 @@ public partial class CatalogedApplicationOpenPgp : CatalogedApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+			Combine(CatalogedApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -8800,7 +8808,7 @@ public partial class CatalogedApplicationSsh : CatalogedApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+			Combine(CatalogedApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -8874,7 +8882,7 @@ public partial class CatalogedApplicationGit : CatalogedApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+			Combine(CatalogedApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -8948,7 +8956,7 @@ public partial class CatalogedApplicationDeveloper : CatalogedApplication {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedApplication._StaticAllProperties);
+			Combine(CatalogedApplication._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -9022,7 +9030,7 @@ public partial class MessageInvoice : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -9096,7 +9104,7 @@ public partial class CatalogedReceipt : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -9170,7 +9178,7 @@ public partial class CatalogedTicket : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -9374,7 +9382,7 @@ public partial class DevicePreconfigurationPrivate : DevicePreconfigurationPubli
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, DevicePreconfigurationPublic._StaticAllProperties);
+			Combine(DevicePreconfigurationPublic._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -9552,7 +9560,7 @@ public partial class MessageError : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -9633,7 +9641,7 @@ public partial class MessageComplete : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -9740,7 +9748,7 @@ public partial class MessageValidated : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -9860,7 +9868,7 @@ public partial class MessagePin : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -9944,7 +9952,7 @@ public partial class RequestConnection : MessageValidated {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MessageValidated._StaticAllProperties);
+			Combine(MessageValidated._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -10046,7 +10054,7 @@ public partial class AcknowledgeConnection : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -10141,7 +10149,7 @@ public partial class RespondConnection : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -10241,7 +10249,7 @@ public partial class MessageContact : MessageValidated {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MessageValidated._StaticAllProperties);
+			Combine(MessageValidated._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -10331,7 +10339,7 @@ public partial class GroupInvitation : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -10412,7 +10420,7 @@ public partial class MessageMail : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -10493,7 +10501,7 @@ public partial class RequestConfirmation : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -10582,7 +10590,7 @@ public partial class ResponseConfirmation : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -10656,7 +10664,7 @@ public partial class RequestTask : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -10758,7 +10766,7 @@ public partial class MessageClaim : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -10849,7 +10857,7 @@ public partial class ProcessResult : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -10925,7 +10933,7 @@ public partial class ProcessResultNotSupported : ProcessResult {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ProcessResult._StaticAllProperties);
+			Combine(ProcessResult._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -10999,7 +11007,7 @@ public partial class ProcessResultNotFound : ProcessResult {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ProcessResult._StaticAllProperties);
+			Combine(ProcessResult._binding, _binding);
 
 
     ///<inheritdoc/>

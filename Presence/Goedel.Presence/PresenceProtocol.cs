@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:17 PM
+//  This file was automatically generated at 2/20/2025 1:45:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -259,7 +259,7 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Protocol.Request._StaticAllProperties);
+			Combine(Goedel.Protocol.Request._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -335,7 +335,7 @@ public partial class PresenceConnectRequest : PresenceFromClient {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromClient._StaticAllProperties);
+			Combine(PresenceFromClient._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -409,7 +409,7 @@ public partial class PresenceHeartbeat : PresenceFromClient {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromClient._StaticAllProperties);
+			Combine(PresenceFromClient._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -483,7 +483,7 @@ public partial class PresenceEndpointRequest : PresenceFromClient {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromClient._StaticAllProperties);
+			Combine(PresenceFromClient._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -557,7 +557,7 @@ public partial class PresenceAcknowledge : PresenceFromClient {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromClient._StaticAllProperties);
+			Combine(PresenceFromClient._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -638,7 +638,7 @@ public partial class PresenceResolveRequest : PresenceFromClient {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromClient._StaticAllProperties);
+			Combine(PresenceFromClient._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -737,7 +737,7 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Protocol.Response._StaticAllProperties);
+			Combine(Goedel.Protocol.Response._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -822,7 +822,7 @@ public partial class PresenceConnectResponse : PresenceFromService {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromService._StaticAllProperties);
+			Combine(PresenceFromService._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -903,7 +903,7 @@ public partial class PresenceErrorInvalidSerial : PresenceFromService {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromService._StaticAllProperties);
+			Combine(PresenceFromService._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -977,7 +977,7 @@ public partial class PresenceStatus : PresenceFromService {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromService._StaticAllProperties);
+			Combine(PresenceFromService._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1051,7 +1051,7 @@ public partial class PresenceEndpointResponse : PresenceFromService {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromService._StaticAllProperties);
+			Combine(PresenceFromService._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1139,7 +1139,7 @@ public partial class PresenceNotify : PresenceFromService {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromService._StaticAllProperties);
+			Combine(PresenceFromService._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1220,7 +1220,7 @@ public partial class PresenceResolveResponse : PresenceFromService {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PresenceFromService._StaticAllProperties);
+			Combine(PresenceFromService._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1322,7 +1322,7 @@ public partial class SessionRequest : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1424,7 +1424,7 @@ public partial class SessionResponse : Message {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Message._StaticAllProperties);
+			Combine(Message._binding, _binding);
 
 
     ///<inheritdoc/>

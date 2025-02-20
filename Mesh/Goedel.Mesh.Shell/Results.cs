@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:19 PM
+//  This file was automatically generated at 2/20/2025 1:44:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -177,7 +177,7 @@ public partial class Result : ShellResult {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ShellResult._StaticAllProperties);
+			Combine(ShellResult._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -307,7 +307,7 @@ public partial class ResultAbout : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -381,7 +381,7 @@ public partial class ResultFail : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -470,7 +470,7 @@ public partial class ResultHello : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -552,7 +552,7 @@ public partial class ResultInfo : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -646,7 +646,7 @@ public partial class ResultKey : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -741,7 +741,7 @@ public partial class ResultDigest : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -836,7 +836,7 @@ public partial class ResultFile : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -938,7 +938,7 @@ public partial class ResultKeyFile : ResultFile {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ResultFile._StaticAllProperties);
+			Combine(ResultFile._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1026,7 +1026,7 @@ public partial class ResultListLog : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1107,7 +1107,7 @@ public partial class ResultLog : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1209,7 +1209,7 @@ public partial class ResultArchive : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1291,7 +1291,7 @@ public partial class ResultFileDare : ResultFile {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ResultFile._StaticAllProperties);
+			Combine(ResultFile._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1386,7 +1386,7 @@ public partial class ResultFileEARL : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1468,7 +1468,7 @@ public partial class ResultDump : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1557,7 +1557,7 @@ public partial class ResultList : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1639,7 +1639,7 @@ public partial class ResultAccountConnect : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1720,7 +1720,7 @@ public partial class ResultPublish : ResultCreateDevice {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ResultCreateDevice._StaticAllProperties);
+			Combine(ResultCreateDevice._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1824,7 +1824,7 @@ public partial class ResultPublishDevice : ResultCreateDevice {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ResultCreateDevice._StaticAllProperties);
+			Combine(ResultCreateDevice._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1920,7 +1920,7 @@ public partial class ResultCreateDevice : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2001,7 +2001,7 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ResultCreateAccount._StaticAllProperties);
+			Combine(ResultCreateAccount._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2091,7 +2091,7 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ResultCreateDevice._StaticAllProperties);
+			Combine(ResultCreateDevice._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2172,7 +2172,7 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ResultCreateDevice._StaticAllProperties);
+			Combine(ResultCreateDevice._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2253,7 +2253,7 @@ public partial class ResultRegisterService : ResultCreateAccount {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ResultCreateAccount._StaticAllProperties);
+			Combine(ResultCreateAccount._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2327,7 +2327,7 @@ public partial class ResultRecover : ResultCreatePersonal {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ResultCreatePersonal._StaticAllProperties);
+			Combine(ResultCreatePersonal._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2409,7 +2409,7 @@ public partial class ResultStatus : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2505,7 +2505,7 @@ public partial class ResultSync : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2592,7 +2592,7 @@ public partial class ResultEscrow : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2673,7 +2673,7 @@ public partial class ResultMachine : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2762,7 +2762,7 @@ public partial class ResultPIN : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2844,7 +2844,7 @@ public partial class ResultSequence : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3048,7 +3048,7 @@ public partial class ResultEntry : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3138,7 +3138,7 @@ public partial class ResultEntrySent : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3212,7 +3212,7 @@ public partial class ResultMail : ResultEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ResultEntry._StaticAllProperties);
+			Combine(ResultEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3286,7 +3286,7 @@ public partial class ResultSSH : ResultEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ResultEntry._StaticAllProperties);
+			Combine(ResultEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3360,7 +3360,7 @@ public partial class ResultGroupCreate : ResultEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, ResultEntry._StaticAllProperties);
+			Combine(ResultEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3449,7 +3449,7 @@ public partial class ResultSent : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3530,7 +3530,7 @@ public partial class ResultPending : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3612,7 +3612,7 @@ public partial class ResultAuthorize : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3694,7 +3694,7 @@ public partial class ResultProcess : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3824,7 +3824,7 @@ public partial class ResultConnect : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3905,7 +3905,7 @@ public partial class ResultTransactionRequest : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3994,7 +3994,7 @@ public partial class ResultReceived : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4076,7 +4076,7 @@ public partial class ResultApplication : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4158,7 +4158,7 @@ public partial class ResultApplicationList : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4248,7 +4248,7 @@ public partial class ResultCallsign : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4338,7 +4338,7 @@ public partial class ResultCallsignResolution : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -4419,7 +4419,7 @@ public partial class ResultCallsignList : Result {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Result._StaticAllProperties);
+			Combine(Result._binding, _binding);
 
 
     ///<inheritdoc/>

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:21 PM
+//  This file was automatically generated at 2/20/2025 1:44:25 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -304,7 +304,7 @@ public partial class WsmpRequest : Goedel.Protocol.Request {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Protocol.Request._StaticAllProperties);
+			Combine(Goedel.Protocol.Request._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -381,7 +381,7 @@ public partial class WsmpResponse : Goedel.Protocol.Response {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Goedel.Protocol.Response._StaticAllProperties);
+			Combine(Goedel.Protocol.Response._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -455,7 +455,7 @@ public partial class ServiceConfigRequest : WsmpRequest {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, WsmpRequest._StaticAllProperties);
+			Combine(WsmpRequest._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -529,7 +529,7 @@ public partial class ServiceConfigResponse : WsmpResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, WsmpResponse._StaticAllProperties);
+			Combine(WsmpResponse._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -603,7 +603,7 @@ public partial class ServiceStatusRequest : WsmpRequest {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, WsmpRequest._StaticAllProperties);
+			Combine(WsmpRequest._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -712,7 +712,7 @@ public partial class ServiceStatusResponse : WsmpResponse {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, WsmpResponse._StaticAllProperties);
+			Combine(WsmpResponse._binding, _binding);
 
 
     ///<inheritdoc/>

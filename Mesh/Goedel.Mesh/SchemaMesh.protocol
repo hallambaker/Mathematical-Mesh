@@ -210,8 +210,11 @@
 		Inherits Profile
 		String AccountAddress
 			Description
-				|The account address. This is either a DNS service address 
-				|(e.g. alice@example.com) or a Mesh Name (@alice).
+				|The account address. This is an account service address 
+				|(e.g. alice@example.com).
+		String AccountHandle
+			Description
+				|The canonical DNS handle for the account (e.g. @alice.alt).
 		String ServiceUdf
 			Description
 				|The fingerprint of the service profile to which the account is

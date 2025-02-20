@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:13 PM
+//  This file was automatically generated at 2/20/2025 1:45:23 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -304,7 +304,7 @@ public partial class JoseWebEncryption : JoseWebSignature {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, JoseWebSignature._StaticAllProperties);
+			Combine(JoseWebSignature._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -793,7 +793,7 @@ public partial class Header : KeyCore {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, KeyCore._StaticAllProperties);
+			Combine(KeyCore._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1102,7 +1102,7 @@ public partial class Key : KeyCore {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, KeyCore._StaticAllProperties);
+			Combine(KeyCore._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1286,7 +1286,7 @@ public partial class PublicKeyRSA : Key {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Key._StaticAllProperties);
+			Combine(Key._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1410,7 +1410,7 @@ public partial class PrivateKeyRSA : PublicKeyRSA {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PublicKeyRSA._StaticAllProperties);
+			Combine(PublicKeyRSA._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1502,7 +1502,7 @@ public partial class PublicKeyDH : Key {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Key._StaticAllProperties);
+			Combine(Key._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1586,7 +1586,7 @@ public partial class PrivateKeyDH : PublicKeyDH {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PublicKeyDH._StaticAllProperties);
+			Combine(PublicKeyDH._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1678,7 +1678,7 @@ public partial class PublicKeyECDH : Key {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Key._StaticAllProperties);
+			Combine(Key._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1762,7 +1762,7 @@ public partial class PrivateKeyECDH : PublicKeyECDH {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, PublicKeyECDH._StaticAllProperties);
+			Combine(PublicKeyECDH._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1885,7 +1885,7 @@ public partial class PrivateKeyUDF : Key {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Key._StaticAllProperties);
+			Combine(Key._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2044,7 +2044,7 @@ public partial class KeyAgreementDH : KeyAgreement {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, KeyAgreement._StaticAllProperties);
+			Combine(KeyAgreement._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2136,7 +2136,7 @@ public partial class KeyAgreementECDH : KeyAgreement {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, KeyAgreement._StaticAllProperties);
+			Combine(KeyAgreement._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2221,7 +2221,7 @@ public partial class PublicKeyBinary : Key {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Key._StaticAllProperties);
+			Combine(Key._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -2306,7 +2306,7 @@ public partial class PrivateKeyBinary : Key {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, Key._StaticAllProperties);
+			Combine(Key._binding, _binding);
 
 
     ///<inheritdoc/>

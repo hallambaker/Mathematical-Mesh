@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:19 PM
+//  This file was automatically generated at 2/20/2025 1:44:23 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -169,7 +169,7 @@ abstract public partial class AccountEntry : CatalogedEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, CatalogedEntry._StaticAllProperties);
+			Combine(CatalogedEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -261,7 +261,7 @@ public partial class AccountUser : AccountEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, AccountEntry._StaticAllProperties);
+			Combine(AccountEntry._binding, _binding);
 
 
     ///<inheritdoc/>

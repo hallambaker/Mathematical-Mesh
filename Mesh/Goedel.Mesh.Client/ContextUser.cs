@@ -313,7 +313,8 @@ public partial class ContextUser : ContextAccount {
     public async Task SetServiceAsync(
                 string accountAddress,
                 JsContact? contact = null,
-                string localName = null, string dnsHandle = null) {
+                string localName = null, 
+                string dnsHandle = null) {
 
         KeyProfileSigners.AssertNotNull(NotSuperAdministrator.Throw);
 
@@ -331,6 +332,7 @@ public partial class ContextUser : ContextAccount {
         // Update the profile
         ProfileUser.ServiceUdf = ProfileService.UdfString;
         ProfileUser.AccountAddress = accountAddress;
+        ProfileUser.AccountHandle = dnsHandle;
         ProfileUser.Envelope(KeyProfileSigners, includeSignatureKey: true);
 
         ActivationCommon.BindService(ProfileService);
@@ -340,7 +342,7 @@ public partial class ContextUser : ContextAccount {
         //var contact2 = CreateContact(contact: contact, dnsHandle: dnsHandle);
 
         contact ??= JsContact.Create();
-        contact.AddMesh(ProfileUser, AccountAddressUdf);
+        contact.AddMesh(ProfileUser);
         await SetContactSelfAsync(contact, localName);
         }
 

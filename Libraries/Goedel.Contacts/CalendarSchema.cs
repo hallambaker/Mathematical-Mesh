@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:13 PM
+//  This file was automatically generated at 2/20/2025 1:45:23 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -648,7 +648,7 @@ public partial class JsCalendarEntry : JmapBase {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, JmapBase._StaticAllProperties);
+			Combine(JmapBase._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -755,7 +755,7 @@ public partial class JsEvent : JsCalendarEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, JsCalendarEntry._StaticAllProperties);
+			Combine(JsCalendarEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -886,7 +886,7 @@ public partial class JsTask : JsCalendarEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, JsCalendarEntry._StaticAllProperties);
+			Combine(JsCalendarEntry._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -978,7 +978,7 @@ public partial class JsGroup : JsCalendarEntry {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, JsCalendarEntry._StaticAllProperties);
+			Combine(JsCalendarEntry._binding, _binding);
 
 
     ///<inheritdoc/>

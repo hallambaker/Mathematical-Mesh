@@ -182,18 +182,32 @@ public static partial class Extensions {
         contact.Update();
         }
 
-    public static void AddMesh(this JsContact contact, Profile profile, string dnsHandle) {
-        if (dnsHandle is null) {
+    public static void AddMesh(this JsContact contact, ProfileAccount profile) {
+
+        if (profile is null) {
             return;
             }
 
+        var directUri = profile.DirectAddressUri;
+
         var service = new OnlineService() {
             Service = "Mesh",
-            User = dnsHandle
+            User = profile.AccountAddress,
+            Uri = "mesh:" + profile.DirectAddress
             };
 
         contact.OnlineServices ??= [];
         contact.OnlineServices.Add("mesh0", service);
+
+        if (profile.AccountHandle is not null) {
+            var servicehandle = new OnlineService() {
+                Service = "Mesh",
+                User = profile.AccountHandle,
+                Uri = directUri
+                };
+
+            contact.OnlineServices.Add("mesh1", servicehandle);
+            }
 
         var uri = profile.DataUri();
 
@@ -203,11 +217,14 @@ public static partial class Extensions {
             Kind = profile._Tag
             };
 
-
         contact.CryptoKeys ??= [];
-        contact.CryptoKeys.Add("mesh0", cryptoKey);
+        contact.CryptoKeys.Add(directUri, cryptoKey);
 
         contact.Update();
+
+        var asString = contact.ToString();
+
+
         }
 
     public static void AddDeveloper(this JsContact contact) {

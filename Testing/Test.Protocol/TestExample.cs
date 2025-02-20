@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/19/2025 6:44:19 PM
+//  This file was automatically generated at 2/20/2025 1:44:24 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -266,7 +266,7 @@ public partial class MultiArray : MultiInstance {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MultiInstance._StaticAllProperties);
+			Combine(MultiInstance._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -371,7 +371,7 @@ public partial class MultiStruct : MultiArray {
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(_StaticProperties, MultiArray._StaticAllProperties);
+			Combine(MultiArray._binding, _binding);
 
 
     ///<inheritdoc/>

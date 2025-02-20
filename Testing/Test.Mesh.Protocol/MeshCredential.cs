@@ -23,6 +23,7 @@
 
 
 using Goedel.Cryptography.Dare;
+using Goedel.Mesh.Shell;
 using Goedel.Test.Core;
 
 namespace Goedel.XUnit;
@@ -64,7 +65,7 @@ public partial class TestService {
     public void TestCredentialAccount() {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
         var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceAliceAdmin, AccountAlice, "main");
+                DeviceAliceAdmin, AccountAlice, HandleAlice, "main");
         var credentialTempPrivate = contextAccountAlice.GetMeshCredentialPrivate();
         var credentialTemp = GetMeshCredentialPublic(credentialTempPrivate);
 
