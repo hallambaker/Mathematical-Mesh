@@ -53,17 +53,19 @@ public partial class EverythingMaui {
             return new ErrorResult();
             }
 
-        var uid = Udf.Nonce();
-        var entry = new CatalogedApplicationGit() {
-            Uid = uid,
-            LocalName = data.LocalName,
-            Path = data.Path,
-            Description = data.Description
-            };
 
-        // Focus: 100 Add in key generation here
 
-        await CurrentAccount.Applications.AddAsync(entry);
+        //var uid = Udf.Nonce();
+        //var entry = new CatalogedApplicationGit() {
+        //    Uid = uid,
+        //    LocalName = data.LocalName,
+        //    Path = data.Path,
+        //    Description = data.Description
+        //    };
+
+        //// Focus: 100 Add in key generation here
+
+        //await CurrentAccount.Applications.AddAsync(entry);
 
         return NullResult.Completed;
         }
