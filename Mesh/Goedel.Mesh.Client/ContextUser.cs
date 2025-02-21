@@ -1811,6 +1811,22 @@ public partial class ContextUser : ContextAccount {
     /// </summary>
     /// <param name="key">specifies the identifier to return.</param>
     /// <returns>The contact, if found. Otherwise null.</returns>
+    public bool TryGetContactSelf(out CatalogedContact contact, string key=null) {
+        var contacts = GetStore(CatalogContact.Label) as CatalogContact;
+
+        if (key is null) {
+            contact =contacts.DefaultContactSelf;
+            return contact != null;
+            }
+
+        return contacts.DictionaryContactSelf.TryGetValue(key, out contact);
+        }
+
+    /// <summary>
+    /// Return the contact with identifier <paramref name="key"/>.
+    /// </summary>
+    /// <param name="key">specifies the identifier to return.</param>
+    /// <returns>The contact, if found. Otherwise null.</returns>
     public CatalogedContact GetContact(string key) =>
         (GetStore(CatalogContact.Label) as CatalogContact).Get(key);
 

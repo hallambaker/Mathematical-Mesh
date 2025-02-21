@@ -735,6 +735,19 @@
 			Option Encrypt "encrypt" String
 				Brief "Encrypt the contact under the specified key"
 
+
+		Command ContactSelf "self"
+			Brief "Lookup contact entry for self"
+			Parameter Identifier "id" String
+				Brief "Contact localname"
+			Parameter File "file" NewFile
+				Brief "File containing the contact entry to add"
+			Option Earl "earl" Flag
+				Brief "Encode the contact as an EARL"
+			Include AccountOptions
+			Include Reporting
+
+
 		Command ContactDump "list"
 			Brief "List contact entries"
 			Include AccountOptions

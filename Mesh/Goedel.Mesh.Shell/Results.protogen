@@ -30,6 +30,11 @@
 		String			ServiceAddress
 		Struct MeshHelloResponse Response
 
+	Structure ResultSelf
+		Inherits			Result
+		Struct JsContact	Contact
+		String				Locator
+		String				Earl
 
 	Structure ResultInfo
 		Inherits		Result

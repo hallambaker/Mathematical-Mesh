@@ -21,11 +21,43 @@
 #endregion
 
 
+using Goedel.Contacts;
+
 namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
 
+    public override ShellResult ContactSelf(ContactSelf options) {
 
+        var contextUser = GetContextUser(options);
+
+        // pull the contact
+        if (!contextUser.TryGetContactSelf(out var catalogedContact)) {
+            throw new NYI();
+            }
+
+
+
+        // write to file
+        var contact = catalogedContact.Contact;
+        var asbytes = contact.GetJson(false);
+
+        // encrypt
+        var earl = Udf.AuthenticatedEncryptionKey(asbytes);
+        var locator = Udf.Locator(earl);
+        var encrypted = Udf.GetEncryptedData(asbytes, earl);
+
+        // write to file
+        var filename = Path.ChangeExtension(locator, "jscontact");
+        filename.WriteFileNew(encrypted);
+
+
+        return new ResultSelf() {
+            Contact = contact,
+            Locator = locator,
+            Earl = earl
+            };
+        }
 
 
     public override ShellResult ContactQuery(ContactQuery options) {

@@ -70,26 +70,28 @@ public partial class EverythingMaui {
     public override async Task<IResult> ContactAddNetwork(
                 ContactAddNetwork parameters) {
 
-        var entry = new ContactNetworkIdentifier() {
-            Protocol = parameters.Protocol?.ToLower(),
-            Address = parameters.Address,
-            Fingerprint = parameters.Fingerprint
-            };
+        throw new NYI();
 
-        var context = parameters.Context;
+        //var entry = new ContactNetworkIdentifier() {
+        //    Protocol = parameters.Protocol?.ToLower(),
+        //    Address = parameters.Address,
+        //    Fingerprint = parameters.Fingerprint
+        //    };
+
+        //var context = parameters.Context;
 
 
-        if (SectionContactSection.Data is ContactSection data) {
-            if (context is not null) {
-                context.NetworkAddresses ??= new SelectList();
-                context.NetworkAddresses.Add(entry);
-                if (data.ContactSelection is not null) {
-                    await data.ContactSelection.UpdateAsync(context);
-                    }
-                }
-            }
+        //if (SectionContactSection.Data is ContactSection data) {
+        //    if (context is not null) {
+        //        context.NetworkAddresses ??= new SelectList();
+        //        context.NetworkAddresses.Add(entry);
+        //        if (data.ContactSelection is not null) {
+        //            await data.ContactSelection.UpdateAsync(context);
+        //            }
+        //        }
+        //    }
 
-        return NullResult.Completed;
+        //return NullResult.Completed;
         }
 
 
@@ -103,28 +105,29 @@ public partial class EverythingMaui {
     ///<inheritdoc/>
     public override async Task<IResult> ContactAddPostal(ContactAddPostal parameters) {
 
-        var entry = new ContactPhysicalAddress() {
-            Appartment = parameters.Appartment,
-            Street = parameters.Street,
-            District = parameters.District,
-            Locality = parameters.Locality,
-            Country = parameters.Country,
-            Postcode = parameters.Postcode,
-            };
+        throw new NYI();
+        //var entry = new ContactPhysicalAddress() {
+        //    Appartment = parameters.Appartment,
+        //    Street = parameters.Street,
+        //    District = parameters.District,
+        //    Locality = parameters.Locality,
+        //    Country = parameters.Country,
+        //    Postcode = parameters.Postcode,
+        //    };
 
-        var context = parameters.Context;
+        //var context = parameters.Context;
 
-        if (SectionContactSection.Data is ContactSection data) {
-            if (context is not null) {
-                context.PhysicalAddresses ??= new SelectList();
-                context.PhysicalAddresses.Add(entry);
-                if (data.ContactSelection is not null) {
-                    await data.ContactSelection.UpdateAsync(context);
-                    }
-                }
-            }
+        //if (SectionContactSection.Data is ContactSection data) {
+        //    if (context is not null) {
+        //        context.PhysicalAddresses ??= new SelectList();
+        //        context.PhysicalAddresses.Add(entry);
+        //        if (data.ContactSelection is not null) {
+        //            await data.ContactSelection.UpdateAsync(context);
+        //            }
+        //        }
+        //    }
 
-        return NullResult.Completed;
+        //return NullResult.Completed;
         }
 
     /////<inheritdoc/>

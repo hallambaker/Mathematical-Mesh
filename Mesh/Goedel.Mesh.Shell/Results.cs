@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/21/2025 5:25:04 PM
+//  This file was automatically generated at 2/21/2025 6:54:39 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -81,6 +81,7 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 	    {"ResultAbout", ResultAbout._Factory},
 	    {"ResultFail", ResultFail._Factory},
 	    {"ResultHello", ResultHello._Factory},
+	    {"ResultSelf", ResultSelf._Factory},
 	    {"ResultInfo", ResultInfo._Factory},
 	    {"ResultKey", ResultKey._Factory},
 	    {"ResultDigest", ResultDigest._Factory},
@@ -516,6 +517,102 @@ public partial class ResultHello : Result {
 			return Out as ResultHello;
 			}
 		var Result = new ResultHello ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class ResultSelf : Result {
+        /// <summary>
+        /// </summary>
+
+	public virtual JsContact?					Contact  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					Locator  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					Earl  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "Contact", new PropertyStruct ("Contact", 
+					(IBinding data, object? value) => {(data as ResultSelf).Contact = value as JsContact;}, (IBinding data) => (data as ResultSelf).Contact,
+					false, ()=>new  JsContact(), ()=>new JsContact())},
+			{ "Locator", new PropertyString ("Locator", 
+					(IBinding data, string? value) => {(data as ResultSelf).Locator = value;}, (IBinding data) => (data as ResultSelf).Locator )},
+			{ "Earl", new PropertyString ("Earl", 
+					(IBinding data, string? value) => {(data as ResultSelf).Earl = value;}, (IBinding data) => (data as ResultSelf).Earl )}
+        }, __Tag,() => new ResultSelf(), Result._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(Result._binding, _binding);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ResultSelf";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ResultSelf();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ResultSelf FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ResultSelf;
+			}
+		var Result = new ResultSelf ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

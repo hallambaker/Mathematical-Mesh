@@ -60,6 +60,8 @@ partial class Program {
         //Trace.Listeners.Add(new GoedelTraceListener());
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
+
+        TestService.Test().TestCredentialAccount();
         TestService.Test().TestCredentialAccountApps();
 
 

@@ -29,6 +29,7 @@ using Goedel.Registry;
 using Goedel.Test.Core;
 
 using System.Collections.Generic;
+using System.IO;
 
 namespace Goedel.XUnit;
 
@@ -81,6 +82,9 @@ public partial class TestService {
         var validatedaccount = credentialTemp.VerifyAccount();
         (validatedaccount as MeshVerifiedDevice).TestNotNull();
         (validatedaccount as MeshVerifiedAccount).TestNotNull();
+
+
+        WriteContactFile(contextAccountAlice);
         }
 
     [Fact]
@@ -109,7 +113,34 @@ public partial class TestService {
         // add a dns app
         var applicationDns = CatalogedApplicationDns.Create("alice@example.net", roles);
         var resultTransact5 = contextAccountAlice.AddApplication(applicationDeveloper, [null]).Sync();
+
+        WriteContactFile(contextAccountAlice);
         }
+
+    bool WriteContactFile(ContextUser contextUser) {
+
+        if (!contextUser.TryGetContactSelf(out var catalogedContact)) {
+            throw new NYI();
+            }
+
+        // write to file
+        var contact = catalogedContact.Contact;
+        var asbytes = contact.GetJson(false);
+
+        // encrypt
+        var earl = Udf.AuthenticatedEncryptionKey(asbytes);
+        var locator = Udf.Locator(earl);
+        var encrypted = Udf.GetEncryptedData(asbytes, earl);
+
+        // write to file
+        var filename = Path.ChangeExtension(locator, "jscontact");
+        filename.WriteFileNew(encrypted);
+
+        System.Console.WriteLine($"EARL = {earl}");
+
+        return true;
+        }
+
 
 
     [Theory]

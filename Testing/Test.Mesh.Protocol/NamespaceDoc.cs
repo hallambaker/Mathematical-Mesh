@@ -31,6 +31,7 @@ global using Goedel.Mesh.Test;
 global using Goedel.Protocol;
 global using Goedel.Repository.Server;
 global using Goedel.Test;
+global using Goedel.IO;
 global using Goedel.Utilities;
 
 global using Xunit;
