@@ -177,7 +177,14 @@ public static partial class Extensions {
         }
 
 
-
+    /// <summary>
+    /// Add the value <paramref name="value"/> to the dictionary <paramref name="dictionary"/>
+    /// under a unique tag formed by appending an integer the base <paramref name="tagBase"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of the values stored in the dictionary.</typeparam>
+    /// <param name="dictionary">The dictionary to add the value to.</param>
+    /// <param name="tagBase">The base from which a unique tag is to be formed</param>
+    /// <param name="value">The value to add.</param>
     public static void AddUniqueKeyed<T>(this Dictionary<string, T> dictionary, string tagBase, T value) {
         var i = 1;
 
@@ -192,7 +199,13 @@ public static partial class Extensions {
         }
 
 
-
+    /// <summary>
+    /// Add the Mesh profilr <paramref name="profile"/>to the contact
+    /// <paramref name="contact"/> under the service type <paramref name="serviceId"/>.
+    /// </summary>
+    /// <param name="contact">The contact to add the profile to.</param>
+    /// <param name="profile">The profile to add.</param>
+    /// <param name="serviceId">The Sevice type.</param>
     public static void AddMesh(this JsContact contact, ProfileAccount profile, string serviceId="Mesh") {
 
         if (profile is null) {
@@ -237,6 +250,11 @@ public static partial class Extensions {
         var asString = contact.ToString();
         }
 
+    /// <summary>
+    /// Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
+    /// </summary>
+    /// <param name="contact">The contact to add the application details to.</param>
+    /// <param name="application">The application to add.</param>
     public static void AddApplication(this JsContact contact, CatalogedApplication application) {
         switch (application) {
             case CatalogedGroup catalogedGroup: {
@@ -263,11 +281,22 @@ public static partial class Extensions {
             }
         }
 
+    /// <summary>
+    /// Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
+    /// </summary>
+    /// <param name="contact">The contact to add the application details to.</param>
+    /// <param name="application">The application to add.</param>
     public static void AddGroup(this JsContact contact, CatalogedGroup application) {
         var profile = application.EnvelopedProfileGroup.EnvelopedObject;
         contact.AddMesh(profile);
         }
 
+
+    /// <summary>
+    /// Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
+    /// </summary>
+    /// <param name="contact">The contact to add the application details to.</param>
+    /// <param name="application">The application to add.</param>
     public static void AddMail(this JsContact contact, CatalogedApplicationMail application) {
 
         // add Email entry for application.AccountAddress
@@ -285,16 +314,31 @@ public static partial class Extensions {
         contact.Update();
         }
 
+    /// <summary>
+    /// Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
+    /// </summary>
+    /// <param name="contact">The contact to add the application details to.</param>
+    /// <param name="application">The application to add.</param>
     public static void AddSsh(this JsContact contact, CatalogedApplicationSsh application) {
         contact.AddKeyData(application.ClientKey, "Ssh", application.AccountAddress);
         contact.Update();
         }
 
+    /// <summary>
+    /// Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
+    /// </summary>
+    /// <param name="contact">The contact to add the application details to.</param>
+    /// <param name="application">The application to add.</param>
     public static void AddPkix(this JsContact contact, CatalogedApplicationPkix application) {
         contact.AddKeyData(application.Certificate, application.Kind, application.AccountAddress, application.Contexts);
         contact.Update();
         }
 
+    /// <summary>
+    /// Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
+    /// </summary>
+    /// <param name="contact">The contact to add the application details to.</param>
+    /// <param name="application">The application to add.</param>
     public static void AddOpenPgp(this JsContact contact, CatalogedApplicationOpenPgp application) {
         contact.AddKeyData(application.Public, application.Kind, application.AccountAddress, application.Contexts);
         foreach (var key in application.SubKey) {
@@ -304,23 +348,42 @@ public static partial class Extensions {
         contact.Update();
         }
 
+    /// <summary>
+    /// Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
+    /// </summary>
+    /// <param name="contact">The contact to add the application details to.</param>
+    /// <param name="application">The application to add.</param>
     public static void AddDeveloper(this JsContact contact, CatalogedApplicationDeveloper application) {
         contact.AddServices(application.Kind, application.AccountAddress, application.Ssh);
         contact.AddServices(application.Kind, application.AccountAddress, application.Commit);
         contact.AddServices(application.Kind, application.AccountAddress, application.Sign);
         }
 
-
+    /// <summary>
+    /// Add the key <paramref name="keyData"/> to the contact <paramref name="contact"/>.
+    /// </summary>
+    /// <param name="contact">The contact to add the key to.</param>
+    /// <param name="serviceId">The Sevice type.</param>
+    /// <param name="accountAddress">The account address to specify.</param>
+    /// <param name="key">Uri identifiers of the keys to add.</param>
     public static void AddServices(
                 this JsContact contact,
                 string serviceId,
                 string accountAddress,
                 List<string> keys) {
         if (keys is not null) {
+            foreach (var key in keys) {
+                AddService (contact, serviceId, accountAddress, key);
+                }
             }
         }
 
-
+    /// <summary>
+    /// Add the key <paramref name="keyData"/> to the contact <paramref name="contact"/>.
+    /// </summary>
+    /// <param name="contact">The contact to add the key to.</param>
+    /// <param name="serviceId">The Sevice type.</param>
+    /// <param name="accountAddress">The account address to specify.</param>
     public static void AddService(
                 this JsContact contact,
                 string serviceId,
@@ -335,6 +398,14 @@ public static partial class Extensions {
         contact.OnlineServices.AddUniqueKeyed(serviceId, service);
         }
 
+    /// <summary>
+    /// Add the key <paramref name="keyData"/> to the contact <paramref name="contact"/>.
+    /// </summary>
+    /// <param name="contact">The contact to add the key to.</param>
+    /// <param name="keyData">The key data to add.</param>
+    /// <param name="serviceId">The Sevice type.</param>
+    /// <param name="accountAddress">The account address to specify.</param>
+    /// <param name="contexts">The contexts in which the identifier is to be used.</param>
     public static void AddKeyData(
                     this JsContact contact, 
                     KeyData keyData, 
@@ -361,8 +432,6 @@ public static partial class Extensions {
             }
         contact.CryptoKeys ??= [];
         contact.CryptoKeys.Add(key, cryptoKey);
-
-
         }
 
 
