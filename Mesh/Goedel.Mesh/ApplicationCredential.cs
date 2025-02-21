@@ -21,26 +21,41 @@
 #endregion
 
 
-namespace Goedel.Mesh.Shell;
 
-public partial class Shell {
+// Todo: SSH Add support for SSH ECC Algorithms
+// Todo: SSH Support for per device client keys
+// Todo: SSH Create SSH root of trust for user
+// Todo: SSH Collect host credentials, sign and book to service
+// Todo: SSH Passphrase for PEM Private keys
 
-    public override ShellResult DnsCreate(DnsCreate Options) {
-        return base.DnsCreate(Options);
-        }
-
-    public override ShellResult DnsHandle(DnsHandle Options) {
-        return base.DnsHandle(Options);
-        }
-
-    public override ShellResult DnsZone(DnsZone Options) {
-        return base.DnsZone(Options);
-        }
-
-    public override ShellResult DnsWildcard(DnsWildcard Options) {
-        return base.DnsWildcard(Options);
-        }
+namespace Goedel.Mesh;
 
 
-
+public partial class ApplicationCredential {
     }
+
+
+public partial class CatalogedApplicationCredential {
+
+
+    ///<inheritdoc/>
+    public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {
+        }
+
+
+
+    ///<inheritdoc/>
+    public override KeyData[] GetEscrow() => Array.Empty<KeyData>();
+
+    ///<inheritdoc/>
+    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
+
+    ///<inheritdoc/>
+    public override void ToBuilder(StringBuilder output) {
+
+        }
+    }
+
+
+
+

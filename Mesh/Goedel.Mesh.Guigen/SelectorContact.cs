@@ -8,12 +8,12 @@ public partial class ContactSection : IHeadedSelection {
     IAccountSelector? Account { get; }
     ContextUser? ContextUser => Account?.ContextUser;
 
-    public ContactSelection? ContactSelection { get; }
+    //public ContactSelection? ContactSelection { get; }
 
-    public GuigenCatalogContact? Catalog { get; }
+    //public GuigenCatalogContact? Catalog { get; }
 
     ///<inheritdoc/>
-    public override ISelectCollection? ChooseContact { get => ContactSelection; set { } }
+    //public override ISelectCollection? ChooseContact { get => ContactSelection; set { } }
 
     ///<inheritdoc/>
     public GuiBinding SelectionBinding => _BoundContact.BaseBinding;
@@ -23,25 +23,25 @@ public partial class ContactSection : IHeadedSelection {
     /// </summary>
     /// <param name="account">The account whose contacts are to be used.</param>
     public ContactSection(IAccountSelector? account = null) {
-        Account = account;
-        Catalog = ContextUser?.GetStore(CatalogContact.Label, create: false) as GuigenCatalogContact;
-        ContactSelection = Catalog is null ? null : new ContactSelection(ContextUser, Catalog);
+        //Account = account;
+        //Catalog = ContextUser?.GetStore(CatalogContact.Label, create: false) as GuigenCatalogContact;
+        //ContactSelection = Catalog is null ? null : new ContactSelection(ContextUser, Catalog);
         }
 
     public async Task AddAsync(CatalogedContact entry) {
-        ContactSelection.AssertNotNull(NYI.Throw);
-        var bound = BoundContact.Factory(entry);
-        await ContactSelection.AddAsync(bound);
+        //ContactSelection.AssertNotNull(NYI.Throw);
+        //var bound = BoundContact.Factory(entry);
+        //await ContactSelection.AddAsync(bound);
         }
 
     public async Task UpdateAsync(BoundContact entry) {
-        ContactSelection.AssertNotNull(NYI.Throw);
-        await ContactSelection.UpdateAsync(entry);
+        //ContactSelection.AssertNotNull(NYI.Throw);
+        //await ContactSelection.UpdateAsync(entry);
         }
 
     public async Task DeleteAsync(BoundContact entry) {
-        ContactSelection.AssertNotNull(NYI.Throw);
-        await ContactSelection.RemoveAsync(entry);
+        //ContactSelection.AssertNotNull(NYI.Throw);
+        //await ContactSelection.RemoveAsync(entry);
         }
 
     }
@@ -49,138 +49,138 @@ public partial class ContactSection : IHeadedSelection {
 #region // Bindings to classes specified through the Guigen schema.
 
 
-public partial class ContactNetworkAddress : IBoundPresentation {
+//public partial class ContactNetworkAddress : IBoundPresentation {
 
-    public NetworkAddress NetworkAddress => (Bound as NetworkAddress)!;
+//    public NetworkAddress NetworkAddress => (Bound as NetworkAddress)!;
 
-    public static ContactNetworkAddress Factory(NetworkAddress address) {
-        switch (address) {
-            case NetworkProfile networkProfile: {
-                return new ContactNetworkCredential(networkProfile) {
-                    Bound = address,
-                    };
-                }
-            default: {
-                return new ContactNetworkIdentifier() {
-                    Bound = address,
-                    Protocol = address.Protocol,
-                    Address = address.Address,
-                    Fingerprint = null
-                    };
-                }
+//    public static ContactNetworkAddress Factory(NetworkAddress address) {
+//        switch (address) {
+//            case NetworkProfile networkProfile: {
+//                return new ContactNetworkCredential(networkProfile) {
+//                    Bound = address,
+//                    };
+//                }
+//            default: {
+//                return new ContactNetworkIdentifier() {
+//                    Bound = address,
+//                    Protocol = address.Protocol,
+//                    Address = address.Address,
+//                    Fingerprint = null
+//                    };
+//                }
 
-            }
+//            }
 
 
-        }
+//        }
 
-    public virtual void Fill() {
-        }
+//    public virtual void Fill() {
+//        }
 
-    public IDataActions GetActions(string? protocol) =>
-        protocol is null ? null : new DataActions(protocol);
-    }
+//    public IDataActions GetActions(string? protocol) =>
+//        protocol is null ? null : new DataActions(protocol);
+//    }
 
 public record DataActions(string? Protocol) : IDataActions {
     }
 
 
-public partial class ContactNetworkIdentifier {
+//public partial class ContactNetworkIdentifier {
 
-    public override IDataActions? Actions => GetActions(Protocol);
-
-
-    public override IFieldIcon? Type => GetFieldIcon();
-
-    IFieldIcon GetFieldIcon() {
-        if (Protocol is null) {
-            return FieldIcons.MessageGeneric;
-            }
-
-        if (FieldIcons.ProtocolToImag.TryGetValue(Protocol.ToLower(), out var icon))
-            return icon;
+//    public override IDataActions? Actions => GetActions(Protocol);
 
 
+//    public override IFieldIcon? Type => GetFieldIcon();
 
-        return FieldIcons.MessageGeneric;
+//    IFieldIcon GetFieldIcon() {
+//        if (Protocol is null) {
+//            return FieldIcons.MessageGeneric;
+//            }
 
-        }
-
-    public override void Fill() {
-        Bound ??= new NetworkAddress();
-
-        NetworkAddress.Address = Address;
-        NetworkAddress.Protocol = Protocol;
-
-
-        base.Fill();
-
-        }
-    }
+//        if (FieldIcons.ProtocolToImag.TryGetValue(Protocol.ToLower(), out var icon))
+//            return icon;
 
 
 
-public partial class ContactNetworkCredential {
+//        return FieldIcons.MessageGeneric;
+
+//        }
+
+//    public override void Fill() {
+//        Bound ??= new NetworkAddress();
+
+//        NetworkAddress.Address = Address;
+//        NetworkAddress.Protocol = Protocol;
 
 
-    public override IDataActions? Actions => GetActions(Protocol);
+//        base.Fill();
 
-    NetworkProfile NetworkProfile => (Bound as NetworkProfile)!;
-
-    public override IFieldIcon? Type => FieldIcons.ContactMesh;
-
-
-    public ContactNetworkCredential() {
-        }
-
-    public ContactNetworkCredential(NetworkProfile networkProfile) : base(networkProfile) {
-        }
-
-    public override void Fill() {
-        Bound ??= new NetworkProfile();
-
-        NetworkProfile.Address = Address;
+//        }
+//    }
 
 
-        NetworkProfile.Protocol = Protocol;
+
+//public partial class ContactNetworkCredential {
 
 
-        base.Fill();
+//    public override IDataActions? Actions => GetActions(Protocol);
 
-        }
+//    NetworkProfile NetworkProfile => (Bound as NetworkProfile)!;
 
-    }
+//    public override IFieldIcon? Type => FieldIcons.ContactMesh;
 
-public partial class _ContactNetworkCredential {
-    public _ContactNetworkCredential() {
-        }
 
-    public _ContactNetworkCredential(NetworkProfile networkProfile) {
-        Bound = networkProfile;
-        Protocol = "mmm";
-        Address = networkProfile.Address;
+//    public ContactNetworkCredential() {
+//        }
 
-        var profile = networkProfile.EnvelopedProfileAccount?.EnvelopedObject;
-        Fingerprint = profile?.UdfString;
+//    public ContactNetworkCredential(NetworkProfile networkProfile) : base(networkProfile) {
+//        }
 
-        }
-    }
+//    public override void Fill() {
+//        Bound ??= new NetworkProfile();
 
-public partial class ContactPhysicalAddress : IBoundPresentation {
+//        NetworkProfile.Address = Address;
 
-    Location? Location => Bound as Location;
-    public virtual void Fill() {
-        Bound ??= new Location();
 
-        Location.Appartment = Appartment;
-        Location.Street = Street;
-        Location.District = District;
-        Location.Locality = Locality;
-        Location.Country = Country;
-        Location.Postcode = Postcode;
+//        NetworkProfile.Protocol = Protocol;
 
-        }
-    }
+
+//        base.Fill();
+
+//        }
+
+//    }
+
+//public partial class _ContactNetworkCredential {
+//    public _ContactNetworkCredential() {
+//        }
+
+//    public _ContactNetworkCredential(NetworkProfile networkProfile) {
+//        Bound = networkProfile;
+//        Protocol = "mmm";
+//        Address = networkProfile.Address;
+
+//        var profile = networkProfile.EnvelopedProfileAccount?.EnvelopedObject;
+//        Fingerprint = profile?.UdfString;
+
+//        }
+//    }
+
+//public partial class ContactPhysicalAddress : IBoundPresentation {
+
+//    Location? Location => Bound as Location;
+//    public virtual void Fill() {
+//        Bound ??= new Location();
+
+//        Location.Appartment = Appartment;
+//        Location.Street = Street;
+//        Location.District = District;
+//        Location.Locality = Locality;
+//        Location.Country = Country;
+//        Location.Postcode = Postcode;
+
+//        }
+//    }
 
 
 public partial class BoundContact : IBoundPresentation, IDialog {
@@ -244,10 +244,10 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
     public override string Display => Local ?? FullName;
 
 
-    static PersonName Default = new PersonName() {
-        First = "Unspecified",
-        Last = "Contact"
-        };
+    //static PersonName Default = new PersonName() {
+    //    First = "Unspecified",
+    //    Last = "Contact"
+    //    };
 
     public virtual CatalogedContact Convert() {
         var result = new CatalogedContact() {
@@ -290,39 +290,39 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
 
 
 
-    public static ISelectList Bind(IEnumerable<NetworkAddress>? input) {
-        if (input == null) {
-            return null!;
-            }
+    //public static ISelectList Bind(IEnumerable<NetworkAddress>? input) {
+    //    if (input == null) {
+    //        return null!;
+    //        }
 
-        var result = new SelectList();
+    //    var result = new SelectList();
 
-        foreach (var inputItem in input) {
-            var entry = ContactNetworkAddress.Factory(inputItem);
-            result.Add(entry);
-            }
-
-
-        return result;
+    //    foreach (var inputItem in input) {
+    //        var entry = ContactNetworkAddress.Factory(inputItem);
+    //        result.Add(entry);
+    //        }
 
 
+    //    return result;
 
-        }
+
+
+    //    }
 
 
     public virtual void Fill() {
         var bound = Bound as CatalogedContact;
 
         var personName = new PersonName() {
-            FullName = Display,
-            Prefix = Prefix,
-            Suffix = Suffix,
-            First = First,
-            Last = Last
+            //FullName = Display,
+            //Prefix = Prefix,
+            //Suffix = Suffix,
+            //First = First,
+            //Last = Last
             };
 
-        var addresses = FillNetworkAddress(NetworkAddresses);
-        var locations = FillLocations(PhysicalAddresses);
+        //var addresses = FillNetworkAddress(NetworkAddresses);
+        //var locations = FillLocations(PhysicalAddresses);
 
         throw new NYI();
 
@@ -336,44 +336,44 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
         }
 
 
-    List<NetworkAddress> FillNetworkAddress(ISelectList? addresses) {
-        if (addresses == null) {
-            return null!;
-            }
+    //List<NetworkAddress> FillNetworkAddress(ISelectList? addresses) {
+    //    if (addresses == null) {
+    //        return null!;
+    //        }
 
-        var result = new List<NetworkAddress>();
+    //    var result = new List<NetworkAddress>();
 
-        foreach (var entry in addresses.Entries) {
-            var address = entry as ContactNetworkAddress;
-            // here we have to do the transmogrification.
-            address.Fill();
-            result.Add(address.NetworkAddress);
+    //    foreach (var entry in addresses.Entries) {
+    //        var address = entry as ContactNetworkAddress;
+    //        // here we have to do the transmogrification.
+    //        address.Fill();
+    //        result.Add(address.NetworkAddress);
 
-            }
+    //        }
 
-        return result;
+    //    return result;
 
-        }
+    //    }
 
-    List<Location> FillLocations(ISelectList? locations) {
-        if (locations == null) {
-            return null!;
-            }
+    //List<Location> FillLocations(ISelectList? locations) {
+    //    if (locations == null) {
+    //        return null!;
+    //        }
 
-        var result = new List<Location>();
+    //    var result = new List<Location>();
 
-        foreach (var entry in locations.Entries) {
-            var address = entry as ContactPhysicalAddress;
-            address.Fill();
-            result.Add(address.Bound as Location);
-            // here we have to do the transmogrification.
+    //    foreach (var entry in locations.Entries) {
+    //        var address = entry as ContactPhysicalAddress;
+    //        address.Fill();
+    //        result.Add(address.Bound as Location);
+    //        // here we have to do the transmogrification.
 
-            }
+    //        }
 
-        return result;
+    //    return result;
 
 
-        }
+    //    }
     }
 
 
@@ -465,8 +465,8 @@ public partial class ContactSelection : SelectionCatalog<GuigenCatalogContact,
 
 
     static PersonName Default = new PersonName() {
-        First = "Unspecified",
-        Last = "Contact"
+        //First = "Unspecified",
+        //Last = "Contact"
         };
 
 
@@ -492,12 +492,13 @@ public partial class ContactSelection : SelectionCatalog<GuigenCatalogContact,
         binding.Fill();
         return binding.Bound as CatalogedContact;
         }
-    #endregion
-
-
-
-
     }
+#endregion
+
+
+
+
+
 
 public partial class QrContact : IMessageable {
 
@@ -505,21 +506,21 @@ public partial class QrContact : IMessageable {
         throw new NYI();
         }
 
-    public override IResult TearDown(Gui gui) {
-        if (QrCode != null) {
-            var everything = gui as EverythingMaui;
-            everything.UnRegister(QrCode);
-            }
+    //public override IResult TearDown(Gui gui) {
+    //    if (QrCode != null) {
+    //        var everything = gui as EverythingMaui;
+    //        everything.UnRegister(QrCode);
+    //        }
 
-        return NullResult.Teardown;
-        }
+    //    return NullResult.Teardown;
+    //    }
 
-    public override IResult Initialize(Gui gui) {
-        var everything = gui as EverythingMaui;
-        QrCode = everything.GetQrContact(this);
+    //public override IResult Initialize(Gui gui) {
+    //    var everything = gui as EverythingMaui;
+    //    QrCode = everything.GetQrContact(this);
 
-        return NullResult.Initialized;
-        }
+    //    return NullResult.Initialized;
+    //    }
 
     }
 

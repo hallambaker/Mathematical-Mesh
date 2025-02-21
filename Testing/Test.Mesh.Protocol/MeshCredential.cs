@@ -23,8 +23,12 @@
 
 
 using Goedel.Cryptography.Dare;
+using Goedel.Mesh.Client;
 using Goedel.Mesh.Shell;
+using Goedel.Registry;
 using Goedel.Test.Core;
+
+using System.Collections.Generic;
 
 namespace Goedel.XUnit;
 
@@ -79,7 +83,26 @@ public partial class TestService {
         (validatedaccount as MeshVerifiedAccount).TestNotNull();
         }
 
+    [Fact]
+    public void TestCredentialAccountApps() {
+        var testEnvironmentCommon = GetTestEnvironmentCommon();
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                DeviceAliceAdmin, AccountAlice, "main", HandleAlice);
 
+        // add an ssh app
+        var roles = new List<string> { Rights.IdRolesWeb };
+        var applicationSSH = CatalogedApplicationSsh.Create("SSH", roles);
+        var resultTransact1 = contextAccountAlice.AddApplication(applicationSSH, [null]).Sync();
+
+        // add a mail app
+        // Create an ssh application
+        var applicationMail = CatalogedApplicationMail.Create("alice@example.net", roles);
+        var resultTransact2 = contextAccountAlice.AddApplication(applicationSSH, [null]).Sync();
+
+        // add a developer app
+
+
+        }
 
 
     [Theory]

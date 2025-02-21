@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/21/2025 12:30:08 PM
+//  This file was automatically generated at 2/21/2025 3:51:06 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -147,8 +147,8 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"CatalogedFeed", CatalogedFeed._Factory},
 	    {"CatalogedApplicationMail", CatalogedApplicationMail._Factory},
 	    {"CatalogedApplicationSsh", CatalogedApplicationSsh._Factory},
-	    {"CatalogedApplicationPkix", CatalogedApplicationPkix._Factory},
-	    {"CatalogedApplicationOpenPgp", CatalogedApplicationOpenPgp._Factory},
+	    {"CatalogedApplicationCredential", CatalogedApplicationCredential._Factory},
+	    {"CatalogedApplicationDns", CatalogedApplicationDns._Factory},
 	    {"CatalogedApplicationDeveloper", CatalogedApplicationDeveloper._Factory},
 	    {"MessageInvoice", MessageInvoice._Factory},
 	    {"CatalogedReceipt", CatalogedReceipt._Factory},
@@ -7232,7 +7232,7 @@ public partial class CatalogedApplicationSsh : CatalogedApplication {
 
 	/// <summary>
 	/// </summary>
-public partial class CatalogedApplicationPkix : CatalogedApplication {
+public partial class CatalogedApplicationCredential : CatalogedApplication {
         /// <summary>
         /// </summary>
 
@@ -7248,11 +7248,17 @@ public partial class CatalogedApplicationPkix : CatalogedApplication {
 
 	public virtual List<string>?					Contexts  {get; set;}
         /// <summary>
-        ///The S/Mime signature key
+        ///The primary key, i.e. the OpenPGP public key or PKIX root certificate
         /// </summary>
 
-	public virtual KeyData?					Certificate  {get; set;}
+	public virtual KeyData?					Primary  {get; set;}
 
+        /// <summary>
+        ///Secondary keys, i.e. OpenPGP sub keys or PKIX intermediate or end
+        ///entity certificates.
+        /// </summary>
+
+	public virtual List<KeyData>?					Secondary  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -7263,15 +7269,18 @@ public partial class CatalogedApplicationPkix : CatalogedApplication {
 			new() {
 
 			{ "AccountAddress", new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationPkix).AccountAddress = value;}, (IBinding data) => (data as CatalogedApplicationPkix).AccountAddress )},
+					(IBinding data, string? value) => {(data as CatalogedApplicationCredential).AccountAddress = value;}, (IBinding data) => (data as CatalogedApplicationCredential).AccountAddress )},
 			{ "Kind", new PropertyString ("Kind", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationPkix).Kind = value;}, (IBinding data) => (data as CatalogedApplicationPkix).Kind )},
+					(IBinding data, string? value) => {(data as CatalogedApplicationCredential).Kind = value;}, (IBinding data) => (data as CatalogedApplicationCredential).Kind )},
 			{ "Contexts", new PropertyListString ("Contexts", 
-					(IBinding data, List<string>? value) => {(data as CatalogedApplicationPkix).Contexts = value;}, (IBinding data) => (data as CatalogedApplicationPkix).Contexts )},
-			{ "Certificate", new PropertyStruct ("Certificate", 
-					(IBinding data, object? value) => {(data as CatalogedApplicationPkix).Certificate = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationPkix).Certificate,
-					false, ()=>new  KeyData(), ()=>new KeyData())}
-        }, __Tag,() => new CatalogedApplicationPkix(), CatalogedApplication._binding);
+					(IBinding data, List<string>? value) => {(data as CatalogedApplicationCredential).Contexts = value;}, (IBinding data) => (data as CatalogedApplicationCredential).Contexts )},
+			{ "Primary", new PropertyStruct ("Primary", 
+					(IBinding data, object? value) => {(data as CatalogedApplicationCredential).Primary = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationCredential).Primary,
+					false, ()=>new  KeyData(), ()=>new KeyData())},
+			{ "Secondary", new PropertyListStruct ("Secondary", 
+					(IBinding data, object? value) => {(data as CatalogedApplicationCredential).Secondary = value as List<KeyData>;}, (IBinding data) => (data as CatalogedApplicationCredential).Secondary,
+					false, ()=>new  List<KeyData>(), ()=>new KeyData())}
+        }, __Tag,() => new CatalogedApplicationCredential(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -7300,13 +7309,13 @@ public partial class CatalogedApplicationPkix : CatalogedApplication {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "CatalogedApplicationPkix";
+	public new const string __Tag = "CatalogedApplicationCredential";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new CatalogedApplicationPkix();
+	public static new JsonObject _Factory () => new CatalogedApplicationCredential();
 
 
     /// <summary>
@@ -7315,15 +7324,15 @@ public partial class CatalogedApplicationPkix : CatalogedApplication {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new CatalogedApplicationPkix FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new CatalogedApplicationCredential FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedApplicationPkix;
+			return Out as CatalogedApplicationCredential;
 			}
-		var Result = new CatalogedApplicationPkix ();
+		var Result = new CatalogedApplicationCredential ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -7335,7 +7344,7 @@ public partial class CatalogedApplicationPkix : CatalogedApplication {
 
 	/// <summary>
 	/// </summary>
-public partial class CatalogedApplicationOpenPgp : CatalogedApplication {
+public partial class CatalogedApplicationDns : CatalogedApplication {
         /// <summary>
         /// </summary>
 
@@ -7344,23 +7353,8 @@ public partial class CatalogedApplicationOpenPgp : CatalogedApplication {
         /// <summary>
         /// </summary>
 
-	public virtual string?					Kind  {get; set;}
+	public virtual string?					ServiceAddress  {get; set;}
 
-        /// <summary>
-        /// </summary>
-
-	public virtual List<string>?					Contexts  {get; set;}
-        /// <summary>
-        ///The primary public key used to sign subkeys
-        /// </summary>
-
-	public virtual KeyData?					Public  {get; set;}
-
-        /// <summary>
-        ///The subkeys
-        /// </summary>
-
-	public virtual List<KeyData>?					SubKey  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -7371,18 +7365,10 @@ public partial class CatalogedApplicationOpenPgp : CatalogedApplication {
 			new() {
 
 			{ "AccountAddress", new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationOpenPgp).AccountAddress = value;}, (IBinding data) => (data as CatalogedApplicationOpenPgp).AccountAddress )},
-			{ "Kind", new PropertyString ("Kind", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationOpenPgp).Kind = value;}, (IBinding data) => (data as CatalogedApplicationOpenPgp).Kind )},
-			{ "Contexts", new PropertyListString ("Contexts", 
-					(IBinding data, List<string>? value) => {(data as CatalogedApplicationOpenPgp).Contexts = value;}, (IBinding data) => (data as CatalogedApplicationOpenPgp).Contexts )},
-			{ "Public", new PropertyStruct ("Public", 
-					(IBinding data, object? value) => {(data as CatalogedApplicationOpenPgp).Public = value as KeyData;}, (IBinding data) => (data as CatalogedApplicationOpenPgp).Public,
-					false, ()=>new  KeyData(), ()=>new KeyData())},
-			{ "SubKey", new PropertyListStruct ("SubKey", 
-					(IBinding data, object? value) => {(data as CatalogedApplicationOpenPgp).SubKey = value as List<KeyData>;}, (IBinding data) => (data as CatalogedApplicationOpenPgp).SubKey,
-					false, ()=>new  List<KeyData>(), ()=>new KeyData())}
-        }, __Tag,() => new CatalogedApplicationOpenPgp(), CatalogedApplication._binding);
+					(IBinding data, string? value) => {(data as CatalogedApplicationDns).AccountAddress = value;}, (IBinding data) => (data as CatalogedApplicationDns).AccountAddress )},
+			{ "ServiceAddress", new PropertyString ("ServiceAddress", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationDns).ServiceAddress = value;}, (IBinding data) => (data as CatalogedApplicationDns).ServiceAddress )}
+        }, __Tag,() => new CatalogedApplicationDns(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -7411,13 +7397,13 @@ public partial class CatalogedApplicationOpenPgp : CatalogedApplication {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "CatalogedApplicationOpenPgp";
+	public new const string __Tag = "CatalogedApplicationDns";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new CatalogedApplicationOpenPgp();
+	public static new JsonObject _Factory () => new CatalogedApplicationDns();
 
 
     /// <summary>
@@ -7426,15 +7412,15 @@ public partial class CatalogedApplicationOpenPgp : CatalogedApplication {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new CatalogedApplicationOpenPgp FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new CatalogedApplicationDns FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedApplicationOpenPgp;
+			return Out as CatalogedApplicationDns;
 			}
-		var Result = new CatalogedApplicationOpenPgp ();
+		var Result = new CatalogedApplicationDns ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

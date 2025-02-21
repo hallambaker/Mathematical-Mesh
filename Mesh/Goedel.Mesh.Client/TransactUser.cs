@@ -124,6 +124,20 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
 
 
 
+    public CatalogedContact GetContactSelf(string? identifier = null) {
+        throw new NotImplementedException();
+
+        }
+
+    public void UpdateContact(
+                CatalogedContact contact, 
+                CatalogedApplication application) {
+
+        throw new NotImplementedException();
+        }
+
+
+
     /// <summary>
     /// Add the application described in <paramref name="catalogedApplication"/> to the
     /// profile and create application entries for each authorized device.

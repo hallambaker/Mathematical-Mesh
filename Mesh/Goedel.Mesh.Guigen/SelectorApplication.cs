@@ -168,25 +168,25 @@ public partial class BoundApplicationSsh {
 
         }
     }
-public partial class BoundApplicationOpenPgp {
+//public partial class BoundApplicationOpenPgp {
 
-    public override string? IconValue => "application_openpgp.png";
+//    public override string? IconValue => "application_openpgp.png";
 
-    public override CatalogedApplication Convert() {
-        throw new NotImplementedException();
-        //var result = new CatalogedApplication();
+//    public override CatalogedApplication Convert() {
+//        throw new NotImplementedException();
+//        //var result = new CatalogedApplication();
 
-        //return result;
-        }
+//        //return result;
+//        }
 
-    public static BoundApplicationOpenPgp Convert(CatalogedApplicationOpenPgp application) {
-        var result = new BoundApplicationOpenPgp();
-        result.Fill(application);
+//    public static BoundApplicationOpenPgp Convert(CatalogedApplicationCredential application) {
+//        var result = new BoundApplicationOpenPgp();
+//        result.Fill(application);
 
-        return result;
+//        return result;
 
-        }
-    }
+//        }
+//    }
 public partial class BoundApplicationDeveloper {
 
     public override string? IconValue => "application_developer.png";
@@ -206,7 +206,7 @@ public partial class BoundApplicationDeveloper {
 
         }
     }
-public partial class BoundApplicationPkix {
+public partial class BoundApplicationCredential {
 
     public override string? IconValue => "application_pkix.png";
 
@@ -217,14 +217,38 @@ public partial class BoundApplicationPkix {
         //return result;
         }
 
-    public static BoundApplicationPkix Convert(CatalogedApplicationPkix application) {
-        var result = new BoundApplicationPkix();
+    public static BoundApplicationCredential Convert(CatalogedApplicationCredential application) {
+        var result = new BoundApplicationCredential();
         result.Fill(application);
 
         return result;
 
         }
     }
+
+
+public partial class BoundApplicationDns {
+
+    public override string? IconValue => "application_pkix.png";
+
+    public override CatalogedApplication Convert() {
+        throw new NotImplementedException();
+        //var result = new CatalogedApplication();
+
+        //return result;
+        }
+
+    public static BoundApplicationDns Convert(CatalogedApplicationDns application) {
+        var result = new BoundApplicationDns();
+        result.Fill(application);
+
+        return result;
+
+        }
+    }
+
+
+
 //public partial class BoundApplicationGroup {
 
 //    public override string? IconValue => "application_group.png";
@@ -244,25 +268,25 @@ public partial class BoundApplicationPkix {
 
 //        }
 //    }
-public partial class BoundApplicationCallSign {
+//public partial class BoundApplicationCallSign {
 
-    public override string? IconValue => "application_callsign.png";
+//    public override string? IconValue => "application_callsign.png";
 
-    public override CatalogedApplication Convert() {
-        throw new NotImplementedException();
-        //var result = new CatalogedApplication();
+//    public override CatalogedApplication Convert() {
+//        throw new NotImplementedException();
+//        //var result = new CatalogedApplication();
 
-        //return result;
-        }
+//        //return result;
+//        }
 
-    public static BoundApplicationCallSign Convert(CatalogedApplicationCallsign application) {
-        var result = new BoundApplicationCallSign();
-        result.Fill(application);
+//    public static BoundApplicationCallSign Convert(CatalogedApplicationCallsign application) {
+//        var result = new BoundApplicationCallSign();
+//        result.Fill(application);
 
-        return result;
+//        return result;
 
-        }
-    }
+//        }
+//    }
 
 
 #endregion
@@ -367,22 +391,18 @@ public partial class ApplicationSelection : SelectionCatalog<GuigenCatalogApplic
             case CatalogedApplicationSsh application: {
                 return BoundApplicationSsh.Convert(application);
                 }
-            case CatalogedApplicationOpenPgp application: {
-                return BoundApplicationOpenPgp.Convert(application);
+            case CatalogedApplicationCredential application: {
+                return BoundApplicationCredential.Convert(application);
                 }
             case CatalogedApplicationDeveloper application: {
                 return BoundApplicationDeveloper.Convert(application);
                 }
-            case CatalogedApplicationPkix application: {
-                return BoundApplicationPkix.Convert(application);
+            case CatalogedApplicationDns application: {
+                return BoundApplicationDns.Convert(application);
                 }
             case CatalogedGroup application: {
                 return BoundApplicationGroup.Convert(application, ContextAccount);
                 }
-            case CatalogedApplicationCallsign application: {
-                return BoundApplicationCallSign.Convert(application);
-                }
-
             default: {
                 return new BoundApplication(input);
                 }

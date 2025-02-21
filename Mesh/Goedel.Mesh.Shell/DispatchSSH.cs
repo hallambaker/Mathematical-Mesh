@@ -39,21 +39,20 @@ public partial class Shell {
         var rights = GetRights(options);
         var id = options.ID.Value;
         var contextUser = GetContextUser(options);
-        using var transaction = contextUser.TransactBegin();
+
 
         var applicationSSH = CatalogedApplicationSsh.Create(id, rights);
-        transaction.ApplicationCreate(applicationSSH);
-        var resultTransact = transaction.TransactAsync().Sync();
+        var resultTransact = contextUser.AddApplication(applicationSSH, [null]).Sync();
 
         return resultTransact.Success() ?
             new ResultApplication() {
                 Success = true,
                 Application = applicationSSH
                 } :
-                new ResultFail() {
-                    Success = false,
-                    Reason = "TBS"
-                    };
+            new ResultFail() {
+                Success = false,
+                Reason = "TBS"
+                };
         }
 
 
@@ -76,8 +75,6 @@ public partial class Shell {
 
         var applicationSsh = contextUser.GetApplicationSsh(id);
 
-
-
         if (!options.Private.Value) {
             var publicformat = GetKeyFileFormat(options, KeyFileFormat.OpenSSH);
 
@@ -90,9 +87,6 @@ public partial class Shell {
             publicformat
             );
             }
-
-
-
 
         var applicationEntrySsh = contextUser.GetApplicationEntrySsh(applicationSsh.Key);
         applicationEntrySsh.AssertNotNull(NYI.Throw);

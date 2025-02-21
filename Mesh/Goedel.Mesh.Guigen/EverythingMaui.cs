@@ -215,7 +215,7 @@ public partial class EverythingMaui {
     BoundAccount GetBoundAccount(ContextUser contextUser) {
         //contextUser.StatusAsync().Sync();
 
-        contextUser.DictionaryCatalogDelegates.Replace(CatalogContact.Label, GuigenCatalogContact.Factory);
+        //contextUser.DictionaryCatalogDelegates.Replace(CatalogContact.Label, GuigenCatalogContact.Factory);
         contextUser.DictionaryCatalogDelegates.Replace(CatalogDocument.Label, GuigenCatalogApplication.Factory);
         // Feeds is a subset of Bookmarks
         // Groups is a subset of Application

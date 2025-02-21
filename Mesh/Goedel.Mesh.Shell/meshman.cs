@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 2/21/2025 12:30:12 PM
+//  This file was automatically generated at 2/21/2025 3:51:10 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -404,6 +404,7 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
         Identifier = "dns",
 		Brief = "<Unspecified>",
 		Entries = new  () {
+			{"create", _DnsCreate._DescribeCommand },
 			{"zone", _DnsZone._DescribeCommand },
 			{"handle", _DnsHandle._DescribeCommand },
 			{"wildcard", _DnsWildcard._DescribeCommand }
@@ -1642,6 +1643,16 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
 		var result = Dispatch.DevList (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_DnsCreate (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		DnsCreate		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.DnsCreate (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -23668,6 +23679,30 @@ public class _DevList : Goedel.Command.Dispatch ,
 public partial class DevList : _DevList {
     } // class DevList
 
+public class _DnsCreate : Goedel.Command.Dispatch {
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {		} ;
+
+
+
+
+
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "create",
+		Brief =  "<Unspecified>",
+		HandleDelegate =  CommandLineInterpreter.Handle_DnsCreate,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			}
+		};
+
+	}
+
+public partial class DnsCreate : _DnsCreate {
+    } // class DnsCreate
+
 public class _DnsZone : Goedel.Command.Dispatch ,
 						IAccountOptions,
 						IReporting{
@@ -24701,6 +24736,11 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		}
 
 	public virtual ShellResult DevList ( DevList Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult DnsCreate ( DnsCreate Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}

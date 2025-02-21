@@ -1366,6 +1366,9 @@
 			Include Reporting
 
 	CommandSet Dns "dns"
+		Command DnsCreate "create"
+
+
 		Command DnsZone "zone"
 			Brief "Publish the specified DNS zone"
 			Parameter Name "name" String

@@ -22,6 +22,7 @@
 
 
 using Goedel.Discovery;
+using Goedel.Registry;
 
 namespace Goedel.Mesh.Client;
 
@@ -497,6 +498,29 @@ public partial class ContextUser : ContextAccount {
 
         return cataloged;
         }
+
+
+
+    public async Task<TransactResponse> AddApplication(
+                    CatalogedApplication application,
+                    IEnumerable<string> contacts = null) {
+
+        using var transaction = TransactBegin();
+
+        if (contacts != null) {
+            foreach (var contactId in contacts) {
+                var contact = transaction.GetContactSelf(contactId);
+                transaction.UpdateContact(contact, application);
+                }
+            }
+
+        transaction.ApplicationCreate(application);
+        var resultTransact = await transaction.TransactAsync();
+
+
+        return resultTransact;
+        }
+
 
 
     #endregion

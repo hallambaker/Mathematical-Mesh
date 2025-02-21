@@ -261,16 +261,12 @@ public static partial class Extensions {
                 AddGroup (contact, catalogedGroup); 
                 break;
                 }
-            case CatalogedApplicationPkix catalogedPkix: {
-                AddPkix(contact, catalogedPkix);
+            case CatalogedApplicationCredential catalogedPkix: {
+                AddCredential(contact, catalogedPkix);
                 break;
                 }
             case CatalogedApplicationMail catalogedmail: {
                 AddMail(contact, catalogedmail);
-                break;
-                }
-            case CatalogedApplicationOpenPgp catalogedOpenPgp: {
-                AddOpenPgp(contact, catalogedOpenPgp);
                 break;
                 }
             case CatalogedApplicationSsh catalogedSsh: {
@@ -329,24 +325,27 @@ public static partial class Extensions {
     /// </summary>
     /// <param name="contact">The contact to add the application details to.</param>
     /// <param name="application">The application to add.</param>
-    public static void AddPkix(this JsContact contact, CatalogedApplicationPkix application) {
-        contact.AddKeyData(application.Certificate, application.Kind, application.AccountAddress, application.Contexts);
-        contact.Update();
-        }
-
-    /// <summary>
-    /// Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
-    /// </summary>
-    /// <param name="contact">The contact to add the application details to.</param>
-    /// <param name="application">The application to add.</param>
-    public static void AddOpenPgp(this JsContact contact, CatalogedApplicationOpenPgp application) {
-        contact.AddKeyData(application.Public, application.Kind, application.AccountAddress, application.Contexts);
-        foreach (var key in application.SubKey) {
+    public static void AddCredential(this JsContact contact, CatalogedApplicationCredential application) {
+        contact.AddKeyData(application.Primary, application.Kind, application.AccountAddress, application.Contexts);
+        foreach (var key in application.Secondary) {
             contact.AddKeyData(key, application.Kind, application.AccountAddress, application.Contexts);
             }
-
         contact.Update();
         }
+
+    ///// <summary>
+    ///// Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
+    ///// </summary>
+    ///// <param name="contact">The contact to add the application details to.</param>
+    ///// <param name="application">The application to add.</param>
+    //public static void AddOpenPgp(this JsContact contact, CatalogedApplicationOpenPgp application) {
+    //    contact.AddKeyData(application.Public, application.Kind, application.AccountAddress, application.Contexts);
+    //    foreach (var key in application.SubKey) {
+    //        contact.AddKeyData(key, application.Kind, application.AccountAddress, application.Contexts);
+    //        }
+
+    //    contact.Update();
+    //    }
 
     /// <summary>
     /// Add the application <paramref name="application"/> to the contact <paramref name="contact"/>

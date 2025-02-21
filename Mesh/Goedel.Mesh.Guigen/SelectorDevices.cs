@@ -73,7 +73,7 @@ public partial class BoundDevice : IBoundPresentation, IDialog {
     public override IFieldIcon Type => FieldIcons.Device(DeviceType);
 
 
-    public override string Udf => CatalogedDevice.DeviceUdf;
+    //public override string Udf => CatalogedDevice.DeviceUdf;
 
     public static BoundDevice Factory(CatalogedDevice contact) {
         var result = new BoundDevice();

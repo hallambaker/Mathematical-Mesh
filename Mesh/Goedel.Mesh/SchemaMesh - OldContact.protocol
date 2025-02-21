@@ -209,3 +209,18 @@
 		String Country
 		Float Latitude
 		Float Longitude
+
+
+	Structure CatalogedApplicationOpenPgp
+		Inherits CatalogedApplication
+		String AccountAddress
+		String Kind
+		String Contexts
+			Multiple
+		Struct KeyData Public
+			Description
+				|The primary public key used to sign subkeys
+		Struct KeyData SubKey
+			Multiple
+			Description
+				|The subkeys

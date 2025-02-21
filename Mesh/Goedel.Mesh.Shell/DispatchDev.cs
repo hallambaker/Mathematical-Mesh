@@ -21,24 +21,22 @@
 #endregion
 
 
+
 namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
 
-    public override ShellResult DnsCreate(DnsCreate Options) {
-        return base.DnsCreate(Options);
+    public override ShellResult DevCreate(DevCreate Options) {
+        return base.DevCreate(Options);
         }
 
-    public override ShellResult DnsHandle(DnsHandle Options) {
-        return base.DnsHandle(Options);
+
+    public override ShellResult DevGet(DevGet Options) {
+        return base.DevGet(Options);
         }
 
-    public override ShellResult DnsZone(DnsZone Options) {
-        return base.DnsZone(Options);
-        }
-
-    public override ShellResult DnsWildcard(DnsWildcard Options) {
-        return base.DnsWildcard(Options);
+    public override ShellResult DevList(DevList Options) {
+        return base.DevList(Options);
         }
 
 

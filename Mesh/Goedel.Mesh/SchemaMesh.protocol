@@ -1016,29 +1016,26 @@
 			Description
 				|The Client authentication key
 
-	Structure CatalogedApplicationPkix
+	Structure CatalogedApplicationCredential
 		Inherits CatalogedApplication
 		String AccountAddress
 		String Kind
 		String Contexts
 			Multiple
-		Struct KeyData Certificate
+		Struct KeyData Primary
 			Description
-				|The S/Mime signature key
+				|The primary key, i.e. the OpenPGP public key or PKIX root certificate
+		Struct KeyData Secondary
+			Multiple
+			Description
+				|Secondary keys, i.e. OpenPGP sub keys or PKIX intermediate or end
+				|entity certificates.
 
-	Structure CatalogedApplicationOpenPgp
-		Inherits CatalogedApplication
+	Structure CatalogedApplicationDns
 		String AccountAddress
-		String Kind
-		String Contexts
-			Multiple
-		Struct KeyData Public
-			Description
-				|The primary public key used to sign subkeys
-		Struct KeyData SubKey
-			Multiple
-			Description
-				|The subkeys
+		Inherits CatalogedApplication
+		String ServiceAddress
+			| The service maintaining the DNS registration
 
 	Structure CatalogedApplicationDeveloper
 		Inherits CatalogedApplication

@@ -262,88 +262,10 @@ public partial class CatalogedApplication {
     }
 
 
-public partial class CatalogedApplicationPkix {
-
-
-    ///<inheritdoc/>
-    public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {
-        }
 
 
 
-    ///<inheritdoc/>
-    public override KeyData[] GetEscrow() => Array.Empty<KeyData>();
-
-    ///<inheritdoc/>
-    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
-
-    ///<inheritdoc/>
-    public override void ToBuilder(StringBuilder output) {
-
-        }
-    }
 
 
-public partial class CatalogedApplicationOpenPgp {
-
-
-    ///<inheritdoc/>
-    public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {
-        }
-
-
-
-    ///<inheritdoc/>
-    public override KeyData[] GetEscrow() => Array.Empty<KeyData>();
-
-    ///<inheritdoc/>
-    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
-
-    ///<inheritdoc/>
-    public override void ToBuilder(StringBuilder output) {
-
-        }
-    }
-
-public partial class CatalogedApplicationDeveloper {
-
-
-    ///<inheritdoc/>
-    public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {
-        }
-
-
-
-    ///<inheritdoc/>
-    public override KeyData[] GetEscrow() => Array.Empty<KeyData>();
-
-    ///<inheritdoc/>
-    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
-
-    ///<inheritdoc/>
-    public override void ToBuilder(StringBuilder output) {
-
-        }
-    }
-
-
-//public partial class CatalogedApplicationGit {
-
-
-//    ///<inheritdoc/>
-//    public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {
-//        }
-
-//    ///<inheritdoc/>
-//    public override KeyData[] GetEscrow() => Array.Empty<KeyData>();
-
-//    ///<inheritdoc/>
-//    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
-
-//    ///<inheritdoc/>
-//    public override void ToBuilder(StringBuilder output) {
-
-//        }
-//    }
 
 #endregion
