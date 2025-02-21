@@ -235,10 +235,10 @@ public partial class ContextGroup : ContextAccount {
                 List<CryptographicCapability> capabilities = null, ContactPerson contact = null, string dnsHandle = null) {
 
 
-        var anchorAccount = new Anchor() {
-            Udf = ProfileGroup.UdfString,
-            Validation = "Self"
-            };
+        //var anchorAccount = new Anchor() {
+        //    Udf = ProfileGroup.UdfString,
+        //    Validation = "Self"
+        //    };
 
         throw new NotImplementedException();
 

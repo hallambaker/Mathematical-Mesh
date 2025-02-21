@@ -2537,33 +2537,6 @@
             <param name="callsign">The callsign to query.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Callsign.Extensions.CallsignTransferAsync(Goedel.Mesh.Client.ContextUser,System.String,System.String)">
-            <summary>
-            Transfer the callsign <paramref name="callsign"/> to <paramref name="recipient"/>.
-            </summary>
-            <param name="contextAccount">The account context to which the callsikgn is currently bound.</param>
-            <param name="callsign">The callsign to transfer.</param>
-            <param name="recipient">The party to receive the callsign.</param>
-            <returns>The resulting registration request (if successful), otherwise
-            throws an exception.</returns>
-        </member>
-        <member name="M:Goedel.Callsign.Extensions.GetProfile(Goedel.Mesh.Contact,System.String)">
-            <summary>
-            Return the Mesh profile bound to the address <paramref name="address"/>
-            in the contact assertion <paramref name="contact"/>.
-            </summary>
-            <param name="contact">The contact assertion to return.</param>
-            <param name="address">The address (used to disambiguate multiple 
-            profiles bound to the same contact).</param>
-            <returns>The account profile.</returns>
-        </member>
-        <member name="M:Goedel.Callsign.Extensions.ListCallsigns(Goedel.Mesh.Client.ContextUser)">
-            <summary>
-            List the callsigns owned by <paramref name="contextAccount"/>.
-            </summary>
-            <param name="contextAccount">The account context.</param>
-            <returns>The list of callsign application bindings.</returns>
-        </member>
         <member name="M:Goedel.Callsign.Extensions.ProcessMessageAsync(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.Message,System.Boolean,System.Boolean,System.Collections.Generic.List{System.String})">
             <summary>
             Process CallsignRegistrationResponse messages in context.

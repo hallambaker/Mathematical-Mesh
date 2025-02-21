@@ -811,41 +811,41 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             List<CryptographicCapability> capabilities = null,
             ContactPerson? contact = null, string dnsHandle = null) {
 
-        var anchorAccount = new Anchor() {
-            Udf = Profile.UdfString,
-            Validation = "Self"
-            };
-        // ContextMesh.ProfileMesh.UDF 
+        //var anchorAccount = new Anchor() {
+        //    Udf = Profile.UdfString,
+        //    Validation = "Self"
+        //    };
+        //// ContextMesh.ProfileMesh.UDF 
 
-        if (contact is null) {
-            contact = new ContactPerson() {
-                Anchors = new List<Anchor>() { anchorAccount }
-                };
-            }
-        else {
-            contact.Anchors ??= new();
-            contact.Anchors.Add(anchorAccount);
-            }
+        //if (contact is null) {
+        //    contact = new ContactPerson() {
+        //        Anchors = new List<Anchor>() { anchorAccount }
+        //        };
+        //    }
+        //else {
+        //    contact.Anchors ??= new();
+        //    contact.Anchors.Add(anchorAccount);
+        //    }
 
 
 
-        if (capabilities is null) {
-            var (primary, aliases) = GetAliases(ServiceAddress, ServiceDns, dnsHandle, Profile.UdfString);
-            var address = new NetworkProfile() {
-                EnvelopedProfileAccount = (Profile as ProfileAccount).GetEnvelopedProfileAccount(),
-                Address = primary,
-                Protocol = "mesh",
-                Aliases = aliases
-                };
-            //(ServiceAddress, Profile as ProfileAccount);
-            contact.NetworkAddresses = new List<NetworkAddress>() { address };
-            }
-        else {
-            var address = new NetworkCapability(ServiceAddress, Profile as ProfileAccount) {
-                Capabilities = capabilities
-                };
-            contact.NetworkAddresses = new List<NetworkAddress>() { address };
-            }
+        //if (capabilities is null) {
+        //    var (primary, aliases) = GetAliases(ServiceAddress, ServiceDns, dnsHandle, Profile.UdfString);
+        //    var address = new NetworkProfile() {
+        //        EnvelopedProfileAccount = (Profile as ProfileAccount).GetEnvelopedProfileAccount(),
+        //        Address = primary,
+        //        Protocol = "mesh",
+        //        Aliases = aliases
+        //        };
+        //    //(ServiceAddress, Profile as ProfileAccount);
+        //    contact.NetworkAddresses = new List<NetworkAddress>() { address };
+        //    }
+        //else {
+        //    var address = new NetworkCapability(ServiceAddress, Profile as ProfileAccount) {
+        //        Capabilities = capabilities
+        //        };
+        //    contact.NetworkAddresses = new List<NetworkAddress>() { address };
+        //    }
 
         throw new NYI();
 

@@ -52,7 +52,7 @@
     <None Update="MeshConstants.Constant">
       <Generator>Constant</Generator>
       <LastGenOutput>MeshConstants.cs</LastGenOutput>         
-    </None>    
+    </None>
     <None Update="SchemaMesh.protocol">
       <LastGenOutput>SchemaMesh.cs</LastGenOutput>
       <Generator>Protogen</Generator>

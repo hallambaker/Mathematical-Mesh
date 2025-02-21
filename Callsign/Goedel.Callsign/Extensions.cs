@@ -235,76 +235,76 @@ public static class Extensions {
         return catalogedApplication as CatalogedApplicationCallsign;
         }
 
-    /// <summary>
-    /// Transfer the callsign <paramref name="callsign"/> to <paramref name="recipient"/>.
-    /// </summary>
-    /// <param name="contextAccount">The account context to which the callsikgn is currently bound.</param>
-    /// <param name="callsign">The callsign to transfer.</param>
-    /// <param name="recipient">The party to receive the callsign.</param>
-    /// <returns>The resulting registration request (if successful), otherwise
-    /// throws an exception.</returns>
-    public static async Task<CallsignRegistrationRequest> CallsignTransferAsync(
-            this ContextUser contextAccount,
-            string callsign,
-            string recipient) {
-        throw new NYI();
+    ///// <summary>
+    ///// Transfer the callsign <paramref name="callsign"/> to <paramref name="recipient"/>.
+    ///// </summary>
+    ///// <param name="contextAccount">The account context to which the callsikgn is currently bound.</param>
+    ///// <param name="callsign">The callsign to transfer.</param>
+    ///// <param name="recipient">The party to receive the callsign.</param>
+    ///// <returns>The resulting registration request (if successful), otherwise
+    ///// throws an exception.</returns>
+    //public static async Task<CallsignRegistrationRequest> CallsignTransferAsync(
+    //        this ContextUser contextAccount,
+    //        string callsign,
+    //        string recipient) {
+    //    throw new NYI();
 
 
-        //// pull the contact entry for the recipient
-        //var contact = contextAccount.GetContact(recipient);
+    //    //// pull the contact entry for the recipient
+    //    //var contact = contextAccount.GetContact(recipient);
 
-        //var profile = GetProfile(contact.Contact, recipient);
-        //// create the transfer request
-        //return await contextAccount.CallsignRequestAsync(callsign, bind: false, transfer: profile);
+    //    //var profile = GetProfile(contact.Contact, recipient);
+    //    //// create the transfer request
+    //    //return await contextAccount.CallsignRequestAsync(callsign, bind: false, transfer: profile);
 
-        }
+    //    }
 
-    /// <summary>
-    /// Return the Mesh profile bound to the address <paramref name="address"/>
-    /// in the contact assertion <paramref name="contact"/>.
-    /// </summary>
-    /// <param name="contact">The contact assertion to return.</param>
-    /// <param name="address">The address (used to disambiguate multiple 
-    /// profiles bound to the same contact).</param>
-    /// <returns>The account profile.</returns>
-    static ProfileAccount GetProfile(Contact contact, string address) {
-        foreach (var entry in contact.NetworkAddresses) {
-            if (entry is NetworkProfile networkProfile) {
-                if (entry.Address == address) {
-                    var profile = networkProfile.EnvelopedProfileAccount.Decode();
-                    return profile;
-                    }
-                }
-            }
+    ///// <summary>
+    ///// Return the Mesh profile bound to the address <paramref name="address"/>
+    ///// in the contact assertion <paramref name="contact"/>.
+    ///// </summary>
+    ///// <param name="contact">The contact assertion to return.</param>
+    ///// <param name="address">The address (used to disambiguate multiple 
+    ///// profiles bound to the same contact).</param>
+    ///// <returns>The account profile.</returns>
+    //static ProfileAccount GetProfile(Contact contact, string address) {
+    //    foreach (var entry in contact.NetworkAddresses) {
+    //        if (entry is NetworkProfile networkProfile) {
+    //            if (entry.Address == address) {
+    //                var profile = networkProfile.EnvelopedProfileAccount.Decode();
+    //                return profile;
+    //                }
+    //            }
+    //        }
 
-        return null;
-        }
+    //    return null;
+    //    }
 
-    /// <summary>
-    /// List the callsigns owned by <paramref name="contextAccount"/>.
-    /// </summary>
-    /// <param name="contextAccount">The account context.</param>
-    /// <returns>The list of callsign application bindings.</returns>
-    public static List<CatalogedApplicationCallsign> ListCallsigns(
-                this ContextUser contextAccount) {
+    ///// <summary>
+    ///// List the callsigns owned by <paramref name="contextAccount"/>.
+    ///// </summary>
+    ///// <param name="contextAccount">The account context.</param>
+    ///// <returns>The list of callsign application bindings.</returns>
+    //public static List<CatalogedApplicationCallsign> ListCallsigns(
+    //            this ContextUser contextAccount) {
 
-        // get the application catalog
-        var catalog = contextAccount.GetStore(CatalogApplication.Label) as CatalogApplication;
+    //    // get the application catalog
+    //    var catalog = contextAccount.GetStore(CatalogApplication.Label) as CatalogApplication;
 
-        var result = new List<CatalogedApplicationCallsign>();
+    //    var result = new List<CatalogedApplicationCallsign>();
 
-        // print the entry for everything that is a callsign entry.
-        foreach (var application in catalog) {
-            if (application is CatalogedApplicationCallsign applicationCallsign) {
-                result.Add(applicationCallsign);
-                // ToDo: here we will eventually YIELD
-                }
+    //    // print the entry for everything that is a callsign entry.
+    //    foreach (var application in catalog) {
+    //        if (application is CatalogedApplicationCallsign applicationCallsign) {
+    //            result.Add(applicationCallsign);
+    //            // ToDo: here we will eventually YIELD
+    //            }
 
-            }
+    //        }
 
 
-        return result;
-        }
+    //    return result;
+    //    }
 
     /// <summary>
     /// Process CallsignRegistrationResponse messages in context.

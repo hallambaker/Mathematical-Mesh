@@ -43,8 +43,9 @@ public class CatalogContact : Catalog<CatalogedContact> {
     public override StoreType StoreType => StoreType.Contact;
 
     ///<summary>Dictionary mapping email addresses to contacts.</summary>
-    public Dictionary<string, NetworkProtocolEntry> DictionaryByNetworkAddress { get; set; } =
-                new Dictionary<string, NetworkProtocolEntry>();
+    Dictionary<string, string> DictionaryByNetworkAddress { get; } = [];
+
+    Dictionary<string, List<CryptoKey>> DictionaryProfiles { get; } = [];
 
     ///<inheritdoc/>
     public override string SequenceDefault => Label;
@@ -112,6 +113,9 @@ public class CatalogContact : Catalog<CatalogedContact> {
     ///<inheritdoc/>
     protected override void NewEntry(CatalogedContact catalogedEntry) => UpdateEntry(catalogedEntry);
 
+
+
+
     ///<inheritdoc/>
     protected override void UpdateEntry(CatalogedContact catalogedEntry) {
 
@@ -120,40 +124,67 @@ public class CatalogContact : Catalog<CatalogedContact> {
         var catalogedContact = catalogedEntry as CatalogedContact;
         var contact = catalogedContact.Contact;
 
+        if (contact.OnlineServices is null) {
+            return;
+            }
+
+        foreach (var servicePair in contact.OnlineServices) {
+            var service = servicePair.Value;
+
+            if (service.Service.ToLower() == "mesh") {
+                if (service.User is not null) {
+                    DictionaryByNetworkAddress.AddSafe(service.User, service.Uri);
+                    }
+                }
+            }
+
+        foreach (var cryptoKey in contact.CryptoKeys) {
+            if (DictionaryProfiles.TryGetValue(cryptoKey.Key, out var profiles)) {
+                profiles.Add(cryptoKey.Value);
+                }
+            else {
+                profiles = [cryptoKey.Value];
+                DictionaryProfiles.Add(cryptoKey.Key, profiles);
+                }
 
 
+            }
 
-        //if (contact.NetworkAddresses != null) {
-        //    foreach (var networkAddress in contact.NetworkAddresses) {
-        //        if (networkAddress.Address is not null) {
-        //            DictionaryByNetworkAddress.AddSafe(networkAddress.Address,
-        //                new NetworkProtocolEntry(catalogedContact, networkAddress));
-        //            }
-        //        if (networkAddress is NetworkCapability networkCapability) {
-        //            foreach (var capability in networkCapability.Capabilities) {
-        //                capability.KeyCollection = KeyCollection;
-        //                switch (capability) {
-        //                    case CapabilityDecrypt capabilityDecrypt: {
-        //                        //Console.WriteLine($"Key {networkAddress.Address} -> {capability.Id}");
 
-        //                        if (DictionaryDecryptByKeyId.TryGetValue(capability.Id, out var existing)) {
-        //                            if (capabilityDecrypt.Issued > existing.Issued) {
-        //                                DictionaryDecryptByKeyId.Remove(capability.Id);
-        //                                DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
-        //                                }
-        //                            }
-        //                        else {
-        //                            DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
-        //                            }
+        // 
 
-        //                        //DictionaryDecryptByKeyId.Replace(capability.Id, capabilityDecrypt);
-        //                        break;
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
+
+            //if (contact.NetworkAddresses != null) {
+            //    foreach (var networkAddress in contact.NetworkAddresses) {
+            //        if (networkAddress.Address is not null) {
+            //            DictionaryByNetworkAddress.AddSafe(networkAddress.Address,
+            //                new NetworkProtocolEntry(catalogedContact, networkAddress));
+            //            }
+            //        if (networkAddress is NetworkCapability networkCapability) {
+            //            foreach (var capability in networkCapability.Capabilities) {
+            //                capability.KeyCollection = KeyCollection;
+            //                switch (capability) {
+            //                    case CapabilityDecrypt capabilityDecrypt: {
+            //                        //Console.WriteLine($"Key {networkAddress.Address} -> {capability.Id}");
+
+            //                        if (DictionaryDecryptByKeyId.TryGetValue(capability.Id, out var existing)) {
+            //                            if (capabilityDecrypt.Issued > existing.Issued) {
+            //                                DictionaryDecryptByKeyId.Remove(capability.Id);
+            //                                DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
+            //                                }
+            //                            }
+            //                        else {
+            //                            DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
+            //                            }
+
+            //                        //DictionaryDecryptByKeyId.Replace(capability.Id, capabilityDecrypt);
+            //                        break;
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
         }
 
     /// <summary>
@@ -239,13 +270,16 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="key">specifies the identifier to return.</param>
     /// <returns>The contact, if found. Otherwise null.</returns>
     public override CatalogedContact Get(string key) {
-        if (base.Get(key).NotNull(out var result)) {
-            return result;
-            }
-        if (DictionaryByNetworkAddress.TryGetValue(key, out var networkEntry)) {
-            return networkEntry.CatalogedContact;
-            }
-        return null;
+        throw new NYI();
+
+
+        //if (base.Get(key).NotNull(out var result)) {
+        //    return result;
+        //    }
+        //if (DictionaryByNetworkAddress.TryGetValue(key, out var networkEntry)) {
+        //    return networkEntry.CatalogedContact;
+        //    }
+        //return null;
         }
 
     /// <summary>
@@ -254,8 +288,10 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="networkAddress">The address to return the entry for.</param>
     /// <returns>The network entry if found, otherwise, null.</returns>
     public NetworkProtocolEntry GetNetworkEntry(string networkAddress) {
-        DictionaryByNetworkAddress.TryGetValue(networkAddress, out var catalogedContact);
-        return catalogedContact;
+
+        throw new NYI();
+        //DictionaryByNetworkAddress.TryGetValue(networkAddress, out var catalogedContact);
+        //return catalogedContact;
         }
 
     /// <summary>
@@ -264,12 +300,12 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="networkAddress">The address to return the entry for.</param>
     /// <returns>The mesh account encryption key if found, otherwise, null.</returns>
     public CryptographicKey GetByAccountEncrypt(string networkAddress) {
+        throw new NYI();
+        //if (!DictionaryByNetworkAddress.TryGetValue(networkAddress, out var catalogedContact)) {
+        //    return null;
+        //    }
 
-        if (!DictionaryByNetworkAddress.TryGetValue(networkAddress, out var catalogedContact)) {
-            return null;
-            }
-
-        return catalogedContact.MeshKeyEncryption;
+        //return catalogedContact.MeshKeyEncryption;
         }
 
 
@@ -279,11 +315,13 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="keyId">The key identifier to match.</param>
     /// <returns>The key pair if found.</returns>
     public CryptographicKey TryMatchRecipient(string keyId) {
-        if (!DictionaryByNetworkAddress.TryGetValue(keyId, out var catalogedContact)) {
-            return null;
-            }
+        throw new NYI();
 
-        return catalogedContact.MeshKeyEncryption;
+        //if (!DictionaryByNetworkAddress.TryGetValue(keyId, out var catalogedContact)) {
+        //    return null;
+        //    }
+
+        //return catalogedContact.MeshKeyEncryption;
         }
 
 
@@ -481,25 +519,25 @@ public partial class ContactPerson {
                     string suffix = null,
                     string email = null) {
 
-        var personName = new PersonName() {
-            First = first,
-            Last = last,
-            Prefix = prefix,
-            Suffix = suffix
-            };
-        personName.SetFullName();
-        CommonNames = new List<PersonName> { personName };
+        //var personName = new PersonName() {
+        //    First = first,
+        //    Last = last,
+        //    Prefix = prefix,
+        //    Suffix = suffix
+        //    };
+        //personName.SetFullName();
+        //CommonNames = new List<PersonName> { personName };
 
-        if (email is not null) {
-            var networkAddress = new NetworkAddress {
-                Address = email,
-                Protocol = "SMTP"
-                //"SMTP"new NetworkProtocol() {
-                //    Protocol = "SMTP"
-                //    }
-                };
-            NetworkAddresses = new List<NetworkAddress> { networkAddress };
-            }
+        //if (email is not null) {
+        //    var networkAddress = new NetworkAddress {
+        //        Address = email,
+        //        Protocol = "SMTP"
+        //        //"SMTP"new NetworkProtocol() {
+        //        //    Protocol = "SMTP"
+        //        //    }
+        //        };
+        //    NetworkAddresses = new List<NetworkAddress> { networkAddress };
+        //    }
         }
     }
 
@@ -518,42 +556,42 @@ public partial class NetworkProfile {
     /// <param name="profile">The Mesh profile to obtain public keys from.</param>
     public NetworkProfile(string address, ProfileAccount profile) {
 
-        //List<CryptographicCapability> keyList = null;
+        ////List<CryptographicCapability> keyList = null;
 
-        EnvelopedProfileAccount = profile.GetEnvelopedProfileAccount();
+        //EnvelopedProfileAccount = profile.GetEnvelopedProfileAccount();
 
 
-        Address = address;
-        //Protocols = new List<NetworkProtocol>() {
-        //            new NetworkProtocol() {
-        //            Protocol = "mmm",
-        //            Capabilities = keyList
-        //            }
-        //        };
+        //Address = address;
+        ////Protocols = new List<NetworkProtocol>() {
+        ////            new NetworkProtocol() {
+        ////            Protocol = "mmm",
+        ////            Capabilities = keyList
+        ////            }
+        ////        };
         }
 
     }
 
-/// <summary>
-/// Network capability.
-/// </summary>
-public partial class NetworkCapability {
-    
-    /// <summary>
-    /// Default constructor used for deserialization.
-    /// </summary>
-    public NetworkCapability() {
-        }
+///// <summary>
+///// Network capability.
+///// </summary>
+//public partial class NetworkCapability {
 
-    /// <summary>
-    /// Constructor returning a capability for <paramref name="address"/>,
-    /// <paramref name="profile"/>.
-    /// </summary>
-    /// <param name="address">The capability address.</param>
-    /// <param name="profile">The capability profile.</param>
-    public NetworkCapability(string address, ProfileAccount profile) : base(address, profile) {
-        }
-    }
+//    ///// <summary>
+//    ///// Default constructor used for deserialization.
+//    ///// </summary>
+//    //public NetworkCapability() {
+//    //    }
+
+//    ///// <summary>
+//    ///// Constructor returning a capability for <paramref name="address"/>,
+//    ///// <paramref name="profile"/>.
+//    ///// </summary>
+//    ///// <param name="address">The capability address.</param>
+//    ///// <param name="profile">The capability profile.</param>
+//    //public NetworkCapability(string address, ProfileAccount profile) : base(address, profile) {
+//    //    }
+//    }
 
 
 /// <summary>
@@ -572,75 +610,75 @@ public partial class PersonName {
     /// </summary>
     /// <param name="fullname">The person's full name.</param>
     public PersonName(string fullname) {
-        if (fullname is null) {
-            return;
-            }
+        //if (fullname is null) {
+        //    return;
+        //    }
 
-        FullName = fullname;
-        var items = fullname.Split(' ');
-        if (items.Length == 0) {
-            return;
-            }
+        //FullName = fullname;
+        //var items = fullname.Split(' ');
+        //if (items.Length == 0) {
+        //    return;
+        //    }
 
-        First = items[0];
-        if (items.Length == 1) {
-            return;
-            }
+        //First = items[0];
+        //if (items.Length == 1) {
+        //    return;
+        //    }
 
-        Last = items[items.Length - 1];
-        if (items.Length == 2) {
-            return;
-            }
+        //Last = items[items.Length - 1];
+        //if (items.Length == 2) {
+        //    return;
+        //    }
 
-        Middle = new();
-        for (var i = 1; i < items.Length - 1; i++) {
-            Middle.Add(items[i]);
-            }
+        //Middle = new();
+        //for (var i = 1; i < items.Length - 1; i++) {
+        //    Middle.Add(items[i]);
+        //    }
 
         }
 
     ///<summary>Set the full name.</summary>
-    public void SetFullName() {
+    //public void SetFullName() {
 
-        var builder = new StringBuilder();
+    //    var builder = new StringBuilder();
 
-        SpaceAfter(builder, Prefix);
-        SpaceAfter(builder, First);
-        if (Middle != null) {
-            foreach (var middle in Middle) {
-                SpaceAfter(builder, middle);
-                }
-            }
-        Unspaced(builder, Last);
-        SpaceBefore(builder, Suffix);
-        SpaceBefore(builder, PostNominal);
+    //    SpaceAfter(builder, Prefix);
+    //    SpaceAfter(builder, First);
+    //    if (Middle != null) {
+    //        foreach (var middle in Middle) {
+    //            SpaceAfter(builder, middle);
+    //            }
+    //        }
+    //    Unspaced(builder, Last);
+    //    SpaceBefore(builder, Suffix);
+    //    SpaceBefore(builder, PostNominal);
 
-        FullName = builder.ToString();
-        }
+    //    FullName = builder.ToString();
+    //    }
 
-    static void Unspaced(StringBuilder builder, string value) {
-        if (value != null) {
-            builder.Append(value);
-            }
+    //static void Unspaced(StringBuilder builder, string value) {
+    //    if (value != null) {
+    //        builder.Append(value);
+    //        }
 
-        }
+    //    }
 
-    static void SpaceAfter(StringBuilder builder, string value) {
-        if (value != null) {
-            builder.Append(value);
-            builder.Append(' ');
-            }
+    //static void SpaceAfter(StringBuilder builder, string value) {
+    //    if (value != null) {
+    //        builder.Append(value);
+    //        builder.Append(' ');
+    //        }
 
-        }
+    //    }
 
-    static void SpaceBefore(StringBuilder builder, string value) {
-        if (value != null) {
-            builder.Append(' ');
-            builder.Append(value);
+    //static void SpaceBefore(StringBuilder builder, string value) {
+    //    if (value != null) {
+    //        builder.Append(' ');
+    //        builder.Append(value);
 
-            }
+    //        }
 
-        }
+    //    }
     }
 
 /// <summary>
@@ -652,20 +690,24 @@ public class NetworkProtocolEntry {
     ///This may be used to update the credential data periodically.</summary>
     public CatalogedContact CatalogedContact { get; }
 
-    ///<summary>The network address entry.</summary>
-    public NetworkAddress NetworkAddress { get; }
+
+
+    public string Address => throw new NYI();
+
+    /////<summary>The network address entry.</summary>
+    //public NetworkAddress NetworkAddress { get; }
 
 
     ///<summary>The encryption key to use for this contact.</summary>
     public Cryptography.CryptographicKey MeshKeyEncryption => Expire.Expired(meshKeyEncryption) ??
-         SetKeys(ref meshKeyEncryption);
+            SetKeys(ref meshKeyEncryption);
 
     CryptographicKey meshKeyEncryption;
 
-    ///<summary>The signature root of trust to use for this contact.</summary>
-    public CryptographicKey MeshKeyAdministrator => Expire.Expired(meshKeyAdministrator) ??
-         SetKeys(ref meshKeyAdministrator);
-    CryptographicKey meshKeyAdministrator;
+    /////<summary>The signature root of trust to use for this contact.</summary>
+    //public CryptographicKey MeshKeyAdministrator => Expire.Expired(meshKeyAdministrator) ??
+    //     SetKeys(ref meshKeyAdministrator);
+    //CryptographicKey meshKeyAdministrator;
 
     ///<summary>The expiry time for the derived keys.</summary>
     public System.DateTime? Expire { get; private set; }
@@ -677,20 +719,24 @@ public class NetworkProtocolEntry {
     /// </summary>
     /// <param name="catalogedContact">The cataloged contact.</param>
     /// <param name="networkAddress">The network address entry.</param>
-    public NetworkProtocolEntry(CatalogedContact catalogedContact, NetworkAddress networkAddress) {
-        CatalogedContact = catalogedContact;
-        NetworkAddress = networkAddress;
+    public NetworkProtocolEntry(JsContact contact, OnlineService service) {
+        //CatalogedContact = catalogedContact;
+        //NetworkAddress = networkAddress;
         }
 
     CryptographicKey SetKeys(ref CryptographicKey keyPair) {
-        if (NetworkAddress is NetworkProfile networkProfile) {
-            var profileAccount = networkProfile.EnvelopedProfileAccount.Decode();
-            meshKeyEncryption = profileAccount.CommonEncryption.CryptoKey;
-            meshKeyAdministrator = profileAccount.AdministratorSignature.CryptoKey;
-            }
-        return keyPair;
+
+        throw new NYI();
+
+        //if (NetworkAddress is NetworkProfile networkProfile) {
+        //    var profileAccount = networkProfile.EnvelopedProfileAccount.Decode();
+        //    meshKeyEncryption = profileAccount.CommonEncryption.CryptoKey;
+        //    meshKeyAdministrator = profileAccount.AdministratorSignature.CryptoKey;
+        //    }
+        //return keyPair;
         }
 
 
     }
+    
 #endregion

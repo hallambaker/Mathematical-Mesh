@@ -80,11 +80,11 @@ public class MeshMachineTest : MeshMachineCore {
         TestEnvironmentCommon.GetMeshClient(this, credential, accountAddress);
 
 
-    public static Contact ContactAlice { get; } = new ContactPerson(
-        "Alice", "Aardvark", email: "alice@example.com");
+    //public static Contact ContactAlice { get; } = new ContactPerson(
+    //    "Alice", "Aardvark", email: "alice@example.com");
 
-    public static Contact ContactBob { get; } = new ContactPerson(
-        "Bob", "Baker", email: "bob@example.com");
+    //public static Contact ContactBob { get; } = new ContactPerson(
+    //    "Bob", "Baker", email: "bob@example.com");
 
 
 

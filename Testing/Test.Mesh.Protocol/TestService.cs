@@ -61,8 +61,8 @@ public partial class TestService {
 
     static readonly string AccountGroup = "groupw@example.com";
 
-    public static Contact ContactAlice => MeshMachineTest.ContactAlice;
-    public static Contact ContactBob => MeshMachineTest.ContactBob;
+    //public static Contact ContactAlice => MeshMachineTest.ContactAlice;
+    //public static Contact ContactBob => MeshMachineTest.ContactBob;
 
     readonly CatalogedCredential password1 = new() {
         Username = "fred",

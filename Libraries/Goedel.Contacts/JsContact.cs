@@ -14,8 +14,6 @@ public partial class JsContact {
     public JsContact() {
         }
 
-
-
     public static JsContact Create(
             string kind=null) {
 
@@ -63,6 +61,10 @@ public partial class JsContact {
 
         return result;
         }
+
+
+
+
 
     public void Update() {
         Updated = DateTime.Now;

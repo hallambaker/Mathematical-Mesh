@@ -1,0 +1,211 @@
+﻿	Structure Contact
+		Abstract
+		Inherits Assertion
+		Description
+			|Base class for contact entries.
+		String Id
+			Description
+				|The globally unique contact identifier.
+
+		Struct Anchor Anchors
+			Multiple
+			Description
+				|Mesh fingerprints associated with the contact.
+		TStruct NetworkAddress NetworkAddresses
+			Multiple
+			Description
+				|Network address entries
+		Struct Location Locations
+			Multiple
+			Description
+				|The physical locations the contact is associated with.
+		Struct Role Roles
+			Multiple
+			Description
+				|The roles of the contact
+		Struct Bookmark Bookmark 
+			Multiple
+			Description
+				|The Web sites and other online presences of the contact
+		Struct TaggedSource Sources
+			Multiple
+			Description
+				|Source(s) from which this contact was constructed.
+
+
+
+	Structure Anchor
+		Description
+			|Trust anchor
+		String Udf
+			Description
+				|The trust anchor.
+		String Validation
+			Description
+				|The means of validation.
+
+	Structure TaggedSource
+		Description
+			|Source from which contact information was obtained.
+		String LocalName
+			Description
+				|Short name for the contact information.
+		String Validation
+			Description
+				|The means of validation.		
+		Binary BinarySource
+			Description
+				|The contact data in binary form.
+		Struct Enveloped<Contact> EnvelopedSource
+			Description
+				|The contact data in enveloped form. If present, the BinarySource property
+				|is ignored.
+
+	Structure ContactGroup
+		Inherits Contact
+		Description
+			|Contact for a group, including encryption groups.
+
+	Structure ContactPerson
+		Inherits Contact
+		Description
+			|
+		Struct PersonName CommonNames
+			Multiple
+			Description
+				|List of person names in order of preference
+
+	Structure ContactOrganization
+		Inherits Contact
+		Description
+			|		
+		Struct OrganizationName CommonNames
+			Multiple
+			Description
+				|List of person names in order of preference
+
+	Structure OrganizationName
+		Description
+			|The name of an organization
+		Boolean Inactive
+			Description
+				|If true, the name is not in current use.
+		String RegisteredName
+			Description
+				|The registered name.
+		String DBA
+			Description
+				|Names that the organization uses including trading names
+				|and doing business as names.
+
+
+	Structure PersonName
+		Description
+			|The name of a natural person
+		Boolean Inactive
+			Description
+				|If true, the name is not in current use.
+		String FullName
+			Description
+				|The preferred presentation of the full name.
+		String Prefix
+			Description
+				|Honorific or title, E.g. Sir, Lord, Dr., Mr.
+		String First
+			Description
+				|First name.
+		String Middle
+			Multiple
+			Description
+				|Middle names or initials.
+		String Last
+			Description
+				|Last name.
+		String Suffix
+			Description
+				|Nominal suffix, e.g. Jr., III, etc.
+		String PostNominal
+			Description
+				|Post nominal letters (if used).
+
+	Structure NetworkAddress
+		Description
+			|Provides all means of contacting the individual according to a
+			|particular network address
+		Boolean Inactive
+			Description
+				|If true, the name is not in current use.
+		String Address	
+			Description
+				|The network address, e.g. alice@example.com
+		String Aliases
+			Multiple
+			Description
+				|Aliases that may be used in place of the Network address
+		String Protocol
+			Description
+				|The IANA protocol|identifier of the network protocols by which 
+				|the contact may be reached using the specified Address. 
+
+		//Struct NetworkProtocol Protocol
+		//	Description
+		//		|Public keys associated with the network address
+
+
+	Structure NetworkCredential
+		Inherits NetworkAddress
+		String Type
+			Description
+				|The IANA credential type
+		Binary Credential
+			Description
+				|The credential
+
+	Structure NetworkProfile
+		Inherits NetworkAddress
+		Struct Enveloped<ProfileAccount> EnvelopedProfileAccount
+			Description
+				|The account profile
+
+
+	Structure NetworkCapability
+		Inherits NetworkProfile
+		TStruct CryptographicCapability Capabilities
+			Multiple
+			Description
+				|Cryptographic capabilities that may be claimed from this address
+
+	Structure NetworkProtocol
+		String Protocol
+			Description
+				|The IANA protocol|identifier of the network protocols by which 
+				|the contact may be reached using the specified Address. 
+		//TStruct CryptographicCapability Capabilities
+		//	Multiple
+		//	Description
+		//		|Cryptographic keys representing capabilities.
+
+
+	Structure Role
+		String OrganizationName
+			Description
+				|The organization at which the role is held
+		String Titles
+			Multiple
+			Description
+				|The titles held with respect to that organization.
+		Struct Location Locations
+			Multiple
+			Description
+				|Postal or physical addresses associated with the role.
+
+	Structure Location
+		String Appartment
+		String Street
+		String District
+		String Locality
+		String County
+		String Postcode
+		String Country
+		Float Latitude
+		Float Longitude

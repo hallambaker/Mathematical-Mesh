@@ -340,7 +340,7 @@ public abstract class Transaction<TAccount> : Disposable
             NetworkProtocolEntry recipient,
             Message message) {
 
-        var recipientAddress = recipient.NetworkAddress.Address;
+        var recipientAddress = recipient.Address;
         var recipientEncryptionKey = recipient.MeshKeyEncryption;
 
         OutboundMessage(recipientAddress, recipientEncryptionKey, message);
