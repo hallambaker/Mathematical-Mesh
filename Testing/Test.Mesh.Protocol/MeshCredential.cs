@@ -95,13 +95,20 @@ public partial class TestService {
         var resultTransact1 = contextAccountAlice.AddApplication(applicationSSH, [null]).Sync();
 
         // add a mail app
-        // Create an ssh application
         var applicationMail = CatalogedApplicationMail.Create("alice@example.net", roles);
         var resultTransact2 = contextAccountAlice.AddApplication(applicationSSH, [null]).Sync();
 
         // add a developer app
+        var applicationDeveloper = CatalogedApplicationDeveloper.Create("alice@example.net", roles);
+        var resultTransact3 = contextAccountAlice.AddApplication(applicationDeveloper, [null]).Sync();
 
+        // add a credential app
+        var applicationCredential = CatalogedApplicationCredential.Create("alice@example.net", roles);
+        var resultTransact4 = contextAccountAlice.AddApplication(applicationDeveloper, [null]).Sync();
 
+        // add a dns app
+        var applicationDns = CatalogedApplicationDns.Create("alice@example.net", roles);
+        var resultTransact5 = contextAccountAlice.AddApplication(applicationDeveloper, [null]).Sync();
         }
 
 

@@ -38,6 +38,14 @@ public partial class ApplicationCredential {
 public partial class CatalogedApplicationCredential {
 
 
+    public static CatalogedApplicationCredential Create(string localName, List<string> roles) {
+
+
+        throw new NYI();
+        }
+
+
+
     ///<inheritdoc/>
     public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {
         }

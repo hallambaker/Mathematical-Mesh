@@ -138,10 +138,14 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
         }
 
     public void UpdateContact(
-                CatalogedContact contact, 
+                CatalogedContact catalogedContact, 
                 CatalogedApplication application) {
+        var catalogContact = GetCatalogContact();
 
-        throw new NotImplementedException();
+        var contact = catalogedContact.Contact;
+        contact.AddApplication(application);
+        CatalogUpdate(catalogContact, catalogedContact);
+
         }
 
 

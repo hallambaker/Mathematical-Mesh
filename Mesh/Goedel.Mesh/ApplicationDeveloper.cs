@@ -37,6 +37,14 @@ public partial class ApplicationDeveloper {
 public partial class CatalogedApplicationDeveloper {
 
 
+    public static CatalogedApplicationDeveloper Create(string localName, List<string> roles) {
+
+
+        throw new NYI();
+        }
+
+
+
     ///<inheritdoc/>
     public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {
         }

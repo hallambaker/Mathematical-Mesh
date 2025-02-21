@@ -35,8 +35,11 @@ public partial class ApplicationDns {
     }
 
 public partial class CatalogedApplicationDns {
+    public static CatalogedApplicationDns Create(string localName, List<string> roles) {
 
 
+        throw new NYI();
+        }
     ///<inheritdoc/>
     public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {
         }
