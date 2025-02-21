@@ -21,6 +21,8 @@
 #endregion
 
 
+using System.Net.WebSockets;
+
 namespace Goedel.Mesh.Client;
 
 /// <summary>
@@ -125,8 +127,14 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
 
 
     public CatalogedContact GetContactSelf(string? identifier = null) {
-        throw new NotImplementedException();
+        var catalogContact = GetCatalogContact();
 
+        if (identifier is null) {
+            return catalogContact.DefaultContactSelf;
+            }
+
+        catalogContact.DictionaryContactSelf.TryGetValue(identifier, out var result);
+        return result;
         }
 
     public void UpdateContact(

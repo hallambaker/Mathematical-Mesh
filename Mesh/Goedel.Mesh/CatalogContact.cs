@@ -43,9 +43,14 @@ public class CatalogContact : Catalog<CatalogedContact> {
     public override StoreType StoreType => StoreType.Contact;
 
     ///<summary>Dictionary mapping email addresses to contacts.</summary>
-    Dictionary<string, string> DictionaryByNetworkAddress { get; } = [];
+    Dictionary<string, OnlineService> DictionaryByNetworkAddress { get; } = [];
 
     Dictionary<string, List<CryptoKey>> DictionaryProfiles { get; } = [];
+
+
+    public Dictionary<string, CatalogedContact> DictionaryContactSelf { get; } = [];
+    public CatalogedContact DefaultContactSelf { get; set; }
+
 
     ///<inheritdoc/>
     public override string SequenceDefault => Label;
@@ -121,8 +126,15 @@ public class CatalogContact : Catalog<CatalogedContact> {
 
         base.UpdateEntry(catalogedEntry);
 
-        var catalogedContact = catalogedEntry as CatalogedContact;
-        var contact = catalogedContact.Contact;
+        //var catalogedContact = catalogedEntry as CatalogedContact;
+        var contact = catalogedEntry.Contact;
+
+
+        if (catalogedEntry.Self == true) {
+            DefaultContactSelf ??= catalogedEntry;
+            DictionaryContactSelf.AddSafe(catalogedEntry.LocalName, catalogedEntry);
+            }
+
 
         if (contact.OnlineServices is null) {
             return;
@@ -133,7 +145,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
 
             if (service.Service.ToLower() == "mesh") {
                 if (service.User is not null) {
-                    DictionaryByNetworkAddress.AddSafe(service.User, service.Uri);
+                    DictionaryByNetworkAddress.AddSafe(service.User, service);
                     }
                 }
             }
