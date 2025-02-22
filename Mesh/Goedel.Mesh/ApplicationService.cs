@@ -28,17 +28,45 @@
 // Todo: SSH Collect host credentials, sign and book to service
 // Todo: SSH Passphrase for PEM Private keys
 
+using System.Net;
+
 namespace Goedel.Mesh;
 
 
-public partial class ApplicationDns {
+public partial class ApplicationService {
     }
 
-public partial class CatalogedApplicationDns {
-    public static CatalogedApplicationDns Create(string localName, List<string> roles) {
+public partial class CatalogedApplicationService {
 
 
-        throw new NYI();
+    public static CatalogedApplicationService CreateDns(
+                string localName, 
+                List<string> roles,
+                string zone,
+                string service) {
+
+
+        return new CatalogedApplicationService() {
+            LocalName = localName,
+            Grant = roles,
+            Protocol = "dns",
+            Address = zone,
+            AdministrationAddress = service
+            };
+        }
+
+    public static CatalogedApplicationService CreateWeb(
+                string localName, 
+                List<string> roles,
+                string address) {
+
+
+        return new CatalogedApplicationService() {
+            LocalName = localName,
+            Grant = roles,
+            Protocol = "http",
+            Address = address
+            };
         }
     ///<inheritdoc/>
     public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {

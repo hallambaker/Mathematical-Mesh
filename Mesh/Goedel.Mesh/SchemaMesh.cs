@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/22/2025 6:16:26 PM
+//  This file was automatically generated at 2/22/2025 6:46:03 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -152,7 +152,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"CatalogedApplicationMail", CatalogedApplicationMail._Factory},
 	    {"CatalogedApplicationSsh", CatalogedApplicationSsh._Factory},
 	    {"CatalogedApplicationCredential", CatalogedApplicationCredential._Factory},
-	    {"CatalogedApplicationDns", CatalogedApplicationDns._Factory},
+	    {"CatalogedApplicationService", CatalogedApplicationService._Factory},
 	    {"CatalogedApplicationDeveloper", CatalogedApplicationDeveloper._Factory},
 	    {"MessageInvoice", MessageInvoice._Factory},
 	    {"CatalogedReceipt", CatalogedReceipt._Factory},
@@ -7660,7 +7660,7 @@ public partial class CatalogedApplicationCredential : CatalogedApplication {
 
 	/// <summary>
 	/// </summary>
-public partial class CatalogedApplicationDns : CatalogedApplication {
+public partial class CatalogedApplicationService : CatalogedApplication {
         /// <summary>
         /// </summary>
 
@@ -7669,7 +7669,17 @@ public partial class CatalogedApplicationDns : CatalogedApplication {
         /// <summary>
         /// </summary>
 
-	public virtual string?					ServiceAddress  {get; set;}
+	public virtual string?					Address  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					AdministrationAddress  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					Protocol  {get; set;}
 
 
 
@@ -7681,10 +7691,14 @@ public partial class CatalogedApplicationDns : CatalogedApplication {
 			new() {
 
 			{ "AccountAddress", new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationDns).AccountAddress = value;}, (IBinding data) => (data as CatalogedApplicationDns).AccountAddress )},
-			{ "ServiceAddress", new PropertyString ("ServiceAddress", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationDns).ServiceAddress = value;}, (IBinding data) => (data as CatalogedApplicationDns).ServiceAddress )}
-        }, __Tag,() => new CatalogedApplicationDns(), CatalogedApplication._binding);
+					(IBinding data, string? value) => {(data as CatalogedApplicationService).AccountAddress = value;}, (IBinding data) => (data as CatalogedApplicationService).AccountAddress )},
+			{ "Address", new PropertyString ("Address", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationService).Address = value;}, (IBinding data) => (data as CatalogedApplicationService).Address )},
+			{ "AdministrationAddress", new PropertyString ("AdministrationAddress", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationService).AdministrationAddress = value;}, (IBinding data) => (data as CatalogedApplicationService).AdministrationAddress )},
+			{ "Protocol", new PropertyString ("Protocol", 
+					(IBinding data, string? value) => {(data as CatalogedApplicationService).Protocol = value;}, (IBinding data) => (data as CatalogedApplicationService).Protocol )}
+        }, __Tag,() => new CatalogedApplicationService(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -7713,13 +7727,13 @@ public partial class CatalogedApplicationDns : CatalogedApplication {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "CatalogedApplicationDns";
+	public new const string __Tag = "CatalogedApplicationService";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new CatalogedApplicationDns();
+	public static new JsonObject _Factory () => new CatalogedApplicationService();
 
 
     /// <summary>
@@ -7728,15 +7742,15 @@ public partial class CatalogedApplicationDns : CatalogedApplication {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new CatalogedApplicationDns FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new CatalogedApplicationService FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedApplicationDns;
+			return Out as CatalogedApplicationService;
 			}
-		var Result = new CatalogedApplicationDns ();
+		var Result = new CatalogedApplicationService ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

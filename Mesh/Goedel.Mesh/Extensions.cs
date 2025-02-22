@@ -277,6 +277,10 @@ public static partial class Extensions {
                 AddDeveloper(contact, catalogedDeveloper);
                 break;
                 }
+            case CatalogedApplicationService catalogedService: {
+                AddService(contact, catalogedService);
+                break;
+                }
             }
         }
 
@@ -339,6 +343,9 @@ public static partial class Extensions {
         contact.Update();
         }
 
+
+
+
     ///// <summary>
     ///// Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
     ///// </summary>
@@ -363,6 +370,19 @@ public static partial class Extensions {
         contact.AddServices(application.Kind, application.AccountAddress, application.Commit);
         contact.AddServices(application.Kind, application.AccountAddress, application.Code);
         }
+
+    /// <summary>
+    /// Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
+    /// </summary>
+    /// <param name="contact">The contact to add the application details to.</param>
+    /// <param name="application">The application to add.</param>
+    public static void AddService(this JsContact contact, CatalogedApplicationService application) {
+
+        if (application?.Protocol == "http") {
+            }
+
+        }
+
 
     /// <summary>
     /// Add the key <paramref name="keyData"/> to the contact <paramref name="contact"/>.

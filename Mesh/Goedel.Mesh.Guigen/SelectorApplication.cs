@@ -238,7 +238,7 @@ public partial class BoundApplicationDns {
         //return result;
         }
 
-    public static BoundApplicationDns Convert(CatalogedApplicationDns application) {
+    public static BoundApplicationDns Convert(CatalogedApplicationService application) {
         var result = new BoundApplicationDns();
         result.Fill(application);
 
@@ -397,7 +397,7 @@ public partial class ApplicationSelection : SelectionCatalog<GuigenCatalogApplic
             case CatalogedApplicationDeveloper application: {
                 return BoundApplicationDeveloper.Convert(application);
                 }
-            case CatalogedApplicationDns application: {
+            case CatalogedApplicationService application: {
                 return BoundApplicationDns.Convert(application);
                 }
             case CatalogedGroup application: {

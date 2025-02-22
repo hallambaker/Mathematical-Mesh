@@ -746,75 +746,6 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Mesh.CatalogedApplicationDns">
-            <summary>
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationDns.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationDns.GetEscrow">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationDns.GetActivation(Goedel.Mesh.CatalogedDevice)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationDns.ToBuilder(System.Text.StringBuilder)">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationDns.AccountAddress">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationDns.ServiceAddress">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationDns._Binding">
-            <summary>Implement IBinding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedApplicationDns._binding">
-            <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedApplicationDns._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedApplicationDns._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationDns._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationDns._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationDns._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationDns._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.CatalogedApplicationDns.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationDns._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationDns.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Mesh.ApplicationEntry">
             <summary>
             </summary>
@@ -1377,6 +1308,83 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationMail.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.CatalogedApplicationService">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationService.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationService.GetEscrow">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationService.GetActivation(Goedel.Mesh.CatalogedDevice)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationService.ToBuilder(System.Text.StringBuilder)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationService.AccountAddress">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationService.Address">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationService.AdministrationAddress">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationService.Protocol">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationService._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedApplicationService._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedApplicationService._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedApplicationService._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationService._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationService._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationService._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationService._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedApplicationService.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationService._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationService.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -6825,6 +6833,13 @@
             <param name="application">The application to add.</param>
         </member>
         <member name="M:Goedel.Mesh.Extensions.AddDeveloper(Goedel.Contacts.JsContact,Goedel.Mesh.CatalogedApplicationDeveloper)">
+            <summary>
+            Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
+            </summary>
+            <param name="contact">The contact to add the application details to.</param>
+            <param name="application">The application to add.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.AddService(Goedel.Contacts.JsContact,Goedel.Mesh.CatalogedApplicationService)">
             <summary>
             Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
             </summary>

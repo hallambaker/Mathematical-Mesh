@@ -114,9 +114,15 @@ public partial class TestService {
         //var applicationCredential = CatalogedApplicationCredential.Create("alice@example.net", roles);
         //var resultTransact4 = contextAccountAlice.AddApplication(applicationCredential, [null]).Sync();
 
-        // add a dns app
-        //var applicationDns = CatalogedApplicationDns.Create("alice@example.net", roles);
-        //var resultTransact5 = contextAccountAlice.AddApplication(applicationDns, [null]).Sync();
+        // add service configuring the zone "alice.cryptomesh.org"
+        var applicationDns = CatalogedApplicationService.CreateDns(
+                "cryptomesh", roles, "alice.cryptomesh.org", "example.com");
+        var resultTransact5 = contextAccountAlice.AddApplication(applicationDns, [null]).Sync();
+
+
+        var applicationWeb = CatalogedApplicationService.CreateWeb(
+                "cryptomesh", roles, "alice.cryptomesh.org");
+        var resultTransact6 = contextAccountAlice.AddApplication(applicationWeb, [null]).Sync();
 
         WriteContactFile(contextAccountAlice);
         }
@@ -131,7 +137,8 @@ public partial class TestService {
         var roles = new List<string> { Rights.IdRolesWeb };
 
         // add a dns app
-        var applicationDns = CatalogedApplicationDns.Create("alice@example.net", roles);
+        var applicationDns = CatalogedApplicationService.CreateDns(
+                "cryptomesh", roles, "alice.cryptomesh.org", "example.com");
         var resultTransact5 = contextAccountAlice.AddApplication(applicationDns, [null]).Sync();
 
 

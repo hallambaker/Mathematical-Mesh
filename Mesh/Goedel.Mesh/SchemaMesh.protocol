@@ -1043,11 +1043,16 @@
 				|Secondary keys, i.e. OpenPGP sub keys or PKIX intermediate or end
 				|entity certificates.
 
-	Structure CatalogedApplicationDns
+	Structure CatalogedApplicationService
 		String AccountAddress
 		Inherits CatalogedApplication
-		String ServiceAddress
-			| The service maintaining the DNS registration
+
+		String Address
+			| The address through which the service is reached
+		String AdministrationAddress
+			| The address through which the service is configured
+		String Protocol
+			| The service protocol, e.g. 'DNS', 'http'
 
 	Structure CatalogedApplicationDeveloper
 		Inherits CatalogedApplication
