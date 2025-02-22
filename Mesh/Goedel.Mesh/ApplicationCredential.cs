@@ -34,14 +34,27 @@ namespace Goedel.Mesh;
 public partial class ApplicationCredential {
     }
 
-
 public partial class CatalogedApplicationCredential {
 
 
-    public static CatalogedApplicationCredential Create(string localName, List<string> roles) {
+    public static CatalogedApplicationCredential Create(
+                        string localName, 
+                        List<string> roles,
+                        CredentialProfile credentialProfile,
+                        CatalogedApplicationCredential parent=null) {
 
+        var clientKey = KeyPair.Factory(credentialProfile.AlgorithmId,
+                    KeySecurity.Exportable, keySize: credentialProfile.keySize);
 
-        throw new NYI();
+        var result = new CatalogedApplicationCredential() {
+            Key = clientKey.KeyIdentifier,
+            LocalName = localName,
+            Grant = roles,
+            //ClientKeyPrivate = clientKey,
+            Primary = new KeyData(clientKey)
+            };
+
+        return result;
         }
 
 

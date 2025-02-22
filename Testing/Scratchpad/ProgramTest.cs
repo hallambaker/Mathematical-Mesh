@@ -61,7 +61,7 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        TestService.Test().TestCredentialAccount();
+        //TestService.Test().TestCredentialAccount();
         TestService.Test().TestCredentialAccountApps();
 
 

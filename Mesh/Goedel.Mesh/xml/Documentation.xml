@@ -690,7 +690,7 @@
             under this persona
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedApplicationDeveloper.Sign">
+        <member name="P:Goedel.Mesh.CatalogedApplicationDeveloper.Code">
             <summary>
             Unique identifier of the PKIX keys to sign code
             under this persona

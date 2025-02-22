@@ -37,10 +37,45 @@ public partial class ApplicationDeveloper {
 public partial class CatalogedApplicationDeveloper {
 
 
-    public static CatalogedApplicationDeveloper Create(string localName, List<string> roles) {
+    public static List<CatalogedApplication> Create(string localName, List<string> roles) {
 
+        // create a root code signing cert
+        var rootCertCode = CatalogedApplicationCredential.Create(
+                    localName + "_rootcode", roles, CredentialProfile.Code);
+        var signingCertCode1 = CatalogedApplicationCredential.Create(
+                    localName + "_windows", roles, CredentialProfile.Windows, parent: rootCertCode);
+        var signingCertCode2 = CatalogedApplicationCredential.Create(
+                    localName + "_apple", roles, CredentialProfile.Apple, parent: rootCertCode);
+        var signingCertCode3 = CatalogedApplicationCredential.Create(
+                    localName + "_android", roles, CredentialProfile.Android, parent: rootCertCode);
+        var signingCertCode4 = CatalogedApplicationCredential.Create(
+                    localName + "_linux", roles, CredentialProfile.Linux, parent: rootCertCode);
 
-        throw new NYI();
+        // create a repository commit key
+        var rootCertCommit = CatalogedApplicationCredential.Create(
+                    localName + "_rootcommit", roles, CredentialProfile.Commit);
+        var signingCertCommit = CatalogedApplicationCredential.Create(
+                    localName + "_commit", roles, CredentialProfile.Commit, parent: rootCertCode);
+
+        // create an SSH client key
+        var sslKey = CatalogedApplicationSsh.Create(localName + "_ssh", roles);
+
+        var developer = new CatalogedApplicationDeveloper() {
+            LocalName = localName,
+            Grant = roles,
+            Ssh = [sslKey._PrimaryKey],
+            Commit = [rootCertCommit._PrimaryKey, signingCertCommit._PrimaryKey],
+            Code = [rootCertCode._PrimaryKey, signingCertCode1._PrimaryKey,
+                signingCertCode2._PrimaryKey, signingCertCode3._PrimaryKey, 
+                signingCertCode4._PrimaryKey]
+            };
+
+        List<CatalogedApplication> result = [
+            developer, rootCertCode, signingCertCode1, signingCertCode2, signingCertCode3, signingCertCode4,
+            rootCertCommit, signingCertCommit, sslKey
+            ];
+
+        return result;
         }
 
 

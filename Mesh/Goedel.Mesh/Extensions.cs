@@ -355,7 +355,7 @@ public static partial class Extensions {
     public static void AddDeveloper(this JsContact contact, CatalogedApplicationDeveloper application) {
         contact.AddServices(application.Kind, application.AccountAddress, application.Ssh);
         contact.AddServices(application.Kind, application.AccountAddress, application.Commit);
-        contact.AddServices(application.Kind, application.AccountAddress, application.Sign);
+        contact.AddServices(application.Kind, application.AccountAddress, application.Code);
         }
 
     /// <summary>
@@ -425,6 +425,7 @@ public static partial class Extensions {
             MediaType = media
             };
         if (contexts != null) {
+            cryptoKey.Contexts ??= [];
             foreach (var context in contexts) {
                 cryptoKey.Contexts.Add(context, true);
                 }

@@ -1410,7 +1410,14 @@
 				Brief "Name to distinguish public contact records"
 
 
+	CommandSet Service "service"
 
+		Command ServiceCreate "create"
+			Brief "Create or update a device service description"
+		Command ServiceCredential "cert"
+			Brief "Generate a new keypair and obtain a certificate"
+		Command ServicePublish "publish"
+			Brief "Publish the DNS entries for the service"
 
 
 	CommandSet Chat "chat"

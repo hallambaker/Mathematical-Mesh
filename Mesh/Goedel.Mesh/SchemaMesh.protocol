@@ -1053,7 +1053,7 @@
 			Description
 				| Unique identifier of the OpenPGP keys to sign repository commits
 				| under this persona
-		String Sign
+		String Code
 			Multiple
 			Description
 				| Unique identifier of the PKIX keys to sign code

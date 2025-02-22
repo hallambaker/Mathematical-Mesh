@@ -237,8 +237,12 @@ public static class ArrayUtilities {
             }
 
         try {
-            dictionary.Add(key, value);
-            return true;
+            if (!dictionary.ContainsKey(key)) {
+                dictionary.Add(key, value);
+
+                return true;
+                }
+            return false;
             }
         catch (System.ArgumentException) {
             return false;

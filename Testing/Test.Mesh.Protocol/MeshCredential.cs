@@ -23,6 +23,7 @@
 
 
 using Goedel.Cryptography.Dare;
+using Goedel.Mesh;
 using Goedel.Mesh.Client;
 using Goedel.Mesh.Shell;
 using Goedel.Registry;
@@ -93,29 +94,59 @@ public partial class TestService {
         var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                 DeviceAliceAdmin, AccountAlice, "main", HandleAlice);
 
-        // add an ssh app
         var roles = new List<string> { Rights.IdRolesWeb };
+
+        // add an ssh app
         var applicationSSH = CatalogedApplicationSsh.Create("SSH", roles);
         var resultTransact1 = contextAccountAlice.AddApplication(applicationSSH, [null]).Sync();
 
         // add a mail app
         var applicationMail = CatalogedApplicationMail.Create("alice@example.net", roles);
-        var resultTransact2 = contextAccountAlice.AddApplication(applicationSSH, [null]).Sync();
+        var resultTransact2 = contextAccountAlice.AddApplication(applicationMail, [null]).Sync();
 
-        // add a developer app
+        // add a developer app, this returns a list of applications for ssh, pgp, etc.
         var applicationDeveloper = CatalogedApplicationDeveloper.Create("alice@example.net", roles);
-        var resultTransact3 = contextAccountAlice.AddApplication(applicationDeveloper, [null]).Sync();
+        foreach (var app in applicationDeveloper) {
+            var resultTransact3 = contextAccountAlice.AddApplication(app, [null]).Sync();
+            }
 
-        // add a credential app
-        var applicationCredential = CatalogedApplicationCredential.Create("alice@example.net", roles);
-        var resultTransact4 = contextAccountAlice.AddApplication(applicationDeveloper, [null]).Sync();
+        //// add a credential app
+        //var applicationCredential = CatalogedApplicationCredential.Create("alice@example.net", roles);
+        //var resultTransact4 = contextAccountAlice.AddApplication(applicationCredential, [null]).Sync();
 
         // add a dns app
         var applicationDns = CatalogedApplicationDns.Create("alice@example.net", roles);
-        var resultTransact5 = contextAccountAlice.AddApplication(applicationDeveloper, [null]).Sync();
+        var resultTransact5 = contextAccountAlice.AddApplication(applicationDns, [null]).Sync();
 
         WriteContactFile(contextAccountAlice);
         }
+
+
+    [Fact]
+    public void TestCredentialAccountThing() {
+        var testEnvironmentCommon = GetTestEnvironmentCommon();
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                DeviceAliceAdmin, AccountAlice, "main", HandleAlice);
+
+        var roles = new List<string> { Rights.IdRolesWeb };
+
+        // add a dns app
+        var applicationDns = CatalogedApplicationDns.Create("alice@example.net", roles);
+        var resultTransact5 = contextAccountAlice.AddApplication(applicationDns, [null]).Sync();
+
+
+        // create service description 
+
+        // acquire certificate and provision private key to service 
+
+        // publish DNS entry
+
+
+        WriteContactFile(contextAccountAlice);
+        }
+
+
+
 
     bool WriteContactFile(ContextUser contextUser) {
 

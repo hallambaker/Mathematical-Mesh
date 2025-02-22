@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/21/2025 6:54:36 PM
+//  This file was automatically generated at 2/22/2025 4:45:23 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -7464,7 +7464,7 @@ public partial class CatalogedApplicationDeveloper : CatalogedApplication {
         /// under this persona
         /// </summary>
 
-	public virtual List<string>?					Sign  {get; set;}
+	public virtual List<string>?					Code  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -7484,8 +7484,8 @@ public partial class CatalogedApplicationDeveloper : CatalogedApplication {
 					(IBinding data, List<string>? value) => {(data as CatalogedApplicationDeveloper).Ssh = value;}, (IBinding data) => (data as CatalogedApplicationDeveloper).Ssh )},
 			{ "Commit", new PropertyListString ("Commit", 
 					(IBinding data, List<string>? value) => {(data as CatalogedApplicationDeveloper).Commit = value;}, (IBinding data) => (data as CatalogedApplicationDeveloper).Commit )},
-			{ "Sign", new PropertyListString ("Sign", 
-					(IBinding data, List<string>? value) => {(data as CatalogedApplicationDeveloper).Sign = value;}, (IBinding data) => (data as CatalogedApplicationDeveloper).Sign )}
+			{ "Code", new PropertyListString ("Code", 
+					(IBinding data, List<string>? value) => {(data as CatalogedApplicationDeveloper).Code = value;}, (IBinding data) => (data as CatalogedApplicationDeveloper).Code )}
         }, __Tag,() => new CatalogedApplicationDeveloper(), CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

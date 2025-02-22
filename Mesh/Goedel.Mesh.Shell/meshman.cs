@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 2/21/2025 6:54:39 PM
+//  This file was automatically generated at 2/22/2025 4:45:27 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -412,6 +412,16 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 			} // End Entries
 		};
 
+	public static DescribeCommandSet DescribeCommandSet_Service => new  () {
+        Identifier = "service",
+		Brief = "<Unspecified>",
+		Entries = new  () {
+			{"create", _ServiceCreate._DescribeCommand },
+			{"cert", _ServiceCredential._DescribeCommand },
+			{"publish", _ServicePublish._DescribeCommand }
+			} // End Entries
+		};
+
 	public static DescribeCommandSet DescribeCommandSet_Chat => new  () {
         Identifier = "chat",
 		Brief = "<Unspecified>",
@@ -456,6 +466,7 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 			{"ssh", DescribeCommandSet_SSH},
 			{"dev", DescribeCommandSet_Dev},
 			{"dns", DescribeCommandSet_Dns},
+			{"service", DescribeCommandSet_Service},
 			{"chat", DescribeCommandSet_Chat},
 			{"help", DescribeHelp }
 			}; // End Entries
@@ -1694,6 +1705,36 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
 		var result = Dispatch.DnsWildcard (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_ServiceCreate (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		ServiceCreate		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.ServiceCreate (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_ServiceCredential (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		ServiceCredential		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.ServiceCredential (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_ServicePublish (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		ServicePublish		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.ServicePublish (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -24222,6 +24263,78 @@ public class _DnsWildcard : Goedel.Command.Dispatch {
 public partial class DnsWildcard : _DnsWildcard {
     } // class DnsWildcard
 
+public class _ServiceCreate : Goedel.Command.Dispatch {
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {		} ;
+
+
+
+
+
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "create",
+		Brief =  "Create or update a device service description",
+		HandleDelegate =  CommandLineInterpreter.Handle_ServiceCreate,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			}
+		};
+
+	}
+
+public partial class ServiceCreate : _ServiceCreate {
+    } // class ServiceCreate
+
+public class _ServiceCredential : Goedel.Command.Dispatch {
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {		} ;
+
+
+
+
+
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "cert",
+		Brief =  "Generate a new keypair and obtain a certificate",
+		HandleDelegate =  CommandLineInterpreter.Handle_ServiceCredential,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			}
+		};
+
+	}
+
+public partial class ServiceCredential : _ServiceCredential {
+    } // class ServiceCredential
+
+public class _ServicePublish : Goedel.Command.Dispatch {
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {		} ;
+
+
+
+
+
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "publish",
+		Brief =  "Publish the DNS entries for the service",
+		HandleDelegate =  CommandLineInterpreter.Handle_ServicePublish,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			}
+		};
+
+	}
+
+public partial class ServicePublish : _ServicePublish {
+    } // class ServicePublish
+
 public class _ChatMessage : Goedel.Command.Dispatch {
 
 	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {		} ;
@@ -24951,6 +25064,21 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		}
 
 	public virtual ShellResult DnsWildcard ( DnsWildcard Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult ServiceCreate ( ServiceCreate Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult ServiceCredential ( ServiceCredential Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult ServicePublish ( ServicePublish Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}
