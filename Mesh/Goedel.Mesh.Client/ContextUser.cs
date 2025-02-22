@@ -1352,7 +1352,10 @@ public partial class ContextUser : ContextAccount {
                 application.Activate(ApplicationEntries, ProfileDevice, this);
 
                 result ??= new();
-                result.Add(application.GetActivation(catalogedDevice));
+                var activation = application.GetActivation(catalogedDevice);
+                if (activation is not null) {
+                    result.Add(activation);
+                    }
                 }
             }
 

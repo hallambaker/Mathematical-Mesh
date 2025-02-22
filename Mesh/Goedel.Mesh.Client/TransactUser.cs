@@ -177,13 +177,15 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
             if (catalogedApplication.DeviceAuthorized(device)) {
                 var applicationEntry = catalogedApplication.GetActivation(device);
 
-                device.ApplicationEntries ??= new();
-                device.ApplicationEntries.Add(applicationEntry);
+                if (applicationEntry is not null) {
 
-                updated.Add(device);
-                applicationEntries.Add(applicationEntry);
+                    device.ApplicationEntries ??= new();
+                    device.ApplicationEntries.Add(applicationEntry);
 
+                    updated.Add(device);
+                    applicationEntries.Add(applicationEntry);
 
+                    }
                 }
             }
         foreach (var device in updated) {

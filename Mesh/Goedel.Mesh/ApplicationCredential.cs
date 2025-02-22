@@ -36,6 +36,8 @@ public partial class ApplicationCredential {
 
 public partial class CatalogedApplicationCredential {
 
+    public KeyPair PrimaryPrivate { get; set; }
+
 
     public static CatalogedApplicationCredential Create(
                         string localName, 
@@ -50,7 +52,8 @@ public partial class CatalogedApplicationCredential {
             Key = clientKey.KeyIdentifier,
             LocalName = localName,
             Grant = roles,
-            //ClientKeyPrivate = clientKey,
+            Kind = "Credential",
+            PrimaryPrivate = clientKey,
             Primary = new KeyData(clientKey)
             };
 
@@ -69,7 +72,7 @@ public partial class CatalogedApplicationCredential {
     public override KeyData[] GetEscrow() => Array.Empty<KeyData>();
 
     ///<inheritdoc/>
-    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
+    public override ApplicationEntry? GetActivation(CatalogedDevice catalogedDevice) => null;
 
     ///<inheritdoc/>
     public override void ToBuilder(StringBuilder output) {

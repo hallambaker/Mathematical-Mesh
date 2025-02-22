@@ -525,6 +525,12 @@
 				|Signed connection service delegation allowing the device to
 				|access the account.
 
+	Structure ActivationApplicationDeveloper
+		Inherits ActivationApplication
+
+	Structure ActivationApplicationCredential
+		Inherits ActivationApplication
+
 	//Structure ActivationApplicationCallsignObsolete				
 	//	Inherits ActivationApplication
 	//	String RequestId
@@ -540,11 +546,9 @@
 		Abstract
 		String Identifier
 
-
 	Structure ApplicationEntrySsh
 		Inherits ApplicationEntry
 		Struct Enveloped<ActivationApplicationSsh> EnvelopedActivation
-
 
 	Structure ApplicationEntryGroup
 		Inherits ApplicationEntry
@@ -553,6 +557,14 @@
 	Structure ApplicationEntryMail
 		Inherits ApplicationEntry
 		Struct Enveloped<ActivationApplicationMail> EnvelopedActivation
+
+	Structure ApplicationEntryDeveloper
+		Inherits ApplicationEntry
+		Struct Enveloped<ActivationApplicationDeveloper> EnvelopedActivation
+
+	Structure ApplicationEntryCredential
+		Inherits ApplicationEntry
+		Struct Enveloped<ActivationApplicationCredential> EnvelopedActivation
 
 
 	Section 2 "Data Structures"

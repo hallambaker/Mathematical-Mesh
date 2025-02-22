@@ -44,7 +44,7 @@ public partial class CatalogedApplicationCallsign {
         }
 
     ///<inheritdoc/>
-    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => null;
+    public override ApplicationEntry? GetActivation(CatalogedDevice catalogedDevice) => null;
 
 
 

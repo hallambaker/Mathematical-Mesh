@@ -163,7 +163,7 @@ public partial class CatalogedApplicationMail {
         }
 
     ///<inheritdoc/>
-    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
+    public override ApplicationEntry? GetActivation(CatalogedDevice catalogedDevice) {
         var activation = new ActivationApplicationMail() {
             SmimeSign = new KeyData(SmimeSignKeyPair, true),
             SmimeEncrypt = new KeyData(SmimeEncryptKeyPair, true),

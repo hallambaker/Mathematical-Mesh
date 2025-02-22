@@ -273,7 +273,10 @@ public static partial class Extensions {
                 AddSsh(contact, catalogedSsh);
                 break;
                 }
-
+            case CatalogedApplicationDeveloper catalogedDeveloper: {
+                AddDeveloper(contact, catalogedDeveloper);
+                break;
+                }
             }
         }
 
@@ -327,8 +330,11 @@ public static partial class Extensions {
     /// <param name="application">The application to add.</param>
     public static void AddCredential(this JsContact contact, CatalogedApplicationCredential application) {
         contact.AddKeyData(application.Primary, application.Kind, application.AccountAddress, application.Contexts);
-        foreach (var key in application.Secondary) {
-            contact.AddKeyData(key, application.Kind, application.AccountAddress, application.Contexts);
+
+        if (application.Secondary is not null) {
+            foreach (var key in application.Secondary) {
+                contact.AddKeyData(key, application.Kind, application.AccountAddress, application.Contexts);
+                }
             }
         contact.Update();
         }

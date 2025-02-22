@@ -129,7 +129,7 @@ public partial class CatalogedApplicationSsh {
 
 
     ///<inheritdoc/>
-    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
+    public override ApplicationEntry? GetActivation(CatalogedDevice catalogedDevice) {
 
         // To: work out proper way to handle this.
         ClientKeyPrivate.AssertNotNull(NYI.Throw);

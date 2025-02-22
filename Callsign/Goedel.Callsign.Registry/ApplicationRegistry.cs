@@ -216,7 +216,7 @@ public partial class CatalogedRegistry {
         }
 
     ///<inheritdoc/>
-    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
+    public override ApplicationEntry? GetActivation(CatalogedDevice catalogedDevice) {
         //connectionDevice = new ConnectionDevice() {
         //    Authentication = profileDevice.Encryption
         //    };

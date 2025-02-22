@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/22/2025 4:45:23 PM
+//  This file was automatically generated at 2/22/2025 6:16:26 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -108,10 +108,14 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {"ActivationApplicationSsh", ActivationApplicationSsh._Factory},
 	    {"ActivationApplicationMail", ActivationApplicationMail._Factory},
 	    {"ActivationApplicationGroup", ActivationApplicationGroup._Factory},
+	    {"ActivationApplicationDeveloper", ActivationApplicationDeveloper._Factory},
+	    {"ActivationApplicationCredential", ActivationApplicationCredential._Factory},
 	    {"ApplicationEntry", ApplicationEntry._Factory},
 	    {"ApplicationEntrySsh", ApplicationEntrySsh._Factory},
 	    {"ApplicationEntryGroup", ApplicationEntryGroup._Factory},
 	    {"ApplicationEntryMail", ApplicationEntryMail._Factory},
+	    {"ApplicationEntryDeveloper", ApplicationEntryDeveloper._Factory},
+	    {"ApplicationEntryCredential", ApplicationEntryCredential._Factory},
 	    {"Bookmark", Bookmark._Factory},
 	    {"Reference", Reference._Factory},
 	    {"Engagement", Engagement._Factory},
@@ -3366,6 +3370,154 @@ public partial class ActivationApplicationGroup : ActivationApplication {
 
 	/// <summary>
 	/// </summary>
+public partial class ActivationApplicationDeveloper : ActivationApplication {
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+        }, __Tag,() => new ActivationApplicationDeveloper(), ActivationApplication._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(ActivationApplication._binding, _binding);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ActivationApplicationDeveloper";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ActivationApplicationDeveloper();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ActivationApplicationDeveloper FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ActivationApplicationDeveloper;
+			}
+		var Result = new ActivationApplicationDeveloper ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class ActivationApplicationCredential : ActivationApplication {
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+        }, __Tag,() => new ActivationApplicationCredential(), ActivationApplication._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(ActivationApplication._binding, _binding);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ActivationApplicationCredential";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ActivationApplicationCredential();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ActivationApplicationCredential FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ActivationApplicationCredential;
+			}
+		var Result = new ActivationApplicationCredential ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
 abstract public partial class ApplicationEntry : MeshItem {
         /// <summary>
         /// </summary>
@@ -3678,6 +3830,170 @@ public partial class ApplicationEntryMail : ApplicationEntry {
 			return Out as ApplicationEntryMail;
 			}
 		var Result = new ApplicationEntryMail ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class ApplicationEntryDeveloper : ApplicationEntry {
+        /// <summary>
+        /// </summary>
+
+	public virtual Enveloped<ActivationApplicationDeveloper>?					EnvelopedActivation  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
+					(IBinding data, object? value) => {(data as ApplicationEntryDeveloper).EnvelopedActivation = value as Enveloped<ActivationApplicationDeveloper>;}, (IBinding data) => (data as ApplicationEntryDeveloper).EnvelopedActivation,
+					false, ()=>new  Enveloped<ActivationApplicationDeveloper>(), ()=>new Enveloped<ActivationApplicationDeveloper>())}
+        }, __Tag,() => new ApplicationEntryDeveloper(), ApplicationEntry._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(ApplicationEntry._binding, _binding);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ApplicationEntryDeveloper";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ApplicationEntryDeveloper();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ApplicationEntryDeveloper FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ApplicationEntryDeveloper;
+			}
+		var Result = new ApplicationEntryDeveloper ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class ApplicationEntryCredential : ApplicationEntry {
+        /// <summary>
+        /// </summary>
+
+	public virtual Enveloped<ActivationApplicationCredential>?					EnvelopedActivation  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
+					(IBinding data, object? value) => {(data as ApplicationEntryCredential).EnvelopedActivation = value as Enveloped<ActivationApplicationCredential>;}, (IBinding data) => (data as ApplicationEntryCredential).EnvelopedActivation,
+					false, ()=>new  Enveloped<ActivationApplicationCredential>(), ()=>new Enveloped<ActivationApplicationCredential>())}
+        }, __Tag,() => new ApplicationEntryCredential(), ApplicationEntry._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(ApplicationEntry._binding, _binding);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ApplicationEntryCredential";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ApplicationEntryCredential();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new ApplicationEntryCredential FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as ApplicationEntryCredential;
+			}
+		var Result = new ApplicationEntryCredential ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

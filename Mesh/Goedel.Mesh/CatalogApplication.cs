@@ -192,7 +192,7 @@ public partial class CatalogedApplication {
     /// </summary>
     /// <param name="catalogedDevice">The device to activate.</param>
     /// <returns>The activation record.</returns>
-    public abstract ApplicationEntry GetActivation(CatalogedDevice catalogedDevice);
+    public abstract ApplicationEntry? GetActivation(CatalogedDevice catalogedDevice);
 
 
 

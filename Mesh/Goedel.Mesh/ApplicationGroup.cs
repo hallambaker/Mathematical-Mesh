@@ -136,7 +136,7 @@ public partial class CatalogedGroup {
         }
 
     ///<inheritdoc/>
-    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) {
+    public override ApplicationEntry? GetActivation(CatalogedDevice catalogedDevice) {
         var activation = new ActivationApplicationGroup() {
             AccountEncryption = new KeyData(ActivationAccount.CommonEncryptionKey, true),
             AdministratorSignature = new KeyData(ActivationAccount.AdministratorSignatureKey, true),

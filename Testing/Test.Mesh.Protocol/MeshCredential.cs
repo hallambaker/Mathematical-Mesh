@@ -96,9 +96,9 @@ public partial class TestService {
 
         var roles = new List<string> { Rights.IdRolesWeb };
 
-        // add an ssh app
-        var applicationSSH = CatalogedApplicationSsh.Create("SSH", roles);
-        var resultTransact1 = contextAccountAlice.AddApplication(applicationSSH, [null]).Sync();
+        //// add an ssh app
+        //var applicationSSH = CatalogedApplicationSsh.Create("SSH", roles);
+        //var resultTransact1 = contextAccountAlice.AddApplication(applicationSSH, [null]).Sync();
 
         // add a mail app
         var applicationMail = CatalogedApplicationMail.Create("alice@example.net", roles);
@@ -115,8 +115,8 @@ public partial class TestService {
         //var resultTransact4 = contextAccountAlice.AddApplication(applicationCredential, [null]).Sync();
 
         // add a dns app
-        var applicationDns = CatalogedApplicationDns.Create("alice@example.net", roles);
-        var resultTransact5 = contextAccountAlice.AddApplication(applicationDns, [null]).Sync();
+        //var applicationDns = CatalogedApplicationDns.Create("alice@example.net", roles);
+        //var resultTransact5 = contextAccountAlice.AddApplication(applicationDns, [null]).Sync();
 
         WriteContactFile(contextAccountAlice);
         }

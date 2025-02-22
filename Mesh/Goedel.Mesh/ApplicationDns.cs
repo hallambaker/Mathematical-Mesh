@@ -50,7 +50,7 @@ public partial class CatalogedApplicationDns {
     public override KeyData[] GetEscrow() => Array.Empty<KeyData>();
 
     ///<inheritdoc/>
-    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
+    public override ApplicationEntry? GetActivation(CatalogedDevice catalogedDevice) => null;
 
     ///<inheritdoc/>
     public override void ToBuilder(StringBuilder output) {

@@ -654,6 +654,11 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationDeveloper._PrimaryKey">
+            <summary>
+            The primary key used to catalog the entry.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationDeveloper.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
@@ -14848,6 +14853,210 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationApplication.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.ActivationApplicationDeveloper">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationDeveloper._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ActivationApplicationDeveloper._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ActivationApplicationDeveloper._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ActivationApplicationDeveloper._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationDeveloper._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationDeveloper._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationDeveloper._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationDeveloper._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ActivationApplicationDeveloper.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationApplicationDeveloper._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationApplicationDeveloper.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.ActivationApplicationCredential">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationCredential._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ActivationApplicationCredential._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ActivationApplicationCredential._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ActivationApplicationCredential._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationCredential._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationCredential._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationCredential._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationApplicationCredential._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ActivationApplicationCredential.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationApplicationCredential._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ActivationApplicationCredential.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.ApplicationEntryDeveloper">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryDeveloper.EnvelopedActivation">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryDeveloper._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ApplicationEntryDeveloper._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ApplicationEntryDeveloper._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ApplicationEntryDeveloper._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryDeveloper._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryDeveloper._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryDeveloper._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryDeveloper._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ApplicationEntryDeveloper.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ApplicationEntryDeveloper._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ApplicationEntryDeveloper.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Mesh.ApplicationEntryCredential">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryCredential.EnvelopedActivation">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryCredential._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ApplicationEntryCredential._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ApplicationEntryCredential._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ApplicationEntryCredential._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryCredential._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryCredential._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryCredential._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.ApplicationEntryCredential._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ApplicationEntryCredential.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ApplicationEntryCredential._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ApplicationEntryCredential.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

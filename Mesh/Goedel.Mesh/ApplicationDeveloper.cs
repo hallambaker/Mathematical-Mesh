@@ -36,6 +36,11 @@ public partial class ApplicationDeveloper {
 
 public partial class CatalogedApplicationDeveloper {
 
+    /// <summary>
+    /// The primary key used to catalog the entry.
+    /// </summary>
+    public override string _PrimaryKey => Key;
+
 
     public static List<CatalogedApplication> Create(string localName, List<string> roles) {
 
@@ -61,12 +66,14 @@ public partial class CatalogedApplicationDeveloper {
         var sslKey = CatalogedApplicationSsh.Create(localName + "_ssh", roles);
 
         var developer = new CatalogedApplicationDeveloper() {
+            Key = Udf.Nonce(),
             LocalName = localName,
+            Kind="Developer",
             Grant = roles,
             Ssh = [sslKey._PrimaryKey],
             Commit = [rootCertCommit._PrimaryKey, signingCertCommit._PrimaryKey],
             Code = [rootCertCode._PrimaryKey, signingCertCode1._PrimaryKey,
-                signingCertCode2._PrimaryKey, signingCertCode3._PrimaryKey, 
+                signingCertCode2._PrimaryKey, signingCertCode3._PrimaryKey,
                 signingCertCode4._PrimaryKey]
             };
 
@@ -81,7 +88,10 @@ public partial class CatalogedApplicationDeveloper {
 
 
     ///<inheritdoc/>
-    public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {
+    public override void Activate(
+                    List<ApplicationEntry> activationEntry, 
+                    ProfileDevice profileDevice, 
+                    IKeyCollection keyCollection) {
         }
 
 
@@ -90,7 +100,12 @@ public partial class CatalogedApplicationDeveloper {
     public override KeyData[] GetEscrow() => Array.Empty<KeyData>();
 
     ///<inheritdoc/>
-    public override ApplicationEntry GetActivation(CatalogedDevice catalogedDevice) => throw new NYI();
+    public override ApplicationEntry? GetActivation(CatalogedDevice catalogedDevice) {
+
+        return null;
+        //return new ApplicationEntryDeveloper() {
+        //    };
+        }
 
     ///<inheritdoc/>
     public override void ToBuilder(StringBuilder output) {
