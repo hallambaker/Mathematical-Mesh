@@ -20,8 +20,11 @@
 //  
 //  
 
+using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
+using Goedel.IO;
 
+using System.Data;
 using System.Reflection.Metadata;
 
 namespace Goedel.Discovery;
@@ -265,6 +268,29 @@ public class ParsedHandle {
         return new ParsedHandle(meshService.Dsa);
         }
 
+
+    public static async Task<(byte[], string)> ResolveEarl(string handle) {
+
+        var contactTxt = await HandleServiceContact.Fetch(handle);
+        var uri = new Uri(contactTxt.Uri);
+        var earl = uri.Segments[^1];
+
+
+
+        // Form the .well-known service URI and fetch the result
+        var locator = Udf.Locator(earl);
+        var serviceUri = $"https://{uri.Host}/.well-known/jscontact/{locator}.jscontact" ;
+        var ciphertext = await UriClient.DownloadByteArrayAsync(serviceUri);
+        ciphertext.AssertNotNull(NYI.Throw);
+
+        // decrypt the cipher text
+        var plaintext = Udf.GetDecryptedData(ciphertext, earl);
+
+
+        return (plaintext, "application/jscontact");
+        }
+
+
     /// <summary>
     /// Fetch the services associated with this handle.
     /// </summary>
@@ -403,6 +429,8 @@ public abstract record HandleService {
             }
         }
     }
+
+
 
 
 /// <summary>

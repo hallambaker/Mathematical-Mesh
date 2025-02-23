@@ -82,9 +82,24 @@ public static class UriClient {
         catch {
             return null;
             }
-
-
         }
+
+    /// <summary>
+    /// Perform a HTTP client GET on <paramref name="uri"/> and return the result as a string.
+    /// If an exception is thrown, the value null is returned.
+    /// </summary>
+    /// <param name="uri">The URI to query.</param>
+    /// <returns>The data fetched or null if the fetch failed.</returns>
+    public static async Task<byte[]?> DownloadByteArrayAsync(this string uri) {
+        try {
+            var result = await HttpClient.GetByteArrayAsync(uri);
+            return result;
+            }
+        catch {
+            return null;
+            }
+        }
+
 
     /// <summary>
     /// Perform a HTTP client POST on <paramref name="uri"/> with data <paramref name="data"/>

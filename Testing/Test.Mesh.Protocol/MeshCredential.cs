@@ -22,7 +22,9 @@
 
 
 
+using Goedel.Contacts;
 using Goedel.Cryptography.Dare;
+using Goedel.Discovery;
 using Goedel.Mesh;
 using Goedel.Mesh.Client;
 using Goedel.Mesh.Shell;
@@ -135,10 +137,20 @@ public partial class TestService {
         var handle = "phill.hallambaker.com";
 
         // pull the contact 
-
+        var (bytes, content) = ParsedHandle.ResolveEarl(handle).Sync();
 
         // present to screen
+        var text = bytes.ToUTF8();
+        Console.WriteLine($"Contact: {text}");
 
+
+        var contact = GetContact(bytes);
+
+        }
+
+    private static JsonObject GetContact(byte[] bytes) {
+        var reader = new JsonReader(bytes);
+        return JsContact.FromJson(reader, false);
         }
 
     [Fact]
@@ -181,9 +193,11 @@ public partial class TestService {
         var astext = asbytes.ToUTF8();
 
         // encrypt
-        var earl = Udf.AuthenticatedEncryptionKey(asbytes);
-        var locator = Udf.Locator(earl);
-        var encrypted = Udf.GetEncryptedData(asbytes, earl);
+        var(earl, locator, encrypted) = Udf.CreateEarl(asbytes);
+
+        //var earl = Udf.AuthenticatedEncryptionKey(asbytes);
+        //var locator = Udf.Locator(earl);
+        //var encrypted = Udf.GetEncryptedData(asbytes, earl);
 
         // write to file
         var filename = Path.ChangeExtension(locator, "jscontact");

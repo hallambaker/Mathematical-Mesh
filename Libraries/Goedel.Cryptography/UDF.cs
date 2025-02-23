@@ -23,6 +23,7 @@
 
 using Goedel.ASN;
 
+using System;
 using System.Net.Mime;
 using System.Security.Cryptography;
 
@@ -834,16 +835,18 @@ public record Udf(
         SymmetricKey(UdfTypeIdentifier.Encryption_HKDF_AES_256, data);
 
 
+    public static (string, string, byte[]) CreateEarl(byte[] data) {
+        var earl = Udf.AuthenticatedEncryptionKey(data);
+        var locator = Udf.Locator(earl);
+        var encrypted = Udf.GetEncryptedData(data, earl);
 
+        return (earl, locator, encrypted);
+        }
 
     public static string AuthenticatedEncryptionKey(byte[] data, int bits = 0) {
-
         var digest = SHAKE256.HashData(data);
 
-
         return AuthenticatedEncryptionKeyDigest(digest, bits);
-
-        throw new NYI();
         }
 
     public static string Locator(string earl) {

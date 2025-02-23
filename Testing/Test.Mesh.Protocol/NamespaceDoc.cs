@@ -19,6 +19,7 @@
 //  THE SOFTWARE.
 
 
+global using System;
 
 
 global using Goedel.Carnet;

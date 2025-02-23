@@ -62,8 +62,8 @@ partial class Program {
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
         //TestService.Test().TestCredentialAccount();
-        TestService.Test().TestCredentialAccountApps();
-
+        //TestService.Test().TestCredentialAccountApps();
+        TestService.Test().TestCredentialFromHandle();
 
         //Jmap.Test().TestContactAlice();
         //ShellTests.Test().TestHandleThing();
