@@ -121,7 +121,7 @@ public partial class TestService {
 
 
         var applicationWeb = CatalogedApplicationService.CreateWeb(
-                "cryptomesh", roles, "https://alice.cryptomesh.org/");
+                "cryptomesh", roles, "https://phill.hallambaker.com/");
         var resultTransact6 = contextAccountAlice.AddApplication(applicationWeb, [null]).Sync();
 
         WriteContactFile(contextAccountAlice);
@@ -178,7 +178,7 @@ public partial class TestService {
         var contact = catalogedContact.Contact;
         var asbytes = contact.GetJson(false);
 
-        var astext = asbytes.ToString();
+        var astext = asbytes.ToUTF8();
 
         // encrypt
         var earl = Udf.AuthenticatedEncryptionKey(asbytes);
