@@ -199,7 +199,12 @@ public partial class KeyData {
         }
 
 
-
+    /// <summary>
+    /// Return the public key data as a data uri using the X509Certificate data if 
+    /// available, otherwise the PublicParameters.
+    /// </summary>
+    /// <returns>The media type and data uri.</returns>
+    /// <exception cref="NotImplementedException"></exception>
     public (string, string) GetDataUri() {
         if (X509Certificate is not null) {
             return GetDataUri("application/pkix-cert", X509Certificate);

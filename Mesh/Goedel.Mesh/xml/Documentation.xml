@@ -13728,6 +13728,14 @@
             or a RFC822 email address.</param>
             <param name="Signer">The signing key (which must have an attached certificate).</param>
         </member>
+        <member name="M:Goedel.Mesh.KeyData.GetDataUri">
+            <summary>
+            Return the public key data as a data uri using the X509Certificate data if 
+            available, otherwise the PublicParameters.
+            </summary>
+            <returns>The media type and data uri.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
         <member name="P:Goedel.Mesh.KeyData.Udf">
              <summary>
             UDF fingerprint of the public key parameters
