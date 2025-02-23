@@ -379,6 +379,7 @@ public static partial class Extensions {
     public static void AddService(this JsContact contact, CatalogedApplicationService application) {
 
         if (application?.Protocol == "http") {
+            contact.AddService("http", null, application.Address);
             }
 
         }

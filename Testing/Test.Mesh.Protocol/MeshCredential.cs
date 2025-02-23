@@ -121,12 +121,25 @@ public partial class TestService {
 
 
         var applicationWeb = CatalogedApplicationService.CreateWeb(
-                "cryptomesh", roles, "alice.cryptomesh.org");
+                "cryptomesh", roles, "https://alice.cryptomesh.org/");
         var resultTransact6 = contextAccountAlice.AddApplication(applicationWeb, [null]).Sync();
 
         WriteContactFile(contextAccountAlice);
         }
 
+
+
+    [Fact]
+    public void TestCredentialFromHandle() {
+
+        var handle = "phill.hallambaker.com";
+
+        // pull the contact 
+
+
+        // present to screen
+
+        }
 
     [Fact]
     public void TestCredentialAccountThing() {
@@ -164,6 +177,8 @@ public partial class TestService {
         // write to file
         var contact = catalogedContact.Contact;
         var asbytes = contact.GetJson(false);
+
+        var astext = asbytes.ToString();
 
         // encrypt
         var earl = Udf.AuthenticatedEncryptionKey(asbytes);

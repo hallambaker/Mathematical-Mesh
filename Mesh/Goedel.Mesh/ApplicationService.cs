@@ -38,6 +38,8 @@ public partial class ApplicationService {
 
 public partial class CatalogedApplicationService {
 
+    public override string _PrimaryKey => Key;
+
 
     public static CatalogedApplicationService CreateDns(
                 string localName, 
@@ -47,6 +49,7 @@ public partial class CatalogedApplicationService {
 
 
         return new CatalogedApplicationService() {
+            Key = Udf.Nonce(),
             LocalName = localName,
             Grant = roles,
             Protocol = "dns",
@@ -62,6 +65,7 @@ public partial class CatalogedApplicationService {
 
 
         return new CatalogedApplicationService() {
+            Key = Udf.Nonce(),
             LocalName = localName,
             Grant = roles,
             Protocol = "http",
