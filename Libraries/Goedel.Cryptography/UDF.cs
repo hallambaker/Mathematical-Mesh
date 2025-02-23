@@ -836,9 +836,9 @@ public record Udf(
 
 
     public static (string, string, byte[]) CreateEarl(byte[] data) {
-        var earl = Udf.AuthenticatedEncryptionKey(data);
-        var locator = Udf.Locator(earl);
-        var encrypted = Udf.GetEncryptedData(data, earl);
+        var earl = AuthenticatedEncryptionKey(data);
+        var locator = Locator(earl);
+        var encrypted = GetEncryptedData(data, earl);
 
         return (earl, locator, encrypted);
         }
@@ -846,7 +846,7 @@ public record Udf(
     public static string AuthenticatedEncryptionKey(byte[] data, int bits = 0) {
         var digest = SHAKE256.HashData(data);
 
-        return AuthenticatedEncryptionKeyDigest(digest, bits);
+        return AuthenticatedEncryptionKeyDigest(digest, bits).ToLower();
         }
 
     public static string Locator(string earl) {
@@ -854,7 +854,7 @@ public record Udf(
         var bits = source.Length * 16;
 
         var buffer = DataToUDFBinary(source, "application/udf", bits, CryptoAlgorithmId.SHA_3_512);
-        return PresentationBase32(buffer, bits);
+        return PresentationBase32(buffer, bits).ToLower();
         }
 
     public static string AuthenticatedEncryptionKeyDigest(byte[] digest, int bits = 0) {
@@ -867,7 +867,7 @@ public record Udf(
         }
 
     public static byte[] GetEncryptionKey(string udf) {
-        var bytes = udf.ToUTF8();
+        var bytes = udf.ToLower().ToUTF8();
         var key = SHAKE256.HashData(bytes, KeyLength256 + AesNonceLength);
         //var iv = SHAKE256.HashData(key, 96);
         return key;

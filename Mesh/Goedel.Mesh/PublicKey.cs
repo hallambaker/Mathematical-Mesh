@@ -219,7 +219,7 @@ public partial class KeyData {
         builder.Append("data:");
         builder.Append(media);
         builder.Append(";base64,");
-        builder.Append(data);
+        builder.Append(data.ToStringBase64url());
 
         return (media, builder.ToString());
         }
