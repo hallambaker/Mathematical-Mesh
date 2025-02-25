@@ -1,4 +1,4 @@
-﻿namespace Goedel.Caarnet.Server;
+﻿namespace Goedel.Carnet.Server;
 
 
 /// <summary>

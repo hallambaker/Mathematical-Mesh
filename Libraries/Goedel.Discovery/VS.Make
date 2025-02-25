@@ -20,6 +20,7 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.Cryptography.dll\
     Goedel.FSR.dll\
+    Goedel.IO.dll\
     Goedel.Utilities.dll
 
 ToolTargets = \

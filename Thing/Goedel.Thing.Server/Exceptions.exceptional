@@ -1,0 +1,8 @@
+﻿
+Namespace Goedel.Thing.Server
+
+	Exception TBS
+		Console "Exception TBS"
+		Description
+			|TBS
+

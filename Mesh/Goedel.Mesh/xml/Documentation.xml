@@ -6846,7 +6846,7 @@
             <param name="contact">The contact to add the application details to.</param>
             <param name="application">The application to add.</param>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.AddServices(Goedel.Contacts.JsContact,System.String,System.String,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Extensions.AddServices(Goedel.Contacts.JsContact,System.String,System.String,System.Collections.Generic.List{System.String},System.String)">
             <summary>
             Add the key <paramref name="keyData"/> to the contact <paramref name="contact"/>.
             </summary>
@@ -6855,7 +6855,7 @@
             <param name="accountAddress">The account address to specify.</param>
             <param name="key">Uri identifiers of the keys to add.</param>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.AddService(Goedel.Contacts.JsContact,System.String,System.String,System.String)">
+        <member name="M:Goedel.Mesh.Extensions.AddService(Goedel.Contacts.JsContact,System.String,System.String,System.String,System.String)">
             <summary>
             Add the key <paramref name="keyData"/> to the contact <paramref name="contact"/>.
             </summary>

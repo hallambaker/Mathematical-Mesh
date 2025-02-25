@@ -41,7 +41,7 @@ public partial class CatalogedApplicationService {
     public override string _PrimaryKey => Key;
 
 
-    public static CatalogedApplicationService CreateDns(
+    public static CatalogedApplicationService CreateThing(
                 string localName, 
                 List<string> roles,
                 string zone,
@@ -52,7 +52,7 @@ public partial class CatalogedApplicationService {
             Key = Udf.Nonce(),
             LocalName = localName,
             Grant = roles,
-            Protocol = "dns",
+            Protocol = "thing",
             Address = zone,
             AdministrationAddress = service
             };
@@ -72,6 +72,27 @@ public partial class CatalogedApplicationService {
             Address = address
             };
         }
+
+
+    public static CatalogedApplicationService CreateMessaging(
+                string localName,
+                List<string> roles,
+                string address,
+                string protocol) {
+
+
+        return new CatalogedApplicationService() {
+            Key = Udf.Nonce(),
+            LocalName = localName,
+            Grant = roles,
+            Protocol = protocol,
+            Address = address
+            };
+        }
+
+
+
+
     ///<inheritdoc/>
     public override void Activate(List<ApplicationEntry> activationEntry, ProfileDevice profileDevice, IKeyCollection keyCollection) {
         }

@@ -1,0 +1,2733 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Certes</name>
+    </assembly>
+    <members>
+        <member name="T:Certes.AcmeContext">
+            <summary>
+            Represents the context for ACME operations.
+            </summary>
+            <seealso cref="T:Certes.IAcmeContext" />
+        </member>
+        <member name="P:Certes.AcmeContext.BadNonceRetryCount">
+            <summary>
+            Gets the number of retries on a badNonce error.
+            </summary>
+            <value>
+            The number of retries.
+            </value>
+        </member>
+        <member name="P:Certes.AcmeContext.HttpClient">
+            <summary>
+            Gets the ACME HTTP client.
+            </summary>
+            <value>
+            The ACME HTTP client.
+            </value>
+        </member>
+        <member name="P:Certes.AcmeContext.DirectoryUri">
+            <summary>
+            Gets the directory URI.
+            </summary>
+            <value>
+            The directory URI.
+            </value>
+        </member>
+        <member name="P:Certes.AcmeContext.AccountKey">
+            <summary>
+            Gets the account key.
+            </summary>
+            <value>
+            The account key.
+            </value>
+        </member>
+        <member name="M:Certes.AcmeContext.#ctor(System.Uri,Certes.IKey,Certes.Acme.IAcmeHttpClient,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.AcmeContext" /> class.
+            </summary>
+            <param name="directoryUri">The directory URI.</param>
+            <param name="accountKey">The account key.</param>
+            <param name="http">The HTTP client.</param>
+            <param name="badNonceRetryCount">The number of retries on a bad nonce.</param>
+            <exception cref="T:System.ArgumentNullException">
+            If <paramref name="directoryUri"/> is <c>null</c>.
+            </exception>
+        </member>
+        <member name="M:Certes.AcmeContext.Account">
+            <summary>
+            Gets the ACME account context.
+            </summary>
+            <returns>The ACME account context.</returns>
+        </member>
+        <member name="M:Certes.AcmeContext.ChangeKey(Certes.IKey)">
+            <summary>
+            Changes the account key.
+            </summary>
+            <param name="key">The new account key.</param>
+            <returns>The account resource.</returns>
+        </member>
+        <member name="M:Certes.AcmeContext.NewAccount(System.Collections.Generic.IList{System.String},System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            Creates the account.
+            </summary>
+            <returns>
+            The account created.
+            </returns>
+        </member>
+        <member name="M:Certes.AcmeContext.GetDirectory">
+            <summary>
+            Gets the ACME directory.
+            </summary>
+            <returns>
+            The ACME directory.
+            </returns>
+        </member>
+        <member name="M:Certes.AcmeContext.RevokeCertificate(System.Byte[],Certes.Acme.Resource.RevocationReason,Certes.IKey)">
+            <summary>
+            Revokes the certificate.
+            </summary>
+            <param name="certificate">The certificate in DER format.</param>
+            <param name="reason">The reason for revocation.</param>
+            <param name="certificatePrivateKey">The certificate's private key.</param>
+            <returns>
+            The awaitable.
+            </returns>
+        </member>
+        <member name="M:Certes.AcmeContext.NewOrder(System.Collections.Generic.IList{System.String},System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})">
+            <summary>
+            Creates a new the order.
+            </summary>
+            <param name="identifiers">The identifiers.</param>
+            <param name="notBefore">Th value of not before field for the certificate.</param>
+            <param name="notAfter">The value of not after field for the certificate.</param>
+            <returns>
+            The order context created.
+            </returns>
+        </member>
+        <member name="M:Certes.AcmeContext.Sign(System.Object,System.Uri)">
+            <summary>
+            Signs the data with account key.
+            </summary>
+            <param name="entity">The data to sign.</param>
+            <param name="uri">The URI for the request.</param>
+            <returns>The JWS payload.</returns>
+        </member>
+        <member name="M:Certes.AcmeContext.Order(System.Uri)">
+            <summary>
+            Gets the order by specified location.
+            </summary>
+            <param name="location">The order location.</param>
+            <returns>
+            The order context.
+            </returns>
+        </member>
+        <member name="M:Certes.AcmeContext.Authorization(System.Uri)">
+            <summary>
+            Gets the authorization by specified location.
+            </summary>
+            <param name="location">The authorization location.</param>
+            <returns>
+            The authorization context.
+            </returns>
+        </member>
+        <member name="T:Certes.AcmeException">
+            <summary>
+            The exception that is thrown when an error occurs while processing ACME operations.
+            </summary>
+            <seealso cref="T:System.Exception" />
+        </member>
+        <member name="M:Certes.AcmeException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.AcmeException"/> class.
+            </summary>
+        </member>
+        <member name="M:Certes.AcmeException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.AcmeException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:Certes.AcmeException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.AcmeException"/> class.
+            </summary>
+            <param name="message">
+            The error message that explains the reason for the exception.
+            </param>
+            <param name="innerException">
+            The exception that is the cause of the current exception, 
+            or a null reference (Nothing in Visual Basic) if no inner
+            exception is specified.
+            </param>
+        </member>
+        <member name="M:Certes.AcmeException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.AcmeException"/> class.
+            </summary>
+            <param name="info">
+            The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that
+            holds the serialized object data about the exception being thrown.
+            </param>
+            <param name="context">
+            The <see cref="T:System.Runtime.Serialization.StreamingContext"/> 
+            that contains contextual information about the source or destination.
+            </param>
+        </member>
+        <member name="T:Certes.AcmeRequestException">
+            <summary>
+            The exception that is thrown when an error occurs while processing ACME operations.
+            </summary>
+            <seealso cref="T:Certes.AcmeException" />
+        </member>
+        <member name="F:Certes.AcmeRequestException.jsonSerializerSettings">
+            <summary>
+            The json serializer settings for converting additional information.
+            </summary>
+        </member>
+        <member name="P:Certes.AcmeRequestException.Error">
+            <summary>
+            Gets the error occurred while processing ACME operations.
+            </summary>
+            <value>
+            The error occurred while processing ACME operations.
+            </value>
+        </member>
+        <member name="M:Certes.AcmeRequestException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.AcmeRequestException"/> class.
+            </summary>
+        </member>
+        <member name="M:Certes.AcmeRequestException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.AcmeRequestException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:Certes.AcmeRequestException.#ctor(System.String,Certes.Acme.AcmeError)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.AcmeException" /> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+            <param name="error">The error occurred while processing ACME operations.</param>
+        </member>
+        <member name="M:Certes.AcmeRequestException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.AcmeRequestException"/> class.
+            </summary>
+            <param name="message">
+            The error message that explains the reason for the exception.
+            </param>
+            <param name="innerException">
+            The exception that is the cause of the current exception, 
+            or a null reference (Nothing in Visual Basic) if no inner
+            exception is specified.
+            </param>
+        </member>
+        <member name="M:Certes.AcmeRequestException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.AcmeRequestException"/> class.
+            </summary>
+            <param name="info">
+            The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that
+            holds the serialized object data about the exception being thrown.
+            </param>
+            <param name="context">
+            The <see cref="T:System.Runtime.Serialization.StreamingContext"/> 
+            that contains contextual information about the source or destination.
+            </param>
+        </member>
+        <member name="M:Certes.AcmeRequestException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Sets the <see cref="T:System.Runtime.Serialization.SerializationInfo"/> 
+            with information about the exception.
+            </summary>
+            <param name="info">
+            The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that
+            holds the serialized object data about the exception being thrown.
+            </param>
+            <param name="context">
+            The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that 
+            contains contextual information about the source or destination.
+            </param>
+        </member>
+        <member name="P:Certes.AcmeRequestException.Message">
+            <summary>
+            Gets a message that describes the current exception.
+            </summary>
+        </member>
+        <member name="T:Certes.Acme.AccountContext">
+            <summary>
+            Represents the context for ACME account operations.
+            </summary>
+            <seealso cref="T:Certes.Acme.IAccountContext" />
+        </member>
+        <member name="M:Certes.Acme.AccountContext.#ctor(Certes.IAcmeContext,System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Acme.AccountContext" /> class.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="location">The location.</param>
+        </member>
+        <member name="M:Certes.Acme.AccountContext.Deactivate">
+            <summary>
+            Deactivates the current account.
+            </summary>
+            <returns>
+            The account deactivated.
+            </returns>
+        </member>
+        <member name="M:Certes.Acme.AccountContext.Orders">
+            <summary>
+            Gets the order list.
+            </summary>
+            <returns>
+            The orders list.
+            </returns>
+        </member>
+        <member name="M:Certes.Acme.AccountContext.Update(System.Collections.Generic.IList{System.String},System.Boolean)">
+            <summary>
+            Updates the current account.
+            </summary>
+            <param name="contact">The contact infomation.</param>
+            <param name="agreeTermsOfService">Set to <c>true</c> to accept the terms of service.</param>
+            <returns>
+            The account.
+            </returns>
+        </member>
+        <member name="M:Certes.Acme.AccountContext.NewAccount(Certes.IAcmeContext,Certes.Acme.Resource.Account,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            Post to the new account endpoint.
+            </summary>
+            <param name="context">The ACME context.</param>
+            <param name="body">The payload.</param>
+            <param name="ensureSuccessStatusCode">if set to <c>true</c>, throw exception if the request failed.</param>
+            <param name="eabKeyId">Optional key identifier, if using external account binding.</param>
+            <param name="eabKey">Optional EAB key, if using external account binding.</param>
+            <param name="eabKeyAlg">Optional EAB key algorithm, if using external account binding, defaults to HS256 if not specified</param>
+            <returns>The ACME response.</returns>
+        </member>
+        <member name="T:Certes.Acme.AcmeError">
+            <summary>
+            Represents an error returned from ACME server.
+            </summary>
+        </member>
+        <member name="P:Certes.Acme.AcmeError.Type">
+            <summary>
+            Gets or sets the error type URI.
+            </summary>
+            <value>
+            The error type URI.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.AcmeError.Detail">
+            <summary>
+            Gets or sets the detail message.
+            </summary>
+            <value>
+            The detail message.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.AcmeError.Identifier">
+            <summary>
+            Gets or sets the identifier for this error.
+            </summary>
+            <value>
+            The identifier for this error.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.AcmeError.Subproblems">
+            <summary>
+            Gets or sets the subproblems.
+            </summary>
+            <value>
+            The subproblems.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.AcmeError.Status">
+            <summary>
+            Gets or sets the HTTP status.
+            </summary>
+            <value>
+            The HTTP status.
+            </value>
+        </member>
+        <member name="T:Certes.Acme.AcmeHttpClient">
+            <summary>
+            HTTP client handling ACME operations.
+            </summary>
+            <seealso cref="T:Certes.Acme.IAcmeHttpClient" />
+        </member>
+        <member name="F:Certes.Acme.AcmeHttpClient.userAgentHeaders">
+            <remarks>
+            ACME clients MUST send a User-Agent header field, in accordance with
+            [RFC7231]. This header field SHOULD include the name and version of
+            the ACME software in addition to the name and version of the
+            underlying HTTP client software.
+            </remarks>
+        </member>
+        <member name="P:Certes.Acme.AcmeHttpClient.Http">
+            <summary>
+            Gets the HTTP client.
+            </summary>
+            <value>
+            The HTTP client.
+            </value>
+        </member>
+        <member name="M:Certes.Acme.AcmeHttpClient.CreateHttpClient">
+            <summary>
+            Creates an instance of HttpClient configured with default settings.
+            </summary>
+        </member>
+        <member name="M:Certes.Acme.AcmeHttpClient.#ctor(System.Uri,System.Net.Http.HttpClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Acme.AcmeHttpClient" /> class.
+            </summary>
+            <param name="directoryUri">The ACME directory URI.</param>
+            <param name="http">The HTTP.</param>
+            <exception cref="T:System.ArgumentNullException">directoryUri</exception>
+        </member>
+        <member name="M:Certes.Acme.AcmeHttpClient.Get``1(System.Uri)">
+            <summary>
+            Gets the specified URI.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="uri">The URI.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Certes.Acme.AcmeHttpClient.Post``1(System.Uri,System.Object)">
+            <summary>
+            Posts the specified URI.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="uri">The URI.</param>
+            <param name="payload">The payload.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Certes.Acme.AcmeHttpClient.ConsumeNonce">
+            <summary>
+            Gets the nonce for next request.
+            </summary>
+            <returns>
+            The nonce.
+            </returns>
+        </member>
+        <member name="T:Certes.Acme.AcmeHttpResponse`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Certes.Acme.AcmeHttpResponse`1.#ctor(System.Uri,`0,System.Linq.ILookup{System.String,System.Uri},Certes.Acme.AcmeError,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Acme.AcmeHttpResponse`1"/> class.
+            </summary>
+            <param name="location">The location.</param>
+            <param name="resource">The resource.</param>
+            <param name="links">The links.</param>
+            <param name="error">The error.</param>
+            <param name="retryAfter">The retryAfter delay.</param>
+        </member>
+        <member name="P:Certes.Acme.AcmeHttpResponse`1.Location">
+            <summary>
+            Gets the location.
+            </summary>
+            <value>
+            The location.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.AcmeHttpResponse`1.Resource">
+            <summary>
+            Gets the resource.
+            </summary>
+            <value>
+            The resource.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.AcmeHttpResponse`1.Links">
+            <summary>
+            Gets the links.
+            </summary>
+            <value>
+            The links.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.AcmeHttpResponse`1.Error">
+            <summary>
+            Gets the error.
+            </summary>
+            <value>
+            The error.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.AcmeHttpResponse`1.RetryAfter">
+            <summary>
+            Gets the retry after delay.
+            </summary>
+            <value>
+            The retry after delay.
+            </value>
+        </member>
+        <member name="T:Certes.Acme.AuthorizationContext">
+            <summary>
+            Represents the context for ACME authorization operations.
+            </summary>
+            <seealso cref="T:Certes.Acme.IAuthorizationContext" />
+        </member>
+        <member name="M:Certes.Acme.AuthorizationContext.#ctor(Certes.IAcmeContext,System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Acme.AuthorizationContext"/> class.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="location">The location.</param>
+        </member>
+        <member name="M:Certes.Acme.AuthorizationContext.Challenges">
+            <summary>
+            Gets the challenges for this authorization.
+            </summary>
+            <returns>
+            The list fo challenges.
+            </returns>
+        </member>
+        <member name="M:Certes.Acme.AuthorizationContext.Deactivate">
+            <summary>
+            Deactivates this authzorization.
+            </summary>
+            <returns>
+            The authorization deactivated.
+            </returns>
+        </member>
+        <member name="T:Certes.Acme.CertificateChain">
+            <summary>
+            Represents the certificate chain downloaded from ACME server.
+            </summary>
+        </member>
+        <member name="M:Certes.Acme.CertificateChain.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Acme.CertificateChain"/> class.
+            </summary>
+            <param name="certificateChain">The certificate chain.</param>
+        </member>
+        <member name="P:Certes.Acme.CertificateChain.Certificate">
+            <summary>
+            Gets or sets the certificate.
+            </summary>
+            <value>
+            The certificate.
+            </value>55
+        </member>
+        <member name="P:Certes.Acme.CertificateChain.Issuers">
+            <summary>
+            Gets or sets the issuers.5
+            </summary>
+            <value>
+            The issuers.
+            </value>
+        </member>
+        <member name="M:Certes.Acme.CertificateChain.MatchesPreferredChain(System.String)">
+            <summary>
+            Checks if the certificate chain is signed by a preferred issuer.
+            </summary>
+            <param name="preferredChain">The name of the preferred issuer</param>
+            <returns>true if a certificate in the chain is issued by preferredChain or preferredChain is empty</returns>
+        </member>
+        <member name="T:Certes.Acme.ChallengeContext">
+            <summary>
+            Represents the context for ACME challenge operations.
+            </summary>
+            <seealso cref="T:Certes.Acme.IChallengeContext" />
+        </member>
+        <member name="M:Certes.Acme.ChallengeContext.#ctor(Certes.IAcmeContext,System.Uri,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Acme.ChallengeContext"/> class.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="location">The location.</param>
+            <param name="type">The type.</param>
+            <param name="token">The token.</param>
+        </member>
+        <member name="P:Certes.Acme.ChallengeContext.Type">
+            <summary>
+            Gets the type.
+            </summary>
+            <value>
+            The type.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.ChallengeContext.Token">
+            <summary>
+            Gets the token.
+            </summary>
+            <value>
+            The token.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.ChallengeContext.KeyAuthz">
+            <summary>
+            Gets the key authorization string.
+            </summary>
+            <value>
+            The key authorization string.
+            </value>
+        </member>
+        <member name="M:Certes.Acme.ChallengeContext.Validate">
+            <summary>
+            Acknowledges the ACME server the challenge is ready for validation.
+            </summary>
+            <returns>
+            The challenge.
+            </returns>
+        </member>
+        <member name="T:Certes.Acme.ChallengeValidation">
+            <summary>
+            Represents the validation details for a challenge.
+            </summary>
+        </member>
+        <member name="P:Certes.Acme.ChallengeValidation.Url">
+            <summary>
+            Gets or sets the URL used for validation.
+            </summary>
+            <value>
+            The URL used for validation.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.ChallengeValidation.HostName">
+            <summary>
+            Gets or sets the host name used for validation.
+            </summary>
+            <value>
+            The host name used for validation.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.ChallengeValidation.AddressesResolved">
+            <summary>
+            Gets or sets the addresses resolved.
+            </summary>
+            <value>
+            The addresses resolved.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.ChallengeValidation.AddressUsed">
+            <summary>
+            Gets or sets the address used.
+            </summary>
+            <value>
+            The address used.
+            </value>
+        </member>
+        <member name="T:Certes.Acme.EntityContext`1">
+            <summary>
+            Represents the context of ACME entity.
+            </summary>
+            <typeparam name="T">The entity type.</typeparam>
+        </member>
+        <member name="P:Certes.Acme.EntityContext`1.Context">
+            <summary>
+            Gets the context.
+            </summary>
+            <value>
+            The context.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.EntityContext`1.Location">
+            <summary>
+            Gets the entity location.
+            </summary>
+            <value>
+            The entity location.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.EntityContext`1.RetryAfter">
+            <summary>
+            The timespan after which to retry the request
+            </summary>
+        </member>
+        <member name="M:Certes.Acme.EntityContext`1.#ctor(Certes.IAcmeContext,System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Acme.EntityContext`1"/> class.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="location">The location.</param>
+        </member>
+        <member name="M:Certes.Acme.EntityContext`1.Resource">
+            <summary>
+            Gets the resource entity data.
+            </summary>
+            <returns>The resource entity data.</returns>
+        </member>
+        <member name="T:Certes.Acme.IAccountContext">
+            <summary>
+            Supports ACME account operations.
+            </summary>
+        </member>
+        <member name="M:Certes.Acme.IAccountContext.Orders">
+            <summary>
+            Gets the orders
+            </summary>
+            <returns>The orders.</returns>
+        </member>
+        <member name="M:Certes.Acme.IAccountContext.Update(System.Collections.Generic.IList{System.String},System.Boolean)">
+            <summary>
+            Updates the current account.
+            </summary>
+            <param name="agreeTermsOfService">Set to <c>true</c> to accept the terms of service.</param>
+            <param name="contact">The contact infomation.</param>
+            <returns>The account.</returns>
+        </member>
+        <member name="M:Certes.Acme.IAccountContext.Deactivate">
+            <summary>
+            Deactivates the current account.
+            </summary>
+            <returns>The account deactivated.</returns>
+        </member>
+        <member name="T:Certes.Acme.IAcmeHttpClient">
+            <summary>
+            Supports HTTP operations for ACME servers.
+            </summary>
+        </member>
+        <member name="M:Certes.Acme.IAcmeHttpClient.ConsumeNonce">
+            <summary>
+            Gets the nonce for next request.
+            </summary>
+            <returns>
+            The nonce.
+            </returns>
+        </member>
+        <member name="M:Certes.Acme.IAcmeHttpClient.Post``1(System.Uri,System.Object)">
+            <summary>
+            Posts the data to the specified URI.
+            </summary>
+            <typeparam name="T">The type of expected result</typeparam>
+            <param name="uri">The URI.</param>
+            <param name="payload">The payload.</param>
+            <returns>The response from ACME server.</returns>
+        </member>
+        <member name="M:Certes.Acme.IAcmeHttpClient.Get``1(System.Uri)">
+            <summary>
+            Gets the data from specified URI.
+            </summary>
+            <typeparam name="T">The type of expected result</typeparam>
+            <param name="uri">The URI.</param>
+            <returns>The response from ACME server.</returns>
+        </member>
+        <member name="T:Certes.Acme.IAcmeHttpClientExtensions">
+            <summary>
+            Extension methods for <see cref="T:Certes.Acme.IAcmeHttpClient"/>.
+            </summary>
+        </member>
+        <member name="M:Certes.Acme.IAcmeHttpClientExtensions.Post``1(Certes.Acme.IAcmeHttpClient,Certes.IAcmeContext,System.Uri,System.Object,System.Boolean)">
+            <summary>
+            Posts the data to the specified URI.
+            </summary>
+            <typeparam name="T">The type of expected result</typeparam>
+            <param name="client">The client.</param>
+            <param name="context">The context.</param>
+            <param name="location">The URI.</param>
+            <param name="entity">The payload.</param>
+            <param name="ensureSuccessStatusCode">if set to <c>true</c>, throw exception if the request failed.</param>
+            <returns>
+            The response from ACME server.
+            </returns>
+            <exception cref="T:System.Exception">
+            If the HTTP request failed and <paramref name="ensureSuccessStatusCode"/> is <c>true</c>.
+            </exception>
+        </member>
+        <member name="M:Certes.Acme.IAcmeHttpClientExtensions.Post``1(Certes.Acme.IAcmeHttpClient,Certes.Jws.JwsSigner,System.Uri,System.Object,System.Boolean,System.Int32)">
+            <summary>
+            Posts the data to the specified URI.
+            </summary>
+            <typeparam name="T">The type of expected result</typeparam>
+            <param name="client">The client.</param>
+            <param name="jwsSigner">The jwsSigner used to sign the payload.</param>
+            <param name="location">The URI.</param>
+            <param name="entity">The payload.</param>
+            <param name="ensureSuccessStatusCode">if set to <c>true</c>, throw exception if the request failed.</param>
+            <param name="retryCount">Number of retries on badNonce errors (default = 1)</param>
+            <returns>
+            The response from ACME server.
+            </returns>
+            <exception cref="T:System.Exception">
+            If the HTTP request failed and <paramref name="ensureSuccessStatusCode"/> is <c>true</c>.
+            </exception>
+        </member>
+        <member name="T:Certes.Acme.IAuthorizationContext">
+            <summary>
+            Supports ACME authorization operations.
+            </summary>
+        </member>
+        <member name="M:Certes.Acme.IAuthorizationContext.Challenges">
+            <summary>
+            Gets the challenges for this authorization.
+            </summary>
+            <returns>The list fo challenges.</returns>
+        </member>
+        <member name="M:Certes.Acme.IAuthorizationContext.Deactivate">
+            <summary>
+            Deactivates this authzorization.
+            </summary>
+            <returns>
+            The authorization deactivated.
+            </returns>
+        </member>
+        <member name="T:Certes.Acme.IChallengeContext">
+            <summary>
+            Supports ACME challenge operations.
+            </summary>
+        </member>
+        <member name="P:Certes.Acme.IChallengeContext.Type">
+            <summary>
+            Gets the type.
+            </summary>
+            <value>
+            The type.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.IChallengeContext.Token">
+            <summary>
+            Gets the token.
+            </summary>
+            <value>
+            The token.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.IChallengeContext.KeyAuthz">
+            <summary>
+            Gets the key authorization string.
+            </summary>
+            <value>
+            The key authorization string.
+            </value>
+        </member>
+        <member name="M:Certes.Acme.IChallengeContext.Validate">
+            <summary>
+            Acknowledges the ACME server the challenge is ready for validation.
+            </summary>
+            <returns>The challenge.</returns>
+        </member>
+        <member name="T:Certes.Acme.IOrderContext">
+            <summary>
+            Presents the context for ACME order operations.
+            </summary>
+        </member>
+        <member name="M:Certes.Acme.IOrderContext.Authorizations">
+            <summary>
+            Gets the authorizations for this order.
+            </summary>
+            <returns>
+            The list of authorizations.
+            </returns>
+        </member>
+        <member name="M:Certes.Acme.IOrderContext.Finalize(System.Byte[])">
+            <summary>
+            Finalizes the certificate order.
+            </summary>
+            <param name="csr">The CSR in DER.</param>
+            <returns>The order finalized.</returns>
+        </member>
+        <member name="M:Certes.Acme.IOrderContext.Download(System.String)">
+            <summary>
+            Downloads the certificate chain in PEM.
+            </summary>
+            <param name="preferredChain">The preferred Root Certificate.</param>
+            <returns>The certificate chain in PEM.</returns>
+        </member>
+        <member name="T:Certes.Acme.IOrderListContext">
+            <summary>
+            Presents the context for ACME order list operations.
+            </summary>
+        </member>
+        <member name="M:Certes.Acme.IOrderListContext.Orders">
+            <summary>
+            Gets the orders.
+            </summary>
+            <returns>
+            The orders.
+            </returns>
+        </member>
+        <member name="T:Certes.Acme.IResourceContext`1">
+            <summary>
+            Supports loading ACME resource with URI.
+            </summary>
+            <typeparam name="T">The resource entity type.</typeparam>
+        </member>
+        <member name="P:Certes.Acme.IResourceContext`1.Location">
+            <summary>
+            Gets the location.
+            </summary>
+            <value>
+            The location.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.IResourceContext`1.RetryAfter">
+            <summary>
+            The timespan after which to retry the request
+            </summary>
+        </member>
+        <member name="M:Certes.Acme.IResourceContext`1.Resource">
+            <summary>55
+            Gets the ACME resource.
+            </summary>
+            <returns>The resource entity.</returns>
+        </member>
+        <member name="T:Certes.Acme.OrderContext">
+            <summary>
+            Represents the context for ACME order operations.
+            </summary>
+            <seealso cref="T:Certes.Acme.IOrderContext" />
+        </member>
+        <member name="M:Certes.Acme.OrderContext.Authorizations">
+            <summary>
+            Gets the authorizations for this order.
+            </summary>
+            <returns>
+            The list of authorizations.
+            </returns>
+        </member>
+        <member name="M:Certes.Acme.OrderContext.Finalize(System.Byte[])">
+            <summary>
+            Finalizes the certificate order.
+            </summary>
+            <param name="csr">The CSR in DER.</param>
+            <returns>
+            The order finalized.
+            </returns>
+        </member>
+        <member name="M:Certes.Acme.OrderContext.Download(System.String)">
+            <summary>
+            Downloads the certificate chain in PEM.
+            <param name="preferredChain">The preferred Root Certificate</param>
+            </summary>
+            <returns>The certificate chain in PEM.</returns>
+        </member>
+        <member name="T:Certes.Acme.OrderListContext">
+            <summary>
+            Represents the context for ACME order list operations.
+            </summary>
+            <seealso cref="T:Certes.Acme.IOrderListContext" />
+        </member>
+        <member name="M:Certes.Acme.OrderListContext.#ctor(Certes.IAcmeContext,System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Acme.OrderListContext"/> class.
+            </summary>
+            <param name="context">The ACME context.</param>
+            <param name="location">The location.</param>
+        </member>
+        <member name="M:Certes.Acme.OrderListContext.Orders">
+            <summary>
+            Gets the orders.
+            </summary>
+            <returns>
+            The orders.
+            </returns>
+        </member>
+        <member name="T:Certes.Acme.RelLink">
+            <summary>
+            Represents a HTTP rel link.
+            </summary>
+        </member>
+        <member name="P:Certes.Acme.RelLink.Rel">
+            <summary>
+            Gets or sets the relation.
+            </summary>
+            <value>
+            The relation.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.RelLink.Uri">
+            <summary>
+            Gets or sets the URI.
+            </summary>
+            <value>
+            The URI.
+            </value>
+        </member>
+        <member name="T:Certes.Acme.ResourceTypes">
+            <summary>
+            The ACME resource types.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.ResourceTypes.NewRegistration">
+            <summary>
+            The new registration.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.ResourceTypes.NewAuthorization">
+            <summary>
+            The new authorization.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.ResourceTypes.NewCertificate">
+            <summary>
+            The new certificate.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.ResourceTypes.RevokeCertificate">
+            <summary>
+            The revoke certificate.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.ResourceTypes.Registration">
+            <summary>
+            The registration.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.ResourceTypes.Authorization">
+            <summary>
+            The authorization.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.ResourceTypes.Challenge">
+            <summary>
+            The challenge.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.ResourceTypes.Certificate">
+            <summary>
+            The certificate.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.ResourceTypes.KeyChange">
+            <summary>
+            The key change.
+            </summary>
+        </member>
+        <member name="T:Certes.Acme.Resource.Account">
+            <summary>
+            Represents the ACME Account resource.
+            </summary>
+        </member>
+        <member name="P:Certes.Acme.Resource.Account.Status">
+            <summary>
+            Gets or sets the status.
+            </summary>
+            <remarks>
+            See <see cref="T:Certes.Acme.Resource.AccountStatus"/> for possible values.
+            </remarks>
+            <value>
+            The status.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Account.Contact">
+            <summary>
+            Gets or sets the contact.
+            </summary>
+            <value>
+            The contact.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Account.TermsOfServiceAgreed">
+            <summary>
+            Gets or sets a value indicating whether the terms of service is agreed.
+            </summary>
+            <value>
+              <c>true</c> if the terms of service is agreed; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Account.ExternalAccountBinding">
+            <summary>
+            Gets or sets an external account binding
+            </summary>
+            <value>
+             
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Account.Orders">
+            <summary>
+            Gets or sets the orders.
+            </summary>
+            <value>
+            The orders.
+            </value>
+        </member>
+        <member name="T:Certes.Acme.Resource.Account.Payload">
+            <summary>
+            Represents the payload to retrieve existing account by key.
+            </summary>
+            <seealso cref="T:Certes.Acme.Resource.Account" />
+        </member>
+        <member name="P:Certes.Acme.Resource.Account.Payload.OnlyReturnExisting">
+            <summary>
+            Gets or sets the only return existing flag.
+            </summary>
+            <value>
+            The only return existing flag.
+            </value>
+        </member>
+        <member name="T:Certes.Acme.Resource.AccountStatus">
+            <summary>
+            Represents the status of <see cref="T:Certes.Acme.Resource.Account"/>.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.AccountStatus.Valid">
+            <summary>
+            The valid status.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.AccountStatus.Deactivated">
+            <summary>
+            The deactivated status, initiated by client.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.AccountStatus.Revoked">
+            <summary>
+            The revoked status, initiated by server.
+            </summary>
+        </member>
+        <member name="T:Certes.Acme.Resource.Authorization">
+            <summary>
+            Represents the ACME Authorization resource.
+            </summary>
+        </member>
+        <member name="P:Certes.Acme.Resource.Authorization.Identifier">
+            <summary>
+            Gets or sets the identifier.
+            </summary>
+            <value>
+            The identifier.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Authorization.Status">
+            <summary>
+            Gets or sets the status.
+            </summary>
+            <value>
+            The status.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Authorization.Expires">
+            <summary>
+            Gets or sets the expires.
+            </summary>
+            <value>
+            The expires.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Authorization.Scope">
+            <summary>
+            Gets or sets the scope.
+            </summary>
+            <value>
+            The scope.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Authorization.Challenges">
+            <summary>
+            Gets or sets the challenges.
+            </summary>
+            <value>
+            The challenges.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Authorization.Wildcard">
+            <summary>
+            Gets or sets the flag indicating if this authorization is for wildcard.
+            </summary>
+            <value>
+            The flag indicating if this authorization is for wildcard.
+            </value>
+        </member>
+        <member name="T:Certes.Acme.Resource.AuthorizationStatus">
+            <summary>
+            Represents the status of <see cref="T:Certes.Acme.Resource.Authorization"/>.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.AuthorizationStatus.Pending">
+            <summary>
+            The pending status.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.AuthorizationStatus.Valid">
+            <summary>
+            The valid status.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.AuthorizationStatus.Invalid">
+            <summary>
+            The invalid status.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.AuthorizationStatus.Revoked">
+            <summary>
+            The revoked status.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.AuthorizationStatus.Deactivated">
+            <summary>
+            The deactivated status.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.AuthorizationStatus.Expired">
+            <summary>
+            The expired status.
+            </summary>
+        </member>
+        <member name="T:Certes.Acme.Resource.CertificateRevocation">
+            <summary>
+            Represents the payload for certificate revocation.
+            </summary>
+        </member>
+        <member name="P:Certes.Acme.Resource.CertificateRevocation.Certificate">
+            <summary>
+            Gets or sets the certificate to be revoked, in the base64url-encoded version of the DER format..
+            </summary>
+            <value>
+            The certificate to be revoked, in the base64url-encoded version of the DER format.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.CertificateRevocation.Reason">
+            <summary>
+            Gets or sets the revocation reason.
+            </summary>
+            <value>
+            The revocation reason.
+            </value>
+        </member>
+        <member name="T:Certes.Acme.Resource.Challenge">
+            <summary>
+            Represents a challenge for <see cref="T:Certes.Acme.Resource.Identifier"/>.
+            </summary>
+        </member>
+        <member name="P:Certes.Acme.Resource.Challenge.Type">
+            <summary>
+            Gets or sets the type.
+            </summary>
+            <value>
+            The type.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Challenge.Url">
+            <summary>
+            Gets or sets the URL.
+            </summary>
+            <value>
+            The URL.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Challenge.Status">
+            <summary>
+            Gets or sets the status.
+            </summary>
+            <value>
+            The status.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Challenge.Validated">
+            <summary>
+            Gets or sets the validation time.
+            </summary>
+            <value>
+            The validation time.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Challenge.Error">
+            <summary>
+            Gets or sets the error.
+            Only if the status is invalid
+            </summary>
+            <value>
+            The errors.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Challenge.Token">
+            <summary>
+            Gets or sets the token.
+            </summary>
+            <value>
+            The token.
+            </value>
+        </member>
+        <member name="T:Certes.Acme.Resource.ChallengeStatus">
+            <summary>
+            Represents the status for <see cref="T:Certes.Acme.Resource.Challenge"/>.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.ChallengeStatus.Pending">
+            <summary>
+            The pending status.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.ChallengeStatus.Processing">
+            <summary>
+            The processing status.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.ChallengeStatus.Valid">
+            <summary>
+            The valid status.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.ChallengeStatus.Invalid">
+            <summary>
+            The invalid status.
+            </summary>
+        </member>
+        <member name="T:Certes.Acme.Resource.ChallengeTypes">
+            <summary>
+            Represents the type for <see cref="T:Certes.Acme.Resource.Challenge"/>.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.ChallengeTypes.Http01">
+            <summary>
+            The http-01 challenge.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.ChallengeTypes.Dns01">
+            <summary>
+            The dns-01 challenge.
+            </summary>
+        </member>
+        <member name="P:Certes.Acme.Resource.ChallengeTypes.TlsAlpn01">
+            <summary>
+            Gets the tls-alpn-01 challenge name.
+            </summary>
+            <value>
+            The tls-alpn-01 challenge name.
+            </value>
+        </member>
+        <member name="T:Certes.Acme.Resource.Directory">
+            <summary>
+            Represents the ACME directory resource.
+            </summary>
+        </member>
+        <member name="P:Certes.Acme.Resource.Directory.NewNonce">
+            <summary>
+            Gets or sets the new nonce endpoint.
+            </summary>
+            <value>
+            The new nonce endpoint.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Directory.NewAccount">
+            <summary>
+            Gets or sets the new account endpoint.
+            </summary>
+            <value>
+            The new account endpoint.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Directory.NewOrder">
+            <summary>
+            Gets or sets the new order endpoint.
+            </summary>
+            <value>
+            The new order endpoint.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Directory.RevokeCert">
+            <summary>
+            Gets or sets the revoke cert.
+            </summary>
+            <value>
+            The revoke cert.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Directory.KeyChange">
+            <summary>
+            Gets or sets the key change endpoint.
+            </summary>
+            <value>
+            The key change endpoint.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Directory.Meta">
+            <summary>
+            Gets or sets the metadata.
+            </summary>
+            <value>
+            The metadata.
+            </value>
+        </member>
+        <member name="M:Certes.Acme.Resource.Directory.#ctor(System.Uri,System.Uri,System.Uri,System.Uri,System.Uri,Certes.Acme.Resource.DirectoryMeta)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Acme.Resource.Directory"/> class.
+            </summary>
+            <param name="newNonce">The new nonce.</param>
+            <param name="newAccount">The new account.</param>
+            <param name="newOrder">The new order.</param>
+            <param name="revokeCert">The revoke cert.</param>
+            <param name="keyChange">The key change.</param>
+            <param name="meta">The meta.</param>
+        </member>
+        <member name="T:Certes.Acme.Resource.DirectoryMeta">
+            <summary>
+            Represents the metadata for a ACME directory.
+            </summary>
+        </member>
+        <member name="P:Certes.Acme.Resource.DirectoryMeta.TermsOfService">
+            <summary>
+            Gets or sets the terms of service.
+            </summary>
+            <value>
+            The terms of service.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.DirectoryMeta.Website">
+            <summary>
+            Gets or sets the website.
+            </summary>
+            <value>
+            The website.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.DirectoryMeta.CaaIdentities">
+            <summary>
+            Gets or sets the caa identities.
+            </summary>
+            <value>
+            The caa identities.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.DirectoryMeta.ExternalAccountRequired">
+            <summary>
+            Gets or sets a value indicating whether [external account required].
+            </summary>
+            <value>
+              <c>true</c> if external account required; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="M:Certes.Acme.Resource.DirectoryMeta.#ctor(System.Uri,System.Uri,System.Collections.Generic.IList{System.String},System.Nullable{System.Boolean})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Acme.Resource.DirectoryMeta"/> class.
+            </summary>
+            <param name="termsOfService">The terms of service.</param>
+            <param name="website">The website.</param>
+            <param name="caaIdentities">The caa identities.</param>
+            <param name="externalAccountRequired">The external account required.</param>
+        </member>
+        <member name="T:Certes.Acme.Resource.Identifier">
+            <summary>
+            Represents the identifier for <see cref="T:Certes.Acme.Resource.Authorization"/>.
+            </summary>
+        </member>
+        <member name="P:Certes.Acme.Resource.Identifier.Type">
+            <summary>
+            Gets or sets the type.
+            </summary>
+            <value>
+            The type.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Identifier.Value">
+            <summary>
+            Gets or sets the value.
+            </summary>
+            <value>
+            The value.
+            </value>
+        </member>
+        <member name="T:Certes.Acme.Resource.IdentifierStatus">
+            <summary>
+            Represents status of <see cref="T:Certes.Acme.Resource.Identifier"/>.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.IdentifierStatus.Pending">
+            <summary>
+            The pending status.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.IdentifierStatus.Processing">
+            <summary>
+            The processing status.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.IdentifierStatus.Valid">
+            <summary>
+            The valid status.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.IdentifierStatus.Invalid">
+            <summary>
+            The invalid status.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.IdentifierStatus.Revoked">
+            <summary>
+            The revoked status.
+            </summary>
+        </member>
+        <member name="T:Certes.Acme.Resource.IdentifierType">
+            <summary>
+            Represents type of <see cref="T:Certes.Acme.Resource.Identifier"/>.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.IdentifierType.Dns">
+            <summary>
+            The DNS type.
+            </summary>
+        </member>
+        <member name="T:Certes.Acme.Resource.Order">
+            <summary>
+            Represents the ACME Order resource.
+            </summary>
+        </member>
+        <member name="P:Certes.Acme.Resource.Order.Status">
+            <summary>
+            Gets or sets the status.
+            </summary>
+            <value>
+            The status.
+            </value>
+            <remarks>
+            See <see cref="T:Certes.Acme.Resource.OrderStatus"/> for possible values.
+            </remarks>
+        </member>
+        <member name="P:Certes.Acme.Resource.Order.Expires">
+            <summary>
+            Gets or sets the expires.
+            </summary>
+            <value>
+            The expires.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Order.Identifiers">
+            <summary>
+            Gets or sets the identifiers.
+            </summary>
+            <value>
+            The identifiers.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Order.NotBefore">
+            <summary>
+            Gets or sets the not before.
+            </summary>
+            <value>
+            The not before.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Order.NotAfter">
+            <summary>
+            Gets or sets the not after.
+            </summary>
+            <value>
+            The not after.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Order.Error">
+            <summary>
+            Gets or sets the error.
+            </summary>
+            <value>
+            The error.
+            </value>
+            <remarks>
+            TODO: model https://tools.ietf.org/html/rfc7807
+            </remarks>
+        </member>
+        <member name="P:Certes.Acme.Resource.Order.Authorizations">
+            <summary>
+            Gets or sets the authorizations.
+            </summary>
+            <value>
+            The authorizations.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Order.Finalize">
+            <summary>
+            Gets or sets the finalize.
+            </summary>
+            <value>
+            The finalize.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.Resource.Order.Certificate">
+            <summary>
+            Gets or sets the certificate.
+            </summary>
+            <value>
+            The certificate.
+            </value>
+        </member>
+        <member name="T:Certes.Acme.Resource.Order.Payload">
+            <summary>
+            Represents the payload to finalize an order.
+            </summary>
+            <seealso cref="T:Certes.Acme.Resource.Order" />
+        </member>
+        <member name="P:Certes.Acme.Resource.Order.Payload.Csr">
+            <summary>
+            Gets or sets the CSR.
+            </summary>
+            <value>
+            The CSR.
+            </value>
+        </member>
+        <member name="T:Certes.Acme.Resource.OrderList">
+            <summary>
+            Represents the ACME Orders List resource.
+            </summary>
+            <remarks>
+            As https://tools.ietf.org/html/draft-ietf-acme-acme-07#section-7.1.2.1
+            </remarks>
+        </member>
+        <member name="P:Certes.Acme.Resource.OrderList.Orders">
+            <summary>
+            Gets or sets the orders.
+            </summary>
+            <value>
+            The orders.
+            </value>
+        </member>
+        <member name="T:Certes.Acme.Resource.OrderStatus">
+            <summary>
+            Represents the status of <see cref="T:Certes.Acme.Resource.Order"/>.
+            </summary>
+            <remarks>
+            As https://tools.ietf.org/html/draft-ietf-acme-acme-07#section-7.1.3
+            </remarks>
+        </member>
+        <member name="F:Certes.Acme.Resource.OrderStatus.Pending">
+            <summary>
+            The server does not believe that the client has fulfilled the requirements.
+            Check the "authorizations" array for entries that are still pending.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.OrderStatus.Ready">
+            <summary>
+            The server agrees that the requirements have been fulfilled, and is awaiting finalization.
+            Submit a finalization request.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.OrderStatus.Processing">
+            <summary>
+            The certificate is being issued.  Send a POST-as-GET request after the time given in the 
+            Retry-After header field of the response, if any.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.OrderStatus.Valid">
+            <summary>
+            The server has issued the certificate and provisioned its URL to the "certificate" field of the order.
+            Download the certificate.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.OrderStatus.Invalid">
+            <summary>
+            The certificate will not be issued.  Consider this order process abandoned.
+            </summary>
+        </member>
+        <member name="T:Certes.Acme.Resource.RevocationReason">
+            <summary>
+            Represents the reasons for certificate revocation.
+            </summary>
+            <remarks>
+            See https://tools.ietf.org/html/rfc5280#section-5.3.1
+            </remarks>
+        </member>
+        <member name="F:Certes.Acme.Resource.RevocationReason.Unspecified">
+            <summary>
+            The unspecified reason.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.RevocationReason.KeyCompromise">
+            <summary>
+            Indicates the key is compromised.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.RevocationReason.CACompromise">
+            <summary>
+            Indicates the CAA is compromised.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.RevocationReason.AffiliationChanged">
+            <summary>
+            Indicates the affiliation is changed.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.RevocationReason.Superseded">
+            <summary>
+            Indicates the certifcate is superseded.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.RevocationReason.CessationOfOperation">
+            <summary>
+            Indicates the Cessation of operation.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.RevocationReason.CertificateHold">
+            <summary>
+            Indicates the certificate is on hold.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.RevocationReason.RemoveFromCRL">
+            <summary>
+            Indicates the certificate is removed from CRL.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.RevocationReason.PrivilegeWithdrawn">
+            <summary>
+            Indicates privilege is withdrawn.
+            </summary>
+        </member>
+        <member name="F:Certes.Acme.Resource.RevocationReason.AACompromise">
+            <summary>
+            Indicates AA is compromised.
+            </summary>
+        </member>
+        <member name="T:Certes.Acme.WellKnownServers">
+            <summary>
+            The well known ACME servers.
+            </summary>
+        </member>
+        <member name="P:Certes.Acme.WellKnownServers.LetsEncryptV2">
+            <summary>
+            Gets the URI for Let's Encrypt ACME v2 production server.
+            </summary>
+            <value>
+            The URI for Let's Encrypt ACME v2 production server.
+            </value>
+        </member>
+        <member name="P:Certes.Acme.WellKnownServers.LetsEncryptStagingV2">
+            <summary>
+            Gets the URI for Let's Encrypt V2 staging server.
+            </summary>
+            <value>
+            The URI for Let's Encrypt V2 staging server.
+            </value>
+        </member>
+        <member name="M:Certes.Crypto.ISigner.ComputeHash(System.Byte[])">
+            <summary>
+            Computes the hash for given data.
+            </summary>
+            <param name="data">The data.</param>
+            <returns>The hash.</returns>
+        </member>
+        <member name="M:Certes.Crypto.ISigner.SignData(System.Byte[])">
+            <summary>
+            Signs the data.
+            </summary>
+            <param name="data">The data.</param>
+            <returns>The signature.</returns>
+        </member>
+        <member name="T:Certes.CertificateChainExtensions">
+            <summary>
+            Extension methods for <see cref="T:Certes.Acme.CertificateChain"/>.
+            </summary>
+        </member>
+        <member name="M:Certes.CertificateChainExtensions.ToPfx(Certes.Acme.CertificateChain,Certes.IKey)">
+            <summary>
+            Converts the certificate to PFX with the key.
+            </summary>
+            <param name="certificateChain">The certificate chain.</param>
+            <param name="certKey">The certificate private key.</param>
+            <returns>The PFX.</returns>
+        </member>
+        <member name="M:Certes.CertificateChainExtensions.ToPem(Certes.Acme.CertificateChain,Certes.IKey)">
+            <summary>
+            Encodes the full certificate chain in PEM.
+            </summary>
+            <param name="certificateChain">The certificate chain.</param>
+            <param name="certKey">The certificate key.</param>
+            <returns>The encoded certificate chain.</returns>
+        </member>
+        <member name="T:Certes.CsrInfo">
+            <summary>
+            Represents common information for CSR.
+            </summary>
+        </member>
+        <member name="P:Certes.CsrInfo.CountryName">
+            <summary>
+            Gets or sets the two-letter ISO abbreviation for your country.
+            </summary>
+            <value>
+            The two-letter ISO abbreviation for your country.
+            </value>
+        </member>
+        <member name="P:Certes.CsrInfo.State">
+            <summary>
+            Gets or sets the state or province where your organization is located. Can not be abbreviated.
+            </summary>
+            <value>
+            The state or province where your organization is located. Can not be abbreviated.
+            </value>
+        </member>
+        <member name="P:Certes.CsrInfo.Locality">
+            <summary>
+            Gets or sets the city where your organization is located.
+            </summary>
+            <value>
+            The city where your organization is located.
+            </value>
+        </member>
+        <member name="P:Certes.CsrInfo.Organization">
+            <summary>
+            Gets or sets the exact legal name of your organization. Do not abbreviate.
+            </summary>
+            <value>
+            The exact legal name of your organization. Do not abbreviate.
+            </value>
+        </member>
+        <member name="P:Certes.CsrInfo.OrganizationUnit">
+            <summary>
+            Gets or sets the optional organizational information.
+            </summary>
+            <value>
+            The optional organizational information.
+            </value>
+        </member>
+        <member name="P:Certes.CsrInfo.CommonName">
+            <summary>
+            Gets or sets the common name for the CSR.
+            If not set, the first identifier of the ACME order will be chosen as common name.
+            </summary>
+            <value>
+            The common name for the CSR.
+            </value>
+        </member>
+        <member name="P:Certes.CsrInfo.Fields">
+            <summary>
+            Gets all the fields with value.
+            </summary>
+            <value>
+            All fields.
+            </value>
+        </member>
+        <member name="T:Certes.IAccountContextExtensions">
+            <summary>
+            Extension methods for <see cref="T:Certes.Acme.IAccountContext"/>.
+            </summary>
+        </member>
+        <member name="M:Certes.IAccountContextExtensions.Deactivate(System.Threading.Tasks.Task{Certes.Acme.IAccountContext})">
+            <summary>
+            Deactivates the current account.
+            </summary>
+            <returns>The account deactivated.</returns>
+        </member>
+        <member name="M:Certes.IAccountContextExtensions.Location(System.Threading.Tasks.Task{Certes.Acme.IAccountContext})">
+            <summary>
+            Gets the location of the account.
+            </summary>
+            <param name="account">The account.</param>
+            <returns>The location URI.</returns>
+        </member>
+        <member name="T:Certes.IAcmeContextExtensions">
+            <summary>
+            Extension methods for <see cref="T:Certes.IAcmeContext"/>.
+            </summary>
+        </member>
+        <member name="M:Certes.IAcmeContextExtensions.GetResourceUri(Certes.IAcmeContext,System.Func{Certes.Acme.Resource.Directory,System.Uri},System.Boolean)">
+            <summary>
+            Gets a resource URI.
+            </summary>
+            <param name="context">The ACME context.</param>
+            <param name="getter">The getter to retrieve resource URI from <see cref="T:System.IO.Directory"/>.</param>
+            <param name="optional">if set to <c>true</c>, the resource is optional.</param>
+            <returns>The resource URI, or <c>null</c> if not found</returns>
+            <exception cref="T:System.NotSupportedException">If the ACME operation not supported.</exception>
+        </member>
+        <member name="M:Certes.IAcmeContextExtensions.NewAccount(Certes.IAcmeContext,System.String,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            Creates an account.
+            </summary>
+            <param name="context">The ACME context.</param>
+            <param name="email">The email.</param>
+            <param name="termsOfServiceAgreed">Set to <c>true</c> to accept the terms of service.</param>
+            <param name="eabKeyId">Optional key identifier for external account binding</param>
+            <param name="eabKey">Optional key for use with external account binding</param>
+            <param name="eabKeyAlg">Optional key algorithm e.g HS256, for external account binding</param>
+            <returns>
+            The account created.
+            </returns>
+        </member>
+        <member name="M:Certes.IAcmeContextExtensions.TermsOfService(Certes.IAcmeContext)">
+            <summary>
+            Gets the terms of service link from the ACME server.
+            </summary>
+            <param name="context">The ACME context.</param>
+            <returns>The terms of service link.</returns>
+        </member>
+        <member name="T:Certes.IAuthorizationContextExtensions">
+            <summary>
+            Extension methods for <see cref="T:Certes.Acme.IAuthorizationContext"/>.
+            </summary>
+        </member>
+        <member name="M:Certes.IAuthorizationContextExtensions.Http(Certes.Acme.IAuthorizationContext)">
+            <summary>
+            Gets the HTTP challenge.
+            </summary>
+            <param name="authorizationContext">The authorization context.</param>
+            <returns>The HTTP challenge, <c>null</c> if no HTTP challenge available.</returns>
+        </member>
+        <member name="M:Certes.IAuthorizationContextExtensions.Dns(Certes.Acme.IAuthorizationContext)">
+            <summary>
+            Gets the DNS challenge.
+            </summary>
+            <param name="authorizationContext">The authorization context.</param>
+            <returns>The DNS challenge, <c>null</c> if no DNS challenge available.</returns>
+        </member>
+        <member name="M:Certes.IAuthorizationContextExtensions.TlsAlpn(Certes.Acme.IAuthorizationContext)">
+            <summary>
+            Gets the TLS ALPN challenge.
+            </summary>
+            <param name="authorizationContext">The authorization context.</param>
+            <returns>The TLS ALPN challenge, <c>null</c> if no TLS ALPN challenge available.</returns>
+        </member>
+        <member name="M:Certes.IAuthorizationContextExtensions.Challenge(Certes.Acme.IAuthorizationContext,System.String)">
+            <summary>
+            Gets a challenge by type.
+            </summary>
+            <param name="authorizationContext">The authorization context.</param>
+            <param name="type">The challenge type.</param>
+            <returns>The challenge, <c>null</c> if no challenge found.</returns>
+        </member>
+        <member name="T:Certes.IOrderContextExtensions">
+            <summary>
+            Extension methods for <see cref="T:Certes.Acme.IOrderContext"/>.
+            </summary>
+        </member>
+        <member name="M:Certes.IOrderContextExtensions.Finalize(Certes.Acme.IOrderContext,Certes.CsrInfo,Certes.IKey)">
+            <summary>
+            Finalizes the certificate order.
+            </summary>
+            <param name="context">The order context.</param>
+            <param name="csr">The CSR.</param>
+            <param name="key">The private key for the certificate.</param>
+            <returns>
+            The order finalized.
+            </returns>
+        </member>
+        <member name="M:Certes.IOrderContextExtensions.CreateCsr(Certes.Acme.IOrderContext,Certes.IKey)">
+            <summary>
+            Creates CSR from the order.
+            </summary>
+            <param name="context">The order context.</param>
+            <param name="key">The private key.</param>
+            <returns>The CSR.</returns>
+        </member>
+        <member name="M:Certes.IOrderContextExtensions.Generate(Certes.Acme.IOrderContext,Certes.CsrInfo,Certes.IKey,System.String,System.Int32)">
+            <summary>
+            Finalizes and download the certifcate for the order.
+            </summary>
+            <param name="context">The order context.</param>
+            <param name="csr">The CSR.</param>
+            <param name="key">The private key for the certificate.</param>
+            <param name="retryCount">Number of retries when the Order is in 'processing' state. (default = 1)</param>
+            <param name="preferredChain">The preferred Root Certificate.</param>
+            <returns>
+            The certificate generated.
+            </returns>
+        </member>
+        <member name="M:Certes.IOrderContextExtensions.Authorization(Certes.Acme.IOrderContext,System.String,Certes.Acme.Resource.IdentifierType)">
+            <summary>
+            Gets the authorization by identifier.
+            </summary>
+            <param name="context">The order context.</param>
+            <param name="value">The identifier value.</param>
+            <param name="type">The identifier type.</param>
+            <returns>The authorization found.</returns>
+        </member>
+        <member name="T:Certes.IAcmeContext">
+            <summary>
+            Represents the context for ACME operations.
+            </summary>
+        </member>
+        <member name="P:Certes.IAcmeContext.BadNonceRetryCount">
+            <summary>
+            Gets the number of retries on a badNonce error.
+            </summary>
+            <value>
+            The number of retries.
+            </value>
+        </member>
+        <member name="P:Certes.IAcmeContext.DirectoryUri">
+            <summary>
+            Gets the directory URI.
+            </summary>
+            <value>
+            The directory URI.
+            </value>
+        </member>
+        <member name="P:Certes.IAcmeContext.HttpClient">
+            <summary>
+            Gets the ACME HTTP client.
+            </summary>
+            <value>
+            The ACME HTTP client.
+            </value>
+        </member>
+        <member name="P:Certes.IAcmeContext.AccountKey">
+            <summary>
+            Gets the account key.
+            </summary>
+            <value>
+            The account key.
+            </value>
+        </member>
+        <member name="M:Certes.IAcmeContext.Account">
+            <summary>
+            Gets the ACME account context.
+            </summary>
+            <returns>The ACME account context.</returns>
+        </member>
+        <member name="M:Certes.IAcmeContext.GetDirectory">
+            <summary>
+            Gets the ACME directory.
+            </summary>
+            <returns>
+            The ACME directory.
+            </returns>
+        </member>
+        <member name="M:Certes.IAcmeContext.NewAccount(System.Collections.Generic.IList{System.String},System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            Creates an account.
+            </summary>
+            <param name="contact">The contact.</param>
+            <param name="termsOfServiceAgreed">Set to <c>true</c> to accept the terms of service.</param>
+            <param name="eabKeyId">Optional key identifier, if using external account binding.</param>
+            <param name="eabKey">Optional EAB key, if using external account binding.</param>
+            <param name="eabKeyAlg">Optional EAB key algorithm, if using external account binding, defaults to HS256 if not specified</param>
+            <returns>
+            The account created.
+            </returns>
+        </member>
+        <member name="M:Certes.IAcmeContext.RevokeCertificate(System.Byte[],Certes.Acme.Resource.RevocationReason,Certes.IKey)">
+            <summary>
+            Revokes the certificate.
+            </summary>
+            <param name="certificate">The certificate in DER format.</param>
+            <param name="reason">The reason for revocation.</param>
+            <param name="certificatePrivateKey">The certificate's private key.</param>
+            <returns>
+            The awaitable.
+            </returns>
+        </member>
+        <member name="M:Certes.IAcmeContext.ChangeKey(Certes.IKey)">
+            <summary>
+            Changes the account key.
+            </summary>
+            <param name="key">The new account key.</param>
+            <returns>The account resource.</returns>
+        </member>
+        <member name="M:Certes.IAcmeContext.NewOrder(System.Collections.Generic.IList{System.String},System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset})">
+            <summary>
+            Creates a new the order.
+            </summary>
+            <param name="identifiers">The identifiers.</param>
+            <param name="notBefore">Th value of not before field for the certificate.</param>
+            <param name="notAfter">The value of not after field for the certificate.</param>
+            <returns>
+            The order context created.
+            </returns>
+        </member>
+        <member name="M:Certes.IAcmeContext.Sign(System.Object,System.Uri)">
+            <summary>
+            Signs the data with account key.
+            </summary>
+            <param name="entity">The data to sign.</param>
+            <param name="uri">The URI for the request.</param>
+            <returns>The JWS payload.</returns>
+        </member>
+        <member name="M:Certes.IAcmeContext.Order(System.Uri)">
+            <summary>
+            Gets the order by specified location.
+            </summary>
+            <param name="location">The order location.</param>
+            <returns>The order context.</returns>
+        </member>
+        <member name="M:Certes.IAcmeContext.Authorization(System.Uri)">
+            <summary>
+            Gets the authorization by specified location.
+            </summary>
+            <param name="location">The authorization location.</param>
+            <returns>The authorization context.</returns>
+        </member>
+        <member name="T:Certes.IEncodable">
+            <summary>
+            Supports exporting to PEM or DER format.
+            </summary>
+        </member>
+        <member name="M:Certes.IEncodable.ToDer">
+            <summary>
+            Exports to DER.
+            </summary>
+            <returns>DER encoded data.</returns>
+        </member>
+        <member name="M:Certes.IEncodable.ToPem">
+            <summary>
+            Exports to PEM.
+            </summary>
+            <returns>PEM encoded data.</returns>
+        </member>
+        <member name="T:Certes.IKey">
+            <summary>
+            Represents key parameters used for signing.
+            </summary>
+        </member>
+        <member name="P:Certes.IKey.Algorithm">
+            <summary>
+            Gets the algorithm.
+            </summary>
+            <value>
+            The algorithm.
+            </value>
+        </member>
+        <member name="P:Certes.IKey.JsonWebKey">
+            <summary>
+            Gets the json web key.
+            </summary>
+            <value>
+            The json web key.
+            </value>
+        </member>
+        <member name="T:Certes.ISignatureKeyExtensions">
+            <summary>
+            Helper methods for <see cref="T:Certes.Jws.AccountKey"/>.
+            </summary>
+        </member>
+        <member name="M:Certes.ISignatureKeyExtensions.GenerateThumbprint(Certes.IKey)">
+            <summary>
+            Generates the thumbprint for the given account <paramref name="key"/>.
+            </summary>
+            <param name="key">The account key.</param>
+            <returns>The thumbprint.</returns>
+        </member>
+        <member name="M:Certes.ISignatureKeyExtensions.Thumbprint(Certes.IKey)">
+            <summary>
+            Generates the base64 encoded thumbprint for the given account <paramref name="key"/>.
+            </summary>
+            <param name="key">The account key.</param>
+            <returns>The thumbprint.</returns>
+        </member>
+        <member name="M:Certes.ISignatureKeyExtensions.KeyAuthorization(Certes.IKey,System.String)">
+            <summary>
+            Generates key authorization string.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="token">The challenge token.</param>
+            <returns>The key authorization string.</returns>
+        </member>
+        <member name="M:Certes.ISignatureKeyExtensions.DnsTxt(Certes.IKey,System.String)">
+            <summary>
+            Generates the value for DNS TXT record.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="token">The challenge token.</param>
+            <returns>The DNS text value for dns-01 validation.</returns>
+        </member>
+        <member name="M:Certes.ISignatureKeyExtensions.TlsAlpnCertificate(Certes.IKey,System.String,System.String,Certes.IKey)">
+            <summary>
+            Generates the certificate for <see cref="P:Certes.Acme.Resource.ChallengeTypes.TlsAlpn01" /> validation.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="token">The <see cref="P:Certes.Acme.Resource.ChallengeTypes.TlsAlpn01" /> token.</param>
+            <param name="subjectName">Name of the subject.</param>
+            <param name="certificateKey">The certificate key pair.</param>
+            <returns>The tls-alpn-01 certificate in PEM.</returns>
+        </member>
+        <member name="T:Certes.Json.JsonUtil">
+            <summary>
+            Helper methods for JSON serialization.
+            </summary>
+        </member>
+        <member name="M:Certes.Json.JsonUtil.CreateSettings">
+            <summary>
+            Creates the <see cref="T:Newtonsoft.Json.JsonSerializerSettings"/> used for ACME entity serialization.
+            </summary>
+            <returns>The JSON serializer settings.</returns>
+        </member>
+        <member name="T:Certes.Jws.AccountKey">
+            <summary>
+            Represents a JSON Web Signature (JWS) key pair.
+            </summary>
+            <seealso cref="T:Certes.Jws.IAccountKey" />
+        </member>
+        <member name="M:Certes.Jws.AccountKey.#ctor(Certes.KeyAlgorithm)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Jws.AccountKey"/> class.
+            </summary>
+            <param name="algorithm">The JWS signature algorithm.</param>
+        </member>
+        <member name="M:Certes.Jws.AccountKey.#ctor(Certes.Pkcs.KeyInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Jws.AccountKey" /> class.
+            </summary>
+            <param name="keyInfo">The key information.</param>
+            <exception cref="T:System.ArgumentNullException">keyInfo</exception>
+            <exception cref="T:System.NotSupportedException">
+            If the provided key is not one of the supported <seealso cref="T:Certes.KeyAlgorithm" />.
+            </exception>
+        </member>
+        <member name="P:Certes.Jws.AccountKey.Algorithm">
+            <summary>
+            Gets the signing algorithm.
+            </summary>
+            <value>
+            The signing algorithm.
+            </value>
+        </member>
+        <member name="P:Certes.Jws.AccountKey.JsonWebKey">
+            <summary>
+            Gets the JSON web key.
+            </summary>
+            <value>
+            The JSON web key.
+            </value>
+        </member>
+        <member name="P:Certes.Jws.AccountKey.SignatureKey">
+            <summary>
+            Gets the signature key.
+            </summary>
+            <value>
+            The signature key.
+            </value>
+        </member>
+        <member name="M:Certes.Jws.AccountKey.ComputeHash(System.Byte[])">
+            <summary>
+            Computes the hash for given data.
+            </summary>
+            <param name="data">The data.</param>
+            <returns>The hash.</returns>
+        </member>
+        <member name="M:Certes.Jws.AccountKey.SignData(System.Byte[])">
+            <summary>
+            Signs the data.
+            </summary>
+            <param name="data">The data.</param>
+            <returns>The signature.</returns>
+        </member>
+        <member name="M:Certes.Jws.AccountKey.Export">
+            <summary>
+            Exports the key pair.
+            </summary>
+            <returns>The key pair.</returns>
+        </member>
+        <member name="T:Certes.Jws.EcJsonWebKey">
+            <summary>
+            Represents a JWK using Elliptic Curve.
+            </summary>
+            <seealso cref="T:Certes.Jws.JsonWebKey" />
+        </member>
+        <member name="P:Certes.Jws.EcJsonWebKey.Curve">
+            <summary>
+            Gets or sets the curve identifies the cryptographic curve used with the key.
+            </summary>
+            <value>
+            The curve identifies the cryptographic curve used with the key.
+            </value>
+        </member>
+        <member name="P:Certes.Jws.EcJsonWebKey.X">
+            <summary>
+            Gets or sets the x coordinate for the Elliptic Curve point.
+            </summary>
+            <value>
+            The x coordinate for the Elliptic Curve point.
+            </value>
+        </member>
+        <member name="P:Certes.Jws.EcJsonWebKey.Y">
+            <summary>
+            Gets or sets the y coordinate for the Elliptic Curve point.
+            </summary>
+            <value>
+            The y coordinate for the Elliptic Curve point.
+            </value>
+        </member>
+        <member name="T:Certes.Jws.IAccountKey">
+            <summary>
+            Represents a JSON Web Signature (JWS) key pair.
+            </summary>
+        </member>
+        <member name="P:Certes.Jws.IAccountKey.Algorithm">
+            <summary>
+            Gets the signing algorithm.
+            </summary>
+            <value>
+            The signing algorithm.
+            </value>
+        </member>
+        <member name="M:Certes.Jws.IAccountKey.SignData(System.Byte[])">
+            <summary>
+            Signs the data.
+            </summary>
+            <param name="data">The data.</param>
+            <returns>The signature.</returns>
+        </member>
+        <member name="M:Certes.Jws.IAccountKey.ComputeHash(System.Byte[])">
+            <summary>
+            Computes the hash for given data.
+            </summary>
+            <param name="data">The data.</param>
+            <returns>The hash.</returns>
+        </member>
+        <member name="P:Certes.Jws.IAccountKey.JsonWebKey">
+            <summary>
+            Gets the JSON web key.
+            </summary>
+            <value>
+            The JSON web key.
+            </value>
+        </member>
+        <member name="P:Certes.Jws.IAccountKey.SignatureKey">
+            <summary>
+            Gets the signature key.
+            </summary>
+            <value>
+            The signature key.
+            </value>
+        </member>
+        <member name="M:Certes.Jws.IAccountKey.Export">
+            <summary>
+            Exports the key pair.
+            </summary>
+            <returns>The key pair.</returns>
+        </member>
+        <member name="T:Certes.Jws.AccountKeyExtensions">
+            <summary>
+            Helper methods for <see cref="T:Certes.Jws.AccountKey"/>.
+            </summary>
+        </member>
+        <member name="M:Certes.Jws.AccountKeyExtensions.GenerateThumbprint(Certes.Jws.IAccountKey)">
+            <summary>
+            Generates the thumbprint for the given account <paramref name="key"/>.
+            </summary>
+            <param name="key">The account key.</param>
+            <returns>The thumbprint.</returns>
+        </member>
+        <member name="M:Certes.Jws.AccountKeyExtensions.Thumbprint(Certes.Jws.IAccountKey)">
+            <summary>
+            Generates the base64 encoded thumbprint for the given account <paramref name="key"/>.
+            </summary>
+            <param name="key">The account key.</param>
+            <returns>The thumbprint.</returns>
+        </member>
+        <member name="M:Certes.Jws.AccountKeyExtensions.KeyAuthorization(Certes.Jws.IAccountKey,System.String)">
+            <summary>
+            Generates key authorization string.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="token">The challenge token.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Certes.Jws.JsonWebKey">
+            <summary>
+            Represents and JSON web key. 
+            Note that inheriting classes must define JSON serialisation order to maintain lexographic order as per https://tools.ietf.org/html/rfc7638#page-8
+            </summary>
+        </member>
+        <member name="P:Certes.Jws.JsonWebKey.KeyType">
+            <summary>
+            Gets or sets the type of the key.
+            </summary>
+            <value>
+            The type of the key.
+            </value>
+        </member>
+        <member name="T:Certes.Jws.JwsConvert">
+            <summary>
+            Base64 URL encoding without padding.
+            </summary>
+            <remarks>See RFC 7515 Appendix C.</remarks>
+        </member>
+        <member name="M:Certes.Jws.JwsConvert.ToBase64String(System.Byte[])">
+            <summary>
+            Encodes the data to the base64 string without padding.
+            </summary>
+            <param name="data">The data to encoded.</param>
+            <returns>The encoded data.</returns>
+        </member>
+        <member name="M:Certes.Jws.JwsConvert.FromBase64String(System.String)">
+            <summary>
+            Decodes the base64 string without padding.
+            </summary>
+            <param name="data">The data.</param>
+            <returns>The decoded data.</returns>
+            <exception cref="T:System.Exception">If <paramref name="data"/> is illegal base64 URL string.</exception>
+        </member>
+        <member name="T:Certes.Jws.JwsPayload">
+            <summary>
+            Represents data signed with JWS.
+            </summary>
+        </member>
+        <member name="P:Certes.Jws.JwsPayload.Protected">
+            <summary>
+            Gets or sets the protected.
+            </summary>
+            <value>
+            The protected.
+            </value>
+        </member>
+        <member name="P:Certes.Jws.JwsPayload.Payload">
+            <summary>
+            Gets or sets the payload.
+            </summary>
+            <value>
+            The payload.
+            </value>
+        </member>
+        <member name="P:Certes.Jws.JwsPayload.Signature">
+            <summary>
+            Gets or sets the signature.
+            </summary>
+            <value>
+            The signature.
+            </value>
+        </member>
+        <member name="T:Certes.Jws.JwsSigner">
+            <summary>
+            Represents an signer for JSON Web Signature.
+            </summary>
+        </member>
+        <member name="M:Certes.Jws.JwsSigner.#ctor(Certes.IKey)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Jws.JwsSigner"/> class.
+            </summary>
+            <param name="keyPair">The keyPair.</param>
+        </member>
+        <member name="M:Certes.Jws.JwsSigner.Sign(System.Object,System.String)">
+            <summary>
+            Signs the specified payload.
+            </summary>
+            <param name="payload">The payload.</param>
+            <param name="nonce">The nonce.</param>
+            <returns>The signed payload.</returns>
+        </member>
+        <member name="M:Certes.Jws.JwsSigner.Sign(System.Object,System.Uri,System.Uri,System.String)">
+            <summary>
+            Encodes this instance.
+            </summary>
+            <param name="payload">The payload.</param>
+            <param name="keyId">The key identifier.</param>
+            <param name="url">The URL.</param>
+            <param name="nonce">The nonce.</param>
+            <returns>The signed payload.</returns>
+        </member>
+        <member name="T:Certes.Jws.RsaJsonWebKey">
+            <summary>
+            Represents a JWK using RSA.
+            </summary>
+            <seealso cref="T:Certes.Jws.JsonWebKey" />
+        </member>
+        <member name="P:Certes.Jws.RsaJsonWebKey.Exponent">
+            <summary>
+            Gets or sets the exponent value for the RSA public key.
+            </summary>
+            <value>
+            The exponent value for the RSA public key.
+            </value>
+        </member>
+        <member name="P:Certes.Jws.RsaJsonWebKey.Modulus">
+            <summary>
+            Gets or sets the modulus value for the RSA public key.
+            </summary>
+            <value>
+            The modulus value for the RSA public key.
+            </value>
+        </member>
+        <member name="T:Certes.KeyAlgorithm">
+            <summary>
+            The supported algorithms.
+            </summary>
+        </member>
+        <member name="F:Certes.KeyAlgorithm.RS256">
+            <summary>
+            RSASSA-PKCS1-v1_5 using SHA-256.
+            </summary>
+        </member>
+        <member name="F:Certes.KeyAlgorithm.ES256">
+            <summary>
+            ECDSA using P-256 and SHA-256.
+            </summary>
+        </member>
+        <member name="F:Certes.KeyAlgorithm.ES384">
+            <summary>
+            ECDSA using P-384 and SHA-384.
+            </summary>
+        </member>
+        <member name="F:Certes.KeyAlgorithm.ES512">
+            <summary>
+            ECDSA using P-521 and SHA-512.
+            </summary>
+        </member>
+        <member name="T:Certes.KeyAlgorithmExtensions">
+            <summary>
+            Helper methods for <see cref="T:Certes.KeyAlgorithm"/>.
+            </summary>
+        </member>
+        <member name="M:Certes.KeyAlgorithmExtensions.ToJwsAlgorithm(Certes.KeyAlgorithm)">
+            <summary>
+            Get the JWS name of the <paramref name="algorithm"/>.
+            </summary>
+            <param name="algorithm">The algorithm.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Certes.KeyFactory">
+            <summary>
+            Provides helper methods for handling keys.
+            </summary>
+        </member>
+        <member name="M:Certes.KeyFactory.NewKey(Certes.KeyAlgorithm,System.Nullable{System.Int32})">
+            <summary>
+            Creates a random key.
+            </summary>
+            <param name="algorithm">The algorithm to use.</param>
+            <param name="keySize">Optional key size (used for RSA, defaults to 2048)</param>
+            <returns>The key created.</returns>
+        </member>
+        <member name="M:Certes.KeyFactory.FromDer(System.Byte[])">
+            <summary>
+            Parse the key from DER encoded data.
+            </summary>
+            <param name="der">The DER encoded data.</param>
+            <returns>The key restored.</returns>
+        </member>
+        <member name="M:Certes.KeyFactory.FromPem(System.String)">
+            <summary>
+            Parse the key from PEM encoded text.
+            </summary>
+            <param name="pem">The PEM encoded text.</param>
+            <returns>The key restored.</returns>
+        </member>
+        <member name="M:Certes.KeyFactory.GetSigner(Certes.IKey)">
+            <summary>
+            Gets the signer for the given key.
+            </summary>
+            <param name="key">The key.</param>
+            <returns>The signer.</returns>
+        </member>
+        <member name="T:Certes.Pkcs.CertificationRequestBuilder">
+            <summary>
+            Represents a CSR builder.
+            </summary>
+            <seealso cref="T:Certes.Pkcs.ICertificationRequestBuilder" />
+        </member>
+        <member name="P:Certes.Pkcs.CertificationRequestBuilder.Key">
+            <summary>
+            Gets the key.
+            </summary>
+            <value>
+            The key.
+            </value>
+        </member>
+        <member name="P:Certes.Pkcs.CertificationRequestBuilder.SubjectAlternativeNames">
+            <summary>
+            Gets the subject alternative names.
+            </summary>
+            <value>
+            The subject alternative names.
+            </value>
+        </member>
+        <member name="M:Certes.Pkcs.CertificationRequestBuilder.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Pkcs.CertificationRequestBuilder"/> class.
+            </summary>
+        </member>
+        <member name="M:Certes.Pkcs.CertificationRequestBuilder.#ctor(Certes.IKey)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Pkcs.CertificationRequestBuilder"/> class.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
+        <member name="M:Certes.Pkcs.CertificationRequestBuilder.AddName(System.String)">
+            <summary>
+            Adds the distinguished name as certificate subject.
+            </summary>
+            <param name="distinguishedName">The distinguished name.</param>
+        </member>
+        <member name="M:Certes.Pkcs.CertificationRequestBuilder.AddName(System.String,System.String)">
+            <summary>
+            Adds the name.
+            </summary>
+            <param name="keyOrCommonName">Name of the key or common.</param>
+            <param name="value">The value.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            If <paramref name="keyOrCommonName"/> is not a valid X509 name.
+            </exception>
+        </member>
+        <member name="M:Certes.Pkcs.CertificationRequestBuilder.Generate">
+            <summary>
+            Generates the CSR.
+            </summary>
+            <returns>
+            The CSR data.
+            </returns>
+        </member>
+        <member name="T:Certes.Pkcs.CertificateStore">
+            <summary>
+            Represents a collection of X509 certificates.
+            </summary>
+        </member>
+        <member name="M:Certes.Pkcs.CertificateStore.Add(System.Byte[])">
+            <summary>
+            Adds issuer certificates.
+            </summary>
+            <param name="certificates">The issuer certificates.</param>
+        </member>
+        <member name="M:Certes.Pkcs.CertificateStore.GetIssuers(System.Byte[])">
+            <summary>
+            Gets the issuers of given certificate.
+            </summary>
+            <param name="der">The certificate.</param>
+            <returns>
+            The issuers of the certificate.
+            </returns>
+        </member>
+        <member name="T:Certes.Pkcs.ICertificationRequestBuilder">
+            <summary>
+            Supports building Certificate Signing Request (CSR).
+            </summary>
+        </member>
+        <member name="M:Certes.Pkcs.ICertificationRequestBuilder.Generate">
+            <summary>
+            Generates the CSR.
+            </summary>
+            <returns>The CSR data.</returns>
+        </member>
+        <member name="T:Certes.Pkcs.KeyInfo">
+            <summary>
+            Represents a key pair.
+            </summary>
+        </member>
+        <member name="P:Certes.Pkcs.KeyInfo.PrivateKeyInfo">
+            <summary>
+            Gets or sets the private key information.
+            </summary>
+            <value>
+            The private key information.
+            </value>
+        </member>
+        <member name="M:Certes.Pkcs.KeyInfo.From(System.IO.Stream)">
+            <summary>
+            Reads the key from the given <paramref name="stream"/>.
+            </summary>
+            <param name="stream">The steam.</param>
+            <returns>The key loaded.</returns>
+        </member>
+        <member name="T:Certes.Pkcs.KeyInfoExtensions">
+            <summary>
+            Helper methods for <see cref="T:Certes.Pkcs.KeyInfo"/>.
+            </summary>
+        </member>
+        <member name="M:Certes.Pkcs.KeyInfoExtensions.Save(Certes.Pkcs.KeyInfo,System.IO.Stream)">
+            <summary>
+            Saves the key pair to the specified stream.
+            </summary>
+            <param name="keyInfo">The key information.</param>
+            <param name="stream">The stream.</param>
+        </member>
+        <member name="M:Certes.Pkcs.KeyInfoExtensions.CreateKeyPair(Certes.Pkcs.KeyInfo)">
+            <summary>
+            Gets the key pair.
+            </summary>
+            <param name="keyInfo">The key data.</param>
+            <returns>The key pair</returns>
+        </member>
+        <member name="M:Certes.Pkcs.KeyInfoExtensions.Export(Org.BouncyCastle.Crypto.AsymmetricCipherKeyPair)">
+            <summary>
+            Exports the key pair.
+            </summary>
+            <param name="keyPair">The key pair.</param>
+            <returns>The key data.</returns>
+        </member>
+        <member name="T:Certes.Pkcs.PfxBuilder">
+            <summary>
+            Supports generating PFX from the certificate and key pair.
+            </summary>
+        </member>
+        <member name="P:Certes.Pkcs.PfxBuilder.FullChain">
+            <summary>
+            Gets or sets a value indicating whether to include the full certificate chain in the PFX.
+            </summary>
+            <value>
+              <c>true</c> if include the full certificate chain in the PFX; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="M:Certes.Pkcs.PfxBuilder.#ctor(System.Byte[],Certes.Pkcs.KeyInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Pkcs.PfxBuilder"/> class.
+            </summary>
+            <param name="certificate">The certificate.</param>
+            <param name="privateKeyInfo">The private key information.</param>
+        </member>
+        <member name="M:Certes.Pkcs.PfxBuilder.#ctor(System.Byte[],Certes.IKey)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Certes.Pkcs.PfxBuilder"/> class.
+            </summary>
+            <param name="certificate">The certificate.</param>
+            <param name="privateKey">The private key.</param>
+        </member>
+        <member name="M:Certes.Pkcs.PfxBuilder.AddIssuer(System.Byte[])">
+            <summary>
+            Adds an issuer certificate.
+            </summary>
+            <param name="certificate">The issuer certificate.</param>
+        </member>
+        <member name="M:Certes.Pkcs.PfxBuilder.AddIssuers(System.Byte[])">
+            <summary>
+            Adds issuer certificates.
+            </summary>
+            <param name="certificates">The issuer certificates.</param>
+        </member>
+        <member name="M:Certes.Pkcs.PfxBuilder.Build(System.String,System.String)">
+            <summary>
+            Builds the PFX with specified friendly name.
+            </summary>
+            <param name="friendlyName">The friendly name.</param>
+            <param name="password">The password.</param>
+            <returns>The PFX data.</returns>
+        </member>
+        <member name="T:Certes.Properties.Strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Certes.Properties.Strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Certes.Properties.Strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Certes.Properties.Strings.ErrorFetchNonce">
+            <summary>
+              Looks up a localized string similar to Fail to fetch new nonce..
+            </summary>
+        </member>
+        <member name="P:Certes.Properties.Strings.ErrorFetchResource">
+            <summary>
+              Looks up a localized string similar to Fail to load resource from &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Certes.Properties.Strings.ErrorFinalizeFailed">
+            <summary>
+              Looks up a localized string similar to Fail to finalize order..
+            </summary>
+        </member>
+        <member name="P:Certes.Properties.Strings.ErrorHttpRequest">
+            <summary>
+              Looks up a localized string similar to Fail to invoke &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Certes.Properties.Strings.ErrorInvalidBase64String">
+            <summary>
+              Looks up a localized string similar to Illegal base64url string..
+            </summary>
+        </member>
+        <member name="P:Certes.Properties.Strings.ErrorInvalidKeyData">
+            <summary>
+              Looks up a localized string similar to Invaid key data..
+            </summary>
+        </member>
+        <member name="P:Certes.Properties.Strings.ErrorInvalidOrderStatusForFinalize">
+            <summary>
+              Looks up a localized string similar to Can not finalize order with status &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Certes.Properties.Strings.ErrorIssuerNotFound">
+            <summary>
+              Looks up a localized string similar to Can not find issuer &apos;{0}&apos; for certificate &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:Certes.Properties.Strings.ErrorMissingCertificateData">
+            <summary>
+              Looks up a localized string similar to Certificate data missing, please fetch the certificate from &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:Certes.Properties.Strings.ErrorUnsupportedResourceType">
+            <summary>
+              Looks up a localized string similar to Unsupported resource type &apos;{0}&apos;..
+            </summary>
+        </member>
+    </members>
+</doc>

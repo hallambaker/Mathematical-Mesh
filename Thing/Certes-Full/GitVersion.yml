@@ -1,0 +1,17 @@
+mode: Mainline
+assembly-file-versioning-format: '{Major}.{Minor}.{Patch}.{WeightedPreReleaseNumber}'
+
+branches:
+  main:
+    tag: beta
+    regex: ^master$|^main$
+    increment: Patch
+    is-source-branch-for: ['release']
+  pull-request:
+    tag: pr
+    increment: Patch
+  release:
+    tag: ''
+    regex: release
+    increment: Patch
+    is-release-branch: true

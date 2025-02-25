@@ -106,25 +106,28 @@ public partial class TestService {
         var applicationMail = CatalogedApplicationMail.Create("alice@example.net", roles);
         var resultTransact2 = contextAccountAlice.AddApplication(applicationMail, [null]).Sync();
 
-        // add a developer app, this returns a list of applications for ssh, pgp, etc.
-        var applicationDeveloper = CatalogedApplicationDeveloper.Create("alice@example.net", roles);
-        foreach (var app in applicationDeveloper) {
-            var resultTransact3 = contextAccountAlice.AddApplication(app, [null]).Sync();
-            }
+        //// add a developer app, this returns a list of applications for ssh, pgp, etc.
+        //var applicationDeveloper = CatalogedApplicationDeveloper.Create("alice@example.net", roles);
+        //foreach (var app in applicationDeveloper) {
+        //    var resultTransact3 = contextAccountAlice.AddApplication(app, [null]).Sync();
+        //    }
 
-        //// add a credential app
-        //var applicationCredential = CatalogedApplicationCredential.Create("alice@example.net", roles);
-        //var resultTransact4 = contextAccountAlice.AddApplication(applicationCredential, [null]).Sync();
+
 
         // add service configuring the zone "alice.cryptomesh.org"
-        var applicationDns = CatalogedApplicationService.CreateDns(
-                "cryptomesh", roles, "alice.cryptomesh.org", "example.com");
+        var applicationDns = CatalogedApplicationService.CreateThing(
+                "Home Network", roles, "alicehome.cryptomesh.org", "example.com");
         var resultTransact5 = contextAccountAlice.AddApplication(applicationDns, [null]).Sync();
 
 
         var applicationWeb = CatalogedApplicationService.CreateWeb(
-                "cryptomesh", roles, "https://phill.hallambaker.com/");
+                "Web", roles, "https://phill.hallambaker.com/");
         var resultTransact6 = contextAccountAlice.AddApplication(applicationWeb, [null]).Sync();
+
+
+        var applicationsignal = CatalogedApplicationService.CreateMessaging(
+                "Signal", roles, "phill_hallambaker_com", "Signal");
+        var resultTransact7 = contextAccountAlice.AddApplication(applicationWeb, [null]).Sync();
 
         WriteContactFile(contextAccountAlice);
         }
@@ -145,10 +148,14 @@ public partial class TestService {
 
 
         var contact = GetContact(bytes);
+        Analyze(contact);
+
+
+        // list the developer personas
 
         }
 
-    private static JsonObject GetContact(byte[] bytes) {
+    private static JsContact GetContact(byte[] bytes) {
         var reader = new JsonReader(bytes);
         return JsContact.FromJson(reader, false);
         }
@@ -162,7 +169,7 @@ public partial class TestService {
         var roles = new List<string> { Rights.IdRolesWeb };
 
         // add a dns app
-        var applicationDns = CatalogedApplicationService.CreateDns(
+        var applicationDns = CatalogedApplicationService.CreateThing(
                 "cryptomesh", roles, "alice.cryptomesh.org", "example.com");
         var resultTransact5 = contextAccountAlice.AddApplication(applicationDns, [null]).Sync();
 
@@ -191,9 +198,10 @@ public partial class TestService {
         var asbytes = contact.GetJson(false);
 
         var astext = asbytes.ToUTF8();
+        Console.WriteLine(astext);
 
         // encrypt
-        var(earl, locator, encrypted) = Udf.CreateEarl(asbytes);
+        var (earl, locator, encrypted) = Udf.CreateEarl(asbytes);
 
         //var earl = Udf.AuthenticatedEncryptionKey(asbytes);
         //var locator = Udf.Locator(earl);
@@ -205,9 +213,47 @@ public partial class TestService {
 
         System.Console.WriteLine($"EARL = {earl}");
 
+
+        Analyze(contact);
         return true;
         }
 
+
+    bool Analyze(JsContact contact) {
+
+        contact.Analyze();
+
+
+        // list the http services
+
+
+        // list the email accounts with security
+        foreach (var servicePair in contact.DictionaryServices) {
+            var service = servicePair.Value;
+
+            if (service is JsContactServiceEmail serviceEmail) {
+                Console.WriteLine($"Email: {serviceEmail.EmailAddress.Address}");
+                }
+            else {
+                Console.WriteLine($"{service.ServiceType} : {service.Label}");
+                }
+
+
+            //else {
+            //    Console.WriteLine($"Group:  {service.Label}");
+            //    }
+
+            foreach (var account in service.Accounts) {
+                Console.WriteLine($"    {account}");
+                }
+            foreach (var cryptoKey in service.Credentials) {
+                Console.WriteLine($"    {cryptoKey.Key}");
+                }
+
+
+            }
+        return true;
+        }
 
 
     [Theory]

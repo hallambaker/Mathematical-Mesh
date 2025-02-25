@@ -309,10 +309,10 @@ public static partial class Extensions {
         contact.Emails ??= [];
         contact.Emails.AddUniqueKeyed("mail", emailAddress);
 
-        contact.AddKeyData(application.SmimeSign, "S/Mime", application.AccountAddress, ["sign"]);
-        contact.AddKeyData(application.SmimeEncrypt, "S/Mime", application.AccountAddress,["encrypt"]);
+        contact.AddKeyData(application.SmimeSign, "SMime", application.AccountAddress, ["sign"]);
+        contact.AddKeyData(application.SmimeEncrypt, "SMime_encrypt", application.AccountAddress,["encrypt"]);
         contact.AddKeyData(application.OpenpgpSign, "OpenPGP", application.AccountAddress, ["sign"]);
-        contact.AddKeyData(application.OpenpgpEncrypt, "OpenPGP", application.AccountAddress, ["encrypt"]);
+        contact.AddKeyData(application.OpenpgpEncrypt, "OpenPGP_encrypt", application.AccountAddress, ["encrypt"]);
 
         contact.Update();
         }
@@ -366,9 +366,9 @@ public static partial class Extensions {
     /// <param name="contact">The contact to add the application details to.</param>
     /// <param name="application">The application to add.</param>
     public static void AddDeveloper(this JsContact contact, CatalogedApplicationDeveloper application) {
-        contact.AddServices(application.Kind, application.AccountAddress, application.Ssh);
-        contact.AddServices(application.Kind, application.AccountAddress, application.Commit);
-        contact.AddServices(application.Kind, application.AccountAddress, application.Code);
+        contact.AddServices(application.Kind, application.AccountAddress, application.Ssh, application.LocalName);
+        contact.AddServices(application.Kind, application.AccountAddress, application.Commit, application.LocalName);
+        contact.AddServices(application.Kind, application.AccountAddress, application.Code, application.LocalName);
         }
 
     /// <summary>
@@ -379,7 +379,7 @@ public static partial class Extensions {
     public static void AddService(this JsContact contact, CatalogedApplicationService application) {
 
         if (application?.Protocol == "http") {
-            contact.AddService("http", null, application.Address);
+            contact.AddService("http", null, application.Address, application.LocalName);
             }
 
         }
@@ -396,10 +396,11 @@ public static partial class Extensions {
                 this JsContact contact,
                 string serviceId,
                 string accountAddress,
-                List<string> keys) {
+                List<string> keys, 
+                string localName) {
         if (keys is not null) {
             foreach (var key in keys) {
-                AddService (contact, serviceId, accountAddress, key);
+                AddService(contact, serviceId, accountAddress, key, localName);
                 }
             }
         }
@@ -414,7 +415,8 @@ public static partial class Extensions {
                 this JsContact contact,
                 string serviceId,
                 string accountAddress,
-                string key) {
+                string key, 
+                string localName) {
         var service = new OnlineService() {
             Service = serviceId,
             User = accountAddress,
@@ -444,7 +446,7 @@ public static partial class Extensions {
 
         var key = "udf:" + keyData.Udf;
 
-        contact.AddService(serviceId, accountAddress, key);
+        contact.AddService(serviceId, accountAddress, key, null);
 
         var (media, uri) = keyData.GetDataUri();
         var cryptoKey = new CryptoKey() {

@@ -24,7 +24,7 @@ global using Goedel.Utilities;
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif
 
-namespace Goedel.Caarnet.Server;
+namespace Goedel.Carnet.Server;
 /// <summary>
 /// Desctiption of the 
 /// </summary>

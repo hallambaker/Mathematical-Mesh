@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 2/23/2025 6:20:54 PM
+//  This file was automatically generated at 2/25/2025 6:05:20 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -20,7 +20,7 @@
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006 // Naming Styles
-namespace Goedel.Caarnet.Server ;
+namespace Goedel.Carnet.Server ;
 
 
 /// <summary>

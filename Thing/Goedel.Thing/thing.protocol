@@ -1,0 +1,49 @@
+﻿Protocol Goedel.Thing ThingProtocol ThingProtocol
+	
+	Section 3 "Profile and account registration"
+
+	Structure ProfileThing
+		External ProfileService
+		Description 
+			|Describes a carnet issuer.
+
+
+	Structure CatalogedThing
+		External CatalogedEntry
+		String Key
+		Struct Enveloped<ConnectionStripped> EnvelopedConnectionAddress
+			Description
+				|The connection allowing control of the registry.
+		Struct Enveloped<ProfileThing> EnvelopedProfileThing
+			Description
+				|The Mesh profile
+		Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
+			Description
+				|The activation data for the registry.
+
+
+
+	Section 2 "Thing service"
+
+	Description 
+		|Carnet Ledger Protocol maintaining a record of carnet accounts.
+
+    Using Goedel.Cryptography.Jose
+    Using Goedel.Cryptography.Dare
+
+	Section 3 "Shared Classes"
+    Service ThingService "_thing._tcp" "carnet" ThingRequest ThingResponse
+		Description
+
+
+	Message ThingRequest
+		External Goedel.Protocol.Request
+		Description
+			|Base class for all requests made to a registrar
+
+
+	Message ThingResponse
+		External Goedel.Protocol.Response		
+		Description
+			|Base class for all response messages. Contains only the
+			|status code and status description fields.

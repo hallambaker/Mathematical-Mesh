@@ -1,5 +1,5 @@
 ﻿
-Namespace Goedel.Caarnet.Server
+Namespace Goedel.Carnet.Server
 
 	Exception TBS
 		Console "Exception TBS"
