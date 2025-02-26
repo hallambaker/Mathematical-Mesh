@@ -40,10 +40,25 @@ public class Acme {
     public string DeviceIp = "192.168.1.21";
 
     [Fact]
+    public async Task TestEnroll4() {
+
+        var thingService = new ServiceThingDispatch();
+        var configTask =  thingService.NewDeviceHttps(DeviceDns, DeviceIp);
+
+        while (!configTask.IsCompleted) {
+            await Task.Delay (configTask.RetryMs);
+            }
+
+
+        }
+
+
+
+    [Fact]
     public async Task TestEnroll3() {
 
         // Service config here 
-        var dnsAccount = new ZoneAccount("cryptomesh.org", IPAddress.Parse("178.62.79.124"), "1234") ;
+        var dnsAccount = new DnsUpdateAccount("cryptomesh.org", IPAddress.Parse("178.62.79.124"), "1234") ;
         dnsAccount.Initialize();
         var account = await AcmeAccount.Create(AcmeAccountAddress, true);
 
