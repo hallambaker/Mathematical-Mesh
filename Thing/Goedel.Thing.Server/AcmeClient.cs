@@ -27,6 +27,7 @@ using Goedel.Protocol;
 using Org.BouncyCastle.Asn1.X509;
 using System.Security.AccessControl;
 
+
 public class AcmeAccount {
 
     public string PemKey { get; init; }
@@ -168,9 +169,9 @@ public enum ChallengeState {
 
 public record DnsChallenge(
             string Zone,
-            string Value) {
+            string Text) {
 
-    public string TxtZone => Zone[0] == '*' ? "_acme-challenge" + Zone[1..] : "_acme-challenge." + Zone;
+    public string PrefixedDomain => Zone[0] == '*' ? "_acme-challenge" + Zone[1..] : "_acme-challenge." + Zone;
 
     public IChallengeContext ChallengeContext { get; init; }
 

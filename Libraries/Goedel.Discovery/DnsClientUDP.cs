@@ -176,8 +176,6 @@ public static class HostNetwork {
 
     }
 
-
-
 /// <summary>
 /// DNS client implementation
 /// </summary>

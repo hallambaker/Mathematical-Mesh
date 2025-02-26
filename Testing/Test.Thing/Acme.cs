@@ -22,7 +22,7 @@
 
 using Goedel.Acme;
 
-using System.Numerics;
+using System.Net;
 using System.Threading.Tasks;
 using Certes.Acme;
 using Certes;
@@ -35,6 +35,38 @@ public class Acme {
 
 
     public string AcmeAccountAddress = "admin@hallambaker.com";
+    public string DeviceDns = "camera1.cryptomesh.org";
+
+    public string DeviceIp = "192.168.1.21";
+
+    [Fact]
+    public async Task TestEnroll3() {
+
+        // Service config here 
+        var dnsAccount = new ZoneAccount("cryptomesh.org", IPAddress.Parse("178.62.79.124"), "1234") ;
+        dnsAccount.Initialize();
+        var account = await AcmeAccount.Create(AcmeAccountAddress, true);
+
+        // Step 1: Get the credentials set up
+        var order = await account.PlaceOrder([DeviceDns]);
+
+        foreach (var challengePair in order.DictionaryZoneToChallenge) {
+            var challenge = challengePair.Value;
+
+            Console.WriteLine($"{challenge.PrefixedDomain} TXT \"{challenge.Text}\"");
+            // here respond to the challenge thang
+
+            dnsAccount.PublishTxt(challenge.PrefixedDomain, challenge.Text);
+            }
+        var result = await order.TryCompleteOrder("my-cert", "abcd1234");
+
+        // Step 2: Publish the service addresses
+        dnsAccount.PublishA(DeviceDns, [IPAddress.Parse("178.62.79.124")]);
+
+        }
+
+
+
 
     [Fact]
     public async Task TestEnroll2() {
@@ -46,7 +78,7 @@ public class Acme {
         foreach (var challengePair in order.DictionaryZoneToChallenge) {
             var challenge = challengePair.Value;
 
-            Console.WriteLine($"{challenge.TxtZone} TXT \"{challenge.Value}\"");
+            Console.WriteLine($"{challenge.PrefixedDomain} TXT \"{challenge.Text}\"");
             // here respond to the challenge thang
             }
 
