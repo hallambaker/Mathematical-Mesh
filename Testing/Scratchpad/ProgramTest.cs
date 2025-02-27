@@ -63,7 +63,7 @@ partial class Program {
 
         //TestService.Test().TestCredentialAccount();
 
-        Acme.Test().TestEnroll().Sync();
+        //Acme.Test().TestEnroll().Sync();
         TestService.Test().TestCredentialAccountApps();
         //TestService.Test().TestCredentialFromHandle();
 

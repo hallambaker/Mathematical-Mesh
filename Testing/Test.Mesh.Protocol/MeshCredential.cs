@@ -98,36 +98,37 @@ public partial class TestService {
 
         var roles = new List<string> { Rights.IdRolesWeb };
 
-        //// add an ssh app
-        //var applicationSSH = CatalogedApplicationSsh.Create("SSH", roles);
-        //var resultTransact1 = contextAccountAlice.AddApplication(applicationSSH, [null]).Sync();
+
 
         // add a mail app
         var applicationMail = CatalogedApplicationMail.Create("alice@example.net", roles);
         var resultTransact2 = contextAccountAlice.AddApplication(applicationMail, [null]).Sync();
 
-        //// add a developer app, this returns a list of applications for ssh, pgp, etc.
-        //var applicationDeveloper = CatalogedApplicationDeveloper.Create("alice@example.net", roles);
-        //foreach (var app in applicationDeveloper) {
-        //    var resultTransact3 = contextAccountAlice.AddApplication(app, [null]).Sync();
-        //    }
+        // add a developer app, this returns a list of applications for ssh, pgp, etc.
+        var applicationDeveloper = CatalogedApplicationDeveloper.Create("alice@example.net", roles);
+        foreach (var app in applicationDeveloper) {
+            var resultTransact3 = contextAccountAlice.AddApplication(app, [null]).Sync();
+            }
 
 
-
-        // add service configuring the zone "alice.cryptomesh.org"
-        var applicationDns = CatalogedApplicationService.CreateThing(
-                "Home Network", roles, "alicehome.cryptomesh.org", "example.com");
-        var resultTransact5 = contextAccountAlice.AddApplication(applicationDns, [null]).Sync();
+        //// add service configuring the zone "alice.cryptomesh.org"
+        //var applicationDns = CatalogedApplicationService.CreateThing(
+        //        "Home Network", roles, "alicehome.cryptomesh.org", "example.com");
+        //var resultTransact5 = contextAccountAlice.AddApplication(applicationDns, [null]).Sync();
 
 
         var applicationWeb = CatalogedApplicationService.CreateWeb(
                 "Web", roles, "https://phill.hallambaker.com/");
         var resultTransact6 = contextAccountAlice.AddApplication(applicationWeb, [null]).Sync();
 
-
         var applicationsignal = CatalogedApplicationService.CreateMessaging(
                 "Signal", roles, "phill_hallambaker_com", "Signal");
-        var resultTransact7 = contextAccountAlice.AddApplication(applicationWeb, [null]).Sync();
+        var resultTransact7 = contextAccountAlice.AddApplication(applicationsignal, [null]).Sync();
+
+        // add an ssh app
+        var applicationSSH = CatalogedApplicationSsh.Create("SSH", roles);
+        var resultTransact1 = contextAccountAlice.AddApplication(applicationSSH, [null]).Sync();
+
 
         WriteContactFile(contextAccountAlice);
         }
@@ -198,7 +199,7 @@ public partial class TestService {
         var asbytes = contact.GetJson(false);
 
         var astext = asbytes.ToUTF8();
-        Console.WriteLine(astext);
+        //Console.WriteLine(astext);
 
         // encrypt
         var (earl, locator, encrypted) = Udf.CreateEarl(asbytes);
@@ -238,16 +239,16 @@ public partial class TestService {
                 Console.WriteLine($"{service.ServiceType} : {service.Label}");
                 }
 
-
-            //else {
-            //    Console.WriteLine($"Group:  {service.Label}");
-            //    }
-
+            if (service.ServiceType == ServiceType.Messaging) {
+                foreach (var online in service.OnlineServices) {
+                    Console.WriteLine($"    {online.Service}");
+                    }
+                }
             foreach (var account in service.Accounts) {
                 Console.WriteLine($"    {account}");
                 }
             foreach (var cryptoKey in service.Credentials) {
-                Console.WriteLine($"    {cryptoKey.Key}");
+                Console.WriteLine($"    {cryptoKey.Key}, {cryptoKey.Value.Kind}");
                 }
 
 

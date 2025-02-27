@@ -281,6 +281,8 @@ public static partial class Extensions {
                 AddService(contact, catalogedService);
                 break;
                 }
+
+
             }
         }
 
@@ -312,7 +314,7 @@ public static partial class Extensions {
         contact.AddKeyData(application.SmimeSign, "SMime", application.AccountAddress, ["sign"]);
         contact.AddKeyData(application.SmimeEncrypt, "SMime_encrypt", application.AccountAddress,["encrypt"]);
         contact.AddKeyData(application.OpenpgpSign, "OpenPGP", application.AccountAddress, ["sign"]);
-        contact.AddKeyData(application.OpenpgpEncrypt, "OpenPGP_encrypt", application.AccountAddress, ["encrypt"]);
+        contact.AddKeyData(application.OpenpgpEncrypt, "OpenPGP_sub", application.AccountAddress, ["encrypt"]);
 
         contact.Update();
         }
@@ -377,10 +379,27 @@ public static partial class Extensions {
     /// <param name="contact">The contact to add the application details to.</param>
     /// <param name="application">The application to add.</param>
     public static void AddService(this JsContact contact, CatalogedApplicationService application) {
+        var protocol = application?.Protocol;
 
-        if (application?.Protocol == "http") {
-            contact.AddService("http", null, application.Address, application.LocalName);
+        switch (protocol) {
+            case "http": {
+                contact.AddService(protocol, null, application.Address, application.LocalName);
+                break;
+                }
+            default: {
+                contact.AddService(protocol,application.Address, null,application.LocalName);
+                break;
+                }
+
+
             }
+
+
+        //if (protocol is not null) {
+        //    contact.AddService(protocol, null, application.Address, application.LocalName);
+        //    }
+
+
 
         }
 
@@ -451,7 +470,8 @@ public static partial class Extensions {
         var (media, uri) = keyData.GetDataUri();
         var cryptoKey = new CryptoKey() {
             Uri = uri,
-            MediaType = media
+            MediaType = media,
+            Kind= "serviceId"
             };
         if (contexts != null) {
             cryptoKey.Contexts ??= [];

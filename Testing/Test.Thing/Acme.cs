@@ -33,11 +33,28 @@ namespace Goedel.XUnit;
 public class Acme {
     public static Acme Test() => new();
 
-
     public string AcmeAccountAddress = "admin@hallambaker.com";
     public string DeviceDns = "camera1.cryptomesh.org";
-
     public string DeviceIp = "192.168.1.21";
+
+
+    [Fact]
+    public async Task TestEnroll5() {
+
+        var thingService = new ServiceThingDispatch();
+        var configTask = thingService.NewDevice(
+                    DeviceDns, [
+                        new(WellKnownService.HTTPS), 
+                        new(WellKnownService.SSH)]);
+
+        while (!configTask.IsCompleted) {
+            await Task.Delay(configTask.RetryMs);
+            }
+
+        }
+
+
+
 
     [Fact]
     public async Task TestEnroll4() {

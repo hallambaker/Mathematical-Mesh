@@ -29,8 +29,36 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Goedel.Acme;
 
+public record ServiceDescription(
+            string Protocol,
+            int Port=0,
+            string Configuration=null) {
+
+
+    public ServiceDescription(
+                WellKnownService service,
+                int port = 0,
+                string configuration = null) : this (
+                    service.GetProtocol(), 
+                    service.GetPort(port), 
+                    service.GetConfiguration(configuration)) {
+        }
+
+
+    }
+
 
 public class ServiceThingDispatch() {
+
+
+    public ServiceThingTask NewDevice(
+                    string domain, 
+                    IEnumerable<ServiceDescription> services) {
+
+        return new ServiceThingTask() {
+
+            };
+        }
 
     public ServiceThingTask NewDeviceHttps(string domain, string ipaddress) {
 

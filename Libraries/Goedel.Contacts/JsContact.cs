@@ -41,7 +41,7 @@ public record JsContactService (
     public List<string> Accounts { get; } = [];
 
 
-    public Dictionary<string, CryptoKey> Credentials { get; } = [];
+    public Dictionary<string, JsContactCredential> Credentials { get; } = [];
 
 
     public JsContactService(
@@ -57,18 +57,42 @@ public record JsContactService (
                     OnlineService onlineService,
                     CryptoKey cryptoKey = null,
                     string cryptoLabel = null) {
-
+        OnlineServices.Add(onlineService);
         var serviceType = onlineService.Service.ToLower();
-
-        if (serviceType == "mesh") {
-            ServiceType = ServiceType.Mesh;
-            Accounts.Add (onlineService.User);
+        switch (serviceType) {
+            case "mesh": {
+                ServiceType = ServiceType.Mesh;
+                Accounts.Add(onlineService.User);
+                break;
+                }
+            case "ssh": {
+                ServiceType = ServiceType.Ssh;
+                break;
+                }
+            case "code": {
+                ServiceType = ServiceType.Code;
+                break;
+                }
+            case "http": {
+                ServiceType = ServiceType.Web;
+                break;
+                }
+            case "signal":
+            case "telegram":
+            case "whatsapp":
+            case "message": {
+                ServiceType = ServiceType.Messaging;
+                break;
+                }
+            default: {
+                break;
+                }
             }
 
         if (cryptoKey != null) {
-            Credentials.AddSafe (cryptoLabel,cryptoKey);
+            var credential = new JsContactCredential(cryptoKey, serviceType ?? cryptoKey.Kind);
+            Credentials.AddSafe (cryptoLabel, credential);
             }
-
         }
 
 
@@ -92,59 +116,22 @@ public enum CredentialUse {
     }
 
 
-public record JsContactCredential (CryptoKey CryptoKey) {
+public record JsContactCredential (
+                CryptoKey CryptoKey,
+                string Kind) {
 
+    }
+
+public record JsContactGroup {
+    public Dictionary<string, JsContactService> DictionaryServices { get; } = [];
 
     }
 
 
-//public record JsContactEmail (
-//            EmailAddress entry){
-
-//    public string Address => entry.Address;
-
-//    public List<JsContactSmime> Smime { get; } = [];
-//    public List<JsContactOpenPgp> OpenPgp { get; } = [];
-
-//    //public List<JsContactSmime> Smime { get; } = [];
-
-//    //public List<JsContactSmime> Smime { get; } = [];
-//    }
-
-//public record JsContactSmime {
-
-
-//    }
-
-//public record JsContactOpenPgp {
-
-
-//    }
-
-//public record JsContactMesh {
-
-
-//    }
-
-//public record JsContactDeveloper {
-
-
-//    }
-
-//public record JsContactMessaging {
-
-
-//    }
-
-//public record JsContactWeb (
-//            OnlineService service){
-
-
-//    }
-
-
-
 public partial class JsContact {
+
+
+    public Dictionary<string, JsContactGroup> DictionaryGroups { get; } = [];
 
     public Dictionary<string, JsContactService> DictionaryServices { get; } = [];
     public Dictionary<string, JsContactCredential> DictionaryCredential { get; } = [];
@@ -229,15 +216,12 @@ public partial class JsContact {
                 DictionaryServices.Add(key, new JsContactServiceEmail(email.Value));
                 }
             }
-        //foreach (var keyPair in CryptoKeys) {
-        //    var cryptoKey = keyPair.Value;
 
-        //    var credential = new JsContactCredential(cryptoKey);
-
-
-        //    }
 
         foreach (var servicePair in OnlineServices) {
+
+
+
             var serviceTag = servicePair.Value.Service.ToLower();
             var (serviceLabel, keyLabel) = GetLabel(servicePair.Value);
 
@@ -267,12 +251,14 @@ public partial class JsContact {
         //var label = service.Label.ToLower();
 
         switch (serviceTag) {
+            case "ssh":
+            case "http":
             case "mesh": {
                 return (service.Uri, service.Uri);
                 }
             case "smime_encrypt":
             case "smime":
-            case "openpgp_encrypt":
+            case "openpgp_sub":
             case "openpgp": {
                 return (service.User, service.Uri);
                 }
@@ -282,7 +268,7 @@ public partial class JsContact {
 
 
 
-        return ("", null);
+        return (service.User?? service.Uri, service.Uri?? serviceTag);
         }
 
 
