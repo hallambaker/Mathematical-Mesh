@@ -41,6 +41,7 @@ LinkFiles = \
     Test.Mesh.Store.dll\
     Test.NotaryCallsign.dll\
     Test.Protocol.dll\
+    Test.Thing.dll\
     Test.Utilities.dll
 
 ToolTargets = 

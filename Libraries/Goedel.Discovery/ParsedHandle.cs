@@ -268,26 +268,47 @@ public class ParsedHandle {
         return new ParsedHandle(meshService.Dsa);
         }
 
-
-    public static async Task<(byte[], string)> ResolveEarl(string handle) {
+    /// <summary>
+    /// Resolve the JSContact entry for the handle <paramref name="handle"/> and return the 
+    /// plaintext bytes and media type.
+    /// </summary>
+    /// <param name="handle"></param>
+    /// <returns></returns>
+    public static async Task<byte[]> ResolveContact(string handle) {
 
         var contactTxt = await HandleServiceContact.Fetch(handle);
-        var uri = new Uri(contactTxt.Uri);
+
+        return await ResolveEarl(contactTxt.Uri, "jscontact");
+        }
+
+    /// <summary>
+    /// Resolve <paramref name="uriString"/> to obtain the HTTPS well known service, 
+    /// fetch the ciphertext, decrypt and return the result.
+    /// </summary>
+    /// <param name="uriString">The uri to parse.</param>
+    /// <param name="wellKnown">The wellknown service type</param>
+    /// <param name="extension">The file extension (defaults to <paramref name="wellKnown"/>).</param>
+    /// <returns></returns>
+    private static async Task<byte[]> ResolveEarl(
+                    string uriString, 
+                    string wellKnown = null,
+                    string extension = null) {
+
+        extension ??= wellKnown;
+
+        var uri = new Uri(uriString);
+        var host = uri.Host;
         var earl = uri.Segments[^1];
-
-
 
         // Form the .well-known service URI and fetch the result
         var locator = Udf.Locator(earl);
-        var serviceUri = $"https://{uri.Host}/.well-known/jscontact/{locator}.jscontact" ;
+        var serviceUri = $"https://{host}/.well-known/{wellKnown}/{locator}.{extension}";
         var ciphertext = await UriClient.DownloadByteArrayAsync(serviceUri);
         ciphertext.AssertNotNull(NYI.Throw);
 
         // decrypt the cipher text
         var plaintext = Udf.GetDecryptedData(ciphertext, earl);
-
-
-        return (plaintext, "application/jscontact");
+        return (plaintext);
         }
 
 

@@ -90,6 +90,12 @@ public partial class TestService {
         WriteContactFile(contextAccountAlice);
         }
 
+    //// add service configuring the zone "alice.cryptomesh.org"
+    //var applicationDns = CatalogedApplicationService.CreateThing(
+    //        "Home Network", roles, "alicehome.cryptomesh.org", "example.com");
+    //var resultTransact5 = contextAccountAlice.AddApplication(applicationDns, [null]).Sync();
+
+
     [Fact]
     public void TestCredentialAccountApps() {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
@@ -98,36 +104,29 @@ public partial class TestService {
 
         var roles = new List<string> { Rights.IdRolesWeb };
 
-
-
         // add a mail app
-        var applicationMail = CatalogedApplicationMail.Create("alice@example.net", roles);
+        var applicationMail = CatalogedApplicationMail.Create("phill@example.net", roles, "Main email");
         var resultTransact2 = contextAccountAlice.AddApplication(applicationMail, [null]).Sync();
 
+        var applicationWeb = CatalogedApplicationService.CreateWeb(
+                "Web", roles, "https://phill.hallambaker.com/", "Phill's personal page");
+        var resultTransact6 = contextAccountAlice.AddApplication(applicationWeb, [null]).Sync();
+
+        // add an ssh app
+        var applicationSSH = CatalogedApplicationSsh.Create("SSH", roles, "Main SSH key");
+        var resultTransact1 = contextAccountAlice.AddApplication(applicationSSH, [null]).Sync();
+
+        var applicationsignal = CatalogedApplicationService.CreateMessaging(
+                "Signal", roles, "phill_hallambaker_com", "Signal", "Use for confidential stuff");
+        var resultTransact7 = contextAccountAlice.AddApplication(applicationsignal, [null]).Sync();
+
         // add a developer app, this returns a list of applications for ssh, pgp, etc.
-        var applicationDeveloper = CatalogedApplicationDeveloper.Create("alice@example.net", roles);
+        var applicationDeveloper = CatalogedApplicationDeveloper.Create("phill@example.net", 
+            roles, "Open Source Developer Key Set");
         foreach (var app in applicationDeveloper) {
             var resultTransact3 = contextAccountAlice.AddApplication(app, [null]).Sync();
             }
 
-
-        //// add service configuring the zone "alice.cryptomesh.org"
-        //var applicationDns = CatalogedApplicationService.CreateThing(
-        //        "Home Network", roles, "alicehome.cryptomesh.org", "example.com");
-        //var resultTransact5 = contextAccountAlice.AddApplication(applicationDns, [null]).Sync();
-
-
-        var applicationWeb = CatalogedApplicationService.CreateWeb(
-                "Web", roles, "https://phill.hallambaker.com/");
-        var resultTransact6 = contextAccountAlice.AddApplication(applicationWeb, [null]).Sync();
-
-        var applicationsignal = CatalogedApplicationService.CreateMessaging(
-                "Signal", roles, "phill_hallambaker_com", "Signal");
-        var resultTransact7 = contextAccountAlice.AddApplication(applicationsignal, [null]).Sync();
-
-        // add an ssh app
-        var applicationSSH = CatalogedApplicationSsh.Create("SSH", roles);
-        var resultTransact1 = contextAccountAlice.AddApplication(applicationSSH, [null]).Sync();
 
 
         WriteContactFile(contextAccountAlice);
@@ -141,7 +140,7 @@ public partial class TestService {
         var handle = "phill.hallambaker.com";
 
         // pull the contact 
-        var (bytes, content) = ParsedHandle.ResolveEarl(handle).Sync();
+        var bytes = ParsedHandle.ResolveContact(handle).Sync();
 
         // present to screen
         var text = bytes.ToUTF8();
@@ -223,38 +222,42 @@ public partial class TestService {
     bool Analyze(JsContact contact) {
 
         contact.Analyze();
+        var astext = contact.GetJson(false).ToUTF8();
 
 
-        // list the http services
+        //foreach (var servicePair in contact.DictionaryServices) {
+        //    var service = servicePair.Value;
+
+        //    if (service is JsContactServiceEmail serviceEmail) {
+        //        Console.WriteLine($"Email: {serviceEmail.EmailAddress.Address}");
+        //        }
+        //    else {
+        //        Console.WriteLine($"{service.ServiceType} : {service.Label}");
+        //        }
+
+        //    if (service.ServiceType == ServiceType.Messaging) {
+        //        foreach (var online in service.OnlineServices) {
+        //            Console.WriteLine($"    {online.Service}");
+        //            }
+        //        }
+        //    foreach (var account in service.Accounts) {
+        //        Console.WriteLine($"    {account}");
+        //        }
+        //    foreach (var cryptoKey in service.Credentials) {
+        //        Console.WriteLine($"    {cryptoKey.Key}, {cryptoKey.Value.Kind}");
+        //        }
 
 
-        // list the email accounts with security
-        foreach (var servicePair in contact.DictionaryServices) {
-            var service = servicePair.Value;
-
-            if (service is JsContactServiceEmail serviceEmail) {
-                Console.WriteLine($"Email: {serviceEmail.EmailAddress.Address}");
-                }
-            else {
-                Console.WriteLine($"{service.ServiceType} : {service.Label}");
-                }
-
-            if (service.ServiceType == ServiceType.Messaging) {
-                foreach (var online in service.OnlineServices) {
-                    Console.WriteLine($"    {online.Service}");
-                    }
-                }
-            foreach (var account in service.Accounts) {
-                Console.WriteLine($"    {account}");
-                }
-            foreach (var cryptoKey in service.Credentials) {
-                Console.WriteLine($"    {cryptoKey.Key}, {cryptoKey.Value.Kind}");
-                }
+        //    }
 
 
-            }
+
         return true;
         }
+
+
+
+
 
 
     [Theory]

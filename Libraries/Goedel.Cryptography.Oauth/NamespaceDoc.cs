@@ -26,7 +26,7 @@ global using Goedel.Utilities;
 global using Goedel.Discovery;
 //global using Goedel.Serialization;
 global using Goedel.IO;
-global using Goedel.Cryptography.Algorithms;
+global using Goedel.Cryptography.Jose;
 //global using Goedel.Cryptography.Dare;
 global using Goedel.Protocol.Web;
 

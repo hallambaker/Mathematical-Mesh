@@ -26,15 +26,19 @@ namespace Goedel.Mesh.Shell;
 public partial class Shell {
 
 
-
+    ///<inheritdoc/>
     public override ShellResult ChatListen(ChatListen Options) {
         return base.ChatListen(Options);
         }
 
+
+    ///<inheritdoc/>
     public override ShellResult ChatMessage(ChatMessage Options) {
         return base.ChatMessage(Options);
         }
 
+
+    ///<inheritdoc/>
     public override ShellResult ChatPoll(ChatPoll Options) {
         return base.ChatPoll(Options);
         }

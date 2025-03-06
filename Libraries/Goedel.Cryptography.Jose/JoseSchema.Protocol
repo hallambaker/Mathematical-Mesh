@@ -62,6 +62,52 @@
 			Description
 				|Authentication tag
 
+
+
+	Structure JWKS
+		CamelCase
+		Struct JWK Keys 
+			Multiple
+
+	Structure JWK
+		CamelCase
+		String KeyType
+			Tag "kty"
+		String Use 
+			Tag "use"
+		String KeyOps
+			Tag "key_ops"
+		String Alg 
+		String Kid 
+		Binary X5u
+			Tag "x5u"
+		Binary X5T
+			Tag "x5t"
+		Binary X5T256
+			Tag "x5t#S256"
+
+		String Curve
+			Tag "crv"
+		String X 
+		String Y 
+		String D 
+
+
+	Structure JwtHeader
+		String Typ
+			Tag "typ"
+			Description
+				|Another IANA content type parameter
+		String Alg
+			Tag "alg"
+			Description
+				|Key exchange algorithm
+		Struct JWK Jwk
+			Tag "jwk"	
+			Description
+				|JSON Web Key	
+
+
 	Structure Signed
 		Description
 			|Compact representation for signed data
@@ -99,6 +145,11 @@
 			Tag "signature"
 			Description
 				|The signature data
+
+	Structure JsonWebKeys
+		CamelCase
+		Struct KeyCore Keys 
+			Multiple
 
 	Structure KeyCore
 		Description
@@ -227,8 +278,11 @@
 				|Public Key use
 		String Key_ops
 			Tag "key_ops"
+			Multiple
 			Description
 				|Key operations
+
+
 		Binary K
 			Tag "k"
 			Description

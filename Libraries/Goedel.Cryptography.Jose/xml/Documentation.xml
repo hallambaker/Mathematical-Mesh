@@ -1118,6 +1118,230 @@
             <param name="UDF">The fingerprint of the matching key.</param>
             <returns>The recipient record that was matched.</returns>
         </member>
+        <member name="T:Goedel.Cryptography.Jose.JWKS">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWKS.Keys">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWKS._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JWKS._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JWKS._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JWKS._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWKS._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWKS._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWKS._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWKS._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JWKS.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JWKS._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JWKS.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Jose.JWK">
+            <summary>
+            </summary>
+            <summary>
+            JOSE Web Key
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK.KeyType">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK.Use">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK.KeyOps">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK.Alg">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK.Kid">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK.X5u">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK.X5T">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK.X5T256">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK.Curve">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK.X">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK.Y">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK.D">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JWK._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JWK._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JWK._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JWK.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JWK._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JWK.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPair)">
+            <summary>
+            Facotry method returning an instance for the key <paramref name="keyPair"/>
+            </summary>
+            <param name="keyPair">The key to return the JWK for.</param>
+            <returns>The created instance.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Jose.JwtHeader">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwtHeader.Typ">
+             <summary>
+            Another IANA content type parameter
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwtHeader.Alg">
+             <summary>
+            Key exchange algorithm
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwtHeader.Jwk">
+             <summary>
+            JSON Web Key	
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwtHeader._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwtHeader._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwtHeader._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwtHeader._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwtHeader._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwtHeader._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwtHeader._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwtHeader._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwtHeader.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JwtHeader._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JwtHeader.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
         <member name="T:Goedel.Cryptography.Jose.Signed">
              <summary>
             
@@ -1248,6 +1472,59 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Cryptography.Jose.Encrypted.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Jose.JsonWebKeys">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JsonWebKeys.Keys">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JsonWebKeys._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JsonWebKeys._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JsonWebKeys._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JsonWebKeys._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JsonWebKeys._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JsonWebKeys._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JsonWebKeys._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JsonWebKeys._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JsonWebKeys.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JsonWebKeys._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JsonWebKeys.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

@@ -5,6 +5,9 @@
 /// </summary>
 public class CallsignRegistryConfiguration : IConfigurationEntry {
 
+    /// <summary>
+    /// Default constructor, return a new instance.
+    /// </summary>
     public CallsignRegistryConfiguration () {
         Initialization.Initialized.AssertTrue(NYI.Throw);
         }

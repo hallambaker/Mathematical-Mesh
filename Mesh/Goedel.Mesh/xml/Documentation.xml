@@ -1214,7 +1214,7 @@
         <member name="M:Goedel.Mesh.CatalogedApplicationMail.GetEscrow">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationMail.Create(System.String,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail.Create(System.String,System.Collections.Generic.List{System.String},System.String)">
             <summary>
             Create a new mail application instance.
             </summary>
@@ -1520,7 +1520,7 @@
         <member name="P:Goedel.Mesh.CatalogedApplicationSsh.ClientKeyPrivate">
             <summary>The privatge client key</summary> 
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.Create(System.String,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.CatalogedApplicationSsh.Create(System.String,System.Collections.Generic.List{System.String},System.String)">
             <summary>
             Create a new catalog entry for a set of client authentication keys.
             </summary>
@@ -5569,6 +5569,27 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.CredentialProfileOpenPgp.Platform">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfileCommit.Platform">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfilePkix.Platform">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfileWindows.Platform">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfileApple.Platform">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfileAndroid.Platform">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfileLinux.Platform">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Mesh.DevicePreconfiguration">
             <summary>
             
@@ -6788,14 +6809,13 @@
             <param name="tagBase">The base from which a unique tag is to be formed</param>
             <param name="value">The value to add.</param>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.AddMesh(Goedel.Contacts.JsContact,Goedel.Mesh.ProfileAccount,System.String)">
+        <member name="M:Goedel.Mesh.Extensions.AddMesh(Goedel.Contacts.JsContact,Goedel.Mesh.ProfileAccount)">
             <summary>
             Add the Mesh profilr <paramref name="profile"/>to the contact
             <paramref name="contact"/> under the service type <paramref name="serviceId"/>.
             </summary>
             <param name="contact">The contact to add the profile to.</param>
             <param name="profile">The profile to add.</param>
-            <param name="serviceId">The Sevice type.</param>
         </member>
         <member name="M:Goedel.Mesh.Extensions.AddApplication(Goedel.Contacts.JsContact,Goedel.Mesh.CatalogedApplication)">
             <summary>
@@ -6846,15 +6866,6 @@
             <param name="contact">The contact to add the application details to.</param>
             <param name="application">The application to add.</param>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.AddServices(Goedel.Contacts.JsContact,System.String,System.String,System.Collections.Generic.List{System.String},System.String)">
-            <summary>
-            Add the key <paramref name="keyData"/> to the contact <paramref name="contact"/>.
-            </summary>
-            <param name="contact">The contact to add the key to.</param>
-            <param name="serviceId">The Sevice type.</param>
-            <param name="accountAddress">The account address to specify.</param>
-            <param name="key">Uri identifiers of the keys to add.</param>
-        </member>
         <member name="M:Goedel.Mesh.Extensions.AddService(Goedel.Contacts.JsContact,System.String,System.String,System.String,System.String)">
             <summary>
             Add the key <paramref name="keyData"/> to the contact <paramref name="contact"/>.
@@ -6862,6 +6873,11 @@
             <param name="contact">The contact to add the key to.</param>
             <param name="serviceId">The Sevice type.</param>
             <param name="accountAddress">The account address to specify.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.AddServiceKeyData(Goedel.Contacts.JsContact,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String,System.String,System.String)">
+            <summary>
+            Add the key <paramref name="keyData"/> to the contact <paramref name="contact"/>.
+            </summary>
         </member>
         <member name="M:Goedel.Mesh.Extensions.AddKeyData(Goedel.Contacts.JsContact,Goedel.Mesh.KeyData,System.String,System.String,System.Collections.Generic.List{System.String})">
             <summary>

@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Data;
 using System.Runtime.CompilerServices;
 using System.Web;
 
@@ -112,12 +113,27 @@ public static partial class WebExtensions {
 
         }
 
+    /// <summary>
+    /// Parse the query component of <paramref name="uri"/> and return an instance of 
+    /// <typeparamref name="T"/> with the properties fields populated using the resulting
+    /// dictionary values.
+    /// </summary>
+    /// <typeparam name="T">The type of object to return.</typeparam>
+    /// <param name="uri">The URI to parse.</param>
+    /// <returns>The instance created.</returns>
     public static T FromUrlQuery<T>  (Uri uri) where T : JsonObject, new() {
         var result = new T();
         result.FillFromUrlQuery(uri);
         return result;
         }
 
+    /// <summary>
+    /// Parse the query component of <paramref name="uri"/> and fill the object 
+    /// <paramref name="data"/> with the properties fields populated using the resulting
+    /// dictionary values.
+    /// </summary>
+    /// <param name="data">The object toi populate.</param>
+    /// <param name="uri">The URI to parse.</param>
 
     public static void FillFromUrlQuery(
             this JsonObject data,
@@ -134,10 +150,7 @@ public static partial class WebExtensions {
                     propertyString.Set (data, value);
                     break;
                     }
-
-
                 }
-
             }
         }
 

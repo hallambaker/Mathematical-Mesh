@@ -159,6 +159,7 @@ public class AnythingCa {
     /// Create a new private end entity certificate
     /// </summary>
     /// <param name="key">The signature key.</param>
+    /// <param name="thing">The device that the certificate is to be issued to.</param>
     public X509Certificate2 CreateEndEntity(CatalogedThing thing, ECDsa key = null) {
         var commonName = Identity.GetPrivateName();
 
@@ -217,6 +218,7 @@ public class AnythingCa {
                 X509KeyUsageFlags.KeyCertSign, true),
             CertificateType.EndEntity => new X509KeyUsageExtension(
                 X509KeyUsageFlags.DigitalSignature, true),
+            _ => throw new NYI()
             };
         request.CertificateExtensions.Add(keyUsage);
 

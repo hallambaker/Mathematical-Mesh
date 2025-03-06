@@ -33,19 +33,27 @@ using System.Net;
 namespace Goedel.Mesh;
 
 
-public partial class ApplicationService {
-    }
 
 public partial class CatalogedApplicationService {
 
+    ///<inheritdoc/>
     public override string _PrimaryKey => Key;
 
-
+    /// <summary>
+    /// Create a catalogged service entry for Thing service.
+    /// </summary>
+    /// <param name="localName">The local name</param>
+    /// <param name="roles">The roles to which the application is granted.</param>
+    /// <param name="zone">The zone under control</param>
+    /// <param name="admin">The service administration address</param>
+    /// <param name="description">Description of the account.</param>
+    /// <returns>The application</returns>
     public static CatalogedApplicationService CreateThing(
                 string localName, 
                 List<string> roles,
                 string zone,
-                string service) {
+                string admin,
+                string description = null) {
 
 
         return new CatalogedApplicationService() {
@@ -54,14 +62,24 @@ public partial class CatalogedApplicationService {
             Grant = roles,
             Protocol = "thing",
             Address = zone,
-            AdministrationAddress = service
+            AdministrationAddress = admin,
+            Description = description
             };
         }
 
+    /// <summary>
+    /// Create a catalogged service entry for Web service.
+    /// </summary>
+    /// <param name="localName">The local name</param>
+    /// <param name="roles">The roles to which the application is granted.</param>
+    /// <param name="address">The Web address</param>
+    /// <param name="description">Description of the account.</param>
+    /// <returns>The application</returns>
     public static CatalogedApplicationService CreateWeb(
                 string localName, 
                 List<string> roles,
-                string address) {
+                string address,
+                string description = null) {
 
 
         return new CatalogedApplicationService() {
@@ -69,16 +87,26 @@ public partial class CatalogedApplicationService {
             LocalName = localName,
             Grant = roles,
             Protocol = "http",
-            Address = address
+            Address = address,
+            Description = description
             };
         }
 
-
+    /// <summary>
+    /// Create a catalogged service entry for Messaging service.
+    /// </summary>
+    /// <param name="localName">The local name</param>
+    /// <param name="roles">The roles to which the application is granted.</param>
+    /// <param name="address">The Web address</param>
+    /// <param name="protocol">The messaging protocol.</param>
+    /// <param name="description">Description of the account.</param>
+    /// <returns>The application</returns>
     public static CatalogedApplicationService CreateMessaging(
                 string localName,
                 List<string> roles,
                 string address,
-                string protocol) {
+                string protocol,
+                string description = null) {
 
 
         return new CatalogedApplicationService() {
@@ -86,7 +114,8 @@ public partial class CatalogedApplicationService {
             LocalName = localName,
             Grant = roles,
             Protocol = protocol,
-            Address = address
+            Address = address,
+            Description = description
             };
         }
 

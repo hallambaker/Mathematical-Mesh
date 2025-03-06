@@ -28,6 +28,8 @@ using Certes.Acme;
 using Certes;
 using System;
 using System.Linq;
+using Goedel.Thing;
+using Org.BouncyCastle.Bcpg;
 namespace Goedel.XUnit;
 
 public class Acme {
@@ -35,7 +37,130 @@ public class Acme {
 
     public string AcmeAccountAddress = "admin@hallambaker.com";
     public string DeviceDns = "camera1.cryptomesh.org";
+
+    public string AliceDns = "alice.cryptomesh.org";
+    public string AliceHomeDns = "alicehome.cryptomesh.org";
     public string DeviceIp = "192.168.1.21";
+
+    static string Zone => "cryptomesh.org";
+    static string MintUri(string zone) => $"udf://{zone}/{Udf.Nonce()}";
+
+
+     [Fact]
+    public async Task TestJsDevice() {
+        //var bytes = "e9fb9e3b8254041333e89333a78beca9a557d1a6cf2b045420087dc9ec15dd1d2abfa588c46972e95e131f65cbde659aa9b2984914d75a5a00".FromBase16();
+        //var base64 = bytes.ToStringBase64url();
+        //var base32 = bytes.ToStringBase32(format:ConversionFormat.Dash4);
+
+
+        var device = MakeJsDevice(Zone);
+        var address = IPAddress.Parse(DeviceIp);
+
+        // so pretend we retrieved that from a jsdevice uri
+
+        var thingService = new ServiceThingDispatch();
+
+        var deviceDomain = thingService.GetName(AliceHomeDns, device.NameHint);
+        var configTask = thingService.NewDevice(
+                    DeviceDns, [address], [
+                        new(WellKnownService.HTTPS),
+                        new(WellKnownService.SSH)]);
+
+        while (!configTask.IsCompleted) {
+            await Task.Delay(configTask.RetryMs);
+            }
+
+
+
+        }
+
+
+
+
+
+    static JsDevice MakeJsDevice(string zone) {
+
+        var imageFront = new DeviceImage() {
+            MediaType = "image/png",
+            Uri = MintUri(zone),
+            View = "front"
+
+            };
+        var imageRear = new DeviceImage() {
+            MediaType = "image/png",
+            Uri = MintUri(zone),
+            View = "rear"
+            };
+
+        var offered = new List<Service>() {
+            new () {
+                Name = "https",
+                Requires = ["anything"],
+                Transports = ["TLS", "QUIC"]
+                },
+            new () {
+                Name = "ssh",
+                },
+            new () {
+                Name = "thing",
+                Credentials = [
+                    new () {
+                        MediaType= "application/jwks",
+                        Uri = MintUri(zone)
+                        }
+                    ]
+                }
+            };
+
+        var used = new List<Service>() {
+            new () {
+                Name = "anything",
+                Transports = ["TLS", "QUIC"]
+                },
+            };
+
+        var wifi = new Physical() {
+            Name = "IEEE 802.11",
+            Profiles = ["b", "a", "g", "n", "ac", "ax"]
+            };
+
+        var ethernet = new Physical() {
+            Name = "IEEE 802.3",
+            Profiles = ["10BASE-T", "100BASE-T", "1000BASE-T",]
+            };
+
+        var storage = new List<Storage>() {
+            new() {
+                Purpose = "Surveillance",
+                TypicalUse = 50_000_000
+                },
+            new () {
+                Purpose = "Archive",
+                TypicalAnnual = 200_000_000
+                }
+            };
+
+        var device = new JsDevice() {
+            ModelName = "FredCam",
+            NameHint = "camera",
+            ModelSerial = "Fred001",
+            DeviceSerial = "0100021",
+            DeviceIdentifier = Udf.Nonce(),
+            Manufacturer = "Freddly Manufacturing Co. Ltd.",
+            CountryOfOrigin = "UK",
+            Manufactured = DateTime.Now,
+            OfferedServices = offered,
+            UsedServices = used,
+            Images = [imageFront, imageRear],
+            Physical = [wifi, ethernet]
+            };
+        var asText = device.GetJson(false).ToUTF8();
+
+        return device;
+        }
+
+
+
 
 
     [Fact]
@@ -43,7 +168,7 @@ public class Acme {
 
         var thingService = new ServiceThingDispatch();
         var configTask = thingService.NewDevice(
-                    DeviceDns, [
+                    DeviceDns,[], [
                         new(WellKnownService.HTTPS), 
                         new(WellKnownService.SSH)]);
 

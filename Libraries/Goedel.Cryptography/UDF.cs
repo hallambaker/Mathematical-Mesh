@@ -834,7 +834,11 @@ public record Udf(
     public static string EncryptionKey(byte[] data) =>
         SymmetricKey(UdfTypeIdentifier.Encryption_HKDF_AES_256, data);
 
-
+    /// <summary>
+    /// Create an EARL from the data <paramref name="data"/>
+    /// </summary>
+    /// <param name="data">The data to analyze.</param>
+    /// <returns>The EARL locator.</returns>
     public static (string, string, byte[]) CreateEarl(byte[] data) {
         var earl = AuthenticatedEncryptionKey(data);
         var locator = Locator(earl);
@@ -843,12 +847,23 @@ public record Udf(
         return (earl, locator, encrypted);
         }
 
+    /// <summary>
+    /// Obrain the Authenticated encryption key for <paramref name="data"/>
+    /// </summary>
+    /// <param name="data">The data to analyze.</param>
+    /// <param name="bits">The number of bits precision to specify in the output.</param>
+    /// <returns>The key as a Base32 fingerprint.</returns>
     public static string AuthenticatedEncryptionKey(byte[] data, int bits = 0) {
         var digest = SHAKE256.HashData(data);
 
-        return AuthenticatedEncryptionKeyDigest(digest, bits).ToLower();
+        return AuthenticatedEncryptionKeyDigest(digest, bits);
         }
 
+    /// <summary>
+    /// Create the locator path for the EARL <paramref name="earl"/>
+    /// </summary>
+    /// <param name="earl">The EARL to construct the locator path for.</param>
+    /// <returns>The locator.</returns>
     public static string Locator(string earl) {
         var source = earl.FromBase32();
         var bits = source.Length * 16;
@@ -857,22 +872,42 @@ public record Udf(
         return PresentationBase32(buffer, bits).ToLower();
         }
 
+    /// <summary>
+    /// Truncate the digest value <paramref name="digest"/> to <paramref name="bits"/> and return the
+    /// presentation form.
+    /// </summary>
+    /// <param name="digest">The digest value to present</param>
+    /// <param name="bits">The number of bits if outpur to provide.</param>
+    /// <returns>The presentation string.</returns>
     public static string AuthenticatedEncryptionKeyDigest(byte[] digest, int bits = 0) {
         bits = bits < 128 ? 128 : bits;
 
         var truncated = digest[..(bits/8)];
         Console.WriteLine($"Digest: {digest.ToStringBase16FormatHex()}");
         Console.WriteLine($"Trunc: {truncated.ToStringBase16FormatHex()}  {UdfTypeIdentifier.AuthenticatedEncryption_SHA3_AES_256}");
-        return SymmetricKey(UdfTypeIdentifier.AuthenticatedEncryption_SHA3_AES_256, truncated);
+        return SymmetricKey(UdfTypeIdentifier.AuthenticatedEncryption_SHA3_AES_256, truncated).ToLower();
         }
 
+    /// <summary>
+    /// Obtain the 256 bit AES encryption key and 96 bit nonce from the key <paramref name="udf"/>.
+    /// </summary>
+    /// <param name="udf">The key in presentation format.</param>
+    /// <returns>The encryption key.</returns>
     public static byte[] GetEncryptionKey(string udf) {
         var bytes = udf.ToLower().ToUTF8();
         var key = SHAKE256.HashData(bytes, KeyLength256 + AesNonceLength);
-        //var iv = SHAKE256.HashData(key, 96);
         return key;
         }
 
+    /// <summary>
+    /// Encrypt the plaintext <paramref name="plaintext"/> under the key path
+    /// <paramref name="earl"/> and return the result with the ciphertext bytes
+    /// followed by the tag.
+    /// </summary>
+    /// <param name="plaintext">The plaintext to encrypt.</param>
+    /// <param name="earl">The key in presentation form.</param>
+    /// <returns>The encrypted data package consisting of the ciphertext followed
+    /// by the tag.</returns>
     public static byte[] GetEncryptedData(byte[] plaintext, string earl) {
 
         var keyIv = GetEncryptionKey(earl);
@@ -892,6 +927,16 @@ public record Udf(
         return result;
         }
 
+
+    /// <summary>
+    /// Decrypt the encrypted data package <paramref name="ciphertextTag"/> using
+    /// the key <paramref name="earl"/>, verify the tag is correct and return the
+    /// plaintext.
+    /// </summary>
+    /// <param name="ciphertextTag">The encrypted data package consisting of the ciphertext followed
+    /// by the tag.</param>
+    /// <param name="earl">The key in presentation form.</param>
+    /// <returns>The plaintext.</returns>
     public static byte[] GetDecryptedData(byte[] ciphertextTag, string earl) {
         var keyIv = GetEncryptionKey(earl);
 

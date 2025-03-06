@@ -649,48 +649,7 @@ public partial class PersonName {
 
         }
 
-    ///<summary>Set the full name.</summary>
-    //public void SetFullName() {
 
-    //    var builder = new StringBuilder();
-
-    //    SpaceAfter(builder, Prefix);
-    //    SpaceAfter(builder, First);
-    //    if (Middle != null) {
-    //        foreach (var middle in Middle) {
-    //            SpaceAfter(builder, middle);
-    //            }
-    //        }
-    //    Unspaced(builder, Last);
-    //    SpaceBefore(builder, Suffix);
-    //    SpaceBefore(builder, PostNominal);
-
-    //    FullName = builder.ToString();
-    //    }
-
-    //static void Unspaced(StringBuilder builder, string value) {
-    //    if (value != null) {
-    //        builder.Append(value);
-    //        }
-
-    //    }
-
-    //static void SpaceAfter(StringBuilder builder, string value) {
-    //    if (value != null) {
-    //        builder.Append(value);
-    //        builder.Append(' ');
-    //        }
-
-    //    }
-
-    //static void SpaceBefore(StringBuilder builder, string value) {
-    //    if (value != null) {
-    //        builder.Append(' ');
-    //        builder.Append(value);
-
-    //        }
-
-    //    }
     }
 
 /// <summary>
@@ -703,11 +662,9 @@ public class NetworkProtocolEntry {
     public CatalogedContact CatalogedContact { get; }
 
 
-
+    ///<summary>The address</summary> 
     public string Address => throw new NYI();
 
-    /////<summary>The network address entry.</summary>
-    //public NetworkAddress NetworkAddress { get; }
 
 
     ///<summary>The encryption key to use for this contact.</summary>

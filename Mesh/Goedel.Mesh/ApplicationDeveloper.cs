@@ -31,8 +31,6 @@
 namespace Goedel.Mesh;
 
 
-public partial class ApplicationDeveloper {
-    }
 
 public partial class CatalogedApplicationDeveloper {
 
@@ -41,8 +39,14 @@ public partial class CatalogedApplicationDeveloper {
     /// </summary>
     public override string _PrimaryKey => Key;
 
-
-    public static List<CatalogedApplication> Create(string localName, List<string> roles) {
+    /// <summary>
+    /// Create a new Developer application instance.
+    /// </summary>
+    /// <param name="localName">The local name</param>
+    /// <param name="roles">The roles to which the application is granted.</param>
+    /// <param name="description">Description of the account.</param>
+    /// <returns>The application</returns>
+    public static List<CatalogedApplication> Create(string localName, List<string> roles, string description = null) {
 
         // create a root code signing cert
         var rootCertCode = CatalogedApplicationCredential.Create(
@@ -74,7 +78,8 @@ public partial class CatalogedApplicationDeveloper {
             Commit = [rootCertCommit._PrimaryKey, signingCertCommit._PrimaryKey],
             Code = [rootCertCode._PrimaryKey, signingCertCode1._PrimaryKey,
                 signingCertCode2._PrimaryKey, signingCertCode3._PrimaryKey,
-                signingCertCode4._PrimaryKey]
+                signingCertCode4._PrimaryKey],
+            Description = description
             };
 
         List<CatalogedApplication> result = [

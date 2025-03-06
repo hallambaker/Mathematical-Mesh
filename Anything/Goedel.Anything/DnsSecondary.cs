@@ -159,6 +159,7 @@ public class DnsSecondary {
     /// <param name="address">The address to return the record for.</param>
     /// <returns>The record.</returns>
     /// <exception cref="NotImplementedException">The address type is not supported.</exception>
+    /// <param name="domain">Domain to fetch the record for.</param>
     public DNSRecord GetRecord(Domain domain, IPAddress address) =>
         address.AddressFamily switch {
             AddressFamily.InterNetwork => new DNSRecord_A() {

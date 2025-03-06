@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/26/2025 7:41:32 PM
+//  This file was automatically generated at 3/6/2025 4:59:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1652,6 +1652,11 @@ public partial class EmailAddress : Contacts {
 
 	public virtual string?					Label  {get; set;}
 
+        /// <summary>
+        /// The groups that the email address is a member of 
+        /// </summary>
+
+	public virtual List<string>?					Groups  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -1670,7 +1675,9 @@ public partial class EmailAddress : Contacts {
 			{ "pref", new PropertyInteger32 ("pref", 
 					(IBinding data, int? value) => {(data as EmailAddress).Pref = value;}, (IBinding data) => (data as EmailAddress).Pref )},
 			{ "label", new PropertyString ("label", 
-					(IBinding data, string? value) => {(data as EmailAddress).Label = value;}, (IBinding data) => (data as EmailAddress).Label )}
+					(IBinding data, string? value) => {(data as EmailAddress).Label = value;}, (IBinding data) => (data as EmailAddress).Label )},
+			{ "groups", new PropertyListString ("groups", 
+					(IBinding data, List<string>? value) => {(data as EmailAddress).Groups = value;}, (IBinding data) => (data as EmailAddress).Groups )}
         }, __Tag,() => new EmailAddress(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1781,6 +1788,11 @@ public partial class OnlineService : Contacts {
 
 	public virtual string?					Label  {get; set;}
 
+        /// <summary>
+        /// The groups that the service is a member of 
+        /// </summary>
+
+	public virtual List<string>?					Groups  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -1803,7 +1815,9 @@ public partial class OnlineService : Contacts {
 			{ "pref", new PropertyInteger32 ("pref", 
 					(IBinding data, int? value) => {(data as OnlineService).Pref = value;}, (IBinding data) => (data as OnlineService).Pref )},
 			{ "label", new PropertyString ("label", 
-					(IBinding data, string? value) => {(data as OnlineService).Label = value;}, (IBinding data) => (data as OnlineService).Label )}
+					(IBinding data, string? value) => {(data as OnlineService).Label = value;}, (IBinding data) => (data as OnlineService).Label )},
+			{ "groups", new PropertyListString ("groups", 
+					(IBinding data, List<string>? value) => {(data as OnlineService).Groups = value;}, (IBinding data) => (data as OnlineService).Groups )}
         }, __Tag,() => new OnlineService(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

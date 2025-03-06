@@ -79,12 +79,13 @@ public partial class CatalogedApplicationSsh {
     #region // Constructors and factories
 
     /// <summary>
-    /// Create a new catalog entry for a set of client authentication keys.
+    /// Create a new SSH application instance.
     /// </summary>
-    /// <param name="localName">The local name.</param>
-    /// <param name="roles">The roles to which the key is to be granted.</param>
-    /// <returns></returns>
-    public static CatalogedApplicationSsh Create(string localName, List<string> roles) {
+    /// <param name="localName">The local name</param>
+    /// <param name="roles">The roles to which the application is granted.</param>
+    /// <param name="description">Description of the account.</param>
+    /// <returns>The application</returns>
+    public static CatalogedApplicationSsh Create(string localName, List<string> roles, string description=null) {
         // generate an RSA client key here.
         var clientKey = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
                 KeySecurity.Exportable, keySize: 2048);
@@ -95,7 +96,8 @@ public partial class CatalogedApplicationSsh {
             LocalName = localName,
             Grant = roles,
             ClientKeyPrivate = clientKey,
-            ClientKey = new KeyData(clientKey)
+            ClientKey = new KeyData(clientKey),
+            Description = description
             };
 
         return applicationSSH;

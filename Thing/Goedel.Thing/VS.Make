@@ -26,8 +26,12 @@ LinkFiles = \
     Goedel.Mesh.dll
 
 ToolTargets = \
+	JSDevice.cs\
 	thing.cs\
 	Exceptions.cs
+JSDevice.cs : JSDevice.protocol 
+	protogen JSDevice.protocol  /cs  JSDevice.cs
+
 thing.cs : thing.protocol 
 	protogen thing.protocol  /cs  thing.cs
 

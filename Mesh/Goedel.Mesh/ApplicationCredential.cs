@@ -31,14 +31,20 @@
 namespace Goedel.Mesh;
 
 
-public partial class ApplicationCredential {
-    }
 
 public partial class CatalogedApplicationCredential {
 
+    ///<summary>The primary keypair.</summary> 
     public KeyPair PrimaryPrivate { get; set; }
 
-
+    /// <summary>
+    /// Create a credential
+    /// </summary>
+    /// <param name="localName">Local Name</param>
+    /// <param name="roles">Assigned roles</param>
+    /// <param name="credentialProfile">Profile</param>
+    /// <param name="parent">Parent credential, used in CA operations.</param>
+    /// <returns>The credential</returns>
     public static CatalogedApplicationCredential Create(
                         string localName, 
                         List<string> roles,
@@ -52,9 +58,10 @@ public partial class CatalogedApplicationCredential {
             Key = clientKey.KeyIdentifier,
             LocalName = localName,
             Grant = roles,
-            Kind = "Credential",
+            Kind = credentialProfile.Platform,
             PrimaryPrivate = clientKey,
-            Primary = new KeyData(clientKey)
+            Primary = new KeyData(clientKey),
+            Description = $"Code Sign for {credentialProfile.Platform}"
             };
 
         return result;

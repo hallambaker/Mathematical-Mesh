@@ -20,7 +20,10 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.ASN.dll\
     Goedel.Utilities.dll\
-    Goedel.Test.Core.dll
+    Goedel.Test.Core.dll\
+    Certes.dll\
+    Goedel.Thing.Server.dll\
+    Goedel.Thing.dll
 
 ToolTargets = 
 
@@ -38,5 +41,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Test.ASN1.dll
+	powershell publishtarget Test.Thing.dll
 

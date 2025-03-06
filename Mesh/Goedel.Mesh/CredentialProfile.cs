@@ -37,6 +37,8 @@ public record CredentialProfile (
             int keySize = 0
             ) {
 
+    public virtual string Platform => "Any";
+
     public static CredentialProfilePkix Code = new CredentialProfilePkix(
             CryptoAlgorithmId.P384, KeyUses.Sign);
     public static CredentialProfileWindows Windows = new CredentialProfileWindows(
@@ -57,6 +59,9 @@ public record CredentialProfileOpenPgp(
             KeyUses KeyUses = KeyUses.Sign,
             int keySize = 0
             ) : CredentialProfile (AlgorithmId, KeyUses, keySize) {
+
+    ///<inheritdoc/>
+    public override string Platform => "OpenPGP";
     }
 
 public record CredentialProfileCommit(
@@ -64,6 +69,9 @@ public record CredentialProfileCommit(
             KeyUses KeyUses = KeyUses.Sign,
             int keySize = 0
             ) : CredentialProfileOpenPgp(AlgorithmId, KeyUses, keySize) {
+
+    ///<inheritdoc/>
+    public override string Platform => "Commit";
     }
 
 public record CredentialProfilePkix(
@@ -71,6 +79,9 @@ public record CredentialProfilePkix(
             KeyUses KeyUses = KeyUses.Sign,
             int keySize = 0
             ) : CredentialProfile(AlgorithmId, KeyUses, keySize) {
+
+    ///<inheritdoc/>
+    public override string Platform => "Pkix";
     }
 
 public record CredentialProfileWindows(
@@ -78,6 +89,9 @@ public record CredentialProfileWindows(
             KeyUses KeyUses = KeyUses.Sign,
             int keySize = 0
             ) : CredentialProfilePkix(AlgorithmId, KeyUses, keySize) {
+
+    ///<inheritdoc/>
+    public override string Platform => "Windows";
     }
 
 public record CredentialProfileApple(
@@ -85,6 +99,9 @@ public record CredentialProfileApple(
             KeyUses KeyUses = KeyUses.Sign,
             int keySize = 0
             ) : CredentialProfilePkix(AlgorithmId, KeyUses, keySize) {
+
+    ///<inheritdoc/>
+    public override string Platform => "Apple";
     }
 
 public record CredentialProfileAndroid(
@@ -92,6 +109,9 @@ public record CredentialProfileAndroid(
             KeyUses KeyUses = KeyUses.Sign,
             int keySize = 0
             ) : CredentialProfilePkix(AlgorithmId, KeyUses, keySize) {
+
+    ///<inheritdoc/>
+    public override string Platform => "Android";
     }
 
 public record CredentialProfileLinux(
@@ -99,4 +119,7 @@ public record CredentialProfileLinux(
             KeyUses KeyUses = KeyUses.Sign,
             int keySize = 0
             ) : CredentialProfilePkix(AlgorithmId, KeyUses, keySize) {
+
+    ///<inheritdoc/>
+    public override string Platform => "Linux";
     }

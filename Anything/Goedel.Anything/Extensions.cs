@@ -9,7 +9,11 @@ namespace Goedel.Anything;
 public static class Helper {
 
 
-
+    /// <summary>
+    /// Return the DER encoding of the names <paramref name="dnsNames"/>
+    /// </summary>
+    /// <param name="dnsNames">List of DNS names to encode.</param>
+    /// <returns>The DER encoding.</returns>
     public static byte[] GetSubjectAltNameDer(
                 IEnumerable<string> dnsNames) {
 

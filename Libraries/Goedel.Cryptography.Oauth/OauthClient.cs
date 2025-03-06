@@ -118,7 +118,6 @@ public class OauthClient {
         handle = TrimHandle(handle);
         handle.AssertNotNull(NYI.Throw);
         return await SessionManager.TryResolveHandle(handle);
-
         }
 
 
@@ -130,7 +129,6 @@ public class OauthClient {
     /// <param name="state">State to be preserved between pre request
     /// and completion.</param>
     /// <returns>A client result.</returns>
-    /// <param name="handle">The ATprotocol handle.</param>
     public async Task<OauthClientResult> PreRequest(
             string handle,
             string state) {
@@ -347,7 +345,7 @@ public record OauthClientResultAuthRequest : OauthClientResult {
     ///challenge.</summary> 
     public byte[]? Nonce { get; init; } = null;
 
-
+    ///<summary>Value of the code field.</summary> 
     public string? Code { get; init; } = null;
 
     }

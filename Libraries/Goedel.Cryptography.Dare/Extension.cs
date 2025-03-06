@@ -29,7 +29,12 @@ namespace Goedel.Cryptography.Dare;
 /// </summary>
 public static partial class Extension {
 
-
+    /// <summary>
+    /// Serialize <paramref name="jsonObject"/> as JSON and return the result as a 
+    /// data: URI.
+    /// </summary>
+    /// <param name="jsonObject">The object to serialize.</param>
+    /// <returns>The constructed URI.</returns>
     public static string DataUri(this JsonObject jsonObject) {
 
         var enveloped = jsonObject.Enveloped as DareEnvelope;
@@ -76,8 +81,10 @@ public static partial class Extension {
 
 
     /// <summary>
-    /// Sign the profile under <paramref name="signingKeys"/>.
+    /// Sign and encrypt the object <paramref name="jsonObject"/> under 
+    /// <paramref name="signingKeys"/> and <paramref name="encryptionKeys"/>.
     /// </summary>
+    /// <param name="jsonObject">The object to sign.</param>
     /// <param name="signingKeys">Optional list of signature keys.</param>
     /// <param name="encryptionKeys">Optional list of encryption keys.</param>
     /// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
@@ -101,13 +108,12 @@ public static partial class Extension {
 
 
     /// <summary>
-    /// Sign the profile under <paramref name="signingKeys"/>.
+    /// Sign and encrypt the object <paramref name="jsonObject"/> under 
+    /// <paramref name="cryptoParameters"/>.
     /// </summary>
-    /// <param name="signingKeys">Optional list of signature keys.</param>
-    /// <param name="encryptionKeys">Optional list of encryption keys.</param>
+    ///  <param name="jsonObject">The object to sign.</param>
+    /// <param name="cryptoParameters">The cryptographic parameters.</param>
     /// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
-    /// <param name="includeSignatureKey">If true include the public key parameters in the
-    /// signature.</param>
     /// <returns>Envelope containing the signed profile. Also updates the property
     /// <see cref="DareEnvelope"/></returns>
     public static DareEnvelope Envelope(

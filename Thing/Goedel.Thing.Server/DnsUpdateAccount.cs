@@ -48,12 +48,27 @@ public record ServiceDescription(
     }
 
 
+
+
 public class ServiceThingDispatch() {
 
+    public string GetName(
+                    string zone,
+                    string baseName) => (baseName ?? "iot") + "1." + zone;
 
     public ServiceThingTask NewDevice(
                     string domain, 
+                    List<IPAddress> addresses,
                     IEnumerable<ServiceDescription> services) {
+
+        // Delete the A and AAAA records for the zone (if they exist)
+
+        // Create the A/AAAA records for the zone
+
+
+
+        // Add the service entries.
+
 
         return new ServiceThingTask() {
 

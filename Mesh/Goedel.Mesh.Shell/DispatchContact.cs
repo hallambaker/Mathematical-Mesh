@@ -27,6 +27,11 @@ namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
 
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
     public override ShellResult ContactSelf(ContactSelf options) {
 
         var contextUser = GetContextUser(options);
@@ -59,7 +64,11 @@ public partial class Shell {
             };
         }
 
-
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
     public override ShellResult ContactQuery(ContactQuery options) {
 
         var address = options.Address.Value;
@@ -95,18 +104,23 @@ public partial class Shell {
             };
         }
 
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
     public override ShellResult ContactAdd(ContactAdd options) {
         return base.ContactAdd(options);
         }
 
 
 
-/// <summary>
-/// Dispatch method
-/// </summary>
-/// <param name="options">The command line options.</param>
-/// <returns>Mesh result instance</returns>
-public override ShellResult ContactStatic(ContactStatic options) {
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult ContactStatic(ContactStatic options) {
         var contextUser = GetContextUser(options);
 
         var uri = contextUser.ContactUri(false, null).Sync();

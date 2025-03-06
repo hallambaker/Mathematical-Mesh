@@ -8,7 +8,7 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Oauth.ClientMetadata.FactoryAtproto(System.String,System.Collections.Generic.List{System.String},Goedel.Cryptography.Oauth.ScopeTypes,System.Boolean,Goedel.Cryptography.Oauth.JWKS)">
+        <member name="M:Goedel.Cryptography.Oauth.ClientMetadata.FactoryAtproto(System.String,System.Collections.Generic.List{System.String},Goedel.Cryptography.Oauth.ScopeTypes,System.Boolean,Goedel.Cryptography.Jose.JWKS)">
             <summary>
             Return a ClientMetadata instance for an ATprotocol client with the
             specified parameters.
@@ -347,93 +347,6 @@
             Initialization routine for cryptographic functions on the dotNet Core platform.
             </summary>
         </member>
-        <member name="T:Goedel.Cryptography.Oauth.JWK">
-            <summary>
-            JOSE Web Key
-            </summary>
-            <summary>
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Oauth.JWK.Factory(Goedel.Cryptography.KeyPair)">
-            <summary>
-            Facotry method returning an instance for the key <paramref name="keyPair"/>
-            </summary>
-            <param name="keyPair">The key to return the JWK for.</param>
-            <returns>The created instance.</returns>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWK.Kid">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWK.KeyType">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWK.Use">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWK.Curve">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWK.X">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWK.Y">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWK.D">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWK._Binding">
-            <summary>Implement IBinding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.JWK._binding">
-            <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.JWK._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.JWK._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWK._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWK._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWK._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWK._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.JWK.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Oauth.JWK._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Oauth.JWK.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Cryptography.Oauth.NamespaceDoc">
             <summary>
             Support classes for OAuth, OpenID etc.
@@ -459,7 +372,7 @@
         <member name="P:Goedel.Cryptography.Oauth.OauthClient.EncryptedTokenManager">
             <summary>Encrypted state token manager.</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Oauth.OauthClient.#ctor(System.String,System.String,Goedel.Cryptography.Oauth.JWKS)">
+        <member name="M:Goedel.Cryptography.Oauth.OauthClient.#ctor(System.String,System.String,Goedel.Cryptography.Jose.JWKS)">
             <summary>
             Constructor, returns an instance with client URI <paramref name="clientId"/>, redirect
             URI <paramref name="redirectUri"/> and keys <paramref name="keys"/>.
@@ -1792,123 +1705,6 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Cryptography.Oauth.AuthenticationResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="T:Goedel.Cryptography.Oauth.JWKS">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWKS.Keys">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWKS._Binding">
-            <summary>Implement IBinding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.JWKS._binding">
-            <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.JWKS._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.JWKS._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWKS._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWKS._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWKS._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JWKS._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.JWKS.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Oauth.JWKS._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Oauth.JWKS.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="T:Goedel.Cryptography.Oauth.JwtHeader">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JwtHeader.Typ">
-             <summary>
-            Another IANA content type parameter
-             </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JwtHeader.Alg">
-             <summary>
-            Key exchange algorithm
-             </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JwtHeader.Jwk">
-             <summary>
-            JSON Web Key		
-             </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JwtHeader._Binding">
-            <summary>Implement IBinding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.JwtHeader._binding">
-            <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.JwtHeader._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.JwtHeader._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JwtHeader._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JwtHeader._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JwtHeader._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JwtHeader._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.JwtHeader.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Oauth.JwtHeader._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Oauth.JwtHeader.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

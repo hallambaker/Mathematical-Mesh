@@ -21,7 +21,11 @@
 #endregion
 
 global using Goedel.Cryptography;
+global using Goedel.Protocol;
+global using Goedel.Cryptography.Jose;
 global using Goedel.Utilities;
+
+global using System.Collections.Generic;
 
 global using Xunit;
 

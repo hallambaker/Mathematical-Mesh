@@ -1,0 +1,140 @@
+﻿Protocol Goedel.Thing ThingDevice ThingDevice
+	
+	Section 3 "Profile and account registration"
+
+	Structure JsDevice
+		Description 
+			|Describes a device
+		String ModelName
+			Required
+			Description 
+				|The name of the device
+		String NameHint
+			Required
+			Description 
+				|Short string giving the type of device for naming purposes, e.g. 
+				|'camera'
+		String ModelSerial
+			Description 
+				|The model serial identifier
+		String DeviceSerial
+			Description 
+				|The device serial identifier. 
+		String DeviceIdentifier
+			Description 
+				|Globally unique device identifier
+		String Manufacturer
+			Description 
+				|Name of the manufacturer
+		String CountryOfOrigin
+			Description 
+				|Country of Origin as ISO 2 letter country code.
+		DateTime Manufactured
+			Description 
+				|Datge of manufacture in UTC.
+		Struct Service OfferedServices
+			Multiple
+			Description 
+				|The set of services the device offers, e.g. SSH access, 
+				|http/https access, etc.
+		Struct Service UsedServices
+			Multiple
+			Description 
+				|The set of services the device consumes, e.g. file storage,
+				|DNS, WebPKI administration
+		Struct DeviceImage Images
+			Multiple
+			Description 
+				|A list of images showing the device in order of relevance. The images need 
+				|not be picttures of the specific device shown but SHOULD be representative.
+		Struct Physical Physical
+			Multiple
+			Description 
+				|List of physical network media supported by the device, e.g.
+				|Ethernet, WiFi, USB-C, etc.
+		Struct Storage Storage
+			Multiple
+			Description 
+				|Describes off-device storage requirements
+
+
+
+	Structure Resource
+		String MediaType
+			Description 
+				|IANA media type for the resource.
+		String Uri
+			Description 
+				|Uri from which the resource can be fetched
+		Binary Data
+			Description 
+				|The resource as Base64 encoded binary data.
+
+	Structure DeviceCredential
+		Inherits Resource
+		Tag "credential"
+
+	Structure DeviceImage
+		Inherits Resource
+		Tag "image"
+		String View
+			Description 
+				|Indication of the side being shown, e.g. 'front', 'left', 'right', 
+				|'rear', 'top', 'bottom'. Sides MAY be combined to indicate isometric views
+				|e.g. 'front-right-top'
+
+	Structure Service
+		String Name
+			Description 
+				|IANA protocol name
+		String Requires
+			Multiple
+			Description 
+				|The service provision of this service requires to provide
+		String Profiles
+			Multiple
+			Description 
+				|Service profiles supported, these MAY be protocol versions or a string
+				|registered to represent a specific set of capabilities.
+		String Transports
+			Multiple
+			Description 
+				|The service transports supported, e.g TCP, TLS, UDP, QUIC, HTTP, HTTPS,
+				|COAP.
+		Struct DeviceCredential Credentials
+			Multiple
+			Description 
+				|List of credentials to be used in conjunction with the service.
+			Description 
+				|Note that credentials supplied by the device manufacturer SHOULD NOT
+				|be used for any purpose other than establishing secure credentials
+				|for production use.
+
+	Structure Physical
+		String Name
+			Description 
+				|The media type name
+		String Identifier
+			Description 
+				|Identifier used by the device under that protocol, e.g. an EUI-48
+				|or EUI-64 media access control address.
+		String Profiles
+			Multiple
+			Description 
+				|Media profiles supported as specified by the media type.
+
+	Structure Storage
+		String Purpose
+			Description 
+				|The purpose of this storage type
+		Integer TypicalUse
+			Description 
+				|Typical storage requirement in kilobytes
+		Integer TypicalAnnual
+			Description 
+				|Typical storage requirement in kilobytes
+		Struct Service Services
+			Multiple
+			Description 
+				|The set of data storage protocols the device can use
+

@@ -19,6 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="JSDevice.cs">
+      <DependentUpon>JSDevice.protocol</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="thing.cs">
       <DependentUpon>thing.protocol</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -32,6 +37,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="JSDevice.protocol">
+      <LastGenOutput>JSDevice.cs</LastGenOutput>
+      <Generator>Protogen</Generator>
+    </None>
     <None Update="thing.protocol">
       <LastGenOutput>thing.cs</LastGenOutput>
       <Generator>Protogen</Generator>

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/26/2025 7:41:32 PM
+//  This file was automatically generated at 3/6/2025 4:59:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -76,8 +76,12 @@ public abstract partial class Jose : global::Goedel.Protocol.JsonObject {
 
 	    {"JoseWebSignature", JoseWebSignature._Factory},
 	    {"JoseWebEncryption", JoseWebEncryption._Factory},
+	    {"JWKS", JWKS._Factory},
+	    {"JWK", JWK._Factory},
+	    {"JwtHeader", JwtHeader._Factory},
 	    {"Signed", Signed._Factory},
 	    {"Encrypted", Encrypted._Factory},
+	    {"JsonWebKeys", JsonWebKeys._Factory},
 	    {"KeyCore", KeyCore._Factory},
 	    {"Header", Header._Factory},
 	    {"Signature", Signature._Factory},
@@ -360,6 +364,341 @@ public partial class JoseWebEncryption : JoseWebSignature {
 
 
 	/// <summary>
+	/// </summary>
+public partial class JWKS : Jose {
+        /// <summary>
+        /// </summary>
+
+	public virtual List<JWK>?					Keys  {get; set;}
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "keys", new PropertyListStruct ("keys", 
+					(IBinding data, object? value) => {(data as JWKS).Keys = value as List<JWK>;}, (IBinding data) => (data as JWKS).Keys,
+					false, ()=>new  List<JWK>(), ()=>new JWK())}
+        }, __Tag,() => new JWKS(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "JWKS";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new JWKS();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new JWKS FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as JWKS;
+			}
+		var Result = new JWKS ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class JWK : Jose {
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					KeyType  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					Use  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					KeyOps  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					Alg  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					Kid  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual byte[]?					X5u  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual byte[]?					X5T  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual byte[]?					X5T256  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					Curve  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					X  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					Y  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					D  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "kty", new PropertyString ("kty", 
+					(IBinding data, string? value) => {(data as JWK).KeyType = value;}, (IBinding data) => (data as JWK).KeyType )},
+			{ "use", new PropertyString ("use", 
+					(IBinding data, string? value) => {(data as JWK).Use = value;}, (IBinding data) => (data as JWK).Use )},
+			{ "key_ops", new PropertyString ("key_ops", 
+					(IBinding data, string? value) => {(data as JWK).KeyOps = value;}, (IBinding data) => (data as JWK).KeyOps )},
+			{ "alg", new PropertyString ("alg", 
+					(IBinding data, string? value) => {(data as JWK).Alg = value;}, (IBinding data) => (data as JWK).Alg )},
+			{ "kid", new PropertyString ("kid", 
+					(IBinding data, string? value) => {(data as JWK).Kid = value;}, (IBinding data) => (data as JWK).Kid )},
+			{ "x5u", new PropertyBinary ("x5u", 
+					(IBinding data, byte[]? value) => {(data as JWK).X5u = value;}, (IBinding data) => (data as JWK).X5u )},
+			{ "x5t", new PropertyBinary ("x5t", 
+					(IBinding data, byte[]? value) => {(data as JWK).X5T = value;}, (IBinding data) => (data as JWK).X5T )},
+			{ "x5t#S256", new PropertyBinary ("x5t#S256", 
+					(IBinding data, byte[]? value) => {(data as JWK).X5T256 = value;}, (IBinding data) => (data as JWK).X5T256 )},
+			{ "crv", new PropertyString ("crv", 
+					(IBinding data, string? value) => {(data as JWK).Curve = value;}, (IBinding data) => (data as JWK).Curve )},
+			{ "x", new PropertyString ("x", 
+					(IBinding data, string? value) => {(data as JWK).X = value;}, (IBinding data) => (data as JWK).X )},
+			{ "y", new PropertyString ("y", 
+					(IBinding data, string? value) => {(data as JWK).Y = value;}, (IBinding data) => (data as JWK).Y )},
+			{ "d", new PropertyString ("d", 
+					(IBinding data, string? value) => {(data as JWK).D = value;}, (IBinding data) => (data as JWK).D )}
+        }, __Tag,() => new JWK(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "JWK";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new JWK();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new JWK FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as JWK;
+			}
+		var Result = new JWK ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class JwtHeader : Jose {
+        /// <summary>
+        ///Another IANA content type parameter
+        /// </summary>
+
+	public virtual string?					Typ  {get; set;}
+
+        /// <summary>
+        ///Key exchange algorithm
+        /// </summary>
+
+	public virtual string?					Alg  {get; set;}
+
+        /// <summary>
+        ///JSON Web Key	
+        /// </summary>
+
+	public virtual JWK?					Jwk  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "typ", new PropertyString ("typ", 
+					(IBinding data, string? value) => {(data as JwtHeader).Typ = value;}, (IBinding data) => (data as JwtHeader).Typ )},
+			{ "alg", new PropertyString ("alg", 
+					(IBinding data, string? value) => {(data as JwtHeader).Alg = value;}, (IBinding data) => (data as JwtHeader).Alg )},
+			{ "jwk", new PropertyStruct ("jwk", 
+					(IBinding data, object? value) => {(data as JwtHeader).Jwk = value as JWK;}, (IBinding data) => (data as JwtHeader).Jwk,
+					false, ()=>new  JWK(), ()=>new JWK())}
+        }, __Tag,() => new JwtHeader(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "JwtHeader";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new JwtHeader();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new JwtHeader FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as JwtHeader;
+			}
+		var Result = new JwtHeader ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
 	///
 	/// Compact representation for signed data
 	/// </summary>
@@ -557,6 +896,86 @@ public partial class Encrypted : Jose {
 			return Out as Encrypted;
 			}
 		var Result = new Encrypted ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class JsonWebKeys : Jose {
+        /// <summary>
+        /// </summary>
+
+	public virtual List<KeyCore>?					Keys  {get; set;}
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "keys", new PropertyListStruct ("keys", 
+					(IBinding data, object? value) => {(data as JsonWebKeys).Keys = value as List<KeyCore>;}, (IBinding data) => (data as JsonWebKeys).Keys,
+					false, ()=>new  List<KeyCore>(), ()=>new KeyCore())}
+        }, __Tag,() => new JsonWebKeys(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "JsonWebKeys";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new JsonWebKeys();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new JsonWebKeys FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as JsonWebKeys;
+			}
+		var Result = new JsonWebKeys ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
@@ -1068,8 +1487,7 @@ public partial class Key : KeyCore {
         ///Key operations
         /// </summary>
 
-	public virtual string?					Key_ops  {get; set;}
-
+	public virtual List<string>?					Key_ops  {get; set;}
         /// <summary>
         ///Symmetric key value.
         /// </summary>
@@ -1091,8 +1509,8 @@ public partial class Key : KeyCore {
 					(IBinding data, string? value) => {(data as Key).Kty = value;}, (IBinding data) => (data as Key).Kty )},
 			{ "use", new PropertyString ("use", 
 					(IBinding data, string? value) => {(data as Key).Use = value;}, (IBinding data) => (data as Key).Use )},
-			{ "key_ops", new PropertyString ("key_ops", 
-					(IBinding data, string? value) => {(data as Key).Key_ops = value;}, (IBinding data) => (data as Key).Key_ops )},
+			{ "key_ops", new PropertyListString ("key_ops", 
+					(IBinding data, List<string>? value) => {(data as Key).Key_ops = value;}, (IBinding data) => (data as Key).Key_ops )},
 			{ "k", new PropertyBinary ("k", 
 					(IBinding data, byte[]? value) => {(data as Key).K = value;}, (IBinding data) => (data as Key).K )}
         }, __Tag,() => new Key(), KeyCore._binding);

@@ -312,38 +312,7 @@
 		String State 
 		String Code 
 
-	Structure JWKS
-		CamelCase
-		Struct JWK Keys 
-			Multiple
-
-	Structure JWK
-		CamelCase
-		String Kid 
-		String KeyType
-			Tag "kty"
-		String Use 
-			Tag "use"
-		String Curve
-			Tag "crv"
-		String X 
-		String Y 
-		String D 
-
-
-	Structure JwtHeader
-		String Typ
-			Tag "typ"
-			Description
-				|Another IANA content type parameter
-		String Alg
-			Tag "alg"
-			Description
-				|Key exchange algorithm
-		Struct JWK Jwk
-			Tag "jwk"	
-			Description
-				|JSON Web Key		
+	
 
 	Structure DpopPayload
 		String JTI

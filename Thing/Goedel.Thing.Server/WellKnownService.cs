@@ -20,8 +20,12 @@
 
 namespace Goedel.Acme;
 
-
+/// <summary>
+/// Well Known services.
+/// </summary>
 public enum WellKnownService {
+
+
     HTTP,
     HTTPS,
     HTTP2,

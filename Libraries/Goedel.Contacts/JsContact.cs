@@ -1,156 +1,75 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Nist;
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.WebSockets;
 
 namespace Goedel.Contacts;
 
-public record JsContactPersona(
-            string Label) {
-    
-    
-    
-    }
 
 
 
-public enum ServiceType {
-    Email,
-    Mesh,
-    Ssh,
-    Code,
-    Web,
-    Messaging,
-    Unknown
 
-    }
+/// <summary>
+/// Convenience class collecting together related parts of a <see cref="JsContact"/>.
+/// </summary>
+public record AnalysizedContact {
 
-public record JsContactService (
-            string Label) {
+    ///<summary>Service groups this entry is a member of.</summary> 
+    public List<OnlineService> Parents { get; } = [];
 
-    public virtual ServiceType ServiceType { get; set; } = ServiceType.Unknown;
-
-    public List<OnlineService> OnlineServices { get; } = [];
-
-    public List<string> Accounts { get; } = [];
+    ///<summary>Services that are members of this service groups.</summary> 
+    public List<OnlineService> Children { get; } = [];
 
 
-    public Dictionary<string, JsContactCredential> Credentials { get; } = [];
+    ///<summary>Email addresses as an <see cref="OnlineService"/></summary> 
+    public List<OnlineService> Emails { get; } = [];
 
+    ///<summary>Services of type HTTP or HTTPS</summary> 
+    public List<OnlineService> Webs { get; } = [];
 
-    public JsContactService(
-                    OnlineService onlineService, 
-                    string tag,
-                    CryptoKey cryptoKey=null,
-                    string cryptoLabel = null) : this(tag) {
-        Add(onlineService, cryptoKey, cryptoLabel);
-        }
+    ///<summary>Mesh services</summary> 
+    public List<OnlineService> Mesh { get; } = [];
 
+    ///<summary>Groups</summary> 
+    public List<OnlineService> Groups { get; } = [];
 
-    public void Add(
-                    OnlineService onlineService,
-                    CryptoKey cryptoKey = null,
-                    string cryptoLabel = null) {
-        OnlineServices.Add(onlineService);
-        var serviceType = onlineService.Service.ToLower();
-        switch (serviceType) {
-            case "mesh": {
-                ServiceType = ServiceType.Mesh;
-                Accounts.Add(onlineService.User);
-                break;
-                }
-            case "ssh": {
-                ServiceType = ServiceType.Ssh;
-                break;
-                }
-            case "code": {
-                ServiceType = ServiceType.Code;
-                break;
-                }
-            case "http": {
-                ServiceType = ServiceType.Web;
-                break;
-                }
-            case "signal":
-            case "telegram":
-            case "whatsapp":
-            case "message": {
-                ServiceType = ServiceType.Messaging;
-                break;
-                }
-            default: {
-                break;
-                }
-            }
+    ///<summary>Services of type SSH</summary> 
+    public List<OnlineService> Ssh { get; } = [];
 
-        if (cryptoKey != null) {
-            var credential = new JsContactCredential(cryptoKey, serviceType ?? cryptoKey.Kind);
-            Credentials.AddSafe (cryptoLabel, credential);
-            }
-        }
+    ///<summary>Services of type credential</summary> 
+    public List<OnlineService> Credentials{ get; } = [];
 
-
-    }
-
-public record JsContactServiceEmail(
-            EmailAddress EmailAddress) : JsContactService(EmailAddress.Address) {
-
-    public override ServiceType ServiceType => ServiceType.Email;
-
-    }
-
-[Flags]
-public enum CredentialUse {
-    OpenPgp = 1,
-    OpenPgpSub = 2,
-    Pkix = 4,
-    PkixCode = 8,
-    PkixSign = 16,
-    PkixEncrypt =32
-    }
-
-
-public record JsContactCredential (
-                CryptoKey CryptoKey,
-                string Kind) {
-
-    }
-
-public record JsContactGroup {
-    public Dictionary<string, JsContactService> DictionaryServices { get; } = [];
-
+    ///<summary>Services not included in any other category.</summary> 
+    public List<OnlineService> Other { get; } = [];
     }
 
 
 public partial class JsContact {
 
+    ///<summary>Used during analysis to track services claiming to be part 
+    ///of a service group.</summary> 
+    public Dictionary<string, List<string>> GroupClaim { get; } = [];
 
-    public Dictionary<string, JsContactGroup> DictionaryGroups { get; } = [];
+    ///<summary>Analyzed version of the contact. Note that this is not synchronized
+    ///and so a new call must be made to <see cref="Analyze"/></summary> 
+    public AnalysizedContact Analysis { get; set; }
 
-    public Dictionary<string, JsContactService> DictionaryServices { get; } = [];
-    public Dictionary<string, JsContactCredential> DictionaryCredential { get; } = [];
 
-    //public Dictionary<string, JsContactEmail> DictionaryEmail { get; } = [];
-
-    //public Dictionary<string, JsContactMesh> DictionaryMesh { get; } = [];
-
-    //public Dictionary<string, JsContactDeveloper> DictionaryDeveloper { get; } = [];
-
-    //public Dictionary<string, JsContactMessaging> DictionaryMessaging { get; } = [];
-
-    //public Dictionary<string, JsContactWeb> DictionaryWeb { get; } = [];
     #region // Constructors and Factory methods
+    /// <summary>
+    /// Returns a new instance.
+    /// </summary>
     public JsContact() {
         }
 
+    /// <summary>
+    /// Create a  contact of the specified kind with the Version, Created and Updated
+    /// fields filled.
+    /// </summary>
+    /// <param name="kind"></param>
+    /// <returns>The created contact.</returns>
     public static JsContact Create(
-    string kind = null) {
+                string kind = null) {
 
         return new JsContact() {
             Version = "1.0",
@@ -163,7 +82,13 @@ public partial class JsContact {
             };
         }
 
-
+    /// <summary>
+    /// Create an individual contact for <paramref name="fullname"/> of gender
+    /// <paramref name="gender"/>.
+    /// </summary>
+    /// <param name="fullname">Full name</param>
+    /// <param name="gender">Gender, "masculine", "feminine", "inanimate", "animate", etc. </param>
+    /// <returns>The created card.</returns>
     public static JsContact Individual(
             string fullname, string gender) {
 
@@ -201,75 +126,156 @@ public partial class JsContact {
 
     #endregion
 
-
+    /// <summary>
+    /// Update the contact updated time.
+    /// </summary>
     public void Update() {
         Updated = DateTime.Now;
         }
 
 
-
+    /// <summary>
+    /// Analyze the contact to populate the property <see cref="Analysis"/>
+    /// </summary>
     public void Analyze() {
-        // First create all the principal services
-        foreach (var email in Emails) {
-            var key = email.Value?.Address;
-            if (!DictionaryServices.ContainsKey(key)) {
-                DictionaryServices.Add(key, new JsContactServiceEmail(email.Value));
-                }
+        Emails ??= [];
+        OnlineServices ??= [];
+        CryptoKeys ??= [];
+
+        Analysis = new();
+
+        var worklist = new Dictionary<string,OnlineService>();
+
+
+        foreach (var emailPair in Emails) {
+            var email = emailPair.Value;
+            email.Key = emailPair.Key;
+
+            var service = new OnlineService() {
+                Service = "smtp",
+                Key = emailPair.Key,
+                User = email.Address,
+                Contexts = email.Contexts,
+                Pref = email.Pref,
+                Label = email.Label,
+                Groups = email.Groups,
+                Analysis = new()
+                };
+            worklist.Add(service.Key, service);
             }
 
+        foreach (var pair in OnlineServices) {
+            var service = pair.Value;
+            service.Analysis = new();
 
-        foreach (var servicePair in OnlineServices) {
-
-
-
-            var serviceTag = servicePair.Value.Service.ToLower();
-            var (serviceLabel, keyLabel) = GetLabel(servicePair.Value);
-
-            CryptoKey? cryptoKey=null;
-            if (keyLabel != null) {
-                CryptoKeys.TryGetValue(keyLabel, out cryptoKey);
+            service.Key = pair.Key;
+            if (CryptoKeys.TryGetValue(service.Key, out var cryptoKey)) {
+                service.CryptoKey = cryptoKey;
                 }
 
-            if (DictionaryServices.TryGetValue(serviceLabel, out var service)) {
-                service.Add(servicePair.Value, cryptoKey, keyLabel);
+            worklist.Add(service.Key, service);
+            }
+
+        foreach (var pair in worklist) {
+            var item = pair.Value;
+            if (item.Groups != null && item.Groups.Count > 0) {
+                foreach (var member in item.Groups) {
+                    if (CheckNotCyclic(worklist, item) & worklist.TryGetValue(member, out var parent)) {
+                        AnalyzeService(parent.Analysis, item);
+
+                        parent.Analysis.Children.Add(item);
+                        item.Analysis.Parents.Add(parent);
+                        }
+                    }
                 }
             else {
-                service = new JsContactService(servicePair.Value, serviceLabel, cryptoKey, keyLabel);
-                DictionaryServices.Add(serviceLabel, service);
+                AnalyzeService(Analysis, item);
+                Analysis.Children.Add(item);
                 }
             }
-
-
-
-
-
         }
 
 
-    (string, string) GetLabel(OnlineService service) {
-        var serviceTag = service.Service.ToLower();
-        //var label = service.Label.ToLower();
+    static bool CheckNotCyclic(
+                    Dictionary<string, OnlineService> worklist,
+                    OnlineService service,
+                    string? key = null) {
+        key ??= service.Key;
 
-        switch (serviceTag) {
-            case "ssh":
+        if (service.Groups is null || service.Groups.Count == 0) {
+            return true;
+            }
+
+        foreach (var member in service.Groups) {
+            if (member == key) {
+                return false;
+                }
+            if (worklist.TryGetValue(member, out var parent)) {
+                if (!CheckNotCyclic(worklist, parent, key)) {
+                    return false;
+                    }
+                }
+            }
+        return true;
+        }
+
+
+    static void AnalyzeService(AnalysizedContact analysis, OnlineService service) {
+
+        switch (service.Service.ToLower()) {
             case "http":
+            case "https":
+            case "web": {
+                analysis.Webs.Add(service);
+                break;
+                }
+            case "smtp": {
+                analysis.Emails.Add(service);
+                break;
+                }
             case "mesh": {
-                return (service.Uri, service.Uri);
+                analysis.Mesh.Add(service);
+                break;
                 }
-            case "smime_encrypt":
-            case "smime":
-            case "openpgp_sub":
-            case "openpgp": {
-                return (service.User, service.Uri);
+            case "credential": {
+                analysis.Credentials.Add(service);
+                break;
                 }
-
-
+            case "group": {
+                analysis.Groups.Add(service);
+                break;
+                }
+            case "ssh": {
+                analysis.Ssh.Add(service);
+                break;
+                }
+            default: {
+                analysis.Other.Add(service);
+                break;
+                }
             }
 
-
-
-        return (service.User?? service.Uri, service.Uri?? serviceTag);
         }
 
+    }
+
+
+public partial class EmailAddress {
+
+    ///<summary>The dictionary key (filled by calling Analyze)</summary> 
+    public string Key { get; set; }
+    }
+
+
+public partial class OnlineService {
+
+    ///<summary>The dictionary key (filled by calling Analyze)</summary> 
+    public string Key { get; set; }
+
+    ///<summary>The associated <see cref="CryptoKey"/> entry.</summary> 
+    public CryptoKey CryptoKey { get; set; }
+
+    ///<summary>Analysis of the service parent and children.</summary> 
+    public AnalysizedContact Analysis { get; set; }
 
     }

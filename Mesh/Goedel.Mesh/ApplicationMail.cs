@@ -99,8 +99,9 @@ public partial class CatalogedApplicationMail {
     /// </summary>
     /// <param name="address">The email address.</param>
     /// <param name="roles">The roles to which the application is granted.</param>
-    /// <returns></returns>
-    public static CatalogedApplicationMail Create(string address, List<string> roles) {
+    /// <param name="description">Description of the account.</param>
+    /// <returns>The application</returns>
+    public static CatalogedApplicationMail Create(string address, List<string> roles, string description=null) {
         var key = GetKey(address);
         var smimeSignKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
                  KeySecurity.Exportable, keySize: 2048);
@@ -122,7 +123,8 @@ public partial class CatalogedApplicationMail {
             SmimeSign = new KeyData(smimeSignKeyPair),
             SmimeEncrypt = new KeyData(smimeEncryptKeyPair),
             OpenpgpSign = new KeyData(openpgpSignKeyPair),
-            OpenpgpEncrypt = new KeyData(openpgpEncryptKeyPair)
+            OpenpgpEncrypt = new KeyData(openpgpEncryptKeyPair),
+            Description = description
             };
         }
     #endregion

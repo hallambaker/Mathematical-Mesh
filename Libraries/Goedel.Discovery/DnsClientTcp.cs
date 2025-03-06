@@ -37,52 +37,72 @@ using System.Net;
 namespace Goedel.Discovery;
 
 
-
+/// <summary>
+/// DNS update client.
+/// </summary>
 public class DnsUpdate {
 
 
+    /// <summary>
+    /// Constructor returns a new instance for the service at <paramref name="iPAddress"/>.
+    /// </summary>
+    /// <param name="iPAddress">IP address of the service to push updates to.</param>
     public DnsUpdate(
             IPAddress iPAddress) : this(new DnsClientTcp(iPAddress)) {
         }
 
+    /// <summary>
+    /// Constructor returns a new instance for the service using the DNS Client <paramref name="client"/>.
+    /// </summary>
+    /// <param name="client"></param>
     public DnsUpdate(
                 DnsClient client) {
-
-
-
         }
 
 
+    /// <summary>
+    /// Initialize the zone entries.
+    /// </summary>
+    /// <param name="zoneName"></param>
+    /// <param name="tsig"></param>
     public void InitializeZone(
                     string zoneName, 
                     string tsig) {
-
         }
 
+
+    /// <summary>
+    /// Publish the update records <paramref name="records"/> to the zone.
+    /// </summary>
+    /// <param name="records">The records to update.</param>
     public void Publish (
                     List<DNSRecord> records) { 
-        
-        
         }
-
-
-
-
 
     }
 
 
+/// <summary>
+/// DNS Client over TCP transport.
+/// </summary>
 public class DnsClientTcp : DnsClient {
 
-
+    /// <summary>
+    /// Constructor, return a new instance for the IP Address <paramref name="ipAddress"/>
+    /// </summary>
+    /// <param name="ipAddress">IP Address for the server to bind to.</param>
     public DnsClientTcp(
-                    IPAddress iPAddress) {
+                    IPAddress ipAddress) {
 
         }
 
 
 
-
+    /// <summary>
+    /// Return a new DNS query context.
+    /// </summary>
+    /// <returns>The constrructed context.</returns>
+    /// <exception cref="NotImplementedException"></exception>
     public override DNSContext GetContext() {
         throw new NotImplementedException();
         }

@@ -462,6 +462,10 @@
 		String					Label
 			Description
 				| A custom label for the value. 
+		String					Groups
+			Multiple
+			Description
+				| The groups that the email address is a member of 
 
 	// 2.3.2.  onlineServices
 	Structure OnlineService
@@ -492,7 +496,10 @@
 		String					Label
 			Description
 				| A custom label for the value. 
-
+		String					Groups
+			Multiple
+			Description
+				| The groups that the service is a member of 
 
 	// 2.3.3.  phones
 	Structure Phone

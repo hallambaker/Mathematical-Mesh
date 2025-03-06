@@ -22,6 +22,11 @@
 
 
 namespace Goedel.Anything;
+
+
+/// <summary>
+/// Identity declaration, a collection of linked DNS names.
+/// </summary>
 public partial class Identity {
 
     ///<summary>Suffix appended to the name of the things deployed to the identity.</summary> 
@@ -35,7 +40,12 @@ public partial class Identity {
     public virtual string GetDnsName(string name) => $"{name}.{DnsRoot}";
 
 
-
+    /// <summary>
+    /// Create a certificate for <paramref name="thing"/> using algorithm
+    /// <paramref name="cryptoAlgorithm"/>
+    /// </summary>
+    /// <param name="thing">Thing to create the certificate for</param>
+    /// <param name="cryptoAlgorithm">Signinature algorithm.</param>
     public virtual void CreateCertificate(
                 CatalogedThing thing,
                 CryptoAlgorithmId cryptoAlgorithm = CryptoAlgorithmId.P384) {
@@ -46,8 +56,13 @@ public partial class Identity {
 
     }
 
+
 public partial class CatalogedIdentity {
 
+    /// <summary>
+    /// Return the private name associated with the identitgy
+    /// </summary>
+    /// <returns>The private name.</returns>
     public string GetPrivateName() {
         foreach (var identity in Identities) {
             if (identity is CallsignIdentity) {
@@ -63,7 +78,10 @@ public partial class CatalogedIdentity {
         }
 
 
-
+    /// <summary>
+    /// Create a private root for the identity.
+    /// </summary>
+    /// <param name="algorithmId">Signinature algorithm.</param>
     public void CreateRoot(CryptoAlgorithmId algorithmId = CryptoAlgorithmId.P384) {
 
 
@@ -72,10 +90,14 @@ public partial class CatalogedIdentity {
         //    }
         }
 
-
+    /// <summary>
+    /// Create a certificate set for <paramref name="thing"/>
+    /// </summary>
+    /// <param name="thing">The device to issue a certificate to.</param>
+    /// <param name="algorithmId">Signinature algorithm.</param>
     public virtual void CreateCertificateSet (
                 CatalogedThing thing,
-                CryptoAlgorithmId cryptoAlgorithm = CryptoAlgorithmId.P384) {
+                CryptoAlgorithmId algorithmId = CryptoAlgorithmId.P384) {
 
 
         }
@@ -83,19 +105,19 @@ public partial class CatalogedIdentity {
 
     }
 
+
 public partial class LocalIdentity {
 
     ///<inheritdoc/>
     public override string DnsRoot => Name + ".";
 
-    /////<inheritdoc/>
-    //public override string GetDnsName(string name) => $"{name}.local.";
 
 
-    public void CreateRoot(CryptoAlgorithmId cryptoAlgorithm = CryptoAlgorithmId.P384) {
+
+    //public void CreateRoot(CryptoAlgorithmId cryptoAlgorithm = CryptoAlgorithmId.P384) {
 
 
-        }
+    //    }
 
 
     }
@@ -105,13 +127,11 @@ public partial class DnsIdentity {
     ///<inheritdoc/>
     public override string DnsRoot => Name + ".";
 
-    /////<inheritdoc/>
-    //public override string GetDnsName(string name) => $"{name}.{Name}.";
 
-    public void CreateRoot(CryptoAlgorithmId cryptoAlgorithm = CryptoAlgorithmId.P384) {
+    //public void CreateRoot(CryptoAlgorithmId cryptoAlgorithm = CryptoAlgorithmId.P384) {
 
 
-        }
+    //    }
 
 
     }
@@ -120,6 +140,6 @@ public partial class CallsignIdentity {
     ///<inheritdoc/>
     public override string DnsRoot => Name + ".mesh.";
 
-    //public override string GetDnsName(string name) => $"{name}.{DnsRoot}";
+
 
     }

@@ -2784,6 +2784,11 @@
             A custom label for the value. 
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.EmailAddress.Groups">
+            <summary>
+            The groups that the email address is a member of 
+            </summary>
+        </member>
         <member name="P:Goedel.Contacts.EmailAddress._Binding">
             <summary>Implement IBinding</summary> 
         </member>
@@ -2829,6 +2834,9 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="P:Goedel.Contacts.EmailAddress.Key">
+            <summary>The dictionary key (filled by calling Analyze)</summary> 
+        </member>
         <member name="T:Goedel.Contacts.OnlineService">
             <summary>
             </summary>
@@ -2870,6 +2878,11 @@
         <member name="P:Goedel.Contacts.OnlineService.Label">
             <summary>
             A custom label for the value. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService.Groups">
+            <summary>
+            The groups that the service is a member of 
             </summary>
         </member>
         <member name="P:Goedel.Contacts.OnlineService._Binding">
@@ -2916,6 +2929,9 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService.Key">
+            <summary>The dictionary key (filled by calling Analyze)</summary> 
         </member>
         <member name="T:Goedel.Contacts.Phone">
             <summary>
