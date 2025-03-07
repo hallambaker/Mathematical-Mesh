@@ -47,8 +47,10 @@ public class CatalogContact : Catalog<CatalogedContact> {
 
     Dictionary<string, List<CryptoKey>> DictionaryProfiles { get; } = [];
 
-
+    ///<summary>Contacts for self.</summary> 
     public Dictionary<string, CatalogedContact> DictionaryContactSelf { get; } = [];
+
+    ///<summary>Default contact for self.</summary> 
     public CatalogedContact DefaultContactSelf { get; set; }
 
 
@@ -350,7 +352,12 @@ public class CatalogContact : Catalog<CatalogedContact> {
         return found;
         }
 
-
+    /// <summary>
+    /// Attempt to find a contact by its local name key/
+    /// </summary>
+    /// <param name="key">The local name to search on.</param>
+    /// <param name="contact">The contact (if found).</param>
+    /// <returns>True if the contact is found, otherwise false.</returns>
     public bool TryFindByLocalName(
                     string key,
                     out CatalogedContact contact) => DictionaryByLocalName.TryGetValue(key, out contact);

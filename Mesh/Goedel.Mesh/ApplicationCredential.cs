@@ -52,7 +52,7 @@ public partial class CatalogedApplicationCredential {
                         CatalogedApplicationCredential parent=null) {
 
         var clientKey = KeyPair.Factory(credentialProfile.AlgorithmId,
-                    KeySecurity.Exportable, keySize: credentialProfile.keySize);
+                    KeySecurity.Exportable, keySize: credentialProfile.KeySize);
 
         var result = new CatalogedApplicationCredential() {
             Key = clientKey.KeyIdentifier,

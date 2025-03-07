@@ -30,95 +30,153 @@
 
 namespace Goedel.Mesh;
 
-
+/// <summary>
+/// Profile describing a credential type.
+/// </summary>
+/// <param name="AlgorithmId">The default algorithm ID.</param>
+/// <param name="KeyUses">The default key uses.</param>
+/// <param name="KeySize">The default key size.</param>
 public record CredentialProfile (
             CryptoAlgorithmId AlgorithmId,
             KeyUses KeyUses = KeyUses.Sign,
-            int keySize = 0
+            int KeySize = 0
             ) {
 
+    ///<summary>The platform served by the credential</summary> 
     public virtual string Platform => "Any";
 
-    public static CredentialProfilePkix Code = new CredentialProfilePkix(
+    ///<summary>PKIK credential profile.</summary> 
+    public static CredentialProfilePkix Code { get; } = new CredentialProfilePkix(
             CryptoAlgorithmId.P384, KeyUses.Sign);
-    public static CredentialProfileWindows Windows = new CredentialProfileWindows(
-                CryptoAlgorithmId.P384, KeyUses.Sign);
-    public static CredentialProfileApple Apple = new CredentialProfileApple(
-                CryptoAlgorithmId.P384, KeyUses.Sign);
-    public static CredentialProfileAndroid Android = new CredentialProfileAndroid(
-                CryptoAlgorithmId.P384, KeyUses.Sign);
-    public static CredentialProfileLinux Linux = new CredentialProfileLinux(
+
+    ///<summary>Windows credential profile.</summary> 
+    public static CredentialProfileWindows Windows { get; } = new CredentialProfileWindows(
                 CryptoAlgorithmId.P384, KeyUses.Sign);
 
-    public static CredentialProfileCommit Commit = new CredentialProfileCommit(
+    ///<summary>Apple developer (ios and macOS) credential profile.</summary> 
+    public static CredentialProfileApple Apple { get; } = new CredentialProfileApple(
+                CryptoAlgorithmId.P384, KeyUses.Sign);
+
+    ///<summary>Android credential profile.</summary> 
+    public static CredentialProfileAndroid Android { get; } = new CredentialProfileAndroid(
+                CryptoAlgorithmId.P384, KeyUses.Sign);
+
+    ///<summary>Linux credential profile.</summary> 
+    public static CredentialProfileLinux Linux { get; } = new CredentialProfileLinux(
+                CryptoAlgorithmId.P384, KeyUses.Sign);
+
+    ///<summary>Commit credential profile.</summary> 
+    public static CredentialProfileCommit Commit { get; } = new CredentialProfileCommit(
                 CryptoAlgorithmId.P384, KeyUses.Sign);
     }
 
+/// <summary>
+/// OpenPGP Credential Profile
+/// </summary>
+/// <param name="AlgorithmId">The default algorithm ID.</param>
+/// <param name="KeyUses">The default key uses.</param>
+/// <param name="KeySize">The default key size.</param>
 public record CredentialProfileOpenPgp(
             CryptoAlgorithmId AlgorithmId,
             KeyUses KeyUses = KeyUses.Sign,
-            int keySize = 0
-            ) : CredentialProfile (AlgorithmId, KeyUses, keySize) {
+            int KeySize = 0
+            ) : CredentialProfile (AlgorithmId, KeyUses, KeySize) {
 
     ///<inheritdoc/>
     public override string Platform => "OpenPGP";
     }
 
+/// <summary>
+/// Commit Credential Profile
+/// </summary>
+/// <param name="AlgorithmId">The default algorithm ID.</param>
+/// <param name="KeyUses">The default key uses.</param>
+/// <param name="KeySize">The default key size.</param>
 public record CredentialProfileCommit(
             CryptoAlgorithmId AlgorithmId,
             KeyUses KeyUses = KeyUses.Sign,
-            int keySize = 0
-            ) : CredentialProfileOpenPgp(AlgorithmId, KeyUses, keySize) {
+            int KeySize = 0
+            ) : CredentialProfileOpenPgp(AlgorithmId, KeyUses, KeySize) {
 
     ///<inheritdoc/>
     public override string Platform => "Commit";
     }
 
+/// <summary>
+/// Pkix Credential Profile
+/// </summary>
+/// <param name="AlgorithmId">The default algorithm ID.</param>
+/// <param name="KeyUses">The default key uses.</param>
+/// <param name="KeySize">The default key size.</param>
 public record CredentialProfilePkix(
             CryptoAlgorithmId AlgorithmId,
             KeyUses KeyUses = KeyUses.Sign,
-            int keySize = 0
-            ) : CredentialProfile(AlgorithmId, KeyUses, keySize) {
+            int KeySize = 0
+            ) : CredentialProfile(AlgorithmId, KeyUses, KeySize) {
 
     ///<inheritdoc/>
     public override string Platform => "Pkix";
     }
 
+/// <summary>
+/// Windows Credential Profile
+/// </summary>
+/// <param name="AlgorithmId">The default algorithm ID.</param>
+/// <param name="KeyUses">The default key uses.</param>
+/// <param name="KeySize">The default key size.</param>
 public record CredentialProfileWindows(
             CryptoAlgorithmId AlgorithmId,
             KeyUses KeyUses = KeyUses.Sign,
-            int keySize = 0
-            ) : CredentialProfilePkix(AlgorithmId, KeyUses, keySize) {
+            int KeySize = 0
+            ) : CredentialProfilePkix(AlgorithmId, KeyUses, KeySize) {
 
     ///<inheritdoc/>
     public override string Platform => "Windows";
     }
 
+/// <summary>
+/// Apple Credential Profile
+/// </summary>
+/// <param name="AlgorithmId">The default algorithm ID.</param>
+/// <param name="KeyUses">The default key uses.</param>
+/// <param name="KeySize">The default key size.</param>
 public record CredentialProfileApple(
             CryptoAlgorithmId AlgorithmId,
             KeyUses KeyUses = KeyUses.Sign,
-            int keySize = 0
-            ) : CredentialProfilePkix(AlgorithmId, KeyUses, keySize) {
+            int KeySize = 0
+            ) : CredentialProfilePkix(AlgorithmId, KeyUses, KeySize) {
 
     ///<inheritdoc/>
     public override string Platform => "Apple";
     }
 
+/// <summary>
+/// Android Credential Profile
+/// </summary>
+/// <param name="AlgorithmId">The default algorithm ID.</param>
+/// <param name="KeyUses">The default key uses.</param>
+/// <param name="KeySize">The default key size.</param>
 public record CredentialProfileAndroid(
             CryptoAlgorithmId AlgorithmId,
             KeyUses KeyUses = KeyUses.Sign,
-            int keySize = 0
-            ) : CredentialProfilePkix(AlgorithmId, KeyUses, keySize) {
+            int KeySize = 0
+            ) : CredentialProfilePkix(AlgorithmId, KeyUses, KeySize) {
 
     ///<inheritdoc/>
     public override string Platform => "Android";
     }
 
+/// <summary>
+/// Linux Credential Profile
+/// </summary>
+/// <param name="AlgorithmId">The default algorithm ID.</param>
+/// <param name="KeyUses">The default key uses.</param>
+/// <param name="KeySize">The default key size.</param>
 public record CredentialProfileLinux(
             CryptoAlgorithmId AlgorithmId,
             KeyUses KeyUses = KeyUses.Sign,
-            int keySize = 0
-            ) : CredentialProfilePkix(AlgorithmId, KeyUses, keySize) {
+            int KeySize = 0
+            ) : CredentialProfilePkix(AlgorithmId, KeyUses, KeySize) {
 
     ///<inheritdoc/>
     public override string Platform => "Linux";
