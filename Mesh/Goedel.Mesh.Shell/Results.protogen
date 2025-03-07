@@ -38,7 +38,7 @@
 
 	Structure ResultInfo
 		Inherits		Result
-		TStruct Contact	Contact
+		//TStruct Contact	Contact
 
 	Structure ResultKey
 		Inherits		Result

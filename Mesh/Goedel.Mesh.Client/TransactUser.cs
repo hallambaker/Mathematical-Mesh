@@ -125,7 +125,11 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
         }
 
 
-
+    /// <summary>
+    /// Get contact for self.
+    /// </summary>
+    /// <param name="identifier"></param>
+    /// <returns></returns>
     public CatalogedContact GetContactSelf(string? identifier = null) {
         var catalogContact = GetCatalogContact();
 
@@ -137,6 +141,11 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
         return result;
         }
 
+    /// <summary>
+    /// Update a contact record.
+    /// </summary>
+    /// <param name="catalogedContact">Contact to update.</param>
+    /// <param name="application">Application to add.</param>
     public void UpdateContact(
                 CatalogedContact catalogedContact, 
                 CatalogedApplication application) {

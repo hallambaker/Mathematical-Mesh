@@ -35,6 +35,7 @@ public partial class Profile {
 
     #region // Properties
 
+    ///<inheritdoc/>
     public override string IanaMediaType => MeshConstants.IanaTypeMeshProfile;
 
 

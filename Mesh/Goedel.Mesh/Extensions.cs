@@ -205,7 +205,7 @@ public static partial class Extensions {
 
     /// <summary>
     /// Add the Mesh profilr <paramref name="profile"/>to the contact
-    /// <paramref name="contact"/> under the service type <paramref name="serviceId"/>.
+    /// <paramref name="contact"/> .
     /// </summary>
     /// <param name="contact">The contact to add the profile to.</param>
     /// <param name="profile">The profile to add.</param>
@@ -388,11 +388,13 @@ public static partial class Extensions {
 
 
     /// <summary>
-    /// Add the key <paramref name="keyData"/> to the contact <paramref name="contact"/>.
+    /// Add a service with the specified parameters to the contact <paramref name="contact"/>.
     /// </summary>
     /// <param name="contact">The contact to add the key to.</param>
     /// <param name="serviceId">The Sevice type.</param>
     /// <param name="accountAddress">The account address to specify.</param>
+    /// <param name="uri">The service URI</param>
+    /// <param name="label">The service description.</param>
     public static void AddService(
                 this JsContact contact,
                 string serviceId,
@@ -409,7 +411,19 @@ public static partial class Extensions {
         contact.OnlineServices.AddUniqueKeyed(serviceId, service);
         }
 
-
+    /// <summary>
+    /// Add a service with the specified parameters and credential <paramref name="keyData"/> to 
+    /// the contact with separate service and CryptoKey entries.
+    /// </summary>
+    /// <param name="contact">The contact to add the key to.</param>
+    /// <param name="keyData"></param>
+    /// <param name="serviceId">The Sevice type.</param>
+    /// <param name="user"></param>
+    /// <param name="uri">The service URI</param>
+    /// <param name="label">The service description.</param>
+    /// <param name="contexts">Contexts in which the service is to be used.</param>
+    /// <param name="parent">Parent service if a member of a group.</param>
+    /// <returns>The service entry.</returns>
     public static OnlineService? AddServiceKeyData(
                 this JsContact contact,
                 KeyData keyData,
@@ -430,8 +444,20 @@ public static partial class Extensions {
 
 
     /// <summary>
-    /// Add the key <paramref name="keyData"/> to the contact <paramref name="contact"/>.
+    /// Add a service with the specified parameters and credential <paramref name="cryptoData"/> to 
+    /// the contact with separate service and CryptoKey entries.
     /// </summary>
+    /// <param name="contact">The contact to add the key to.</param>
+    /// <param name="key">The key the service is added under.</param>
+    /// <param name="serviceId">The Sevice type.</param>
+    /// <param name="user"></param>
+    /// <param name="uri">The service URI</param>
+    /// <param name="label">The service description.</param>
+    /// <param name="contexts">Contexts in which the service is to be used.</param>
+    /// <param name="parent">Parent service if a member of a group.</param>
+    /// <param name="cryptoData">The CryptoData representing the key.</param>
+    /// <param name="mediaType">The Key media type.</param>
+    /// <returns>The service entry.</returns>
     public static OnlineService? AddServiceKeyData(
                     this JsContact contact,
                     string key,

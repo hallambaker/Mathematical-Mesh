@@ -4,6 +4,11 @@
         <name>Goedel.Thing.Server</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Acme.WellKnownService">
+            <summary>
+            Well Known services.
+            </summary>
+        </member>
         <member name="T:Goedel.Thing.Server.TBS">
             <summary>
             TBS

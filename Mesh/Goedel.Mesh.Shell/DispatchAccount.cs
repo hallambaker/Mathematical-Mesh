@@ -57,10 +57,10 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult AccountHello(AccountHello options) {
-        var account = options.Account.Value;
-        account.AssertNotNull(NYI.Throw);
+        //var account = options.Account.Value;
+        //account.AssertNotNull(NYI.Throw);
 
-        string serviceAddress = null;
+        //string serviceAddress = null;
         throw new NYI();
         //var handle = new ParsedHandle(account);
         //if (handle.HandleType == HandleType.LocalName) {

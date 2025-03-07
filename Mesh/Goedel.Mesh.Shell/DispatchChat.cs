@@ -26,21 +26,33 @@ namespace Goedel.Mesh.Shell;
 public partial class Shell {
 
 
-    ///<inheritdoc/>
-    public override ShellResult ChatListen(ChatListen Options) {
-        return base.ChatListen(Options);
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult ChatListen(ChatListen options) {
+        return base.ChatListen(options);
         }
 
 
-    ///<inheritdoc/>
-    public override ShellResult ChatMessage(ChatMessage Options) {
-        return base.ChatMessage(Options);
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult ChatMessage(ChatMessage options) {
+        return base.ChatMessage(options);
         }
 
 
-    ///<inheritdoc/>
-    public override ShellResult ChatPoll(ChatPoll Options) {
-        return base.ChatPoll(Options);
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult ChatPoll(ChatPoll options) {
+        return base.ChatPoll(options);
         }
 
 

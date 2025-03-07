@@ -500,7 +500,14 @@ public partial class ContextUser : ContextAccount {
         }
 
 
-
+    /// <summary>
+    /// Add the application <paramref name="application"/> to the specified contact(s).
+    /// </summary>
+    /// <param name="application">The application to add.</param>
+    /// <param name="contacts">If not null, a list of the local names of the self-contacts
+    /// the application is to be added to. Otherwise, the application is added to the
+    /// default contact.</param>
+    /// <returns>Result of add transaction.</returns>
     public async Task<TransactResponse> AddApplication(
                     CatalogedApplication application,
                     IEnumerable<string> contacts = null) {
@@ -1474,10 +1481,10 @@ public partial class ContextUser : ContextAccount {
         //    }
 
         // Get the reply (if required)
-        var reply = requestContact.Reply == true ?
-            await ContactRequestAsync(requestContact.Sender, requestContact.PIN, localname, false) : null;
+        //var reply = requestContact.Reply == true ?
+        //    await ContactRequestAsync(requestContact.Sender, requestContact.PIN, localname, false) : null;
 
-        return new ResultMessageContact(requestContact, reply);
+        //return new ResultMessageContact(requestContact, reply);
         }
 
     /// <summary>
@@ -1524,10 +1531,21 @@ public partial class ContextUser : ContextAccount {
     #region // ContactManagement
 
 
-
+    /// <summary>
+    /// Attempt to find a contact record for the handle <paramref name="handle"/>
+    /// </summary>
+    /// <param name="handle">The handle to locate the contact for.</param>
+    /// <param name="contact">The contact, if found, otherwise null.</param>
+    /// <returns>True if a contact is found, otherwise null.</returns>
     public bool TryFindContact(string handle, out CatalogedContact contact) => TryFindContact(
                 new ParsedHandle(handle), out contact);
 
+    /// <summary>
+    /// Attempt to find a contact record for the handle <paramref name="handle"/>
+    /// </summary>
+    /// <param name="handle">The handle to locate the contact for.</param>
+    /// <param name="contact">The contact, if found, otherwise null.</param>
+    /// <returns>True if a contact is found, otherwise null.</returns>
     public bool TryFindContact(ParsedHandle handle, out CatalogedContact contact) {
         if (handle.HandleType == HandleType.LocalName) {
             return TryFindContactLocal(handle.Name, out contact);
@@ -1538,15 +1556,22 @@ public partial class ContextUser : ContextAccount {
         throw new NYI();
         }
 
-    public bool TryFindContactLocal(string handle, out CatalogedContact contact) =>
-                CatalogContact.TryFindByLocalName(handle, out contact);
+
+    /// <summary>
+    /// Try to locate a contact by local name.
+    /// </summary>
+    /// <param name="localname">The loacl name to locate the contact for.</param>
+    /// <param name="contact">The contact, if found, otherwise null.</param>
+    /// <returns></returns>
+    public bool TryFindContactLocal(string localname, out CatalogedContact contact) =>
+                CatalogContact.TryFindByLocalName(localname, out contact);
 
 
-    public bool TryFindContactNetwork(string handle, out CatalogedContact contact) {
+    //public bool TryFindContactNetwork(string handle, out CatalogedContact contact) {
 
 
-        throw new NYI();
-        }
+    //    throw new NYI();
+    //    }
 
 
 
@@ -1812,7 +1837,9 @@ public partial class ContextUser : ContextAccount {
     /// <summary>
     /// Return the contact with identifier <paramref name="key"/>.
     /// </summary>
-    /// <param name="key">specifies the identifier to return.</param>
+    /// <param name="key">specifies the identifier to return. If null, the 
+    /// default contact for self is returned.</param>
+    /// <param name="contact">The contact, if found.</param>
     /// <returns>The contact, if found. Otherwise null.</returns>
     public bool TryGetContactSelf(out CatalogedContact contact, string key=null) {
         var contacts = GetStore(CatalogContact.Label) as CatalogContact;

@@ -93,30 +93,30 @@ public static class Utilities {
     /// </summary>
     /// <param name="dateTime">The time to convert.</param>
     /// <returns>The converted date time</returns>
-    public static string ToRFC3339(this System.DateTime dateTime) => dateTime.ToString("yyyy-MM-dd'T'HH:mm:ssZ");
+    public static string ToRFC3339(this DateTime dateTime) => dateTime.ToString("yyyy-MM-dd'T'HH:mm:ssZ");
 
     /// <summary>
     /// Format a dateTime value in RFC3339 format.
     /// </summary>
     /// <param name="dateTime">The time to convert.</param>
     /// <returns>The converted date time</returns>
-    public static string ToRFC3339(this System.DateTime? dateTime) => dateTime == null ? "null" :
-        ((System.DateTime)dateTime).ToString("yyyy-MM-dd'T'HH:mm:ssZ");
+    public static string ToRFC3339(this DateTime? dateTime) => dateTime == null ? "null" :
+        ((DateTime)dateTime).ToString("yyyy-MM-dd'T'HH:mm:ssZ");
 
     /// <summary>
     /// Format a dateTime value in RFC3339 format.
     /// </summary>
     /// <param name="dateTime">The time to convert.</param>
     /// <returns>The converted date time</returns>
-    public static string ToFileSpec(this System.DateTime dateTime) => dateTime == null ? "null" :
-        ((System.DateTime)dateTime).ToString("yyyy-MM-dd--HH-mm");
+    public static string ToFileSpec(this DateTime? dateTime) => dateTime == null ? "null" :
+        ((DateTime)dateTime).ToString("yyyy-MM-dd--HH-mm");
 
     /// <summary>
     /// Parse an RFC3339 format date time value.
     /// </summary>
     /// <param name="text">The date to parse</param>
     /// <returns>The date value</returns>
-    public static System.DateTime FromRFC3339(this string text) {
+    public static DateTime FromRFC3339(this string text) {
         int Index = 0;
 
         try {

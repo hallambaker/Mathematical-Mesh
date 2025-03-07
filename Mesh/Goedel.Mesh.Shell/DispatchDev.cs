@@ -26,17 +26,34 @@ namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
 
-    public override ShellResult DevCreate(DevCreate Options) {
-        return base.DevCreate(Options);
+
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult DevCreate(DevCreate options) {
+        return base.DevCreate(options);
         }
 
 
-    public override ShellResult DevGet(DevGet Options) {
-        return base.DevGet(Options);
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult DevGet(DevGet options) {
+        return base.DevGet(options);
         }
 
-    public override ShellResult DevList(DevList Options) {
-        return base.DevList(Options);
+
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult DevList(DevList options) {
+        return base.DevList(options);
         }
 
 

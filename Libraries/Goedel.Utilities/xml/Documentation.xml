@@ -1798,7 +1798,7 @@
             <param name="dateTime">The time to convert.</param>
             <returns>The converted date time</returns>
         </member>
-        <member name="M:Goedel.Utilities.Utilities.ToFileSpec(System.DateTime)">
+        <member name="M:Goedel.Utilities.Utilities.ToFileSpec(System.Nullable{System.DateTime})">
             <summary>
             Format a dateTime value in RFC3339 format.
             </summary>

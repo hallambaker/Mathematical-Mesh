@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 3/6/2025 5:00:05 PM
+//  This file was automatically generated at 3/7/2025 1:29:00 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -625,11 +625,6 @@ public partial class ResultSelf : Result {
 	/// <summary>
 	/// </summary>
 public partial class ResultInfo : Result {
-        /// <summary>
-        /// </summary>
-
-	public virtual Contact?					Contact  {get; set;}
-
 
 
     ///<summary>Implement IBinding</summary> 
@@ -639,9 +634,6 @@ public partial class ResultInfo : Result {
 	static protected new Binding _binding = new (
 			new() {
 
-			{ "Contact", new PropertyStruct ("Contact", 
-					(IBinding data, object? value) => {(data as ResultInfo).Contact = value as Contact;}, (IBinding data) => (data as ResultInfo).Contact,
-					true)} 
         }, __Tag,() => new ResultInfo(), Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

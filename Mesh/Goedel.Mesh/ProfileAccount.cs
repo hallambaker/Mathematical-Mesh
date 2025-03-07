@@ -31,9 +31,10 @@ public partial class ProfileAccount {
     ///<summary>Typed enveloped data</summary> 
     public Enveloped<ProfileAccount> GetEnvelopedProfileAccount() => new(DareEnvelope);
 
+    ///<summary>Profile direct address</summary> 
+    public string DirectAddress => UdfString.ToLower() + "@@" + AccountAddress.GetServiceRaw();
 
-    public string DirectAddress => UdfString.ToLower() + "@" + AccountAddress.GetServiceRaw();
-
+    ///<summary>URI specifying profile direct address.</summary> 
     public string DirectAddressUri => "mesh:" + DirectAddress;
 
     ///<summary>The account encryption key</summary> 

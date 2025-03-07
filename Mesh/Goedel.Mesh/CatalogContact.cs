@@ -451,6 +451,7 @@ public partial class CatalogedContact {
 #endregion
 #region // Contact and sub classes
 
+
 public partial class Contact {
 
     /////<summary>Typed enveloped data</summary> 

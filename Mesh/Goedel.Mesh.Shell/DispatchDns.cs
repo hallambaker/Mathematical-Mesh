@@ -25,20 +25,40 @@ namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
 
-    public override ShellResult DnsCreate(DnsCreate Options) {
-        return base.DnsCreate(Options);
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult DnsCreate(DnsCreate options) {
+        return base.DnsCreate(options);
         }
 
-    public override ShellResult DnsHandle(DnsHandle Options) {
-        return base.DnsHandle(Options);
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult DnsHandle(DnsHandle options) {
+        return base.DnsHandle(options);
         }
 
-    public override ShellResult DnsZone(DnsZone Options) {
-        return base.DnsZone(Options);
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult DnsZone(DnsZone options) {
+        return base.DnsZone(options);
         }
 
-    public override ShellResult DnsWildcard(DnsWildcard Options) {
-        return base.DnsWildcard(Options);
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult DnsWildcard(DnsWildcard options) {
+        return base.DnsWildcard(options);
         }
 
 

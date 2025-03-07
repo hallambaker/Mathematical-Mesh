@@ -2015,6 +2015,46 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="P:Goedel.Contacts.JsContact.GroupClaim">
+            <summary>Used during analysis to track services claiming to be part 
+            of a service group.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.JsContact.Analysis">
+            <summary>Analyzed version of the contact. Note that this is not synchronized
+            and so a new call must be made to <see cref="M:Goedel.Contacts.JsContact.Analyze"/></summary> 
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.#ctor">
+            <summary>
+            Returns a new instance.
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.Create(System.String)">
+            <summary>
+            Create a  contact of the specified kind with the Version, Created and Updated
+            fields filled.
+            </summary>
+            <param name="kind"></param>
+            <returns>The created contact.</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.Individual(System.String,System.String)">
+            <summary>
+            Create an individual contact for <paramref name="fullname"/> of gender
+            <paramref name="gender"/>.
+            </summary>
+            <param name="fullname">Full name</param>
+            <param name="gender">Gender, "masculine", "feminine", "inanimate", "animate", etc. </param>
+            <returns>The created card.</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.Update">
+            <summary>
+            Update the contact updated time.
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.Analyze">
+            <summary>
+            Analyze the contact to populate the property <see cref="P:Goedel.Contacts.JsContact.Analysis"/>
+            </summary>
+        </member>
         <member name="T:Goedel.Contacts.Relation">
             <summary>
             </summary>
@@ -2932,6 +2972,12 @@
         </member>
         <member name="P:Goedel.Contacts.OnlineService.Key">
             <summary>The dictionary key (filled by calling Analyze)</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService.CryptoKey">
+            <summary>The associated <see cref="P:Goedel.Contacts.OnlineService.CryptoKey"/> entry.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService.Analysis">
+            <summary>Analysis of the service parent and children.</summary> 
         </member>
         <member name="T:Goedel.Contacts.Phone">
             <summary>
@@ -4087,6 +4133,38 @@
             <summary>
             Initialization routine for cryptographic functions on the dotNet Core platform.
             </summary>
+        </member>
+        <member name="T:Goedel.Contacts.AnalysizedContact">
+            <summary>
+            Convenience class collecting together related parts of a <see cref="T:Goedel.Contacts.JsContact"/>.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Parents">
+            <summary>Service groups this entry is a member of.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Children">
+            <summary>Services that are members of this service groups.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Emails">
+            <summary>Email addresses as an <see cref="T:Goedel.Contacts.OnlineService"/></summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Webs">
+            <summary>Services of type HTTP or HTTPS</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Mesh">
+            <summary>Mesh services</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Groups">
+            <summary>Groups</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Ssh">
+            <summary>Services of type SSH</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Credentials">
+            <summary>Services of type credential</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Other">
+            <summary>Services not included in any other category.</summary> 
         </member>
         <member name="T:Goedel.Contacts.NamespaceDoc">
             <summary>

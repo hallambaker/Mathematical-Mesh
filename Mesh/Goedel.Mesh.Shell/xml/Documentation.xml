@@ -234,6 +234,48 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.ChatListen(Goedel.Mesh.Shell.ChatListen)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.ChatMessage(Goedel.Mesh.Shell.ChatMessage)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.ChatPoll(Goedel.Mesh.Shell.ChatPoll)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.ContactSelf(Goedel.Mesh.Shell.ContactSelf)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.ContactQuery(Goedel.Mesh.Shell.ContactQuery)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.ContactAdd(Goedel.Mesh.Shell.ContactAdd)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.ContactStatic(Goedel.Mesh.Shell.ContactStatic)">
             <summary>
             Dispatch method
@@ -325,6 +367,41 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DevCreate(Goedel.Mesh.Shell.DevCreate)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DevGet(Goedel.Mesh.Shell.DevGet)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DevList(Goedel.Mesh.Shell.DevList)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DeviceCredential(Goedel.Mesh.Shell.DeviceCredential)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DeviceService(Goedel.Mesh.Shell.DeviceService)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.DeviceRequestConnect(Goedel.Mesh.Shell.DeviceRequestConnect)">
             <summary>
             Dispatch method
@@ -396,6 +473,34 @@
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.DeviceAuthorize(Goedel.Mesh.Shell.DeviceAuthorize)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DnsCreate(Goedel.Mesh.Shell.DnsCreate)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DnsHandle(Goedel.Mesh.Shell.DnsHandle)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DnsZone(Goedel.Mesh.Shell.DnsZone)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DnsWildcard(Goedel.Mesh.Shell.DnsWildcard)">
             <summary>
             Dispatch method
             </summary>
@@ -694,6 +799,34 @@
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.SelfPublish(Goedel.Mesh.Shell.SelfPublish)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.SelfAnyone(Goedel.Mesh.Shell.SelfAnyone)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.SelfAnything(Goedel.Mesh.Shell.SelfAnything)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.SelfAnywhere(Goedel.Mesh.Shell.SelfAnywhere)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.SelfService(Goedel.Mesh.Shell.SelfService)">
             <summary>
             Dispatch method
             </summary>
@@ -5568,10 +5701,6 @@
             <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultInfo">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ResultInfo.Contact">
             <summary>
             </summary>
         </member>

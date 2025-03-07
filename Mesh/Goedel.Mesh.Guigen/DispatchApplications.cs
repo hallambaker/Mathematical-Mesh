@@ -46,6 +46,8 @@ public partial class EverythingMaui {
 
         return NullResult.Completed;
         }
+
+
     ///<inheritdoc/>
     public override async Task<IResult> AddGitAccount(AddGitAccount data) {
 

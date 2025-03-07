@@ -3370,7 +3370,11 @@
             <summary>
             Typed DareEnvelope.
             </summary>
-            <typeparam name="T">The type of the wrapped data item.</typeparam>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EnvelopedJson.#ctor">
+            <summary>
+            Default constructor, used in deserialization.
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.EnvelopedJson.#ctor(Goedel.Protocol.JsonObject,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
             <summary>
@@ -4140,6 +4144,14 @@
             Extension methods
             </summary>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.Extension.DataUri(Goedel.Protocol.JsonObject)">
+            <summary>
+            Serialize <paramref name="jsonObject"/> as JSON and return the result as a 
+            data: URI.
+            </summary>
+            <param name="jsonObject">The object to serialize.</param>
+            <returns>The constructed URI.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.Extension.Envelope(Goedel.Protocol.JsonObject,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Protocol.ObjectEncoding)">
             <summary>
             Sign and encrypt the JsonObject under <paramref name="signingKey"/> and
@@ -4154,8 +4166,10 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.Extension.Envelope(Goedel.Protocol.JsonObject,System.Collections.Generic.List{Goedel.Cryptography.CryptographicKey},System.Collections.Generic.List{Goedel.Cryptography.CryptographicKey},Goedel.Protocol.ObjectEncoding,System.Boolean)">
             <summary>
-            Sign the profile under <paramref name="signingKeys"/>.
+            Sign and encrypt the object <paramref name="jsonObject"/> under 
+            <paramref name="signingKeys"/> and <paramref name="encryptionKeys"/>.
             </summary>
+            <param name="jsonObject">The object to sign.</param>
             <param name="signingKeys">Optional list of signature keys.</param>
             <param name="encryptionKeys">Optional list of encryption keys.</param>
             <param name="objectEncoding">The encoding to use to compute the inner object.</param>
@@ -4166,13 +4180,12 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.Extension.Envelope(Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Protocol.ObjectEncoding)">
             <summary>
-            Sign the profile under <paramref name="signingKeys"/>.
+            Sign and encrypt the object <paramref name="jsonObject"/> under 
+            <paramref name="cryptoParameters"/>.
             </summary>
-            <param name="signingKeys">Optional list of signature keys.</param>
-            <param name="encryptionKeys">Optional list of encryption keys.</param>
+             <param name="jsonObject">The object to sign.</param>
+            <param name="cryptoParameters">The cryptographic parameters.</param>
             <param name="objectEncoding">The encoding to use to compute the inner object.</param>
-            <param name="includeSignatureKey">If true include the public key parameters in the
-            signature.</param>
             <returns>Envelope containing the signed profile. Also updates the property
             <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/></returns>
         </member>

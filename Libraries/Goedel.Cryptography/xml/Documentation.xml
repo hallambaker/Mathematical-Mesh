@@ -12514,6 +12514,66 @@
             <param name="data">The data to convert to key form</param>
             <returns>A randomly generated UDF string.</returns>
         </member>
+        <member name="M:Goedel.Cryptography.Udf.CreateEarl(System.Byte[])">
+            <summary>
+            Create an EARL from the data <paramref name="data"/>
+            </summary>
+            <param name="data">The data to analyze.</param>
+            <returns>The EARL locator.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Udf.AuthenticatedEncryptionKey(System.Byte[],System.Int32)">
+            <summary>
+            Obrain the Authenticated encryption key for <paramref name="data"/>
+            </summary>
+            <param name="data">The data to analyze.</param>
+            <param name="bits">The number of bits precision to specify in the output.</param>
+            <returns>The key as a Base32 fingerprint.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Udf.Locator(System.String)">
+            <summary>
+            Create the locator path for the EARL <paramref name="earl"/>
+            </summary>
+            <param name="earl">The EARL to construct the locator path for.</param>
+            <returns>The locator.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Udf.AuthenticatedEncryptionKeyDigest(System.Byte[],System.Int32)">
+            <summary>
+            Truncate the digest value <paramref name="digest"/> to <paramref name="bits"/> and return the
+            presentation form.
+            </summary>
+            <param name="digest">The digest value to present</param>
+            <param name="bits">The number of bits if outpur to provide.</param>
+            <returns>The presentation string.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Udf.GetEncryptionKey(System.String)">
+            <summary>
+            Obtain the 256 bit AES encryption key and 96 bit nonce from the key <paramref name="udf"/>.
+            </summary>
+            <param name="udf">The key in presentation format.</param>
+            <returns>The encryption key.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Udf.GetEncryptedData(System.Byte[],System.String)">
+            <summary>
+            Encrypt the plaintext <paramref name="plaintext"/> under the key path
+            <paramref name="earl"/> and return the result with the ciphertext bytes
+            followed by the tag.
+            </summary>
+            <param name="plaintext">The plaintext to encrypt.</param>
+            <param name="earl">The key in presentation form.</param>
+            <returns>The encrypted data package consisting of the ciphertext followed
+            by the tag.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Udf.GetDecryptedData(System.Byte[],System.String)">
+            <summary>
+            Decrypt the encrypted data package <paramref name="ciphertextTag"/> using
+            the key <paramref name="earl"/>, verify the tag is correct and return the
+            plaintext.
+            </summary>
+            <param name="ciphertextTag">The encrypted data package consisting of the ciphertext followed
+            by the tag.</param>
+            <param name="earl">The key in presentation form.</param>
+            <returns>The plaintext.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Udf.KeyShare(System.Byte[])">
             <summary>
             Return the key value <paramref name="Data"/> in UDF form.

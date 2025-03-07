@@ -58,7 +58,7 @@ class NamespaceDoc {
 
 internal class Component : IComponent {
 
-    static bool initialized = false;
+    //static bool initialized = false;
 
     ///<summary> default logger for the assembly</summary> 
     public static ILogger Logger = new AssemblyLogger("Goedel.Mesh.Client") {
@@ -67,6 +67,7 @@ internal class Component : IComponent {
 
     ///<inheritdoc/>
     public void Initialize() {
+        //initialized = true;
         }
 
     ///<inheritdoc/>

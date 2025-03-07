@@ -621,6 +621,54 @@
             <param name="serviceDescription">The service description to add to</param>
             <param name="record">DNS record to add data from</param>
         </member>
+        <member name="T:Goedel.Discovery.DnsUpdate">
+            <summary>
+            DNS update client.
+            </summary>
+        </member>
+        <member name="M:Goedel.Discovery.DnsUpdate.#ctor(System.Net.IPAddress)">
+            <summary>
+            Constructor returns a new instance for the service at <paramref name="iPAddress"/>.
+            </summary>
+            <param name="iPAddress">IP address of the service to push updates to.</param>
+        </member>
+        <member name="M:Goedel.Discovery.DnsUpdate.#ctor(Goedel.Discovery.DnsClient)">
+            <summary>
+            Constructor returns a new instance for the service using the DNS Client <paramref name="client"/>.
+            </summary>
+            <param name="client"></param>
+        </member>
+        <member name="M:Goedel.Discovery.DnsUpdate.InitializeZone(System.String,System.String)">
+            <summary>
+            Initialize the zone entries.
+            </summary>
+            <param name="zoneName"></param>
+            <param name="tsig"></param>
+        </member>
+        <member name="M:Goedel.Discovery.DnsUpdate.Publish(System.Collections.Generic.List{Goedel.Discovery.DNSRecord})">
+            <summary>
+            Publish the update records <paramref name="records"/> to the zone.
+            </summary>
+            <param name="records">The records to update.</param>
+        </member>
+        <member name="T:Goedel.Discovery.DnsClientTcp">
+            <summary>
+            DNS Client over TCP transport.
+            </summary>
+        </member>
+        <member name="M:Goedel.Discovery.DnsClientTcp.#ctor(System.Net.IPAddress)">
+            <summary>
+            Constructor, return a new instance for the IP Address <paramref name="ipAddress"/>
+            </summary>
+            <param name="ipAddress">IP Address for the server to bind to.</param>
+        </member>
+        <member name="M:Goedel.Discovery.DnsClientTcp.GetContext">
+            <summary>
+            Return a new DNS query context.
+            </summary>
+            <returns>The constrructed context.</returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
         <member name="T:Goedel.Discovery.HostNetwork">
             <summary>
             Convenience wrapper to extract the pertinent information from the host network
@@ -4175,6 +4223,24 @@
             Return the Account Service handle associated with the handle.
             </summary>
             <returns>The account service handle</returns>
+        </member>
+        <member name="M:Goedel.Discovery.ParsedHandle.ResolveContact(System.String)">
+            <summary>
+            Resolve the JSContact entry for the handle <paramref name="handle"/> and return the 
+            plaintext bytes and media type.
+            </summary>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Discovery.ParsedHandle.ResolveEarl(System.String,System.String,System.String)">
+            <summary>
+            Resolve <paramref name="uriString"/> to obtain the HTTPS well known service, 
+            fetch the ciphertext, decrypt and return the result.
+            </summary>
+            <param name="uriString">The uri to parse.</param>
+            <param name="wellKnown">The wellknown service type</param>
+            <param name="extension">The file extension (defaults to <paramref name="wellKnown"/>).</param>
+            <returns></returns>
         </member>
         <member name="M:Goedel.Discovery.ParsedHandle.GetServices">
             <summary>

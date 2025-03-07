@@ -234,8 +234,15 @@ public static partial class Extensions {
         return JSONWriter.GetBytes;
         }
 
+    /// <summary>
+    /// Return a new enumerator on the dictionary <paramref name="dict"/>
+    /// </summary>
+    /// <typeparam name="T">The value type of the dictionary</typeparam>
+    /// <param name="dict">The dictionary to enumerate</param>
+    /// <returns>The enumerator.</returns>
     public static IEnumerable<KeyValuePair<string, object?>> GetEnumerable<T>(this Dictionary<string, T> dict) =>
         new KeyValueEnumerable<T>(dict);
+
 
     private class KeyValueEnumerable<T> : IEnumerable<KeyValuePair<string, object?>> {
         IEnumerable<KeyValuePair<string, T?>> Typed { get; }
@@ -251,9 +258,9 @@ public static partial class Extensions {
         }
 
 
-    public static IEnumerator<KeyValuePair<string,object?>> GetEnumerator<T>(this Dictionary<string,T> dict) {
-        return new KeyValueEnumeration<T>(dict.GetEnumerator());
-        }
+    //public static IEnumerator<KeyValuePair<string,object?>> GetEnumerator<T>(this Dictionary<string,T> dict) {
+    //    return new KeyValueEnumeration<T>(dict.GetEnumerator());
+    //    }
 
     private abstract class KeyValueEnumeration : IEnumerator<KeyValuePair<string, object?>> {
         public abstract KeyValuePair<string, object> Current { get; }

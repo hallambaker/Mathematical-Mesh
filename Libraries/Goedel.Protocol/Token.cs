@@ -53,8 +53,11 @@ public record Binding(
 
     ///<summary>Dictionary binding sub classes to binding descriptions</summary> 
     public Dictionary<string, Binding>? ChildClasses = null;
+
+    ///<summary>Dictionary binding all properties to binding descriptions</summary> 
     public Dictionary<string, Property> AllProperties = null;
 
+    ///<summary>Dictionary binding all properties to binding descriptions</summary> 
     public Dictionary<string, Property> FullProperties => AllProperties ?? Properties;
     }
 
@@ -863,6 +866,8 @@ public record PropertyListStruct(
 /// <param name="IFactory">For a collection object, factory returning an instance of an
 /// object in the collection.</param>
 /// <param name="Tagged">If true, the property should be tagged.</param>
+/// <param name="Add">Add struct to dictionary</param>
+/// <param name="Enumerator">Returns an enumerator</param>
 public record PropertyDictionaryStruct(
             string Tag,
             Action<IBinding, object?> Set,
@@ -875,6 +880,7 @@ public record PropertyDictionaryStruct(
 
 
     ) : Property(Tag, true) {
+
 
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {

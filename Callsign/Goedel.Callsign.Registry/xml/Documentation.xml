@@ -313,6 +313,11 @@
             The Mesh service configuration.
             </summary>
         </member>
+        <member name="M:Goedel.Callsign.Registry.CallsignRegistryConfiguration.#ctor">
+            <summary>
+            Default constructor, return a new instance.
+            </summary>
+        </member>
         <member name="F:Goedel.Callsign.Registry.CallsignRegistryConfiguration.ConfigurationEntry">
             <summary>The configuration entry.</summary> 
         </member>

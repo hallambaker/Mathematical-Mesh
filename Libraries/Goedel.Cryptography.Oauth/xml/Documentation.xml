@@ -405,7 +405,6 @@
             <param name="state">State to be preserved between pre request
             and completion.</param>
             <returns>A client result.</returns>
-            <param name="handle">The ATprotocol handle.</param>
         </member>
         <member name="M:Goedel.Cryptography.Oauth.OauthClient.ConstructPar(Goedel.Cryptography.Oauth.OauthHandleResolution,System.String)">
             <summary>
@@ -483,6 +482,9 @@
         <member name="P:Goedel.Cryptography.Oauth.OauthClientResultAuthRequest.Nonce">
             <summary>The nonce value used to construct the PKCE verifier and 
             challenge.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.OauthClientResultAuthRequest.Code">
+            <summary>Value of the code field.</summary> 
         </member>
         <member name="T:Goedel.Cryptography.Oauth.ApplicationType">
             <summary>Application Types</summary>

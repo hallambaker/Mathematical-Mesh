@@ -107,6 +107,25 @@
             <param name="uri">The base URI for the query.</param>
             <returns>The encoded data.</returns>
         </member>
+        <member name="M:Goedel.Protocol.Web.WebExtensions.FromUrlQuery``1(System.Uri)">
+            <summary>
+            Parse the query component of <paramref name="uri"/> and return an instance of 
+            <typeparamref name="T"/> with the properties fields populated using the resulting
+            dictionary values.
+            </summary>
+            <typeparam name="T">The type of object to return.</typeparam>
+            <param name="uri">The URI to parse.</param>
+            <returns>The instance created.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Web.WebExtensions.FillFromUrlQuery(Goedel.Protocol.JsonObject,System.Uri)">
+            <summary>
+            Parse the query component of <paramref name="uri"/> and fill the object 
+            <paramref name="data"/> with the properties fields populated using the resulting
+            dictionary values.
+            </summary>
+            <param name="data">The object toi populate.</param>
+            <param name="uri">The URI to parse.</param>
+        </member>
         <member name="T:Goedel.Protocol.Web.FieldData">
             <summary>
             Backer record describing a form field entry in a MIME multipart.

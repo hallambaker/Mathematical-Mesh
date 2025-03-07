@@ -258,8 +258,30 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="M:Goedel.Anything.CatalogedIdentity.GetPrivateName">
+            <summary>
+            Return the private name associated with the identitgy
+            </summary>
+            <returns>The private name.</returns>
+        </member>
+        <member name="M:Goedel.Anything.CatalogedIdentity.CreateRoot(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Create a private root for the identity.
+            </summary>
+            <param name="algorithmId">Signinature algorithm.</param>
+        </member>
+        <member name="M:Goedel.Anything.CatalogedIdentity.CreateCertificateSet(Goedel.Anything.CatalogedThing,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Create a certificate set for <paramref name="thing"/>
+            </summary>
+            <param name="thing">The device to issue a certificate to.</param>
+            <param name="algorithmId">Signinature algorithm.</param>
+        </member>
         <member name="T:Goedel.Anything.Identity">
             <summary>
+            </summary>
+            <summary>
+            Identity declaration, a collection of linked DNS names.
             </summary>
         </member>
         <member name="P:Goedel.Anything.Identity.Name">
@@ -320,6 +342,14 @@
             </summary>
             <param name="name">The local name to map</param>
             <returns>The DNS name</returns>
+        </member>
+        <member name="M:Goedel.Anything.Identity.CreateCertificate(Goedel.Anything.CatalogedThing,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Create a certificate for <paramref name="thing"/> using algorithm
+            <paramref name="cryptoAlgorithm"/>
+            </summary>
+            <param name="thing">Thing to create the certificate for</param>
+            <param name="cryptoAlgorithm">Signinature algorithm.</param>
         </member>
         <member name="T:Goedel.Anything.DnsIdentity">
             <summary>
@@ -822,6 +852,7 @@
             Create a new private end entity certificate
             </summary>
             <param name="key">The signature key.</param>
+            <param name="thing">The device that the certificate is to be issued to.</param>
         </member>
         <member name="T:Goedel.Anything.AnythingRequestContext">
             <summary>
@@ -1169,6 +1200,7 @@
             <param name="address">The address to return the record for.</param>
             <returns>The record.</returns>
             <exception cref="T:System.NotImplementedException">The address type is not supported.</exception>
+            <param name="domain">Domain to fetch the record for.</param>
         </member>
         <member name="M:Goedel.Anything.DnsSecondary.RecordUpdate(Goedel.Discovery.DNSRecord)">
             <summary>
@@ -1235,6 +1267,13 @@
             <summary>
             Extensions class. Provides static convenience extensions.
             </summary>
+        </member>
+        <member name="M:Goedel.Anything.Helper.GetSubjectAltNameDer(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Return the DER encoding of the names <paramref name="dnsNames"/>
+            </summary>
+            <param name="dnsNames">List of DNS names to encode.</param>
+            <returns>The DER encoding.</returns>
         </member>
         <member name="T:Goedel.Anything.Extensions">
             <summary>

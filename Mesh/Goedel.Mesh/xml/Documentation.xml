@@ -570,6 +570,19 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationCredential.PrimaryPrivate">
+            <summary>The primary keypair.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationCredential.Create(System.String,System.Collections.Generic.List{System.String},Goedel.Mesh.CredentialProfile,Goedel.Mesh.CatalogedApplicationCredential)">
+            <summary>
+            Create a credential
+            </summary>
+            <param name="localName">Local Name</param>
+            <param name="roles">Assigned roles</param>
+            <param name="credentialProfile">Profile</param>
+            <param name="parent">Parent credential, used in CA operations.</param>
+            <returns>The credential</returns>
+        </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationCredential.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
@@ -658,6 +671,15 @@
             <summary>
             The primary key used to catalog the entry.
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationDeveloper.Create(System.String,System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            Create a new Developer application instance.
+            </summary>
+            <param name="localName">The local name</param>
+            <param name="roles">The roles to which the application is granted.</param>
+            <param name="description">Description of the account.</param>
+            <returns>The application</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationDeveloper.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
@@ -1220,7 +1242,8 @@
             </summary>
             <param name="address">The email address.</param>
             <param name="roles">The roles to which the application is granted.</param>
-            <returns></returns>
+            <param name="description">Description of the account.</param>
+            <returns>The application</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationMail.GetKey(System.String)">
             <summary>
@@ -1318,6 +1341,41 @@
         <member name="T:Goedel.Mesh.CatalogedApplicationService">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplicationService._PrimaryKey">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationService.CreateThing(System.String,System.Collections.Generic.List{System.String},System.String,System.String,System.String)">
+            <summary>
+            Create a catalogged service entry for Thing service.
+            </summary>
+            <param name="localName">The local name</param>
+            <param name="roles">The roles to which the application is granted.</param>
+            <param name="zone">The zone under control</param>
+            <param name="admin">The service administration address</param>
+            <param name="description">Description of the account.</param>
+            <returns>The application</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationService.CreateWeb(System.String,System.Collections.Generic.List{System.String},System.String,System.String)">
+            <summary>
+            Create a catalogged service entry for Web service.
+            </summary>
+            <param name="localName">The local name</param>
+            <param name="roles">The roles to which the application is granted.</param>
+            <param name="address">The Web address</param>
+            <param name="description">Description of the account.</param>
+            <returns>The application</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedApplicationService.CreateMessaging(System.String,System.Collections.Generic.List{System.String},System.String,System.String,System.String)">
+            <summary>
+            Create a catalogged service entry for Messaging service.
+            </summary>
+            <param name="localName">The local name</param>
+            <param name="roles">The roles to which the application is granted.</param>
+            <param name="address">The Web address</param>
+            <param name="protocol">The messaging protocol.</param>
+            <param name="description">Description of the account.</param>
+            <returns>The application</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationService.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
@@ -1522,11 +1580,12 @@
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationSsh.Create(System.String,System.Collections.Generic.List{System.String},System.String)">
             <summary>
-            Create a new catalog entry for a set of client authentication keys.
+            Create a new SSH application instance.
             </summary>
-            <param name="localName">The local name.</param>
-            <param name="roles">The roles to which the key is to be granted.</param>
-            <returns></returns>
+            <param name="localName">The local name</param>
+            <param name="roles">The roles to which the application is granted.</param>
+            <param name="description">Description of the account.</param>
+            <returns>The application</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationSsh.Activate(System.Collections.Generic.List{Goedel.Mesh.ApplicationEntry},Goedel.Mesh.ProfileDevice,Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
@@ -3126,6 +3185,12 @@
         <member name="P:Goedel.Mesh.CatalogContact.DictionaryByNetworkAddress">
             <summary>Dictionary mapping email addresses to contacts.</summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogContact.DictionaryContactSelf">
+            <summary>Contacts for self.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CatalogContact.DefaultContactSelf">
+            <summary>Default contact for self.</summary> 
+        </member>
         <member name="P:Goedel.Mesh.CatalogContact.SequenceDefault">
             <inheritdoc/>
         </member>
@@ -3245,6 +3310,14 @@
             capability against.</param>
             <param name="keyDecrypt">The decryption key if found, otherwise null.</param>
             <returns>true if a key is found, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogContact.TryFindByLocalName(System.String,Goedel.Mesh.CatalogedContact@)">
+            <summary>
+            Attempt to find a contact by its local name key/
+            </summary>
+            <param name="key">The local name to search on.</param>
+            <param name="contact">The contact (if found).</param>
+            <returns>True if the contact is found, otherwise false.</returns>
         </member>
         <member name="T:Goedel.Mesh.CatalogedContact">
             <summary>
@@ -3388,6 +3461,9 @@
         <member name="P:Goedel.Mesh.NetworkProtocolEntry.CatalogedContact">
             <summary>The contact from which the network protocol data was obtained.
             This may be used to update the credential data periodically.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.NetworkProtocolEntry.Address">
+            <summary>The address</summary> 
         </member>
         <member name="P:Goedel.Mesh.NetworkProtocolEntry.MeshKeyEncryption">
             <summary>The encryption key to use for this contact.</summary>
@@ -5569,23 +5645,181 @@
             <summary>
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.CredentialProfile">
+            <summary>
+            Profile describing a credential type.
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CredentialProfile.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyUses,System.Int32)">
+            <summary>
+            Profile describing a credential type.
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfile.AlgorithmId">
+            <summary>The default algorithm ID.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfile.KeyUses">
+            <summary>The default key uses.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfile.KeySize">
+            <summary>The default key size.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfile.Platform">
+            <summary>The platform served by the credential</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfile.Code">
+            <summary>PKIK credential profile.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfile.Windows">
+            <summary>Windows credential profile.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfile.Apple">
+            <summary>Apple developer (ios and macOS) credential profile.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfile.Android">
+            <summary>Android credential profile.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfile.Linux">
+            <summary>Linux credential profile.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfile.Commit">
+            <summary>Commit credential profile.</summary> 
+        </member>
+        <member name="T:Goedel.Mesh.CredentialProfileOpenPgp">
+            <summary>
+            OpenPGP Credential Profile
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CredentialProfileOpenPgp.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyUses,System.Int32)">
+            <summary>
+            OpenPGP Credential Profile
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
+        </member>
         <member name="P:Goedel.Mesh.CredentialProfileOpenPgp.Platform">
             <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.CredentialProfileCommit">
+            <summary>
+            Commit Credential Profile
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CredentialProfileCommit.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyUses,System.Int32)">
+            <summary>
+            Commit Credential Profile
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
         </member>
         <member name="P:Goedel.Mesh.CredentialProfileCommit.Platform">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Mesh.CredentialProfilePkix">
+            <summary>
+            Pkix Credential Profile
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CredentialProfilePkix.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyUses,System.Int32)">
+            <summary>
+            Pkix Credential Profile
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
+        </member>
         <member name="P:Goedel.Mesh.CredentialProfilePkix.Platform">
             <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.CredentialProfileWindows">
+            <summary>
+            Windows Credential Profile
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CredentialProfileWindows.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyUses,System.Int32)">
+            <summary>
+            Windows Credential Profile
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
         </member>
         <member name="P:Goedel.Mesh.CredentialProfileWindows.Platform">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Mesh.CredentialProfileApple">
+            <summary>
+            Apple Credential Profile
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CredentialProfileApple.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyUses,System.Int32)">
+            <summary>
+            Apple Credential Profile
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
+        </member>
         <member name="P:Goedel.Mesh.CredentialProfileApple.Platform">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Mesh.CredentialProfileAndroid">
+            <summary>
+            Android Credential Profile
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CredentialProfileAndroid.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyUses,System.Int32)">
+            <summary>
+            Android Credential Profile
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
+        </member>
         <member name="P:Goedel.Mesh.CredentialProfileAndroid.Platform">
             <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.CredentialProfileLinux">
+            <summary>
+            Linux Credential Profile
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CredentialProfileLinux.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyUses,System.Int32)">
+            <summary>
+            Linux Credential Profile
+            </summary>
+            <param name="AlgorithmId">The default algorithm ID.</param>
+            <param name="KeyUses">The default key uses.</param>
+            <param name="KeySize">The default key size.</param>
         </member>
         <member name="P:Goedel.Mesh.CredentialProfileLinux.Platform">
             <inheritdoc/>
@@ -6812,7 +7046,7 @@
         <member name="M:Goedel.Mesh.Extensions.AddMesh(Goedel.Contacts.JsContact,Goedel.Mesh.ProfileAccount)">
             <summary>
             Add the Mesh profilr <paramref name="profile"/>to the contact
-            <paramref name="contact"/> under the service type <paramref name="serviceId"/>.
+            <paramref name="contact"/> .
             </summary>
             <param name="contact">The contact to add the profile to.</param>
             <param name="profile">The profile to add.</param>
@@ -6868,16 +7102,45 @@
         </member>
         <member name="M:Goedel.Mesh.Extensions.AddService(Goedel.Contacts.JsContact,System.String,System.String,System.String,System.String)">
             <summary>
-            Add the key <paramref name="keyData"/> to the contact <paramref name="contact"/>.
+            Add a service with the specified parameters to the contact <paramref name="contact"/>.
             </summary>
             <param name="contact">The contact to add the key to.</param>
             <param name="serviceId">The Sevice type.</param>
             <param name="accountAddress">The account address to specify.</param>
+            <param name="uri">The service URI</param>
+            <param name="label">The service description.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.AddServiceKeyData(Goedel.Contacts.JsContact,Goedel.Mesh.KeyData,System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            Add a service with the specified parameters and credential <paramref name="keyData"/> to 
+            the contact with separate service and CryptoKey entries.
+            </summary>
+            <param name="contact">The contact to add the key to.</param>
+            <param name="keyData"></param>
+            <param name="serviceId">The Sevice type.</param>
+            <param name="user"></param>
+            <param name="uri">The service URI</param>
+            <param name="label">The service description.</param>
+            <param name="contexts">Contexts in which the service is to be used.</param>
+            <param name="parent">Parent service if a member of a group.</param>
+            <returns>The service entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.Extensions.AddServiceKeyData(Goedel.Contacts.JsContact,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String,System.String,System.String)">
             <summary>
-            Add the key <paramref name="keyData"/> to the contact <paramref name="contact"/>.
+            Add a service with the specified parameters and credential <paramref name="cryptoData"/> to 
+            the contact with separate service and CryptoKey entries.
             </summary>
+            <param name="contact">The contact to add the key to.</param>
+            <param name="key">The key the service is added under.</param>
+            <param name="serviceId">The Sevice type.</param>
+            <param name="user"></param>
+            <param name="uri">The service URI</param>
+            <param name="label">The service description.</param>
+            <param name="contexts">Contexts in which the service is to be used.</param>
+            <param name="parent">Parent service if a member of a group.</param>
+            <param name="cryptoData">The CryptoData representing the key.</param>
+            <param name="mediaType">The Key media type.</param>
+            <returns>The service entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.Extensions.AddKeyData(Goedel.Contacts.JsContact,Goedel.Mesh.KeyData,System.String,System.String,System.Collections.Generic.List{System.String})">
             <summary>
@@ -9143,6 +9406,9 @@
              Parent class from which all profile classes are derived
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Profile.IanaMediaType">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Profile.KeyProfileSigners">
             <summary>List of signing keys used to sign the profile.</summary> 
         </member>
@@ -9334,6 +9600,12 @@
         </member>
         <member name="M:Goedel.Mesh.ProfileAccount.GetEnvelopedProfileAccount">
             <summary>Typed enveloped data</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ProfileAccount.DirectAddress">
+            <summary>Profile direct address</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.ProfileAccount.DirectAddressUri">
+            <summary>URI specifying profile direct address.</summary> 
         </member>
         <member name="P:Goedel.Mesh.ProfileAccount.AccountAuthenticationKey">
             <summary>The account encryption key</summary> 

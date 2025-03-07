@@ -100,7 +100,7 @@ public partial class Shell {
 
 
         return new ResultInfo() {
-            Contact = null
+            //Contact = null
             };
         }
 

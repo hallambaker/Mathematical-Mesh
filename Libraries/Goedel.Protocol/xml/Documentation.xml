@@ -1196,6 +1196,14 @@
             <param name="TagDictionary">Tag dictionary to use to decode type tags.</param>
             <returns>Data as byte sequence.</returns>
         </member>
+        <member name="M:Goedel.Protocol.Extensions.GetEnumerable``1(System.Collections.Generic.Dictionary{System.String,``0})">
+            <summary>
+            Return a new enumerator on the dictionary <paramref name="dict"/>
+            </summary>
+            <typeparam name="T">The value type of the dictionary</typeparam>
+            <param name="dict">The dictionary to enumerate</param>
+            <returns>The enumerator.</returns>
+        </member>
         <member name="M:Goedel.Protocol.Extensions.StatusInformation(System.Int32)">
             <summary>
             Extension method to report the success or failure of transaction.
@@ -4623,6 +4631,12 @@
         <member name="F:Goedel.Protocol.Binding.ChildClasses">
             <summary>Dictionary binding sub classes to binding descriptions</summary> 
         </member>
+        <member name="F:Goedel.Protocol.Binding.AllProperties">
+            <summary>Dictionary binding all properties to binding descriptions</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.FullProperties">
+            <summary>Dictionary binding all properties to binding descriptions</summary> 
+        </member>
         <member name="T:Goedel.Protocol.Property">
             <summary>
             Metadate record representing a property.
@@ -5453,6 +5467,8 @@
             <param name="IFactory">For a collection object, factory returning an instance of an
             object in the collection.</param>
             <param name="Tagged">If true, the property should be tagged.</param>
+            <param name="Add">Add struct to dictionary</param>
+            <param name="Enumerator">Returns an enumerator</param>
         </member>
         <member name="M:Goedel.Protocol.PropertyDictionaryStruct.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Boolean,System.Func{System.Object},System.Func{System.Object},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}}},System.Action{System.Object,System.Object,System.Object})">
             <summary>
@@ -5465,6 +5481,8 @@
             <param name="IFactory">For a collection object, factory returning an instance of an
             object in the collection.</param>
             <param name="Tagged">If true, the property should be tagged.</param>
+            <param name="Add">Add struct to dictionary</param>
+            <param name="Enumerator">Returns an enumerator</param>
         </member>
         <member name="P:Goedel.Protocol.PropertyDictionaryStruct.Set">
             <summary>Set the property to the specified value.</summary>
@@ -5478,6 +5496,12 @@
         <member name="P:Goedel.Protocol.PropertyDictionaryStruct.IFactory">
             <summary>For a collection object, factory returning an instance of an
             object in the collection.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyDictionaryStruct.Enumerator">
+            <summary>Returns an enumerator</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyDictionaryStruct.Add">
+            <summary>Add struct to dictionary</summary>
         </member>
         <member name="M:Goedel.Protocol.PropertyDictionaryStruct.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
             <inheritdoc/>
