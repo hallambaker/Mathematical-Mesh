@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 
@@ -8,7 +8,11 @@
 		<Description>Reference library for the Mathematical Mesh.</Description>
 		<Copyright>© 2020-2022</Copyright>
 		<Title>Goedel.Mesh</Title>
+		<BuildPlatform>All</BuildPlatform>
 	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Callsign\Goedel.Callsign.Resolver\Goedel.Callsign.Resolver.csproj" />
 	  <ProjectReference Include="..\..\Callsign\Goedel.Callsign\Goedel.Callsign.csproj" />

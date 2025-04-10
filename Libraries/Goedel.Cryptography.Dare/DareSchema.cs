@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 3/7/2025 1:28:55 AM
+//  This file was automatically generated at 4/10/2025 4:56:01 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -88,7 +88,9 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 	    {"DarePolicy", DarePolicy._Factory},
 	    {"FileEntry", FileEntry._Factory},
 	    {"Witness", Witness._Factory},
-	    {"Proof", Proof._Factory}
+	    {"Proof", Proof._Factory},
+	    {"Unprotected", Unprotected._Factory},
+	    {"EarlSignature", EarlSignature._Factory}
 		};
 
 	///<summary>Variable used to force static initialization</summary> 
@@ -704,6 +706,13 @@ public partial class ContentMeta : Dare {
 	public virtual string?					UniqueId  {get; set;}
 
         /// <summary>
+        ///Nonce value, optionally used to ensure uniqueness of a digest over the content 
+        ///and associated metadata.
+        /// </summary>
+
+	public virtual string?					Nonce  {get; set;}
+
+        /// <summary>
         ///List of labels that are applied to the payload of the frame.
         /// </summary>
 
@@ -789,6 +798,8 @@ public partial class ContentMeta : Dare {
 
 			{ "UniqueId", new PropertyString ("UniqueId", 
 					(IBinding data, string? value) => {(data as ContentMeta).UniqueId = value;}, (IBinding data) => (data as ContentMeta).UniqueId )},
+			{ "Nonce", new PropertyString ("Nonce", 
+					(IBinding data, string? value) => {(data as ContentMeta).Nonce = value;}, (IBinding data) => (data as ContentMeta).Nonce )},
 			{ "Labels", new PropertyListString ("Labels", 
 					(IBinding data, List<string>? value) => {(data as ContentMeta).Labels = value;}, (IBinding data) => (data as ContentMeta).Labels )},
 			{ "KeyValues", new PropertyListStruct ("KeyValues", 
@@ -1879,6 +1890,197 @@ public partial class Proof : Dare {
 			return Out as Proof;
 			}
 		var Result = new Proof ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class Unprotected : Dare {
+        /// <summary>
+        ///The digest algorithm to be used to compute the payload digest.
+        /// </summary>
+
+	public virtual string?					DigestAlgorithm  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual List<EarlSignature>?					Signers  {get; set;}
+        /// <summary>
+        /// </summary>
+
+	public virtual List<EarlSignature>?					Signatures  {get; set;}
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "dig", new PropertyString ("dig", 
+					(IBinding data, string? value) => {(data as Unprotected).DigestAlgorithm = value;}, (IBinding data) => (data as Unprotected).DigestAlgorithm )},
+			{ "signs", new PropertyListStruct ("signs", 
+					(IBinding data, object? value) => {(data as Unprotected).Signers = value as List<EarlSignature>;}, (IBinding data) => (data as Unprotected).Signers,
+					false, ()=>new  List<EarlSignature>(), ()=>new EarlSignature())},
+			{ "sigs", new PropertyListStruct ("sigs", 
+					(IBinding data, object? value) => {(data as Unprotected).Signatures = value as List<EarlSignature>;}, (IBinding data) => (data as Unprotected).Signatures,
+					false, ()=>new  List<EarlSignature>(), ()=>new EarlSignature())}
+        }, __Tag,() => new Unprotected(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "Unprotected";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new Unprotected();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new Unprotected FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as Unprotected;
+			}
+		var Result = new Unprotected ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class EarlSignature : Dare {
+        /// <summary>
+        ///Key exchange algorithm
+        /// </summary>
+
+	public virtual string?					Alg  {get; set;}
+
+        /// <summary>
+        ///Key identifier of the signature key.		
+        /// </summary>
+
+	public virtual string?					KeyIdentifier  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual byte[]?					Value  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "alg", new PropertyString ("alg", 
+					(IBinding data, string? value) => {(data as EarlSignature).Alg = value;}, (IBinding data) => (data as EarlSignature).Alg )},
+			{ "kid", new PropertyString ("kid", 
+					(IBinding data, string? value) => {(data as EarlSignature).KeyIdentifier = value;}, (IBinding data) => (data as EarlSignature).KeyIdentifier )},
+			{ "val", new PropertyBinary ("val", 
+					(IBinding data, byte[]? value) => {(data as EarlSignature).Value = value;}, (IBinding data) => (data as EarlSignature).Value )}
+        }, __Tag,() => new EarlSignature(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "EarlSignature";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new EarlSignature();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new EarlSignature FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as EarlSignature;
+			}
+		var Result = new EarlSignature ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

@@ -1,49 +1,47 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<Product>Goedel.Protocol.Management</Product>
+		<Description>Support library for services built using PROTOGEN.</Description>
+		<Copyright>© 2021</Copyright>
+		<Title>Goedel.Protocol.Management</Title>
+	</PropertyGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	<ItemGroup>
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\Goedel.Mesh.ServiceAdmin\Goedel.Mesh.ServiceAdmin.csproj" />
+	</ItemGroup>
 
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <Product>Goedel.Protocol.Management</Product>
-    <Description>Support library for services built using PROTOGEN.</Description>
-    <Copyright>© 2021</Copyright>
-    <Title>Goedel.Protocol.Management</Title>
-  </PropertyGroup>
+	<ItemGroup>
+		<Compile Update="StatusSchema.cs">
+			<DependentUpon>StatusSchema.Protocol</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh.ServiceAdmin\Goedel.Mesh.ServiceAdmin.csproj" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Compile Update="StatusSchema.cs">
-      <DependentUpon>StatusSchema.Protocol</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
 
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Exceptions.exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>exceptional</Generator>
+		</None>
+		<None Update="StatusSchema.Protocol">
+			<LastGenOutput>StatusSchema.cs</LastGenOutput>
+			<Generator>Protogen</Generator>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Exceptions.exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>exceptional</Generator>
-    </None>
-    <None Update="StatusSchema.Protocol">
-      <LastGenOutput>StatusSchema.cs</LastGenOutput>
-      <Generator>Protogen</Generator>
-    </None>
-  </ItemGroup>
 
-  
 </Project>

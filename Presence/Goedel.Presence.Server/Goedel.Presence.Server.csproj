@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<Product>Goedel.Presence.Server</Product>
@@ -8,28 +8,29 @@
 		<Title>Goedel.Presence.Server</Title>
 		<ProjectGuid>{9e2f87a5-d424-42f6-b5c7-31089c68bd4e}</ProjectGuid>
 
-  </PropertyGroup>
-   <ItemGroup>
-     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj" />
-     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
-     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj" />
-     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
-     <ProjectReference Include="..\Goedel.Presence\Goedel.Presence.csproj" />
-   </ItemGroup>
+	</PropertyGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	<ItemGroup>
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj" />
+		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
+		<ProjectReference Include="..\Goedel.Presence\Goedel.Presence.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Exceptions.exceptional">
-      <Generator>exceptional</Generator>
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  
+	<ItemGroup>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Exceptions.exceptional">
+			<Generator>exceptional</Generator>
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
+
 
 </Project>

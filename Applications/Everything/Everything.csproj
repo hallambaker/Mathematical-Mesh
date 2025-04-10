@@ -27,11 +27,19 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<BuildPlatform>Windows</BuildPlatform>
 	</PropertyGroup>
+
+
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	
+	
+	
 	<PropertyGroup>
+		
 	  <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.0</TargetFrameworks>
 	</PropertyGroup>
-	<Import Project="$(SolutionDir)Settings/CommonSettingsPlatform.xml" />
+
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.3" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.3" />
@@ -68,6 +76,7 @@
 	  <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
 	  <ProjectReference Include="..\..\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
 	  <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+	  <ProjectReference Include="..\..\Libraries\Platforms\Goedel.Cryptography.Windows\Goedel.Cryptography.Windows.csproj" />
 	  <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
 	  <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />
 	  <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Guigen\Goedel.Mesh.Guigen.csproj" />

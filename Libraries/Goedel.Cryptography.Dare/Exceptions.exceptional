@@ -86,3 +86,5 @@ Namespace Goedel.Cryptography.Dare
 	
 	Exception RelativeDirectoryInvalid
         Console "A relative directory specification was encountered in an invalid context.."
+	
+	Exception InvalidLength

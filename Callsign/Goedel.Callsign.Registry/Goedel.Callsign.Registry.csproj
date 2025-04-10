@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<Product>Goedel.Callsign.Registry</Product>
@@ -7,7 +7,7 @@
 		<Copyright>© 2022</Copyright>
 		<Title>Goedel.Callsign.Registry</Title>
 	</PropertyGroup>
-
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 	<ItemGroup>
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />

@@ -24,6 +24,9 @@ namespace Goedel.Utilities;
 
 public static partial class Extension {
 
+
+
+
     /// <summary>
     /// Reads a sequence of bytes from the current stream and advances the position 
     /// within the stream by the number of bytes read using index pointers that

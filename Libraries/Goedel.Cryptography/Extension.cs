@@ -32,6 +32,10 @@ namespace Goedel.Cryptography;
 /// </summary>
 public static class ExtensionMethods {
 
+    ///<summary>Buffer for copying chunks of data from one stream to another.</summary> 
+    public static ulong CopyBufferSize { get; } = 4096;
+
+
     /// <summary>
     /// If <paramref name="buffer"/> is not null, present the entire contents to
     /// the digest function <paramref name="hashAlgorithm"/>.
@@ -42,6 +46,30 @@ public static class ExtensionMethods {
         if (buffer != null) {
             hashAlgorithm.TransformBlock(buffer, 0, buffer.Length, buffer, 0);
             }
+        }
+
+    /// <summary>
+    /// If <paramref name="buffer"/> is not null, present the entire contents to
+    /// the digest function <paramref name="hashAlgorithm"/>.
+    /// </summary>
+    /// <param name="hashAlgorithm">The digest function to use.</param>
+    /// <param name="buffer">The data to be digested.</param>
+    public static void Digest(
+                this HashAlgorithm hashAlgorithm, 
+                byte[] buffer, 
+                int offset,
+                int length) {
+        if (buffer != null) {
+            hashAlgorithm.TransformBlock(buffer, offset, length, buffer, 0);
+            }
+        }
+
+    static readonly byte[] Last = [];
+    public static byte[] GetValue(
+                this HashAlgorithm hashAlgorithm) {
+        hashAlgorithm.TransformFinalBlock(Last, 0, 0);
+        return hashAlgorithm.Hash;
+
         }
 
     /// <summary>
@@ -194,4 +222,46 @@ public static class ExtensionMethods {
                 CryptoAlgorithmId.Ed448 => UdfAlgorithmIdentifier.Ed448,
                 _ => UdfAlgorithmIdentifier.Any,
                 };
+
+
+
+
+    public static void CopyTo(this Stream input, Stream output, ulong length) {
+        var chunk = (int)CopyBufferSize;
+        var buffer = new byte[length < CopyBufferSize ? length : CopyBufferSize];
+
+        while (length >= CopyBufferSize) {
+            input.ReadExactly(buffer, 0, chunk);
+            output.Write(buffer, 0, chunk);
+            length -= CopyBufferSize;
+            }
+        if (length > 0) {
+            input.ReadExactly(buffer, 0, (int)length);
+            output.Write(buffer, 0, (int)length);
+            }
+        }
+
+
+    public static void HashCopyTo(
+                this Stream input, 
+                Stream output, 
+                ulong length,
+                HashAlgorithm digest) {
+        var chunk = (int)CopyBufferSize;
+        var buffer = new byte[length < CopyBufferSize ? length : CopyBufferSize];
+
+        while (length >= CopyBufferSize) {
+            input.ReadExactly(buffer, 0, chunk);
+            output.Write(buffer, 0, chunk);
+            length -= CopyBufferSize;
+            digest.Digest(buffer, 0 , chunk);
+            }
+        if (length > 0) {
+            input.ReadExactly(buffer, 0, (int)length);
+            output.Write(buffer, 0, (int)length);
+            digest.Digest(buffer, 0, (int)length);
+            }
+        }
+
+
     }

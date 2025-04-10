@@ -56,6 +56,12 @@ public partial class TestService {
         MeshCredentialPrivate MeshCredentialPrivate) => MeshCredentialPrivate.GetMeshCredentialPublic();
 
 
+
+    [Fact]
+    public void MakeEarl() {
+        }
+
+
     [Fact]
     public void TestCredentialDevice() {
         var credentialTempPrivate = MakeCredentialDevice();
@@ -201,7 +207,7 @@ public partial class TestService {
         //Console.WriteLine(astext);
 
         // encrypt
-        var (earl, locator, encrypted) = Udf.CreateEarl(asbytes);
+        var (earl, locator, encrypted) = Udf.Earl(asbytes);
 
         //var earl = Udf.AuthenticatedEncryptionKey(asbytes);
         //var locator = Udf.Locator(earl);
@@ -210,6 +216,10 @@ public partial class TestService {
         // write to file
         var filename = Path.ChangeExtension(locator, "jscontact");
         filename.WriteFileNew(encrypted);
+
+
+        var filename2 = Path.ChangeExtension(earl, "jscontact");
+        filename2.WriteFileNew(asbytes);
 
         System.Console.WriteLine($"EARL = {earl}");
 

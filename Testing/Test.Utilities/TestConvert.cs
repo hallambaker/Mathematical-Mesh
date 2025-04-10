@@ -120,7 +120,7 @@ public class Utilities {
             ConversionFormat Format = ConversionFormat.None);
 
 
-    delegate byte[] FromStringDelegate(string Data);
+    delegate byte[] FromStringDelegate(string Data, bool partial=false);
 
 
     [Fact]

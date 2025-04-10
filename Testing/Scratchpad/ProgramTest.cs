@@ -21,6 +21,8 @@
 #endregion
 
 
+using ExampleGenerator;
+
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 //using Test.Cryptography.Oauth;
@@ -63,7 +65,11 @@ partial class Program {
 
         //TestService.Test().TestCredentialAccount();
 
-        Acme.Test().TestJsDevice().Sync();
+        var examples = new CreateExamples();
+        var earl = new Earl(examples);
+
+
+        //Acme.Test().TestJsDevice().Sync();
         //TestService.Test().TestCredentialAccountApps();
         //TestService.Test().TestCredentialFromHandle();
 

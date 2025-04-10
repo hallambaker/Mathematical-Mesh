@@ -195,6 +195,10 @@
 		String UniqueId
 			Description 
 				|Unique object identifier
+		String Nonce
+			Description
+				|Nonce value, optionally used to ensure uniqueness of a digest over the content 
+				|and associated metadata.
 		String Labels
 			Multiple
 			Description
@@ -283,12 +287,7 @@
 			Tag "signature"
 			Description
 				|The signature value as an Enhanced Data Sequence under the envelope base seed.
-		//Binary WitnessValue
-		//	Tag "witness"
-		//	Description
-		//		|The signature witness value used on an encrypted envelope to demonstrate that 
-		//		|the signature was authorized by a party with actual knowledge of the encryption 
-		//		|key used to encrypt the envelope.
+
 
 	Structure IntervalSignature
 		Description
@@ -453,3 +452,33 @@
 			Multiple
 			Description
 				|The list of entries from which the proof path is computed.
+
+
+	Structure Unprotected
+		String DigestAlgorithm
+			Tag "dig"
+			Description
+				|The digest algorithm to be used to compute the payload digest.
+
+		Struct EarlSignature Signers
+			Tag "signs"
+			Multiple
+
+		Struct EarlSignature Signatures
+			Tag "sigs"
+			Multiple
+
+
+	Structure EarlSignature
+		String Alg
+			Tag "alg"
+			Description
+				|Key exchange algorithm
+		String KeyIdentifier
+			Tag "kid"
+			Description
+				|Key identifier of the signature key.		
+
+		Binary Value
+			Tag "val"
+

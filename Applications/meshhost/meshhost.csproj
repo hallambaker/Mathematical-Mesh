@@ -1,14 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettingsLinemode.xml" />
+	<!--<Import Project="$(SolutionDir)Settings/CommonSettingsLinemode.xml" />-->
 
 	<PropertyGroup>
 		<AssemblyName>meshhost</AssemblyName>
 		<Product>Mesh Host</Product>
 		<Description>Mesh Service Host.</Description>
-		<Copyright>© 2020-2022</Copyright>
+		<Copyright>© 2020-20225</Copyright>
 		<Title>MeshHost</Title>
-		
+		<OutputType>Exe</OutputType>	
 	</PropertyGroup>
+
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />

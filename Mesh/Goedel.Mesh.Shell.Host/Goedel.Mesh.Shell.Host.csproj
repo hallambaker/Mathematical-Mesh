@@ -1,71 +1,71 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <Product>Goedel.Mesh.Shell</Product>
-    <Description></Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.Mesh.Shell</Title>
 
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<Product>Goedel.Mesh.Shell</Product>
+		<Description></Description>
+		<Copyright>© 2020</Copyright>
+		<Title>Goedel.Mesh.Shell</Title>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Command.Json\Goedel.Command.Json.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh.Management\Goedel.Mesh.Management.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh.ServiceAdmin\Goedel.Mesh.ServiceAdmin.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
-  </ItemGroup>
+	</PropertyGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	<ItemGroup>
+		<ProjectReference Include="..\..\Libraries\Goedel.Command.Json\Goedel.Command.Json.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+		<ProjectReference Include="..\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
+		<ProjectReference Include="..\Goedel.Mesh.Management\Goedel.Mesh.Management.csproj" />
+		<ProjectReference Include="..\Goedel.Mesh.Server\Goedel.Mesh.Server.csproj" />
+		<ProjectReference Include="..\Goedel.Mesh.ServiceAdmin\Goedel.Mesh.ServiceAdmin.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.Exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Results.cs">
-      <DependentUpon>Results.protogen</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="anyhost.cs">
-      <DependentUpon>anyhost.command</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.Exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Resources.Designer.cs">
+			<DependentUpon>Resources.resx</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Results.cs">
+			<DependentUpon>Results.protogen</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="anyhost.cs">
+			<DependentUpon>anyhost.command</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Resources.resx">
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources.resx">
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+			<Generator>ResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Exceptions.Exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>Exceptional</Generator>
-    </None>
-    <None Update="anyhost.command">
-      <LastGenOutput>anyhost.cs</LastGenOutput>
-      <Generator>CommandCS</Generator>
-    </None>
-    <None Update="Results.protogen">
-      <LastGenOutput>Results.cs</LastGenOutput>
-      <Generator>ProtoGen</Generator>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Exceptions.Exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>Exceptional</Generator>
+		</None>
+		<None Update="anyhost.command">
+			<LastGenOutput>anyhost.cs</LastGenOutput>
+			<Generator>CommandCS</Generator>
+		</None>
+		<None Update="Results.protogen">
+			<LastGenOutput>Results.cs</LastGenOutput>
+			<Generator>ProtoGen</Generator>
+		</None>
+	</ItemGroup>
 
 </Project>

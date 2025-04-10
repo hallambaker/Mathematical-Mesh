@@ -98,7 +98,7 @@ public partial class CreateExamples {
 
 
     public ExampleDare Dare = new();
-
+    public Earl Earl;
 
     StringWriter consoleWriter;
 
@@ -113,6 +113,7 @@ public partial class CreateExamples {
 
         ShellKey = new ShellKey(this);
         ShellHash = new ShellHash(this);
+        Earl = new Earl(this);
         ShellDare = new ShellDare(this);
         ShellSequence = new ShellSequence(this);
 

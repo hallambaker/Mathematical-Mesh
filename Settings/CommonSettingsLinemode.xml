@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build">
+<!--<Project DefaultTargets="Build">
 
 	<PropertyGroup>
 		<TargetFrameworks>net9.0-windows</TargetFrameworks>
@@ -6,4 +6,6 @@
 	<Import Project="$(SolutionDir)Settings/CommonSettingsExecutable.xml" />
 
 
-</Project>
+</Project>-->
+
+<Project/>

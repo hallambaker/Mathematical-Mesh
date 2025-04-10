@@ -28,23 +28,41 @@ using Org.BouncyCastle.Asn1.X509;
 using System.Security.AccessControl;
 
 
+
+/// <summary>
+/// ACME account
+/// </summary>
 public class AcmeAccount {
 
+    ///<summary>The PEM key</summary> 
     public string PemKey { get; init; }
 
+    ///<summary>The Account context</summary> 
     public IAccountContext AccountContext { get; init; }
 
+    ///<summary></summary> 
     public AcmeContext AcmeContext { get; init; }
 
     private AcmeAccount() {
 
         }
 
+    /// <summary>
+    /// Factory method, returns a new account instance to the service at <paramref name="uri"/>
+    /// </summary>
+    /// <param name="uriString">Uri of the CA service.</param>
+    /// <param name="staging">If true, use the staging/test version of the service.</param>
+    /// <returns></returns>
     public static async Task<AcmeAccount> Create(
-                        string uri = null, 
+                        string uriString = null, 
                         bool staging=false) {
 
-        var acme = new AcmeContext(WellKnownServers.LetsEncryptStagingV2);
+        var uri = uriString == null ? 
+            (staging ? WellKnownServers.LetsEncryptStagingV2 : WellKnownServers.LetsEncryptV2) :
+            new Uri(uriString);
+
+
+        var acme = new AcmeContext(uri);
         var account = await acme.NewAccount("admin@hallambaker.com", true);
 
         // Save the account key for later use
@@ -58,6 +76,11 @@ public class AcmeAccount {
             };
         }
 
+    /// <summary>
+    /// Place an order for a certificate with the domains <paramref name="domains"/>
+    /// </summary>
+    /// <param name="domains">List of domains to be included in the certificate.</param>
+    /// <returns>Task returning the order.</returns>
     public async Task<AcmeOrder> PlaceOrder(
                 List<string> domains) {
 

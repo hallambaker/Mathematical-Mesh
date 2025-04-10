@@ -2227,6 +2227,12 @@
             Unique object identifier
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.ContentMeta.Nonce">
+             <summary>
+            Nonce value, optionally used to ensure uniqueness of a digest over the content 
+            and associated metadata.
+             </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.ContentMeta.Labels">
              <summary>
             List of labels that are applied to the payload of the frame.
@@ -3345,6 +3351,138 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Cryptography.Dare.Unprotected">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Unprotected.DigestAlgorithm">
+             <summary>
+            The digest algorithm to be used to compute the payload digest.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Unprotected.Signers">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Unprotected.Signatures">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Unprotected._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Unprotected._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Unprotected._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Unprotected._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Unprotected._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Unprotected._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Unprotected._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Unprotected._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Unprotected.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Unprotected._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Unprotected.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.EarlSignature">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSignature.Alg">
+             <summary>
+            Key exchange algorithm
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSignature.KeyIdentifier">
+             <summary>
+            Key identifier of the signature key.		
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSignature.Value">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSignature._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EarlSignature._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EarlSignature._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EarlSignature._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSignature._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSignature._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSignature._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSignature._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EarlSignature.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSignature._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSignature.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.CopyPayload(System.IO.Stream)">
+            <summary>
+            Copy bytes from the 
+            </summary>
+            <param name="output"></param>
+            <returns>True if there is more payload to be read</returns>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.EnvelopeValidation">
             <summary>
             Envelope validation levels
@@ -4125,6 +4263,37 @@
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="P:Goedel.Cryptography.Dare.RelativeDirectoryInvalid.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.InvalidLength">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.InvalidLength.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.InvalidLength.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.InvalidLength.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.InvalidLength._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.InvalidLength.Throw">
             <summary>
             The public fatory delegate
             </summary>

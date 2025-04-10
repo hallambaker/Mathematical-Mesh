@@ -79,8 +79,9 @@ public static partial class AlgorithmID {
                 { PKIX.Constants.OIDS__id_hmacWithSHA256, CryptoAlgorithmId.HMAC_SHA_2_256 },
                 { PKIX.Constants.OIDS__id_hmacWithSHA512, CryptoAlgorithmId.HMAC_SHA_2_512 },
                 { PKIX.Constants.OIDS__id_sha256, CryptoAlgorithmId.SHA_2_256 },
-                { PKIX.Constants.OIDS__id_sha512, CryptoAlgorithmId.SHA_2_512 }
-
+                { PKIX.Constants.OIDS__id_sha512, CryptoAlgorithmId.SHA_2_512 },
+                { PKIX.Constants.OIDS__id_sha3_256, CryptoAlgorithmId.SHA_3_256 },
+                { PKIX.Constants.OIDS__id_sha3_512, CryptoAlgorithmId.SHA_3_512 }
             };
 
     static readonly Dictionary<CryptoAlgorithmId, HashAlgorithmName> IDtoHashAlgorithmName =

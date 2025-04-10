@@ -12,8 +12,6 @@
 	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
 
-
-	<Import Project="$(SolutionDir)Settings/CommonSettingsIos.xml" />
 	<PropertyGroup>
 		<TargetFramework>net9.0-ios</TargetFramework>
 		<RootNamespace>Goedel.Cryptography.Ios</RootNamespace>

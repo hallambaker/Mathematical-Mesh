@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)Settings/CommonSettingsTest.xml" />
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <StartupObject>Scratchpad.Program</StartupObject>
-  </PropertyGroup>
 
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<StartupObject>Scratchpad.Program</StartupObject>
+	</PropertyGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 	<ItemGroup>
 		<ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
@@ -32,23 +32,23 @@
 		<ProjectReference Include="..\Test.Thing\Test.Thing.csproj" />
 		<ProjectReference Include="..\Test.Utilities\Test.Utilities.csproj" />
 	</ItemGroup>
-	
-  <ItemGroup>
-    <Folder Include="Test\" />
-  </ItemGroup>
-	
-  <ItemGroup>
-    <PackageReference Update="coverlet.collector" Version="6.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.6.0" />
-    <PackageReference Update="xunit" Version="2.4.2" />
-    <PackageReference Update="xunit.runner.visualstudio" Version="2.4.5">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Test\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Update="coverlet.collector" Version="6.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+		<PackageReference Update="xunit" Version="2.4.2" />
+		<PackageReference Update="xunit.runner.visualstudio" Version="2.4.5">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
 
 
 </Project>

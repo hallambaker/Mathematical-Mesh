@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<Product>Goedel.Callsign</Product>
@@ -9,7 +8,7 @@
 		<Title>Goedel.Callsign</Title>
 		<OutputType>Library</OutputType>
 	</PropertyGroup>
-
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 	<ItemGroup>
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
@@ -26,9 +25,9 @@
 	<ItemGroup>
 
 		<Compile Update="CallsignResolver.cs">
-		  <DependentUpon>CallsignResolver.protocol</DependentUpon>
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
+			<DependentUpon>CallsignResolver.protocol</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
 		</Compile>
 
 		<Compile Update="Exceptions.cs">
@@ -51,11 +50,11 @@
 	<ItemGroup>
 
 		<None Update="CallsignResolver.protocol">
-		  <LastGenOutput>CallsignResolver.cs</LastGenOutput>
-		  <Generator>Protogen</Generator>
+			<LastGenOutput>CallsignResolver.cs</LastGenOutput>
+			<Generator>Protogen</Generator>
 		</None>
 
-		
+
 		<None Update="Exceptions.exceptional">
 			<LastGenOutput>Exceptions.cs</LastGenOutput>
 			<Generator>exceptional</Generator>
@@ -71,7 +70,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Resources\" />
+		<Folder Include="Resources\" />
 	</ItemGroup>
 
 </Project>

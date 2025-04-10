@@ -13,7 +13,7 @@ File TypeIdentifier
 			Algorithm  HKDF_AES_256 
 		UDF 33 EncryptionSignature 
 			Algorithm  HKDF_AES_256
-		UDF 33 AuthenticatedEncryption
+		UDF 34 Earl
 			Algorithm  SHA3_AES_256  
 		UDF 80 Digest 
 			Algorithm  SHA_3_512

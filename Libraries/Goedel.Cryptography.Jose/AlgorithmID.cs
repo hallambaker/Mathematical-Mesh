@@ -43,7 +43,7 @@ public static class AlgorithmID {
             //{"SHA128",  CryptoAlgorithmID.SHA_2_512T128 },
                 //{ JoseConstants.SHA3, CryptoAlgorithmId.SHA_3_512 },
                 { JoseConstants.SHA3_256, CryptoAlgorithmId.SHA_3_256 },
-                { JoseConstants.SHA3_512, CryptoAlgorithmId.SHA_3_256 },
+                { JoseConstants.SHA3_512, CryptoAlgorithmId.SHA_3_512 },
 
                 { JoseConstants.X448, CryptoAlgorithmId.X448 },
                 { JoseConstants.X25519, CryptoAlgorithmId.X25519 },
@@ -92,6 +92,11 @@ public static class AlgorithmID {
                 { JoseConstants.SHA2_256, CryptoAlgorithmId.SHA_2_256 },
             //SHA-512	alg (Private)
                 { JoseConstants.SHA2_512, CryptoAlgorithmId.SHA_2_512 },
+
+            //SHA-256	alg (Private)
+                { JoseConstants.SHA3_256, CryptoAlgorithmId.SHA_3_256 },
+            //SHA-512	alg (Private)
+                { JoseConstants.SHA3_512, CryptoAlgorithmId.SHA_3_512 },
 
             //HS256   HMAC using SHA-256	alg Required[IESG]  [RFC7518, Section 3.2]
                 { "HS256", CryptoAlgorithmId.HMAC_SHA_2_256 },
@@ -164,6 +169,7 @@ public static class AlgorithmID {
                 { "ECDH", CryptoAlgorithmId.ECDH },
 
             // Special
+
 
             //none    No digital signature or MAC performed   alg Optional[IESG]  [RFC7518, Section 3.6]
                 { "none", CryptoAlgorithmId.NULL }

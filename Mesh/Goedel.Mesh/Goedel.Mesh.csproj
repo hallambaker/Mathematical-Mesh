@@ -1,62 +1,62 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
 
-    <Product>Goedel.Mesh</Product>
-    <Description>Reference library for the Mathematical Mesh.</Description>
-    <Copyright>© 2020-2022</Copyright>
-    <Title>Goedel.Mesh</Title>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Goedel.Contacts\Goedel.Contacts.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj" />
-  </ItemGroup>
+		<Product>Goedel.Mesh</Product>
+		<Description>Reference library for the Mathematical Mesh.</Description>
+		<Copyright>© 2020-2022</Copyright>
+		<Title>Goedel.Mesh</Title>
+	</PropertyGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	<ItemGroup>
+		<ProjectReference Include="..\..\Libraries\Goedel.Contacts\Goedel.Contacts.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.KeyFile\Goedel.Cryptography.KeyFile.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol.Presentation\Goedel.Protocol.Presentation.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="ProtocolSchema.cs">
-      <DependentUpon>ProtocolSchema.protocol</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="SchemaMesh.cs">
-      <DependentUpon>SchemaMesh.protocol</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="MeshConstants.cs">
-      <DependentUpon>MeshConstants.Constant</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>    
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="ProtocolSchema.cs">
+			<DependentUpon>ProtocolSchema.protocol</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="SchemaMesh.cs">
+			<DependentUpon>SchemaMesh.protocol</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="MeshConstants.cs">
+			<DependentUpon>MeshConstants.Constant</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="Exceptions.exceptional">
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-      <Generator>exceptional</Generator>
-    </None>
-    <None Update="ProtocolSchema.Protocol">
-      <Generator>Protogen</Generator>
-    </None>
-    <None Update="MeshConstants.Constant">
-      <Generator>Constant</Generator>
-      <LastGenOutput>MeshConstants.cs</LastGenOutput>         
-    </None>
-    <None Update="SchemaMesh.protocol">
-      <LastGenOutput>SchemaMesh.cs</LastGenOutput>
-      <Generator>Protogen</Generator>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="Exceptions.exceptional">
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+			<Generator>exceptional</Generator>
+		</None>
+		<None Update="ProtocolSchema.Protocol">
+			<Generator>Protogen</Generator>
+		</None>
+		<None Update="MeshConstants.Constant">
+			<Generator>Constant</Generator>
+			<LastGenOutput>MeshConstants.cs</LastGenOutput>
+		</None>
+		<None Update="SchemaMesh.protocol">
+			<LastGenOutput>SchemaMesh.cs</LastGenOutput>
+			<Generator>Protogen</Generator>
+		</None>
+	</ItemGroup>
 
 </Project>

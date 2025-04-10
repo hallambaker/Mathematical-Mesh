@@ -10,7 +10,6 @@
 
 	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
-
 	<ItemGroup>
 		<ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />
 		<ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />

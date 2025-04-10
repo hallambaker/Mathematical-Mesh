@@ -1,15 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<Product>Goedel.Callsign.Registrar</Product>
 		<Description>Callsign Registrar Service Library.</Description>
 		<Copyright>© 2022</Copyright>
 		<Title>Goedel.Callsign.Registrar</Title>
-		<OutputType>Library</OutputType>
+		<BuildPlatform>All</BuildPlatform>
 	</PropertyGroup>
-
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 	<ItemGroup>
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />

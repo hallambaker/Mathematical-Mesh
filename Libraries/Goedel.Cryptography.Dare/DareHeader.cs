@@ -357,7 +357,7 @@ public partial class DareTrailer {
 
 public partial class ContentMeta {
 
-
+    public List<EarlSignature> VerifiedSignatures { get; set; } 
 
 
     const bool TagData = false;

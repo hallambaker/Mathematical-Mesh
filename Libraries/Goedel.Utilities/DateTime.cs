@@ -108,7 +108,7 @@ public static class Utilities {
     /// </summary>
     /// <param name="dateTime">The time to convert.</param>
     /// <returns>The converted date time</returns>
-    public static string ToFileSpec(this DateTime? dateTime) => dateTime == null ? "null" :
+    public static string ToFileSpec(this DateTime dateTime) => 
         ((DateTime)dateTime).ToString("yyyy-MM-dd--HH-mm");
 
     /// <summary>

@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 3/7/2025 1:28:55 AM
+//  This file was automatically generated at 4/10/2025 4:56:01 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1145,6 +1145,55 @@ public partial class RelativeDirectoryInvalid : global::Goedel.Utilities.GoedelE
     /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
     static System.Exception _Throw(object reasons) => new RelativeDirectoryInvalid(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// </summary>
+[global::System.Serializable]
+public partial class InvalidLength : global::Goedel.Utilities.GoedelException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public InvalidLength  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new InvalidLength(args:reasons) ;
 		
 	/// <summary>
     /// The public fatory delegate

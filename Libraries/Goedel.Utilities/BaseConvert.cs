@@ -263,7 +263,7 @@ public static partial class BaseConvert {
     /// </summary>
     /// <param name="output">The stream to write the output to.</param>
     /// <param name="format">Specifies the output format</param>
-    /// <param name="outputMax">The maximum number of significant bits in the output.</param>
+    /// <param name="outputMax">The maximum number of significant characters in the output.</param>
     /// <returns>The stream converter</returns>
     public static IBytesToStream ToStreamBase32(
         StringBuilder output,
@@ -278,7 +278,7 @@ public static partial class BaseConvert {
     /// <param name="first">The index position of the first byte to convert.</param>
     /// <param name="length">The number of bytes to convert</param>
     /// <param name="format">Specifies the output format</param>
-    /// <param name="outputMax">The maximum number of significant bits in the output.</param>
+    /// <param name="outputMax">The maximum number of significant characters in the output.</param>
     /// <returns>The encoded data</returns>
     public static string ToStringBase32(
             this byte[] data,
@@ -297,7 +297,7 @@ public static partial class BaseConvert {
     /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
     /// <param name="data">The data to be encoded.</param>
     /// <param name="format">Specifies the output format</param>
-    /// <param name="outputMax">The maximum number of significant bits in the output.</param>
+    /// <param name="outputMax">The maximum number of significant characters in the output.</param>
     public static void ToStringBase32(
                 this StringBuilder stringBuilder,
                 byte[] data,
@@ -518,8 +518,8 @@ public static partial class BaseConvert {
     /// </summary>
     /// <param name="data">The string to convert</param>
     /// <returns>The resulting binary data.</returns>
-    public static byte[] FromBase64(this string data) =>
-        StreamConvertString.Convert(BASE64Value, 6, data);
+    public static byte[] FromBase64(this string data, bool partial = false) =>
+        StreamConvertString.Convert(BASE64Value, 6, data, partial);
 
     /// <summary>
     /// Return a streaming converter to 
@@ -534,8 +534,8 @@ public static partial class BaseConvert {
     /// </summary>
     /// <param name="data">The string to convert</param>
     /// <returns>The resulting binary data.</returns>
-    public static byte[] FromBase32(this string data) =>
-        StreamConvertString.Convert(BASE32Value, 5, data);
+    public static byte[] FromBase32(this string data, bool partial = false) =>
+        StreamConvertString.Convert(BASE32Value, 5, data, partial);
 
     /// <summary>
     /// Return a streaming converter to 
@@ -550,7 +550,7 @@ public static partial class BaseConvert {
     /// </summary>
     /// <param name="data">The string to convert</param>
     /// <returns>The resulting binary data.</returns>
-    public static byte[] FromBase16(this string data) =>
-        StreamConvertString.Convert(BASE16Value, 4, data);
+    public static byte[] FromBase16(this string data, bool partial = false) =>
+        StreamConvertString.Convert(BASE16Value, 4, data, partial);
 
     }

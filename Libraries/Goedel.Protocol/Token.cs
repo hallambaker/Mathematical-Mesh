@@ -884,6 +884,9 @@ public record PropertyDictionaryStruct(
 
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
+        Tagged.Future();
+
+
         if (Get(data) is IEnumerable value) {
             var first = true;
             writer.WriteObjectStart();

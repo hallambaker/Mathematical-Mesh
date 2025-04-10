@@ -215,7 +215,7 @@ public partial class ResultStatus {
             if (StatusResponse.StoreStatus != null) {
                 foreach (var containerStatus in StatusResponse.StoreStatus) {
                     var digest = containerStatus.Digest == null ? "" :
-                        containerStatus.Digest.ToStringBase32(format: ConversionFormat.Dash4, outputMax: 120);
+                        containerStatus.Digest.ToStringBase32(format: ConversionFormat.Dash4, outputMax: 16);
 
                     builder.Append($"   [{containerStatus.Store}] {containerStatus.Index}  {digest}");
                     builder.AppendLine();

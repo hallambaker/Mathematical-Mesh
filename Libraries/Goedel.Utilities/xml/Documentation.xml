@@ -1238,7 +1238,7 @@
             </summary>
             <param name="output">The stream to write the output to.</param>
             <param name="format">Specifies the output format</param>
-            <param name="outputMax">The maximum number of significant bits in the output.</param>
+            <param name="outputMax">The maximum number of significant characters in the output.</param>
             <returns>The stream converter</returns>
         </member>
         <member name="M:Goedel.Utilities.BaseConvert.ToStringBase32(System.Byte[],System.Int32,System.Int32,Goedel.Utilities.ConversionFormat,System.Int32)">
@@ -1249,7 +1249,7 @@
             <param name="first">The index position of the first byte to convert.</param>
             <param name="length">The number of bytes to convert</param>
             <param name="format">Specifies the output format</param>
-            <param name="outputMax">The maximum number of significant bits in the output.</param>
+            <param name="outputMax">The maximum number of significant characters in the output.</param>
             <returns>The encoded data</returns>
         </member>
         <member name="M:Goedel.Utilities.BaseConvert.ToStringBase32(System.Text.StringBuilder,System.Byte[],System.Int32,System.Int32,Goedel.Utilities.ConversionFormat,System.Int32)">
@@ -1261,7 +1261,7 @@
             <param name="length">Position of last byte to send. If less than zero, read to end.</param>
             <param name="data">The data to be encoded.</param>
             <param name="format">Specifies the output format</param>
-            <param name="outputMax">The maximum number of significant bits in the output.</param>
+            <param name="outputMax">The maximum number of significant characters in the output.</param>
         </member>
         <member name="M:Goedel.Utilities.BaseConvert.ToStreamBase32Hex(System.IO.Stream,Goedel.Utilities.ConversionFormat)">
             <summary>
@@ -1394,7 +1394,7 @@
             <param name="length">The maximum number of characters in the output string</param>
             <returns>The resulting string.</returns>
         </member>
-        <member name="M:Goedel.Utilities.BaseConvert.FromBase64(System.String)">
+        <member name="M:Goedel.Utilities.BaseConvert.FromBase64(System.String,System.Boolean)">
             <summary>
             Convert Base64/Base64URL character string data to binary data. Note
             that because the two character sets are unambiguous, a single conversion
@@ -1410,7 +1410,7 @@
             </summary>
             <returns>The resulting binary data.</returns>
         </member>
-        <member name="M:Goedel.Utilities.BaseConvert.FromBase32(System.String)">
+        <member name="M:Goedel.Utilities.BaseConvert.FromBase32(System.String,System.Boolean)">
             <summary>
             Convert Base32 character string data to binary data.
             </summary>
@@ -1424,7 +1424,7 @@
             </summary>
             <returns>The resulting binary data.</returns>
         </member>
-        <member name="M:Goedel.Utilities.BaseConvert.FromBase16(System.String)">
+        <member name="M:Goedel.Utilities.BaseConvert.FromBase16(System.String,System.Boolean)">
             <summary>
             Convert Base16 character string data to binary data.
             </summary>
@@ -1462,7 +1462,7 @@
             Complete the transformation.
             </summary>
         </member>
-        <member name="M:Goedel.Utilities.BaseConvert.StreamConvertString.Convert(System.Byte[],System.Int32,System.String)">
+        <member name="M:Goedel.Utilities.BaseConvert.StreamConvertString.Convert(System.Byte[],System.Int32,System.String,System.Boolean)">
             <summary>
             Create a StreamConvertString instance using conversion table <paramref name="table"/> in 
             which each character represents <paramref name="stride"/> bits and return the result
@@ -1585,8 +1585,7 @@
             <param name="first">Position of first byte to send.</param>
             <param name="length">Position of last byte to send. If less than zero, read to end.</param>
             <param name="outputCol">The initial output column</param>
-            <param name="outputMax">If positive, wrap the output at the column value specified.
-            Otherwise, do not wrap.</param>
+            <param name="outputMax">If positive, truncate the output after the specified number of characters</param>
             <returns></returns>
         </member>
         <member name="M:Goedel.Utilities.BaseConvert.StringBuilderConvertBits.Append(System.Byte[],System.Char[],System.Int32,Goedel.Utilities.ConversionFormat,System.Text.StringBuilder,System.Int32,System.Int32,System.Int32,System.Int32)">
@@ -1798,7 +1797,7 @@
             <param name="dateTime">The time to convert.</param>
             <returns>The converted date time</returns>
         </member>
-        <member name="M:Goedel.Utilities.Utilities.ToFileSpec(System.Nullable{System.DateTime})">
+        <member name="M:Goedel.Utilities.Utilities.ToFileSpec(System.DateTime)">
             <summary>
             Format a dateTime value in RFC3339 format.
             </summary>

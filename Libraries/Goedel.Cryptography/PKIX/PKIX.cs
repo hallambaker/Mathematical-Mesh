@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 3/7/2025 1:28:53 AM
+//  This file was automatically generated at 4/10/2025 4:55:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1084,6 +1084,50 @@ namespace Goedel.Cryptography.PKIX {
 
 
 		/// <summary>
+		/// id_hmacWithSHA3_224 = nist_hashalgs (13) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_hmacWithSHA3_224 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 13};
+		/// <summary>
+		/// id_hmacWithSHA3_224 = nist_hashalgs (13) as string
+		/// </summary>
+		public const string OIDS__id_hmacWithSHA3_224 = "2.16.840.1.101.3.4.2.13";
+
+
+
+		/// <summary>
+		/// id_hmacWithSHA3_256 = nist_hashalgs (14) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_hmacWithSHA3_256 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 14};
+		/// <summary>
+		/// id_hmacWithSHA3_256 = nist_hashalgs (14) as string
+		/// </summary>
+		public const string OIDS__id_hmacWithSHA3_256 = "2.16.840.1.101.3.4.2.14";
+
+
+
+		/// <summary>
+		/// id_hmacWithSHA3_384 = nist_hashalgs (15) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_hmacWithSHA3_384 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 15};
+		/// <summary>
+		/// id_hmacWithSHA3_384 = nist_hashalgs (15) as string
+		/// </summary>
+		public const string OIDS__id_hmacWithSHA3_384 = "2.16.840.1.101.3.4.2.15";
+
+
+
+		/// <summary>
+		/// id_hmacWithSHA3_512 = nist_hashalgs (16) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_hmacWithSHA3_512 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 16};
+		/// <summary>
+		/// id_hmacWithSHA3_512 = nist_hashalgs (16) as string
+		/// </summary>
+		public const string OIDS__id_hmacWithSHA3_512 = "2.16.840.1.101.3.4.2.16";
+
+
+
+		/// <summary>
 		/// id_sha224 = nist_hashalgs (4) as integer sequence
 		/// </summary>
 		public readonly static int [] OID__id_sha224 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 4};
@@ -1124,6 +1168,116 @@ namespace Goedel.Cryptography.PKIX {
 		/// id_sha512 = nist_hashalgs (3) as string
 		/// </summary>
 		public const string OIDS__id_sha512 = "2.16.840.1.101.3.4.2.3";
+
+
+
+		/// <summary>
+		/// id_sha3_224 = nist_hashalgs (7) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_sha3_224 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 7};
+		/// <summary>
+		/// id_sha3_224 = nist_hashalgs (7) as string
+		/// </summary>
+		public const string OIDS__id_sha3_224 = "2.16.840.1.101.3.4.2.7";
+
+
+
+		/// <summary>
+		/// id_sha3_256 = nist_hashalgs (8) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_sha3_256 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 8};
+		/// <summary>
+		/// id_sha3_256 = nist_hashalgs (8) as string
+		/// </summary>
+		public const string OIDS__id_sha3_256 = "2.16.840.1.101.3.4.2.8";
+
+
+
+		/// <summary>
+		/// id_sha3_384 = nist_hashalgs (9) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_sha3_384 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 9};
+		/// <summary>
+		/// id_sha3_384 = nist_hashalgs (9) as string
+		/// </summary>
+		public const string OIDS__id_sha3_384 = "2.16.840.1.101.3.4.2.9";
+
+
+
+		/// <summary>
+		/// id_sha3_512 = nist_hashalgs (10) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_sha3_512 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 10};
+		/// <summary>
+		/// id_sha3_512 = nist_hashalgs (10) as string
+		/// </summary>
+		public const string OIDS__id_sha3_512 = "2.16.840.1.101.3.4.2.10";
+
+
+
+		/// <summary>
+		/// id_shake_128 = nist_hashalgs (11) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_shake_128 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 11};
+		/// <summary>
+		/// id_shake_128 = nist_hashalgs (11) as string
+		/// </summary>
+		public const string OIDS__id_shake_128 = "2.16.840.1.101.3.4.2.11";
+
+
+
+		/// <summary>
+		/// id_shake_256 = nist_hashalgs (12) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_shake_256 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 12};
+		/// <summary>
+		/// id_shake_256 = nist_hashalgs (12) as string
+		/// </summary>
+		public const string OIDS__id_shake_256 = "2.16.840.1.101.3.4.2.12";
+
+
+
+		/// <summary>
+		/// id_shake_128_len = nist_hashalgs (17) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_shake_128_len = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 17};
+		/// <summary>
+		/// id_shake_128_len = nist_hashalgs (17) as string
+		/// </summary>
+		public const string OIDS__id_shake_128_len = "2.16.840.1.101.3.4.2.17";
+
+
+
+		/// <summary>
+		/// id_shake_256_len = nist_hashalgs (18) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_shake_256_len = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 18};
+		/// <summary>
+		/// id_shake_256_len = nist_hashalgs (18) as string
+		/// </summary>
+		public const string OIDS__id_shake_256_len = "2.16.840.1.101.3.4.2.18";
+
+
+
+		/// <summary>
+		/// id_kmac128 = nist_hashalgs (21) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_kmac128 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 21};
+		/// <summary>
+		/// id_kmac128 = nist_hashalgs (21) as string
+		/// </summary>
+		public const string OIDS__id_kmac128 = "2.16.840.1.101.3.4.2.21";
+
+
+
+		/// <summary>
+		/// id_kmac256 = nist_hashalgs (22) as integer sequence
+		/// </summary>
+		public readonly static int [] OID__id_kmac256 = new int [] { 2, 16, 840, 1, 101, 3, 4, 2, 22};
+		/// <summary>
+		/// id_kmac256 = nist_hashalgs (22) as string
+		/// </summary>
+		public const string OIDS__id_kmac256 = "2.16.840.1.101.3.4.2.22";
 
 
 

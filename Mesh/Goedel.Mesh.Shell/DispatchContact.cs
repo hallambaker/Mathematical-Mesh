@@ -48,9 +48,9 @@ public partial class Shell {
         var asbytes = contact.GetJson(false);
 
         // encrypt
-        var earl = Udf.AuthenticatedEncryptionKey(asbytes);
-        var locator = Udf.Locator(earl);
-        var encrypted = Udf.GetEncryptedData(asbytes, earl);
+        var earl = Udf.EarlEncryptionKey(asbytes);
+        var locator = Udf.EarlLocator(earl);
+        var encrypted = Udf.EarlCiphertext(asbytes, earl);
 
         // write to file
         var filename = Path.ChangeExtension(locator, "jscontact");

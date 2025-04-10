@@ -184,8 +184,8 @@ public partial class CreateExamples {
     public const string AliceDevice4 = "Alice4";
     public const string AliceDevice5 = "Alice5";
 
-    string outputPath;
-
+    string WorkingDirectory { get; set; }
+    string DraftsDirectory { get; set; }
 
     public LayerAccount Account;
     public LayerConnect Connect;
@@ -197,93 +197,116 @@ public partial class CreateExamples {
     public LayerNYI NYI;
 
     string deviceId;
+
+
     public void Examples() {
         var output = Console.Out;
-        outputPath = Directory.GetCurrentDirectory();
+        WorkingDirectory = Directory.GetCurrentDirectory();
+        Directory.SetCurrentDirectory("..\\Outputs\\Documents");
+        DraftsDirectory = Directory.GetCurrentDirectory();
+
+        All = false;
+
 
         var seed = DeterministicSeed.Create("InternetDrafts");
         testEnvironment = new TestEnvironmentCommon(seed);
 
-        //PlatformUDF();
-
-        //PlatformCrypto();
-        //Directory.SetCurrentDirectory(outputPath);
-        //Directory.SetCurrentDirectory(outputPath);
         Directory.CreateDirectory(TestDir1);
         TestFile1.WriteFileNew(TestFile1Text.ToString());
         TestFile2.WriteFileNew(TestText2.ToString());
         TestFile3.WriteFileNew(TestText3.ToString());
         TestFile4.WriteFileNew(TestText4.ToString());
         TestFile5.WriteFileNew(TestText5.ToString());
-        //var t2 = Directory.GetCurrentDirectory();
-
         GitHub = true;
 
-        PlatformUDF();
-        PlatformCrypto();
 
-        Service = new LayerService(this);
-        Account = new LayerAccount(this);
-        Connect = new LayerConnect(this);
-        Apps = new LayerApps(this);
-        Contact = new LayerContact(this);
-        Confirm = new LayerConfirm(this);
-        Group = new LayerGroup(this);
-        NYI = new LayerNYI(this);
+        MakeEarl();
 
+        if (false) {
 
-        PerformAll();
+            SetWorkingDirectory();
+            PlatformUDF();
+            PlatformCrypto();
 
-
-        LayerAccount();
-        CheckAccess();
-
-
-        //LayerService();
+            Service = new LayerService(this);
+            Account = new LayerAccount(this);
+            Connect = new LayerConnect(this);
+            Apps = new LayerApps(this);
+            Contact = new LayerContact(this);
+            Confirm = new LayerConfirm(this);
+            Group = new LayerGroup(this);
+            NYI = new LayerNYI(this);
 
 
-        // Dare uses the keys from the contacts catalog.
-        PlatformDare(testEnvironment);
-
-        TestConnectDisconnect("");
-        EscrowAndRecover();
-        //ImportAndExport();
-
-        Directory.SetCurrentDirectory(outputPath);
-        var CreateExamples = new CreateExamples();
-
-        output.WriteLine($"***** WebDocs");
-        WebDocs(this);
-
-        Directory.SetCurrentDirectory("..\\Outputs\\Documents");
-        GitHub = false;
+            PerformAll();
 
 
-        //// Call the generators to create output.
-        ///
-        output.WriteLine($"***** Architecture");
-        MakeArchitectureExamples(this);
-        output.WriteLine($"***** UDF");
-        MakeUDFExamples(this);
-        output.WriteLine($"***** DARE");
-        MakeDareExamples(this);
-        output.WriteLine($"***** Schema");
-        MakeSchemaExamples(this);
-        output.WriteLine($"***** Protocol");
-        MakeProtocolExamples(this);
-        output.WriteLine($"***** Presentation");
-        MakePresentationExamples(this);
-        output.WriteLine($"***** Cryptography");
-        MakeCryptographyExamples(this);
+            LayerAccount();
+            CheckAccess();
+
+
+            //LayerService();
+
+
+            // Dare uses the keys from the contacts catalog.
+            PlatformDare(testEnvironment);
+
+            TestConnectDisconnect("");
+            EscrowAndRecover();
+            //ImportAndExport();
+
+            Directory.SetCurrentDirectory(WorkingDirectory);
+            var CreateExamples = new CreateExamples();
+
+            output.WriteLine($"***** WebDocs");
+            WebDocs(this);
+
+            Directory.SetCurrentDirectory("..\\Outputs\\Documents");
+            GitHub = false;
+
+
+            //// Call the generators to create output.
+            ///
+            output.WriteLine($"***** Architecture");
+            MakeArchitectureExamples(this);
+            output.WriteLine($"***** UDF");
+            MakeUDFExamples(this);
+            output.WriteLine($"***** DARE");
+            MakeDareExamples(this);
+            output.WriteLine($"***** Schema");
+            MakeSchemaExamples(this);
+            output.WriteLine($"***** Protocol");
+            MakeProtocolExamples(this);
+            output.WriteLine($"***** Presentation");
+            MakePresentationExamples(this);
+            output.WriteLine($"***** Cryptography");
+            MakeCryptographyExamples(this);
 
 
 
 
-        output.WriteLine($"*****");
-        output.WriteLine($"Missing {CountMissing} of which {CountObsolete} obsolete");
+            output.WriteLine($"*****");
+            output.WriteLine($"Missing {CountMissing} of which {CountObsolete} obsolete");
+            }
 
         MakeDocs();
         }
+
+
+    public void MakeEarl(
+                ) {
+        SetWorkingDirectory();
+        Earl = new Earl(this);
+
+
+        SetOutputDirectory();
+        MakeEarlExamples(this);
+
+        }
+
+
+    void SetWorkingDirectory() => Directory.SetCurrentDirectory(WorkingDirectory);
+    void SetOutputDirectory() => Directory.SetCurrentDirectory(DraftsDirectory);
 
     void CheckAccess() {
 

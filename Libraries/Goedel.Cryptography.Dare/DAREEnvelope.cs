@@ -23,6 +23,7 @@ using System.Runtime.CompilerServices;
 
 namespace Goedel.Cryptography.Dare;
 
+
 /// <summary>
 /// DARE Message class.
 /// </summary>

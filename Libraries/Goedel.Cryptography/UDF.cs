@@ -31,6 +31,9 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Cryptography;
 
+
+
+
 /// <summary>
 /// Class implementing the Uniform Data Fingerprint spec.
 /// </summary>
@@ -755,9 +758,19 @@ public record Udf(
     public static string Nonce(int bits = 0) {
         bits = bits <= 0 ? DefaultBits - 8 : bits;
 
-        var Data = CryptoCatalog.GetBits(bits);
-        return TypeBDSToString(UdfTypeIdentifier.Nonce, Data, bits + 8);
+        var data = CryptoCatalog.GetBits(bits);
+        return TypeBDSToString(UdfTypeIdentifier.Nonce, data, bits + 8);
         }
+
+    public static string FixedNonce(string seed, int bits=0) {
+        bits = bits <= 0 ? DefaultBits - 8 : bits;
+
+        var data = SHAKE256.HashData (seed.ToUTF8 (), 1+ bits/8);
+        return TypeBDSToString(UdfTypeIdentifier.Nonce, data, bits + 8);
+        }
+
+
+
 
     #endregion
     #region // OID
@@ -839,10 +852,11 @@ public record Udf(
     /// </summary>
     /// <param name="data">The data to analyze.</param>
     /// <returns>The EARL locator.</returns>
-    public static (string, string, byte[]) CreateEarl(byte[] data) {
-        var earl = AuthenticatedEncryptionKey(data);
-        var locator = Locator(earl);
-        var encrypted = GetEncryptedData(data, earl);
+    public static (string, string, byte[]) Earl(byte[] data,
+                int precision = 140) {
+        var earl = EarlEncryptionKey(data, precision);
+        var locator = EarlLocator(earl);
+        var encrypted = EarlCiphertext(data, earl);
 
         return (earl, locator, encrypted);
         }
@@ -853,10 +867,17 @@ public record Udf(
     /// <param name="data">The data to analyze.</param>
     /// <param name="bits">The number of bits precision to specify in the output.</param>
     /// <returns>The key as a Base32 fingerprint.</returns>
-    public static string AuthenticatedEncryptionKey(byte[] data, int bits = 0) {
+    public static string EarlEncryptionKey(byte[] data, int bits = 0) {
         var digest = SHAKE256.HashData(data);
 
-        return AuthenticatedEncryptionKeyDigest(digest, bits);
+        bits = bits < 140 ? 140 : bits;
+        var segments = (bits + 19) / 20;
+
+        digest[0] = (byte) UdfTypeIdentifier.Earl_SHA3_AES_256;
+        var result = digest.ToStringBase32(format: ConversionFormat.Dash4,
+                outputMax: segments*4).ToLower();
+
+        return result;
         }
 
     /// <summary>
@@ -864,29 +885,29 @@ public record Udf(
     /// </summary>
     /// <param name="earl">The EARL to construct the locator path for.</param>
     /// <returns>The locator.</returns>
-    public static string Locator(string earl) {
-        var source = earl.FromBase32();
-        var bits = source.Length * 16;
+    public static string EarlLocator(string earl) {
+        var source = earl.FromBase32(partial:true);
 
-        var buffer = DataToUDFBinary(source, "application/udf", bits, CryptoAlgorithmId.SHA_3_512);
-        return PresentationBase32(buffer, bits).ToLower();
+        var l1 = SHA3Managed.Process256(source);
+        var l2 = SHA3Managed.Process256(l1);
+
+        return l2.ToStringBase64url();
         }
 
     /// <summary>
-    /// Truncate the digest value <paramref name="digest"/> to <paramref name="bits"/> and return the
-    /// presentation form.
+    /// Create the locator path for the EARL <paramref name="earl"/>
     /// </summary>
-    /// <param name="digest">The digest value to present</param>
-    /// <param name="bits">The number of bits if outpur to provide.</param>
-    /// <returns>The presentation string.</returns>
-    public static string AuthenticatedEncryptionKeyDigest(byte[] digest, int bits = 0) {
-        bits = bits < 128 ? 128 : bits;
+    /// <param name="earl">The EARL to construct the locator path for.</param>
+    /// <returns>The locator.</returns>
+    public static string EarlLocator1(string earl) {
+        var source = earl.FromBase32(partial: true);
 
-        var truncated = digest[..(bits/8)];
-        Console.WriteLine($"Digest: {digest.ToStringBase16FormatHex()}");
-        Console.WriteLine($"Trunc: {truncated.ToStringBase16FormatHex()}  {UdfTypeIdentifier.AuthenticatedEncryption_SHA3_AES_256}");
-        return SymmetricKey(UdfTypeIdentifier.AuthenticatedEncryption_SHA3_AES_256, truncated).ToLower();
+        var l1 = SHA3Managed.Process256(source);
+
+
+        return l1.ToStringBase32();
         }
+
 
     /// <summary>
     /// Obtain the 256 bit AES encryption key and 96 bit nonce from the key <paramref name="udf"/>.
@@ -894,7 +915,7 @@ public record Udf(
     /// <param name="udf">The key in presentation format.</param>
     /// <returns>The encryption key.</returns>
     public static byte[] GetEncryptionKey(string udf) {
-        var bytes = udf.ToLower().ToUTF8();
+        var bytes = udf.FromBase32(partial:true);
         var key = SHAKE256.HashData(bytes, KeyLength256 + AesNonceLength);
         return key;
         }
@@ -908,7 +929,7 @@ public record Udf(
     /// <param name="earl">The key in presentation form.</param>
     /// <returns>The encrypted data package consisting of the ciphertext followed
     /// by the tag.</returns>
-    public static byte[] GetEncryptedData(byte[] plaintext, string earl) {
+    public static byte[] EarlCiphertext(byte[] plaintext, string earl) {
 
         var keyIv = GetEncryptionKey(earl);
 
@@ -954,7 +975,7 @@ public record Udf(
         var provider = new AesGcm(key, AesTagLength);
         provider.Decrypt(nonce, ciphertext, tag, plaintext);
 
-        var digest = AuthenticatedEncryptionKey(plaintext);
+        var digest = EarlEncryptionKey(plaintext);
 
         (earl == digest).AssertTrue(EarlContentInvalid.Throw);
 

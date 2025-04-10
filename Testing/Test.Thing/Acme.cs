@@ -58,17 +58,14 @@ public class Acme {
 
         // so pretend we retrieved that from a jsdevice uri
 
-        var thingService = new ServiceThingDispatch();
+        var thingService = new ServiceThingClient();
 
         var deviceDomain = thingService.GetName(AliceHomeDns, device.NameHint);
-        var configTask = thingService.NewDevice(
+        var configTask = await thingService.NewDeviceAsync(
                     DeviceDns, [address], [
                         new(WellKnownService.HTTPS),
                         new(WellKnownService.SSH)]);
 
-        while (!configTask.IsCompleted) {
-            await Task.Delay(configTask.RetryMs);
-            }
 
 
 
@@ -166,15 +163,11 @@ public class Acme {
     [Fact]
     public async Task TestEnroll5() {
 
-        var thingService = new ServiceThingDispatch();
-        var configTask = thingService.NewDevice(
+        var thingService = new ServiceThingClient();
+        var configTask = await thingService.NewDeviceAsync(
                     DeviceDns,[], [
                         new(WellKnownService.HTTPS), 
                         new(WellKnownService.SSH)]);
-
-        while (!configTask.IsCompleted) {
-            await Task.Delay(configTask.RetryMs);
-            }
 
         }
 
@@ -184,13 +177,8 @@ public class Acme {
     [Fact]
     public async Task TestEnroll4() {
 
-        var thingService = new ServiceThingDispatch();
-        var configTask =  thingService.NewDeviceHttps(DeviceDns, DeviceIp);
-
-        while (!configTask.IsCompleted) {
-            await Task.Delay (configTask.RetryMs);
-            }
-
+        var thingService = new ServiceThingClient();
+        var configTask = await thingService.NewDeviceHttpsAsync(DeviceDns, DeviceIp);
 
         }
 

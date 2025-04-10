@@ -146,12 +146,15 @@ public static partial class BaseConvert {
         /// <param name="stride">The number of bits corresponding to each output character.</param>
         /// <param name="data">String to be transformed.</param>
         /// <returns>The result of the transformation</returns>
-        public static byte[] Convert(byte[] table, int stride, string data) {
+        public static byte[] Convert(byte[] table, int stride, string data, bool partial=false) {
             if (data == null) {
                 return null;
                 }
             var Converter = new StreamConvertString(table, stride);
             Converter.Write(data);
+            if (partial) {
+                Converter.Write('a');
+                }
             Converter.Final();
             return Converter.ToArray;
 
@@ -435,8 +438,7 @@ public static partial class BaseConvert {
         /// <param name="first">Position of first byte to send.</param>
         /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
         /// <param name="outputCol">The initial output column</param>
-        /// <param name="outputMax">If positive, wrap the output at the column value specified.
-        /// Otherwise, do not wrap.</param>
+        /// <param name="outputMax">If positive, truncate the output after the specified number of characters</param>
         /// <returns></returns>
         public static string Convert(
                 byte[] data,

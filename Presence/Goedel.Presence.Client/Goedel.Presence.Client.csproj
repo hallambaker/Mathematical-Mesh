@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
+
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<Product>Goedel.Presence.Client</Product>
@@ -8,25 +8,27 @@
 		<Title>Goedel.Presence.Client</Title>
 		<ProjectGuid>{25942fc9-3341-4a52-8d5a-0bafca36e0d0}</ProjectGuid>
 
-  </PropertyGroup>
-   <ItemGroup>
-     <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
-     <ProjectReference Include="..\Goedel.Presence\Goedel.Presence.csproj" />
-   </ItemGroup>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Update="Exceptions.cs">
-      <DependentUpon>Exceptions.exceptional</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Exceptions.exceptional">
-      <Generator>exceptional</Generator>
-      <LastGenOutput>Exceptions.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	<ItemGroup>
+		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\Goedel.Presence\Goedel.Presence.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Exceptions.cs">
+			<DependentUpon>Exceptions.exceptional</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Exceptions.exceptional">
+			<Generator>exceptional</Generator>
+			<LastGenOutput>Exceptions.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 
 
 </Project>

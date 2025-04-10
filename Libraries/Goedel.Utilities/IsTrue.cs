@@ -39,6 +39,9 @@ public static partial class Extension {
     public static bool Future(this object o) => o != null;
 
 
+
+
+
     /// <summary>
     /// You might think this code is unnecessary but it is actually very 
     /// important. Don't tamper with it unless you understand how the

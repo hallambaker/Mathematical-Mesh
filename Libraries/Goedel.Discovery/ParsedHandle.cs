@@ -301,7 +301,7 @@ public class ParsedHandle {
         var earl = uri.Segments[^1];
 
         // Form the .well-known service URI and fetch the result
-        var locator = Udf.Locator(earl);
+        var locator = Udf.EarlLocator(earl);
         var serviceUri = $"https://{host}/.well-known/{wellKnown}/{locator}.{extension}";
         var ciphertext = await UriClient.DownloadByteArrayAsync(serviceUri);
         ciphertext.AssertNotNull(NYI.Throw);

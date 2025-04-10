@@ -1,22 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(SolutionDir)Settings/CommonSettings.xml" />
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <Product>Goedel.Mesh.Core</Product>
-    <Description>Run-Time specific implementations for .NET CORE</Description>
-    <Copyright>© 2020</Copyright>
-    <Title>Goedel.Mesh.Core</Title>
-  </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Callsign\Goedel.Callsign\Goedel.Callsign.csproj" />
-    <ProjectReference Include="..\..\Carnet\Goedel.Carnet\Goedel.Carnet.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
-    <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
-    <ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj" />
-  </ItemGroup>
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<Product>Goedel.Mesh.Core</Product>
+		<Description>Run-Time specific implementations for .NET CORE</Description>
+		<Copyright>© 2020</Copyright>
+		<Title>Goedel.Mesh.Core</Title>
+	</PropertyGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	<ItemGroup>
+		<ProjectReference Include="..\..\Callsign\Goedel.Callsign\Goedel.Callsign.csproj" />
+		<ProjectReference Include="..\..\Carnet\Goedel.Carnet\Goedel.Carnet.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Core\Goedel.Cryptography.Core.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography\Goedel.Cryptography.csproj" />
+		<ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
+		<ProjectReference Include="..\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
+		<ProjectReference Include="..\Goedel.Mesh\Goedel.Mesh.csproj" />
+	</ItemGroup>
 
 </Project>

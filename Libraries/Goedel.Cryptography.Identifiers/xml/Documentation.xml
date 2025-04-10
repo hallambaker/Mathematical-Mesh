@@ -2721,8 +2721,8 @@
         <member name="F:Goedel.Cryptography.UdfTypeIdentifier.EncryptionSignature_HKDF_AES_256">
             <summary>EncryptionSignature HKDF_AES_256</summary>
         </member>
-        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.AuthenticatedEncryption_SHA3_AES_256">
-            <summary>AuthenticatedEncryption SHA3_AES_256</summary>
+        <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Earl_SHA3_AES_256">
+            <summary>Earl SHA3_AES_256</summary>
         </member>
         <member name="F:Goedel.Cryptography.UdfTypeIdentifier.Digest_SHA_3_512">
             <summary>Digest SHA_3_512</summary>

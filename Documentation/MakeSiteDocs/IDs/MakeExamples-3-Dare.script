@@ -9,6 +9,26 @@
 #% #pragma warning disable IDE1006
 #xclass ExampleGenerator CreateExamples
 
+
+#method MakeEarlExamples CreateExamples Example
+#% EarlExamples(Example);
+#% EarlExamplesLocator(Example);
+#% EarlExamplesName(Example);
+#% Type0Envelope(Example);
+#% Type0Meta(Example);
+#% Type1Envelope(Example);
+#% EarlKeyDerivation(Example);
+#% Type0Nonce(Example);
+#% EarlEncryption(Example);
+#% EarlLocator(Example);
+#% EarlAuthenticatedLocator(Example);
+#% Unprotected(Example);
+#% EarlManifest(Example);
+#% SignedEnvelope25519(Example);
+#% SignedEnvelope448(Example);
+#end method
+
+
 #method MakeDareExamples CreateExamples Example
 #% MeshExamplesMessageMail(Example);
 #% MeshExamplesMessageEDS(Example);
@@ -29,6 +49,346 @@ $$$ Missing data $$$
 #end method
 
 
+#zfile CreateExamples EarlExamples "Examples\\EarlExamples.md" Example
+#% var earl = Example.Earl;
+
+~~~~
+#{earl.EarlLocator}
+#{earl.EarlName}
+#{earl.EarlJSContact}
+~~~~
+
+All three forms refer to the exact same data object. The first two forms are URLs
+that indicate that the corresponding ciphertext MAY be retreived via HTTPS at:
+
+~~~~
+#{earl.LocatorUri}
+~~~~
+
+#end zfile
+
+#zfile CreateExamples EarlExamplesLocator "Examples\\EarlExamplesLocator.md" Example
+#% var earl = Example.Earl;
+~~~~
+#{earl.EarlLocator}
+~~~~
+#end zfile
+
+#zfile CreateExamples EarlExamplesName "Examples\\EarlExamplesName.md" Example
+#% var earl = Example.Earl;
+~~~~
+#{earl.EarlName}
+~~~~
+#end zfile
+
+
+
+
+#zfile CreateExamples Type0Envelope "Examples\\Type0Envelope.md" Example
+#% var earl = Example.Earl;
+
+For example, the payload:
+
+~~~~
+"#{Example.TestFile1Text}" =
+#{earl.Payload.ToStringBase16FormatHex()}
+~~~~
+
+Is encoded as a Type 0 envelope without metadata by concatenating 
+
+* ???
+
+* The envelope type identifier (0), 
+
+* a zero length byte to indicate an empty metadata field,
+
+* a varint specifying the number of payload bytes (#{earl.Payload.Length}) followed by the payload bytes.
+
+~~~~
+#{earl.EnvelopeContent.ToStringBase16FormatHex()}
+~~~~
+
+#end zfile
+
+#zfile CreateExamples Type0Meta "Examples\\Type0Meta.md" Example
+#% var earl = Example.Earl;
+
+The same payload as before MAY be enveloped with the following metadata:
+
+~~~~
+#{earl.ProtectedHeaderJson}
+~~~~
+
+The enveloped content is as before except that the metadata field is now specified:
+
+~~~~
+#{earl.BytesMeta.ToStringBase16FormatHex()}
+~~~~
+
+#end zfile
+
+
+#zfile CreateExamples Type1Envelope "Examples\\Type1Envelope.md" Example
+#% var earl = Example.Earl;
+~~~~
+"#{earl.FirstChunk}"
+"#{earl.SecondChunk}"
+~~~~
+
+Is encoded as a Type 1 envelope by concatenating:
+
+* ???
+
+* The envelope type identifier (1), 
+
+* a zero length byte to indicate an empty unprotected header field,
+
+* a varint specifying the number of metadata bytes followed by the metadata,
+
+* a varint specifying the number of bytes in the first chunk followed by the first chunk,
+
+* a varint specifying the number of bytes in the second chunk followed by the second chunk,
+
+* a zero length byte to indicate the end of the payload section,
+
+* a zero length byte to indicate an empty trailer field.
+
+~~~~
+#{earl.BytesUnsigned.ToStringBase16FormatHex()}
+~~~~
+
+#end zfile
+
+
+
+#zfile CreateExamples EarlKeyDerivation "Examples\\EarlKeyDerivation.md" Example
+#% var earl = Example.Earl;
+
+
+The content digest of the envelope shown in the first example is computed using SHAK256:
+
+~~~~
+#{earl.ContentDigest.ToStringBase16FormatHex()}
+~~~~
+
+The first byte of the result is set to the type identifier #{earl.VersionTag}, truncated
+to the desired precision (#{earl.Precision} bits):
+
+~~~~
+#{earl.ContentDigestTruncated.ToStringBase16FormatHex()}
+~~~~
+
+The multipurpose key presentation is the result presented in Base32 with the characters 
+grouped into sets of four with dashes:
+
+~~~~
+#{earl.EarlPath}
+~~~~
+
+Note that since there is an odd number of 20-bit segments in this example, only 
+the upper half of the last byte is recorded in the key:
+
+~~~~
+#% var path = earl.EarlPath.FromBase32(partial: true);
+#{path.ToStringBase16FormatHex()}
+~~~~
+
+The EARL forms consist of the scheme name, authority section (if specified) and the 
+presentation form of the multi-purpose key:
+
+~~~~
+#{earl.EarlLocator}
+#{earl.EarlName}
+#{earl.EarlJSContact}
+~~~~
+
+#end zfile
+
+
+
+#zfile CreateExamples Type0Nonce "Examples\\Type0Nonce.md" Example
+#% var earl = Example.Earl;
+
+If a different nonce is specified in the metadata:
+
+~~~~
+#{earl.ProtectedHeaderJson2}
+~~~~
+
+A different multi-purpose key is derived:
+
+~~~~
+#{earl.WithNonce.Uri}
+~~~~
+
+#end zfile
+
+
+
+#zfile CreateExamples EarlEncryption "Examples\\EarlEncryption.md" Example
+#% var earl = Example.Earl;
+
+Since the encryption algorithm is AES-GCM with a 96 nonce and a 256 bit key,
+it is necessary to generate 44 bytes to encrypt the enveloped data.
+
+The key derrivation function, SHAKE-256 is applied to the multi-purpose key 
+of the first example to obtain 44 bytes of output:
+
+~~~~
+#{earl.AesKeyNonce.ToStringBase16FormatHex()}
+~~~~
+
+The first 32 bytes of the result are the AES-GCM encryption key:
+
+~~~~
+encryption key =
+#{earl.AesKeyNonce[0..32].ToStringBase16FormatHex()}
+~~~~
+
+The final 12 bytes of the result are the AES-GCM nonce:
+
+~~~~
+encryption nonce = 
+#{earl.AesKeyNonce[32..].ToStringBase16FormatHex()}
+~~~~
+
+The enveloped plaintext data is encrypted under AES-GCM with the specified key and 
+nonce to produce the ciphertext:
+
+~~~~
+ciphertext = 
+#{earl.Ciphertext.ToStringBase16FormatHex()}
+~~~~
+#end zfile
+
+
+
+#zfile CreateExamples EarlLocator "Examples\\EarlLocator.md" Example
+#% var earl = Example.Earl;
+
+The first locator value is computed from the multi-purpose key using the  
+locator digest function, in this case SHA-3-256:
+
+~~~~
+locator1 =
+#{earl.Locator1.ToStringBase16FormatHex()}
+~~~~
+
+The locator value is computed from the first locator value using the  
+locator digest function, in this case SHA-3-256:
+
+~~~~
+locator =
+#{earl.Locator1.ToStringBase16FormatHex()}
+~~~~
+
+The locator URI is a HTTPS well-known service in which the final element of the
+path is the base64url encoded locator value.
+
+~~~~
+EARL =
+#{earl.LocatorUri}
+~~~~
+
+
+#end zfile
+
+#zfile CreateExamples EarlAuthenticatedLocator "Examples\\EarlAuthenticatedLocator.md" Example
+#% var earl = Example.Earl;
+
+~~~~
+access authenticator =
+#{earl.Password}
+~~~~
+
+
+#end zfile
+
+#zfile CreateExamples Unprotected "Examples\\Unprotected.md" Example
+#% var earl = Example.Earl;
+
+~~~~
+Unprotected Header =
+#{earl.Signed25519.Header}
+~~~~
+
+#end zfile
+
+
+#zfile CreateExamples EarlManifest "Examples\\EarlManifest.md" Example
+#% var earl = Example.Earl;
+
+~~~~
+Metadata digest =
+#{earl.Signed25519.MetadataDigest.ToStringBase16FormatHex()}
+
+Payload digest =
+#{earl.Signed25519.PayloadDigest.ToStringBase16FormatHex()}
+
+Manifest =
+#{earl.Signed25519.Manifest.ToStringBase16FormatHex()}
+~~~~
+
+
+
+#end zfile
+
+
+
+
+
+
+
+
+
+
+
+
+#zfile CreateExamples SignedEnvelope25519 "Examples\\SignedEnvelope25519.md" Example
+#% var earl = Example.Earl;
+
+~~~~
+Ed25519 private key =
+#{(earl.SignatureEd25519 as KeyPairEd25519).PrivateKey.Secret.ToStringBase16FormatHex()}
+~~~~
+
+The trailer contains a Signatures property with a single entry specifying the key 
+identifier of the signing key and the signature value:
+
+~~~~
+Trailer =
+#{earl.Signed25519.Trailer}
+~~~~
+
+#end zfile
+
+
+#zfile CreateExamples SignedEnvelope448 "Examples\\SignedEnvelope448.md" Example
+#% var earl = Example.Earl;
+
+The process for signing with an Ed448 key is identical except that achieving the
+higher work factor requires use of a 512 bit digest:
+
+~~~~
+Unprotected Header =
+#{earl.SignedEd448.Header}
+~~~~
+
+The private key used to generate the signature in this example is:
+
+~~~~
+Ed448 private key =
+#{(earl.SignatureEd448 as KeyPairEd448).PrivateKey.Secret.ToStringBase16FormatHex()}
+~~~~
+
+The signature value is specified in the trailer as before:
+
+~~~~
+Trailer =
+#{earl.SignedEd448.Trailer}
+~~~~
+
+#end zfile
 
 
 

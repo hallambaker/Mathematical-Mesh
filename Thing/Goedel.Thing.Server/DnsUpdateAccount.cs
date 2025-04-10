@@ -19,11 +19,14 @@
 //  THE SOFTWARE.
 
 using Goedel.Contacts;
+using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
 using Goedel.Discovery;
 
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.ConstrainedExecution;
+using System.Security.Cryptography.X509Certificates;
 
 using static System.Net.Mime.MediaTypeNames;
 
@@ -49,56 +52,144 @@ public record ServiceDescription(
 
 
 
+/// <summary>
+/// Thing service client, interfaces to the DNS and to ACME services.
+/// </summary>
+public class ServiceThingClient {
 
-public class ServiceThingDispatch() {
+    /// <summary>
+    /// Constructor, 
+    /// </summary>
+    public ServiceThingClient() {
+        // get the DNS client
+
+        }
 
     public string GetName(
                     string zone,
                     string baseName) => (baseName ?? "iot") + "1." + zone;
 
-    public ServiceThingTask NewDevice(
+    /// <summary>
+    /// Obtain credentials for a host providing the services <paramref name="services"/>
+    /// from addresses <paramref name="addresses"/> on domain <paramref name="domain"/>
+    /// and publish the DNS settings for the services.
+    /// </summary>
+    /// <param name="domain">The domain to provision the device to.</param>
+    /// <param name="addresses">The IP addresses of the device.</param>
+    /// <param name="services">The services supported by the device.</param>
+    /// <returns>Task returning a <see cref="ServiceThingResult"/> on completion.</returns>
+    public async Task<ServiceThingResult> NewDeviceAsync(
                     string domain, 
                     List<IPAddress> addresses,
                     IEnumerable<ServiceDescription> services) {
+
+        var result = new ServiceThingResult (domain, addresses, services);
+        result = await PrepareAsync(domain, addresses, services);
+
+        // Callers may prefer to split these up so the device can initialize the
+        // services before publishing the DNS entries.
+
+        result = await PublishAsync(result);
+        return result;
+        }
+
+
+    /// <summary>
+    /// Obtain credentials for a host providing the services <paramref name="services"/>
+    /// from addresses <paramref name="addresses"/> on domain <paramref name="domain"/>.
+    /// </summary>
+    /// <param name="domain">The domain to provision the device to.</param>
+    /// <param name="addresses">The IP addresses of the device.</param>
+    /// <param name="services">The services supported by the device.</param>
+    /// <returns>Task returning a <see cref="ServiceThingResult"/> on completion.</returns>
+    public async Task<ServiceThingResult> PrepareAsync(
+                    string domain,
+                    List<IPAddress> addresses,
+                    IEnumerable<ServiceDescription> services) {
+
+        var result = new ServiceThingResult(domain, addresses, services);
+        result = await PrepareAsync(result);
+
+
+        return result;
+        }
+
+    /// <summary>
+    /// Obtain credentials for a host providing the services
+    /// <paramref name="services"/>. The DNS records to allow service discovery are not
+    /// published so as to allow the caller to start the services before publishing the
+    /// discovery record.
+    /// </summary>
+    /// <param name="services">The service descriptions.</param>
+    /// <returns>Task returning a <see cref="ServiceThingResult"/> on completion.</returns>
+    public async Task<ServiceThingResult> PrepareAsync(
+                        ServiceThingResult services) {
+
+        // Do the ACME stuff here
+
+
+        return services;
+        }
+
+    /// <summary>
+    /// Publish the DNS settings for the services previously credentialed in 
+    /// <paramref name="services"/>.
+    /// </summary>
+    /// <param name="services">The service descriptions.</param>
+    /// <returns>Task returning a <see cref="ServiceThingResult"/> on completion.</returns>
+    public async Task<ServiceThingResult> PublishAsync(
+                            ServiceThingResult services) {
 
         // Delete the A and AAAA records for the zone (if they exist)
 
         // Create the A/AAAA records for the zone
 
-
-
         // Add the service entries.
 
 
-        return new ServiceThingTask() {
 
-            };
+        return services;
         }
 
-    public ServiceThingTask NewDeviceHttps(string domain, string ipaddress) {
 
-        return new ServiceThingTask() {
 
-            };
-        }
+
+    public async Task<ServiceThingResult> NewDeviceHttpsAsync(string domain, string ipaddress) =>
+        await NewDeviceAsync(domain, [IPAddress.Parse(ipaddress)], [new(WellKnownService.HTTPS)]);
     }
 
-public record ServiceThingTask {
+public record ServiceThingResult {
+    public string Domain { get; }
+    public List<IPAddress> Addresses { get; } = [];
+    public List<ServiceServiceEntry> Services { get; } = [];
 
-    public bool IsCompleted { get; set; }
+    public ServiceThingResult (
+                    string domain,
+                    List<IPAddress> addresses,
+                    IEnumerable<ServiceDescription> services) {
+        Domain = domain;
+        Addresses = addresses;
+        foreach (var service in services) {
+            Services.Add(new(service));
+            }
 
-    public int RetryMs { get; private set; } = 500;
-
-
-    int count = 5;
-
-    public bool Poll() {
-        IsCompleted = count-- > 0;
-        
-        return IsCompleted;
         }
 
+
+
+
     }
+
+
+public record ServiceServiceEntry (
+                ServiceDescription ServiceDescription) {
+
+    public KeyPair Key { get; set; }
+    public Key Credential { get; set; }
+
+
+    }
+
 
 
 public record DnsUpdateRequest {

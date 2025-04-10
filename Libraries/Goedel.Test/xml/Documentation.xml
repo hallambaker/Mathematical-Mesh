@@ -4,6 +4,134 @@
         <name>Goedel.Test</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Test.AcvpTestBinding`1">
+            <summary>
+            ACVP test data read from a file 'InternalProjectionFile.json' in JSON format.
+            </summary>
+            <typeparam name="T">The type of the test specific data.</typeparam>
+        </member>
+        <member name="T:Goedel.Test.IExtensionData">
+            <summary>
+            Interface allowing access to extension data property.
+            </summary>
+        </member>
+        <member name="T:Goedel.Test.AcvpTestFile">
+            <summary>
+            Test file deserialization root element.
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.AcvpTestFile.VsId">
+            <summary>The numeric version number</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTestFile.Algorithm">
+            <summary>The algorithm name</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTestFile.Mode">
+            <summary>The test mode.</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTestFile.Revision">
+            <summary>The revision of the test subject</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTestFile.IsSample">
+            <summary>If true is sample data.</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTestFile.TestGroups">
+            <summary>The test groups.</summary> 
+        </member>
+        <member name="T:Goedel.Test.AcvpTestGroup">
+            <summary>
+            Group root element, contains a series of tests
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.AcvpTestGroup.CachedData">
+            <summary>Slot to allow group data to be cached for use.</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTestGroup.tgId">
+            <summary>The test group identifier.</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTestGroup.TestType">
+            <summary>The test type.</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTestGroup.ParameterSet">
+            <summary>The parameter set being tested.</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTestGroup.Function">
+            <summary>The function being tested.</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTestGroup.Tests">
+            <summary>The tests.</summary> 
+        </member>
+        <member name="T:Goedel.Test.AcvpTestItem">
+            <summary>
+            Test item deserialization element.
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.AcvpTestItem.TcId">
+            <summary>Test identifier.</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTestItem.ExtensionData">
+            <summary>Additional data.</summary> 
+        </member>
+        <member name="T:Goedel.Test.AcvpTest">
+            <summary>
+            The test item, this should be implemented for each specific test type, 
+            binding data from <see cref="!:ExtensionData"/> to local properties in
+            <see cref="M:Goedel.Test.AcvpTest.Populate(Goedel.Test.AcvpTestGroup,Goedel.Test.AcvpTestItem)"/>and
+            implementing a <see cref="M:Goedel.Test.AcvpTest.Test"/> method.
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.AcvpTest.GroupData">
+            <summary>The test group data.</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTest.TestData">
+            <summary>The test data.</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTest.GroupId">
+            <summary>The group identifier.</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTest.TestId">
+            <summary>The test identifier.</summary> 
+        </member>
+        <member name="M:Goedel.Test.AcvpTest.Populate(Goedel.Test.AcvpTestGroup,Goedel.Test.AcvpTestItem)">
+            <summary>
+            Is called during deserialization to bind data from the test specific fields
+            to local properties.
+            </summary>
+            <param name="group">The test group read by the deserializer.</param>
+            <param name="test">The test item read by the deserializer.</param>
+        </member>
+        <member name="M:Goedel.Test.AcvpTest.Test">
+            <summary>
+            Test method, is called to perform the test.
+            </summary>
+        </member>
+        <member name="M:Goedel.Test.AcvpTest.BindBinary(Goedel.Test.IExtensionData,System.String)">
+            <summary>
+            Convenience method binding data from the field named  <paramref name="key"/>  in
+            <see cref="!:ExtensionData"/> of <paramref name="test"/> 
+            </summary>
+            <param name="test">The test or group data to search.</param>
+            <param name="key">The key to locate</param>
+            <returns>The result of decoding the field as hexadecimal data.</returns>
+        </member>
+        <member name="M:Goedel.Test.AcvpTest.BindString(Goedel.Test.IExtensionData,System.String)">
+            <summary>
+            Convenience method binding data from the field named  <paramref name="key"/>  in
+            <see cref="!:ExtensionData"/> of <paramref name="test"/> 
+            </summary>
+            <param name="test">The test or group data to search.</param>
+            <param name="key">The key to locate</param>
+            <returns>The string data.</returns>
+        </member>
+        <member name="M:Goedel.Test.AcvpTest.BindBool(Goedel.Test.IExtensionData,System.String)">
+            <summary>
+            Convenience method binding data from the field named  <paramref name="key"/>  in
+            <see cref="!:ExtensionData"/> of <paramref name="test"/> 
+            </summary>
+            <param name="test">The test or group data to search.</param>
+            <param name="key">The key to locate</param>
+            <returns>The boolean data.</returns>
+        </member>
         <member name="T:Goedel.Test.MakeConstant">
             <summary>
             
@@ -34,8 +162,26 @@
             Condition is true</param>
             <param name="args">Reason arguments to be passed to the throw delegate.</param>
         </member>
+        <member name="M:Goedel.Test.AssertTest.TestFalse(System.Nullable{System.Boolean},Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Throw an exception if <paramref name="condition"/> is true. 
+            (test, NYIException.Throw, "test was false").AssertTrue();
+            </summary>
+            <param name="condition">The condition</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
         <member name="M:Goedel.Test.AssertTest.TestFalse(System.Boolean,Goedel.Utilities.ThrowDelegate,System.Object[])">
             <summary>Throw an exception if <paramref name="condition"/> is true. 
+            (test, NYIException.Throw, "test was false").AssertTrue();
+            </summary>
+            <param name="condition">The condition</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Test.AssertTest.TestTrue(System.Nullable{System.Boolean},Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Throw an exception if <paramref name="condition"/> is false. 
             (test, NYIException.Throw, "test was false").AssertTrue();
             </summary>
             <param name="condition">The condition</param>
@@ -54,6 +200,24 @@
         </member>
         <member name="M:Goedel.Test.AssertTest.TestEqual(System.Byte[],System.Byte[],Goedel.Utilities.ThrowDelegate,System.Object[])">
             <summary>Test to see if two arrays are equal.
+            </summary>
+            <param name="test1">First test value</param>
+            <param name="test2">Second test value</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Test.AssertTest.TestNotEqual(System.Byte[],System.Byte[],Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Test to see if two arrays are equal.
+            </summary>
+            <param name="test1">First test value</param>
+            <param name="test2">Second test value</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
+        <member name="M:Goedel.Test.AssertTest.TestIsEqual(System.String,System.String,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Test to see if two values are equal.
             </summary>
             <param name="test1">First test value</param>
             <param name="test2">Second test value</param>
@@ -145,13 +309,17 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Test.Core.DareRecipientDebug.#ctor(System.Byte[],Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Test.Core.DareRecipientDebug.#ctor(System.Byte[],Goedel.Cryptography.CryptographicKey)">
             <summary>
             Create a DARERecipient using the specified cryptographic parameters.
             </summary>
             <param name="MasterKey">The master key</param>
             <param name="PublicKey">The recipient public key.</param>
             <returns>The recipient informatin object.</returns>
+        </member>
+        <member name="P:Goedel.Test.UnitTestSet.Seed">
+            <summary>The deterministic seed to be used by the test, may be set explictly
+            or generated automatically through use in a test method.</summary> 
         </member>
         <member name="T:Goedel.Test.TestNotImplemented">
             <summary>
@@ -408,6 +576,70 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Test.TestExpectedFail">
+            <summary>
+            An test validation check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedFail.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedFail.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedFail.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedFail._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Test.TestExpectedFail.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Test.TestExpectedSuccess">
+            <summary>
+            An test validation check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedSuccess.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Test.TestExpectedSuccess.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedSuccess.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Test.TestExpectedSuccess._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Test.TestExpectedSuccess.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Test.Compare">
             <summary>
             An comparison check on the produced result failed
@@ -440,10 +672,69 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Test.UnitTestNotFound">
+            <summary>
+            Could not initialize the deterministic seed as none of the callers is a unit test
+            </summary>
+        </member>
+        <member name="P:Goedel.Test.UnitTestNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Test.UnitTestNotFound.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Test.UnitTestNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Test.UnitTestNotFound._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Test.UnitTestNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Test.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Test.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
         <member name="T:Goedel.Test.NamespaceDoc">
             <summary>
             Various functions to support unit testing.
             </summary>
+        </member>
+        <member name="M:Goedel.Test.TestRandom.#ctor(System.String,System.String,System.Int32)">
+            <summary>
+            Constructor creating an instance using the string 
+            <paramref name="test"/>-<paramref name="parameters"/>-<paramref name="count"/>.
+            </summary>
+            <param name="test"></param>
+            <param name="parameters"></param>
+            <param name="count"></param>
+        </member>
+        <member name="M:Goedel.Test.TestRandom.GetRandom(System.String,System.Int32)">
+            <summary>
+            Determine the name of the calling method and return a random number provider
+            for that label with the specified count.
+            </summary>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
     </members>
 </doc>

@@ -4,6 +4,84 @@
         <name>Goedel.Thing.Server</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Acme.AcmeAccount">
+            <summary>
+            ACME account
+            </summary>
+        </member>
+        <member name="P:Goedel.Acme.AcmeAccount.PemKey">
+            <summary>The PEM key</summary> 
+        </member>
+        <member name="P:Goedel.Acme.AcmeAccount.AccountContext">
+            <summary>The Account context</summary> 
+        </member>
+        <member name="P:Goedel.Acme.AcmeAccount.AcmeContext">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Acme.AcmeAccount.Create(System.String,System.Boolean)">
+            <summary>
+            Factory method, returns a new account instance to the service at <paramref name="uri"/>
+            </summary>
+            <param name="uriString">Uri of the CA service.</param>
+            <param name="staging">If true, use the staging/test version of the service.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Acme.AcmeAccount.PlaceOrder(System.Collections.Generic.List{System.String})">
+            <summary>
+            Place an order for a certificate with the domains <paramref name="domains"/>
+            </summary>
+            <param name="domains">List of domains to be included in the certificate.</param>
+            <returns>Task returning the order.</returns>
+        </member>
+        <member name="T:Goedel.Acme.ServiceThingClient">
+            <summary>
+            Thing service client, interfaces to the DNS and to ACME services.
+            </summary>
+        </member>
+        <member name="M:Goedel.Acme.ServiceThingClient.#ctor">
+            <summary>
+            Constructor, 
+            </summary>
+        </member>
+        <member name="M:Goedel.Acme.ServiceThingClient.NewDeviceAsync(System.String,System.Collections.Generic.List{System.Net.IPAddress},System.Collections.Generic.IEnumerable{Goedel.Acme.ServiceDescription})">
+            <summary>
+            Obtain credentials for a host providing the services <paramref name="services"/>
+            from addresses <paramref name="addresses"/> on domain <paramref name="domain"/>
+            and publish the DNS settings for the services.
+            </summary>
+            <param name="domain">The domain to provision the device to.</param>
+            <param name="addresses">The IP addresses of the device.</param>
+            <param name="services">The services supported by the device.</param>
+            <returns>Task returning a <see cref="T:Goedel.Acme.ServiceThingResult"/> on completion.</returns>
+        </member>
+        <member name="M:Goedel.Acme.ServiceThingClient.PrepareAsync(System.String,System.Collections.Generic.List{System.Net.IPAddress},System.Collections.Generic.IEnumerable{Goedel.Acme.ServiceDescription})">
+            <summary>
+            Obtain credentials for a host providing the services <paramref name="services"/>
+            from addresses <paramref name="addresses"/> on domain <paramref name="domain"/>.
+            </summary>
+            <param name="domain">The domain to provision the device to.</param>
+            <param name="addresses">The IP addresses of the device.</param>
+            <param name="services">The services supported by the device.</param>
+            <returns>Task returning a <see cref="T:Goedel.Acme.ServiceThingResult"/> on completion.</returns>
+        </member>
+        <member name="M:Goedel.Acme.ServiceThingClient.PrepareAsync(Goedel.Acme.ServiceThingResult)">
+            <summary>
+            Obtain credentials for a host providing the services
+            <paramref name="services"/>. The DNS records to allow service discovery are not
+            published so as to allow the caller to start the services before publishing the
+            discovery record.
+            </summary>
+            <param name="services">The service descriptions.</param>
+            <returns>Task returning a <see cref="T:Goedel.Acme.ServiceThingResult"/> on completion.</returns>
+        </member>
+        <member name="M:Goedel.Acme.ServiceThingClient.PublishAsync(Goedel.Acme.ServiceThingResult)">
+            <summary>
+            Publish the DNS settings for the services previously credentialed in 
+            <paramref name="services"/>.
+            </summary>
+            <param name="services">The service descriptions.</param>
+            <returns>Task returning a <see cref="T:Goedel.Acme.ServiceThingResult"/> on completion.</returns>
+        </member>
         <member name="T:Goedel.Acme.WellKnownService">
             <summary>
             Well Known services.
