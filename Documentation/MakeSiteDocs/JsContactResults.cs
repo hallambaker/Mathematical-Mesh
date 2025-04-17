@@ -138,7 +138,8 @@ public class JsContactResults {
         Console.WriteLine(JSONDebugWriter.Write(Contact));
 
         var contactBytes = Contact.GetJson(false);
-        EarlSet = new EarlSet(ProtectedHeaderJson, contactBytes, [SignatureEd448]);
+        EarlSet = new EarlSet(ProtectedHeaderJson, contactBytes, [SignatureEd448], 
+            scheme:"jscontact", service: CreateExamples.AliceService);
         // create an EARL for the contact here.
 
         foreach (var servicePair in Contact.Emails) {
