@@ -114,6 +114,8 @@ public partial class TestService {
         var applicationMail = CatalogedApplicationMail.Create("phill@example.net", roles, "Main email");
         var resultTransact2 = contextAccountAlice.AddApplication(applicationMail, [null]).Sync();
 
+
+        // add a Web place
         var applicationWeb = CatalogedApplicationService.CreateWeb(
                 "Web", roles, "https://phill.hallambaker.com/", "Phill's personal page");
         var resultTransact6 = contextAccountAlice.AddApplication(applicationWeb, [null]).Sync();

@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Utilities;
+
 namespace Goedel.Protocol;
 
 
@@ -131,9 +133,27 @@ public class JSONDebugWriter : JsonWriter {
         var Length = count < 0 ? Data.Length : count;
 
         Output.Write("\"");
-        Output.Write(BaseConvert.ToStringBase64url(
+
+        if (Data.Length < Threshold) {
+            Output.Write(BaseConvert.ToStringBase64url(
                 Data, offset, Length, format: ConversionFormat.Draft,
                 outputCol: OutputCol + 2, outputMax: 66));
+            }
+        else {
+            Output.Write(BaseConvert.ToStringBase64url(
+                Data, offset, Threshold - 10, format: ConversionFormat.Draft,
+                outputCol: OutputCol + 2, outputMax: 66));
+            Output.Write("...");
+            NewLine();
+            Output.Write("...");
+            Output.Write(BaseConvert.ToStringBase64url(
+                Data[^10..], offset, 10, format: ConversionFormat.Draft,
+                outputCol: OutputCol + 2, outputMax: 66));
+            }
+
+
+
+
 
         Output.Write("\"");
         }

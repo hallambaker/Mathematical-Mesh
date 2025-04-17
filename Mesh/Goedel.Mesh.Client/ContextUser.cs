@@ -24,6 +24,8 @@
 using Goedel.Discovery;
 using Goedel.Registry;
 
+using System.Linq;
+
 namespace Goedel.Mesh.Client;
 
 
@@ -522,6 +524,49 @@ public partial class ContextUser : ContextAccount {
             }
 
         transaction.ApplicationCreate(application);
+        var resultTransact = await transaction.TransactAsync();
+
+
+        return resultTransact;
+        }
+
+
+
+
+    /// <summary>
+    /// Add the application <paramref name="application"/> to the specified contact(s).
+    /// </summary>
+    /// <param name="applications">The application to add.</param>
+    /// <param name="contacts">If not null, a list of the local names of the self-contacts
+    /// the application is to be added to. Otherwise, the application is added to the
+    /// default contact.</param>
+    /// <returns>Result of add transaction.</returns>
+    public async Task<TransactResponse> AddApplications(
+                    List<CatalogedApplication> applications,
+                    IEnumerable<string> contacts = null) {
+
+        using var transaction = TransactBegin();
+
+        var catalogContact = transaction.GetCatalogContact();
+        var catalogedContacts = new List<CatalogedContact>();
+
+        if (contacts != null) {
+            foreach (var contactId in contacts) {
+                var contact = transaction.GetContactSelf(contactId);
+                catalogedContacts.Add(contact);
+                }
+            }
+        foreach (var application in applications) {
+            transaction.ApplicationCreate(application);
+            foreach (var contact in catalogedContacts) {
+                var jsContact = contact.Contact;
+
+                jsContact.AddApplication(application);
+                }
+            }
+        foreach (var contact in catalogedContacts) {
+            transaction.CatalogUpdate(catalogContact, contact);
+            }
         var resultTransact = await transaction.TransactAsync();
 
 

@@ -151,54 +151,63 @@ public class CatalogContact : Catalog<CatalogedContact> {
                     }
                 }
             }
-
-        foreach (var cryptoKey in contact.CryptoKeys) {
-            if (DictionaryProfiles.TryGetValue(cryptoKey.Key, out var profiles)) {
-                profiles.Add(cryptoKey.Value);
+        if (contact.CryptoKeys is not null) {
+            foreach (var cryptoKey in contact.CryptoKeys) {
+                if (DictionaryProfiles.TryGetValue(cryptoKey.Key, out var profiles)) {
+                    profiles.Add(cryptoKey.Value);
+                    }
+                else {
+                    profiles = [cryptoKey.Value];
+                    DictionaryProfiles.Add(cryptoKey.Key, profiles);
+                    }
                 }
-            else {
-                profiles = [cryptoKey.Value];
-                DictionaryProfiles.Add(cryptoKey.Key, profiles);
-                }
-
-
             }
-
+        if (contact.JsonWebKeys is not null) {
+            foreach (var cryptoKey in contact.JsonWebKeys) {
+                //if (DictionaryProfiles.TryGetValue(cryptoKey.Key, out var profiles)) {
+                //    profiles.Add(cryptoKey.Value);
+                //    }
+                //else {
+                //    profiles = [cryptoKey.Value];
+                //    DictionaryProfiles.Add(cryptoKey.Key, profiles);
+                //    }
+                }
+            }
 
         // 
 
 
-            //if (contact.NetworkAddresses != null) {
-            //    foreach (var networkAddress in contact.NetworkAddresses) {
-            //        if (networkAddress.Address is not null) {
-            //            DictionaryByNetworkAddress.AddSafe(networkAddress.Address,
-            //                new NetworkProtocolEntry(catalogedContact, networkAddress));
-            //            }
-            //        if (networkAddress is NetworkCapability networkCapability) {
-            //            foreach (var capability in networkCapability.Capabilities) {
-            //                capability.KeyCollection = KeyCollection;
-            //                switch (capability) {
-            //                    case CapabilityDecrypt capabilityDecrypt: {
-            //                        //Console.WriteLine($"Key {networkAddress.Address} -> {capability.Id}");
+        //if (contact.NetworkAddresses != null) {
+        //    foreach (var networkAddress in contact.NetworkAddresses) {
+        //        if (networkAddress.Address is not null) {
+        //            DictionaryByNetworkAddress.AddSafe(networkAddress.Address,
+        //                new NetworkProtocolEntry(catalogedContact, networkAddress));
+        //            }
+        //        if (networkAddress is NetworkCapability networkCapability) {
+        //            foreach (var capability in networkCapability.Capabilities) {
+        //                capability.KeyCollection = KeyCollection;
+        //                switch (capability) {
+        //                    case CapabilityDecrypt capabilityDecrypt: {
+        //                        //Console.WriteLine($"Key {networkAddress.Address} -> {capability.Id}");
 
-            //                        if (DictionaryDecryptByKeyId.TryGetValue(capability.Id, out var existing)) {
-            //                            if (capabilityDecrypt.Issued > existing.Issued) {
-            //                                DictionaryDecryptByKeyId.Remove(capability.Id);
-            //                                DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
-            //                                }
-            //                            }
-            //                        else {
-            //                            DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
-            //                            }
+        //                        if (DictionaryDecryptByKeyId.TryGetValue(capability.Id, out var existing)) {
+        //                            if (capabilityDecrypt.Issued > existing.Issued) {
+        //                                DictionaryDecryptByKeyId.Remove(capability.Id);
+        //                                DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
+        //                                }
+        //                            }
+        //                        else {
+        //                            DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
+        //                            }
 
-            //                        //DictionaryDecryptByKeyId.Replace(capability.Id, capabilityDecrypt);
-            //                        break;
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
+        //                        //DictionaryDecryptByKeyId.Replace(capability.Id, capabilityDecrypt);
+        //                        break;
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
         }
 
     /// <summary>

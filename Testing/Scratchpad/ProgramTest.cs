@@ -66,8 +66,8 @@ partial class Program {
         //TestService.Test().TestCredentialAccount();
 
         var examples = new CreateExamples();
-        var earl = new Earl(examples);
-
+        //var earl = new EarlResults(examples);
+        //var jscontact = new JsContactResults(examples);
 
         //Acme.Test().TestJsDevice().Sync();
         //TestService.Test().TestCredentialAccountApps();

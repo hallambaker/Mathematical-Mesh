@@ -104,13 +104,13 @@ public partial class CatalogedApplicationMail {
     public static CatalogedApplicationMail Create(string address, List<string> roles, string description=null) {
         var key = GetKey(address);
         var smimeSignKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                 KeySecurity.Exportable, keySize: 2048);
+                 KeySecurity.Exportable, keySize: 2048, keyUses: KeyUses.Sign);
         var smimeEncryptKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                KeySecurity.Exportable, keySize: 2048);
+                KeySecurity.Exportable, keySize: 2048, keyUses: KeyUses.Encrypt);
         var openpgpSignKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-                KeySecurity.Exportable, keySize: 2048);
+                KeySecurity.Exportable, keySize: 2048, keyUses: KeyUses.Sign);
         var openpgpEncryptKeyPair = KeyPair.Factory(CryptoAlgorithmId.RSAExch,
-               KeySecurity.Exportable, keySize: 2048);
+               KeySecurity.Exportable, keySize: 2048, keyUses: KeyUses.Encrypt);
 
         return new CatalogedApplicationMail() {
             AccountAddress = address,

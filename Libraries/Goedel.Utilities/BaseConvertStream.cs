@@ -266,6 +266,7 @@ public static partial class BaseConvert {
                     int n = a >> offset;
                     formatChar(table[n]);
                     a &= (0xff >> (8 - offset));
+                    //outputCount++;
                     }
                 }
             }

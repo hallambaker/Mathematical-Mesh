@@ -40,5 +40,6 @@ copy ..\favicon.png .
 
 :: rfctool %DocSource%\hallambaker-mesh-10-everything.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-earl.docx /auto /cache=bib.xml
+rfctool %DocSource%\hallambaker-jscontact.docx /auto /cache=bib.xml
 exit /b 0
 

@@ -195,7 +195,7 @@ public partial class CatalogedApplication {
     public abstract ApplicationEntry? GetActivation(CatalogedDevice catalogedDevice);
 
 
-
+    public static string GetIdentifier(KeyPair keyPair) => Udf.ContentDigestOfDataString(keyPair.UDFBytes, "");
 
 
 

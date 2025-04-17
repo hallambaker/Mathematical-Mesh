@@ -54,14 +54,23 @@ public partial class CatalogedApplicationCredential {
         var clientKey = KeyPair.Factory(credentialProfile.AlgorithmId,
                     KeySecurity.Exportable, keySize: credentialProfile.KeySize);
 
+        var contexts = credentialProfile.Platforms is null ? null : new List<string>(credentialProfile.Platforms);
+        var description = credentialProfile.Kind;
+        if (credentialProfile.Platforms is not null) {
+            description += " "+ String.Join(", ", credentialProfile.Platforms);
+            }
+
+
+
         var result = new CatalogedApplicationCredential() {
-            Key = clientKey.KeyIdentifier,
+            Key = GetIdentifier(clientKey),
             LocalName = localName,
             Grant = roles,
-            Kind = credentialProfile.Platform,
+            Kind = credentialProfile.Kind,
+            Contexts = contexts,
             PrimaryPrivate = clientKey,
             Primary = new KeyData(clientKey),
-            Description = $"Code Sign for {credentialProfile.Platform}"
+            Description = description
             };
 
         return result;

@@ -58,6 +58,26 @@ public record EarlSet {
                  EarlEnvelopeWriter.GetBytes(contentMeta, payload), service, scheme, precision) {
         }
 
+
+    public EarlSet(
+            ContentMeta contentMeta,
+            byte[] payload,
+            IEnumerable<KeyPair> signers,
+            string? service = null,
+            string scheme = "earl",
+                int precision = 140) {
+
+        var writer = new EarlEnvelopeWriter(contentMeta, signers);
+        writer.Write(payload);
+        var envelope = writer.End(signers);
+
+        (Earl, Locator, Ciphertext) = Udf.Earl(envelope);
+        Scheme = scheme;
+        Authority = service == null ? "" : $"//{service}/";
+
+        }
+
+
     public static string GetWellKnown(
                 string authority,
                 string locator) => $"https://{authority}/.well-known/earl/{locator}";

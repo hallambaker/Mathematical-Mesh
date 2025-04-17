@@ -98,8 +98,8 @@ public partial class CreateExamples {
 
 
     public ExampleDare Dare = new();
-    public Earl Earl;
-
+    public EarlResults Earl;
+    public JsContactResults JSContact;
     StringWriter consoleWriter;
 
 
@@ -113,7 +113,8 @@ public partial class CreateExamples {
 
         ShellKey = new ShellKey(this);
         ShellHash = new ShellHash(this);
-        Earl = new Earl(this);
+        JSContact = new JsContactResults(this);
+        Earl = new EarlResults(this);
         ShellDare = new ShellDare(this);
         ShellSequence = new ShellSequence(this);
 

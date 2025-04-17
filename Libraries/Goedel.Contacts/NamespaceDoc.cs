@@ -22,6 +22,7 @@
 
 global using Goedel.Protocol;
 global using Goedel.Utilities;
+global using Goedel.Cryptography.Jose;
 global using Goedel.IO;
 
 global using System.Collections.Generic;

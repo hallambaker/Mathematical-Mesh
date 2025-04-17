@@ -1970,6 +1970,22 @@
             The personal information of the entity represented by the Card.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.JsContact.Updates">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsContact.Groups">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsContact.JsonWebKeys">
+            <summary>
+            The cryptographic resources such as public keys and certificates associated 
+            with the entity represented by the Card.
+            </summary>
+        </member>
         <member name="P:Goedel.Contacts.JsContact._Binding">
             <summary>Implement IBinding</summary> 
         </member>
@@ -2829,6 +2845,12 @@
             The groups that the email address is a member of 
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.EmailAddress.Keys">
+            <summary>
+            The identifiers of the set of cryptographic keys to be used to 
+            authenticate the updated contact information and their use.
+            </summary>
+        </member>
         <member name="P:Goedel.Contacts.EmailAddress._Binding">
             <summary>Implement IBinding</summary> 
         </member>
@@ -2923,6 +2945,12 @@
         <member name="P:Goedel.Contacts.OnlineService.Groups">
             <summary>
             The groups that the service is a member of 
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService.Keys">
+            <summary>
+            The identifiers of the set of cryptographic keys to be used to 
+            authenticate the updated contact information and their use.
             </summary>
         </member>
         <member name="P:Goedel.Contacts.OnlineService._Binding">
@@ -4099,6 +4127,177 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Contacts.PersonalInfo.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Update">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Update.Protocol">
+            <summary>
+            The IANA update protocol identifier
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Update.Keys">
+            <summary>
+            The identifiers of the set of cryptographic keys to be used to 
+            authenticate the updated contact information and their use.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Update._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Update._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Update._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Update._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Update._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Update._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Update._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Update._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Update.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Update._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Update.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Jwks">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Jwks.Data">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Jwks.Jwk">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Jwks._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Jwks._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Jwks._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Jwks._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Jwks._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Jwks._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Jwks._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Jwks._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Jwks.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Jwks._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Jwks.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Group">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Group.Members">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Group._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Group._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Group._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Group._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Group._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Group._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Group._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Group._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Group.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Group._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Group.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>

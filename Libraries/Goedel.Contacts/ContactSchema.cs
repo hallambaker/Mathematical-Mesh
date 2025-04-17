@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/10/2025 4:55:58 PM
+//  This file was automatically generated at 4/17/2025 12:05:19 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -100,7 +100,10 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	    {"TimeStamp", TimeStamp._Factory},
 	    {"Note", Note._Factory},
 	    {"Author", Author._Factory},
-	    {"PersonalInfo", PersonalInfo._Factory}
+	    {"PersonalInfo", PersonalInfo._Factory},
+	    {"Update", Update._Factory},
+	    {"Jwks", Jwks._Factory},
+	    {"Group", Group._Factory}
 		};
 
 	///<summary>Variable used to force static initialization</summary> 
@@ -314,6 +317,25 @@ public partial class JsContact : JmapBase {
 
 	public virtual Dictionary<string,PersonalInfo>?					PersonalInfo  {get; set;}
 
+        /// <summary>
+        /// 
+        /// </summary>
+
+	public virtual Dictionary<string,Update>?					Updates  {get; set;}
+
+        /// <summary>
+        /// 
+        /// </summary>
+
+	public virtual Dictionary<string,Group>?					Groups  {get; set;}
+
+        /// <summary>
+        /// The cryptographic resources such as public keys and certificates associated 
+        /// with the entity represented by the Card.
+        /// </summary>
+
+	public virtual Dictionary<string,Jwks>?					JsonWebKeys  {get; set;}
+
 
 
     ///<summary>Implement IBinding</summary> 
@@ -446,7 +468,25 @@ public partial class JsContact : JmapBase {
 					false, ()=>new  Dictionary<string,PersonalInfo>(), ()=>new PersonalInfo(),
 					(IBinding data) => (data as JsContact).PersonalInfo.GetEnumerable(),
 					(object dictionary, object key, object value) =>
-						 {(dictionary as Dictionary<string,PersonalInfo>).Add (key as string,value as PersonalInfo);})}
+						 {(dictionary as Dictionary<string,PersonalInfo>).Add (key as string,value as PersonalInfo);})},
+			{ "updates", new PropertyDictionaryStruct ("updates", 
+					(IBinding data, object? value) => {(data as JsContact).Updates = value as Dictionary<string,Update>;}, (IBinding data) => (data as JsContact).Updates,
+					false, ()=>new  Dictionary<string,Update>(), ()=>new Update(),
+					(IBinding data) => (data as JsContact).Updates.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Update>).Add (key as string,value as Update);})},
+			{ "groups", new PropertyDictionaryStruct ("groups", 
+					(IBinding data, object? value) => {(data as JsContact).Groups = value as Dictionary<string,Group>;}, (IBinding data) => (data as JsContact).Groups,
+					false, ()=>new  Dictionary<string,Group>(), ()=>new Group(),
+					(IBinding data) => (data as JsContact).Groups.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Group>).Add (key as string,value as Group);})},
+			{ "jwks", new PropertyDictionaryStruct ("jwks", 
+					(IBinding data, object? value) => {(data as JsContact).JsonWebKeys = value as Dictionary<string,Jwks>;}, (IBinding data) => (data as JsContact).JsonWebKeys,
+					false, ()=>new  Dictionary<string,Jwks>(), ()=>new Jwks(),
+					(IBinding data) => (data as JsContact).JsonWebKeys.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Jwks>).Add (key as string,value as Jwks);})}
         }, __Tag,() => new JsContact(), JmapBase._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1657,6 +1697,13 @@ public partial class EmailAddress : Contacts {
         /// </summary>
 
 	public virtual List<string>?					Groups  {get; set;}
+        /// <summary>
+        /// The identifiers of the set of cryptographic keys to be used to 
+        /// authenticate the updated contact information and their use.
+        /// </summary>
+
+	public virtual Dictionary<string,string>?					Keys  {get; set;}
+
 
 
     ///<summary>Implement IBinding</summary> 
@@ -1677,7 +1724,9 @@ public partial class EmailAddress : Contacts {
 			{ "label", new PropertyString ("label", 
 					(IBinding data, string? value) => {(data as EmailAddress).Label = value;}, (IBinding data) => (data as EmailAddress).Label )},
 			{ "groups", new PropertyListString ("groups", 
-					(IBinding data, List<string>? value) => {(data as EmailAddress).Groups = value;}, (IBinding data) => (data as EmailAddress).Groups )}
+					(IBinding data, List<string>? value) => {(data as EmailAddress).Groups = value;}, (IBinding data) => (data as EmailAddress).Groups )},
+			{ "keys", new PropertyDictionaryString ("keys", 
+					(IBinding data, Dictionary<string,string>? value) => {(data as EmailAddress).Keys = value;}, (IBinding data) => (data as EmailAddress).Keys )}
         }, __Tag,() => new EmailAddress(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1793,6 +1842,13 @@ public partial class OnlineService : Contacts {
         /// </summary>
 
 	public virtual List<string>?					Groups  {get; set;}
+        /// <summary>
+        /// The identifiers of the set of cryptographic keys to be used to 
+        /// authenticate the updated contact information and their use.
+        /// </summary>
+
+	public virtual Dictionary<string,string>?					Keys  {get; set;}
+
 
 
     ///<summary>Implement IBinding</summary> 
@@ -1817,7 +1873,9 @@ public partial class OnlineService : Contacts {
 			{ "label", new PropertyString ("label", 
 					(IBinding data, string? value) => {(data as OnlineService).Label = value;}, (IBinding data) => (data as OnlineService).Label )},
 			{ "groups", new PropertyListString ("groups", 
-					(IBinding data, List<string>? value) => {(data as OnlineService).Groups = value;}, (IBinding data) => (data as OnlineService).Groups )}
+					(IBinding data, List<string>? value) => {(data as OnlineService).Groups = value;}, (IBinding data) => (data as OnlineService).Groups )},
+			{ "keys", new PropertyDictionaryString ("keys", 
+					(IBinding data, Dictionary<string,string>? value) => {(data as OnlineService).Keys = value;}, (IBinding data) => (data as OnlineService).Keys )}
         }, __Tag,() => new OnlineService(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3555,6 +3613,267 @@ public partial class PersonalInfo : Contacts {
 			return Out as PersonalInfo;
 			}
 		var Result = new PersonalInfo ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class Update : Resource {
+        /// <summary>
+        /// The IANA update protocol identifier
+        /// </summary>
+
+	public virtual string?					Protocol  {get; set;}
+
+        /// <summary>
+        /// The identifiers of the set of cryptographic keys to be used to 
+        /// authenticate the updated contact information and their use.
+        /// </summary>
+
+	public virtual Dictionary<string,string>?					Keys  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "protocol", new PropertyString ("protocol", 
+					(IBinding data, string? value) => {(data as Update).Protocol = value;}, (IBinding data) => (data as Update).Protocol )},
+			{ "keys", new PropertyDictionaryString ("keys", 
+					(IBinding data, Dictionary<string,string>? value) => {(data as Update).Keys = value;}, (IBinding data) => (data as Update).Keys )}
+        }, __Tag,() => new Update(), Resource._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(Resource._binding, _binding);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "Update";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new Update();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new Update FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as Update;
+			}
+		var Result = new Update ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class Jwks : Resource {
+        /// <summary>
+        /// </summary>
+
+	public virtual byte[]?					Data  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual List<JWK>?					Jwk  {get; set;}
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "data", new PropertyBinary ("data", 
+					(IBinding data, byte[]? value) => {(data as Jwks).Data = value;}, (IBinding data) => (data as Jwks).Data )},
+			{ "jwk", new PropertyListStruct ("jwk", 
+					(IBinding data, object? value) => {(data as Jwks).Jwk = value as List<JWK>;}, (IBinding data) => (data as Jwks).Jwk,
+					false, ()=>new  List<JWK>(), ()=>new JWK())}
+        }, __Tag,() => new Jwks(), Resource._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(Resource._binding, _binding);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "Jwks";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new Jwks();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new Jwks FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as Jwks;
+			}
+		var Result = new Jwks ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class Group : Resource {
+        /// <summary>
+        /// 
+        /// </summary>
+
+	public virtual Dictionary<string,bool>?					Members  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "members", new PropertyDictionaryBoolean ("members", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as Group).Members = value;}, (IBinding data) => (data as Group).Members )}
+        }, __Tag,() => new Group(), Resource._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(Resource._binding, _binding);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "Group";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new Group();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new Group FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as Group;
+			}
+		var Result = new Group ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

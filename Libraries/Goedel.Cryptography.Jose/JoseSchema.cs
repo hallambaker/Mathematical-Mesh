@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/10/2025 4:55:58 PM
+//  This file was automatically generated at 4/17/2025 12:05:17 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -506,6 +506,16 @@ public partial class JWK : Jose {
 
 	public virtual string?					D  {get; set;}
 
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					N  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	public virtual string?					E  {get; set;}
+
 
 
     ///<summary>Implement IBinding</summary> 
@@ -538,7 +548,11 @@ public partial class JWK : Jose {
 			{ "y", new PropertyString ("y", 
 					(IBinding data, string? value) => {(data as JWK).Y = value;}, (IBinding data) => (data as JWK).Y )},
 			{ "d", new PropertyString ("d", 
-					(IBinding data, string? value) => {(data as JWK).D = value;}, (IBinding data) => (data as JWK).D )}
+					(IBinding data, string? value) => {(data as JWK).D = value;}, (IBinding data) => (data as JWK).D )},
+			{ "n", new PropertyString ("n", 
+					(IBinding data, string? value) => {(data as JWK).N = value;}, (IBinding data) => (data as JWK).N )},
+			{ "e", new PropertyString ("e", 
+					(IBinding data, string? value) => {(data as JWK).E = value;}, (IBinding data) => (data as JWK).E )}
         }, __Tag,() => new JWK(), null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 

@@ -1346,6 +1346,16 @@
             default contact.</param>
             <returns>Result of add transaction.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.AddApplications(System.Collections.Generic.List{Goedel.Mesh.CatalogedApplication},System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Add the application <paramref name="application"/> to the specified contact(s).
+            </summary>
+            <param name="applications">The application to add.</param>
+            <param name="contacts">If not null, a list of the local names of the self-contacts
+            the application is to be added to. Otherwise, the application is added to the
+            default contact.</param>
+            <returns>Result of add transaction.</returns>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.DictionaryCatalogDelegates">
             <inheritdoc/>
         </member>

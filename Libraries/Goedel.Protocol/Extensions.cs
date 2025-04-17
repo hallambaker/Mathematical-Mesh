@@ -289,7 +289,9 @@ public static partial class Extensions {
 
         public override bool MoveNext() {
             var result = Typed.MoveNext();
-            current = new KeyValuePair<string, object>(Typed.Current.Key, Typed.Current.Value);
+            if (result) {
+                current = new KeyValuePair<string, object>(Typed.Current.Key, Typed.Current.Value);
+                }
             return result;
             }
 

@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Contacts;
 using Goedel.Cryptography.Core;
 using Goedel.IO;
 using Goedel.Mesh.Shell;
@@ -76,8 +77,10 @@ public partial class CreateExamples {
     public bool GitHub = true;
     public string Preformat => GitHub ? "````" : "~~~~";
 
-    static CreateExamples() => Initialization.Initialized.AssertTrue(Goedel.Utilities.NYI.Throw);
-
+    static CreateExamples() {
+        Goedel.Cryptography.Core.Initialization.Initialized.AssertTrue(Goedel.Utilities.NYI.Throw);
+        Goedel.Contacts.Initialization.Initialized.AssertTrue(Goedel.Utilities.NYI.Throw);
+        }
     static void Main() {
         Screen.WriteInfo("Make Document Set");
         var createWeb = new CreateExamples();
@@ -159,6 +162,12 @@ public partial class CreateExamples {
 
     public static string AliceAccount => "alice@" + MeshServiceProvider1;
     public static string AliceAccountNew => "alice@" + MeshServiceProvider2;
+    public static string HandleAlice => "@" + DnsHandleAlice;
+    public static string DnsHandleAlice => "alice." + MeshServiceProvider1;
+
+
+    public static string WebPageAlice => "https://alice." + MeshServiceProvider1 + "/";
+
 
 
     public const string BobAccount = "bob@example.com";
@@ -221,6 +230,7 @@ public partial class CreateExamples {
 
 
         MakeEarl();
+        MakeJSContact();
 
         if (false) {
 
@@ -296,13 +306,25 @@ public partial class CreateExamples {
     public void MakeEarl(
                 ) {
         SetWorkingDirectory();
-        Earl = new Earl(this);
+        Earl = new EarlResults(this);
 
 
         SetOutputDirectory();
         MakeEarlExamples(this);
 
         }
+
+    public void MakeJSContact(
+            ) {
+        SetWorkingDirectory();
+        JSContact = new JsContactResults(this);
+
+
+        SetOutputDirectory();
+        MakeJSContactExamples(this);
+
+        }
+
 
 
     void SetWorkingDirectory() => Directory.SetCurrentDirectory(WorkingDirectory);

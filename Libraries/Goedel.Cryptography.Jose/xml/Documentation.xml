@@ -1226,6 +1226,14 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK.N">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK.E">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Jose.JWK._Binding">
             <summary>Implement IBinding</summary> 
         </member>

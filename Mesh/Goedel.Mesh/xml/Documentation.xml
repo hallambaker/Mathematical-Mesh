@@ -5670,7 +5670,7 @@
         <member name="P:Goedel.Mesh.CredentialProfile.KeySize">
             <summary>The default key size.</summary>
         </member>
-        <member name="P:Goedel.Mesh.CredentialProfile.Platform">
+        <member name="P:Goedel.Mesh.CredentialProfile.Platforms">
             <summary>The platform served by the credential</summary> 
         </member>
         <member name="P:Goedel.Mesh.CredentialProfile.Code">
@@ -5707,7 +5707,7 @@
             <param name="KeyUses">The default key uses.</param>
             <param name="KeySize">The default key size.</param>
         </member>
-        <member name="P:Goedel.Mesh.CredentialProfileOpenPgp.Platform">
+        <member name="P:Goedel.Mesh.CredentialProfileOpenPgp.Platforms">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.CredentialProfileCommit">
@@ -5726,7 +5726,10 @@
             <param name="KeyUses">The default key uses.</param>
             <param name="KeySize">The default key size.</param>
         </member>
-        <member name="P:Goedel.Mesh.CredentialProfileCommit.Platform">
+        <member name="P:Goedel.Mesh.CredentialProfileCommit.Kind">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Mesh.CredentialProfileCommit.Platforms">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.CredentialProfilePkix">
@@ -5745,7 +5748,7 @@
             <param name="KeyUses">The default key uses.</param>
             <param name="KeySize">The default key size.</param>
         </member>
-        <member name="P:Goedel.Mesh.CredentialProfilePkix.Platform">
+        <member name="P:Goedel.Mesh.CredentialProfilePkix.Platforms">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.CredentialProfileWindows">
@@ -5764,7 +5767,7 @@
             <param name="KeyUses">The default key uses.</param>
             <param name="KeySize">The default key size.</param>
         </member>
-        <member name="P:Goedel.Mesh.CredentialProfileWindows.Platform">
+        <member name="P:Goedel.Mesh.CredentialProfileWindows.Platforms">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.CredentialProfileApple">
@@ -5783,7 +5786,7 @@
             <param name="KeyUses">The default key uses.</param>
             <param name="KeySize">The default key size.</param>
         </member>
-        <member name="P:Goedel.Mesh.CredentialProfileApple.Platform">
+        <member name="P:Goedel.Mesh.CredentialProfileApple.Platforms">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.CredentialProfileAndroid">
@@ -5802,7 +5805,7 @@
             <param name="KeyUses">The default key uses.</param>
             <param name="KeySize">The default key size.</param>
         </member>
-        <member name="P:Goedel.Mesh.CredentialProfileAndroid.Platform">
+        <member name="P:Goedel.Mesh.CredentialProfileAndroid.Platforms">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.CredentialProfileLinux">
@@ -5821,7 +5824,7 @@
             <param name="KeyUses">The default key uses.</param>
             <param name="KeySize">The default key size.</param>
         </member>
-        <member name="P:Goedel.Mesh.CredentialProfileLinux.Platform">
+        <member name="P:Goedel.Mesh.CredentialProfileLinux.Platforms">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.DevicePreconfiguration">
@@ -7043,6 +7046,13 @@
             <param name="tagBase">The base from which a unique tag is to be formed</param>
             <param name="value">The value to add.</param>
         </member>
+        <member name="M:Goedel.Mesh.Extensions.AddApplication(Goedel.Contacts.JsContact,Goedel.Mesh.CatalogedApplication)">
+            <summary>
+            Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
+            </summary>
+            <param name="contact">The contact to add the application details to.</param>
+            <param name="application">The application to add.</param>
+        </member>
         <member name="M:Goedel.Mesh.Extensions.AddMesh(Goedel.Contacts.JsContact,Goedel.Mesh.ProfileAccount)">
             <summary>
             Add the Mesh profilr <paramref name="profile"/>to the contact
@@ -7050,13 +7060,6 @@
             </summary>
             <param name="contact">The contact to add the profile to.</param>
             <param name="profile">The profile to add.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Extensions.AddApplication(Goedel.Contacts.JsContact,Goedel.Mesh.CatalogedApplication)">
-            <summary>
-            Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
-            </summary>
-            <param name="contact">The contact to add the application details to.</param>
-            <param name="application">The application to add.</param>
         </member>
         <member name="M:Goedel.Mesh.Extensions.AddGroup(Goedel.Contacts.JsContact,Goedel.Mesh.CatalogedGroup)">
             <summary>
@@ -7100,34 +7103,9 @@
             <param name="contact">The contact to add the application details to.</param>
             <param name="application">The application to add.</param>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.AddService(Goedel.Contacts.JsContact,System.String,System.String,System.String,System.String)">
+        <member name="M:Goedel.Mesh.Extensions.AddServiceKeyData(Goedel.Contacts.JsContact,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String,System.String,System.Byte[],System.String)">
             <summary>
-            Add a service with the specified parameters to the contact <paramref name="contact"/>.
-            </summary>
-            <param name="contact">The contact to add the key to.</param>
-            <param name="serviceId">The Sevice type.</param>
-            <param name="accountAddress">The account address to specify.</param>
-            <param name="uri">The service URI</param>
-            <param name="label">The service description.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Extensions.AddServiceKeyData(Goedel.Contacts.JsContact,Goedel.Mesh.KeyData,System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String)">
-            <summary>
-            Add a service with the specified parameters and credential <paramref name="keyData"/> to 
-            the contact with separate service and CryptoKey entries.
-            </summary>
-            <param name="contact">The contact to add the key to.</param>
-            <param name="keyData"></param>
-            <param name="serviceId">The Sevice type.</param>
-            <param name="user"></param>
-            <param name="uri">The service URI</param>
-            <param name="label">The service description.</param>
-            <param name="contexts">Contexts in which the service is to be used.</param>
-            <param name="parent">Parent service if a member of a group.</param>
-            <returns>The service entry.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Extensions.AddServiceKeyData(Goedel.Contacts.JsContact,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String},System.String,System.String,System.String)">
-            <summary>
-            Add a service with the specified parameters and credential <paramref name="cryptoData"/> to 
+            Add a service with the specified parameters and credential <paramref name="cryptoUri"/> to 
             the contact with separate service and CryptoKey entries.
             </summary>
             <param name="contact">The contact to add the key to.</param>
@@ -7138,11 +7116,28 @@
             <param name="label">The service description.</param>
             <param name="contexts">Contexts in which the service is to be used.</param>
             <param name="parent">Parent service if a member of a group.</param>
-            <param name="cryptoData">The CryptoData representing the key.</param>
+            <param name="cryptoUri">The CryptoData representing the key.</param>
             <param name="mediaType">The Key media type.</param>
             <returns>The service entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.AddKeyData(Goedel.Contacts.JsContact,Goedel.Mesh.KeyData,System.String,System.String,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Extensions.AddServiceData(Goedel.Contacts.JsContact,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Add a service with the specified parameters and credential <paramref name="cryptoUri"/> to 
+            the contact with separate service and CryptoKey entries.
+            </summary>
+            <param name="contact">The contact to add the key to.</param>
+            <param name="key">The key the service is added under.</param>
+            <param name="serviceId">The Sevice type.</param>
+            <param name="user"></param>
+            <param name="uri">The service URI</param>
+            <param name="label">The service description.</param>
+            <param name="contexts">Contexts in which the service is to be used.</param>
+            <param name="parent">Parent service if a member of a group.</param>
+            <param name="cryptoUri">The CryptoData representing the key.</param>
+            <param name="mediaType">The Key media type.</param>
+            <returns>The service entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.AddKeyData(Goedel.Contacts.JsContact,Goedel.Mesh.KeyData,System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.List{System.String})">
             <summary>
             Add the key <paramref name="keyData"/> to the contact <paramref name="contact"/>.
             </summary>

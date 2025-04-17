@@ -60,9 +60,7 @@ public partial class CatalogedApplicationDeveloper {
         var signingCertCode4 = CatalogedApplicationCredential.Create(
                     localName + "_linux", roles, CredentialProfile.Linux, parent: rootCertCode);
 
-        // create a repository commit key
-        var rootCertCommit = CatalogedApplicationCredential.Create(
-                    localName + "_rootcommit", roles, CredentialProfile.Commit);
+
         var signingCertCommit = CatalogedApplicationCredential.Create(
                     localName + "_commit", roles, CredentialProfile.Commit, parent: rootCertCode);
 
@@ -75,7 +73,7 @@ public partial class CatalogedApplicationDeveloper {
             Kind="Developer",
             Grant = roles,
             Ssh = [sslKey._PrimaryKey],
-            Commit = [rootCertCommit._PrimaryKey, signingCertCommit._PrimaryKey],
+            Commit = [signingCertCommit._PrimaryKey],
             Code = [rootCertCode._PrimaryKey, signingCertCode1._PrimaryKey,
                 signingCertCode2._PrimaryKey, signingCertCode3._PrimaryKey,
                 signingCertCode4._PrimaryKey],
@@ -84,7 +82,7 @@ public partial class CatalogedApplicationDeveloper {
 
         List<CatalogedApplication> result = [
             developer, rootCertCode, signingCertCode1, signingCertCode2, signingCertCode3, signingCertCode4,
-            rootCertCommit, signingCertCommit, sslKey
+            signingCertCommit, sslKey
             ];
 
         return result;

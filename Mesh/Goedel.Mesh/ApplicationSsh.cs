@@ -92,7 +92,7 @@ public partial class CatalogedApplicationSsh {
 
         // don't need to add it to the application record though because every device will have a copy.
         var applicationSSH = new CatalogedApplicationSsh() {
-            Key = clientKey.KeyIdentifier,
+            Key = GetIdentifier(clientKey),
             LocalName = localName,
             Grant = roles,
             ClientKeyPrivate = clientKey,

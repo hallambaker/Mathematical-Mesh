@@ -42,8 +42,10 @@ public record CredentialProfile (
             int KeySize = 0
             ) {
 
+    public virtual string Kind => "code";
+
     ///<summary>The platform served by the credential</summary> 
-    public virtual string Platform => "Any";
+    public virtual string[] Platforms => ["Any"];
 
     ///<summary>PKIK credential profile.</summary> 
     public static CredentialProfilePkix Code { get; } = new CredentialProfilePkix(
@@ -83,7 +85,7 @@ public record CredentialProfileOpenPgp(
             ) : CredentialProfile (AlgorithmId, KeyUses, KeySize) {
 
     ///<inheritdoc/>
-    public override string Platform => "OpenPGP";
+    public override string[] Platforms => ["OpenPGP"];
     }
 
 /// <summary>
@@ -99,7 +101,10 @@ public record CredentialProfileCommit(
             ) : CredentialProfileOpenPgp(AlgorithmId, KeyUses, KeySize) {
 
     ///<inheritdoc/>
-    public override string Platform => "Commit";
+    public override string Kind => "commit";
+
+    ///<inheritdoc/>
+    public override string[] Platforms => null;
     }
 
 /// <summary>
@@ -115,7 +120,7 @@ public record CredentialProfilePkix(
             ) : CredentialProfile(AlgorithmId, KeyUses, KeySize) {
 
     ///<inheritdoc/>
-    public override string Platform => "Pkix";
+    public override string[] Platforms => ["Pkix"];
     }
 
 /// <summary>
@@ -131,7 +136,7 @@ public record CredentialProfileWindows(
             ) : CredentialProfilePkix(AlgorithmId, KeyUses, KeySize) {
 
     ///<inheritdoc/>
-    public override string Platform => "Windows";
+    public override string[] Platforms => ["Windows"];
     }
 
 /// <summary>
@@ -147,7 +152,7 @@ public record CredentialProfileApple(
             ) : CredentialProfilePkix(AlgorithmId, KeyUses, KeySize) {
 
     ///<inheritdoc/>
-    public override string Platform => "Apple";
+    public override string[] Platforms => ["Apple"];
     }
 
 /// <summary>
@@ -163,7 +168,7 @@ public record CredentialProfileAndroid(
             ) : CredentialProfilePkix(AlgorithmId, KeyUses, KeySize) {
 
     ///<inheritdoc/>
-    public override string Platform => "Android";
+    public override string[] Platforms => ["Android"];
     }
 
 /// <summary>
@@ -179,5 +184,5 @@ public record CredentialProfileLinux(
             ) : CredentialProfilePkix(AlgorithmId, KeyUses, KeySize) {
 
     ///<inheritdoc/>
-    public override string Platform => "Linux";
+    public override string[] Platforms => ["Linux"];
     }

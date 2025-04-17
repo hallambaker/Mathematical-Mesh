@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+global using Goedel.Contacts;
+
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
 #endif

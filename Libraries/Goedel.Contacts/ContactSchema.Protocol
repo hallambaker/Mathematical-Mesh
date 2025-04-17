@@ -226,6 +226,29 @@
 			Description
 				| The personal information of the entity represented by the Card.
 
+		// Extension  Properties
+		// Updates
+		Struct Update		Updates
+			Dictionary
+			Description
+				| 
+
+		// 2.3.  Group Properties
+		// Groups
+		Struct Group		Groups
+			Dictionary
+			Description
+				| 
+
+		// JsonWebKeys
+		Struct Jwks		JsonWebKeys
+			Tag "jwks"
+			Dictionary
+			Description
+				| The cryptographic resources such as public keys and certificates associated 
+				| with the entity represented by the Card.
+
+
 	Structure Relation
 		Boolean					Relationships
 			Dictionary
@@ -466,6 +489,12 @@
 			Multiple
 			Description
 				| The groups that the email address is a member of 
+		String					Keys
+			Dictionary
+			Description
+				| The identifiers of the set of cryptographic keys to be used to 
+				| authenticate the updated contact information and their use.
+
 
 	// 2.3.2.  onlineServices
 	Structure OnlineService
@@ -500,6 +529,11 @@
 			Multiple
 			Description
 				| The groups that the service is a member of 
+		String					Keys
+			Dictionary
+			Description
+				| The identifiers of the set of cryptographic keys to be used to 
+				| authenticate the updated contact information and their use.
 
 	// 2.3.3.  phones
 	Structure Phone
@@ -817,3 +851,26 @@
 			Description
 				| A custom label. 
 
+	Structure Update 
+		Inherits				Resource
+		String					Protocol
+			Description
+				| The IANA update protocol identifier
+		String					Keys
+			Dictionary
+			Description
+				| The identifiers of the set of cryptographic keys to be used to 
+				| authenticate the updated contact information and their use.
+
+	Structure Jwks
+		Inherits				Resource
+		Binary					Data
+		Struct JWK				Jwk
+			Multiple
+
+	Structure Group 
+		Inherits				Resource
+		Boolean					Members
+			Dictionary
+			Description
+				| 

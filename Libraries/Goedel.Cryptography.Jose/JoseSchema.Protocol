@@ -92,6 +92,10 @@
 		String Y 
 		String D 
 
+		String N
+		String E 
+
+
 
 	Structure JwtHeader
 		String Typ

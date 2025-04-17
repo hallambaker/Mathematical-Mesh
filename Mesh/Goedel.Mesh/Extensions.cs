@@ -23,10 +23,14 @@
 
 
 using Goedel.Contacts;
+using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.KeyFile;
 
+using System;
+using System.Net.Mail;
 using System.Reflection.Emit;
+using System.Text.RegularExpressions;
 
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -189,7 +193,9 @@ public static partial class Extensions {
     /// <param name="dictionary">The dictionary to add the value to.</param>
     /// <param name="tagBase">The base from which a unique tag is to be formed</param>
     /// <param name="value">The value to add.</param>
-    public static string AddUniqueKeyed<T>(this Dictionary<string, T> dictionary, string tagBase, T value) {
+    public static string AddUniqueKeyed<T>(
+                    this Dictionary<string, T> dictionary, 
+                    string tagBase, T value) {
         var i = 1;
 
         while (true) {
@@ -203,24 +209,6 @@ public static partial class Extensions {
         }
 
 
-    /// <summary>
-    /// Add the Mesh profilr <paramref name="profile"/>to the contact
-    /// <paramref name="contact"/> .
-    /// </summary>
-    /// <param name="contact">The contact to add the profile to.</param>
-    /// <param name="profile">The profile to add.</param>
-
-    public static void AddMesh(this JsContact contact, ProfileAccount profile) {
-
-        if (profile is null) {
-            return;
-            }
-        var uri = profile.AccountHandle is null ? null : "handle:" + profile.AccountHandle;
-        var cryptoData = profile.DataUri();
-        contact.AddServiceKeyData(profile.DirectAddressUri,
-            "Mesh", uri, profile.AccountAddress, profile.Description, null,
-            cryptoData, profile.IanaMediaType);
-        }
 
     /// <summary>
     /// Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
@@ -256,6 +244,26 @@ public static partial class Extensions {
             }
         }
 
+
+    /// <summary>
+    /// Add the Mesh profilr <paramref name="profile"/>to the contact
+    /// <paramref name="contact"/> .
+    /// </summary>
+    /// <param name="contact">The contact to add the profile to.</param>
+    /// <param name="profile">The profile to add.</param>
+
+    public static void AddMesh(this JsContact contact, ProfileAccount profile) {
+        if (profile is null) {
+            return;
+            }
+        var uri = profile.AccountHandle is null ? null : "handle:" + profile.AccountHandle;
+        var cryptoData = (profile.Enveloped as DareEnvelope).GetBytes();
+
+        contact.AddServiceKeyData(profile.UdfString, "Mesh", uri: uri, user: profile.AccountAddress, label: null, contexts: [],
+             mediaType: profile.IanaMediaType, cryptoData: cryptoData);
+        }
+
+
     /// <summary>
     /// Add the application <paramref name="application"/> to the contact <paramref name="contact"/>
     /// </summary>
@@ -264,6 +272,8 @@ public static partial class Extensions {
     public static void AddGroup(this JsContact contact, CatalogedGroup application) {
         var profile = application.EnvelopedProfileGroup.EnvelopedObject;
         contact.AddMesh(profile);
+
+        throw new NYI();
         }
 
 
@@ -277,7 +287,8 @@ public static partial class Extensions {
         // add Email entry for application.AccountAddress
         var emailAddress = new EmailAddress() {
             Address = application.AccountAddress,
-            Label = application.Description 
+            Label = application.Description ,
+            Keys = new()
             };
         contact.Emails ??= [];
         var id = contact.Emails.AddUniqueKeyed("mail", emailAddress);
@@ -285,12 +296,12 @@ public static partial class Extensions {
 
         // ToDo: need to read the encoded JSContact OpenPGP/SMIME keys and check they can actually be used.
         // Conditionally add the S/MIME keys
-        contact.AddServiceKeyData(application.SmimeSign, "SMime", null, id, null, ["sign"], id);
-        contact.AddServiceKeyData(application.SmimeEncrypt, "SMime_encrypt", null, id, null, ["encrypt"], id);
+        contact.AddKeyData(application.SmimeSign, "smime", emailAddress.Keys, ["sig"]);
+        contact.AddKeyData(application.SmimeEncrypt, "smime", emailAddress.Keys, ["enc"]);
 
         // Conditionally add the OpenPGP keys
-        contact.AddServiceKeyData(application.OpenpgpSign, "OpenPGP", null, id, null, ["sign"], id);
-        contact.AddServiceKeyData(application.OpenpgpEncrypt, "OpenPGP_sub", null, id, null, ["encrypt"], id);
+        contact.AddKeyData(application.OpenpgpSign, "openpgp", emailAddress.Keys, ["sig"]);
+        contact.AddKeyData(application.OpenpgpEncrypt, "openpgp", emailAddress.Keys, ["enc"]);
 
         contact.Update();
         }
@@ -302,7 +313,18 @@ public static partial class Extensions {
     /// <param name="application">The application to add.</param>
     public static void AddSsh(this JsContact contact, CatalogedApplicationSsh application) {
 
-        contact.AddServiceKeyData(application.ClientKey, "Ssh", application.AccountAddress);
+        var service = new OnlineService() {
+            Service = "ssh",
+            User = application.AccountAddress,
+            Label = application.Description,
+            Keys = []
+            };
+        contact.OnlineServices ??= [];
+        contact.OnlineServices.Add(application.Key, service);
+
+        contact.AddKeyData(application.ClientKey, "ssh", service.Keys, ["auth"]);
+
+
         contact.Update();
         }
 
@@ -312,12 +334,25 @@ public static partial class Extensions {
     /// <param name="contact">The contact to add the application details to.</param>
     /// <param name="application">The application to add.</param>
     public static void AddCredential(this JsContact contact, CatalogedApplicationCredential application) {
-        var contexts = new List<string> { "sign" };
-        if (application.Kind is not null) {
-            contexts.Add(application.Kind);
+        Dictionary<string, bool>? contexts = null;
+        if (application.Contexts is not null) {
+            contexts = new();
+            foreach (var context in application.Contexts) {
+                contexts.Add(context, true);
+                }
             }
-        contact.AddServiceKeyData(application.Primary, "Credential", application.Description, contexts: contexts);
+            
+        var service = new OnlineService() {
+            Service = application.Kind ?? "credential",
+            User = application.AccountAddress,
+            Label = application.Description,
+            Keys = [],
+            Contexts = contexts
+            };
+        contact.OnlineServices ??= [];
+        contact.OnlineServices.Add(application.Key, service);
 
+        contact.AddKeyData(application.Primary, "credential", service.Keys, ["sign"]);
         contact.Update();
         }
 
@@ -328,51 +363,29 @@ public static partial class Extensions {
     /// <param name="contact">The contact to add the application details to.</param>
     /// <param name="application">The application to add.</param>
     public static void AddDeveloper(this JsContact contact, CatalogedApplicationDeveloper application) {
-        var service = new OnlineService() {
-            Service = "Group",
-            Label = application.Description
+        var group = new Contacts.Group() {
+            Label = application.Description,
+            Members = []
             };
+        
+        contact.Groups ??= [];
+        contact.Groups.Add(application.Key, group);
 
-        contact.OnlineServices ??= [];
-        var key = contact.OnlineServices.AddUniqueKeyed("Group", service);
-
-
-        contact.ClaimGroups(key, application.Ssh);
-        contact.ClaimGroups(key, application.Commit);
-        contact.ClaimGroups(key, application.Code);
+        AddMembers (group, application.Ssh);
+        AddMembers(group, application.Commit);
+        AddMembers(group, application.Code);
 
         }
 
-
-    static void ClaimGroups(this JsContact contact, string group, List<string> members) {
+    static void AddMembers(Contacts.Group group, List<string> members) {
+        if (members is null) {
+            return;
+            }
         foreach (var member in members) {
-            var key = "udf:" + member;
-
-            if (contact.Emails?.TryGetValue(key, out var email) == true) {
-                email.Groups ??= [];
-                email.Groups.Add(group);
-
-                }
-            else if (contact.OnlineServices?.TryGetValue(key, out var service) == true) {
-                service.Groups ??= [];
-                service.Groups.Add(group);
-                }
-            else {
-                if (contact.GroupClaim.TryGetValue(key, out var groups)) {
-                    groups.Add(group);
-                    }
-                else {
-                    contact.GroupClaim.Add(key, [group]);
-                    }
-                }
+            group.Members.Add(member, true);
+            
             }
-        }
 
-    static List<string> CheckClaim(this JsContact contact, string member) {
-        if (!contact.GroupClaim.TryGetValue(member, out var groups)) {
-            return null; 
-            }
-        return groups;
         }
 
 
@@ -381,70 +394,25 @@ public static partial class Extensions {
     /// </summary>
     /// <param name="contact">The contact to add the application details to.</param>
     /// <param name="application">The application to add.</param>
-    public static void AddService(this JsContact contact, CatalogedApplicationService application) {
+    public static OnlineService AddService(this JsContact contact, CatalogedApplicationService application) {
         var protocol = application?.Protocol;
-        contact.AddService(protocol, application.AccountAddress, application.Address, application.Description);
-        }
 
-
-    /// <summary>
-    /// Add a service with the specified parameters to the contact <paramref name="contact"/>.
-    /// </summary>
-    /// <param name="contact">The contact to add the key to.</param>
-    /// <param name="serviceId">The Sevice type.</param>
-    /// <param name="accountAddress">The account address to specify.</param>
-    /// <param name="uri">The service URI</param>
-    /// <param name="label">The service description.</param>
-    public static void AddService(
-                this JsContact contact,
-                string serviceId,
-                string accountAddress,
-                string uri,
-                string label) {
         var service = new OnlineService() {
-            Service = serviceId,
-            User = accountAddress,
-            Uri = uri,
-            Label = label
+            Service = protocol,
+            User = application.AccountAddress,
+            Uri = application.Address,
+            Label = application.Description
             };
         contact.OnlineServices ??= [];
-        contact.OnlineServices.AddUniqueKeyed(serviceId, service);
-        }
+        contact.OnlineServices.Add(application.Key, service);
 
-    /// <summary>
-    /// Add a service with the specified parameters and credential <paramref name="keyData"/> to 
-    /// the contact with separate service and CryptoKey entries.
-    /// </summary>
-    /// <param name="contact">The contact to add the key to.</param>
-    /// <param name="keyData"></param>
-    /// <param name="serviceId">The Sevice type.</param>
-    /// <param name="user"></param>
-    /// <param name="uri">The service URI</param>
-    /// <param name="label">The service description.</param>
-    /// <param name="contexts">Contexts in which the service is to be used.</param>
-    /// <param name="parent">Parent service if a member of a group.</param>
-    /// <returns>The service entry.</returns>
-    public static OnlineService? AddServiceKeyData(
-                this JsContact contact,
-                KeyData keyData,
-                string serviceId,
-                string label,
-                string user = null,
-                string uri = null,
-                List<string> contexts = null, 
-                string parent = null) {
-        if (keyData is null) {
-            return null;
-            }
-        var key = "udf:" + keyData.Udf;
-        var (media, cryptoData) = keyData.GetDataUri();
-        return contact.AddServiceKeyData(key, serviceId, uri, user, label, contexts, cryptoData, media, parent);
+        return service;
         }
 
 
 
     /// <summary>
-    /// Add a service with the specified parameters and credential <paramref name="cryptoData"/> to 
+    /// Add a service with the specified parameters and credential <paramref name="cryptoUri"/> to 
     /// the contact with separate service and CryptoKey entries.
     /// </summary>
     /// <param name="contact">The contact to add the key to.</param>
@@ -455,10 +423,10 @@ public static partial class Extensions {
     /// <param name="label">The service description.</param>
     /// <param name="contexts">Contexts in which the service is to be used.</param>
     /// <param name="parent">Parent service if a member of a group.</param>
-    /// <param name="cryptoData">The CryptoData representing the key.</param>
+    /// <param name="cryptoUri">The CryptoData representing the key.</param>
     /// <param name="mediaType">The Key media type.</param>
     /// <returns>The service entry.</returns>
-    public static OnlineService? AddServiceKeyData(
+    public static void AddServiceKeyData(
                     this JsContact contact,
                     string key,
                     string serviceId,
@@ -466,9 +434,9 @@ public static partial class Extensions {
                     string user,
                     string label,
                     List<string> contexts,
-                    string cryptoData,
                     string mediaType,
-                    string parent = null) {
+                    string cryptoUri=null,
+                    byte[] cryptoData = null, string parent = null) {
 
         var contextsD = new Dictionary<string, bool>();
         if (contexts != null) {
@@ -477,7 +445,70 @@ public static partial class Extensions {
                 }
             }
 
-        var groups = contact.CheckClaim(key);
+
+        var service = contact.AddServiceData(key, serviceId, uri, user, label, contexts);
+
+        var jwks = new Jwks() {
+            Uri = cryptoUri,
+            Data = cryptoData,
+            MediaType = mediaType
+            };
+        contact.JsonWebKeys ??= [];
+        contact.JsonWebKeys.Add(key, jwks);                                                                                                                                                     
+
+        service.Keys.Add(key, "");
+
+        //var groups = contact.CheckClaim(key);
+
+
+
+        //var service = new OnlineService() {
+        //    Service = serviceId,
+        //    User = user,
+        //    Uri = uri,
+        //    Label = label,
+        //    Contexts = contextsD,
+        //    Keys = []
+        //    //Groups = groups
+        //    };
+        ////service.Keys.Add(key, "");
+        //contact.OnlineServices ??= [];
+        //contact.OnlineServices.AddUniqueKeyed(key, service);
+
+        return;
+        }
+
+
+    /// <summary>
+    /// Add a service with the specified parameters and credential <paramref name="cryptoUri"/> to 
+    /// the contact with separate service and CryptoKey entries.
+    /// </summary>
+    /// <param name="contact">The contact to add the key to.</param>
+    /// <param name="key">The key the service is added under.</param>
+    /// <param name="serviceId">The Sevice type.</param>
+    /// <param name="user"></param>
+    /// <param name="uri">The service URI</param>
+    /// <param name="label">The service description.</param>
+    /// <param name="contexts">Contexts in which the service is to be used.</param>
+    /// <param name="parent">Parent service if a member of a group.</param>
+    /// <param name="cryptoUri">The CryptoData representing the key.</param>
+    /// <param name="mediaType">The Key media type.</param>
+    /// <returns>The service entry.</returns>
+    public static OnlineService AddServiceData(
+                    this JsContact contact,
+                    string key,
+                    string serviceId,
+                    string uri,
+                    string user,
+                    string label,
+                    List<string> contexts) {
+
+        var contextsD = new Dictionary<string, bool>();
+        if (contexts != null) {
+            foreach (var context in contexts) {
+                contextsD.AddSafe(context, true);
+                }
+            }
 
         var service = new OnlineService() {
             Service = serviceId,
@@ -485,29 +516,13 @@ public static partial class Extensions {
             Uri = uri,
             Label = label,
             Contexts = contextsD,
-            Groups = groups
+            Keys = []
             };
-
         contact.OnlineServices ??= [];
         contact.OnlineServices.AddUniqueKeyed(key, service);
 
-        var cryptoKey = new CryptoKey() {
-            Uri = cryptoData,
-            MediaType = mediaType,
-            };
-
-        contact.CryptoKeys ??= [];
-        contact.CryptoKeys.Add(key, cryptoKey);
-
-        if (parent != null) {
-            service.Groups ??= [];
-            service.Groups.Add(parent);
-            }
-
         return service;
         }
-
-
 
 
     /// <summary>
@@ -520,26 +535,25 @@ public static partial class Extensions {
     /// <param name="contexts">The contexts in which the identifier is to be used.</param>
     public static void AddKeyData(
                     this JsContact contact,
-                    KeyData keyData,
+                    KeyData? keyData,
                     string serviceId,
-                    string accountAddress,
+                    Dictionary<string, string> keys,
                     List<string> contexts = null) {
-
-        var key = "udf:" + keyData.Udf;
-
-        var (media, uri) = keyData.GetDataUri();
-        var cryptoKey = new CryptoKey() {
-            Uri = uri,
-            MediaType = media,
-            Kind= serviceId
-            };
-        if (contexts != null) {
-            cryptoKey.Contexts ??= [];
-            foreach (var context in contexts) {
-                cryptoKey.Contexts.Add(context, true);
-                }
+        if (keyData is null) {
+            return;
             }
-        contact.CryptoKeys ??= [];
-        contact.CryptoKeys.Add(key, cryptoKey);
+        var key = keyData.Udf;
+        //var (media, cryptoData) = keyData.GetDataUri();
+
+        var jwk = JWK.Factory(keyData.GetKeyPair());
+        var jwks = new Jwks() {
+            Jwk = [jwk]
+            };
+        contact.JsonWebKeys ??= [];
+        contact.JsonWebKeys.Add(key, jwks);
+
+        keys.Add(key, serviceId);
+
+
         }
     }
