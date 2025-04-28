@@ -43,6 +43,12 @@
 			Description
 				|The date and time when the data in the Card was last modified.
 
+	Structure Relation
+		Boolean					Relationships
+			Dictionary
+			Description
+				| The relationships, each one MUST have the value true.
+
 
 	Structure JsCalendarEntry
 		Inherits JmapBase

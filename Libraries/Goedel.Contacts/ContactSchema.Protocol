@@ -14,35 +14,6 @@
 
 		Description
 			| Metadata, see section 2.1
-		//String					Type
-		//	Tag "@type"
-		//	Required
-		//	Description
-		//		| The JSContact type of the Card object. If specified, value MUST be 'card'
-		//
-		//String					Uid 
-		//	Required
-		//	Description
-		//		| An identifier that associates the object as the same across different systems, 
-		//		| address books, and views. The value SHOULD be a URN [RFC8141], but for 
-		//		| compatibility with [RFC6350], it MAY also be a URI [RFC3986] or free-text value.
-		//Struct Relation			RelatedTo
-		//	Dictionary
-		//	Description
-		//		| acquaintance agent child co-resident co-worker colleague 
-		//		| contact crush date emergency friend kin me met muse
-		//		| neighbor parent sibling spouse sweetheart
-		//String					ProdId
-		//	Description
-		//		| The identifier for the product that created the Card. If set, the value MUST 
-		//		| be at least one character long.
-		//DateTime				Created
-		//	Description
-		//		| The date and time when the Card was created.
-		//
-		//String					Updated
-		//	Description
-		//		|The date and time when the data in the Card was last modified.
 
 		String					Version
 			Required

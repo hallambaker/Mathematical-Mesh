@@ -26,6 +26,7 @@ LinkFiles = \
     Goedel.Protocol.dll\
     Goedel.Registry.dll\
     Goedel.Utilities.dll\
+    Goedel.Cryptography.Windows.dll\
     Goedel.Mesh.Client.dll\
     Goedel.Mesh.Core.dll\
     Goedel.Mesh.Guigen.dll\

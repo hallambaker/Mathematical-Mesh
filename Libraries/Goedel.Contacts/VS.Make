@@ -18,17 +18,22 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
+    Goedel.Cryptography.Jose.dll\
     Goedel.IO.dll\
     Goedel.Utilities.dll\
     Goedel.Protocol.dll
 
 ToolTargets = \
 	CalendarSchema.cs\
+	DeviceSchema.cs\
 	ContactSchema.cs\
 	Exceptions.cs\
 	ContactConstants.cs
 CalendarSchema.cs : CalendarSchema.Protocol 
 	protogen CalendarSchema.Protocol  /cs  CalendarSchema.cs
+
+DeviceSchema.cs : DeviceSchema.Protocol 
+	protogen DeviceSchema.Protocol  /cs  DeviceSchema.cs
 
 ContactSchema.cs : ContactSchema.Protocol 
 	protogen ContactSchema.Protocol  /cs  ContactSchema.cs

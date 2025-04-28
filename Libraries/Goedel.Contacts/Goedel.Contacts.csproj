@@ -35,12 +35,22 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="DeviceSchema.cs">
+			<DependentUpon>DeviceSchema.constant</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
 
 		<None Update="CalendarSchema.Protocol">
 		  <LastGenOutput>ContactSchema - Copy.cs</LastGenOutput>
+		  <Generator>PROTOGEN</Generator>
+		</None>
+
+		<None Update="DeviceSchema.Protocol">
+		  <LastGenOutput>DeviceSchema.cs</LastGenOutput>
 		  <Generator>PROTOGEN</Generator>
 		</None>
 

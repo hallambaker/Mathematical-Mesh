@@ -36,5 +36,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget serviceadmin.dll
+	powershell publishtarget serviceadmin.exe $(LinkFiles) 
 

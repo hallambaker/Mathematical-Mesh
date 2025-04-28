@@ -37,5 +37,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget meshman.dll
+	powershell publishtarget meshman.exe $(LinkFiles) 
 

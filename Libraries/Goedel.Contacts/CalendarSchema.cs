@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/17/2025 1:31:11 AM
+//  This file was automatically generated at 4/28/2025 5:41:19 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -73,6 +73,7 @@ public abstract partial class Calandars : global::Goedel.Protocol.JsonObject {
 			new () {
 
 	    {"JmapBase", JmapBase._Factory},
+	    {"Relation", Relation._Factory},
 	    {"JsCalendarEntry", JsCalendarEntry._Factory},
 	    {"JsEvent", JsEvent._Factory},
 	    {"JsTask", JsTask._Factory},
@@ -242,6 +243,87 @@ public partial class JmapBase : Calandars {
 			return Out as JmapBase;
 			}
 		var Result = new JmapBase ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class Relation : Calandars {
+        /// <summary>
+        /// The relationships, each one MUST have the value true.
+        /// </summary>
+
+	public virtual Dictionary<string,bool>?					Relationships  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	static protected new Binding _binding = new (
+			new() {
+
+			{ "relationships", new PropertyDictionaryBoolean ("relationships", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as Relation).Relationships = value;}, (IBinding data) => (data as Relation).Relationships )}
+        }, __Tag,() => new Relation(), null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "Relation";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new Relation();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new Relation FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as Relation;
+			}
+		var Result = new Relation ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

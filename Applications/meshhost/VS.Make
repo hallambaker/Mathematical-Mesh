@@ -41,5 +41,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget meshhost.dll
+	powershell publishtarget meshhost.exe $(LinkFiles) 
 
