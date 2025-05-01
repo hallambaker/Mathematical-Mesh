@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/28/2025 5:41:19 PM
+//  This file was automatically generated at 5/1/2025 6:02:18 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -39,6 +39,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -91,6 +93,35 @@ public abstract partial class Calandars : global::Goedel.Protocol.JsonObject {
 	    {"EmptyPatchObject", EmptyPatchObject._Factory}
 		};
 
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+
+	    {typeof(JmapBase), JmapBase._binding},
+	    {typeof(Relation), Relation._binding},
+	    {typeof(JsCalendarEntry), JsCalendarEntry._binding},
+	    {typeof(JsEvent), JsEvent._binding},
+	    {typeof(JsTask), JsTask._binding},
+	    {typeof(JsGroup), JsGroup._binding},
+	    {typeof(Location), Location._binding},
+	    {typeof(Link), Link._binding},
+	    {typeof(VirtualLocation), VirtualLocation._binding},
+	    {typeof(Participant), Participant._binding},
+	    {typeof(RecurrenceRule), RecurrenceRule._binding},
+	    {typeof(NDay), NDay._binding},
+	    {typeof(Alert), Alert._binding},
+	    {typeof(Trigger), Trigger._binding},
+	    {typeof(TimeZone), TimeZone._binding},
+	    {typeof(TimeZoneRule), TimeZoneRule._binding},
+	    {typeof(EmptyPatchObject), EmptyPatchObject._binding}
+		};
+
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -98,7 +129,10 @@ public abstract partial class Calandars : global::Goedel.Protocol.JsonObject {
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -127,6 +161,7 @@ public partial class JmapBase : Calandars {
         /// differs by object type and is defined in Sections 2.1, 2.2, and 2.3.
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
@@ -137,6 +172,7 @@ public partial class JmapBase : Calandars {
         /// combination of the UID with a recurrenceId identifies a particular instance.
         /// </summary>
 
+	[JsonPropertyName("uid")]
 	public virtual string?					Uid  {get; set;}
 
         /// <summary>
@@ -144,6 +180,7 @@ public partial class JmapBase : Calandars {
         /// a map of the UIDs of the related objects to information about the relation.
         /// </summary>
 
+	[JsonPropertyName("relatedTo")]
 	public virtual Dictionary<string,Relation>?					RelatedTo  {get; set;}
 
         /// <summary>
@@ -152,18 +189,21 @@ public partial class JmapBase : Calandars {
         /// (i.e., whenever the updated property is set).
         /// </summary>
 
+	[JsonPropertyName("prodId")]
 	public virtual string?					ProdId  {get; set;}
 
         /// <summary>
         /// This is the date and time this object was initially created.
         /// </summary>
 
+	[JsonPropertyName("created")]
 	public virtual DateTime?					Created  {get; set;}
 
         /// <summary>
         ///The date and time when the data in the Card was last modified.
         /// </summary>
 
+	[JsonPropertyName("updated")]
 	public virtual DateTime?					Updated  {get; set;}
 
 
@@ -172,14 +212,14 @@ public partial class JmapBase : Calandars {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<JmapBase> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as JmapBase).Type = value;}, (IBinding data) => (data as JmapBase).Type )},
 			{ "uid", new PropertyString ("uid", 
 					(IBinding data, string? value) => {(data as JmapBase).Uid = value;}, (IBinding data) => (data as JmapBase).Uid )},
-			{ "relatedTo", new PropertyDictionaryStruct ("relatedTo", 
+			{ "relatedTo", new PropertyDictionaryStruct ("relatedTo", typeof (Relation),
 					(IBinding data, object? value) => {(data as JmapBase).RelatedTo = value as Dictionary<string,Relation>;}, (IBinding data) => (data as JmapBase).RelatedTo,
 					false, ()=>new  Dictionary<string,Relation>(), ()=>new Relation(),
 					(IBinding data) => (data as JmapBase).RelatedTo.GetEnumerable(),
@@ -191,7 +231,7 @@ public partial class JmapBase : Calandars {
 					(IBinding data, DateTime? value) => {(data as JmapBase).Created = value;}, (IBinding data) => (data as JmapBase).Created )},
 			{ "updated", new PropertyDateTime ("updated", 
 					(IBinding data, DateTime? value) => {(data as JmapBase).Updated = value;}, (IBinding data) => (data as JmapBase).Updated )}
-        }, __Tag,() => new JmapBase(), null);
+        }, __Tag,() => new JmapBase(), () => new List<JmapBase>(), () => new Dictionary<string,JmapBase>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -259,6 +299,7 @@ public partial class Relation : Calandars {
         /// The relationships, each one MUST have the value true.
         /// </summary>
 
+	[JsonPropertyName("relationships")]
 	public virtual Dictionary<string,bool>?					Relationships  {get; set;}
 
 
@@ -267,12 +308,12 @@ public partial class Relation : Calandars {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Relation> _binding = new (
 			new() {
 
 			{ "relationships", new PropertyDictionaryBoolean ("relationships", 
 					(IBinding data, Dictionary<string,bool>? value) => {(data as Relation).Relationships = value;}, (IBinding data) => (data as Relation).Relationships )}
-        }, __Tag,() => new Relation(), null);
+        }, __Tag,() => new Relation(), () => new List<Relation>(), () => new Dictionary<string,Relation>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -342,6 +383,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// property (see Section 4.4.6).
         /// </summary>
 
+	[JsonPropertyName("sequence")]
 	public virtual int?					Sequence  {get; set;}
 
         /// <summary>
@@ -349,12 +391,14 @@ public partial class JsCalendarEntry : JmapBase {
         /// present if the JSCalendar object represents an iTIP scheduling message.
         /// </summary>
 
+	[JsonPropertyName("method")]
 	public virtual string?					Method  {get; set;}
 
         /// <summary>
         /// This is a short summary of the object.
         /// </summary>
 
+	[JsonPropertyName("title")]
 	public virtual string?					Title  {get; set;}
 
         /// <summary>
@@ -362,6 +406,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// formatted according to the descriptionContentType property.
         /// </summary>
 
+	[JsonPropertyName("description")]
 	public virtual string?					Description  {get; set;}
 
         /// <summary>
@@ -374,6 +419,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// by use of the cid property of the Link object.
         /// </summary>
 
+	[JsonPropertyName("descriptionContentType")]
 	public virtual string?					DescriptionContentType  {get; set;}
 
         /// <summary>
@@ -387,6 +433,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// view of their schedule.
         /// </summary>
 
+	[JsonPropertyName("showWithoutTime")]
 	public virtual bool?					ShowWithoutTime  {get; set;}
 
         /// <summary>
@@ -394,12 +441,14 @@ public partial class JsCalendarEntry : JmapBase {
         /// with the object.
         /// </summary>
 
+	[JsonPropertyName("locations")]
 	public virtual Dictionary<string,Location>?					Locations  {get; set;}
 
         /// <summary>
         /// 
         /// </summary>
 
+	[JsonPropertyName("virtualLocations")]
 	public virtual Dictionary<string,VirtualLocation>?					VirtualLocations  {get; set;}
 
         /// <summary>
@@ -407,6 +456,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// associated with the object.
         /// </summary>
 
+	[JsonPropertyName("links")]
 	public virtual Dictionary<string,Link>?					links  {get; set;}
 
         /// <summary>
@@ -414,6 +464,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// locale used for the text in the calendar object, if known.
         /// </summary>
 
+	[JsonPropertyName("locale")]
 	public virtual string?					Locale  {get; set;}
 
         /// <summary>
@@ -422,6 +473,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// each key in the map MUST be true.
         /// </summary>
 
+	[JsonPropertyName("keywords")]
 	public virtual Dictionary<string,bool>?					Keywords  {get; set;}
 
         /// <summary>
@@ -430,6 +482,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// as URIs. The value for each key in the map MUST be true.
         /// </summary>
 
+	[JsonPropertyName("categories")]
 	public virtual Dictionary<string,bool>?					Categories  {get; set;}
 
         /// <summary>
@@ -440,6 +493,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// Module Level 3.
         /// </summary>
 
+	[JsonPropertyName("color")]
 	public virtual string?					Color  {get; set;}
 
         /// <summary>
@@ -448,6 +502,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// recurrenceOverrides properties MUST NOT be present.
         /// </summary>
 
+	[JsonPropertyName("recurrenceId")]
 	public virtual string?					RecurrenceId  {get; set;}
 
         /// <summary>
@@ -457,6 +512,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// set if the recurrenceId property is not set.
         /// </summary>
 
+	[JsonPropertyName("recurrenceIdTimeZone")]
 	public virtual string?					RecurrenceIdTimeZone  {get; set;}
 
         /// <summary>
@@ -469,6 +525,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// define a recurrenceRules property.
         /// </summary>
 
+	[JsonPropertyName("recurrenceRules")]
 	public virtual List<RecurrenceRule>?					RecurrenceRules  {get; set;}
         /// <summary>
         /// This defines a set of recurrence rules (repeating patterns) for 
@@ -482,12 +539,14 @@ public partial class JsCalendarEntry : JmapBase {
         /// recurrenceRules property, as described in Section 4.3.
         /// </summary>
 
+	[JsonPropertyName("excludedRecurrenceRules")]
 	public virtual List<RecurrenceRule>?					ExcludedRecurrenceRules  {get; set;}
         /// <summary>
         /// Maps recurrence ids (the date-time produced by the recurrence rule) 
         /// to the overridden properties of the recurrence instance.
         /// </summary>
 
+	[JsonPropertyName("recurrenceOverrides")]
 	public virtual Dictionary<string,PatchObject>?					RecurrenceOverrides  {get; set;}
 
         /// <summary>
@@ -500,6 +559,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// expansion.
         /// </summary>
 
+	[JsonPropertyName("excluded")]
 	public virtual bool?					Excluded  {get; set;}
 
         /// <summary>
@@ -508,6 +568,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// for a time period.
         /// </summary>
 
+	[JsonPropertyName("priority")]
 	public virtual int?					Priority  {get; set;}
 
         /// <summary>
@@ -517,6 +578,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// Values" registry, or a vendor-specific value (see Section 3.3):
         /// </summary>
 
+	[JsonPropertyName("freeBusyStatus")]
 	public virtual string?					FreeBusyStatus  {get; set;}
 
         /// <summary>
@@ -528,6 +590,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// property is up to the API via which this object is accessed.
         /// </summary>
 
+	[JsonPropertyName("privacy")]
 	public virtual string?					Privacy  {get; set;}
 
         /// <summary>
@@ -543,6 +606,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// than being specified as an empty object).
         /// </summary>
 
+	[JsonPropertyName("replyTo")]
 	public virtual Dictionary<string,string>?					ReplyTo  {get; set;}
 
         /// <summary>
@@ -553,6 +617,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// defined in Section 3.4.1 of [RFC5322].
         /// </summary>
 
+	[JsonPropertyName("sentBy")]
 	public virtual string?					SentBy  {get; set;}
 
         /// <summary>
@@ -560,6 +625,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// their participation in the calendar object.
         /// </summary>
 
+	[JsonPropertyName("participants")]
 	public virtual Dictionary<string,Participant>?					Participants  {get; set;}
 
         /// <summary>
@@ -570,6 +636,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// the following ABNF [RFC5234]:
         /// </summary>
 
+	[JsonPropertyName("requestStatus")]
 	public virtual string?					RequestStatus  {get; set;}
 
         /// <summary>
@@ -582,6 +649,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// set to false.
         /// </summary>
 
+	[JsonPropertyName("useDefaultAlerts")]
 	public virtual bool?					UseDefaultAlerts  {get; set;}
 
         /// <summary>
@@ -590,6 +658,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// object.
         /// </summary>
 
+	[JsonPropertyName("alerts")]
 	public virtual Dictionary<string,Alert>?					Alerts  {get; set;}
 
         /// <summary>
@@ -598,6 +667,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// calendar object in order to localize it into that locale.
         /// </summary>
 
+	[JsonPropertyName("localizations")]
 	public virtual Dictionary<string,PatchObject>?					Localizations  {get; set;}
 
         /// <summary>
@@ -608,6 +678,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// this MUST be presumed to be null (i.e., floating time).
         /// </summary>
 
+	[JsonPropertyName("timeZone")]
 	public virtual string?					TimeZone  {get; set;}
 
         /// <summary>
@@ -616,6 +687,7 @@ public partial class JsCalendarEntry : JmapBase {
         ///the map:
         /// </summary>
 
+	[JsonPropertyName("timeZones")]
 	public virtual Dictionary<string,TimeZone>?					TimeZones  {get; set;}
 
 
@@ -624,7 +696,7 @@ public partial class JsCalendarEntry : JmapBase {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<JsCalendarEntry> _binding = new (
 			new() {
 
 			{ "sequence", new PropertyInteger32 ("sequence", 
@@ -639,19 +711,19 @@ public partial class JsCalendarEntry : JmapBase {
 					(IBinding data, string? value) => {(data as JsCalendarEntry).DescriptionContentType = value;}, (IBinding data) => (data as JsCalendarEntry).DescriptionContentType )},
 			{ "showWithoutTime", new PropertyBoolean ("showWithoutTime", 
 					(IBinding data, bool? value) => {(data as JsCalendarEntry).ShowWithoutTime = value;}, (IBinding data) => (data as JsCalendarEntry).ShowWithoutTime )},
-			{ "locations", new PropertyDictionaryStruct ("locations", 
+			{ "locations", new PropertyDictionaryStruct ("locations", typeof (Location),
 					(IBinding data, object? value) => {(data as JsCalendarEntry).Locations = value as Dictionary<string,Location>;}, (IBinding data) => (data as JsCalendarEntry).Locations,
 					false, ()=>new  Dictionary<string,Location>(), ()=>new Location(),
 					(IBinding data) => (data as JsCalendarEntry).Locations.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Location>).Add (key as string,value as Location);})},
-			{ "virtualLocations", new PropertyDictionaryStruct ("virtualLocations", 
+			{ "virtualLocations", new PropertyDictionaryStruct ("virtualLocations", typeof (VirtualLocation),
 					(IBinding data, object? value) => {(data as JsCalendarEntry).VirtualLocations = value as Dictionary<string,VirtualLocation>;}, (IBinding data) => (data as JsCalendarEntry).VirtualLocations,
 					false, ()=>new  Dictionary<string,VirtualLocation>(), ()=>new VirtualLocation(),
 					(IBinding data) => (data as JsCalendarEntry).VirtualLocations.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,VirtualLocation>).Add (key as string,value as VirtualLocation);})},
-			{ "links", new PropertyDictionaryStruct ("links", 
+			{ "links", new PropertyDictionaryStruct ("links", typeof (Link),
 					(IBinding data, object? value) => {(data as JsCalendarEntry).links = value as Dictionary<string,Link>;}, (IBinding data) => (data as JsCalendarEntry).links,
 					false, ()=>new  Dictionary<string,Link>(), ()=>new Link(),
 					(IBinding data) => (data as JsCalendarEntry).links.GetEnumerable(),
@@ -669,13 +741,13 @@ public partial class JsCalendarEntry : JmapBase {
 					(IBinding data, string? value) => {(data as JsCalendarEntry).RecurrenceId = value;}, (IBinding data) => (data as JsCalendarEntry).RecurrenceId )},
 			{ "recurrenceIdTimeZone", new PropertyString ("recurrenceIdTimeZone", 
 					(IBinding data, string? value) => {(data as JsCalendarEntry).RecurrenceIdTimeZone = value;}, (IBinding data) => (data as JsCalendarEntry).RecurrenceIdTimeZone )},
-			{ "recurrenceRules", new PropertyListStruct ("recurrenceRules", 
+			{ "recurrenceRules", new PropertyListStruct ("recurrenceRules", typeof (RecurrenceRule),
 					(IBinding data, object? value) => {(data as JsCalendarEntry).RecurrenceRules = value as List<RecurrenceRule>;}, (IBinding data) => (data as JsCalendarEntry).RecurrenceRules,
 					false, ()=>new  List<RecurrenceRule>(), ()=>new RecurrenceRule())},
-			{ "excludedRecurrenceRules", new PropertyListStruct ("excludedRecurrenceRules", 
+			{ "excludedRecurrenceRules", new PropertyListStruct ("excludedRecurrenceRules", typeof (RecurrenceRule),
 					(IBinding data, object? value) => {(data as JsCalendarEntry).ExcludedRecurrenceRules = value as List<RecurrenceRule>;}, (IBinding data) => (data as JsCalendarEntry).ExcludedRecurrenceRules,
 					false, ()=>new  List<RecurrenceRule>(), ()=>new RecurrenceRule())},
-			{ "recurrenceOverrides", new PropertyDictionaryStruct ("recurrenceOverrides", 
+			{ "recurrenceOverrides", new PropertyDictionaryStruct ("recurrenceOverrides", typeof (PatchObject),
 					(IBinding data, object? value) => {(data as JsCalendarEntry).RecurrenceOverrides = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as JsCalendarEntry).RecurrenceOverrides,
 					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject(),
 					(IBinding data) => (data as JsCalendarEntry).RecurrenceOverrides.GetEnumerable(),
@@ -693,7 +765,7 @@ public partial class JsCalendarEntry : JmapBase {
 					(IBinding data, Dictionary<string,string>? value) => {(data as JsCalendarEntry).ReplyTo = value;}, (IBinding data) => (data as JsCalendarEntry).ReplyTo )},
 			{ "sentBy", new PropertyString ("sentBy", 
 					(IBinding data, string? value) => {(data as JsCalendarEntry).SentBy = value;}, (IBinding data) => (data as JsCalendarEntry).SentBy )},
-			{ "participants", new PropertyDictionaryStruct ("participants", 
+			{ "participants", new PropertyDictionaryStruct ("participants", typeof (Participant),
 					(IBinding data, object? value) => {(data as JsCalendarEntry).Participants = value as Dictionary<string,Participant>;}, (IBinding data) => (data as JsCalendarEntry).Participants,
 					false, ()=>new  Dictionary<string,Participant>(), ()=>new Participant(),
 					(IBinding data) => (data as JsCalendarEntry).Participants.GetEnumerable(),
@@ -703,13 +775,13 @@ public partial class JsCalendarEntry : JmapBase {
 					(IBinding data, string? value) => {(data as JsCalendarEntry).RequestStatus = value;}, (IBinding data) => (data as JsCalendarEntry).RequestStatus )},
 			{ "useDefaultAlerts", new PropertyBoolean ("useDefaultAlerts", 
 					(IBinding data, bool? value) => {(data as JsCalendarEntry).UseDefaultAlerts = value;}, (IBinding data) => (data as JsCalendarEntry).UseDefaultAlerts )},
-			{ "alerts", new PropertyDictionaryStruct ("alerts", 
+			{ "alerts", new PropertyDictionaryStruct ("alerts", typeof (Alert),
 					(IBinding data, object? value) => {(data as JsCalendarEntry).Alerts = value as Dictionary<string,Alert>;}, (IBinding data) => (data as JsCalendarEntry).Alerts,
 					false, ()=>new  Dictionary<string,Alert>(), ()=>new Alert(),
 					(IBinding data) => (data as JsCalendarEntry).Alerts.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Alert>).Add (key as string,value as Alert);})},
-			{ "localizations", new PropertyDictionaryStruct ("localizations", 
+			{ "localizations", new PropertyDictionaryStruct ("localizations", typeof (PatchObject),
 					(IBinding data, object? value) => {(data as JsCalendarEntry).Localizations = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as JsCalendarEntry).Localizations,
 					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject(),
 					(IBinding data) => (data as JsCalendarEntry).Localizations.GetEnumerable(),
@@ -717,13 +789,13 @@ public partial class JsCalendarEntry : JmapBase {
 						 {(dictionary as Dictionary<string,PatchObject>).Add (key as string,value as PatchObject);})},
 			{ "timeZone", new PropertyString ("timeZone", 
 					(IBinding data, string? value) => {(data as JsCalendarEntry).TimeZone = value;}, (IBinding data) => (data as JsCalendarEntry).TimeZone )},
-			{ "timeZones", new PropertyDictionaryStruct ("timeZones", 
+			{ "timeZones", new PropertyDictionaryStruct ("timeZones", typeof (TimeZone),
 					(IBinding data, object? value) => {(data as JsCalendarEntry).TimeZones = value as Dictionary<string,TimeZone>;}, (IBinding data) => (data as JsCalendarEntry).TimeZones,
 					false, ()=>new  Dictionary<string,TimeZone>(), ()=>new TimeZone(),
 					(IBinding data) => (data as JsCalendarEntry).TimeZones.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,TimeZone>).Add (key as string,value as TimeZone);})}
-        }, __Tag,() => new JsCalendarEntry(), JmapBase._binding);
+        }, __Tag,() => new JsCalendarEntry(), () => new List<JsCalendarEntry>(), () => new Dictionary<string,JsCalendarEntry>(),JmapBase._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -796,6 +868,7 @@ public partial class JsEvent : JsCalendarEntry {
         /// zone (as specified in the timeZone property, see Section 4.7.1).
         /// </summary>
 
+	[JsonPropertyName("start")]
 	public virtual string?					Start  {get; set;}
 
         /// <summary>
@@ -804,6 +877,7 @@ public partial class JsEvent : JsCalendarEntry {
         /// found by adding the duration to the event's start time.
         /// </summary>
 
+	[JsonPropertyName("duration")]
 	public virtual string?					Duration  {get; set;}
 
         /// <summary>
@@ -813,6 +887,7 @@ public partial class JsEvent : JsCalendarEntry {
         /// or a vendor-specific value (see Section 3.3):
         /// </summary>
 
+	[JsonPropertyName("status")]
 	public virtual string?					Status  {get; set;}
 
 
@@ -821,7 +896,7 @@ public partial class JsEvent : JsCalendarEntry {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<JsEvent> _binding = new (
 			new() {
 
 			{ "start", new PropertyString ("start", 
@@ -830,7 +905,7 @@ public partial class JsEvent : JsCalendarEntry {
 					(IBinding data, string? value) => {(data as JsEvent).Duration = value;}, (IBinding data) => (data as JsEvent).Duration )},
 			{ "status", new PropertyString ("status", 
 					(IBinding data, string? value) => {(data as JsEvent).Status = value;}, (IBinding data) => (data as JsEvent).Status )}
-        }, __Tag,() => new JsEvent(), JsCalendarEntry._binding);
+        }, __Tag,() => new JsEvent(), () => new List<JsEvent>(), () => new Dictionary<string,JsEvent>(),JsCalendarEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -902,12 +977,14 @@ public partial class JsTask : JsCalendarEntry {
         /// This is the date/time the task is due in the task's time zone.
         /// </summary>
 
+	[JsonPropertyName("due")]
 	public virtual string?					Due  {get; set;}
 
         /// <summary>
         /// This the date/time the task should start in the task's time zone.
         /// </summary>
 
+	[JsonPropertyName("start")]
 	public virtual string?					Start  {get; set;}
 
         /// <summary>
@@ -915,6 +992,7 @@ public partial class JsTask : JsCalendarEntry {
         /// takes to complete.
         /// </summary>
 
+	[JsonPropertyName("estimatedDuration")]
 	public virtual string?					EstimatedDuration  {get; set;}
 
         /// <summary>
@@ -922,6 +1000,7 @@ public partial class JsTask : JsCalendarEntry {
         /// The property value MUST be a positive integer between 0 and 100.
         /// </summary>
 
+	[JsonPropertyName("percentComplete")]
 	public virtual int?					PercentComplete  {get; set;}
 
         /// <summary>
@@ -930,6 +1009,7 @@ public partial class JsTask : JsCalendarEntry {
         /// of evaluation):
         /// </summary>
 
+	[JsonPropertyName("progress")]
 	public virtual string?					Progress  {get; set;}
 
         /// <summary>
@@ -938,6 +1018,7 @@ public partial class JsTask : JsCalendarEntry {
         /// (Section 4.4.6) was last updated.
         /// </summary>
 
+	[JsonPropertyName("progressUpdated")]
 	public virtual DateTime?					ProgressUpdated  {get; set;}
 
 
@@ -946,7 +1027,7 @@ public partial class JsTask : JsCalendarEntry {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<JsTask> _binding = new (
 			new() {
 
 			{ "due", new PropertyString ("due", 
@@ -961,7 +1042,7 @@ public partial class JsTask : JsCalendarEntry {
 					(IBinding data, string? value) => {(data as JsTask).Progress = value;}, (IBinding data) => (data as JsTask).Progress )},
 			{ "progressUpdated", new PropertyDateTime ("progressUpdated", 
 					(IBinding data, DateTime? value) => {(data as JsTask).ProgressUpdated = value;}, (IBinding data) => (data as JsTask).ProgressUpdated )}
-        }, __Tag,() => new JsTask(), JsCalendarEntry._binding);
+        }, __Tag,() => new JsTask(), () => new List<JsTask>(), () => new Dictionary<string,JsTask>(),JsCalendarEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1031,12 +1112,14 @@ public partial class JsGroup : JsCalendarEntry {
         /// ignore entries of unknown type.
         /// </summary>
 
+	[JsonPropertyName("entries")]
 	public virtual List<JmapBase>?					Entries  {get; set;}
         /// <summary>
         /// This is the source from which updated versions of this group 
         /// may be retrieved. The value MUST be a URI.
         /// </summary>
 
+	[JsonPropertyName("source")]
 	public virtual string?					Source  {get; set;}
 
 
@@ -1045,15 +1128,15 @@ public partial class JsGroup : JsCalendarEntry {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<JsGroup> _binding = new (
 			new() {
 
-			{ "entries", new PropertyListStruct ("entries", 
+			{ "entries", new PropertyListStruct ("entries", typeof (JmapBase),
 					(IBinding data, object? value) => {(data as JsGroup).Entries = value as List<JmapBase>;}, (IBinding data) => (data as JsGroup).Entries,
 					false, ()=>new  List<JmapBase>(), ()=>new JmapBase())},
 			{ "source", new PropertyString ("source", 
 					(IBinding data, string? value) => {(data as JsGroup).Source = value;}, (IBinding data) => (data as JsGroup).Source )}
-        }, __Tag,() => new JsGroup(), JsCalendarEntry._binding);
+        }, __Tag,() => new JsGroup(), () => new List<JsGroup>(), () => new Dictionary<string,JsGroup>(),JsCalendarEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1123,12 +1206,14 @@ public partial class Location : Calandars {
         /// one property other than the relativeTo property.
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// This is the human-readable name of the location.
         /// </summary>
 
+	[JsonPropertyName("name")]
 	public virtual string?					Name  {get; set;}
 
         /// <summary>
@@ -1136,6 +1221,7 @@ public partial class Location : Calandars {
         /// This may be an address, set of directions, door access code, etc.
         /// </summary>
 
+	[JsonPropertyName("description")]
 	public virtual string?					Description  {get; set;}
 
         /// <summary>
@@ -1145,6 +1231,7 @@ public partial class Location : Calandars {
         /// location types. The value for each key in the map MUST be true.
         /// </summary>
 
+	[JsonPropertyName("locationTypes")]
 	public virtual Dictionary<string,bool>?					LocationTypes  {get; set;}
 
         /// <summary>
@@ -1156,18 +1243,21 @@ public partial class Location : Calandars {
         /// for the user.
         /// </summary>
 
+	[JsonPropertyName("relativeTo")]
 	public virtual string?					RelativeTo  {get; set;}
 
         /// <summary>
         /// This is a time zone for this location.
         /// </summary>
 
+	[JsonPropertyName("timeZone")]
 	public virtual string?					TimeZone  {get; set;}
 
         /// <summary>
         /// This is a geo: URI [RFC5870] for the location.
         /// </summary>
 
+	[JsonPropertyName("coordinates")]
 	public virtual string?					Coordinates  {get; set;}
 
         /// <summary>
@@ -1176,6 +1266,7 @@ public partial class Location : Calandars {
         /// no links, this MUST be omitted (rather than specified as an empty set).
         /// </summary>
 
+	[JsonPropertyName("link")]
 	public virtual Dictionary<string,Link>?					Link  {get; set;}
 
 
@@ -1184,7 +1275,7 @@ public partial class Location : Calandars {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Location> _binding = new (
 			new() {
 
 			{ "@type", new PropertyString ("@type", 
@@ -1201,13 +1292,13 @@ public partial class Location : Calandars {
 					(IBinding data, string? value) => {(data as Location).TimeZone = value;}, (IBinding data) => (data as Location).TimeZone )},
 			{ "coordinates", new PropertyString ("coordinates", 
 					(IBinding data, string? value) => {(data as Location).Coordinates = value;}, (IBinding data) => (data as Location).Coordinates )},
-			{ "link", new PropertyDictionaryStruct ("link", 
+			{ "link", new PropertyDictionaryStruct ("link", typeof (Link),
 					(IBinding data, object? value) => {(data as Location).Link = value as Dictionary<string,Link>;}, (IBinding data) => (data as Location).Link,
 					false, ()=>new  Dictionary<string,Link>(), ()=>new Link(),
 					(IBinding data) => (data as Location).Link.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Link>).Add (key as string,value as Link);})}
-        }, __Tag,() => new Location(), null);
+        }, __Tag,() => new Location(), () => new List<Location>(), () => new Dictionary<string,Location>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1274,6 +1365,7 @@ public partial class Link : Calandars {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
@@ -1283,12 +1375,14 @@ public partial class Link : Calandars {
         /// this Link object.
         /// </summary>
 
+	[JsonPropertyName("cid")]
 	public virtual string?					Cid  {get; set;}
 
         /// <summary>
         /// This is the media type [RFC6838] of the resource, if known.
         /// </summary>
 
+	[JsonPropertyName("contentType")]
 	public virtual string?					ContentType  {get; set;}
 
         /// <summary>
@@ -1299,6 +1393,7 @@ public partial class Link : Calandars {
         /// resource is fetched.
         /// </summary>
 
+	[JsonPropertyName("size")]
 	public virtual int?					Size  {get; set;}
 
         /// <summary>
@@ -1307,6 +1402,7 @@ public partial class Link : Calandars {
         /// Relations" registry [LINKRELS], as established in [RFC8288].
         /// </summary>
 
+	[JsonPropertyName("rel")]
 	public virtual string?					Rel  {get; set;}
 
         /// <summary>
@@ -1316,12 +1412,14 @@ public partial class Link : Calandars {
         /// Enum Values" registry, or a vendor-specific value (see Section 3.3):
         /// </summary>
 
+	[JsonPropertyName("display")]
 	public virtual string?					Display  {get; set;}
 
         /// <summary>
         /// This is a human-readable, plain-text description of the resource.
         /// </summary>
 
+	[JsonPropertyName("title")]
 	public virtual string?					Title  {get; set;}
 
 
@@ -1330,7 +1428,7 @@ public partial class Link : Calandars {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Link> _binding = new (
 			new() {
 
 			{ "@type", new PropertyString ("@type", 
@@ -1347,7 +1445,7 @@ public partial class Link : Calandars {
 					(IBinding data, string? value) => {(data as Link).Display = value;}, (IBinding data) => (data as Link).Display )},
 			{ "title", new PropertyString ("title", 
 					(IBinding data, string? value) => {(data as Link).Title = value;}, (IBinding data) => (data as Link).Title )}
-        }, __Tag,() => new Link(), null);
+        }, __Tag,() => new Link(), () => new List<Link>(), () => new Dictionary<string,Link>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1414,12 +1512,14 @@ public partial class VirtualLocation : Calandars {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// This is the human-readable name of the virtual location.
         /// </summary>
 
+	[JsonPropertyName("name")]
 	public virtual string?					Name  {get; set;}
 
         /// <summary>
@@ -1427,12 +1527,14 @@ public partial class VirtualLocation : Calandars {
         /// location. This may be a conference access code, etc.
         /// </summary>
 
+	[JsonPropertyName("description")]
 	public virtual string?					Description  {get; set;}
 
         /// <summary>
         /// This is a URI [RFC3986] that represents how to connect to this virtual location.
         /// </summary>
 
+	[JsonPropertyName("uri")]
 	public virtual string?					Uri  {get; set;}
 
         /// <summary>
@@ -1441,6 +1543,7 @@ public partial class VirtualLocation : Calandars {
         /// MUST be true.
         /// </summary>
 
+	[JsonPropertyName("features")]
 	public virtual Dictionary<string,bool>?					Features  {get; set;}
 
 
@@ -1449,7 +1552,7 @@ public partial class VirtualLocation : Calandars {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<VirtualLocation> _binding = new (
 			new() {
 
 			{ "@type", new PropertyString ("@type", 
@@ -1462,7 +1565,7 @@ public partial class VirtualLocation : Calandars {
 					(IBinding data, string? value) => {(data as VirtualLocation).Uri = value;}, (IBinding data) => (data as VirtualLocation).Uri )},
 			{ "features", new PropertyDictionaryBoolean ("features", 
 					(IBinding data, Dictionary<string,bool>? value) => {(data as VirtualLocation).Features = value;}, (IBinding data) => (data as VirtualLocation).Features )}
-        }, __Tag,() => new VirtualLocation(), null);
+        }, __Tag,() => new VirtualLocation(), () => new List<VirtualLocation>(), () => new Dictionary<string,VirtualLocation>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1532,12 +1635,14 @@ public partial class Participant : Calandars {
         /// This specifies the type of this object. This MUST be Participant.
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// This is the display name of the participant (e.g., "Joe Bloggs").
         /// </summary>
 
+	[JsonPropertyName("name")]
 	public virtual string?					name  {get; set;}
 
         /// <summary>
@@ -1546,6 +1651,7 @@ public partial class Participant : Calandars {
         /// MUST be a valid addr-spec value as defined in Section 3.4.1 of [RFC5322].
         /// </summary>
 
+	[JsonPropertyName("email")]
 	public virtual string?					email  {get; set;}
 
         /// <summary>
@@ -1554,6 +1660,7 @@ public partial class Participant : Calandars {
         /// or how best to contact them.
         /// </summary>
 
+	[JsonPropertyName("description")]
 	public virtual string?					description  {get; set;}
 
         /// <summary>
@@ -1561,30 +1668,35 @@ public partial class Participant : Calandars {
         /// invitation and updates to the calendar object.
         /// </summary>
 
+	[JsonPropertyName("sendTo")]
 	public virtual Dictionary<string,string>?					sendTo  {get; set;}
 
         /// <summary>
         /// a single person
         /// </summary>
 
+	[JsonPropertyName("individual")]
 	public virtual string?					individual  {get; set;}
 
         /// <summary>
         /// a collection of people invited as a whole
         /// </summary>
 
+	[JsonPropertyName("group")]
 	public virtual string?					group  {get; set;}
 
         /// <summary>
         /// a physical location that needs to be scheduled, e.g., a conference room
         /// </summary>
 
+	[JsonPropertyName("location")]
 	public virtual string?					location  {get; set;}
 
         /// <summary>
         /// a non-human resource other than a location, such as a projector
         /// </summary>
 
+	[JsonPropertyName("resource")]
 	public virtual string?					resource  {get; set;}
 
         /// <summary>
@@ -1595,12 +1707,14 @@ public partial class Participant : Calandars {
         /// (see Section 3.3):
         /// </summary>
 
+	[JsonPropertyName("roles")]
 	public virtual Dictionary<string,bool>?					roles  {get; set;}
 
         /// <summary>
         /// This is the location at which this participant is expected to be attending.
         /// </summary>
 
+	[JsonPropertyName("locationId")]
 	public virtual string?					locationId  {get; set;}
 
         /// <summary>
@@ -1608,18 +1722,21 @@ public partial class Participant : Calandars {
         /// participant's preferred language, if known.
         /// </summary>
 
+	[JsonPropertyName("language")]
 	public virtual string?					language  {get; set;}
 
         /// <summary>
         /// This is the participation status, if any, of this participant.
         /// </summary>
 
+	[JsonPropertyName("participationStatus")]
 	public virtual string?					participationStatus  {get; set;}
 
         /// <summary>
         /// This is a note from the participant to explain their participation status.
         /// </summary>
 
+	[JsonPropertyName("participationComment")]
 	public virtual string?					participationComment  {get; set;}
 
         /// <summary>
@@ -1627,6 +1744,7 @@ public partial class Participant : Calandars {
         /// participation status.
         /// </summary>
 
+	[JsonPropertyName("expectReply")]
 	public virtual bool?					expectReply  {get; set;}
 
         /// <summary>
@@ -1634,83 +1752,97 @@ public partial class Participant : Calandars {
         /// calendar object to the participant.
         /// </summary>
 
+	[JsonPropertyName("scheduleAgent")]
 	public virtual string?					scheduleAgent  {get; set;}
 
         /// <summary>
         /// A client may set the property on a participant to true to request that the server send a scheduling message to the participant when it would not normally do so (e.g., if no significant change is made the object or the scheduleAgent is set to client). The property MUST NOT be stored in the JSCalendar object on the server or appear in a scheduling message.
         /// </summary>
 
+	[JsonPropertyName("scheduleForceSend")]
 	public virtual bool?					scheduleForceSend  {get; set;}
 
         /// <summary>
         /// This is the sequence number of the last response from the participant. If defined, this MUST be a nonnegative integer.
         /// </summary>
 
+	[JsonPropertyName("scheduleSequence")]
 	public virtual int?					scheduleSequence  {get; set;}
 
         /// <summary>
         /// This is a list of status codes, returned from the processing of the most recent scheduling message sent to this participant. The status codes MUST be valid statcode values as defined in the ABNF in Section 3.8.8.3 of [RFC5545].
         /// </summary>
 
+	[JsonPropertyName("scheduleStatus")]
 	public virtual List<string>?					scheduleStatus  {get; set;}
         /// <summary>
         /// This is the timestamp for the most recent response from this participant.
         /// </summary>
 
+	[JsonPropertyName("scheduleUpdated")]
 	public virtual string?					scheduleUpdated  {get; set;}
 
         /// <summary>
         /// This is the email address in the "From" header of the email that last updated this participant via iMIP. This SHOULD only be set if the email address is different to that in the mailto URI of this participant's imip method in the sendTo property (i.e., the response was received from a different address to that which the invitation was sent to). If set, the value MUST be a valid addr-spec value as defined in Section 3.4.1 of [RFC5322].
         /// </summary>
 
+	[JsonPropertyName("sentBy")]
 	public virtual string?					sentBy  {get; set;}
 
         /// <summary>
         /// This is the id of the participant who added this participant to the event/task, if known.
         /// </summary>
 
+	[JsonPropertyName("invitedBy")]
 	public virtual string?					invitedBy  {get; set;}
 
         /// <summary>
         /// This is set of participant ids that this participant has delegated their participation to. Each key in the set MUST be the id of a participant. The value for each key in the map MUST be true. If there are no delegates, this MUST be omitted (rather than specified as an empty set).
         /// </summary>
 
+	[JsonPropertyName("delegatedTo")]
 	public virtual Dictionary<string,bool>?					delegatedTo  {get; set;}
 
         /// <summary>
         /// This is a set of participant ids that this participant is acting as a delegate for. Each key in the set MUST be the id of a participant. The value for each key in the map MUST be true. If there are no delegators, this MUST be omitted (rather than specified as an empty set).
         /// </summary>
 
+	[JsonPropertyName("delegatedFrom")]
 	public virtual Dictionary<string,bool>?					delegatedFrom  {get; set;}
 
         /// <summary>
         /// This is a set of group participants that were invited to this calendar object, which caused this participant to be invited due to their membership in the group(s). Each key in the set MUST be the id of a participant. The value for each key in the map MUST be true. If there are no groups, this MUST be omitted (rather than specified as an empty set).
         /// </summary>
 
+	[JsonPropertyName("memberOf")]
 	public virtual Dictionary<string,bool>?					memberOf  {get; set;}
 
         /// <summary>
         /// This is a map of link ids to Link objects, representing external resources associated with this participant, for example, a vCard or image. If there are no links, this MUST be omitted (rather than specified as an empty set).
         /// </summary>
 
+	[JsonPropertyName("links")]
 	public virtual Dictionary<string,Link>?					links  {get; set;}
 
         /// <summary>
         /// This represents the progress of the participant for this task. It MUST NOT be set if the participationStatus of this participant is any value other than accepted. See Section 5.2.5 for allowed values and semantics.
         /// </summary>
 
+	[JsonPropertyName("progress")]
 	public virtual string?					progress  {get; set;}
 
         /// <summary>
         /// This specifies the date-time the progress property was last set on this participant. See Section 5.2.6 for allowed values and semantics.
         /// </summary>
 
+	[JsonPropertyName("progressUpdated")]
 	public virtual DateTime?					progressUpdated  {get; set;}
 
         /// <summary>
         /// This represents the percent completion of the participant for this task. The property value MUST be a positive integer between 0 and 100.
         /// </summary>
 
+	[JsonPropertyName("percentComplete")]
 	public virtual int?					percentComplete  {get; set;}
 
 
@@ -1719,7 +1851,7 @@ public partial class Participant : Calandars {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Participant> _binding = new (
 			new() {
 
 			{ "@type", new PropertyString ("@type", 
@@ -1772,7 +1904,7 @@ public partial class Participant : Calandars {
 					(IBinding data, Dictionary<string,bool>? value) => {(data as Participant).delegatedFrom = value;}, (IBinding data) => (data as Participant).delegatedFrom )},
 			{ "memberOf", new PropertyDictionaryBoolean ("memberOf", 
 					(IBinding data, Dictionary<string,bool>? value) => {(data as Participant).memberOf = value;}, (IBinding data) => (data as Participant).memberOf )},
-			{ "links", new PropertyDictionaryStruct ("links", 
+			{ "links", new PropertyDictionaryStruct ("links", typeof (Link),
 					(IBinding data, object? value) => {(data as Participant).links = value as Dictionary<string,Link>;}, (IBinding data) => (data as Participant).links,
 					false, ()=>new  Dictionary<string,Link>(), ()=>new Link(),
 					(IBinding data) => (data as Participant).links.GetEnumerable(),
@@ -1784,7 +1916,7 @@ public partial class Participant : Calandars {
 					(IBinding data, DateTime? value) => {(data as Participant).progressUpdated = value;}, (IBinding data) => (data as Participant).progressUpdated )},
 			{ "percentComplete", new PropertyInteger32 ("percentComplete", 
 					(IBinding data, int? value) => {(data as Participant).percentComplete = value;}, (IBinding data) => (data as Participant).percentComplete )}
-        }, __Tag,() => new Participant(), null);
+        }, __Tag,() => new Participant(), () => new List<Participant>(), () => new Dictionary<string,Participant>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1852,6 +1984,7 @@ public partial class RecurrenceRule : Calandars {
         /// This specifies the type of this object. This MUST be RecurrenceRule.
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
@@ -1859,6 +1992,7 @@ public partial class RecurrenceRule : Calandars {
         /// rule (see Section 4.3.3.1 for full semantics). 
         /// </summary>
 
+	[JsonPropertyName("frequency")]
 	public virtual string?					frequency  {get; set;}
 
         /// <summary>
@@ -1866,6 +2000,7 @@ public partial class RecurrenceRule : Calandars {
         /// repeats. If included, it MUST be an integer >= 1.
         /// </summary>
 
+	[JsonPropertyName("interval")]
 	public virtual int?					interval  {get; set;}
 
         /// <summary>
@@ -1874,6 +2009,7 @@ public partial class RecurrenceRule : Calandars {
         /// name [CLDR] or a vendor-specific value (see Section 3.3).
         /// </summary>
 
+	[JsonPropertyName("rscale")]
 	public virtual string?					rscale  {get; set;}
 
         /// <summary>
@@ -1883,6 +2019,7 @@ public partial class RecurrenceRule : Calandars {
         /// values:
         /// </summary>
 
+	[JsonPropertyName("skip")]
 	public virtual string?					skip  {get; set;}
 
         /// <summary>
@@ -1892,12 +2029,14 @@ public partial class RecurrenceRule : Calandars {
         /// values:
         /// </summary>
 
+	[JsonPropertyName("firstDayOfWeek")]
 	public virtual string?					firstDayOfWeek  {get; set;}
 
         /// <summary>
         /// These are days of the week on which to repeat. 
         /// </summary>
 
+	[JsonPropertyName("byDay")]
 	public virtual List<NDay>?					byDay  {get; set;}
         /// <summary>
         /// If present, rather than representing every occurrence of the weekday 
@@ -1908,6 +2047,7 @@ public partial class RecurrenceRule : Calandars {
         /// -2 the one before that, etc.).
         /// </summary>
 
+	[JsonPropertyName("nthOfPeriod")]
 	public virtual int?					nthOfPeriod  {get; set;}
 
         /// <summary>
@@ -1919,6 +2059,7 @@ public partial class RecurrenceRule : Calandars {
         /// MUST have at least one entry if included.
         /// </summary>
 
+	[JsonPropertyName("byMonthDay")]
 	public virtual List<int>?					byMonthDay  {get; set;}
         /// <summary>
         /// These are the months in which to repeat. Each entry is a string representation 
@@ -1928,6 +2069,7 @@ public partial class RecurrenceRule : Calandars {
         /// "3L"). The array MUST have at least one entry if included.
         /// </summary>
 
+	[JsonPropertyName("byMonth")]
 	public virtual List<string>?					byMonth  {get; set;}
         /// <summary>
         /// These are the days of the year on which to repeat. Valid values are between
@@ -1938,6 +2080,7 @@ public partial class RecurrenceRule : Calandars {
         /// entry if included.
         /// </summary>
 
+	[JsonPropertyName("byYearDay")]
 	public virtual List<int>?					byYearDay  {get; set;}
         /// <summary>
         /// These are the weeks of the year in which to repeat. Valid values are between 
@@ -1947,6 +2090,7 @@ public partial class RecurrenceRule : Calandars {
         /// MUST have at least one entry if included.
         /// </summary>
 
+	[JsonPropertyName("byWeekNo")]
 	public virtual List<int>?					byWeekNo  {get; set;}
         /// <summary>
         /// These are the hours of the day in which to repeat. Valid values are 0 to 23. 
@@ -1954,18 +2098,21 @@ public partial class RecurrenceRule : Calandars {
         /// from iCalendar.
         /// </summary>
 
+	[JsonPropertyName("byHour")]
 	public virtual List<int>?					byHour  {get; set;}
         /// <summary>
         /// These are the minutes of the hour in which to repeat. Valid values are 
         /// 0 to 59. The array MUST have at least one entry if included.
         /// </summary>
 
+	[JsonPropertyName("byMinute")]
 	public virtual List<int>?					byMinute  {get; set;}
         /// <summary>
         /// These are the seconds of the minute in which to repeat. Valid values 
         /// are 0 to 60. The array MUST have at least one entry if included.
         /// </summary>
 
+	[JsonPropertyName("bySecond")]
 	public virtual List<int>?					bySecond  {get; set;}
         /// <summary>
         /// These are the occurrences within the recurrence interval to include in 
@@ -1974,12 +2121,14 @@ public partial class RecurrenceRule : Calandars {
         /// This is the BYSETPOS part from iCalendar.
         /// </summary>
 
+	[JsonPropertyName("bySetPosition")]
 	public virtual List<int>?					bySetPosition  {get; set;}
         /// <summary>
         /// These are the number of occurrences at which to range-bound the recurrence. 
         /// This MUST NOT be included if an until property is specified.
         /// </summary>
 
+	[JsonPropertyName("count")]
 	public virtual int?					count  {get; set;}
 
         /// <summary>
@@ -1990,6 +2139,7 @@ public partial class RecurrenceRule : Calandars {
         /// time zone specified in the JSCalendar object's timeZone property.
         /// </summary>
 
+	[JsonPropertyName("until")]
 	public virtual DateTime?					until  {get; set;}
 
 
@@ -1998,7 +2148,7 @@ public partial class RecurrenceRule : Calandars {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<RecurrenceRule> _binding = new (
 			new() {
 
 			{ "@type", new PropertyString ("@type", 
@@ -2013,7 +2163,7 @@ public partial class RecurrenceRule : Calandars {
 					(IBinding data, string? value) => {(data as RecurrenceRule).skip = value;}, (IBinding data) => (data as RecurrenceRule).skip )},
 			{ "firstDayOfWeek", new PropertyString ("firstDayOfWeek", 
 					(IBinding data, string? value) => {(data as RecurrenceRule).firstDayOfWeek = value;}, (IBinding data) => (data as RecurrenceRule).firstDayOfWeek )},
-			{ "byDay", new PropertyListStruct ("byDay", 
+			{ "byDay", new PropertyListStruct ("byDay", typeof (NDay),
 					(IBinding data, object? value) => {(data as RecurrenceRule).byDay = value as List<NDay>;}, (IBinding data) => (data as RecurrenceRule).byDay,
 					false, ()=>new  List<NDay>(), ()=>new NDay())},
 			{ "nthOfPeriod", new PropertyInteger32 ("nthOfPeriod", 
@@ -2038,7 +2188,7 @@ public partial class RecurrenceRule : Calandars {
 					(IBinding data, int? value) => {(data as RecurrenceRule).count = value;}, (IBinding data) => (data as RecurrenceRule).count )},
 			{ "until", new PropertyDateTime ("until", 
 					(IBinding data, DateTime? value) => {(data as RecurrenceRule).until = value;}, (IBinding data) => (data as RecurrenceRule).until )}
-        }, __Tag,() => new RecurrenceRule(), null);
+        }, __Tag,() => new RecurrenceRule(), () => new List<RecurrenceRule>(), () => new Dictionary<string,RecurrenceRule>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2106,6 +2256,7 @@ public partial class NDay : Calandars {
         /// This specifies the type of this object. This MUST be NDay.
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
@@ -2113,6 +2264,7 @@ public partial class NDay : Calandars {
         /// as for the firstDayOfWeek recurrenceRule property.
         /// </summary>
 
+	[JsonPropertyName("day")]
 	public virtual string?					day  {get; set;}
 
 
@@ -2121,14 +2273,14 @@ public partial class NDay : Calandars {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<NDay> _binding = new (
 			new() {
 
 			{ "@type", new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as NDay).Type = value;}, (IBinding data) => (data as NDay).Type )},
 			{ "day", new PropertyString ("day", 
 					(IBinding data, string? value) => {(data as NDay).day = value;}, (IBinding data) => (data as NDay).day )}
-        }, __Tag,() => new NDay(), null);
+        }, __Tag,() => new NDay(), () => new List<NDay>(), () => new Dictionary<string,NDay>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2198,6 +2350,7 @@ public partial class Alert : Calandars {
         /// This specifies the type of this object. This MUST be Alert.
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
@@ -2205,6 +2358,7 @@ public partial class Alert : Calandars {
         /// defined in future documents.
         /// </summary>
 
+	[JsonPropertyName("trigger")]
 	public virtual Trigger?					Trigger  {get; set;}
 
         /// <summary>
@@ -2215,6 +2369,7 @@ public partial class Alert : Calandars {
         /// this date-time).
         /// </summary>
 
+	[JsonPropertyName("acknowledged")]
 	public virtual DateTime?					acknowledged  {get; set;}
 
         /// <summary>
@@ -2225,12 +2380,14 @@ public partial class Alert : Calandars {
         ///alert.
         /// </summary>
 
+	[JsonPropertyName("relatedTo")]
 	public virtual Dictionary<string,Relation>?					relatedTo  {get; set;}
 
         /// <summary>
         /// This describes how to alert the user.
         /// </summary>
 
+	[JsonPropertyName("action")]
 	public virtual string?					action  {get; set;}
 
 
@@ -2239,17 +2396,17 @@ public partial class Alert : Calandars {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Alert> _binding = new (
 			new() {
 
 			{ "@type", new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as Alert).Type = value;}, (IBinding data) => (data as Alert).Type )},
-			{ "trigger", new PropertyStruct ("trigger", 
+			{ "trigger", new PropertyStruct ("trigger", typeof (Trigger),
 					(IBinding data, object? value) => {(data as Alert).Trigger = value as Trigger;}, (IBinding data) => (data as Alert).Trigger,
 					false, ()=>new  Trigger(), ()=>new Trigger())},
 			{ "acknowledged", new PropertyDateTime ("acknowledged", 
 					(IBinding data, DateTime? value) => {(data as Alert).acknowledged = value;}, (IBinding data) => (data as Alert).acknowledged )},
-			{ "relatedTo", new PropertyDictionaryStruct ("relatedTo", 
+			{ "relatedTo", new PropertyDictionaryStruct ("relatedTo", typeof (Relation),
 					(IBinding data, object? value) => {(data as Alert).relatedTo = value as Dictionary<string,Relation>;}, (IBinding data) => (data as Alert).relatedTo,
 					false, ()=>new  Dictionary<string,Relation>(), ()=>new Relation(),
 					(IBinding data) => (data as Alert).relatedTo.GetEnumerable(),
@@ -2257,7 +2414,7 @@ public partial class Alert : Calandars {
 						 {(dictionary as Dictionary<string,Relation>).Add (key as string,value as Relation);})},
 			{ "action", new PropertyString ("action", 
 					(IBinding data, string? value) => {(data as Alert).action = value;}, (IBinding data) => (data as Alert).action )}
-        }, __Tag,() => new Alert(), null);
+        }, __Tag,() => new Alert(), () => new List<Alert>(), () => new Dictionary<string,Alert>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2326,6 +2483,7 @@ public partial class Trigger : Calandars {
         /// AbsoluteTrigger or UnknownTrigger .
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
@@ -2335,18 +2493,21 @@ public partial class Trigger : Calandars {
         /// durations signify alerts after the time property.
         /// </summary>
 
+	[JsonPropertyName("offset")]
 	public virtual string?					offset  {get; set;}
 
         /// <summary>
         /// This specifies the time property that the alert offset is relative to.
         /// </summary>
 
+	[JsonPropertyName("relativeTo")]
 	public virtual string?					relativeTo  {get; set;}
 
         /// <summary>
         /// This defines a specific UTC date-time when the alert is triggered.
         /// </summary>
 
+	[JsonPropertyName("when")]
 	public virtual DateTime?					when  {get; set;}
 
 
@@ -2355,7 +2516,7 @@ public partial class Trigger : Calandars {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Trigger> _binding = new (
 			new() {
 
 			{ "@type", new PropertyString ("@type", 
@@ -2366,7 +2527,7 @@ public partial class Trigger : Calandars {
 					(IBinding data, string? value) => {(data as Trigger).relativeTo = value;}, (IBinding data) => (data as Trigger).relativeTo )},
 			{ "when", new PropertyDateTime ("when", 
 					(IBinding data, DateTime? value) => {(data as Trigger).when = value;}, (IBinding data) => (data as Trigger).when )}
-        }, __Tag,() => new Trigger(), null);
+        }, __Tag,() => new Trigger(), () => new List<Trigger>(), () => new Dictionary<string,Trigger>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2439,30 +2600,35 @@ public partial class TimeZone : Calandars {
         /// This specifies the type of this object. This MUST be TimeZone.
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// This is the TZID property from iCalendar. Note that this implies that the value MUST be a valid paramtext value as specified in Section 3.1. of [RFC5545].
         /// </summary>
 
+	[JsonPropertyName("tzId")]
 	public virtual string?					tzId  {get; set;}
 
         /// <summary>
         /// This is the LAST-MODIFIED property from iCalendar.
         /// </summary>
 
+	[JsonPropertyName("updated")]
 	public virtual DateTime?					updated  {get; set;}
 
         /// <summary>
         /// This is the TZURL property from iCalendar.
         /// </summary>
 
+	[JsonPropertyName("url")]
 	public virtual string?					url  {get; set;}
 
         /// <summary>
         /// This is the TZUNTIL property from iCalendar, specified in [RFC7808].
         /// </summary>
 
+	[JsonPropertyName("validUntil")]
 	public virtual DateTime?					validUntil  {get; set;}
 
         /// <summary>
@@ -2472,6 +2638,7 @@ public partial class TimeZone : Calandars {
         /// each key in the map MUST be true.
         /// </summary>
 
+	[JsonPropertyName("aliases")]
 	public virtual Dictionary<string,bool>?					aliases  {get; set;}
 
         /// <summary>
@@ -2479,12 +2646,14 @@ public partial class TimeZone : Calandars {
         /// MUST be preserved during conversion.
         /// </summary>
 
+	[JsonPropertyName("standard")]
 	public virtual List<TimeZoneRule>?					standard  {get; set;}
         /// <summary>
         /// This the DAYLIGHT sub-components from iCalendar. The order 
         /// MUST be preserved during conversion.
         /// </summary>
 
+	[JsonPropertyName("daylight")]
 	public virtual List<TimeZoneRule>?					daylight  {get; set;}
 
 
@@ -2492,7 +2661,7 @@ public partial class TimeZone : Calandars {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<TimeZone> _binding = new (
 			new() {
 
 			{ "@type", new PropertyString ("@type", 
@@ -2507,13 +2676,13 @@ public partial class TimeZone : Calandars {
 					(IBinding data, DateTime? value) => {(data as TimeZone).validUntil = value;}, (IBinding data) => (data as TimeZone).validUntil )},
 			{ "aliases", new PropertyDictionaryBoolean ("aliases", 
 					(IBinding data, Dictionary<string,bool>? value) => {(data as TimeZone).aliases = value;}, (IBinding data) => (data as TimeZone).aliases )},
-			{ "standard", new PropertyListStruct ("standard", 
+			{ "standard", new PropertyListStruct ("standard", typeof (TimeZoneRule),
 					(IBinding data, object? value) => {(data as TimeZone).standard = value as List<TimeZoneRule>;}, (IBinding data) => (data as TimeZone).standard,
 					false, ()=>new  List<TimeZoneRule>(), ()=>new TimeZoneRule())},
-			{ "daylight", new PropertyListStruct ("daylight", 
+			{ "daylight", new PropertyListStruct ("daylight", typeof (TimeZoneRule),
 					(IBinding data, object? value) => {(data as TimeZone).daylight = value as List<TimeZoneRule>;}, (IBinding data) => (data as TimeZone).daylight,
 					false, ()=>new  List<TimeZoneRule>(), ()=>new TimeZoneRule())}
-        }, __Tag,() => new TimeZone(), null);
+        }, __Tag,() => new TimeZone(), () => new List<TimeZone>(), () => new Dictionary<string,TimeZone>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2585,24 +2754,28 @@ public partial class TimeZoneRule : Calandars {
         /// This specifies the type of this object. This MUST be TimeZoneRule.
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// This is the DTSTART property from iCalendar.
         /// </summary>
 
+	[JsonPropertyName("start")]
 	public virtual string?					Start  {get; set;}
 
         /// <summary>
         /// This is the TZOFFSETFROM property from iCalendar.
         /// </summary>
 
+	[JsonPropertyName("offsetFrom")]
 	public virtual string?					OffsetFrom  {get; set;}
 
         /// <summary>
         /// This is the TZOFFSETTO property from iCalendar.
         /// </summary>
 
+	[JsonPropertyName("offsetTo")]
 	public virtual string?					OffsetTo  {get; set;}
 
         /// <summary>
@@ -2611,6 +2784,7 @@ public partial class TimeZoneRule : Calandars {
         /// value MUST be interpreted as a local time in the UTC time zone.
         /// </summary>
 
+	[JsonPropertyName("recurrenceRules")]
 	public virtual List<RecurrenceRule>?					RecurrenceRules  {get; set;}
         /// <summary>
         /// This maps the RDATE properties from iCalendar. The set is 
@@ -2618,6 +2792,7 @@ public partial class TimeZoneRule : Calandars {
         /// dates. The patch object MUST be the empty JSON object ({}).
         /// </summary>
 
+	[JsonPropertyName("recurrenceOverrides")]
 	public virtual Dictionary<string,EmptyPatchObject>?					RecurrenceOverrides  {get; set;}
 
         /// <summary>
@@ -2627,6 +2802,7 @@ public partial class TimeZoneRule : Calandars {
         /// value for each key in the map MUST be true.
         /// </summary>
 
+	[JsonPropertyName("names")]
 	public virtual Dictionary<string,bool>?					Names  {get; set;}
 
         /// <summary>
@@ -2634,6 +2810,7 @@ public partial class TimeZoneRule : Calandars {
         /// MUST be preserved during conversion.
         /// </summary>
 
+	[JsonPropertyName("comments")]
 	public virtual List<string>?					Comments  {get; set;}
 
 
@@ -2641,7 +2818,7 @@ public partial class TimeZoneRule : Calandars {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<TimeZoneRule> _binding = new (
 			new() {
 
 			{ "@type", new PropertyString ("@type", 
@@ -2652,10 +2829,10 @@ public partial class TimeZoneRule : Calandars {
 					(IBinding data, string? value) => {(data as TimeZoneRule).OffsetFrom = value;}, (IBinding data) => (data as TimeZoneRule).OffsetFrom )},
 			{ "offsetTo", new PropertyString ("offsetTo", 
 					(IBinding data, string? value) => {(data as TimeZoneRule).OffsetTo = value;}, (IBinding data) => (data as TimeZoneRule).OffsetTo )},
-			{ "recurrenceRules", new PropertyListStruct ("recurrenceRules", 
+			{ "recurrenceRules", new PropertyListStruct ("recurrenceRules", typeof (RecurrenceRule),
 					(IBinding data, object? value) => {(data as TimeZoneRule).RecurrenceRules = value as List<RecurrenceRule>;}, (IBinding data) => (data as TimeZoneRule).RecurrenceRules,
 					false, ()=>new  List<RecurrenceRule>(), ()=>new RecurrenceRule())},
-			{ "recurrenceOverrides", new PropertyDictionaryStruct ("recurrenceOverrides", 
+			{ "recurrenceOverrides", new PropertyDictionaryStruct ("recurrenceOverrides", typeof (EmptyPatchObject),
 					(IBinding data, object? value) => {(data as TimeZoneRule).RecurrenceOverrides = value as Dictionary<string,EmptyPatchObject>;}, (IBinding data) => (data as TimeZoneRule).RecurrenceOverrides,
 					false, ()=>new  Dictionary<string,EmptyPatchObject>(), ()=>new EmptyPatchObject(),
 					(IBinding data) => (data as TimeZoneRule).RecurrenceOverrides.GetEnumerable(),
@@ -2665,7 +2842,7 @@ public partial class TimeZoneRule : Calandars {
 					(IBinding data, Dictionary<string,bool>? value) => {(data as TimeZoneRule).Names = value;}, (IBinding data) => (data as TimeZoneRule).Names )},
 			{ "comments", new PropertyListString ("comments", 
 					(IBinding data, List<string>? value) => {(data as TimeZoneRule).Comments = value;}, (IBinding data) => (data as TimeZoneRule).Comments )}
-        }, __Tag,() => new TimeZoneRule(), null);
+        }, __Tag,() => new TimeZoneRule(), () => new List<TimeZoneRule>(), () => new Dictionary<string,TimeZoneRule>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2737,10 +2914,10 @@ public partial class EmptyPatchObject : Calandars {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<EmptyPatchObject> _binding = new (
 			new() {
 
-        }, __Tag,() => new EmptyPatchObject(), null);
+        }, __Tag,() => new EmptyPatchObject(), () => new List<EmptyPatchObject>(), () => new Dictionary<string,EmptyPatchObject>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;

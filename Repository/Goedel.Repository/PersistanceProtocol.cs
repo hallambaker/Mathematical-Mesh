@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/17/2025 1:31:34 AM
+//  This file was automatically generated at 5/1/2025 6:02:29 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -39,6 +39,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -87,6 +89,26 @@ public abstract partial class RepositoryProtocol : global::Goedel.Protocol.JsonO
 	    {"QueryResponse", QueryResponse._Factory}
 		};
 
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+
+	    {typeof(ProfileRepository), ProfileRepository._binding},
+	    {typeof(CatalogedRepository), CatalogedRepository._binding},
+	    {typeof(ActivationApplicationRepository), ActivationApplicationRepository._binding},
+	    {typeof(ApplicationEntryRepository), ApplicationEntryRepository._binding},
+	    {typeof(PersistanceRequest), PersistanceRequest._binding},
+	    {typeof(PersistanceResponse), PersistanceResponse._binding},
+	    {typeof(QueryRequest), QueryRequest._binding},
+	    {typeof(QueryResponse), QueryResponse._binding}
+		};
+
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -94,7 +116,10 @@ public abstract partial class RepositoryProtocol : global::Goedel.Protocol.JsonO
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -259,10 +284,10 @@ public partial class ProfileRepository : ProfileAccount {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ProfileRepository> _binding = new (
 			new() {
 
-        }, __Tag,() => new ProfileRepository(), ProfileAccount._binding);
+        }, __Tag,() => new ProfileRepository(), () => new List<ProfileRepository>(), () => new Dictionary<string,ProfileRepository>(),ProfileAccount._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -331,18 +356,21 @@ public partial class CatalogedRepository : CatalogedApplication {
         ///The connection allowing control of the registry.
         /// </summary>
 
+	[JsonPropertyName("EnvelopedConnectionAddress")]
 	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;}
 
         /// <summary>
         ///The Mesh profile
         /// </summary>
 
+	[JsonPropertyName("EnvelopedProfileRepository")]
 	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileRepository  {get; set;}
 
         /// <summary>
         ///The activation data for the registry.
         /// </summary>
 
+	[JsonPropertyName("EnvelopedActivationCommon")]
 	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;}
 
 
@@ -351,19 +379,19 @@ public partial class CatalogedRepository : CatalogedApplication {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<CatalogedRepository> _binding = new (
 			new() {
 
-			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", 
+			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", typeof (Enveloped<ConnectionStripped>),
 					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedRepository).EnvelopedConnectionAddress,
 					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())},
-			{ "EnvelopedProfileRepository", new PropertyStruct ("EnvelopedProfileRepository", 
+			{ "EnvelopedProfileRepository", new PropertyStruct ("EnvelopedProfileRepository", typeof (Enveloped<ProfileAccount>),
 					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedProfileRepository = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedRepository).EnvelopedProfileRepository,
 					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
-			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
+			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
 					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedRepository).EnvelopedActivationCommon,
 					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())}
-        }, __Tag,() => new CatalogedRepository(), CatalogedApplication._binding);
+        }, __Tag,() => new CatalogedRepository(), () => new List<CatalogedRepository>(), () => new Dictionary<string,CatalogedRepository>(),CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -432,12 +460,14 @@ public partial class ActivationApplicationRepository : ActivationApplication {
         ///Key used to decrypt registry messages.
         /// </summary>
 
+	[JsonPropertyName("AccountEncryption")]
 	public virtual KeyData?					AccountEncryption  {get; set;}
 
         /// <summary>
         ///Key or capability used to sign the registry log
         /// </summary>
 
+	[JsonPropertyName("AdministratorSignature")]
 	public virtual KeyData?					AdministratorSignature  {get; set;}
 
         /// <summary>
@@ -445,6 +475,7 @@ public partial class ActivationApplicationRepository : ActivationApplication {
         ///access the account.
         /// </summary>
 
+	[JsonPropertyName("EnvelopedConnectionService")]
 	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;}
 
 
@@ -453,19 +484,19 @@ public partial class ActivationApplicationRepository : ActivationApplication {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ActivationApplicationRepository> _binding = new (
 			new() {
 
-			{ "AccountEncryption", new PropertyStruct ("AccountEncryption", 
+			{ "AccountEncryption", new PropertyStruct ("AccountEncryption", typeof (KeyData),
 					(IBinding data, object? value) => {(data as ActivationApplicationRepository).AccountEncryption = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRepository).AccountEncryption,
 					false, ()=>new  KeyData(), ()=>new KeyData())},
-			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", 
+			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", typeof (KeyData),
 					(IBinding data, object? value) => {(data as ActivationApplicationRepository).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRepository).AdministratorSignature,
 					false, ()=>new  KeyData(), ()=>new KeyData())},
-			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
+			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
 					(IBinding data, object? value) => {(data as ActivationApplicationRepository).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as ActivationApplicationRepository).EnvelopedConnectionService,
 					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())}
-        }, __Tag,() => new ActivationApplicationRepository(), ActivationApplication._binding);
+        }, __Tag,() => new ActivationApplicationRepository(), () => new List<ActivationApplicationRepository>(), () => new Dictionary<string,ActivationApplicationRepository>(),ActivationApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -533,6 +564,7 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("EnvelopedActivation")]
 	public virtual Enveloped<ActivationApplicationRepository>?					EnvelopedActivation  {get; set;}
 
 
@@ -541,13 +573,13 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ApplicationEntryRepository> _binding = new (
 			new() {
 
-			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
+			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", typeof (Enveloped<ActivationApplicationRepository>),
 					(IBinding data, object? value) => {(data as ApplicationEntryRepository).EnvelopedActivation = value as Enveloped<ActivationApplicationRepository>;}, (IBinding data) => (data as ApplicationEntryRepository).EnvelopedActivation,
 					false, ()=>new  Enveloped<ActivationApplicationRepository>(), ()=>new Enveloped<ActivationApplicationRepository>())}
-        }, __Tag,() => new ApplicationEntryRepository(), ApplicationEntry._binding);
+        }, __Tag,() => new ApplicationEntryRepository(), () => new List<ApplicationEntryRepository>(), () => new Dictionary<string,ApplicationEntryRepository>(),ApplicationEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -620,10 +652,10 @@ public partial class PersistanceRequest : Goedel.Protocol.Request {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<PersistanceRequest> _binding = new (
 			new() {
 
-        }, __Tag,() => new PersistanceRequest(), Goedel.Protocol.Request._binding);
+        }, __Tag,() => new PersistanceRequest(), () => new List<PersistanceRequest>(), () => new Dictionary<string,PersistanceRequest>(),Goedel.Protocol.Request._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -697,10 +729,10 @@ public partial class PersistanceResponse : Goedel.Protocol.Response {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<PersistanceResponse> _binding = new (
 			new() {
 
-        }, __Tag,() => new PersistanceResponse(), Goedel.Protocol.Response._binding);
+        }, __Tag,() => new PersistanceResponse(), () => new List<PersistanceResponse>(), () => new Dictionary<string,PersistanceResponse>(),Goedel.Protocol.Response._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -773,10 +805,10 @@ public partial class QueryRequest : PersistanceRequest {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<QueryRequest> _binding = new (
 			new() {
 
-        }, __Tag,() => new QueryRequest(), PersistanceRequest._binding);
+        }, __Tag,() => new QueryRequest(), () => new List<QueryRequest>(), () => new Dictionary<string,QueryRequest>(),PersistanceRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -849,10 +881,10 @@ public partial class QueryResponse : PersistanceResponse {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<QueryResponse> _binding = new (
 			new() {
 
-        }, __Tag,() => new QueryResponse(), PersistanceResponse._binding);
+        }, __Tag,() => new QueryResponse(), () => new List<QueryResponse>(), () => new Dictionary<string,QueryResponse>(),PersistanceResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;

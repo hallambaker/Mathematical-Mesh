@@ -23,6 +23,8 @@
 using Goedel.Protocol.Test;
 
 using System.Collections;
+using System.IO;
+using System.Text.Json;
 
 #pragma warning disable IDE0051
 
@@ -95,6 +97,43 @@ public partial class GoedelProtocol {
         TestStructB2();
         }
 
+
+    [Fact]
+
+    public void TestEncodeDecode2() {
+
+
+
+        var First = TestDataStruct;
+
+        var FirstJSON = First.GetBytes(DataEncoding.JSON, false);
+        Console.WriteLine($"Input: {FirstJSON.ToUTF8()}");
+
+        //var stream = new MemoryStream(FirstJSON);
+
+        var dom = JsonDocument.Parse(FirstJSON);
+        var Second = JsonObject.Parse<MultiStruct>(dom);
+
+        var SecondJSON = Second.GetBytes(DataEncoding.JSON, false);
+        Console.WriteLine($"Output: {SecondJSON.ToUTF8()}");
+
+
+        CheckEqual(First, Second);
+
+
+
+
+
+        //var x = JsonValueKind.False;
+        //var asString = FirstJSON.ToUTF8();
+        //Console.WriteLine(asString);
+
+        //var Second = MultiInstance.FromJson(ReaderFactory(FirstJSON));
+        //CheckEqual(First, Second);
+        }
+
+
+
     [Theory]
     [ClassData(typeof(JSONReadersTestData))]
     public void TestEncodeDecode(
@@ -153,6 +192,47 @@ public partial class GoedelProtocol {
         ArrayBinary = new List<byte[]> { "One".ToBytes(), "Two".ToBytes() }
         };
 
+
+    static readonly DictArray TestDataDict = new() {
+        FieldBoolean = true,
+        FieldInteger = 1,
+        FieldDateTime = System.DateTime.Now,
+        FieldString = "This is a test",
+        FieldBinary = [0, 1, 2, 3, 4],
+        ArrayBoolean = [true, false, true, false],
+        ArrayInteger = [0, 2, 4, 8],
+        ArrayDateTime = [System.DateTime.Now],
+        ArrayString = ["Alice", "Bob", "Carol",],
+        ArrayBinary = ["One".ToBytes(), "Two".ToBytes()],
+
+        DictBoolean = new() {
+               {"One", true},
+               {"Two", false},
+               {"Three", true},
+               {"Four", true},
+               {"Five", false}},
+        DictString = new() {
+               {"One", "hello"},
+               {"Two", "there"},
+               {"Three", "scotty"},
+               {"Four", ""},
+               {"Five", "Help"}},
+        DictBinary = new() {
+               {"One", "hello".ToBytes()},
+               {"Two", "there".ToBytes()},
+               {"Three", "scotty".ToBytes()},
+               {"Four", "".ToBytes()},
+               {"Five", "Help".ToBytes()}},
+        DictInteger = new() {
+               {"One", 1},
+               {"Two", 2},
+               {"Three", 3},
+               {"Four", 4},
+               {"Five", 5}}
+        };
+
+
+
     static readonly MultiInstance Struct1 = new() {
         FieldBoolean = true,
         FieldInteger = 1,
@@ -179,7 +259,7 @@ public partial class GoedelProtocol {
         };
 
 
-    static readonly MultiStruct TestDataStruct = new() {
+    public static readonly MultiStruct TestDataStruct = new() {
         FieldBoolean = true,
         FieldInteger = 1,
         FieldDateTime = System.DateTime.Now,
@@ -191,9 +271,9 @@ public partial class GoedelProtocol {
         ArrayString = new List<string> { "Alice", "Bob", "Carol", },
         ArrayBinary = new List<byte[]> { "One".ToBytes(), "Two".ToBytes() },
         FieldMultiInstance = Struct1,
-        ArrayMultiInstance = new List<MultiInstance> { Struct1, Struct2 },
+        ArrayMultiInstance = [Struct1, Struct2, Struct3],
         TFieldMultiInstance = Struct3,
-        TArrayMultiInstance = new List<MultiInstance> { Struct1, Struct2, Struct3 }
+        TArrayMultiInstance = [Struct1, Struct2, Struct3]
         };
     #endregion
 
@@ -229,7 +309,7 @@ public partial class GoedelProtocol {
         Utilities.Assert.AssertTrue(First.ArrayDateTime.Count == Second.ArrayDateTime.Count,
          Compare.Throw, "Boolean Array Length");
         for (var i = 0; i < First.ArrayDateTime.Count; i++) {
-            First.ArrayDateTime[i].AssertEqual(Second.ArrayDateTime[i],
+            First.ArrayDateTime[i].AssertEqualSeconds(Second.ArrayDateTime[i],
                      Compare.Throw);
             }
 
@@ -247,5 +327,10 @@ public partial class GoedelProtocol {
                      Compare.Throw, "Boolean Array");
             }
         }
+
+
+
+
+
     #endregion
     }

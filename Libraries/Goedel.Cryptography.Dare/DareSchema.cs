@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/28/2025 5:41:19 PM
+//  This file was automatically generated at 5/1/2025 6:02:18 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -39,6 +39,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -93,6 +95,34 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 	    {"EarlSignature", EarlSignature._Factory}
 		};
 
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+
+	    {typeof(DareEnvelopeSequence), DareEnvelopeSequence._binding},
+	    {typeof(DareSignatureHeader), DareSignatureHeader._binding},
+	    {typeof(DareTrailer), DareTrailer._binding},
+	    {typeof(DareHeader), DareHeader._binding},
+	    {typeof(ContentMeta), ContentMeta._binding},
+	    {typeof(DareSignature), DareSignature._binding},
+	    {typeof(IntervalSignature), IntervalSignature._binding},
+	    {typeof(SignedEnvelope), SignedEnvelope._binding},
+	    {typeof(X509Certificate), X509Certificate._binding},
+	    {typeof(DareRecipient), DareRecipient._binding},
+	    {typeof(DarePolicy), DarePolicy._binding},
+	    {typeof(FileEntry), FileEntry._binding},
+	    {typeof(Witness), Witness._binding},
+	    {typeof(Proof), Proof._binding},
+	    {typeof(Unprotected), Unprotected._binding},
+	    {typeof(EarlSignature), EarlSignature._binding}
+		};
+
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -100,7 +130,10 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -137,18 +170,21 @@ public partial class DareEnvelopeSequence : Dare {
         ///or signature data, cloaked headers and/or encrypted data sequences.
         /// </summary>
 
+	[JsonPropertyName("Header")]
 	public virtual DareHeader?					Header  {get; set;}
 
         /// <summary>
         ///The envelope body
         /// </summary>
 
+	[JsonPropertyName("Body")]
 	public virtual byte[]?					Body  {get; set;}
 
         /// <summary>
         ///The envelope trailer. If present, this contains the signature.
         /// </summary>
 
+	[JsonPropertyName("Trailer")]
 	public virtual DareTrailer?					Trailer  {get; set;}
 
 
@@ -157,18 +193,18 @@ public partial class DareEnvelopeSequence : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<DareEnvelopeSequence> _binding = new (
 			new() {
 
-			{ "Header", new PropertyStruct ("Header", 
+			{ "Header", new PropertyStruct ("Header", typeof (DareHeader),
 					(IBinding data, object? value) => {(data as DareEnvelopeSequence).Header = value as DareHeader;}, (IBinding data) => (data as DareEnvelopeSequence).Header,
 					false, ()=>new  DareHeader(), ()=>new DareHeader())},
 			{ "Body", new PropertyBinary ("Body", 
 					(IBinding data, byte[]? value) => {(data as DareEnvelopeSequence).Body = value;}, (IBinding data) => (data as DareEnvelopeSequence).Body )},
-			{ "Trailer", new PropertyStruct ("Trailer", 
+			{ "Trailer", new PropertyStruct ("Trailer", typeof (DareTrailer),
 					(IBinding data, object? value) => {(data as DareEnvelopeSequence).Trailer = value as DareTrailer;}, (IBinding data) => (data as DareEnvelopeSequence).Trailer,
 					false, ()=>new  DareTrailer(), ()=>new DareTrailer())}
-        }, __Tag,() => new DareEnvelopeSequence(), null);
+        }, __Tag,() => new DareEnvelopeSequence(), () => new List<DareEnvelopeSequence>(), () => new Dictionary<string,DareEnvelopeSequence>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -236,6 +272,7 @@ public partial class DareSignatureHeader : Dare {
         ///The encrypted witness value	
         /// </summary>
 
+	[JsonPropertyName("WitnessValue")]
 	public virtual byte[]?					WitnessValue  {get; set;}
 
         /// <summary>
@@ -243,12 +280,14 @@ public partial class DareSignatureHeader : Dare {
         ///algorithm used to encrypt the payload.
         /// </summary>
 
+	[JsonPropertyName("PayloadTag")]
 	public virtual byte[]?					PayloadTag  {get; set;}
 
         /// <summary>
         ///If present, contains the digest of the Payload.
         /// </summary>
 
+	[JsonPropertyName("PayloadDigest")]
 	public virtual byte[]?					PayloadDigest  {get; set;}
 
         /// <summary>
@@ -256,12 +295,14 @@ public partial class DareSignatureHeader : Dare {
         ///frame and the frame immediately preceding.
         /// </summary>
 
+	[JsonPropertyName("ChainDigest")]
 	public virtual byte[]?					ChainDigest  {get; set;}
 
         /// <summary>
         ///If present, contains the Binary Merkle Tree digest value.
         /// </summary>
 
+	[JsonPropertyName("ApexDigest")]
 	public virtual byte[]?					ApexDigest  {get; set;}
 
         /// <summary>
@@ -269,6 +310,7 @@ public partial class DareSignatureHeader : Dare {
         ///construct a signature over the envelope payload.
         /// </summary>
 
+	[JsonPropertyName("dig")]
 	public virtual string?					DigestAlgorithm  {get; set;}
 
 
@@ -277,7 +319,7 @@ public partial class DareSignatureHeader : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<DareSignatureHeader> _binding = new (
 			new() {
 
 			{ "WitnessValue", new PropertyBinary ("WitnessValue", 
@@ -292,7 +334,7 @@ public partial class DareSignatureHeader : Dare {
 					(IBinding data, byte[]? value) => {(data as DareSignatureHeader).ApexDigest = value;}, (IBinding data) => (data as DareSignatureHeader).ApexDigest )},
 			{ "dig", new PropertyString ("dig", 
 					(IBinding data, string? value) => {(data as DareSignatureHeader).DigestAlgorithm = value;}, (IBinding data) => (data as DareSignatureHeader).DigestAlgorithm )}
-        }, __Tag,() => new DareSignatureHeader(), null);
+        }, __Tag,() => new DareSignatureHeader(), () => new List<DareSignatureHeader>(), () => new Dictionary<string,DareSignatureHeader>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -364,17 +406,20 @@ public partial class DareTrailer : DareSignatureHeader {
         ///a signatures field.
         /// </summary>
 
+	[JsonPropertyName("signatures")]
 	public virtual List<DareSignature>?					Signatures  {get; set;}
         /// <summary>
         ///A list of signatures over the ChainDigest and/or ApexDigest if present.
         /// </summary>
 
+	[JsonPropertyName("seqsignatures")]
 	public virtual List<DareSignature>?					SequenceSignatures  {get; set;}
         /// <summary>
         ///Additional data added to the signature to bind to an application 
         ///defined context.
         /// </summary>
 
+	[JsonPropertyName("ApplicationContextValue")]
 	public virtual byte[]?					ApplicationContextValue  {get; set;}
 
         /// <summary>
@@ -382,6 +427,7 @@ public partial class DareTrailer : DareSignatureHeader {
         ///envelope signature is calculated.
         /// </summary>
 
+	[JsonPropertyName("SignedData")]
 	public virtual byte[]?					SignedData  {get; set;}
 
         /// <summary>
@@ -389,6 +435,7 @@ public partial class DareTrailer : DareSignatureHeader {
         ///The sequence signature is calculated over SignedData + SequenceSignedData
         /// </summary>
 
+	[JsonPropertyName("SequenceSignedData")]
 	public virtual byte[]?					SequenceSignedData  {get; set;}
 
 
@@ -397,13 +444,13 @@ public partial class DareTrailer : DareSignatureHeader {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<DareTrailer> _binding = new (
 			new() {
 
-			{ "signatures", new PropertyListStruct ("signatures", 
+			{ "signatures", new PropertyListStruct ("signatures", typeof (DareSignature),
 					(IBinding data, object? value) => {(data as DareTrailer).Signatures = value as List<DareSignature>;}, (IBinding data) => (data as DareTrailer).Signatures,
 					false, ()=>new  List<DareSignature>(), ()=>new DareSignature())},
-			{ "seqsignatures", new PropertyListStruct ("seqsignatures", 
+			{ "seqsignatures", new PropertyListStruct ("seqsignatures", typeof (DareSignature),
 					(IBinding data, object? value) => {(data as DareTrailer).SequenceSignatures = value as List<DareSignature>;}, (IBinding data) => (data as DareTrailer).SequenceSignatures,
 					false, ()=>new  List<DareSignature>(), ()=>new DareSignature())},
 			{ "ApplicationContextValue", new PropertyBinary ("ApplicationContextValue", 
@@ -412,7 +459,7 @@ public partial class DareTrailer : DareSignatureHeader {
 					(IBinding data, byte[]? value) => {(data as DareTrailer).SignedData = value;}, (IBinding data) => (data as DareTrailer).SignedData )},
 			{ "SequenceSignedData", new PropertyBinary ("SequenceSignedData", 
 					(IBinding data, byte[]? value) => {(data as DareTrailer).SequenceSignedData = value;}, (IBinding data) => (data as DareTrailer).SequenceSignedData )}
-        }, __Tag,() => new DareTrailer(), DareSignatureHeader._binding);
+        }, __Tag,() => new DareTrailer(), () => new List<DareTrailer>(), () => new Dictionary<string,DareTrailer>(),DareSignatureHeader._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -484,24 +531,28 @@ public partial class DareHeader : DareTrailer {
         ///Unique identifier
         /// </summary>
 
+	[JsonPropertyName("EnvelopeId")]
 	public virtual string?					EnvelopeId  {get; set;}
 
         /// <summary>
         ///The encryption algorithm as specified in JWE
         /// </summary>
 
+	[JsonPropertyName("enc")]
 	public virtual string?					EncryptionAlgorithm  {get; set;}
 
         /// <summary>
         ///Base seed identifier.
         /// </summary>
 
+	[JsonPropertyName("kid")]
 	public virtual string?					KeyIdentifier  {get; set;}
 
         /// <summary>
         ///Salt value used to derrive cryptographic parameters for the content data.
         /// </summary>
 
+	[JsonPropertyName("Salt")]
 	public virtual byte[]?					Salt  {get; set;}
 
         /// <summary>
@@ -511,6 +562,7 @@ public partial class DareHeader : DareTrailer {
         ///without affecting the ability to calculate the payload digest value.
         /// </summary>
 
+	[JsonPropertyName("Malt")]
 	public virtual byte[]?					Malt  {get; set;}
 
         /// <summary>
@@ -524,6 +576,7 @@ public partial class DareHeader : DareTrailer {
         ///Processing of cloaked data is described in…
         /// </summary>
 
+	[JsonPropertyName("cloaked")]
 	public virtual byte[]?					Cloaked  {get; set;}
 
         /// <summary>
@@ -532,16 +585,19 @@ public partial class DareHeader : DareTrailer {
         ///is application specific.
         /// </summary>
 
+	[JsonPropertyName("annotations")]
 	public virtual List<byte[]>?					EDSS  {get; set;}
         /// <summary>
         ///A list of recipient key exchange information blocks.
         /// </summary>
 
+	[JsonPropertyName("recipients")]
 	public virtual List<DareRecipient>?					Recipients  {get; set;}
         /// <summary>
         ///A DARE security policy governing future additions to the container.
         /// </summary>
 
+	[JsonPropertyName("policy")]
 	public virtual DarePolicy?					Policy  {get; set;}
 
         /// <summary>
@@ -549,12 +605,14 @@ public partial class DareHeader : DareTrailer {
         ///plaintext content metadata and forms one of the inputs to the envelope digest value.
         /// </summary>
 
+	[JsonPropertyName("ContentMetaData")]
 	public virtual byte[]?					ContentMetaData  {get; set;}
 
         /// <summary>
         ///Information that describes container information
         /// </summary>
 
+	[JsonPropertyName("SequenceInfo")]
 	public virtual SequenceInfo?					SequenceInfo  {get; set;}
 
         /// <summary>
@@ -562,18 +620,21 @@ public partial class DareHeader : DareTrailer {
         ///this one.
         /// </summary>
 
+	[JsonPropertyName("SequenceIndex")]
 	public virtual SequenceIndex?					SequenceIndex  {get; set;}
 
         /// <summary>
         ///Date on which the envelope was received.
         /// </summary>
 
+	[JsonPropertyName("Received")]
 	public virtual DateTime?					Received  {get; set;}
 
         /// <summary>
         ///HTML document containing cover text to be presented if the document cannot be decrypted.
         /// </summary>
 
+	[JsonPropertyName("Cover")]
 	public virtual byte[]?					Cover  {get; set;}
 
         /// <summary>
@@ -581,12 +642,14 @@ public partial class DareHeader : DareTrailer {
         ///etc.
         /// </summary>
 
+	[JsonPropertyName("Bitmask")]
 	public virtual byte[]?					Bitmask  {get; set;}
 
         /// <summary>
         ///Field reserved for use in debugging.
         /// </summary>
 
+	[JsonPropertyName("Debug")]
 	public virtual string?					Debug  {get; set;}
 
 
@@ -595,7 +658,7 @@ public partial class DareHeader : DareTrailer {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<DareHeader> _binding = new (
 			new() {
 
 			{ "EnvelopeId", new PropertyString ("EnvelopeId", 
@@ -612,18 +675,18 @@ public partial class DareHeader : DareTrailer {
 					(IBinding data, byte[]? value) => {(data as DareHeader).Cloaked = value;}, (IBinding data) => (data as DareHeader).Cloaked )},
 			{ "annotations", new PropertyListBinary ("annotations", 
 					(IBinding data, List<byte[]>? value) => {(data as DareHeader).EDSS = value;}, (IBinding data) => (data as DareHeader).EDSS )},
-			{ "recipients", new PropertyListStruct ("recipients", 
+			{ "recipients", new PropertyListStruct ("recipients", typeof (DareRecipient),
 					(IBinding data, object? value) => {(data as DareHeader).Recipients = value as List<DareRecipient>;}, (IBinding data) => (data as DareHeader).Recipients,
 					false, ()=>new  List<DareRecipient>(), ()=>new DareRecipient())},
-			{ "policy", new PropertyStruct ("policy", 
+			{ "policy", new PropertyStruct ("policy", typeof (DarePolicy),
 					(IBinding data, object? value) => {(data as DareHeader).Policy = value as DarePolicy;}, (IBinding data) => (data as DareHeader).Policy,
 					false, ()=>new  DarePolicy(), ()=>new DarePolicy())},
 			{ "ContentMetaData", new PropertyBinary ("ContentMetaData", 
 					(IBinding data, byte[]? value) => {(data as DareHeader).ContentMetaData = value;}, (IBinding data) => (data as DareHeader).ContentMetaData )},
-			{ "SequenceInfo", new PropertyStruct ("SequenceInfo", 
+			{ "SequenceInfo", new PropertyStruct ("SequenceInfo", typeof (SequenceInfo),
 					(IBinding data, object? value) => {(data as DareHeader).SequenceInfo = value as SequenceInfo;}, (IBinding data) => (data as DareHeader).SequenceInfo,
 					false, ()=>new  SequenceInfo(), ()=>new SequenceInfo())},
-			{ "SequenceIndex", new PropertyStruct ("SequenceIndex", 
+			{ "SequenceIndex", new PropertyStruct ("SequenceIndex", typeof (SequenceIndex),
 					(IBinding data, object? value) => {(data as DareHeader).SequenceIndex = value as SequenceIndex;}, (IBinding data) => (data as DareHeader).SequenceIndex,
 					false, ()=>new  SequenceIndex(), ()=>new SequenceIndex())},
 			{ "Received", new PropertyDateTime ("Received", 
@@ -634,7 +697,7 @@ public partial class DareHeader : DareTrailer {
 					(IBinding data, byte[]? value) => {(data as DareHeader).Bitmask = value;}, (IBinding data) => (data as DareHeader).Bitmask )},
 			{ "Debug", new PropertyString ("Debug", 
 					(IBinding data, string? value) => {(data as DareHeader).Debug = value;}, (IBinding data) => (data as DareHeader).Debug )}
-        }, __Tag,() => new DareHeader(), DareTrailer._binding);
+        }, __Tag,() => new DareHeader(), () => new List<DareHeader>(), () => new Dictionary<string,DareHeader>(),DareTrailer._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -703,6 +766,7 @@ public partial class ContentMeta : Dare {
         ///Unique object identifier
         /// </summary>
 
+	[JsonPropertyName("UniqueId")]
 	public virtual string?					UniqueId  {get; set;}
 
         /// <summary>
@@ -710,81 +774,95 @@ public partial class ContentMeta : Dare {
         ///and associated metadata.
         /// </summary>
 
+	[JsonPropertyName("Nonce")]
 	public virtual string?					Nonce  {get; set;}
 
         /// <summary>
         ///List of labels that are applied to the payload of the frame.
         /// </summary>
 
+	[JsonPropertyName("Labels")]
 	public virtual List<string>?					Labels  {get; set;}
         /// <summary>
         ///List of key/value pairs describing the payload of the frame.
         /// </summary>
 
+	[JsonPropertyName("KeyValues")]
 	public virtual List<KeyValue>?					KeyValues  {get; set;}
         /// <summary>
         ///The mesh message type
         /// </summary>
 
+	[JsonPropertyName("MessageType")]
 	public virtual string?					MessageType  {get; set;}
 
         /// <summary>
         ///The content type field as specified in JWE
         /// </summary>
 
+	[JsonPropertyName("cty")]
 	public virtual string?					ContentType  {get; set;}
 
         /// <summary>
         ///List of filename paths for the payload of the frame.
         /// </summary>
 
+	[JsonPropertyName("Paths")]
 	public virtual List<string>?					Paths  {get; set;}
         /// <summary>
         ///The original filename under which the data was stored.
         /// </summary>
 
+	[JsonPropertyName("Filename")]
 	public virtual string?					Filename  {get; set;}
 
         /// <summary>
         ///Operation on the header
         /// </summary>
 
+	[JsonPropertyName("Event")]
 	public virtual string?					Event  {get; set;}
 
         /// <summary>
         ///Initial creation date.
         /// </summary>
 
+	[JsonPropertyName("Created")]
 	public virtual DateTime?					Created  {get; set;}
 
         /// <summary>
         ///Date of last modification.
         /// </summary>
 
+	[JsonPropertyName("Modified")]
 	public virtual DateTime?					Modified  {get; set;}
 
         /// <summary>
         ///Date at which the associated transaction will expire
         /// </summary>
 
+	[JsonPropertyName("Expire")]
 	public virtual DateTime?					Expire  {get; set;}
 
         /// <summary>
         ///Frame number of the first object instance value.
         /// </summary>
 
+	[JsonPropertyName("First")]
 	public virtual long?					First  {get; set;}
 
         /// <summary>
         ///Frame number of the immediately prior object instance value	
         /// </summary>
 
+	[JsonPropertyName("Previous")]
 	public virtual long?					Previous  {get; set;}
 
         /// <summary>
         ///Information describing the file entry on disk.
         /// </summary>
 
+	[JsonPropertyName("FileEntry")]
 	public virtual FileEntry?					FileEntry  {get; set;}
 
 
@@ -793,7 +871,7 @@ public partial class ContentMeta : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ContentMeta> _binding = new (
 			new() {
 
 			{ "UniqueId", new PropertyString ("UniqueId", 
@@ -802,7 +880,7 @@ public partial class ContentMeta : Dare {
 					(IBinding data, string? value) => {(data as ContentMeta).Nonce = value;}, (IBinding data) => (data as ContentMeta).Nonce )},
 			{ "Labels", new PropertyListString ("Labels", 
 					(IBinding data, List<string>? value) => {(data as ContentMeta).Labels = value;}, (IBinding data) => (data as ContentMeta).Labels )},
-			{ "KeyValues", new PropertyListStruct ("KeyValues", 
+			{ "KeyValues", new PropertyListStruct ("KeyValues", typeof (KeyValue),
 					(IBinding data, object? value) => {(data as ContentMeta).KeyValues = value as List<KeyValue>;}, (IBinding data) => (data as ContentMeta).KeyValues,
 					false, ()=>new  List<KeyValue>(), ()=>new KeyValue())},
 			{ "MessageType", new PropertyString ("MessageType", 
@@ -825,10 +903,10 @@ public partial class ContentMeta : Dare {
 					(IBinding data, long? value) => {(data as ContentMeta).First = value;}, (IBinding data) => (data as ContentMeta).First )},
 			{ "Previous", new PropertyInteger64 ("Previous", 
 					(IBinding data, long? value) => {(data as ContentMeta).Previous = value;}, (IBinding data) => (data as ContentMeta).Previous )},
-			{ "FileEntry", new PropertyStruct ("FileEntry", 
+			{ "FileEntry", new PropertyStruct ("FileEntry", typeof (FileEntry),
 					(IBinding data, object? value) => {(data as ContentMeta).FileEntry = value as FileEntry;}, (IBinding data) => (data as ContentMeta).FileEntry,
 					false, ()=>new  FileEntry(), ()=>new FileEntry())}
-        }, __Tag,() => new ContentMeta(), null);
+        }, __Tag,() => new ContentMeta(), () => new List<ContentMeta>(), () => new Dictionary<string,ContentMeta>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -899,48 +977,56 @@ public partial class DareSignature : Dare {
         ///to the envelope body allows the body to be processed in streaming mode.
         /// </summary>
 
+	[JsonPropertyName("dig")]
 	public virtual string?					Dig  {get; set;}
 
         /// <summary>
         ///Key exchange algorithm
         /// </summary>
 
+	[JsonPropertyName("alg")]
 	public virtual string?					Alg  {get; set;}
 
         /// <summary>
         ///Key identifier of the signature key.
         /// </summary>
 
+	[JsonPropertyName("kid")]
 	public virtual string?					KeyIdentifier  {get; set;}
 
         /// <summary>
         ///PKIX certificate of signer.
         /// </summary>
 
+	[JsonPropertyName("cert")]
 	public virtual X509Certificate?					Certificate  {get; set;}
 
         /// <summary>
         ///PKIX certificates that establish a trust path for the signer.
         /// </summary>
 
+	[JsonPropertyName("path")]
 	public virtual X509Certificate?					Path  {get; set;}
 
         /// <summary>
         ///The data description that was signed.
         /// </summary>
 
+	[JsonPropertyName("Manifest")]
 	public virtual byte[]?					Manifest  {get; set;}
 
         /// <summary>
         ///The key used to create the signature.
         /// </summary>
 
+	[JsonPropertyName("SignatureKey")]
 	public virtual Key?					SignatureKey  {get; set;}
 
         /// <summary>
         ///The signature value as an Enhanced Data Sequence under the envelope base seed.
         /// </summary>
 
+	[JsonPropertyName("signature")]
 	public virtual byte[]?					SignatureValue  {get; set;}
 
 
@@ -949,7 +1035,7 @@ public partial class DareSignature : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<DareSignature> _binding = new (
 			new() {
 
 			{ "dig", new PropertyString ("dig", 
@@ -958,20 +1044,20 @@ public partial class DareSignature : Dare {
 					(IBinding data, string? value) => {(data as DareSignature).Alg = value;}, (IBinding data) => (data as DareSignature).Alg )},
 			{ "kid", new PropertyString ("kid", 
 					(IBinding data, string? value) => {(data as DareSignature).KeyIdentifier = value;}, (IBinding data) => (data as DareSignature).KeyIdentifier )},
-			{ "cert", new PropertyStruct ("cert", 
+			{ "cert", new PropertyStruct ("cert", typeof (X509Certificate),
 					(IBinding data, object? value) => {(data as DareSignature).Certificate = value as X509Certificate;}, (IBinding data) => (data as DareSignature).Certificate,
 					false, ()=>new  X509Certificate(), ()=>new X509Certificate())},
-			{ "path", new PropertyStruct ("path", 
+			{ "path", new PropertyStruct ("path", typeof (X509Certificate),
 					(IBinding data, object? value) => {(data as DareSignature).Path = value as X509Certificate;}, (IBinding data) => (data as DareSignature).Path,
 					false, ()=>new  X509Certificate(), ()=>new X509Certificate())},
 			{ "Manifest", new PropertyBinary ("Manifest", 
 					(IBinding data, byte[]? value) => {(data as DareSignature).Manifest = value;}, (IBinding data) => (data as DareSignature).Manifest )},
-			{ "SignatureKey", new PropertyStruct ("SignatureKey", 
+			{ "SignatureKey", new PropertyStruct ("SignatureKey", typeof (Key), 
 					(IBinding data, object? value) => {(data as DareSignature).SignatureKey = value as Key;}, (IBinding data) => (data as DareSignature).SignatureKey,
 					true)} ,
 			{ "signature", new PropertyBinary ("signature", 
 					(IBinding data, byte[]? value) => {(data as DareSignature).SignatureValue = value;}, (IBinding data) => (data as DareSignature).SignatureValue )}
-        }, __Tag,() => new DareSignature(), null);
+        }, __Tag,() => new DareSignature(), () => new List<DareSignature>(), () => new Dictionary<string,DareSignature>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1041,12 +1127,14 @@ public partial class IntervalSignature : Dare {
         ///The index number of the frame containing the apex signature.
         /// </summary>
 
+	[JsonPropertyName("Index")]
 	public virtual long?					Index  {get; set;}
 
         /// <summary>
         ///The signed envelopes in order, lowest index first.
         /// </summary>
 
+	[JsonPropertyName("Envelopes")]
 	public virtual SignedEnvelope?					Envelopes  {get; set;}
 
 
@@ -1055,15 +1143,15 @@ public partial class IntervalSignature : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<IntervalSignature> _binding = new (
 			new() {
 
 			{ "Index", new PropertyInteger64 ("Index", 
 					(IBinding data, long? value) => {(data as IntervalSignature).Index = value;}, (IBinding data) => (data as IntervalSignature).Index )},
-			{ "Envelopes", new PropertyStruct ("Envelopes", 
+			{ "Envelopes", new PropertyStruct ("Envelopes", typeof (SignedEnvelope),
 					(IBinding data, object? value) => {(data as IntervalSignature).Envelopes = value as SignedEnvelope;}, (IBinding data) => (data as IntervalSignature).Envelopes,
 					false, ()=>new  SignedEnvelope(), ()=>new SignedEnvelope())}
-        }, __Tag,() => new IntervalSignature(), null);
+        }, __Tag,() => new IntervalSignature(), () => new List<IntervalSignature>(), () => new Dictionary<string,IntervalSignature>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1133,12 +1221,14 @@ public partial class SignedEnvelope : Dare {
         ///The index number of the envelope.
         /// </summary>
 
+	[JsonPropertyName("Index")]
 	public virtual long?					Index  {get; set;}
 
         /// <summary>
         ///The digests required to complete the verification of the signature.		
         /// </summary>
 
+	[JsonPropertyName("Digest")]
 	public virtual List<byte[]>?					Digest  {get; set;}
 
 
@@ -1146,14 +1236,14 @@ public partial class SignedEnvelope : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<SignedEnvelope> _binding = new (
 			new() {
 
 			{ "Index", new PropertyInteger64 ("Index", 
 					(IBinding data, long? value) => {(data as SignedEnvelope).Index = value;}, (IBinding data) => (data as SignedEnvelope).Index )},
 			{ "Digest", new PropertyListBinary ("Digest", 
 					(IBinding data, List<byte[]>? value) => {(data as SignedEnvelope).Digest = value;}, (IBinding data) => (data as SignedEnvelope).Digest )}
-        }, __Tag,() => new SignedEnvelope(), null);
+        }, __Tag,() => new SignedEnvelope(), () => new List<SignedEnvelope>(), () => new Dictionary<string,SignedEnvelope>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1221,12 +1311,14 @@ public partial class X509Certificate : Dare {
         ///URL identifying an X.509 public key certificate
         /// </summary>
 
+	[JsonPropertyName("x5u")]
 	public virtual string?					X5u  {get; set;}
 
         /// <summary>
         ///An X.509 public key certificate
         /// </summary>
 
+	[JsonPropertyName("x5c")]
 	public virtual byte[]?					X5  {get; set;}
 
 
@@ -1235,14 +1327,14 @@ public partial class X509Certificate : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<X509Certificate> _binding = new (
 			new() {
 
 			{ "x5u", new PropertyString ("x5u", 
 					(IBinding data, string? value) => {(data as X509Certificate).X5u = value;}, (IBinding data) => (data as X509Certificate).X5u )},
 			{ "x5c", new PropertyBinary ("x5c", 
 					(IBinding data, byte[]? value) => {(data as X509Certificate).X5 = value;}, (IBinding data) => (data as X509Certificate).X5 )}
-        }, __Tag,() => new X509Certificate(), null);
+        }, __Tag,() => new X509Certificate(), () => new List<X509Certificate>(), () => new Dictionary<string,X509Certificate>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1313,30 +1405,35 @@ public partial class DareRecipient : Dare {
         ///The Key identifier MUST be either a UDF fingerprint of a key or a Group Key Identifier
         /// </summary>
 
+	[JsonPropertyName("kid")]
 	public virtual string?					KeyIdentifier  {get; set;}
 
         /// <summary>
         ///The key wrapping and derivation algorithms.
         /// </summary>
 
+	[JsonPropertyName("kwd")]
 	public virtual string?					KeyWrapDerivation  {get; set;}
 
         /// <summary>
         ///The key parameters of the ephemeral key as specified in JWE
         /// </summary>
 
+	[JsonPropertyName("epk")]
 	public virtual Key?					Epk  {get; set;}
 
         /// <summary>
         ///Binary cryptographic exchange parameters
         /// </summary>
 
+	[JsonPropertyName("ek")]
 	public virtual byte[]?					Ek  {get; set;}
 
         /// <summary>
         ///The wrapped base seed. The base seed is encrypted under the result of the key exchange.
         /// </summary>
 
+	[JsonPropertyName("wmk")]
 	public virtual byte[]?					WrappedBaseSeed  {get; set;}
 
 
@@ -1345,21 +1442,21 @@ public partial class DareRecipient : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<DareRecipient> _binding = new (
 			new() {
 
 			{ "kid", new PropertyString ("kid", 
 					(IBinding data, string? value) => {(data as DareRecipient).KeyIdentifier = value;}, (IBinding data) => (data as DareRecipient).KeyIdentifier )},
 			{ "kwd", new PropertyString ("kwd", 
 					(IBinding data, string? value) => {(data as DareRecipient).KeyWrapDerivation = value;}, (IBinding data) => (data as DareRecipient).KeyWrapDerivation )},
-			{ "epk", new PropertyStruct ("epk", 
+			{ "epk", new PropertyStruct ("epk", typeof (Key), 
 					(IBinding data, object? value) => {(data as DareRecipient).Epk = value as Key;}, (IBinding data) => (data as DareRecipient).Epk,
 					true)} ,
 			{ "ek", new PropertyBinary ("ek", 
 					(IBinding data, byte[]? value) => {(data as DareRecipient).Ek = value;}, (IBinding data) => (data as DareRecipient).Ek )},
 			{ "wmk", new PropertyBinary ("wmk", 
 					(IBinding data, byte[]? value) => {(data as DareRecipient).WrappedBaseSeed = value;}, (IBinding data) => (data as DareRecipient).WrappedBaseSeed )}
-        }, __Tag,() => new DareRecipient(), null);
+        }, __Tag,() => new DareRecipient(), () => new List<DareRecipient>(), () => new Dictionary<string,DareRecipient>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1427,18 +1524,21 @@ public partial class DarePolicy : Dare {
         ///When applied to a store, indicates it is world readable.
         /// </summary>
 
+	[JsonPropertyName("Public")]
 	public virtual bool?					Public  {get; set;}
 
         /// <summary>
         ///The encryption algorithm to be used to compute the payload.
         /// </summary>
 
+	[JsonPropertyName("enc")]
 	public virtual string?					EncryptionAlgorithm  {get; set;}
 
         /// <summary>
         ///The digest algorithm to be used to compute the payload digest.
         /// </summary>
 
+	[JsonPropertyName("dig")]
 	public virtual string?					DigestAlgorithm  {get; set;}
 
         /// <summary>
@@ -1451,6 +1551,7 @@ public partial class DarePolicy : Dare {
         ///Default value is 'None' if EncryptKeys is null, and 'All' otherwise.
         /// </summary>
 
+	[JsonPropertyName("Encryption")]
 	public virtual string?					Encryption  {get; set;}
 
         /// <summary>
@@ -1462,23 +1563,27 @@ public partial class DarePolicy : Dare {
         ///Default value is 'None' if SignKeys is null, and 'Any' otherwise.
         /// </summary>
 
+	[JsonPropertyName("Signature")]
 	public virtual string?					Signature  {get; set;}
 
         /// <summary>
         ///The public parameters of keys used for encryption
         /// </summary>
 
+	[JsonPropertyName("EncryptKeys")]
 	public virtual List<Key>?					EncryptKeys  {get; set;}
         /// <summary>
         ///The public parameters of the signing keys under which records are signed in accordance
         ///with the Signature policy
         /// </summary>
 
+	[JsonPropertyName("SignKeys")]
 	public virtual List<Key>?					SignKeys  {get; set;}
         /// <summary>
         ///If true the policy is immutable and cannot be changed by a subsequent policy override.
         /// </summary>
 
+	[JsonPropertyName("Sealed")]
 	public virtual bool?					Sealed  {get; set;}
 
 
@@ -1487,7 +1592,7 @@ public partial class DarePolicy : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<DarePolicy> _binding = new (
 			new() {
 
 			{ "Public", new PropertyBoolean ("Public", 
@@ -1500,17 +1605,17 @@ public partial class DarePolicy : Dare {
 					(IBinding data, string? value) => {(data as DarePolicy).Encryption = value;}, (IBinding data) => (data as DarePolicy).Encryption )},
 			{ "Signature", new PropertyString ("Signature", 
 					(IBinding data, string? value) => {(data as DarePolicy).Signature = value;}, (IBinding data) => (data as DarePolicy).Signature )},
-			{ "EncryptKeys", new PropertyListStruct ("EncryptKeys", 
+			{ "EncryptKeys", new PropertyListStruct ("EncryptKeys", typeof (Key), 
 					(IBinding data, object? value) => {(data as DarePolicy).EncryptKeys = value as List<Key>;}, (IBinding data) => (data as DarePolicy).EncryptKeys,
 					true, ()=>new List<Key>()
 )} ,
-			{ "SignKeys", new PropertyListStruct ("SignKeys", 
+			{ "SignKeys", new PropertyListStruct ("SignKeys", typeof (Key), 
 					(IBinding data, object? value) => {(data as DarePolicy).SignKeys = value as List<Key>;}, (IBinding data) => (data as DarePolicy).SignKeys,
 					true, ()=>new List<Key>()
 )} ,
 			{ "Sealed", new PropertyBoolean ("Sealed", 
 					(IBinding data, bool? value) => {(data as DarePolicy).Sealed = value;}, (IBinding data) => (data as DarePolicy).Sealed )}
-        }, __Tag,() => new DarePolicy(), null);
+        }, __Tag,() => new DarePolicy(), () => new List<DarePolicy>(), () => new Dictionary<string,DarePolicy>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1578,30 +1683,35 @@ public partial class FileEntry : Dare {
         ///The file path in canonical form. 
         /// </summary>
 
+	[JsonPropertyName("Path")]
 	public virtual string?					Path  {get; set;}
 
         /// <summary>
         ///The creation time of the file on disk in UTC
         /// </summary>
 
+	[JsonPropertyName("CreationTime")]
 	public virtual DateTime?					CreationTime  {get; set;}
 
         /// <summary>
         ///The last access time of the file on disk in UTC
         /// </summary>
 
+	[JsonPropertyName("LastAccessTime")]
 	public virtual DateTime?					LastAccessTime  {get; set;}
 
         /// <summary>
         ///The last write time of the file on disk in UTC
         /// </summary>
 
+	[JsonPropertyName("LastWriteTime")]
 	public virtual DateTime?					LastWriteTime  {get; set;}
 
         /// <summary>
         ///The file attribues as a bitmapped integer.
         /// </summary>
 
+	[JsonPropertyName("Attributes")]
 	public virtual int?					Attributes  {get; set;}
 
 
@@ -1610,7 +1720,7 @@ public partial class FileEntry : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<FileEntry> _binding = new (
 			new() {
 
 			{ "Path", new PropertyString ("Path", 
@@ -1623,7 +1733,7 @@ public partial class FileEntry : Dare {
 					(IBinding data, DateTime? value) => {(data as FileEntry).LastWriteTime = value;}, (IBinding data) => (data as FileEntry).LastWriteTime )},
 			{ "Attributes", new PropertyInteger32 ("Attributes", 
 					(IBinding data, int? value) => {(data as FileEntry).Attributes = value;}, (IBinding data) => (data as FileEntry).Attributes )}
-        }, __Tag,() => new FileEntry(), null);
+        }, __Tag,() => new FileEntry(), () => new List<FileEntry>(), () => new Dictionary<string,FileEntry>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1693,24 +1803,28 @@ public partial class Witness : Dare {
         ///Globally unique log identifier
         /// </summary>
 
+	[JsonPropertyName("Id")]
 	public virtual string?					Id  {get; set;}
 
         /// <summary>
         ///The issuer of the log
         /// </summary>
 
+	[JsonPropertyName("Issuer")]
 	public virtual string?					Issuer  {get; set;}
 
         /// <summary>
         ///The Apex hash value
         /// </summary>
 
+	[JsonPropertyName("Apex")]
 	public virtual byte[]?					Apex  {get; set;}
 
         /// <summary>
         ///Specifies the index number assigned to the entry in the log.
         /// </summary>
 
+	[JsonPropertyName("Index")]
 	public virtual long?					Index  {get; set;}
 
 
@@ -1719,7 +1833,7 @@ public partial class Witness : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Witness> _binding = new (
 			new() {
 
 			{ "Id", new PropertyString ("Id", 
@@ -1730,7 +1844,7 @@ public partial class Witness : Dare {
 					(IBinding data, byte[]? value) => {(data as Witness).Apex = value;}, (IBinding data) => (data as Witness).Apex )},
 			{ "Index", new PropertyInteger64 ("Index", 
 					(IBinding data, long? value) => {(data as Witness).Index = value;}, (IBinding data) => (data as Witness).Index )}
-        }, __Tag,() => new Witness(), null);
+        }, __Tag,() => new Witness(), () => new List<Witness>(), () => new Dictionary<string,Witness>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1801,24 +1915,28 @@ public partial class Proof : Dare {
         ///The signed apex under which this proof chain is established
         /// </summary>
 
+	[JsonPropertyName("SignedWitness")]
 	public virtual DareEnvelope?					SignedWitness  {get; set;}
 
         /// <summary>
         ///
         /// </summary>
 
+	[JsonPropertyName("Hash")]
 	public virtual byte[]?					Hash  {get; set;}
 
         /// <summary>
         ///Specifies the index number assigned to the entry in the log.
         /// </summary>
 
+	[JsonPropertyName("Index")]
 	public virtual long?					Index  {get; set;}
 
         /// <summary>
         ///The list of entries from which the proof path is computed.
         /// </summary>
 
+	[JsonPropertyName("Path")]
 	public virtual List<byte[]>?					Path  {get; set;}
 
 
@@ -1826,10 +1944,10 @@ public partial class Proof : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Proof> _binding = new (
 			new() {
 
-			{ "SignedWitness", new PropertyStruct ("SignedWitness", 
+			{ "SignedWitness", new PropertyStruct ("SignedWitness", typeof (DareEnvelope),
 					(IBinding data, object? value) => {(data as Proof).SignedWitness = value as DareEnvelope;}, (IBinding data) => (data as Proof).SignedWitness,
 					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())},
 			{ "Hash", new PropertyBinary ("Hash", 
@@ -1838,7 +1956,7 @@ public partial class Proof : Dare {
 					(IBinding data, long? value) => {(data as Proof).Index = value;}, (IBinding data) => (data as Proof).Index )},
 			{ "Path", new PropertyListBinary ("Path", 
 					(IBinding data, List<byte[]>? value) => {(data as Proof).Path = value;}, (IBinding data) => (data as Proof).Path )}
-        }, __Tag,() => new Proof(), null);
+        }, __Tag,() => new Proof(), () => new List<Proof>(), () => new Dictionary<string,Proof>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1906,15 +2024,18 @@ public partial class Unprotected : Dare {
         ///The digest algorithm to be used to compute the payload digest.
         /// </summary>
 
+	[JsonPropertyName("dig")]
 	public virtual string?					DigestAlgorithm  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("signs")]
 	public virtual List<EarlSignature>?					Signers  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("sigs")]
 	public virtual List<EarlSignature>?					Signatures  {get; set;}
 
 
@@ -1922,18 +2043,18 @@ public partial class Unprotected : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Unprotected> _binding = new (
 			new() {
 
 			{ "dig", new PropertyString ("dig", 
 					(IBinding data, string? value) => {(data as Unprotected).DigestAlgorithm = value;}, (IBinding data) => (data as Unprotected).DigestAlgorithm )},
-			{ "signs", new PropertyListStruct ("signs", 
+			{ "signs", new PropertyListStruct ("signs", typeof (EarlSignature),
 					(IBinding data, object? value) => {(data as Unprotected).Signers = value as List<EarlSignature>;}, (IBinding data) => (data as Unprotected).Signers,
 					false, ()=>new  List<EarlSignature>(), ()=>new EarlSignature())},
-			{ "sigs", new PropertyListStruct ("sigs", 
+			{ "sigs", new PropertyListStruct ("sigs", typeof (EarlSignature),
 					(IBinding data, object? value) => {(data as Unprotected).Signatures = value as List<EarlSignature>;}, (IBinding data) => (data as Unprotected).Signatures,
 					false, ()=>new  List<EarlSignature>(), ()=>new EarlSignature())}
-        }, __Tag,() => new Unprotected(), null);
+        }, __Tag,() => new Unprotected(), () => new List<Unprotected>(), () => new Dictionary<string,Unprotected>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2001,17 +2122,20 @@ public partial class EarlSignature : Dare {
         ///Key exchange algorithm
         /// </summary>
 
+	[JsonPropertyName("alg")]
 	public virtual string?					Alg  {get; set;}
 
         /// <summary>
         ///Key identifier of the signature key.		
         /// </summary>
 
+	[JsonPropertyName("kid")]
 	public virtual string?					KeyIdentifier  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("val")]
 	public virtual byte[]?					Value  {get; set;}
 
 
@@ -2020,7 +2144,7 @@ public partial class EarlSignature : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<EarlSignature> _binding = new (
 			new() {
 
 			{ "alg", new PropertyString ("alg", 
@@ -2029,7 +2153,7 @@ public partial class EarlSignature : Dare {
 					(IBinding data, string? value) => {(data as EarlSignature).KeyIdentifier = value;}, (IBinding data) => (data as EarlSignature).KeyIdentifier )},
 			{ "val", new PropertyBinary ("val", 
 					(IBinding data, byte[]? value) => {(data as EarlSignature).Value = value;}, (IBinding data) => (data as EarlSignature).Value )}
-        }, __Tag,() => new EarlSignature(), null);
+        }, __Tag,() => new EarlSignature(), () => new List<EarlSignature>(), () => new Dictionary<string,EarlSignature>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;

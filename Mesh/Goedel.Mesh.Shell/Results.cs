@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/17/2025 1:31:49 AM
+//  This file was automatically generated at 5/1/2025 6:02:36 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -39,6 +39,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -129,6 +131,68 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 	    {"ResultCallsignList", ResultCallsignList._Factory}
 		};
 
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+
+	    {typeof(Result), Result._binding},
+	    {typeof(ResultAbout), ResultAbout._binding},
+	    {typeof(ResultFail), ResultFail._binding},
+	    {typeof(ResultHello), ResultHello._binding},
+	    {typeof(ResultSelf), ResultSelf._binding},
+	    {typeof(ResultInfo), ResultInfo._binding},
+	    {typeof(ResultKey), ResultKey._binding},
+	    {typeof(ResultDigest), ResultDigest._binding},
+	    {typeof(ResultFile), ResultFile._binding},
+	    {typeof(ResultKeyFile), ResultKeyFile._binding},
+	    {typeof(ResultListLog), ResultListLog._binding},
+	    {typeof(ResultLog), ResultLog._binding},
+	    {typeof(ResultArchive), ResultArchive._binding},
+	    {typeof(ResultFileDare), ResultFileDare._binding},
+	    {typeof(ResultFileEARL), ResultFileEARL._binding},
+	    {typeof(ResultDump), ResultDump._binding},
+	    {typeof(ResultList), ResultList._binding},
+	    {typeof(ResultAccountConnect), ResultAccountConnect._binding},
+	    {typeof(ResultPublish), ResultPublish._binding},
+	    {typeof(ResultPublishDevice), ResultPublishDevice._binding},
+	    {typeof(ResultCreateDevice), ResultCreateDevice._binding},
+	    {typeof(ResultCreatePersonal), ResultCreatePersonal._binding},
+	    {typeof(ResultCreateAccount), ResultCreateAccount._binding},
+	    {typeof(ResultDeleteAccount), ResultDeleteAccount._binding},
+	    {typeof(ResultRegisterService), ResultRegisterService._binding},
+	    {typeof(ResultRecover), ResultRecover._binding},
+	    {typeof(ResultStatus), ResultStatus._binding},
+	    {typeof(ResultSync), ResultSync._binding},
+	    {typeof(ResultEscrow), ResultEscrow._binding},
+	    {typeof(ResultMachine), ResultMachine._binding},
+	    {typeof(ResultPIN), ResultPIN._binding},
+	    {typeof(ResultSequence), ResultSequence._binding},
+	    {typeof(LogEntry), LogEntry._binding},
+	    {typeof(ResultEntry), ResultEntry._binding},
+	    {typeof(ResultEntrySent), ResultEntrySent._binding},
+	    {typeof(ResultMail), ResultMail._binding},
+	    {typeof(ResultSSH), ResultSSH._binding},
+	    {typeof(ResultGroupCreate), ResultGroupCreate._binding},
+	    {typeof(ResultSent), ResultSent._binding},
+	    {typeof(ResultPending), ResultPending._binding},
+	    {typeof(ResultAuthorize), ResultAuthorize._binding},
+	    {typeof(ResultProcess), ResultProcess._binding},
+	    {typeof(ResultConnect), ResultConnect._binding},
+	    {typeof(ResultTransactionRequest), ResultTransactionRequest._binding},
+	    {typeof(ResultReceived), ResultReceived._binding},
+	    {typeof(ResultApplication), ResultApplication._binding},
+	    {typeof(ResultApplicationList), ResultApplicationList._binding},
+	    {typeof(ResultCallsign), ResultCallsign._binding},
+	    {typeof(ResultCallsignResolution), ResultCallsignResolution._binding},
+	    {typeof(ResultCallsignList), ResultCallsignList._binding}
+		};
+
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -136,7 +200,10 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -168,10 +235,10 @@ public partial class Result : ShellResult {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Result> _binding = new (
 			new() {
 
-        }, __Tag,() => new Result(), ShellResult._binding);
+        }, __Tag,() => new Result(), () => new List<Result>(), () => new Dictionary<string,Result>(),ShellResult._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -239,41 +306,49 @@ public partial class ResultAbout : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("DirectoryKeys")]
 	public virtual string?					DirectoryKeys  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("DirectoryMesh")]
 	public virtual string?					DirectoryMesh  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("AssemblyTitle")]
 	public virtual string?					AssemblyTitle  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("AssemblyDescription")]
 	public virtual string?					AssemblyDescription  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("AssemblyCopyright")]
 	public virtual string?					AssemblyCopyright  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("AssemblyCompany")]
 	public virtual string?					AssemblyCompany  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("AssemblyVersion")]
 	public virtual string?					AssemblyVersion  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Build")]
 	public virtual string?					Build  {get; set;}
 
 
@@ -282,7 +357,7 @@ public partial class ResultAbout : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultAbout> _binding = new (
 			new() {
 
 			{ "DirectoryKeys", new PropertyString ("DirectoryKeys", 
@@ -301,7 +376,7 @@ public partial class ResultAbout : Result {
 					(IBinding data, string? value) => {(data as ResultAbout).AssemblyVersion = value;}, (IBinding data) => (data as ResultAbout).AssemblyVersion )},
 			{ "Build", new PropertyString ("Build", 
 					(IBinding data, string? value) => {(data as ResultAbout).Build = value;}, (IBinding data) => (data as ResultAbout).Build )}
-        }, __Tag,() => new ResultAbout(), Result._binding);
+        }, __Tag,() => new ResultAbout(), () => new List<ResultAbout>(), () => new Dictionary<string,ResultAbout>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -372,10 +447,10 @@ public partial class ResultFail : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultFail> _binding = new (
 			new() {
 
-        }, __Tag,() => new ResultFail(), Result._binding);
+        }, __Tag,() => new ResultFail(), () => new List<ResultFail>(), () => new Dictionary<string,ResultFail>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -443,11 +518,13 @@ public partial class ResultHello : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("ServiceAddress")]
 	public virtual string?					ServiceAddress  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Response")]
 	public virtual MeshHelloResponse?					Response  {get; set;}
 
 
@@ -456,15 +533,15 @@ public partial class ResultHello : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultHello> _binding = new (
 			new() {
 
 			{ "ServiceAddress", new PropertyString ("ServiceAddress", 
 					(IBinding data, string? value) => {(data as ResultHello).ServiceAddress = value;}, (IBinding data) => (data as ResultHello).ServiceAddress )},
-			{ "Response", new PropertyStruct ("Response", 
+			{ "Response", new PropertyStruct ("Response", typeof (MeshHelloResponse),
 					(IBinding data, object? value) => {(data as ResultHello).Response = value as MeshHelloResponse;}, (IBinding data) => (data as ResultHello).Response,
 					false, ()=>new  MeshHelloResponse(), ()=>new MeshHelloResponse())}
-        }, __Tag,() => new ResultHello(), Result._binding);
+        }, __Tag,() => new ResultHello(), () => new List<ResultHello>(), () => new Dictionary<string,ResultHello>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -532,16 +609,19 @@ public partial class ResultSelf : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Contact")]
 	public virtual JsContact?					Contact  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Locator")]
 	public virtual string?					Locator  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Earl")]
 	public virtual string?					Earl  {get; set;}
 
 
@@ -550,17 +630,17 @@ public partial class ResultSelf : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultSelf> _binding = new (
 			new() {
 
-			{ "Contact", new PropertyStruct ("Contact", 
+			{ "Contact", new PropertyStruct ("Contact", typeof (JsContact),
 					(IBinding data, object? value) => {(data as ResultSelf).Contact = value as JsContact;}, (IBinding data) => (data as ResultSelf).Contact,
 					false, ()=>new  JsContact(), ()=>new JsContact())},
 			{ "Locator", new PropertyString ("Locator", 
 					(IBinding data, string? value) => {(data as ResultSelf).Locator = value;}, (IBinding data) => (data as ResultSelf).Locator )},
 			{ "Earl", new PropertyString ("Earl", 
 					(IBinding data, string? value) => {(data as ResultSelf).Earl = value;}, (IBinding data) => (data as ResultSelf).Earl )}
-        }, __Tag,() => new ResultSelf(), Result._binding);
+        }, __Tag,() => new ResultSelf(), () => new List<ResultSelf>(), () => new Dictionary<string,ResultSelf>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -631,10 +711,10 @@ public partial class ResultInfo : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultInfo> _binding = new (
 			new() {
 
-        }, __Tag,() => new ResultInfo(), Result._binding);
+        }, __Tag,() => new ResultInfo(), () => new List<ResultInfo>(), () => new Dictionary<string,ResultInfo>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -702,16 +782,19 @@ public partial class ResultKey : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Key")]
 	public virtual string?					Key  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Identifier")]
 	public virtual string?					Identifier  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Shares")]
 	public virtual List<string>?					Shares  {get; set;}
 
 
@@ -719,7 +802,7 @@ public partial class ResultKey : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultKey> _binding = new (
 			new() {
 
 			{ "Key", new PropertyString ("Key", 
@@ -728,7 +811,7 @@ public partial class ResultKey : Result {
 					(IBinding data, string? value) => {(data as ResultKey).Identifier = value;}, (IBinding data) => (data as ResultKey).Identifier )},
 			{ "Shares", new PropertyListString ("Shares", 
 					(IBinding data, List<string>? value) => {(data as ResultKey).Shares = value;}, (IBinding data) => (data as ResultKey).Shares )}
-        }, __Tag,() => new ResultKey(), Result._binding);
+        }, __Tag,() => new ResultKey(), () => new List<ResultKey>(), () => new Dictionary<string,ResultKey>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -796,16 +879,19 @@ public partial class ResultDigest : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Digest")]
 	public virtual string?					Digest  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Key")]
 	public virtual string?					Key  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Verified")]
 	public virtual bool?					Verified  {get; set;}
 
 
@@ -814,7 +900,7 @@ public partial class ResultDigest : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultDigest> _binding = new (
 			new() {
 
 			{ "Digest", new PropertyString ("Digest", 
@@ -823,7 +909,7 @@ public partial class ResultDigest : Result {
 					(IBinding data, string? value) => {(data as ResultDigest).Key = value;}, (IBinding data) => (data as ResultDigest).Key )},
 			{ "Verified", new PropertyBoolean ("Verified", 
 					(IBinding data, bool? value) => {(data as ResultDigest).Verified = value;}, (IBinding data) => (data as ResultDigest).Verified )}
-        }, __Tag,() => new ResultDigest(), Result._binding);
+        }, __Tag,() => new ResultDigest(), () => new List<ResultDigest>(), () => new Dictionary<string,ResultDigest>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -891,16 +977,19 @@ public partial class ResultFile : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Filename")]
 	public virtual string?					Filename  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("TotalBytes")]
 	public virtual int?					TotalBytes  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Verified")]
 	public virtual bool?					Verified  {get; set;}
 
 
@@ -909,7 +998,7 @@ public partial class ResultFile : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultFile> _binding = new (
 			new() {
 
 			{ "Filename", new PropertyString ("Filename", 
@@ -918,7 +1007,7 @@ public partial class ResultFile : Result {
 					(IBinding data, int? value) => {(data as ResultFile).TotalBytes = value;}, (IBinding data) => (data as ResultFile).TotalBytes )},
 			{ "Verified", new PropertyBoolean ("Verified", 
 					(IBinding data, bool? value) => {(data as ResultFile).Verified = value;}, (IBinding data) => (data as ResultFile).Verified )}
-        }, __Tag,() => new ResultFile(), Result._binding);
+        }, __Tag,() => new ResultFile(), () => new List<ResultFile>(), () => new Dictionary<string,ResultFile>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -986,21 +1075,25 @@ public partial class ResultKeyFile : ResultFile {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Udf")]
 	public virtual string?					Udf  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Private")]
 	public virtual bool?					Private  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Algorithm")]
 	public virtual string?					Algorithm  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Format")]
 	public virtual string?					Format  {get; set;}
 
 
@@ -1009,7 +1102,7 @@ public partial class ResultKeyFile : ResultFile {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultKeyFile> _binding = new (
 			new() {
 
 			{ "Udf", new PropertyString ("Udf", 
@@ -1020,7 +1113,7 @@ public partial class ResultKeyFile : ResultFile {
 					(IBinding data, string? value) => {(data as ResultKeyFile).Algorithm = value;}, (IBinding data) => (data as ResultKeyFile).Algorithm )},
 			{ "Format", new PropertyString ("Format", 
 					(IBinding data, string? value) => {(data as ResultKeyFile).Format = value;}, (IBinding data) => (data as ResultKeyFile).Format )}
-        }, __Tag,() => new ResultKeyFile(), ResultFile._binding);
+        }, __Tag,() => new ResultKeyFile(), () => new List<ResultKeyFile>(), () => new Dictionary<string,ResultKeyFile>(),ResultFile._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1088,11 +1181,13 @@ public partial class ResultListLog : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Filename")]
 	public virtual string?					Filename  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Count")]
 	public virtual int?					Count  {get; set;}
 
 
@@ -1101,14 +1196,14 @@ public partial class ResultListLog : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultListLog> _binding = new (
 			new() {
 
 			{ "Filename", new PropertyString ("Filename", 
 					(IBinding data, string? value) => {(data as ResultListLog).Filename = value;}, (IBinding data) => (data as ResultListLog).Filename )},
 			{ "Count", new PropertyInteger32 ("Count", 
 					(IBinding data, int? value) => {(data as ResultListLog).Count = value;}, (IBinding data) => (data as ResultListLog).Count )}
-        }, __Tag,() => new ResultListLog(), Result._binding);
+        }, __Tag,() => new ResultListLog(), () => new List<ResultListLog>(), () => new Dictionary<string,ResultListLog>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1176,6 +1271,7 @@ public partial class ResultLog : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Count")]
 	public virtual int?					Count  {get; set;}
 
 
@@ -1184,12 +1280,12 @@ public partial class ResultLog : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultLog> _binding = new (
 			new() {
 
 			{ "Count", new PropertyInteger32 ("Count", 
 					(IBinding data, int? value) => {(data as ResultLog).Count = value;}, (IBinding data) => (data as ResultLog).Count )}
-        }, __Tag,() => new ResultLog(), Result._binding);
+        }, __Tag,() => new ResultLog(), () => new List<ResultLog>(), () => new Dictionary<string,ResultLog>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1257,20 +1353,24 @@ public partial class ResultArchive : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Entries")]
 	public virtual List<FileEntry>?					Entries  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Frames")]
 	public virtual int?					Frames  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Deleted")]
 	public virtual int?					Deleted  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("IndexFrame")]
 	public virtual int?					IndexFrame  {get; set;}
 
 
@@ -1279,10 +1379,10 @@ public partial class ResultArchive : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultArchive> _binding = new (
 			new() {
 
-			{ "Entries", new PropertyListStruct ("Entries", 
+			{ "Entries", new PropertyListStruct ("Entries", typeof (FileEntry),
 					(IBinding data, object? value) => {(data as ResultArchive).Entries = value as List<FileEntry>;}, (IBinding data) => (data as ResultArchive).Entries,
 					false, ()=>new  List<FileEntry>(), ()=>new FileEntry())},
 			{ "Frames", new PropertyInteger32 ("Frames", 
@@ -1291,7 +1391,7 @@ public partial class ResultArchive : Result {
 					(IBinding data, int? value) => {(data as ResultArchive).Deleted = value;}, (IBinding data) => (data as ResultArchive).Deleted )},
 			{ "IndexFrame", new PropertyInteger32 ("IndexFrame", 
 					(IBinding data, int? value) => {(data as ResultArchive).IndexFrame = value;}, (IBinding data) => (data as ResultArchive).IndexFrame )}
-        }, __Tag,() => new ResultArchive(), Result._binding);
+        }, __Tag,() => new ResultArchive(), () => new List<ResultArchive>(), () => new Dictionary<string,ResultArchive>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1359,6 +1459,7 @@ public partial class ResultFileDare : ResultFile {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Envelope")]
 	public virtual DareEnvelope?					Envelope  {get; set;}
 
 
@@ -1367,13 +1468,13 @@ public partial class ResultFileDare : ResultFile {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultFileDare> _binding = new (
 			new() {
 
-			{ "Envelope", new PropertyStruct ("Envelope", 
+			{ "Envelope", new PropertyStruct ("Envelope", typeof (DareEnvelope),
 					(IBinding data, object? value) => {(data as ResultFileDare).Envelope = value as DareEnvelope;}, (IBinding data) => (data as ResultFileDare).Envelope,
 					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())}
-        }, __Tag,() => new ResultFileDare(), ResultFile._binding);
+        }, __Tag,() => new ResultFileDare(), () => new List<ResultFileDare>(), () => new Dictionary<string,ResultFileDare>(),ResultFile._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1441,16 +1542,19 @@ public partial class ResultFileEARL : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Source")]
 	public virtual string?					Source  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Created")]
 	public virtual string?					Created  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("URI")]
 	public virtual string?					URI  {get; set;}
 
 
@@ -1459,7 +1563,7 @@ public partial class ResultFileEARL : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultFileEARL> _binding = new (
 			new() {
 
 			{ "Source", new PropertyString ("Source", 
@@ -1468,7 +1572,7 @@ public partial class ResultFileEARL : Result {
 					(IBinding data, string? value) => {(data as ResultFileEARL).Created = value;}, (IBinding data) => (data as ResultFileEARL).Created )},
 			{ "URI", new PropertyString ("URI", 
 					(IBinding data, string? value) => {(data as ResultFileEARL).URI = value;}, (IBinding data) => (data as ResultFileEARL).URI )}
-        }, __Tag,() => new ResultFileEARL(), Result._binding);
+        }, __Tag,() => new ResultFileEARL(), () => new List<ResultFileEARL>(), () => new Dictionary<string,ResultFileEARL>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1536,6 +1640,7 @@ public partial class ResultDump : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("CatalogedEntries")]
 	public virtual List<CatalogedEntry>?					CatalogedEntries  {get; set;}
 
 
@@ -1543,14 +1648,14 @@ public partial class ResultDump : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultDump> _binding = new (
 			new() {
 
-			{ "CatalogedEntries", new PropertyListStruct ("CatalogedEntries", 
+			{ "CatalogedEntries", new PropertyListStruct ("CatalogedEntries", typeof (CatalogedEntry), 
 					(IBinding data, object? value) => {(data as ResultDump).CatalogedEntries = value as List<CatalogedEntry>;}, (IBinding data) => (data as ResultDump).CatalogedEntries,
 					true, ()=>new List<CatalogedEntry>()
 )} 
-        }, __Tag,() => new ResultDump(), Result._binding);
+        }, __Tag,() => new ResultDump(), () => new List<ResultDump>(), () => new Dictionary<string,ResultDump>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1618,10 +1723,12 @@ public partial class ResultList : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("CatalogedDevices")]
 	public virtual List<CatalogedDevice>?					CatalogedDevices  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Profiles")]
 	public virtual List<Assertion>?					Profiles  {get; set;}
 
 
@@ -1629,17 +1736,17 @@ public partial class ResultList : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultList> _binding = new (
 			new() {
 
-			{ "CatalogedDevices", new PropertyListStruct ("CatalogedDevices", 
+			{ "CatalogedDevices", new PropertyListStruct ("CatalogedDevices", typeof (CatalogedDevice),
 					(IBinding data, object? value) => {(data as ResultList).CatalogedDevices = value as List<CatalogedDevice>;}, (IBinding data) => (data as ResultList).CatalogedDevices,
 					false, ()=>new  List<CatalogedDevice>(), ()=>new CatalogedDevice())},
-			{ "Profiles", new PropertyListStruct ("Profiles", 
+			{ "Profiles", new PropertyListStruct ("Profiles", typeof (Assertion), 
 					(IBinding data, object? value) => {(data as ResultList).Profiles = value as List<Assertion>;}, (IBinding data) => (data as ResultList).Profiles,
 					true, ()=>new List<Assertion>()
 )} 
-        }, __Tag,() => new ResultList(), Result._binding);
+        }, __Tag,() => new ResultList(), () => new List<ResultList>(), () => new Dictionary<string,ResultList>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1707,6 +1814,7 @@ public partial class ResultAccountConnect : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("ProfileDevice")]
 	public virtual ProfileDevice?					ProfileDevice  {get; set;}
 
 
@@ -1715,13 +1823,13 @@ public partial class ResultAccountConnect : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultAccountConnect> _binding = new (
 			new() {
 
-			{ "ProfileDevice", new PropertyStruct ("ProfileDevice", 
+			{ "ProfileDevice", new PropertyStruct ("ProfileDevice", typeof (ProfileDevice),
 					(IBinding data, object? value) => {(data as ResultAccountConnect).ProfileDevice = value as ProfileDevice;}, (IBinding data) => (data as ResultAccountConnect).ProfileDevice,
 					false, ()=>new  ProfileDevice(), ()=>new ProfileDevice())}
-        }, __Tag,() => new ResultAccountConnect(), Result._binding);
+        }, __Tag,() => new ResultAccountConnect(), () => new List<ResultAccountConnect>(), () => new Dictionary<string,ResultAccountConnect>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1789,6 +1897,7 @@ public partial class ResultPublish : ResultCreateDevice {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Uri")]
 	public virtual string?					Uri  {get; set;}
 
 
@@ -1797,12 +1906,12 @@ public partial class ResultPublish : ResultCreateDevice {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultPublish> _binding = new (
 			new() {
 
 			{ "Uri", new PropertyString ("Uri", 
 					(IBinding data, string? value) => {(data as ResultPublish).Uri = value;}, (IBinding data) => (data as ResultPublish).Uri )}
-        }, __Tag,() => new ResultPublish(), ResultCreateDevice._binding);
+        }, __Tag,() => new ResultPublish(), () => new List<ResultPublish>(), () => new Dictionary<string,ResultPublish>(),ResultCreateDevice._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1870,21 +1979,25 @@ public partial class ResultPublishDevice : ResultCreateDevice {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Uri")]
 	public virtual string?					Uri  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("FileName")]
 	public virtual string?					FileName  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("DevicePreconfigurationPublic")]
 	public virtual DevicePreconfigurationPublic?					DevicePreconfigurationPublic  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("DevicePreconfigurationPrivate")]
 	public virtual DevicePreconfigurationPrivate?					DevicePreconfigurationPrivate  {get; set;}
 
 
@@ -1893,20 +2006,20 @@ public partial class ResultPublishDevice : ResultCreateDevice {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultPublishDevice> _binding = new (
 			new() {
 
 			{ "Uri", new PropertyString ("Uri", 
 					(IBinding data, string? value) => {(data as ResultPublishDevice).Uri = value;}, (IBinding data) => (data as ResultPublishDevice).Uri )},
 			{ "FileName", new PropertyString ("FileName", 
 					(IBinding data, string? value) => {(data as ResultPublishDevice).FileName = value;}, (IBinding data) => (data as ResultPublishDevice).FileName )},
-			{ "DevicePreconfigurationPublic", new PropertyStruct ("DevicePreconfigurationPublic", 
+			{ "DevicePreconfigurationPublic", new PropertyStruct ("DevicePreconfigurationPublic", typeof (DevicePreconfigurationPublic),
 					(IBinding data, object? value) => {(data as ResultPublishDevice).DevicePreconfigurationPublic = value as DevicePreconfigurationPublic;}, (IBinding data) => (data as ResultPublishDevice).DevicePreconfigurationPublic,
 					false, ()=>new  DevicePreconfigurationPublic(), ()=>new DevicePreconfigurationPublic())},
-			{ "DevicePreconfigurationPrivate", new PropertyStruct ("DevicePreconfigurationPrivate", 
+			{ "DevicePreconfigurationPrivate", new PropertyStruct ("DevicePreconfigurationPrivate", typeof (DevicePreconfigurationPrivate),
 					(IBinding data, object? value) => {(data as ResultPublishDevice).DevicePreconfigurationPrivate = value as DevicePreconfigurationPrivate;}, (IBinding data) => (data as ResultPublishDevice).DevicePreconfigurationPrivate,
 					false, ()=>new  DevicePreconfigurationPrivate(), ()=>new DevicePreconfigurationPrivate())}
-        }, __Tag,() => new ResultPublishDevice(), ResultCreateDevice._binding);
+        }, __Tag,() => new ResultPublishDevice(), () => new List<ResultPublishDevice>(), () => new Dictionary<string,ResultPublishDevice>(),ResultCreateDevice._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1974,16 +2087,19 @@ public partial class ResultCreateDevice : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Default")]
 	public virtual bool?					Default  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("DeviceUDF")]
 	public virtual string?					DeviceUDF  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("CatalogedDevice")]
 	public virtual CatalogedDevice?					CatalogedDevice  {get; set;}
 
 
@@ -1992,17 +2108,17 @@ public partial class ResultCreateDevice : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultCreateDevice> _binding = new (
 			new() {
 
 			{ "Default", new PropertyBoolean ("Default", 
 					(IBinding data, bool? value) => {(data as ResultCreateDevice).Default = value;}, (IBinding data) => (data as ResultCreateDevice).Default )},
 			{ "DeviceUDF", new PropertyString ("DeviceUDF", 
 					(IBinding data, string? value) => {(data as ResultCreateDevice).DeviceUDF = value;}, (IBinding data) => (data as ResultCreateDevice).DeviceUDF )},
-			{ "CatalogedDevice", new PropertyStruct ("CatalogedDevice", 
+			{ "CatalogedDevice", new PropertyStruct ("CatalogedDevice", typeof (CatalogedDevice),
 					(IBinding data, object? value) => {(data as ResultCreateDevice).CatalogedDevice = value as CatalogedDevice;}, (IBinding data) => (data as ResultCreateDevice).CatalogedDevice,
 					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())}
-        }, __Tag,() => new ResultCreateDevice(), Result._binding);
+        }, __Tag,() => new ResultCreateDevice(), () => new List<ResultCreateDevice>(), () => new Dictionary<string,ResultCreateDevice>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2070,6 +2186,7 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("MeshUDF")]
 	public virtual string?					MeshUDF  {get; set;}
 
 
@@ -2078,12 +2195,12 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultCreatePersonal> _binding = new (
 			new() {
 
 			{ "MeshUDF", new PropertyString ("MeshUDF", 
 					(IBinding data, string? value) => {(data as ResultCreatePersonal).MeshUDF = value;}, (IBinding data) => (data as ResultCreatePersonal).MeshUDF )}
-        }, __Tag,() => new ResultCreatePersonal(), ResultCreateAccount._binding);
+        }, __Tag,() => new ResultCreatePersonal(), () => new List<ResultCreatePersonal>(), () => new Dictionary<string,ResultCreatePersonal>(),ResultCreateAccount._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2151,11 +2268,13 @@ public partial class ResultCreateAccount : ResultCreateDevice {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("ProfileAccount")]
 	public virtual ProfileAccount?					ProfileAccount  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("ActivationAccount")]
 	public virtual ActivationAccount?					ActivationAccount  {get; set;}
 
 
@@ -2164,16 +2283,16 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultCreateAccount> _binding = new (
 			new() {
 
-			{ "ProfileAccount", new PropertyStruct ("ProfileAccount", 
+			{ "ProfileAccount", new PropertyStruct ("ProfileAccount", typeof (ProfileAccount),
 					(IBinding data, object? value) => {(data as ResultCreateAccount).ProfileAccount = value as ProfileAccount;}, (IBinding data) => (data as ResultCreateAccount).ProfileAccount,
 					false, ()=>new  ProfileAccount(), ()=>new ProfileAccount())},
-			{ "ActivationAccount", new PropertyStruct ("ActivationAccount", 
+			{ "ActivationAccount", new PropertyStruct ("ActivationAccount", typeof (ActivationAccount),
 					(IBinding data, object? value) => {(data as ResultCreateAccount).ActivationAccount = value as ActivationAccount;}, (IBinding data) => (data as ResultCreateAccount).ActivationAccount,
 					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount())}
-        }, __Tag,() => new ResultCreateAccount(), ResultCreateDevice._binding);
+        }, __Tag,() => new ResultCreateAccount(), () => new List<ResultCreateAccount>(), () => new Dictionary<string,ResultCreateAccount>(),ResultCreateDevice._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2241,6 +2360,7 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("UDF")]
 	public virtual string?					UDF  {get; set;}
 
 
@@ -2249,12 +2369,12 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultDeleteAccount> _binding = new (
 			new() {
 
 			{ "UDF", new PropertyString ("UDF", 
 					(IBinding data, string? value) => {(data as ResultDeleteAccount).UDF = value;}, (IBinding data) => (data as ResultDeleteAccount).UDF )}
-        }, __Tag,() => new ResultDeleteAccount(), ResultCreateDevice._binding);
+        }, __Tag,() => new ResultDeleteAccount(), () => new List<ResultDeleteAccount>(), () => new Dictionary<string,ResultDeleteAccount>(),ResultCreateDevice._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2322,6 +2442,7 @@ public partial class ResultRegisterService : ResultCreateAccount {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("AccountAddress")]
 	public virtual string?					AccountAddress  {get; set;}
 
 
@@ -2330,12 +2451,12 @@ public partial class ResultRegisterService : ResultCreateAccount {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultRegisterService> _binding = new (
 			new() {
 
 			{ "AccountAddress", new PropertyString ("AccountAddress", 
 					(IBinding data, string? value) => {(data as ResultRegisterService).AccountAddress = value;}, (IBinding data) => (data as ResultRegisterService).AccountAddress )}
-        }, __Tag,() => new ResultRegisterService(), ResultCreateAccount._binding);
+        }, __Tag,() => new ResultRegisterService(), () => new List<ResultRegisterService>(), () => new Dictionary<string,ResultRegisterService>(),ResultCreateAccount._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2406,10 +2527,10 @@ public partial class ResultRecover : ResultCreatePersonal {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultRecover> _binding = new (
 			new() {
 
-        }, __Tag,() => new ResultRecover(), ResultCreatePersonal._binding);
+        }, __Tag,() => new ResultRecover(), () => new List<ResultRecover>(), () => new Dictionary<string,ResultRecover>(),ResultCreatePersonal._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2477,6 +2598,7 @@ public partial class ResultStatus : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("StatusResponse")]
 	public virtual StatusResponse?					StatusResponse  {get; set;}
 
 
@@ -2485,13 +2607,13 @@ public partial class ResultStatus : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultStatus> _binding = new (
 			new() {
 
-			{ "StatusResponse", new PropertyStruct ("StatusResponse", 
+			{ "StatusResponse", new PropertyStruct ("StatusResponse", typeof (StatusResponse),
 					(IBinding data, object? value) => {(data as ResultStatus).StatusResponse = value as StatusResponse;}, (IBinding data) => (data as ResultStatus).StatusResponse,
 					false, ()=>new  StatusResponse(), ()=>new StatusResponse())}
-        }, __Tag,() => new ResultStatus(), Result._binding);
+        }, __Tag,() => new ResultStatus(), () => new List<ResultStatus>(), () => new Dictionary<string,ResultStatus>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2559,16 +2681,19 @@ public partial class ResultSync : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Fetched")]
 	public virtual long?					Fetched  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("ProcessedResults")]
 	public virtual int?					ProcessedResults  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("ProcessResults")]
 	public virtual List<ProcessResult>?					ProcessResults  {get; set;}
 
 
@@ -2576,18 +2701,18 @@ public partial class ResultSync : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultSync> _binding = new (
 			new() {
 
 			{ "Fetched", new PropertyInteger64 ("Fetched", 
 					(IBinding data, long? value) => {(data as ResultSync).Fetched = value;}, (IBinding data) => (data as ResultSync).Fetched )},
 			{ "ProcessedResults", new PropertyInteger32 ("ProcessedResults", 
 					(IBinding data, int? value) => {(data as ResultSync).ProcessedResults = value;}, (IBinding data) => (data as ResultSync).ProcessedResults )},
-			{ "ProcessResults", new PropertyListStruct ("ProcessResults", 
+			{ "ProcessResults", new PropertyListStruct ("ProcessResults", typeof (ProcessResult), 
 					(IBinding data, object? value) => {(data as ResultSync).ProcessResults = value as List<ProcessResult>;}, (IBinding data) => (data as ResultSync).ProcessResults,
 					true, ()=>new List<ProcessResult>()
 )} 
-        }, __Tag,() => new ResultSync(), Result._binding);
+        }, __Tag,() => new ResultSync(), () => new List<ResultSync>(), () => new Dictionary<string,ResultSync>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2655,11 +2780,13 @@ public partial class ResultEscrow : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Service")]
 	public virtual string?					Service  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Shares")]
 	public virtual List<string>?					Shares  {get; set;}
 
 
@@ -2667,14 +2794,14 @@ public partial class ResultEscrow : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultEscrow> _binding = new (
 			new() {
 
 			{ "Service", new PropertyString ("Service", 
 					(IBinding data, string? value) => {(data as ResultEscrow).Service = value;}, (IBinding data) => (data as ResultEscrow).Service )},
 			{ "Shares", new PropertyListString ("Shares", 
 					(IBinding data, List<string>? value) => {(data as ResultEscrow).Shares = value;}, (IBinding data) => (data as ResultEscrow).Shares )}
-        }, __Tag,() => new ResultEscrow(), Result._binding);
+        }, __Tag,() => new ResultEscrow(), () => new List<ResultEscrow>(), () => new Dictionary<string,ResultEscrow>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2742,6 +2869,7 @@ public partial class ResultMachine : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("CatalogedMachines")]
 	public virtual List<CatalogedMachine>?					CatalogedMachines  {get; set;}
 
 
@@ -2749,13 +2877,13 @@ public partial class ResultMachine : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultMachine> _binding = new (
 			new() {
 
-			{ "CatalogedMachines", new PropertyListStruct ("CatalogedMachines", 
+			{ "CatalogedMachines", new PropertyListStruct ("CatalogedMachines", typeof (CatalogedMachine),
 					(IBinding data, object? value) => {(data as ResultMachine).CatalogedMachines = value as List<CatalogedMachine>;}, (IBinding data) => (data as ResultMachine).CatalogedMachines,
 					false, ()=>new  List<CatalogedMachine>(), ()=>new CatalogedMachine())}
-        }, __Tag,() => new ResultMachine(), Result._binding);
+        }, __Tag,() => new ResultMachine(), () => new List<ResultMachine>(), () => new Dictionary<string,ResultMachine>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2823,11 +2951,13 @@ public partial class ResultPIN : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("MessagePIN")]
 	public virtual MessagePin?					MessagePIN  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Uri")]
 	public virtual string?					Uri  {get; set;}
 
 
@@ -2836,15 +2966,15 @@ public partial class ResultPIN : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultPIN> _binding = new (
 			new() {
 
-			{ "MessagePIN", new PropertyStruct ("MessagePIN", 
+			{ "MessagePIN", new PropertyStruct ("MessagePIN", typeof (MessagePin),
 					(IBinding data, object? value) => {(data as ResultPIN).MessagePIN = value as MessagePin;}, (IBinding data) => (data as ResultPIN).MessagePIN,
 					false, ()=>new  MessagePin(), ()=>new MessagePin())},
 			{ "Uri", new PropertyString ("Uri", 
 					(IBinding data, string? value) => {(data as ResultPIN).Uri = value;}, (IBinding data) => (data as ResultPIN).Uri )}
-        }, __Tag,() => new ResultPIN(), Result._binding);
+        }, __Tag,() => new ResultPIN(), () => new List<ResultPIN>(), () => new Dictionary<string,ResultPIN>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2912,6 +3042,7 @@ public partial class ResultSequence : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Entries")]
 	public virtual LogEntry?					Entries  {get; set;}
 
 
@@ -2920,13 +3051,13 @@ public partial class ResultSequence : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultSequence> _binding = new (
 			new() {
 
-			{ "Entries", new PropertyStruct ("Entries", 
+			{ "Entries", new PropertyStruct ("Entries", typeof (LogEntry),
 					(IBinding data, object? value) => {(data as ResultSequence).Entries = value as LogEntry;}, (IBinding data) => (data as ResultSequence).Entries,
 					false, ()=>new  LogEntry(), ()=>new LogEntry())}
-        }, __Tag,() => new ResultSequence(), Result._binding);
+        }, __Tag,() => new ResultSequence(), () => new List<ResultSequence>(), () => new Dictionary<string,ResultSequence>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2994,36 +3125,43 @@ public partial class LogEntry : MeshmanShellResult {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Key")]
 	public virtual string?					Key  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Length")]
 	public virtual int?					Length  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Digest")]
 	public virtual byte[]?					Digest  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Recorded")]
 	public virtual DateTime?					Recorded  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Encrypted")]
 	public virtual bool?					Encrypted  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Signed")]
 	public virtual bool?					Signed  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("KeyExchange")]
 	public virtual bool?					KeyExchange  {get; set;}
 
 
@@ -3032,7 +3170,7 @@ public partial class LogEntry : MeshmanShellResult {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<LogEntry> _binding = new (
 			new() {
 
 			{ "Key", new PropertyString ("Key", 
@@ -3049,7 +3187,7 @@ public partial class LogEntry : MeshmanShellResult {
 					(IBinding data, bool? value) => {(data as LogEntry).Signed = value;}, (IBinding data) => (data as LogEntry).Signed )},
 			{ "KeyExchange", new PropertyBoolean ("KeyExchange", 
 					(IBinding data, bool? value) => {(data as LogEntry).KeyExchange = value;}, (IBinding data) => (data as LogEntry).KeyExchange )}
-        }, __Tag,() => new LogEntry(), null);
+        }, __Tag,() => new LogEntry(), () => new List<LogEntry>(), () => new Dictionary<string,LogEntry>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3116,6 +3254,7 @@ public partial class ResultEntry : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("CatalogEntry")]
 	public virtual CatalogedEntry?					CatalogEntry  {get; set;}
 
 
@@ -3124,13 +3263,13 @@ public partial class ResultEntry : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultEntry> _binding = new (
 			new() {
 
-			{ "CatalogEntry", new PropertyStruct ("CatalogEntry", 
+			{ "CatalogEntry", new PropertyStruct ("CatalogEntry", typeof (CatalogedEntry), 
 					(IBinding data, object? value) => {(data as ResultEntry).CatalogEntry = value as CatalogedEntry;}, (IBinding data) => (data as ResultEntry).CatalogEntry,
 					true)} 
-        }, __Tag,() => new ResultEntry(), Result._binding);
+        }, __Tag,() => new ResultEntry(), () => new List<ResultEntry>(), () => new Dictionary<string,ResultEntry>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3198,11 +3337,13 @@ public partial class ResultEntrySent : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("CatalogEntry")]
 	public virtual CatalogedEntry?					CatalogEntry  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Message")]
 	public virtual Message?					Message  {get; set;}
 
 
@@ -3211,16 +3352,16 @@ public partial class ResultEntrySent : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultEntrySent> _binding = new (
 			new() {
 
-			{ "CatalogEntry", new PropertyStruct ("CatalogEntry", 
+			{ "CatalogEntry", new PropertyStruct ("CatalogEntry", typeof (CatalogedEntry), 
 					(IBinding data, object? value) => {(data as ResultEntrySent).CatalogEntry = value as CatalogedEntry;}, (IBinding data) => (data as ResultEntrySent).CatalogEntry,
 					true)} ,
-			{ "Message", new PropertyStruct ("Message", 
+			{ "Message", new PropertyStruct ("Message", typeof (Message),
 					(IBinding data, object? value) => {(data as ResultEntrySent).Message = value as Message;}, (IBinding data) => (data as ResultEntrySent).Message,
 					false, ()=>new  Message(), ()=>new Message())}
-        }, __Tag,() => new ResultEntrySent(), Result._binding);
+        }, __Tag,() => new ResultEntrySent(), () => new List<ResultEntrySent>(), () => new Dictionary<string,ResultEntrySent>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3291,10 +3432,10 @@ public partial class ResultMail : ResultEntry {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultMail> _binding = new (
 			new() {
 
-        }, __Tag,() => new ResultMail(), ResultEntry._binding);
+        }, __Tag,() => new ResultMail(), () => new List<ResultMail>(), () => new Dictionary<string,ResultMail>(),ResultEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3365,10 +3506,10 @@ public partial class ResultSSH : ResultEntry {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultSSH> _binding = new (
 			new() {
 
-        }, __Tag,() => new ResultSSH(), ResultEntry._binding);
+        }, __Tag,() => new ResultSSH(), () => new List<ResultSSH>(), () => new Dictionary<string,ResultSSH>(),ResultEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3439,10 +3580,10 @@ public partial class ResultGroupCreate : ResultEntry {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultGroupCreate> _binding = new (
 			new() {
 
-        }, __Tag,() => new ResultGroupCreate(), ResultEntry._binding);
+        }, __Tag,() => new ResultGroupCreate(), () => new List<ResultGroupCreate>(), () => new Dictionary<string,ResultGroupCreate>(),ResultEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3510,11 +3651,13 @@ public partial class ResultSent : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Message")]
 	public virtual Message?					Message  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Status")]
 	public virtual string?					Status  {get; set;}
 
 
@@ -3523,15 +3666,15 @@ public partial class ResultSent : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultSent> _binding = new (
 			new() {
 
-			{ "Message", new PropertyStruct ("Message", 
+			{ "Message", new PropertyStruct ("Message", typeof (Message),
 					(IBinding data, object? value) => {(data as ResultSent).Message = value as Message;}, (IBinding data) => (data as ResultSent).Message,
 					false, ()=>new  Message(), ()=>new Message())},
 			{ "Status", new PropertyString ("Status", 
 					(IBinding data, string? value) => {(data as ResultSent).Status = value;}, (IBinding data) => (data as ResultSent).Status )}
-        }, __Tag,() => new ResultSent(), Result._binding);
+        }, __Tag,() => new ResultSent(), () => new List<ResultSent>(), () => new Dictionary<string,ResultSent>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3599,6 +3742,7 @@ public partial class ResultPending : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Messages")]
 	public virtual List<Message>?					Messages  {get; set;}
 
 
@@ -3606,13 +3750,13 @@ public partial class ResultPending : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultPending> _binding = new (
 			new() {
 
-			{ "Messages", new PropertyListStruct ("Messages", 
+			{ "Messages", new PropertyListStruct ("Messages", typeof (Message),
 					(IBinding data, object? value) => {(data as ResultPending).Messages = value as List<Message>;}, (IBinding data) => (data as ResultPending).Messages,
 					false, ()=>new  List<Message>(), ()=>new Message())}
-        }, __Tag,() => new ResultPending(), Result._binding);
+        }, __Tag,() => new ResultPending(), () => new List<ResultPending>(), () => new Dictionary<string,ResultPending>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3680,6 +3824,7 @@ public partial class ResultAuthorize : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Messages")]
 	public virtual List<ProcessResult>?					Messages  {get; set;}
 
 
@@ -3687,14 +3832,14 @@ public partial class ResultAuthorize : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultAuthorize> _binding = new (
 			new() {
 
-			{ "Messages", new PropertyListStruct ("Messages", 
+			{ "Messages", new PropertyListStruct ("Messages", typeof (ProcessResult), 
 					(IBinding data, object? value) => {(data as ResultAuthorize).Messages = value as List<ProcessResult>;}, (IBinding data) => (data as ResultAuthorize).Messages,
 					true, ()=>new List<ProcessResult>()
 )} 
-        }, __Tag,() => new ResultAuthorize(), Result._binding);
+        }, __Tag,() => new ResultAuthorize(), () => new List<ResultAuthorize>(), () => new Dictionary<string,ResultAuthorize>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3762,6 +3907,7 @@ public partial class ResultProcess : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("ProcessResult")]
 	public virtual Message?					ProcessResult  {get; set;}
 
 
@@ -3770,13 +3916,13 @@ public partial class ResultProcess : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultProcess> _binding = new (
 			new() {
 
-			{ "ProcessResult", new PropertyStruct ("ProcessResult", 
+			{ "ProcessResult", new PropertyStruct ("ProcessResult", typeof (Message),
 					(IBinding data, object? value) => {(data as ResultProcess).ProcessResult = value as Message;}, (IBinding data) => (data as ResultProcess).ProcessResult,
 					false, ()=>new  Message(), ()=>new Message())}
-        }, __Tag,() => new ResultProcess(), Result._binding);
+        }, __Tag,() => new ResultProcess(), () => new List<ResultProcess>(), () => new Dictionary<string,ResultProcess>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3844,36 +3990,43 @@ public partial class ResultConnect : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Profile")]
 	public virtual Profile?					Profile  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("CatalogedMachine")]
 	public virtual CatalogedMachine?					CatalogedMachine  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("ActivationAccount")]
 	public virtual ActivationAccount?					ActivationAccount  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("ActivationCommon")]
 	public virtual ActivationCommon?					ActivationCommon  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("RequestConnection")]
 	public virtual RequestConnection?					RequestConnection  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("AcknowledgeConnection")]
 	public virtual AcknowledgeConnection?					AcknowledgeConnection  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("RespondConnection")]
 	public virtual RespondConnection?					RespondConnection  {get; set;}
 
 
@@ -3882,31 +4035,31 @@ public partial class ResultConnect : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultConnect> _binding = new (
 			new() {
 
-			{ "Profile", new PropertyStruct ("Profile", 
+			{ "Profile", new PropertyStruct ("Profile", typeof (Profile), 
 					(IBinding data, object? value) => {(data as ResultConnect).Profile = value as Profile;}, (IBinding data) => (data as ResultConnect).Profile,
 					true)} ,
-			{ "CatalogedMachine", new PropertyStruct ("CatalogedMachine", 
+			{ "CatalogedMachine", new PropertyStruct ("CatalogedMachine", typeof (CatalogedMachine),
 					(IBinding data, object? value) => {(data as ResultConnect).CatalogedMachine = value as CatalogedMachine;}, (IBinding data) => (data as ResultConnect).CatalogedMachine,
 					false, ()=>new  CatalogedMachine(), ()=>new CatalogedMachine())},
-			{ "ActivationAccount", new PropertyStruct ("ActivationAccount", 
+			{ "ActivationAccount", new PropertyStruct ("ActivationAccount", typeof (ActivationAccount),
 					(IBinding data, object? value) => {(data as ResultConnect).ActivationAccount = value as ActivationAccount;}, (IBinding data) => (data as ResultConnect).ActivationAccount,
 					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount())},
-			{ "ActivationCommon", new PropertyStruct ("ActivationCommon", 
+			{ "ActivationCommon", new PropertyStruct ("ActivationCommon", typeof (ActivationCommon),
 					(IBinding data, object? value) => {(data as ResultConnect).ActivationCommon = value as ActivationCommon;}, (IBinding data) => (data as ResultConnect).ActivationCommon,
 					false, ()=>new  ActivationCommon(), ()=>new ActivationCommon())},
-			{ "RequestConnection", new PropertyStruct ("RequestConnection", 
+			{ "RequestConnection", new PropertyStruct ("RequestConnection", typeof (RequestConnection),
 					(IBinding data, object? value) => {(data as ResultConnect).RequestConnection = value as RequestConnection;}, (IBinding data) => (data as ResultConnect).RequestConnection,
 					false, ()=>new  RequestConnection(), ()=>new RequestConnection())},
-			{ "AcknowledgeConnection", new PropertyStruct ("AcknowledgeConnection", 
+			{ "AcknowledgeConnection", new PropertyStruct ("AcknowledgeConnection", typeof (AcknowledgeConnection),
 					(IBinding data, object? value) => {(data as ResultConnect).AcknowledgeConnection = value as AcknowledgeConnection;}, (IBinding data) => (data as ResultConnect).AcknowledgeConnection,
 					false, ()=>new  AcknowledgeConnection(), ()=>new AcknowledgeConnection())},
-			{ "RespondConnection", new PropertyStruct ("RespondConnection", 
+			{ "RespondConnection", new PropertyStruct ("RespondConnection", typeof (RespondConnection),
 					(IBinding data, object? value) => {(data as ResultConnect).RespondConnection = value as RespondConnection;}, (IBinding data) => (data as ResultConnect).RespondConnection,
 					false, ()=>new  RespondConnection(), ()=>new RespondConnection())}
-        }, __Tag,() => new ResultConnect(), Result._binding);
+        }, __Tag,() => new ResultConnect(), () => new List<ResultConnect>(), () => new Dictionary<string,ResultConnect>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3974,6 +4127,7 @@ public partial class ResultTransactionRequest : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Identifier")]
 	public virtual string?					Identifier  {get; set;}
 
 
@@ -3982,12 +4136,12 @@ public partial class ResultTransactionRequest : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultTransactionRequest> _binding = new (
 			new() {
 
 			{ "Identifier", new PropertyString ("Identifier", 
 					(IBinding data, string? value) => {(data as ResultTransactionRequest).Identifier = value;}, (IBinding data) => (data as ResultTransactionRequest).Identifier )}
-        }, __Tag,() => new ResultTransactionRequest(), Result._binding);
+        }, __Tag,() => new ResultTransactionRequest(), () => new List<ResultTransactionRequest>(), () => new Dictionary<string,ResultTransactionRequest>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -4055,11 +4209,13 @@ public partial class ResultReceived : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Status")]
 	public virtual string?					Status  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Message")]
 	public virtual Message?					Message  {get; set;}
 
 
@@ -4068,15 +4224,15 @@ public partial class ResultReceived : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultReceived> _binding = new (
 			new() {
 
 			{ "Status", new PropertyString ("Status", 
 					(IBinding data, string? value) => {(data as ResultReceived).Status = value;}, (IBinding data) => (data as ResultReceived).Status )},
-			{ "Message", new PropertyStruct ("Message", 
+			{ "Message", new PropertyStruct ("Message", typeof (Message),
 					(IBinding data, object? value) => {(data as ResultReceived).Message = value as Message;}, (IBinding data) => (data as ResultReceived).Message,
 					false, ()=>new  Message(), ()=>new Message())}
-        }, __Tag,() => new ResultReceived(), Result._binding);
+        }, __Tag,() => new ResultReceived(), () => new List<ResultReceived>(), () => new Dictionary<string,ResultReceived>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -4144,6 +4300,7 @@ public partial class ResultApplication : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Application")]
 	public virtual CatalogedApplication?					Application  {get; set;}
 
 
@@ -4152,13 +4309,13 @@ public partial class ResultApplication : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultApplication> _binding = new (
 			new() {
 
-			{ "Application", new PropertyStruct ("Application", 
+			{ "Application", new PropertyStruct ("Application", typeof (CatalogedApplication), 
 					(IBinding data, object? value) => {(data as ResultApplication).Application = value as CatalogedApplication;}, (IBinding data) => (data as ResultApplication).Application,
 					true)} 
-        }, __Tag,() => new ResultApplication(), Result._binding);
+        }, __Tag,() => new ResultApplication(), () => new List<ResultApplication>(), () => new Dictionary<string,ResultApplication>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -4226,6 +4383,7 @@ public partial class ResultApplicationList : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Applications")]
 	public virtual List<CatalogedApplication>?					Applications  {get; set;}
 
 
@@ -4233,14 +4391,14 @@ public partial class ResultApplicationList : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultApplicationList> _binding = new (
 			new() {
 
-			{ "Applications", new PropertyListStruct ("Applications", 
+			{ "Applications", new PropertyListStruct ("Applications", typeof (CatalogedApplication), 
 					(IBinding data, object? value) => {(data as ResultApplicationList).Applications = value as List<CatalogedApplication>;}, (IBinding data) => (data as ResultApplicationList).Applications,
 					true, ()=>new List<CatalogedApplication>()
 )} 
-        }, __Tag,() => new ResultApplicationList(), Result._binding);
+        }, __Tag,() => new ResultApplicationList(), () => new List<ResultApplicationList>(), () => new Dictionary<string,ResultApplicationList>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -4308,11 +4466,13 @@ public partial class ResultCallsign : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("CallsignApplication")]
 	public virtual CatalogedApplicationCallsign?					CallsignApplication  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Message")]
 	public virtual Message?					Message  {get; set;}
 
 
@@ -4321,16 +4481,16 @@ public partial class ResultCallsign : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultCallsign> _binding = new (
 			new() {
 
-			{ "CallsignApplication", new PropertyStruct ("CallsignApplication", 
+			{ "CallsignApplication", new PropertyStruct ("CallsignApplication", typeof (CatalogedApplicationCallsign),
 					(IBinding data, object? value) => {(data as ResultCallsign).CallsignApplication = value as CatalogedApplicationCallsign;}, (IBinding data) => (data as ResultCallsign).CallsignApplication,
 					false, ()=>new  CatalogedApplicationCallsign(), ()=>new CatalogedApplicationCallsign())},
-			{ "Message", new PropertyStruct ("Message", 
+			{ "Message", new PropertyStruct ("Message", typeof (Message),
 					(IBinding data, object? value) => {(data as ResultCallsign).Message = value as Message;}, (IBinding data) => (data as ResultCallsign).Message,
 					false, ()=>new  Message(), ()=>new Message())}
-        }, __Tag,() => new ResultCallsign(), Result._binding);
+        }, __Tag,() => new ResultCallsign(), () => new List<ResultCallsign>(), () => new Dictionary<string,ResultCallsign>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -4398,11 +4558,13 @@ public partial class ResultCallsignResolution : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("CallsignRegistration")]
 	public virtual Registration?					CallsignRegistration  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Message")]
 	public virtual Message?					Message  {get; set;}
 
 
@@ -4411,16 +4573,16 @@ public partial class ResultCallsignResolution : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultCallsignResolution> _binding = new (
 			new() {
 
-			{ "CallsignRegistration", new PropertyStruct ("CallsignRegistration", 
+			{ "CallsignRegistration", new PropertyStruct ("CallsignRegistration", typeof (Registration),
 					(IBinding data, object? value) => {(data as ResultCallsignResolution).CallsignRegistration = value as Registration;}, (IBinding data) => (data as ResultCallsignResolution).CallsignRegistration,
 					false, ()=>new  Registration(), ()=>new Registration())},
-			{ "Message", new PropertyStruct ("Message", 
+			{ "Message", new PropertyStruct ("Message", typeof (Message),
 					(IBinding data, object? value) => {(data as ResultCallsignResolution).Message = value as Message;}, (IBinding data) => (data as ResultCallsignResolution).Message,
 					false, ()=>new  Message(), ()=>new Message())}
-        }, __Tag,() => new ResultCallsignResolution(), Result._binding);
+        }, __Tag,() => new ResultCallsignResolution(), () => new List<ResultCallsignResolution>(), () => new Dictionary<string,ResultCallsignResolution>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -4488,6 +4650,7 @@ public partial class ResultCallsignList : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("CallsignApplication")]
 	public virtual IEnumerable<CatalogedApplicationCallsign>				CallsignApplication  {get; set;}
 
 
@@ -4495,13 +4658,13 @@ public partial class ResultCallsignList : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultCallsignList> _binding = new (
 			new() {
 
-			{ "CallsignApplication", new PropertyListStruct ("CallsignApplication", 
+			{ "CallsignApplication", new PropertyListStruct ("CallsignApplication", typeof (CatalogedApplicationCallsign),
 					(IBinding data, object? value) => {(data as ResultCallsignList).CallsignApplication = value as List<CatalogedApplicationCallsign>;}, (IBinding data) => (data as ResultCallsignList).CallsignApplication,
 					false, ()=>new  List<CatalogedApplicationCallsign>(), ()=>new CatalogedApplicationCallsign())}
-        }, __Tag,() => new ResultCallsignList(), Result._binding);
+        }, __Tag,() => new ResultCallsignList(), () => new List<ResultCallsignList>(), () => new Dictionary<string,ResultCallsignList>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;

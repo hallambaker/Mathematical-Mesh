@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/28/2025 5:41:19 PM
+//  This file was automatically generated at 5/1/2025 6:02:20 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -39,6 +39,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -94,6 +96,36 @@ public abstract partial class Oauth : global::Goedel.Protocol.JsonObject {
 	    {"JwtDpop", JwtDpop._Factory}
 		};
 
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+
+	    {typeof(ResourceServerMetadata), ResourceServerMetadata._binding},
+	    {typeof(AuthorizationServerMetadata), AuthorizationServerMetadata._binding},
+	    {typeof(AuthorizationRequest), AuthorizationRequest._binding},
+	    {typeof(AuthorizationRequest2), AuthorizationRequest2._binding},
+	    {typeof(PushedAuthorizationResponse), PushedAuthorizationResponse._binding},
+	    {typeof(AuthorizationResponse), AuthorizationResponse._binding},
+	    {typeof(ErrorResponse), ErrorResponse._binding},
+	    {typeof(ClientMetadata), ClientMetadata._binding},
+	    {typeof(DidDocument), DidDocument._binding},
+	    {typeof(AuthorizationCodeGrant), AuthorizationCodeGrant._binding},
+	    {typeof(ClientCredentialsGrant), ClientCredentialsGrant._binding},
+	    {typeof(RefreshTokenGrant), RefreshTokenGrant._binding},
+	    {typeof(DidVerificationMethod), DidVerificationMethod._binding},
+	    {typeof(DidService), DidService._binding},
+	    {typeof(AuthenticationResponse), AuthenticationResponse._binding},
+	    {typeof(DpopPayload), DpopPayload._binding},
+	    {typeof(DpopConfirmation), DpopConfirmation._binding},
+	    {typeof(JwtDpop), JwtDpop._binding}
+		};
+
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -101,7 +133,10 @@ public abstract partial class Oauth : global::Goedel.Protocol.JsonObject {
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -128,23 +163,28 @@ public partial class ResourceServerMetadata : Oauth {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("resource")]
 	public virtual string?					Resource  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("authorization_servers")]
 	public virtual List<string>?					AuthorizationServers  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("scopes_supported")]
 	public virtual List<string>?					ScopesSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("bearer_methods_supported")]
 	public virtual List<string>?					BearerMethodsSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("resource_documentation")]
 	public virtual string?					ResourceDocumentation  {get; set;}
 
 
@@ -153,7 +193,7 @@ public partial class ResourceServerMetadata : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResourceServerMetadata> _binding = new (
 			new() {
 
 			{ "resource", new PropertyString ("resource", 
@@ -166,7 +206,7 @@ public partial class ResourceServerMetadata : Oauth {
 					(IBinding data, List<string>? value) => {(data as ResourceServerMetadata).BearerMethodsSupported = value;}, (IBinding data) => (data as ResourceServerMetadata).BearerMethodsSupported )},
 			{ "resource_documentation", new PropertyString ("resource_documentation", 
 					(IBinding data, string? value) => {(data as ResourceServerMetadata).ResourceDocumentation = value;}, (IBinding data) => (data as ResourceServerMetadata).ResourceDocumentation )}
-        }, __Tag,() => new ResourceServerMetadata(), null);
+        }, __Tag,() => new ResourceServerMetadata(), () => new List<ResourceServerMetadata>(), () => new Dictionary<string,ResourceServerMetadata>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -235,122 +275,149 @@ public partial class AuthorizationServerMetadata : Oauth {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("issuer")]
 	public virtual string?					Issuer  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("scopes_supported")]
 	public virtual List<string>?					ScopesSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("subject_types_supported")]
 	public virtual List<string>?					SubjectTypesSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("response_types_supported")]
 	public virtual List<string>?					ResponseTypesSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("response_modes_supported")]
 	public virtual List<string>?					ResponseModesSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("grant_types_supported")]
 	public virtual List<string>?					GrantTypesSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("code_challenge_methods_supported")]
 	public virtual List<string>?					CodeChallengeMethodsSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("ui_locales_supported")]
 	public virtual List<string>?					UiLocalesSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("display_values_supported")]
 	public virtual List<string>?					DisplayValuesSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("authorization_response_iss_parameter_supported")]
 	public virtual bool?					AuthorizationResponseIssParameterSupported  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("request_object_signing_alg_values_supported")]
 	public virtual List<string>?					RequestObjectSigningAlgValuesSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("request_object_encryption_alg_values_supported")]
 	public virtual List<string>?					RequestObjectEncryptionAlgValuesSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("request_object_encryption_enc_values_supported")]
 	public virtual List<string>?					RequestObjectEncryptionEncValuesSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("request_parameter_supported")]
 	public virtual bool?					RequestParameterSupported  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("request_uri_parameter_supported")]
 	public virtual bool?					RequestUriParameterSupported  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("require_request_uri_registration")]
 	public virtual bool?					RequireRequestUriRegistration  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("jwks_uri")]
 	public virtual string?					JwksUri  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("authorization_endpoint")]
 	public virtual string?					AuthorizationEndpoint  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("token_endpoint")]
 	public virtual string?					TokenEndpoint  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("token_endpoint_auth_methods_supported")]
 	public virtual List<string>?					TokenEndpointAuthMethodsSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("token_endpoint_auth_signing_alg_values_supported")]
 	public virtual List<string>?					TokenEndpointAuthSigningAlgValuesSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("revocation_endpoint")]
 	public virtual string?					RevocationEndpoint  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("introspection_endpoint")]
 	public virtual string?					IntrospectionEndpoint  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("pushed_authorization_request_endpoint")]
 	public virtual string?					PushedAuthorizationRequestEndpoint  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("require_pushed_authorization_requests")]
 	public virtual bool?					RequirePushedAuthorizationRequests  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("dpop_signing_alg_values_supported")]
 	public virtual List<string>?					DpopSigningAlgValuesSupported  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("client_id_metadata_document_supported")]
 	public virtual bool?					ClientIdMetadataDocumentSupported  {get; set;}
 
 
@@ -359,7 +426,7 @@ public partial class AuthorizationServerMetadata : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<AuthorizationServerMetadata> _binding = new (
 			new() {
 
 			{ "issuer", new PropertyString ("issuer", 
@@ -416,7 +483,7 @@ public partial class AuthorizationServerMetadata : Oauth {
 					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).DpopSigningAlgValuesSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).DpopSigningAlgValuesSupported )},
 			{ "client_id_metadata_document_supported", new PropertyBoolean ("client_id_metadata_document_supported", 
 					(IBinding data, bool? value) => {(data as AuthorizationServerMetadata).ClientIdMetadataDocumentSupported = value;}, (IBinding data) => (data as AuthorizationServerMetadata).ClientIdMetadataDocumentSupported )}
-        }, __Tag,() => new AuthorizationServerMetadata(), null);
+        }, __Tag,() => new AuthorizationServerMetadata(), () => new List<AuthorizationServerMetadata>(), () => new Dictionary<string,AuthorizationServerMetadata>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -486,30 +553,35 @@ public partial class AuthorizationRequest : Oauth {
         ///Identifies the client software
         /// </summary>
 
+	[JsonPropertyName("client_id")]
 	public virtual string?					ClientId  {get; set;}
 
         /// <summary>
         /// must be code
         /// </summary>
 
+	[JsonPropertyName("response_type")]
 	public virtual string?					ResponseType  {get; set;}
 
         /// <summary>
         /// the PKCE challenge value. 
         /// </summary>
 
+	[JsonPropertyName("code_challenge")]
 	public virtual string?					CodeChallenge  {get; set;}
 
         /// <summary>
         ///which code challenge method is used, for example S256
         /// </summary>
 
+	[JsonPropertyName("code_challenge_method")]
 	public virtual string?					CodeChallengeMethod  {get; set;}
 
         /// <summary>
         ///random token used to verify the authorization request against the response
         /// </summary>
 
+	[JsonPropertyName("state")]
 	public virtual string?					State  {get; set;}
 
         /// <summary>
@@ -517,30 +589,35 @@ public partial class AuthorizationRequest : Oauth {
         ///with the application_type declared in the client metadata
         /// </summary>
 
+	[JsonPropertyName("redirect_uri")]
 	public virtual string?					RedirectUri  {get; set;}
 
         /// <summary>
         ///Must be a subset of the scopes declared in client metadata. Must include atproto
         /// </summary>
 
+	[JsonPropertyName("scope")]
 	public virtual string?					Scope  {get; set;}
 
         /// <summary>
         ///Used by confidential clients to describe the client authentication mechanism
         /// </summary>
 
+	[JsonPropertyName("client_assertion_type")]
 	public virtual string?					ClientAssertionType  {get; set;}
 
         /// <summary>
         ///Only used for confidential clients
         /// </summary>
 
+	[JsonPropertyName("client_assertion")]
 	public virtual string?					ClientAssertion  {get; set;}
 
         /// <summary>
         ///Account identifier to be used for login
         /// </summary>
 
+	[JsonPropertyName("login_hint")]
 	public virtual string?					LoginHint  {get; set;}
 
 
@@ -549,7 +626,7 @@ public partial class AuthorizationRequest : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<AuthorizationRequest> _binding = new (
 			new() {
 
 			{ "client_id", new PropertyString ("client_id", 
@@ -572,7 +649,7 @@ public partial class AuthorizationRequest : Oauth {
 					(IBinding data, string? value) => {(data as AuthorizationRequest).ClientAssertion = value;}, (IBinding data) => (data as AuthorizationRequest).ClientAssertion )},
 			{ "login_hint", new PropertyString ("login_hint", 
 					(IBinding data, string? value) => {(data as AuthorizationRequest).LoginHint = value;}, (IBinding data) => (data as AuthorizationRequest).LoginHint )}
-        }, __Tag,() => new AuthorizationRequest(), null);
+        }, __Tag,() => new AuthorizationRequest(), () => new List<AuthorizationRequest>(), () => new Dictionary<string,AuthorizationRequest>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -640,12 +717,14 @@ public partial class AuthorizationRequest2 : Oauth {
         ///Identifies the client software
         /// </summary>
 
+	[JsonPropertyName("client_id")]
 	public virtual string?					ClientId  {get; set;}
 
         /// <summary>
         ///The RequestUri returned by the server
         /// </summary>
 
+	[JsonPropertyName("request_uri")]
 	public virtual string?					RequestUri  {get; set;}
 
 
@@ -654,14 +733,14 @@ public partial class AuthorizationRequest2 : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<AuthorizationRequest2> _binding = new (
 			new() {
 
 			{ "client_id", new PropertyString ("client_id", 
 					(IBinding data, string? value) => {(data as AuthorizationRequest2).ClientId = value;}, (IBinding data) => (data as AuthorizationRequest2).ClientId )},
 			{ "request_uri", new PropertyString ("request_uri", 
 					(IBinding data, string? value) => {(data as AuthorizationRequest2).RequestUri = value;}, (IBinding data) => (data as AuthorizationRequest2).RequestUri )}
-        }, __Tag,() => new AuthorizationRequest2(), null);
+        }, __Tag,() => new AuthorizationRequest2(), () => new List<AuthorizationRequest2>(), () => new Dictionary<string,AuthorizationRequest2>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -732,6 +811,7 @@ public partial class PushedAuthorizationResponse : Oauth {
         ///5 and 600 seconds).
         /// </summary>
 
+	[JsonPropertyName("expires_in")]
 	public virtual int?					ExpiresIn  {get; set;}
 
         /// <summary>
@@ -743,6 +823,7 @@ public partial class PushedAuthorizationResponse : Oauth {
         ///the authorization request data available to other parties via this URI.
         /// </summary>
 
+	[JsonPropertyName("request_uri")]
 	public virtual string?					RequestUri  {get; set;}
 
 
@@ -751,14 +832,14 @@ public partial class PushedAuthorizationResponse : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<PushedAuthorizationResponse> _binding = new (
 			new() {
 
 			{ "expires_in", new PropertyInteger32 ("expires_in", 
 					(IBinding data, int? value) => {(data as PushedAuthorizationResponse).ExpiresIn = value;}, (IBinding data) => (data as PushedAuthorizationResponse).ExpiresIn )},
 			{ "request_uri", new PropertyString ("request_uri", 
 					(IBinding data, string? value) => {(data as PushedAuthorizationResponse).RequestUri = value;}, (IBinding data) => (data as PushedAuthorizationResponse).RequestUri )}
-        }, __Tag,() => new PushedAuthorizationResponse(), null);
+        }, __Tag,() => new PushedAuthorizationResponse(), () => new List<PushedAuthorizationResponse>(), () => new Dictionary<string,PushedAuthorizationResponse>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -832,6 +913,7 @@ public partial class AuthorizationResponse : Oauth {
         ///code challenge and redirect URI.
         /// </summary>
 
+	[JsonPropertyName("code")]
 	public virtual string?					Code  {get; set;}
 
         /// <summary>
@@ -839,6 +921,7 @@ public partial class AuthorizationResponse : Oauth {
         ///The exact value received from the client.
         /// </summary>
 
+	[JsonPropertyName("state")]
 	public virtual string?					State  {get; set;}
 
         /// <summary>
@@ -846,6 +929,7 @@ public partial class AuthorizationResponse : Oauth {
         ///mix-up attacks, if the client interacts with more than one authorization server.
         /// </summary>
 
+	[JsonPropertyName("iss")]
 	public virtual string?					Iss  {get; set;}
 
 
@@ -854,7 +938,7 @@ public partial class AuthorizationResponse : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<AuthorizationResponse> _binding = new (
 			new() {
 
 			{ "code", new PropertyString ("code", 
@@ -863,7 +947,7 @@ public partial class AuthorizationResponse : Oauth {
 					(IBinding data, string? value) => {(data as AuthorizationResponse).State = value;}, (IBinding data) => (data as AuthorizationResponse).State )},
 			{ "iss", new PropertyString ("iss", 
 					(IBinding data, string? value) => {(data as AuthorizationResponse).Iss = value;}, (IBinding data) => (data as AuthorizationResponse).Iss )}
-        }, __Tag,() => new AuthorizationResponse(), null);
+        }, __Tag,() => new AuthorizationResponse(), () => new List<AuthorizationResponse>(), () => new Dictionary<string,AuthorizationResponse>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -946,6 +1030,7 @@ public partial class ErrorResponse : Oauth {
         ///be returned to the client via an HTTP redirect.)
         /// </summary>
 
+	[JsonPropertyName("error")]
 	public virtual string?					Error  {get; set;}
 
         /// <summary>
@@ -955,6 +1040,7 @@ public partial class ErrorResponse : Oauth {
         ///%x20-21 / %x23-5B / %x5D-7E.
         /// </summary>
 
+	[JsonPropertyName("errorDescription")]
 	public virtual string?					ErrorDescription  {get; set;}
 
         /// <summary>
@@ -964,6 +1050,7 @@ public partial class ErrorResponse : Oauth {
         ///thus MUST NOT include characters outside the set %x21 / %x23-5B / %x5D-7E
         /// </summary>
 
+	[JsonPropertyName("errorUri")]
 	public virtual string?					ErrorUri  {get; set;}
 
         /// <summary>
@@ -971,6 +1058,7 @@ public partial class ErrorResponse : Oauth {
         ///The exact value received from the client
         /// </summary>
 
+	[JsonPropertyName("state")]
 	public virtual string?					State  {get; set;}
 
         /// <summary>
@@ -978,6 +1066,7 @@ public partial class ErrorResponse : Oauth {
         ///mix-up attacks, if the client interacts with more than one authorization server.
         /// </summary>
 
+	[JsonPropertyName("iss")]
 	public virtual string?					Iss  {get; set;}
 
 
@@ -986,7 +1075,7 @@ public partial class ErrorResponse : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ErrorResponse> _binding = new (
 			new() {
 
 			{ "error", new PropertyString ("error", 
@@ -999,7 +1088,7 @@ public partial class ErrorResponse : Oauth {
 					(IBinding data, string? value) => {(data as ErrorResponse).State = value;}, (IBinding data) => (data as ErrorResponse).State )},
 			{ "iss", new PropertyString ("iss", 
 					(IBinding data, string? value) => {(data as ErrorResponse).Iss = value;}, (IBinding data) => (data as ErrorResponse).Iss )}
-        }, __Tag,() => new ErrorResponse(), null);
+        }, __Tag,() => new ErrorResponse(), () => new List<ErrorResponse>(), () => new Dictionary<string,ErrorResponse>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1066,73 +1155,88 @@ public partial class ClientMetadata : Oauth {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("client_id")]
 	public virtual string?					ClientId  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("application_type")]
 	public virtual string?					ApplicationType  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("grant_types")]
 	public virtual List<string>?					GrantTypes  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("scope")]
 	public virtual string?					Scope  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("response_types")]
 	public virtual List<string>?					ResponseTypes  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("redirect_uris")]
 	public virtual List<string>?					RedirectUris  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("dpop_bound_access_tokens")]
 	public virtual bool?					DpopBoundAccessTokens  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("token_endpoint_auth_method")]
 	public virtual string?					TokenEndpointAuthMethod  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("token_endpoint_auth_signing_alg")]
 	public virtual string?					TokenEndpointAuthSigningAlg  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("jwks")]
 	public virtual JWKS?					Jwks  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("client_name")]
 	public virtual string?					ClientName  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("client_uri")]
 	public virtual string?					ClientUri  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("logo_uri")]
 	public virtual string?					LogoUri  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("tos_uri")]
 	public virtual string?					TosUri  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("policy_uri")]
 	public virtual string?					PolicyUri  {get; set;}
 
 
@@ -1141,7 +1245,7 @@ public partial class ClientMetadata : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ClientMetadata> _binding = new (
 			new() {
 
 			{ "client_id", new PropertyString ("client_id", 
@@ -1162,7 +1266,7 @@ public partial class ClientMetadata : Oauth {
 					(IBinding data, string? value) => {(data as ClientMetadata).TokenEndpointAuthMethod = value;}, (IBinding data) => (data as ClientMetadata).TokenEndpointAuthMethod )},
 			{ "token_endpoint_auth_signing_alg", new PropertyString ("token_endpoint_auth_signing_alg", 
 					(IBinding data, string? value) => {(data as ClientMetadata).TokenEndpointAuthSigningAlg = value;}, (IBinding data) => (data as ClientMetadata).TokenEndpointAuthSigningAlg )},
-			{ "jwks", new PropertyStruct ("jwks", 
+			{ "jwks", new PropertyStruct ("jwks", typeof (JWKS),
 					(IBinding data, object? value) => {(data as ClientMetadata).Jwks = value as JWKS;}, (IBinding data) => (data as ClientMetadata).Jwks,
 					false, ()=>new  JWKS(), ()=>new JWKS())},
 			{ "client_name", new PropertyString ("client_name", 
@@ -1175,7 +1279,7 @@ public partial class ClientMetadata : Oauth {
 					(IBinding data, string? value) => {(data as ClientMetadata).TosUri = value;}, (IBinding data) => (data as ClientMetadata).TosUri )},
 			{ "policy_uri", new PropertyString ("policy_uri", 
 					(IBinding data, string? value) => {(data as ClientMetadata).PolicyUri = value;}, (IBinding data) => (data as ClientMetadata).PolicyUri )}
-        }, __Tag,() => new ClientMetadata(), null);
+        }, __Tag,() => new ClientMetadata(), () => new List<ClientMetadata>(), () => new Dictionary<string,ClientMetadata>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1242,23 +1346,28 @@ public partial class DidDocument : Oauth {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@context")]
 	public virtual List<string>?					Contexts  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("id")]
 	public virtual string?					Id  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("alsoKnownAs")]
 	public virtual List<string>?					AlsoKnownAs  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("verificationMethod")]
 	public virtual List<DidVerificationMethod>?					VerificationMethod  {get; set;}
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("service")]
 	public virtual List<DidService>?					Service  {get; set;}
 
 
@@ -1266,7 +1375,7 @@ public partial class DidDocument : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<DidDocument> _binding = new (
 			new() {
 
 			{ "@context", new PropertyListString ("@context", 
@@ -1275,13 +1384,13 @@ public partial class DidDocument : Oauth {
 					(IBinding data, string? value) => {(data as DidDocument).Id = value;}, (IBinding data) => (data as DidDocument).Id )},
 			{ "alsoKnownAs", new PropertyListString ("alsoKnownAs", 
 					(IBinding data, List<string>? value) => {(data as DidDocument).AlsoKnownAs = value;}, (IBinding data) => (data as DidDocument).AlsoKnownAs )},
-			{ "verificationMethod", new PropertyListStruct ("verificationMethod", 
+			{ "verificationMethod", new PropertyListStruct ("verificationMethod", typeof (DidVerificationMethod),
 					(IBinding data, object? value) => {(data as DidDocument).VerificationMethod = value as List<DidVerificationMethod>;}, (IBinding data) => (data as DidDocument).VerificationMethod,
 					false, ()=>new  List<DidVerificationMethod>(), ()=>new DidVerificationMethod())},
-			{ "service", new PropertyListStruct ("service", 
+			{ "service", new PropertyListStruct ("service", typeof (DidService),
 					(IBinding data, object? value) => {(data as DidDocument).Service = value as List<DidService>;}, (IBinding data) => (data as DidDocument).Service,
 					false, ()=>new  List<DidService>(), ()=>new DidService())}
-        }, __Tag,() => new DidDocument(), null);
+        }, __Tag,() => new DidDocument(), () => new List<DidDocument>(), () => new Dictionary<string,DidDocument>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1349,12 +1458,14 @@ public partial class AuthorizationCodeGrant : Oauth {
         ///"authorization_code"
         /// </summary>
 
+	[JsonPropertyName("grant_type")]
 	public virtual string?					GrantType  {get; set;}
 
         /// <summary>
         ///The authorization code received from the authorization server.
         /// </summary>
 
+	[JsonPropertyName("code")]
 	public virtual string?					Code  {get; set;}
 
         /// <summary>
@@ -1363,12 +1474,14 @@ public partial class AuthorizationCodeGrant : Oauth {
         ///verifier string.
         /// </summary>
 
+	[JsonPropertyName("code_verifier")]
 	public virtual string?					CodeVerifier  {get; set;}
 
         /// <summary>
         ///Identifies the client software
         /// </summary>
 
+	[JsonPropertyName("client_id")]
 	public virtual string?					ClientId  {get; set;}
 
 
@@ -1377,7 +1490,7 @@ public partial class AuthorizationCodeGrant : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<AuthorizationCodeGrant> _binding = new (
 			new() {
 
 			{ "grant_type", new PropertyString ("grant_type", 
@@ -1388,7 +1501,7 @@ public partial class AuthorizationCodeGrant : Oauth {
 					(IBinding data, string? value) => {(data as AuthorizationCodeGrant).CodeVerifier = value;}, (IBinding data) => (data as AuthorizationCodeGrant).CodeVerifier )},
 			{ "client_id", new PropertyString ("client_id", 
 					(IBinding data, string? value) => {(data as AuthorizationCodeGrant).ClientId = value;}, (IBinding data) => (data as AuthorizationCodeGrant).ClientId )}
-        }, __Tag,() => new AuthorizationCodeGrant(), null);
+        }, __Tag,() => new AuthorizationCodeGrant(), () => new List<AuthorizationCodeGrant>(), () => new Dictionary<string,AuthorizationCodeGrant>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1456,6 +1569,7 @@ public partial class ClientCredentialsGrant : Oauth {
         ///REQUIRED. "client_credentials"
         /// </summary>
 
+	[JsonPropertyName("grant_type")]
 	public virtual string?					GrantType  {get; set;}
 
 
@@ -1464,12 +1578,12 @@ public partial class ClientCredentialsGrant : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ClientCredentialsGrant> _binding = new (
 			new() {
 
 			{ "grant_type", new PropertyString ("grant_type", 
 					(IBinding data, string? value) => {(data as ClientCredentialsGrant).GrantType = value;}, (IBinding data) => (data as ClientCredentialsGrant).GrantType )}
-        }, __Tag,() => new ClientCredentialsGrant(), null);
+        }, __Tag,() => new ClientCredentialsGrant(), () => new List<ClientCredentialsGrant>(), () => new Dictionary<string,ClientCredentialsGrant>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1537,18 +1651,21 @@ public partial class RefreshTokenGrant : Oauth {
         ///REQUIRED. "refresh_token"
         /// </summary>
 
+	[JsonPropertyName("grant_type")]
 	public virtual string?					GrantType  {get; set;}
 
         /// <summary>
         ///REQUIRED. "client_credentials"
         /// </summary>
 
+	[JsonPropertyName("refresh_token")]
 	public virtual string?					refresh_token  {get; set;}
 
         /// <summary>
         ///Must be a subset of the scopes declared in client metadata. Must include atproto
         /// </summary>
 
+	[JsonPropertyName("scope")]
 	public virtual string?					Scope  {get; set;}
 
 
@@ -1557,7 +1674,7 @@ public partial class RefreshTokenGrant : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<RefreshTokenGrant> _binding = new (
 			new() {
 
 			{ "grant_type", new PropertyString ("grant_type", 
@@ -1566,7 +1683,7 @@ public partial class RefreshTokenGrant : Oauth {
 					(IBinding data, string? value) => {(data as RefreshTokenGrant).refresh_token = value;}, (IBinding data) => (data as RefreshTokenGrant).refresh_token )},
 			{ "scope", new PropertyString ("scope", 
 					(IBinding data, string? value) => {(data as RefreshTokenGrant).Scope = value;}, (IBinding data) => (data as RefreshTokenGrant).Scope )}
-        }, __Tag,() => new RefreshTokenGrant(), null);
+        }, __Tag,() => new RefreshTokenGrant(), () => new List<RefreshTokenGrant>(), () => new Dictionary<string,RefreshTokenGrant>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1633,21 +1750,25 @@ public partial class DidVerificationMethod : Oauth {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("id")]
 	public virtual string?					Id  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("controller")]
 	public virtual string?					Controller  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("publicKeyMultibase")]
 	public virtual string?					PublicKeyMultibase  {get; set;}
 
 
@@ -1656,7 +1777,7 @@ public partial class DidVerificationMethod : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<DidVerificationMethod> _binding = new (
 			new() {
 
 			{ "id", new PropertyString ("id", 
@@ -1667,7 +1788,7 @@ public partial class DidVerificationMethod : Oauth {
 					(IBinding data, string? value) => {(data as DidVerificationMethod).Controller = value;}, (IBinding data) => (data as DidVerificationMethod).Controller )},
 			{ "publicKeyMultibase", new PropertyString ("publicKeyMultibase", 
 					(IBinding data, string? value) => {(data as DidVerificationMethod).PublicKeyMultibase = value;}, (IBinding data) => (data as DidVerificationMethod).PublicKeyMultibase )}
-        }, __Tag,() => new DidVerificationMethod(), null);
+        }, __Tag,() => new DidVerificationMethod(), () => new List<DidVerificationMethod>(), () => new Dictionary<string,DidVerificationMethod>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1734,16 +1855,19 @@ public partial class DidService : Oauth {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("id")]
 	public virtual string?					Id  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("serviceEndpoint")]
 	public virtual string?					ServiceEndpoint  {get; set;}
 
 
@@ -1752,7 +1876,7 @@ public partial class DidService : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<DidService> _binding = new (
 			new() {
 
 			{ "id", new PropertyString ("id", 
@@ -1761,7 +1885,7 @@ public partial class DidService : Oauth {
 					(IBinding data, string? value) => {(data as DidService).Type = value;}, (IBinding data) => (data as DidService).Type )},
 			{ "serviceEndpoint", new PropertyString ("serviceEndpoint", 
 					(IBinding data, string? value) => {(data as DidService).ServiceEndpoint = value;}, (IBinding data) => (data as DidService).ServiceEndpoint )}
-        }, __Tag,() => new DidService(), null);
+        }, __Tag,() => new DidService(), () => new List<DidService>(), () => new Dictionary<string,DidService>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1828,16 +1952,19 @@ public partial class AuthenticationResponse : Oauth {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("iss")]
 	public virtual string?					Iss  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("state")]
 	public virtual string?					State  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("code")]
 	public virtual string?					Code  {get; set;}
 
 
@@ -1846,7 +1973,7 @@ public partial class AuthenticationResponse : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<AuthenticationResponse> _binding = new (
 			new() {
 
 			{ "iss", new PropertyString ("iss", 
@@ -1855,7 +1982,7 @@ public partial class AuthenticationResponse : Oauth {
 					(IBinding data, string? value) => {(data as AuthenticationResponse).State = value;}, (IBinding data) => (data as AuthenticationResponse).State )},
 			{ "code", new PropertyString ("code", 
 					(IBinding data, string? value) => {(data as AuthenticationResponse).Code = value;}, (IBinding data) => (data as AuthenticationResponse).Code )}
-        }, __Tag,() => new AuthenticationResponse(), null);
+        }, __Tag,() => new AuthenticationResponse(), () => new List<AuthenticationResponse>(), () => new Dictionary<string,AuthenticationResponse>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1930,6 +2057,7 @@ public partial class DpopPayload : Oauth {
         ///prevention; see Section 11.1.
         /// </summary>
 
+	[JsonPropertyName("jti")]
 	public virtual string?					JTI  {get; set;}
 
         /// <summary>
@@ -1937,6 +2065,7 @@ public partial class DpopPayload : Oauth {
         ///which the JWT is attached.
         /// </summary>
 
+	[JsonPropertyName("htm")]
 	public virtual string?					HTM  {get; set;}
 
         /// <summary>
@@ -1944,12 +2073,14 @@ public partial class DpopPayload : Oauth {
         ///the JWT is attached, without query and fragment parts.
         /// </summary>
 
+	[JsonPropertyName("htu")]
 	public virtual string?					HTU  {get; set;}
 
         /// <summary>
         ///Creation timestamp of the JWT (Section 4.1.6 of [RFC7519])
         /// </summary>
 
+	[JsonPropertyName("iat")]
 	public virtual string?					IAT  {get; set;}
 
         /// <summary>
@@ -1958,18 +2089,21 @@ public partial class DpopPayload : Oauth {
         ///encoding of the associated access token's value.
         /// </summary>
 
+	[JsonPropertyName("ath")]
 	public virtual string?					ATH  {get; set;}
 
         /// <summary>
         ///A recent nonce provided via the DPoP-Nonce HTTP header.
         /// </summary>
 
+	[JsonPropertyName("nonce")]
 	public virtual string?					Nonce  {get; set;}
 
         /// <summary>
         ///Confirmation
         /// </summary>
 
+	[JsonPropertyName("cnf")]
 	public virtual DpopConfirmation?					Confirm  {get; set;}
 
 
@@ -1978,7 +2112,7 @@ public partial class DpopPayload : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<DpopPayload> _binding = new (
 			new() {
 
 			{ "jti", new PropertyString ("jti", 
@@ -1993,10 +2127,10 @@ public partial class DpopPayload : Oauth {
 					(IBinding data, string? value) => {(data as DpopPayload).ATH = value;}, (IBinding data) => (data as DpopPayload).ATH )},
 			{ "nonce", new PropertyString ("nonce", 
 					(IBinding data, string? value) => {(data as DpopPayload).Nonce = value;}, (IBinding data) => (data as DpopPayload).Nonce )},
-			{ "cnf", new PropertyStruct ("cnf", 
+			{ "cnf", new PropertyStruct ("cnf", typeof (DpopConfirmation),
 					(IBinding data, object? value) => {(data as DpopPayload).Confirm = value as DpopConfirmation;}, (IBinding data) => (data as DpopPayload).Confirm,
 					false, ()=>new  DpopConfirmation(), ()=>new DpopConfirmation())}
-        }, __Tag,() => new DpopPayload(), null);
+        }, __Tag,() => new DpopPayload(), () => new List<DpopPayload>(), () => new Dictionary<string,DpopPayload>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2067,6 +2201,7 @@ public partial class DpopConfirmation : Oauth {
         ///to which the access token is bound.
         /// </summary>
 
+	[JsonPropertyName("jkt")]
 	public virtual string?					JKT  {get; set;}
 
 
@@ -2075,12 +2210,12 @@ public partial class DpopConfirmation : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<DpopConfirmation> _binding = new (
 			new() {
 
 			{ "jkt", new PropertyString ("jkt", 
 					(IBinding data, string? value) => {(data as DpopConfirmation).JKT = value;}, (IBinding data) => (data as DpopConfirmation).JKT )}
-        }, __Tag,() => new DpopConfirmation(), null);
+        }, __Tag,() => new DpopConfirmation(), () => new List<DpopConfirmation>(), () => new Dictionary<string,DpopConfirmation>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2147,16 +2282,19 @@ public partial class JwtDpop : Oauth {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("header")]
 	public virtual JwtHeader?					Header  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("payload")]
 	public virtual DpopPayload?					Payload  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("signature")]
 	public virtual byte[]?					Signature  {get; set;}
 
 
@@ -2165,18 +2303,18 @@ public partial class JwtDpop : Oauth {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<JwtDpop> _binding = new (
 			new() {
 
-			{ "header", new PropertyStruct ("header", 
+			{ "header", new PropertyStruct ("header", typeof (JwtHeader),
 					(IBinding data, object? value) => {(data as JwtDpop).Header = value as JwtHeader;}, (IBinding data) => (data as JwtDpop).Header,
 					false, ()=>new  JwtHeader(), ()=>new JwtHeader())},
-			{ "payload", new PropertyStruct ("payload", 
+			{ "payload", new PropertyStruct ("payload", typeof (DpopPayload),
 					(IBinding data, object? value) => {(data as JwtDpop).Payload = value as DpopPayload;}, (IBinding data) => (data as JwtDpop).Payload,
 					false, ()=>new  DpopPayload(), ()=>new DpopPayload())},
 			{ "signature", new PropertyBinary ("signature", 
 					(IBinding data, byte[]? value) => {(data as JwtDpop).Signature = value;}, (IBinding data) => (data as JwtDpop).Signature )}
-        }, __Tag,() => new JwtDpop(), null);
+        }, __Tag,() => new JwtDpop(), () => new List<JwtDpop>(), () => new Dictionary<string,JwtDpop>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;

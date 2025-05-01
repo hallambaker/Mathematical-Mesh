@@ -3072,6 +3072,12 @@
             </summary>
             <param name="dictionary">The dictionary to append the values to.</param>
         </member>
+        <member name="M:Goedel.Protocol.JsonObject.AddDictionary(System.Collections.Generic.Dictionary{System.Type,Goedel.Protocol.Binding}@)">
+            <summary>
+            Append the values from the tag dictionary of this type to <paramref name="dictionary"/>.
+            </summary>
+            <param name="dictionary">The dictionary to append the values to.</param>
+        </member>
         <member name="P:Goedel.Protocol.JsonObject._Binding">
             <inheritdoc/>
         </member>
@@ -3794,6 +3800,11 @@
         <member name="P:Goedel.Protocol.BaseMessage._TagDictionary">
             <summary>
             Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.BaseMessage._BindingDictionary">
+            <summary>
+            Dictionary mapping types to bindings
             </summary>
         </member>
         <member name="P:Goedel.Protocol.BaseMessage._Initialized">
@@ -4607,7 +4618,7 @@
             <param name="Factory">Factory returning a new instance of this object.</param>
             <param name="Parent">Parent the object inherits from.</param>
         </member>
-        <member name="M:Goedel.Protocol.Binding.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,System.Func{System.Object},Goedel.Protocol.Binding)">
+        <member name="M:Goedel.Protocol.Binding.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,System.Func{System.Object},Goedel.Protocol.Binding,System.String)">
             <summary>
             Binding specification.
             </summary>
@@ -4622,9 +4633,6 @@
         <member name="P:Goedel.Protocol.Binding.Tag">
             <summary>JSON tag for this object.</summary>
         </member>
-        <member name="P:Goedel.Protocol.Binding.Factory">
-            <summary>Factory returning a new instance of this object.</summary>
-        </member>
         <member name="P:Goedel.Protocol.Binding.Parent">
             <summary>Parent the object inherits from.</summary>
         </member>
@@ -4636,6 +4644,24 @@
         </member>
         <member name="P:Goedel.Protocol.Binding.FullProperties">
             <summary>Dictionary binding all properties to binding descriptions</summary> 
+        </member>
+        <member name="T:Goedel.Protocol.Binding`1">
+            <summary>
+            Binding specification.
+            </summary>
+            <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
+            <param name="Tag">JSON tag for this object.</param>
+            <param name="Factory">Factory returning a new instance of this object.</param>
+            <param name="Parent">Parent the object inherits from.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Binding`1.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,System.Func{`0},System.Func{System.Collections.Generic.List{`0}},System.Func{System.Collections.Generic.Dictionary{System.String,`0}},Goedel.Protocol.Binding,System.String)">
+            <summary>
+            Binding specification.
+            </summary>
+            <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
+            <param name="Tag">JSON tag for this object.</param>
+            <param name="Factory">Factory returning a new instance of this object.</param>
+            <param name="Parent">Parent the object inherits from.</param>
         </member>
         <member name="T:Goedel.Protocol.Property">
             <summary>
@@ -5382,7 +5408,7 @@
             object in the collection.</param>
             <param name="Tagged">If true, the property should be tagged.</param>
         </member>
-        <member name="M:Goedel.Protocol.PropertyStruct.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Boolean,System.Func{System.Object},System.Func{System.Object})">
+        <member name="M:Goedel.Protocol.PropertyStruct.#ctor(System.String,System.Type,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Boolean,System.Func{System.Object},System.Func{System.Object})">
             <summary>
             Metadata record representing a property.
             </summary>
@@ -5425,7 +5451,7 @@
             object in the collection.</param>
             <param name="Tagged">If true, the property should be tagged.</param>
         </member>
-        <member name="M:Goedel.Protocol.PropertyListStruct.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Boolean,System.Func{System.Object},System.Func{System.Object})">
+        <member name="M:Goedel.Protocol.PropertyListStruct.#ctor(System.String,System.Type,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Boolean,System.Func{System.Object},System.Func{System.Object})">
             <summary>
             Metadata record representing a property.
             </summary>
@@ -5470,7 +5496,7 @@
             <param name="Add">Add struct to dictionary</param>
             <param name="Enumerator">Returns an enumerator</param>
         </member>
-        <member name="M:Goedel.Protocol.PropertyDictionaryStruct.#ctor(System.String,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Boolean,System.Func{System.Object},System.Func{System.Object},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}}},System.Action{System.Object,System.Object,System.Object})">
+        <member name="M:Goedel.Protocol.PropertyDictionaryStruct.#ctor(System.String,System.Type,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Boolean,System.Func{System.Object},System.Func{System.Object},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}}},System.Action{System.Object,System.Object,System.Object})">
             <summary>
             Metadata record representing a property.
             </summary>

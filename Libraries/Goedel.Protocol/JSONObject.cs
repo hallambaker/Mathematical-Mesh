@@ -24,8 +24,11 @@
 
 #pragma warning disable IDE1006
 
+using Goedel.Cryptography.Nist;
+
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
+using System.Text.Json;
 
 namespace Goedel.Protocol;
 
@@ -131,6 +134,9 @@ public abstract partial class JsonObject : IBinding {
         new Dictionary<string, JsonFactoryDelegate>().CacheValue(out tagDictionary);
     static Dictionary<string, JsonFactoryDelegate> tagDictionary;
 
+
+    public static Dictionary<Type, Binding> BindingDictionary = [];
+
     /// <summary>
     /// Add a dictionary to the persistence store decoder.
     /// </summary>
@@ -143,7 +149,7 @@ public abstract partial class JsonObject : IBinding {
     /// </summary>
     /// <param name="dictionary">The dictionary to append the values to.</param>
     public static void AddDictionary(
-        ref Dictionary<string, JsonFactoryDelegate> dictionary) {
+                    ref Dictionary<string, JsonFactoryDelegate> dictionary) {
         if (dictionary != TagDictionary) {
             Append(TagDictionary, dictionary);
             dictionary = TagDictionary;
@@ -151,11 +157,44 @@ public abstract partial class JsonObject : IBinding {
         }
 
 
+    /// <summary>
+    /// Append the values from the tag dictionary of this type to <paramref name="dictionary"/>.
+    /// </summary>
+    /// <param name="dictionary">The dictionary to append the values to.</param>
+    public static void AddDictionary(
+                    ref Dictionary<Type, Binding> dictionary) {
+        foreach (var pair in dictionary) {
+            var binding = pair.Value;
+
+
+            if (!BindingDictionary.ContainsKey(pair.Key)) {
+                BindingDictionary.Add (pair.Key, binding);
+                }
+            binding.TypeDictionary.Add(binding.Tag, binding);
+            AddToParents(binding, binding.Parent);
+            }
+        }
+
+    static void AddToParents(Binding binding, Binding parent) {
+
+        if (parent is null) {
+            return;
+            }
+        if (parent.TypeDictionary.ContainsKey(binding.Tag)) {
+            return;
+            }
+        parent.TypeDictionary.Add(binding.Tag, binding);
+        AddToParents(binding, parent.Parent);
+        }
+
+
+
+
     ///<inheritdoc/>
     public virtual Binding _Binding => _binding;
 
     ///<summary>Binding specification.</summary> 
-    protected static Binding _binding = null;
+    public static readonly Binding<JsonObject> _binding = null;
 
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -165,6 +204,9 @@ public abstract partial class JsonObject : IBinding {
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static Dictionary<string, Property> _StaticAllProperties = new() {
         };
+
+
+    public Dictionary<string, JsonElement> UnparsedProperties { get; set; }
 
 
     /// <summary>
@@ -748,4 +790,560 @@ public abstract partial class JsonObject : IBinding {
             Base.AddSafe(Entry.Key, Entry.Value);
             }
         }
+
+    public static T? Parse<T>(
+                    JsonDocument document,
+                    Dictionary<string, JsonFactoryDelegate> dictionary = null,
+                    bool collectUparsed = false) where T : JsonObject, new() =>
+        Parse<T> (document.RootElement, dictionary, collectUparsed);
+
+
+    public static T? Parse<T>(
+                JsonElement element,
+                Dictionary<string, JsonFactoryDelegate> dictionary = null,
+                bool collectUparsed = false) where T : JsonObject, new() {
+        dictionary ??= TagDictionary;
+        if (element.ValueKind != JsonValueKind.Object) {
+            return null;
+            }
+
+        var type = typeof(T);
+        if (!BindingDictionary.TryGetValue(type, out var binding)) {
+            return null;
+            }
+
+        return Parse(element, binding, collectUparsed) as T;
+        }
+
+    public static JsonObject Parse (
+                JsonElement element,
+                Binding binding,
+                bool collectUparsed = false) {
+
+        JsonObject? template = null;
+        if (binding.TypeTag == null) {
+            template = (JsonObject)binding.Factory();
+            }
+        else {
+            if (element.TryGetProperty(binding.TypeTag, out var typeField)) {
+                if (typeField.ValueKind == JsonValueKind.String) {
+                    if (binding.TypeDictionary.TryGetValue(typeField.GetString(), out var subBinding)) {
+                        template = (JsonObject)subBinding.Factory();
+                        }
+                    }
+                }
+            else {
+                template = (JsonObject)binding.Factory();
+                }
+            }
+
+        foreach (var property in element.EnumerateObject()) {
+            var collect = collectUparsed;
+            if (template._AllProperties.TryGetValue(property.Name, out var propertyValue)) {
+                collect &= MapProperty (template, property.Value, propertyValue);
+                }
+            if (collect) {
+                template.UnparsedProperties ??= [];
+                template.UnparsedProperties.Add(property.Name, property.Value);
+                }
+            }
+
+        return template;
+        }
+
+
+
+    public  string? FindTypeTag() {
+        foreach (var propertyPair in _AllProperties) {
+            if (propertyPair.Value is PropertyStringTag tag) {
+                return propertyPair.Key;
+                }
+            }
+        return null;
+        }
+
+
+    public static bool MapProperty(
+                JsonObject jsonObject,
+                JsonElement element,
+                Property property) {
+
+        switch (property) {
+            #region // Boolean
+            case PropertyBoolean subProperty: {
+                if (element.ValueKind == JsonValueKind.True) {
+                    subProperty.Set(jsonObject, true);
+                    return true;
+                    }
+                if (element.ValueKind == JsonValueKind.False) {
+                    subProperty.Set(jsonObject, false);
+                    return false;
+                    }
+                return false;
+                }
+            case PropertyListBoolean subProperty: {
+                if (element.ValueKind == JsonValueKind.Array) {
+                    var collected = true;
+                    var array = new List<bool>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateArray()) {
+                        if (member.ValueKind == JsonValueKind.True) {
+                            array.Add(true);
+                            }
+                        else if (member.ValueKind == JsonValueKind.False) {
+                            array.Add(false);
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            case PropertyDictionaryBoolean subProperty: {
+                if (element.ValueKind == JsonValueKind.Object) {
+                    var collected = true;
+                    var array = new Dictionary<string, bool>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateObject()) {
+                        if (member.Value.ValueKind == JsonValueKind.True) {
+                            array.Add(member.Name, true);
+                            }
+                        else if (member.Value.ValueKind == JsonValueKind.False) {
+                            array.Add(member.Name, false);
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            #endregion
+            #region // String
+
+            case PropertyString subProperty: {
+                if (element.ValueKind == JsonValueKind.String) {
+                    subProperty.Set(jsonObject, element.GetString());
+                    return true;
+                    }
+                return false;
+                }
+            case PropertyListString subProperty: {
+                if (element.ValueKind == JsonValueKind.Array) {
+                    var collected = true;
+                    var array = new List<string>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateArray()) {
+                        if (member.ValueKind == JsonValueKind.String) {
+                            array.Add(member.GetString());
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            case PropertyDictionaryString subProperty: {
+                if (element.ValueKind == JsonValueKind.Object) {
+                    var collected = true;
+                    var array = new Dictionary<string, string>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateObject()) {
+                        if (member.Value.ValueKind == JsonValueKind.String) {
+                            array.Add(member.Name, member.Value.GetString());
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            #endregion
+            #region // Int32
+            case PropertyInteger32 subProperty: {
+                if (element.ValueKind == JsonValueKind.Number) {
+                    subProperty.Set(jsonObject, element.GetInt32());
+                    return true;
+                    }
+                return false;
+                }
+            case PropertyListInteger32 subProperty: {
+                if (element.ValueKind == JsonValueKind.Array) {
+                    var collected = true;
+                    var array = new List<int>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateArray()) {
+                        if (member.ValueKind == JsonValueKind.Number) {
+                            array.Add(member.GetInt32());
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            case PropertyDictionaryInteger32 subProperty: {
+                if (element.ValueKind == JsonValueKind.Object) {
+                    var collected = true;
+                    var array = new Dictionary<string, int>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateObject()) {
+                        if (member.Value.ValueKind == JsonValueKind.Number) {
+                            array.Add(member.Name, member.Value.GetInt32());
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            #endregion
+            #region // Int64
+            case PropertyInteger64 subProperty: {
+                if (element.ValueKind == JsonValueKind.Number) {
+                    subProperty.Set(jsonObject, element.GetInt64());
+                    return true;
+                    }
+                return false;
+                }
+            case PropertyListInteger64 subProperty: {
+                if (element.ValueKind == JsonValueKind.Array) {
+                    var collected = true;
+                    var array = new List<long>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateArray()) {
+                        if (member.ValueKind == JsonValueKind.Number) {
+                            array.Add(member.GetInt64());
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            case PropertyDictionaryInteger64 subProperty: {
+                if (element.ValueKind == JsonValueKind.Object) {
+                    var collected = true;
+                    var array = new Dictionary<string, long>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateObject()) {
+                        if (member.Value.ValueKind == JsonValueKind.Number) {
+                            array.Add(member.Name, member.Value.GetInt64());
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            #endregion
+            #region // Real32
+            case PropertyReal32 subProperty: {
+                if (element.ValueKind == JsonValueKind.Number) {
+                    subProperty.Set(jsonObject, element.GetSingle());
+                    return true;
+                    }
+                return false;
+                }
+            case PropertyListReal32 subProperty: {
+                if (element.ValueKind == JsonValueKind.Array) {
+                    var collected = true;
+                    var array = new List<float>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateArray()) {
+                        if (member.ValueKind == JsonValueKind.Number) {
+                            array.Add(member.GetSingle());
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            case PropertyDictionaryReal32 subProperty: {
+                if (element.ValueKind == JsonValueKind.Object) {
+                    var collected = true;
+                    var array = new Dictionary<string, float>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateObject()) {
+                        if (member.Value.ValueKind == JsonValueKind.Number) {
+                            array.Add(member.Name, member.Value.GetSingle());
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            #endregion
+            #region // Real64
+            case PropertyReal64 subProperty: {
+                if (element.ValueKind == JsonValueKind.Number) {
+                    subProperty.Set(jsonObject, element.GetDouble());
+                    return true;
+                    }
+                return false;
+                }
+            case PropertyListReal64 subProperty: {
+                if (element.ValueKind == JsonValueKind.Array) {
+                    var collected = true;
+                    var array = new List<double>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateArray()) {
+                        if (member.ValueKind == JsonValueKind.Number) {
+                            array.Add(member.GetDouble());
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            case PropertyDictionaryReal64 subProperty: {
+                if (element.ValueKind == JsonValueKind.Object) {
+                    var collected = true;
+                    var array = new Dictionary<string, double>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateObject()) {
+                        if (member.Value.ValueKind == JsonValueKind.Number) {
+                            array.Add(member.Name, member.Value.GetDouble());
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            #endregion
+            #region // DateTime
+            case PropertyDateTime subProperty: {
+                if (element.ValueKind == JsonValueKind.String) {
+                    subProperty.Set(jsonObject, element.GetDateTime());
+                    return true;
+                    }
+                return false;
+                }
+            case PropertyListDateTime subProperty: {
+                if (element.ValueKind == JsonValueKind.Array) {
+                    var collected = true;
+                    var array = new List<DateTime>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateArray()) {
+                        if (member.ValueKind == JsonValueKind.String) {
+                            array.Add(member.GetDateTime());
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            case PropertyDictionaryDateTime subProperty: {
+                if (element.ValueKind == JsonValueKind.Object) {
+                    var collected = true;
+                    var array = new Dictionary<string, DateTime>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateObject()) {
+                        if (member.Value.ValueKind == JsonValueKind.String) {
+                            array.Add(member.Name, member.Value.GetDateTime());
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            #endregion
+            #region // Binary
+            case PropertyBinary subProperty: {
+                if (element.ValueKind == JsonValueKind.String) {
+                    var value = element.GetString().FromBase64();
+                    subProperty.Set(jsonObject, value);
+                    return true;
+                    }
+                return false;
+                }
+            case PropertyListBinary subProperty: {
+                if (element.ValueKind == JsonValueKind.Array) {
+                    var collected = true;
+                    var array = new List<byte[]>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateArray()) {
+                        if (member.ValueKind == JsonValueKind.String) {
+                            var value = member.GetString().FromBase64();
+                            array.Add(value);
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            case PropertyDictionaryBinary subProperty: {
+                if (element.ValueKind == JsonValueKind.Object) {
+                    var collected = true;
+                    var array = new Dictionary<string, byte[]>();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateObject()) {
+                        if (member.Value.ValueKind == JsonValueKind.String) {
+                            var value = member.Value.GetString().FromBase64();
+                            array.Add(member.Name, value);
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            #endregion
+            #region // Struct
+
+            case PropertyStruct subProperty: {
+                if (element.ValueKind == JsonValueKind.Object) {
+                    if (!BindingDictionary.TryGetValue(subProperty.type, out var binding)) {
+                        return false;
+                        }
+                    if (subProperty.Tagged) {
+                        var item = ParseTagged(element, binding);
+                        subProperty.Set(jsonObject, item);
+                        }
+                    else {
+                        var item = Parse(element, binding);
+                        subProperty.Set(jsonObject, item);
+                        }
+                    }
+                return false;
+                }
+            case PropertyListStruct subProperty: {
+                if (element.ValueKind == JsonValueKind.Array) {
+                    if (!BindingDictionary.TryGetValue(subProperty.type, out var binding)) {
+                        return false;
+                        }
+                    var collected = true;
+                    var array = binding.ListFactory();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateArray()) {
+                        if (member.ValueKind == JsonValueKind.Object) {
+
+                            if (subProperty.Tagged) {
+                                var item = ParseTagged(member, binding);
+                                binding.ListAdd(array, item);
+                                }
+                            else {
+                                var item = Parse(member, binding);
+                                binding.ListAdd(array, item);
+                                }
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            case PropertyDictionaryStruct subProperty: {
+                if (element.ValueKind == JsonValueKind.Object) {
+                    if (!BindingDictionary.TryGetValue(subProperty.type, out var binding)) {
+                        return false;
+                        }
+                    var collected = true;
+                    var array = binding.DictionaryFactory();
+                    subProperty.Set(jsonObject, array);
+
+                    foreach (var member in element.EnumerateObject()) {
+                        if (member.Value.ValueKind == JsonValueKind.Object) {
+                            if (subProperty.Tagged) {
+                                var item = ParseTagged(member.Value, binding);
+                                binding.DictionaryAdd(array, member.Name, item);
+                                }
+                            else {
+                                var item = Parse(member.Value, binding);
+                                binding.DictionaryAdd(array, member.Name, item);
+                                }
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+
+            #endregion
+            #region // TStruct
+            #endregion
+
+
+            }
+
+        return false;
+
+        }
+
+
+    static JsonObject ParseTagged(
+                JsonElement element,
+                Binding binding
+                ) {
+        foreach (var member in element.EnumerateObject()) {
+            if (binding.TypeDictionary.TryGetValue(member.Name, out var subBinding)) {
+                if (member.Value.ValueKind == JsonValueKind.Object) {
+                    return Parse(member.Value, binding);
+                    }
+                }
+            return null;
+            }
+        return null;
+        }
+
     }

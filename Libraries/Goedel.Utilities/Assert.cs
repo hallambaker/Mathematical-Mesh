@@ -398,7 +398,21 @@ public static class Assert {
             }
         }
 
+    /// <summary>Test to see if two values are equal.
+    /// </summary>
+    /// <typeparam name="T">The type of the argument.</typeparam>
+    /// <param name="test1">First test value</param>
+    /// <param name="test2">Second test value</param>
+    /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+    /// Condition is true</param>
+    /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
 
+    public static void AssertEqualSeconds(this DateTime test1, DateTime test2, ThrowDelegate throwDelegate,
+                params object[] args) {
+        if (!(test1.Ticks/TimeSpan.TicksPerSecond == test2.Ticks / TimeSpan.TicksPerSecond)) {
+            throw throwDelegate(args);
+            }
+        }
 
     /// <summary>If debugging Throw an exception if <paramref name="condition"/> is false. 
     /// (test, NYIException.Throw, "test was false").AssertTrue();

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/17/2025 1:31:41 AM
+//  This file was automatically generated at 5/1/2025 6:02:32 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -39,6 +39,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -83,6 +85,21 @@ public abstract partial class CallsignRegistry : global::Goedel.Protocol.JsonObj
 	    {"ApplicationEntryRegistry", ApplicationEntryRegistry._Factory}
 		};
 
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+
+	    {typeof(CatalogedRegistry), CatalogedRegistry._binding},
+	    {typeof(ActivationApplicationRegistry), ActivationApplicationRegistry._binding},
+	    {typeof(ApplicationEntryRegistry), ApplicationEntryRegistry._binding}
+		};
+
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -90,7 +107,10 @@ public abstract partial class CallsignRegistry : global::Goedel.Protocol.JsonObj
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -117,29 +137,34 @@ public partial class CatalogedRegistry : CatalogedApplication {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("MaximumRequestLength")]
 	public virtual int?					MaximumRequestLength  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("MaximumCallsignLength")]
 	public virtual int?					MaximumCallsignLength  {get; set;}
 
         /// <summary>
         ///The connection allowing control of the registry.
         /// </summary>
 
+	[JsonPropertyName("EnvelopedConnectionAddress")]
 	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;}
 
         /// <summary>
         ///The Mesh profile
         /// </summary>
 
+	[JsonPropertyName("EnvelopedProfileRegistry")]
 	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileRegistry  {get; set;}
 
         /// <summary>
         ///The activation data for the registry.
         /// </summary>
 
+	[JsonPropertyName("EnvelopedActivationCommon")]
 	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;}
 
 
@@ -148,23 +173,23 @@ public partial class CatalogedRegistry : CatalogedApplication {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<CatalogedRegistry> _binding = new (
 			new() {
 
 			{ "MaximumRequestLength", new PropertyInteger32 ("MaximumRequestLength", 
 					(IBinding data, int? value) => {(data as CatalogedRegistry).MaximumRequestLength = value;}, (IBinding data) => (data as CatalogedRegistry).MaximumRequestLength )},
 			{ "MaximumCallsignLength", new PropertyInteger32 ("MaximumCallsignLength", 
 					(IBinding data, int? value) => {(data as CatalogedRegistry).MaximumCallsignLength = value;}, (IBinding data) => (data as CatalogedRegistry).MaximumCallsignLength )},
-			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", 
+			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", typeof (Enveloped<ConnectionStripped>),
 					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedRegistry).EnvelopedConnectionAddress,
 					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())},
-			{ "EnvelopedProfileRegistry", new PropertyStruct ("EnvelopedProfileRegistry", 
+			{ "EnvelopedProfileRegistry", new PropertyStruct ("EnvelopedProfileRegistry", typeof (Enveloped<ProfileAccount>),
 					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedProfileRegistry = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedRegistry).EnvelopedProfileRegistry,
 					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
-			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", 
+			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
 					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedRegistry).EnvelopedActivationCommon,
 					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())}
-        }, __Tag,() => new CatalogedRegistry(), CatalogedApplication._binding);
+        }, __Tag,() => new CatalogedRegistry(), () => new List<CatalogedRegistry>(), () => new Dictionary<string,CatalogedRegistry>(),CatalogedApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -233,12 +258,14 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
         ///Key used to decrypt registry messages.
         /// </summary>
 
+	[JsonPropertyName("AccountEncryption")]
 	public virtual KeyData?					AccountEncryption  {get; set;}
 
         /// <summary>
         ///Key or capability used to sign the registry log
         /// </summary>
 
+	[JsonPropertyName("AdministratorSignature")]
 	public virtual KeyData?					AdministratorSignature  {get; set;}
 
 
@@ -247,16 +274,16 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ActivationApplicationRegistry> _binding = new (
 			new() {
 
-			{ "AccountEncryption", new PropertyStruct ("AccountEncryption", 
+			{ "AccountEncryption", new PropertyStruct ("AccountEncryption", typeof (KeyData),
 					(IBinding data, object? value) => {(data as ActivationApplicationRegistry).AccountEncryption = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRegistry).AccountEncryption,
 					false, ()=>new  KeyData(), ()=>new KeyData())},
-			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", 
+			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", typeof (KeyData),
 					(IBinding data, object? value) => {(data as ActivationApplicationRegistry).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRegistry).AdministratorSignature,
 					false, ()=>new  KeyData(), ()=>new KeyData())}
-        }, __Tag,() => new ActivationApplicationRegistry(), ActivationApplication._binding);
+        }, __Tag,() => new ActivationApplicationRegistry(), () => new List<ActivationApplicationRegistry>(), () => new Dictionary<string,ActivationApplicationRegistry>(),ActivationApplication._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -324,6 +351,7 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("EnvelopedActivation")]
 	public virtual Enveloped<ActivationApplicationRegistry>?					EnvelopedActivation  {get; set;}
 
         /// <summary>
@@ -331,6 +359,7 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
         ///access the account.
         /// </summary>
 
+	[JsonPropertyName("EnvelopedConnectionService")]
 	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;}
 
 
@@ -339,16 +368,16 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ApplicationEntryRegistry> _binding = new (
 			new() {
 
-			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", 
+			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", typeof (Enveloped<ActivationApplicationRegistry>),
 					(IBinding data, object? value) => {(data as ApplicationEntryRegistry).EnvelopedActivation = value as Enveloped<ActivationApplicationRegistry>;}, (IBinding data) => (data as ApplicationEntryRegistry).EnvelopedActivation,
 					false, ()=>new  Enveloped<ActivationApplicationRegistry>(), ()=>new Enveloped<ActivationApplicationRegistry>())},
-			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", 
+			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
 					(IBinding data, object? value) => {(data as ApplicationEntryRegistry).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as ApplicationEntryRegistry).EnvelopedConnectionService,
 					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())}
-        }, __Tag,() => new ApplicationEntryRegistry(), ApplicationEntry._binding);
+        }, __Tag,() => new ApplicationEntryRegistry(), () => new List<ApplicationEntryRegistry>(), () => new Dictionary<string,ApplicationEntryRegistry>(),ApplicationEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;

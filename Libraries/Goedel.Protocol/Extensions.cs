@@ -258,10 +258,6 @@ public static partial class Extensions {
         }
 
 
-    //public static IEnumerator<KeyValuePair<string,object?>> GetEnumerator<T>(this Dictionary<string,T> dict) {
-    //    return new KeyValueEnumeration<T>(dict.GetEnumerator());
-    //    }
-
     private abstract class KeyValueEnumeration : IEnumerator<KeyValuePair<string, object?>> {
         public abstract KeyValuePair<string, object> Current { get; }
 

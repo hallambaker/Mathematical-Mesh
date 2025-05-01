@@ -674,6 +674,11 @@
             Dictionary mapping tags to factory methods
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.Jose._BindingDictionary">
+            <summary>
+            Dictionary mapping types to bindings
+            </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Jose.Jose._Initialized">
             <summary>Variable used to force static initialization</summary> 
         </member>

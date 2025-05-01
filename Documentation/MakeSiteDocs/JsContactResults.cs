@@ -38,27 +38,27 @@ public class JsContactResults {
     public CreateExamples CreateExamples { get; }
 
 
-    public Dictionary<string,Jwks> JSContactSmime { get; } = [];
-    public Dictionary<string, Jwks> JSContactOpenpgp { get; } = [];
+    public Dictionary<string, CryptoKey> JSContactSmime { get; } = [];
+    public Dictionary<string, CryptoKey> JSContactOpenpgp { get; } = [];
     public EmailAddress EmailAddress { get; set; }
 
     public Goedel.Contacts.Group Group { get; set; }
 
 
     public Update Update { get; }
-    public Dictionary<string, Jwks> UpdateKeys { get; } = [];
+    public Dictionary<string, CryptoKey> UpdateKeys { get; } = [];
 
     public Dictionary<string, OnlineService> GroupMembers { get; } = [];
 
 
     public Dictionary<string, OnlineService> Ssh { get; } = [];
-    public Dictionary<string, Jwks> SshKeys { get; } = [];
+    public Dictionary<string, CryptoKey> SshKeys { get; } = [];
 
     public Dictionary<string, OnlineService> CodeSign { get; } = [];
-    public Dictionary<string, Jwks> CodeSignKeys { get; } = [];
+    public Dictionary<string, CryptoKey> CodeSignKeys { get; } = [];
 
     public Dictionary<string, OnlineService> Commit { get; } = [];
-    public Dictionary<string, Jwks> CommitKeys { get; } = [];
+    public Dictionary<string, CryptoKey> CommitKeys { get; } = [];
 
     public string EARL => EarlSet.Uri;
     public string EARLDNS => "TBS";
@@ -127,9 +127,9 @@ public class JsContactResults {
 
         var jwk = JWK.Factory(SignatureEd448);
         var jwks = new Jwks() {
-            Jwk = [jwk]
+            Jwk = jwk
             };
-        Contact.JsonWebKeys.Add(SignatureEd448.KeyIdentifier, jwks);
+        Contact.CryptoKeys.Add(SignatureEd448.KeyIdentifier, jwks);
 
 
 
@@ -152,12 +152,12 @@ public class JsContactResults {
         // email address
         foreach (var key in EmailAddress.Keys) {
             if (key.Value == "smime") {
-                if (Contact.JsonWebKeys.TryGetValue(key.Key, out var jsonWebKey)) {
+                if (Contact.CryptoKeys.TryGetValue(key.Key, out var jsonWebKey)) {
                     JSContactSmime.Add(key.Key, jsonWebKey);
                     }
                 }
             else if (key.Value == "openpgp") {
-                if (Contact.JsonWebKeys.TryGetValue(key.Key, out var jsonWebKey)) {
+                if (Contact.CryptoKeys.TryGetValue(key.Key, out var jsonWebKey)) {
                     JSContactOpenpgp.Add(key.Key, jsonWebKey);
                     }
                 }
@@ -201,9 +201,9 @@ public class JsContactResults {
             }
         }
 
-    void CollectKeys(Dictionary<string,string> keys, Dictionary<string, Jwks> list) {
+    void CollectKeys(Dictionary<string,string> keys, Dictionary<string, CryptoKey> list) {
         foreach (var key in keys) {
-            if (Contact.JsonWebKeys.TryGetValue(key.Key, out var jsonWebKey)) {
+            if (Contact.CryptoKeys.TryGetValue(key.Key, out var jsonWebKey)) {
                 list.Add(key.Key, jsonWebKey);
                 }
             }

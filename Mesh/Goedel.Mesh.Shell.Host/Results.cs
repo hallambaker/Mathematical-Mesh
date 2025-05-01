@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/17/2025 1:32:03 AM
+//  This file was automatically generated at 5/1/2025 6:02:43 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -39,6 +39,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -83,6 +85,21 @@ public abstract partial class MeshhostShellResult : global::Goedel.Protocol.Json
 	    {"ResultStartService", ResultStartService._Factory}
 		};
 
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+
+	    {typeof(Result), Result._binding},
+	    {typeof(ResultAbout), ResultAbout._binding},
+	    {typeof(ResultStartService), ResultStartService._binding}
+		};
+
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -90,7 +107,10 @@ public abstract partial class MeshhostShellResult : global::Goedel.Protocol.Json
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -122,10 +142,10 @@ public partial class Result : ShellResult {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Result> _binding = new (
 			new() {
 
-        }, __Tag,() => new Result(), ShellResult._binding);
+        }, __Tag,() => new Result(), () => new List<Result>(), () => new Dictionary<string,Result>(),ShellResult._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -193,41 +213,49 @@ public partial class ResultAbout : Result {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("DirectoryKeys")]
 	public virtual string?					DirectoryKeys  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("DirectoryMesh")]
 	public virtual string?					DirectoryMesh  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("AssemblyTitle")]
 	public virtual string?					AssemblyTitle  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("AssemblyDescription")]
 	public virtual string?					AssemblyDescription  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("AssemblyCopyright")]
 	public virtual string?					AssemblyCopyright  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("AssemblyCompany")]
 	public virtual string?					AssemblyCompany  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("AssemblyVersion")]
 	public virtual string?					AssemblyVersion  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Build")]
 	public virtual string?					Build  {get; set;}
 
 
@@ -236,7 +264,7 @@ public partial class ResultAbout : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultAbout> _binding = new (
 			new() {
 
 			{ "DirectoryKeys", new PropertyString ("DirectoryKeys", 
@@ -255,7 +283,7 @@ public partial class ResultAbout : Result {
 					(IBinding data, string? value) => {(data as ResultAbout).AssemblyVersion = value;}, (IBinding data) => (data as ResultAbout).AssemblyVersion )},
 			{ "Build", new PropertyString ("Build", 
 					(IBinding data, string? value) => {(data as ResultAbout).Build = value;}, (IBinding data) => (data as ResultAbout).Build )}
-        }, __Tag,() => new ResultAbout(), Result._binding);
+        }, __Tag,() => new ResultAbout(), () => new List<ResultAbout>(), () => new Dictionary<string,ResultAbout>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -326,10 +354,10 @@ public partial class ResultStartService : Result {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResultStartService> _binding = new (
 			new() {
 
-        }, __Tag,() => new ResultStartService(), Result._binding);
+        }, __Tag,() => new ResultStartService(), () => new List<ResultStartService>(), () => new Dictionary<string,ResultStartService>(),Result._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;

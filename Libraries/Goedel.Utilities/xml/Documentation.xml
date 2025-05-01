@@ -1023,6 +1023,16 @@
             Condition is true</param>
             <param name="args">Reason arguments to be passed to the throw delegate.</param>
         </member>
+        <member name="M:Goedel.Utilities.Assert.AssertEqualSeconds(System.DateTime,System.DateTime,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Test to see if two values are equal.
+            </summary>
+            <typeparam name="T">The type of the argument.</typeparam>
+            <param name="test1">First test value</param>
+            <param name="test2">Second test value</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
         <member name="M:Goedel.Utilities.Assert.VerifyTrue(System.Boolean,Goedel.Utilities.ThrowDelegate,System.Object[])">
             <summary>If debugging Throw an exception if <paramref name="condition"/> is false. 
             (test, NYIException.Throw, "test was false").AssertTrue();

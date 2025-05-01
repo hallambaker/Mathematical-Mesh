@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/28/2025 5:41:19 PM
+//  This file was automatically generated at 5/1/2025 6:02:18 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -39,6 +39,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -82,6 +84,23 @@ public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject 
 	    {"ProofChain", ProofChain._Factory}
 		};
 
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+
+	    {typeof(SequenceInfo), SequenceInfo._binding},
+	    {typeof(SequenceIndex), SequenceIndex._binding},
+	    {typeof(IndexPosition), IndexPosition._binding},
+	    {typeof(KeyValue), KeyValue._binding},
+	    {typeof(ProofChain), ProofChain._binding}
+		};
+
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -89,7 +108,10 @@ public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject 
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -121,6 +143,7 @@ public partial class SequenceInfo : SequenceData {
         ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
         /// </summary>
 
+	[JsonPropertyName("DataEncoding")]
 	public virtual string?					DataEncoding  {get; set;}
 
         /// <summary>
@@ -128,6 +151,7 @@ public partial class SequenceInfo : SequenceData {
         ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
         /// </summary>
 
+	[JsonPropertyName("ContainerType")]
 	public virtual string?					ContainerType  {get; set;}
 
         /// <summary>
@@ -135,6 +159,7 @@ public partial class SequenceInfo : SequenceData {
         ///satisfy any additional requirements determined by the ContainerType.
         /// </summary>
 
+	[JsonPropertyName("Index")]
 	public virtual long?					Index  {get; set;}
 
         /// <summary>
@@ -144,6 +169,7 @@ public partial class SequenceInfo : SequenceData {
         ///Applications MUST NOT interpret a meta frame as a data frame with an enpty payload.
         /// </summary>
 
+	[JsonPropertyName("IsMeta")]
 	public virtual bool?					IsMeta  {get; set;}
 
         /// <summary>
@@ -151,12 +177,14 @@ public partial class SequenceInfo : SequenceData {
         ///the default object for the container.
         /// </summary>
 
+	[JsonPropertyName("Default")]
 	public virtual bool?					Default  {get; set;}
 
         /// <summary>
         ///Position of the frame containing the apex of the preceding sub-tree.
         /// </summary>
 
+	[JsonPropertyName("TreePosition")]
 	public virtual long?					TreePosition  {get; set;}
 
         /// <summary>
@@ -164,6 +192,7 @@ public partial class SequenceInfo : SequenceData {
         ///to be found
         /// </summary>
 
+	[JsonPropertyName("IndexPosition")]
 	public virtual long?					IndexPosition  {get; set;}
 
         /// <summary>
@@ -171,6 +200,7 @@ public partial class SequenceInfo : SequenceData {
         ///to be found
         /// </summary>
 
+	[JsonPropertyName("ExchangePosition")]
 	public virtual long?					ExchangePosition  {get; set;}
 
 
@@ -179,7 +209,7 @@ public partial class SequenceInfo : SequenceData {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<SequenceInfo> _binding = new (
 			new() {
 
 			{ "DataEncoding", new PropertyString ("DataEncoding", 
@@ -198,7 +228,7 @@ public partial class SequenceInfo : SequenceData {
 					(IBinding data, long? value) => {(data as SequenceInfo).IndexPosition = value;}, (IBinding data) => (data as SequenceInfo).IndexPosition )},
 			{ "ExchangePosition", new PropertyInteger64 ("ExchangePosition", 
 					(IBinding data, long? value) => {(data as SequenceInfo).ExchangePosition = value;}, (IBinding data) => (data as SequenceInfo).ExchangePosition )}
-        }, __Tag,() => new SequenceInfo(), null);
+        }, __Tag,() => new SequenceInfo(), () => new List<SequenceInfo>(), () => new Dictionary<string,SequenceInfo>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -271,12 +301,14 @@ public partial class SequenceIndex : SequenceData {
         ///frame containing a ContainerIndex.
         /// </summary>
 
+	[JsonPropertyName("Full")]
 	public virtual bool?					Full  {get; set;}
 
         /// <summary>
         ///List of container position entries
         /// </summary>
 
+	[JsonPropertyName("Positions")]
 	public virtual List<IndexPosition>?					Positions  {get; set;}
 
 
@@ -284,15 +316,15 @@ public partial class SequenceIndex : SequenceData {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<SequenceIndex> _binding = new (
 			new() {
 
 			{ "Full", new PropertyBoolean ("Full", 
 					(IBinding data, bool? value) => {(data as SequenceIndex).Full = value;}, (IBinding data) => (data as SequenceIndex).Full )},
-			{ "Positions", new PropertyListStruct ("Positions", 
+			{ "Positions", new PropertyListStruct ("Positions", typeof (IndexPosition),
 					(IBinding data, object? value) => {(data as SequenceIndex).Positions = value as List<IndexPosition>;}, (IBinding data) => (data as SequenceIndex).Positions,
 					false, ()=>new  List<IndexPosition>(), ()=>new IndexPosition())}
-        }, __Tag,() => new SequenceIndex(), null);
+        }, __Tag,() => new SequenceIndex(), () => new List<SequenceIndex>(), () => new Dictionary<string,SequenceIndex>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -362,18 +394,21 @@ public partial class IndexPosition : SequenceData {
         ///The record index within the file.
         /// </summary>
 
+	[JsonPropertyName("Index")]
 	public virtual long?					Index  {get; set;}
 
         /// <summary>
         ///The record position within the file relative to the index base.
         /// </summary>
 
+	[JsonPropertyName("Position")]
 	public virtual long?					Position  {get; set;}
 
         /// <summary>
         ///Unique object identifier
         /// </summary>
 
+	[JsonPropertyName("UniqueId")]
 	public virtual string?					UniqueId  {get; set;}
 
 
@@ -382,7 +417,7 @@ public partial class IndexPosition : SequenceData {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<IndexPosition> _binding = new (
 			new() {
 
 			{ "Index", new PropertyInteger64 ("Index", 
@@ -391,7 +426,7 @@ public partial class IndexPosition : SequenceData {
 					(IBinding data, long? value) => {(data as IndexPosition).Position = value;}, (IBinding data) => (data as IndexPosition).Position )},
 			{ "UniqueId", new PropertyString ("UniqueId", 
 					(IBinding data, string? value) => {(data as IndexPosition).UniqueId = value;}, (IBinding data) => (data as IndexPosition).UniqueId )}
-        }, __Tag,() => new IndexPosition(), null);
+        }, __Tag,() => new IndexPosition(), () => new List<IndexPosition>(), () => new Dictionary<string,IndexPosition>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -461,12 +496,14 @@ public partial class KeyValue : SequenceData {
         ///The key
         /// </summary>
 
+	[JsonPropertyName("Key")]
 	public virtual string?					Key  {get; set;}
 
         /// <summary>
         ///The value corresponding to the key
         /// </summary>
 
+	[JsonPropertyName("Value")]
 	public virtual string?					Value  {get; set;}
 
 
@@ -475,14 +512,14 @@ public partial class KeyValue : SequenceData {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<KeyValue> _binding = new (
 			new() {
 
 			{ "Key", new PropertyString ("Key", 
 					(IBinding data, string? value) => {(data as KeyValue).Key = value;}, (IBinding data) => (data as KeyValue).Key )},
 			{ "Value", new PropertyString ("Value", 
 					(IBinding data, string? value) => {(data as KeyValue).Value = value;}, (IBinding data) => (data as KeyValue).Value )}
-        }, __Tag,() => new KeyValue(), null);
+        }, __Tag,() => new KeyValue(), () => new List<KeyValue>(), () => new Dictionary<string,KeyValue>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -554,10 +591,10 @@ public partial class ProofChain : SequenceData {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ProofChain> _binding = new (
 			new() {
 
-        }, __Tag,() => new ProofChain(), null);
+        }, __Tag,() => new ProofChain(), () => new List<ProofChain>(), () => new Dictionary<string,ProofChain>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;

@@ -309,7 +309,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// </summary>
 	/// <param name="jsonKeys"></param>
 	/// <param name="part=false"></param>
-	public void Write (Dictionary<string,Jwks> jsonKeys, bool part=false) {
+	public void Write (Dictionary<string,CryptoKey> jsonKeys, bool part=false) {
 		_Output.Write ("[", _Indent);
 		 var sep = new Separator  (",\n");
 		foreach  (var jsonKey in jsonKeys) {

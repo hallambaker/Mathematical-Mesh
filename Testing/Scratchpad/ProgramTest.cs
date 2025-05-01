@@ -42,6 +42,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 
+using static Goedel.XUnit.GoedelProtocol;
+
 namespace Scratchpad;
 
 
@@ -64,7 +66,7 @@ partial class Program {
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
         //TestService.Test().TestCredentialAccount();
-
+        GoedelProtocol.Test().TestEncodeDecode2();
         var examples = new CreateExamples();
         //var earl = new EarlResults(examples);
         //var jscontact = new JsContactResults(examples);

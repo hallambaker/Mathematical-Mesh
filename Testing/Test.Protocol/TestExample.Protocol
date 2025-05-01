@@ -7,6 +7,8 @@
 	Structure MultiInstance
 		Description
 			|Contains one instance of each type of field.
+		String		Type
+			TypeTag
 		Boolean		FieldBoolean
 		Integer		FieldInteger
 		Float		FieldFloat
@@ -28,6 +30,22 @@
 			Multiple
 		Binary		ArrayBinary
 			Multiple
+
+	Structure DictArray
+		Inherits MultiArray
+		Boolean		DictBoolean
+			Dictionary
+		Integer		DictInteger
+			Dictionary
+		Float		DictFloat
+			Dictionary 
+		DateTime	DictDateTime
+			Dictionary
+		String		DictString
+			Dictionary
+		Binary		DictBinary
+			Dictionary
+
 
 	Structure MultiStruct
 		Inherits MultiArray

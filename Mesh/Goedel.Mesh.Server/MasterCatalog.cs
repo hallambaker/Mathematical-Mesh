@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/17/2025 1:31:49 AM
+//  This file was automatically generated at 5/1/2025 6:02:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -39,6 +39,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -80,6 +82,20 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 	    {"AccountUser", AccountUser._Factory}
 		};
 
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+
+	    {typeof(AccountEntry), AccountEntry._binding},
+	    {typeof(AccountUser), AccountUser._binding}
+		};
+
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -87,7 +103,10 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -117,30 +136,35 @@ abstract public partial class AccountEntry : CatalogedEntry {
         ///Subdirectory containing the catalogs and spools for the account.
         /// </summary>
 
+	[JsonPropertyName("Directory")]
 	public virtual string?					Directory  {get; set;}
 
         /// <summary>
         ///The fingerprint of the profile
         /// </summary>
 
+	[JsonPropertyName("ProfileUdf")]
 	public virtual string?					ProfileUdf  {get; set;}
 
         /// <summary>
         ///The quota assigned to this user in KB
         /// </summary>
 
+	[JsonPropertyName("Quota")]
 	public virtual int?					Quota  {get; set;}
 
         /// <summary>
         ///The profile status. Valid values are "Pending", "Connected", "Blocked"
         /// </summary>
 
+	[JsonPropertyName("Status")]
 	public virtual string?					Status  {get; set;}
 
         /// <summary>
         ///Account address in user@domain format
         /// </summary>
 
+	[JsonPropertyName("LocalAddress")]
 	public virtual string?					LocalAddress  {get; set;}
 
 
@@ -149,7 +173,7 @@ abstract public partial class AccountEntry : CatalogedEntry {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<AccountEntry> _binding = new (
 			new() {
 
 			{ "Directory", new PropertyString ("Directory", 
@@ -162,7 +186,7 @@ abstract public partial class AccountEntry : CatalogedEntry {
 					(IBinding data, string? value) => {(data as AccountEntry).Status = value;}, (IBinding data) => (data as AccountEntry).Status )},
 			{ "LocalAddress", new PropertyString ("LocalAddress", 
 					(IBinding data, string? value) => {(data as AccountEntry).LocalAddress = value;}, (IBinding data) => (data as AccountEntry).LocalAddress )}
-        }, __Tag,null, CatalogedEntry._binding);
+        }, __Tag,null, null, null,CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -230,6 +254,7 @@ public partial class AccountUser : AccountEntry {
         ///The signed assertion describing the account.
         /// </summary>
 
+	[JsonPropertyName("EnvelopedProfileUser")]
 	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileUser  {get; set;}
 
         /// <summary>
@@ -237,6 +262,7 @@ public partial class AccountUser : AccountEntry {
         ///discover the host and encrypt data to it.
         /// </summary>
 
+	[JsonPropertyName("EnvelopedAccountHostAssignment")]
 	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;}
 
 
@@ -245,16 +271,16 @@ public partial class AccountUser : AccountEntry {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<AccountUser> _binding = new (
 			new() {
 
-			{ "EnvelopedProfileUser", new PropertyStruct ("EnvelopedProfileUser", 
+			{ "EnvelopedProfileUser", new PropertyStruct ("EnvelopedProfileUser", typeof (Enveloped<ProfileAccount>),
 					(IBinding data, object? value) => {(data as AccountUser).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as AccountUser).EnvelopedProfileUser,
 					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
-			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", 
+			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped<AccountHostAssignment>),
 					(IBinding data, object? value) => {(data as AccountUser).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as AccountUser).EnvelopedAccountHostAssignment,
 					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())}
-        }, __Tag,() => new AccountUser(), AccountEntry._binding);
+        }, __Tag,() => new AccountUser(), () => new List<AccountUser>(), () => new Dictionary<string,AccountUser>(),AccountEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;

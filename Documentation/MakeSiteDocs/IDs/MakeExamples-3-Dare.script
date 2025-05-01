@@ -175,7 +175,7 @@ Each group identifier is specified as an online service:
 ]
 #end method2
 
-#method2 Write Dictionary<string,Jwks> jsonKeys bool part=false
+#method2 Write Dictionary<string,CryptoKey> jsonKeys bool part=false
 [#!
 #% var sep = new Separator  (",\n");
 #foreach (var jsonKey in jsonKeys)

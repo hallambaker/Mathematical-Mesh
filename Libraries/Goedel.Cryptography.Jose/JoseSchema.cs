@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/28/2025 5:41:19 PM
+//  This file was automatically generated at 5/1/2025 6:02:16 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -39,6 +39,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -102,6 +104,44 @@ public abstract partial class Jose : global::Goedel.Protocol.JsonObject {
 	    {"PrivateKeyBinary", PrivateKeyBinary._Factory}
 		};
 
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+
+	    {typeof(JoseWebSignature), JoseWebSignature._binding},
+	    {typeof(JoseWebEncryption), JoseWebEncryption._binding},
+	    {typeof(JWKS), JWKS._binding},
+	    {typeof(JWK), JWK._binding},
+	    {typeof(JwtHeader), JwtHeader._binding},
+	    {typeof(Signed), Signed._binding},
+	    {typeof(Encrypted), Encrypted._binding},
+	    {typeof(JsonWebKeys), JsonWebKeys._binding},
+	    {typeof(KeyCore), KeyCore._binding},
+	    {typeof(Header), Header._binding},
+	    {typeof(Signature), Signature._binding},
+	    {typeof(KeyContainer), KeyContainer._binding},
+	    {typeof(Key), Key._binding},
+	    {typeof(Recipient), Recipient._binding},
+	    {typeof(PublicKeyRSA), PublicKeyRSA._binding},
+	    {typeof(PrivateKeyRSA), PrivateKeyRSA._binding},
+	    {typeof(PublicKeyDH), PublicKeyDH._binding},
+	    {typeof(PrivateKeyDH), PrivateKeyDH._binding},
+	    {typeof(PublicKeyECDH), PublicKeyECDH._binding},
+	    {typeof(PrivateKeyECDH), PrivateKeyECDH._binding},
+	    {typeof(PrivateKeyUDF), PrivateKeyUDF._binding},
+	    {typeof(KeyAgreement), KeyAgreement._binding},
+	    {typeof(KeyAgreementDH), KeyAgreementDH._binding},
+	    {typeof(KeyAgreementECDH), KeyAgreementECDH._binding},
+	    {typeof(PublicKeyBinary), PublicKeyBinary._binding},
+	    {typeof(PrivateKeyBinary), PrivateKeyBinary._binding}
+		};
+
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -109,7 +149,10 @@ public abstract partial class Jose : global::Goedel.Protocol.JsonObject {
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -140,18 +183,21 @@ public partial class JoseWebSignature : Jose {
         ///Data not protected by the signature
         /// </summary>
 
+	[JsonPropertyName("unprotected")]
 	public virtual Header?					Unprotected  {get; set;}
 
         /// <summary>
         ///The signed data
         /// </summary>
 
+	[JsonPropertyName("payload")]
 	public virtual byte[]?					Payload  {get; set;}
 
         /// <summary>
         ///The signature value
         /// </summary>
 
+	[JsonPropertyName("signatures")]
 	public virtual List<Signature>?					Signatures  {get; set;}
 
 
@@ -159,18 +205,18 @@ public partial class JoseWebSignature : Jose {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<JoseWebSignature> _binding = new (
 			new() {
 
-			{ "unprotected", new PropertyStruct ("unprotected", 
+			{ "unprotected", new PropertyStruct ("unprotected", typeof (Header),
 					(IBinding data, object? value) => {(data as JoseWebSignature).Unprotected = value as Header;}, (IBinding data) => (data as JoseWebSignature).Unprotected,
 					false, ()=>new  Header(), ()=>new Header())},
 			{ "payload", new PropertyBinary ("payload", 
 					(IBinding data, byte[]? value) => {(data as JoseWebSignature).Payload = value;}, (IBinding data) => (data as JoseWebSignature).Payload )},
-			{ "signatures", new PropertyListStruct ("signatures", 
+			{ "signatures", new PropertyListStruct ("signatures", typeof (Signature),
 					(IBinding data, object? value) => {(data as JoseWebSignature).Signatures = value as List<Signature>;}, (IBinding data) => (data as JoseWebSignature).Signatures,
 					false, ()=>new  List<Signature>(), ()=>new Signature())}
-        }, __Tag,() => new JoseWebSignature(), null);
+        }, __Tag,() => new JoseWebSignature(), () => new List<JoseWebSignature>(), () => new Dictionary<string,JoseWebSignature>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -240,41 +286,48 @@ public partial class JoseWebEncryption : JoseWebSignature {
         ///Data protected by the signature
         /// </summary>
 
+	[JsonPropertyName("protected")]
 	public virtual byte[]?					Protected  {get; set;}
 
         /// <summary>
         ///The initialization vector for the bulk cipher.
         /// </summary>
 
+	[JsonPropertyName("iv")]
 	public virtual byte[]?					IV  {get; set;}
 
         /// <summary>
         ///Per recipient decryption data.
         /// </summary>
 
+	[JsonPropertyName("recipients")]
 	public virtual List<Recipient>?					Recipients  {get; set;}
         /// <summary>
         ///The decryption data for use by this recipient.
         /// </summary>
 
+	[JsonPropertyName("encrypted_key")]
 	public virtual byte[]?					EncryptedKey  {get; set;}
 
         /// <summary>
         ///Additional data that is included in the authentication scope but not the encryption
         /// </summary>
 
+	[JsonPropertyName("aad")]
 	public virtual byte[]?					AdditionalAuthenticatedData  {get; set;}
 
         /// <summary>
         ///The encrypted data
         /// </summary>
 
+	[JsonPropertyName("ciphertext")]
 	public virtual byte[]?					CipherText  {get; set;}
 
         /// <summary>
         ///Authentication tag
         /// </summary>
 
+	[JsonPropertyName("tag")]
 	public virtual byte[]?					JTag  {get; set;}
 
 
@@ -283,14 +336,14 @@ public partial class JoseWebEncryption : JoseWebSignature {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<JoseWebEncryption> _binding = new (
 			new() {
 
 			{ "protected", new PropertyBinary ("protected", 
 					(IBinding data, byte[]? value) => {(data as JoseWebEncryption).Protected = value;}, (IBinding data) => (data as JoseWebEncryption).Protected )},
 			{ "iv", new PropertyBinary ("iv", 
 					(IBinding data, byte[]? value) => {(data as JoseWebEncryption).IV = value;}, (IBinding data) => (data as JoseWebEncryption).IV )},
-			{ "recipients", new PropertyListStruct ("recipients", 
+			{ "recipients", new PropertyListStruct ("recipients", typeof (Recipient),
 					(IBinding data, object? value) => {(data as JoseWebEncryption).Recipients = value as List<Recipient>;}, (IBinding data) => (data as JoseWebEncryption).Recipients,
 					false, ()=>new  List<Recipient>(), ()=>new Recipient())},
 			{ "encrypted_key", new PropertyBinary ("encrypted_key", 
@@ -301,7 +354,7 @@ public partial class JoseWebEncryption : JoseWebSignature {
 					(IBinding data, byte[]? value) => {(data as JoseWebEncryption).CipherText = value;}, (IBinding data) => (data as JoseWebEncryption).CipherText )},
 			{ "tag", new PropertyBinary ("tag", 
 					(IBinding data, byte[]? value) => {(data as JoseWebEncryption).JTag = value;}, (IBinding data) => (data as JoseWebEncryption).JTag )}
-        }, __Tag,() => new JoseWebEncryption(), JoseWebSignature._binding);
+        }, __Tag,() => new JoseWebEncryption(), () => new List<JoseWebEncryption>(), () => new Dictionary<string,JoseWebEncryption>(),JoseWebSignature._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -369,6 +422,7 @@ public partial class JWKS : Jose {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("keys")]
 	public virtual List<JWK>?					Keys  {get; set;}
 
 
@@ -376,13 +430,13 @@ public partial class JWKS : Jose {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<JWKS> _binding = new (
 			new() {
 
-			{ "keys", new PropertyListStruct ("keys", 
+			{ "keys", new PropertyListStruct ("keys", typeof (JWK),
 					(IBinding data, object? value) => {(data as JWKS).Keys = value as List<JWK>;}, (IBinding data) => (data as JWKS).Keys,
 					false, ()=>new  List<JWK>(), ()=>new JWK())}
-        }, __Tag,() => new JWKS(), null);
+        }, __Tag,() => new JWKS(), () => new List<JWKS>(), () => new Dictionary<string,JWKS>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -449,71 +503,85 @@ public partial class JWK : Jose {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("kty")]
 	public virtual string?					KeyType  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("use")]
 	public virtual string?					Use  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("key_ops")]
 	public virtual string?					KeyOps  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("alg")]
 	public virtual string?					Alg  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("kid")]
 	public virtual string?					Kid  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("x5u")]
 	public virtual byte[]?					X5u  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("x5t")]
 	public virtual byte[]?					X5T  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("x5t#S256")]
 	public virtual byte[]?					X5T256  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("crv")]
 	public virtual string?					Curve  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("x")]
 	public virtual string?					X  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("y")]
 	public virtual string?					Y  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("d")]
 	public virtual string?					D  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("n")]
 	public virtual string?					N  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("e")]
 	public virtual string?					E  {get; set;}
 
 
@@ -522,7 +590,7 @@ public partial class JWK : Jose {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<JWK> _binding = new (
 			new() {
 
 			{ "kty", new PropertyString ("kty", 
@@ -553,7 +621,7 @@ public partial class JWK : Jose {
 					(IBinding data, string? value) => {(data as JWK).N = value;}, (IBinding data) => (data as JWK).N )},
 			{ "e", new PropertyString ("e", 
 					(IBinding data, string? value) => {(data as JWK).E = value;}, (IBinding data) => (data as JWK).E )}
-        }, __Tag,() => new JWK(), null);
+        }, __Tag,() => new JWK(), () => new List<JWK>(), () => new Dictionary<string,JWK>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -621,18 +689,21 @@ public partial class JwtHeader : Jose {
         ///Another IANA content type parameter
         /// </summary>
 
+	[JsonPropertyName("typ")]
 	public virtual string?					Typ  {get; set;}
 
         /// <summary>
         ///Key exchange algorithm
         /// </summary>
 
+	[JsonPropertyName("alg")]
 	public virtual string?					Alg  {get; set;}
 
         /// <summary>
         ///JSON Web Key	
         /// </summary>
 
+	[JsonPropertyName("jwk")]
 	public virtual JWK?					Jwk  {get; set;}
 
 
@@ -641,17 +712,17 @@ public partial class JwtHeader : Jose {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<JwtHeader> _binding = new (
 			new() {
 
 			{ "typ", new PropertyString ("typ", 
 					(IBinding data, string? value) => {(data as JwtHeader).Typ = value;}, (IBinding data) => (data as JwtHeader).Typ )},
 			{ "alg", new PropertyString ("alg", 
 					(IBinding data, string? value) => {(data as JwtHeader).Alg = value;}, (IBinding data) => (data as JwtHeader).Alg )},
-			{ "jwk", new PropertyStruct ("jwk", 
+			{ "jwk", new PropertyStruct ("jwk", typeof (JWK),
 					(IBinding data, object? value) => {(data as JwtHeader).Jwk = value as JWK;}, (IBinding data) => (data as JwtHeader).Jwk,
 					false, ()=>new  JWK(), ()=>new JWK())}
-        }, __Tag,() => new JwtHeader(), null);
+        }, __Tag,() => new JwtHeader(), () => new List<JwtHeader>(), () => new Dictionary<string,JwtHeader>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -721,18 +792,21 @@ public partial class Signed : Jose {
         ///Data protected by the signature
         /// </summary>
 
+	[JsonPropertyName("protected")]
 	public virtual byte[]?					Protected  {get; set;}
 
         /// <summary>
         ///The authenticated data
         /// </summary>
 
+	[JsonPropertyName("payload")]
 	public virtual byte[]?					Payload  {get; set;}
 
         /// <summary>
         ///The signature data
         /// </summary>
 
+	[JsonPropertyName("signature")]
 	public virtual byte[]?					Signature  {get; set;}
 
 
@@ -741,7 +815,7 @@ public partial class Signed : Jose {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Signed> _binding = new (
 			new() {
 
 			{ "protected", new PropertyBinary ("protected", 
@@ -750,7 +824,7 @@ public partial class Signed : Jose {
 					(IBinding data, byte[]? value) => {(data as Signed).Payload = value;}, (IBinding data) => (data as Signed).Payload )},
 			{ "signature", new PropertyBinary ("signature", 
 					(IBinding data, byte[]? value) => {(data as Signed).Signature = value;}, (IBinding data) => (data as Signed).Signature )}
-        }, __Tag,() => new Signed(), null);
+        }, __Tag,() => new Signed(), () => new List<Signed>(), () => new Dictionary<string,Signed>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -820,24 +894,28 @@ public partial class Encrypted : Jose {
         ///Header
         /// </summary>
 
+	[JsonPropertyName("header")]
 	public virtual Header?					Header  {get; set;}
 
         /// <summary>
         ///The initialization vector for the cipher
         /// </summary>
 
+	[JsonPropertyName("iv")]
 	public virtual byte[]?					IV  {get; set;}
 
         /// <summary>
         ///The encrypted data 
         /// </summary>
 
+	[JsonPropertyName("ciphertext")]
 	public virtual byte[]?					CipherText  {get; set;}
 
         /// <summary>
         ///The signature data
         /// </summary>
 
+	[JsonPropertyName("signature")]
 	public virtual byte[]?					Signature  {get; set;}
 
 
@@ -846,10 +924,10 @@ public partial class Encrypted : Jose {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Encrypted> _binding = new (
 			new() {
 
-			{ "header", new PropertyStruct ("header", 
+			{ "header", new PropertyStruct ("header", typeof (Header),
 					(IBinding data, object? value) => {(data as Encrypted).Header = value as Header;}, (IBinding data) => (data as Encrypted).Header,
 					false, ()=>new  Header(), ()=>new Header())},
 			{ "iv", new PropertyBinary ("iv", 
@@ -858,7 +936,7 @@ public partial class Encrypted : Jose {
 					(IBinding data, byte[]? value) => {(data as Encrypted).CipherText = value;}, (IBinding data) => (data as Encrypted).CipherText )},
 			{ "signature", new PropertyBinary ("signature", 
 					(IBinding data, byte[]? value) => {(data as Encrypted).Signature = value;}, (IBinding data) => (data as Encrypted).Signature )}
-        }, __Tag,() => new Encrypted(), null);
+        }, __Tag,() => new Encrypted(), () => new List<Encrypted>(), () => new Dictionary<string,Encrypted>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -925,6 +1003,7 @@ public partial class JsonWebKeys : Jose {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("keys")]
 	public virtual List<KeyCore>?					Keys  {get; set;}
 
 
@@ -932,13 +1011,13 @@ public partial class JsonWebKeys : Jose {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<JsonWebKeys> _binding = new (
 			new() {
 
-			{ "keys", new PropertyListStruct ("keys", 
+			{ "keys", new PropertyListStruct ("keys", typeof (KeyCore),
 					(IBinding data, object? value) => {(data as JsonWebKeys).Keys = value as List<KeyCore>;}, (IBinding data) => (data as JsonWebKeys).Keys,
 					false, ()=>new  List<KeyCore>(), ()=>new KeyCore())}
-        }, __Tag,() => new JsonWebKeys(), null);
+        }, __Tag,() => new JsonWebKeys(), () => new List<JsonWebKeys>(), () => new Dictionary<string,JsonWebKeys>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1008,18 +1087,21 @@ public partial class KeyCore : Jose {
         ///Bulk encryption algorithm for content
         /// </summary>
 
+	[JsonPropertyName("enc")]
 	public virtual string?					Enc  {get; set;}
 
         /// <summary>
         ///Digest algorithm hint
         /// </summary>
 
+	[JsonPropertyName("dig")]
 	public virtual string?					Dig  {get; set;}
 
         /// <summary>
         ///Key exchange algorithm
         /// </summary>
 
+	[JsonPropertyName("alg")]
 	public virtual string?					Alg  {get; set;}
 
         /// <summary>
@@ -1027,30 +1109,35 @@ public partial class KeyCore : Jose {
         ///key it is placed in this field.
         /// </summary>
 
+	[JsonPropertyName("kid")]
 	public virtual string?					Kid  {get; set;}
 
         /// <summary>
         ///URL identifying an X.509 public key certificate
         /// </summary>
 
+	[JsonPropertyName("x5u")]
 	public virtual string?					X5u  {get; set;}
 
         /// <summary>
         ///An X.509 public key certificate
         /// </summary>
 
+	[JsonPropertyName("x5c")]
 	public virtual byte[]?					X5c  {get; set;}
 
         /// <summary>
         ///SHA-1 fingerprint of X.509 certificate
         /// </summary>
 
+	[JsonPropertyName("x5t")]
 	public virtual byte[]?					X5t  {get; set;}
 
         /// <summary>
         ///SHA-2-256 fingerprint of X.509 certificate
         /// </summary>
 
+	[JsonPropertyName("x5t#S256")]
 	public virtual byte[]?					X5tS256  {get; set;}
 
 
@@ -1059,7 +1146,7 @@ public partial class KeyCore : Jose {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<KeyCore> _binding = new (
 			new() {
 
 			{ "enc", new PropertyString ("enc", 
@@ -1078,7 +1165,7 @@ public partial class KeyCore : Jose {
 					(IBinding data, byte[]? value) => {(data as KeyCore).X5t = value;}, (IBinding data) => (data as KeyCore).X5t )},
 			{ "x5t#S256", new PropertyBinary ("x5t#S256", 
 					(IBinding data, byte[]? value) => {(data as KeyCore).X5tS256 = value;}, (IBinding data) => (data as KeyCore).X5tS256 )}
-        }, __Tag,() => new KeyCore(), null);
+        }, __Tag,() => new KeyCore(), () => new List<KeyCore>(), () => new Dictionary<string,KeyCore>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1148,36 +1235,42 @@ public partial class Header : KeyCore {
         ///JWK Set URL
         /// </summary>
 
+	[JsonPropertyName("jku")]
 	public virtual string?					Jku  {get; set;}
 
         /// <summary>
         ///The key parameters
         /// </summary>
 
+	[JsonPropertyName("jwk")]
 	public virtual Key?					Jwk  {get; set;}
 
         /// <summary>
         ///The key parameters of the ephemeral key
         /// </summary>
 
+	[JsonPropertyName("epk")]
 	public virtual Key?					Epk  {get; set;}
 
         /// <summary>
         ///Binary cryptographic exchange parameters
         /// </summary>
 
+	[JsonPropertyName("ek")]
 	public virtual byte[]?					Ek  {get; set;}
 
         /// <summary>
         ///Another IANA content type parameter
         /// </summary>
 
+	[JsonPropertyName("typ")]
 	public virtual string?					Typ  {get; set;}
 
         /// <summary>
         ///Content type parameter
         /// </summary>
 
+	[JsonPropertyName("cty")]
 	public virtual string?					Cty  {get; set;}
 
         /// <summary>
@@ -1185,11 +1278,13 @@ public partial class Header : KeyCore {
         ///the authentication portion of the JOSE object.
         /// </summary>
 
+	[JsonPropertyName("crit")]
 	public virtual List<string>?					Crit  {get; set;}
         /// <summary>
         ///The digest value
         /// </summary>
 
+	[JsonPropertyName("val")]
 	public virtual byte[]?					Val  {get; set;}
 
 
@@ -1198,15 +1293,15 @@ public partial class Header : KeyCore {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Header> _binding = new (
 			new() {
 
 			{ "jku", new PropertyString ("jku", 
 					(IBinding data, string? value) => {(data as Header).Jku = value;}, (IBinding data) => (data as Header).Jku )},
-			{ "jwk", new PropertyStruct ("jwk", 
+			{ "jwk", new PropertyStruct ("jwk", typeof (Key), 
 					(IBinding data, object? value) => {(data as Header).Jwk = value as Key;}, (IBinding data) => (data as Header).Jwk,
 					true)} ,
-			{ "epk", new PropertyStruct ("epk", 
+			{ "epk", new PropertyStruct ("epk", typeof (Key), 
 					(IBinding data, object? value) => {(data as Header).Epk = value as Key;}, (IBinding data) => (data as Header).Epk,
 					true)} ,
 			{ "ek", new PropertyBinary ("ek", 
@@ -1219,7 +1314,7 @@ public partial class Header : KeyCore {
 					(IBinding data, List<string>? value) => {(data as Header).Crit = value;}, (IBinding data) => (data as Header).Crit )},
 			{ "val", new PropertyBinary ("val", 
 					(IBinding data, byte[]? value) => {(data as Header).Val = value;}, (IBinding data) => (data as Header).Val )}
-        }, __Tag,() => new Header(), KeyCore._binding);
+        }, __Tag,() => new Header(), () => new List<Header>(), () => new Dictionary<string,Header>(),KeyCore._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1290,18 +1385,21 @@ public partial class Signature : Jose {
         ///The signature header
         /// </summary>
 
+	[JsonPropertyName("header")]
 	public virtual Header?					Header  {get; set;}
 
         /// <summary>
         ///Data protected by the signature
         /// </summary>
 
+	[JsonPropertyName("protected")]
 	public virtual byte[]?					Protected  {get; set;}
 
         /// <summary>
         ///The signature value
         /// </summary>
 
+	[JsonPropertyName("signature")]
 	public virtual byte[]?					SignatureValue  {get; set;}
 
 
@@ -1310,17 +1408,17 @@ public partial class Signature : Jose {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Signature> _binding = new (
 			new() {
 
-			{ "header", new PropertyStruct ("header", 
+			{ "header", new PropertyStruct ("header", typeof (Header),
 					(IBinding data, object? value) => {(data as Signature).Header = value as Header;}, (IBinding data) => (data as Signature).Header,
 					false, ()=>new  Header(), ()=>new Header())},
 			{ "protected", new PropertyBinary ("protected", 
 					(IBinding data, byte[]? value) => {(data as Signature).Protected = value;}, (IBinding data) => (data as Signature).Protected )},
 			{ "signature", new PropertyBinary ("signature", 
 					(IBinding data, byte[]? value) => {(data as Signature).SignatureValue = value;}, (IBinding data) => (data as Signature).SignatureValue )}
-        }, __Tag,() => new Signature(), null);
+        }, __Tag,() => new Signature(), () => new List<Signature>(), () => new Dictionary<string,Signature>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1390,12 +1488,14 @@ public partial class KeyContainer : Jose {
         ///If false a handler library MUST NOT permit the private key to be exported.
         /// </summary>
 
+	[JsonPropertyName("Exportable")]
 	public virtual bool?					Exportable  {get; set;}
 
         /// <summary>
         ///The key data.
         /// </summary>
 
+	[JsonPropertyName("KeyCore")]
 	public virtual byte[]?					KeyCore  {get; set;}
 
 
@@ -1404,14 +1504,14 @@ public partial class KeyContainer : Jose {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<KeyContainer> _binding = new (
 			new() {
 
 			{ "Exportable", new PropertyBoolean ("Exportable", 
 					(IBinding data, bool? value) => {(data as KeyContainer).Exportable = value;}, (IBinding data) => (data as KeyContainer).Exportable )},
 			{ "KeyCore", new PropertyBinary ("KeyCore", 
 					(IBinding data, byte[]? value) => {(data as KeyContainer).KeyCore = value;}, (IBinding data) => (data as KeyContainer).KeyCore )}
-        }, __Tag,() => new KeyContainer(), null);
+        }, __Tag,() => new KeyContainer(), () => new List<KeyContainer>(), () => new Dictionary<string,KeyContainer>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1483,29 +1583,34 @@ public partial class Key : KeyCore {
         ///which it is stored.
         /// </summary>
 
+	[JsonPropertyName("Exportable")]
 	public virtual bool?					Exportable  {get; set;}
 
         /// <summary>
         ///Key type
         /// </summary>
 
+	[JsonPropertyName("kty")]
 	public virtual string?					Kty  {get; set;}
 
         /// <summary>
         ///Public Key use
         /// </summary>
 
+	[JsonPropertyName("use")]
 	public virtual string?					Use  {get; set;}
 
         /// <summary>
         ///Key operations
         /// </summary>
 
+	[JsonPropertyName("key_ops")]
 	public virtual List<string>?					Key_ops  {get; set;}
         /// <summary>
         ///Symmetric key value.
         /// </summary>
 
+	[JsonPropertyName("k")]
 	public virtual byte[]?					K  {get; set;}
 
 
@@ -1514,7 +1619,7 @@ public partial class Key : KeyCore {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Key> _binding = new (
 			new() {
 
 			{ "Exportable", new PropertyBoolean ("Exportable", 
@@ -1527,7 +1632,7 @@ public partial class Key : KeyCore {
 					(IBinding data, List<string>? value) => {(data as Key).Key_ops = value;}, (IBinding data) => (data as Key).Key_ops )},
 			{ "k", new PropertyBinary ("k", 
 					(IBinding data, byte[]? value) => {(data as Key).K = value;}, (IBinding data) => (data as Key).K )}
-        }, __Tag,() => new Key(), KeyCore._binding);
+        }, __Tag,() => new Key(), () => new List<Key>(), () => new Dictionary<string,Key>(),KeyCore._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1598,12 +1703,14 @@ public partial class Recipient : Jose {
         ///Specify the recipient and per recipient data
         /// </summary>
 
+	[JsonPropertyName("Header")]
 	public virtual Header?					Header  {get; set;}
 
         /// <summary>
         ///The decryption data for use by this recipient.
         /// </summary>
 
+	[JsonPropertyName("encrypted_key")]
 	public virtual byte[]?					EncryptedKey  {get; set;}
 
 
@@ -1612,15 +1719,15 @@ public partial class Recipient : Jose {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Recipient> _binding = new (
 			new() {
 
-			{ "Header", new PropertyStruct ("Header", 
+			{ "Header", new PropertyStruct ("Header", typeof (Header),
 					(IBinding data, object? value) => {(data as Recipient).Header = value as Header;}, (IBinding data) => (data as Recipient).Header,
 					false, ()=>new  Header(), ()=>new Header())},
 			{ "encrypted_key", new PropertyBinary ("encrypted_key", 
 					(IBinding data, byte[]? value) => {(data as Recipient).EncryptedKey = value;}, (IBinding data) => (data as Recipient).EncryptedKey )}
-        }, __Tag,() => new Recipient(), null);
+        }, __Tag,() => new Recipient(), () => new List<Recipient>(), () => new Dictionary<string,Recipient>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1690,12 +1797,14 @@ public partial class PublicKeyRSA : Key {
         ///The public modulus
         /// </summary>
 
+	[JsonPropertyName("n")]
 	public virtual byte[]?					N  {get; set;}
 
         /// <summary>
         ///The public exponent
         /// </summary>
 
+	[JsonPropertyName("e")]
 	public virtual byte[]?					E  {get; set;}
 
 
@@ -1704,14 +1813,14 @@ public partial class PublicKeyRSA : Key {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<PublicKeyRSA> _binding = new (
 			new() {
 
 			{ "n", new PropertyBinary ("n", 
 					(IBinding data, byte[]? value) => {(data as PublicKeyRSA).N = value;}, (IBinding data) => (data as PublicKeyRSA).N )},
 			{ "e", new PropertyBinary ("e", 
 					(IBinding data, byte[]? value) => {(data as PublicKeyRSA).E = value;}, (IBinding data) => (data as PublicKeyRSA).E )}
-        }, __Tag,() => new PublicKeyRSA(), Key._binding);
+        }, __Tag,() => new PublicKeyRSA(), () => new List<PublicKeyRSA>(), () => new Dictionary<string,PublicKeyRSA>(),Key._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1782,36 +1891,42 @@ public partial class PrivateKeyRSA : PublicKeyRSA {
         ///The parameter d
         /// </summary>
 
+	[JsonPropertyName("d")]
 	public virtual byte[]?					D  {get; set;}
 
         /// <summary>
         ///The parameter p
         /// </summary>
 
+	[JsonPropertyName("p")]
 	public virtual byte[]?					P  {get; set;}
 
         /// <summary>
         ///The parameter q
         /// </summary>
 
+	[JsonPropertyName("q")]
 	public virtual byte[]?					Q  {get; set;}
 
         /// <summary>
         ///The parameter dp
         /// </summary>
 
+	[JsonPropertyName("dp")]
 	public virtual byte[]?					DP  {get; set;}
 
         /// <summary>
         ///The parameter dq
         /// </summary>
 
+	[JsonPropertyName("dq")]
 	public virtual byte[]?					DQ  {get; set;}
 
         /// <summary>
         ///The parameter QInverse
         /// </summary>
 
+	[JsonPropertyName("qi")]
 	public virtual byte[]?					QI  {get; set;}
 
 
@@ -1820,7 +1935,7 @@ public partial class PrivateKeyRSA : PublicKeyRSA {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<PrivateKeyRSA> _binding = new (
 			new() {
 
 			{ "d", new PropertyBinary ("d", 
@@ -1835,7 +1950,7 @@ public partial class PrivateKeyRSA : PublicKeyRSA {
 					(IBinding data, byte[]? value) => {(data as PrivateKeyRSA).DQ = value;}, (IBinding data) => (data as PrivateKeyRSA).DQ )},
 			{ "qi", new PropertyBinary ("qi", 
 					(IBinding data, byte[]? value) => {(data as PrivateKeyRSA).QI = value;}, (IBinding data) => (data as PrivateKeyRSA).QI )}
-        }, __Tag,() => new PrivateKeyRSA(), PublicKeyRSA._binding);
+        }, __Tag,() => new PrivateKeyRSA(), () => new List<PrivateKeyRSA>(), () => new Dictionary<string,PrivateKeyRSA>(),PublicKeyRSA._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1906,12 +2021,14 @@ public partial class PublicKeyDH : Key {
         ///The fingerprint of the domain
         /// </summary>
 
+	[JsonPropertyName("Domain")]
 	public virtual byte[]?					Domain  {get; set;}
 
         /// <summary>
         ///The public key
         /// </summary>
 
+	[JsonPropertyName("Public")]
 	public virtual byte[]?					Public  {get; set;}
 
 
@@ -1920,14 +2037,14 @@ public partial class PublicKeyDH : Key {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<PublicKeyDH> _binding = new (
 			new() {
 
 			{ "Domain", new PropertyBinary ("Domain", 
 					(IBinding data, byte[]? value) => {(data as PublicKeyDH).Domain = value;}, (IBinding data) => (data as PublicKeyDH).Domain )},
 			{ "Public", new PropertyBinary ("Public", 
 					(IBinding data, byte[]? value) => {(data as PublicKeyDH).Public = value;}, (IBinding data) => (data as PublicKeyDH).Public )}
-        }, __Tag,() => new PublicKeyDH(), Key._binding);
+        }, __Tag,() => new PublicKeyDH(), () => new List<PublicKeyDH>(), () => new Dictionary<string,PublicKeyDH>(),Key._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1998,6 +2115,7 @@ public partial class PrivateKeyDH : PublicKeyDH {
         ///The private key.
         /// </summary>
 
+	[JsonPropertyName("Private")]
 	public virtual byte[]?					Private  {get; set;}
 
 
@@ -2006,12 +2124,12 @@ public partial class PrivateKeyDH : PublicKeyDH {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<PrivateKeyDH> _binding = new (
 			new() {
 
 			{ "Private", new PropertyBinary ("Private", 
 					(IBinding data, byte[]? value) => {(data as PrivateKeyDH).Private = value;}, (IBinding data) => (data as PrivateKeyDH).Private )}
-        }, __Tag,() => new PrivateKeyDH(), PublicKeyDH._binding);
+        }, __Tag,() => new PrivateKeyDH(), () => new List<PrivateKeyDH>(), () => new Dictionary<string,PrivateKeyDH>(),PublicKeyDH._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2082,12 +2200,14 @@ public partial class PublicKeyECDH : Key {
         ///The curve specifier (X25519, Ed25519, X448, Ed448), etc.
         /// </summary>
 
+	[JsonPropertyName("crv")]
 	public virtual string?					Curve  {get; set;}
 
         /// <summary>
         ///The public key
         /// </summary>
 
+	[JsonPropertyName("Public")]
 	public virtual byte[]?					Public  {get; set;}
 
 
@@ -2096,14 +2216,14 @@ public partial class PublicKeyECDH : Key {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<PublicKeyECDH> _binding = new (
 			new() {
 
 			{ "crv", new PropertyString ("crv", 
 					(IBinding data, string? value) => {(data as PublicKeyECDH).Curve = value;}, (IBinding data) => (data as PublicKeyECDH).Curve )},
 			{ "Public", new PropertyBinary ("Public", 
 					(IBinding data, byte[]? value) => {(data as PublicKeyECDH).Public = value;}, (IBinding data) => (data as PublicKeyECDH).Public )}
-        }, __Tag,() => new PublicKeyECDH(), Key._binding);
+        }, __Tag,() => new PublicKeyECDH(), () => new List<PublicKeyECDH>(), () => new Dictionary<string,PublicKeyECDH>(),Key._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2174,6 +2294,7 @@ public partial class PrivateKeyECDH : PublicKeyECDH {
         ///The private key
         /// </summary>
 
+	[JsonPropertyName("Private")]
 	public virtual byte[]?					Private  {get; set;}
 
 
@@ -2182,12 +2303,12 @@ public partial class PrivateKeyECDH : PublicKeyECDH {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<PrivateKeyECDH> _binding = new (
 			new() {
 
 			{ "Private", new PropertyBinary ("Private", 
 					(IBinding data, byte[]? value) => {(data as PrivateKeyECDH).Private = value;}, (IBinding data) => (data as PrivateKeyECDH).Private )}
-        }, __Tag,() => new PrivateKeyECDH(), PublicKeyECDH._binding);
+        }, __Tag,() => new PrivateKeyECDH(), () => new List<PrivateKeyECDH>(), () => new Dictionary<string,PrivateKeyECDH>(),PublicKeyECDH._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2258,35 +2379,41 @@ public partial class PrivateKeyUDF : Key {
         ///The private value
         /// </summary>
 
+	[JsonPropertyName("PrivateValue")]
 	public virtual string?					PrivateValue  {get; set;}
 
         /// <summary>
         ///The UDF key identifier
         /// </summary>
 
+	[JsonPropertyName("KeyType")]
 	public virtual string?					KeyType  {get; set;}
 
         /// <summary>
         ///List of algorithms used to derrive root signature keys.
         /// </summary>
 
+	[JsonPropertyName("RootSignAlgorithms")]
 	public virtual List<string>?					RootSignAlgorithms  {get; set;}
         /// <summary>
         ///The algorithm used to derrive the encryption key
         /// </summary>
 
+	[JsonPropertyName("AlgorithmEncrypt")]
 	public virtual string?					AlgorithmEncrypt  {get; set;}
 
         /// <summary>
         ///The algorithm used to derrive the signature key
         /// </summary>
 
+	[JsonPropertyName("AlgorithmSign")]
 	public virtual string?					AlgorithmSign  {get; set;}
 
         /// <summary>
         ///The algorithm used to derrive the authentication key
         /// </summary>
 
+	[JsonPropertyName("AlgorithmAuthenticate")]
 	public virtual string?					AlgorithmAuthenticate  {get; set;}
 
 
@@ -2295,7 +2422,7 @@ public partial class PrivateKeyUDF : Key {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<PrivateKeyUDF> _binding = new (
 			new() {
 
 			{ "PrivateValue", new PropertyString ("PrivateValue", 
@@ -2310,7 +2437,7 @@ public partial class PrivateKeyUDF : Key {
 					(IBinding data, string? value) => {(data as PrivateKeyUDF).AlgorithmSign = value;}, (IBinding data) => (data as PrivateKeyUDF).AlgorithmSign )},
 			{ "AlgorithmAuthenticate", new PropertyString ("AlgorithmAuthenticate", 
 					(IBinding data, string? value) => {(data as PrivateKeyUDF).AlgorithmAuthenticate = value;}, (IBinding data) => (data as PrivateKeyUDF).AlgorithmAuthenticate )}
-        }, __Tag,() => new PrivateKeyUDF(), Key._binding);
+        }, __Tag,() => new PrivateKeyUDF(), () => new List<PrivateKeyUDF>(), () => new Dictionary<string,PrivateKeyUDF>(),Key._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2383,10 +2510,10 @@ public partial class KeyAgreement : Jose {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<KeyAgreement> _binding = new (
 			new() {
 
-        }, __Tag,() => new KeyAgreement(), null);
+        }, __Tag,() => new KeyAgreement(), () => new List<KeyAgreement>(), () => new Dictionary<string,KeyAgreement>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2456,6 +2583,7 @@ public partial class KeyAgreementDH : KeyAgreement {
         ///The result
         /// </summary>
 
+	[JsonPropertyName("Result")]
 	public virtual byte[]?					Result  {get; set;}
 
 
@@ -2464,12 +2592,12 @@ public partial class KeyAgreementDH : KeyAgreement {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<KeyAgreementDH> _binding = new (
 			new() {
 
 			{ "Result", new PropertyBinary ("Result", 
 					(IBinding data, byte[]? value) => {(data as KeyAgreementDH).Result = value;}, (IBinding data) => (data as KeyAgreementDH).Result )}
-        }, __Tag,() => new KeyAgreementDH(), KeyAgreement._binding);
+        }, __Tag,() => new KeyAgreementDH(), () => new List<KeyAgreementDH>(), () => new Dictionary<string,KeyAgreementDH>(),KeyAgreement._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2540,12 +2668,14 @@ public partial class KeyAgreementECDH : KeyAgreement {
         ///The curve name
         /// </summary>
 
+	[JsonPropertyName("Curve")]
 	public virtual string?					Curve  {get; set;}
 
         /// <summary>
         ///The result
         /// </summary>
 
+	[JsonPropertyName("Result")]
 	public virtual byte[]?					Result  {get; set;}
 
 
@@ -2554,14 +2684,14 @@ public partial class KeyAgreementECDH : KeyAgreement {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<KeyAgreementECDH> _binding = new (
 			new() {
 
 			{ "Curve", new PropertyString ("Curve", 
 					(IBinding data, string? value) => {(data as KeyAgreementECDH).Curve = value;}, (IBinding data) => (data as KeyAgreementECDH).Curve )},
 			{ "Result", new PropertyBinary ("Result", 
 					(IBinding data, byte[]? value) => {(data as KeyAgreementECDH).Result = value;}, (IBinding data) => (data as KeyAgreementECDH).Result )}
-        }, __Tag,() => new KeyAgreementECDH(), KeyAgreement._binding);
+        }, __Tag,() => new KeyAgreementECDH(), () => new List<KeyAgreementECDH>(), () => new Dictionary<string,KeyAgreementECDH>(),KeyAgreement._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2633,6 +2763,7 @@ public partial class PublicKeyBinary : Key {
         ///The public key value
         /// </summary>
 
+	[JsonPropertyName("Public")]
 	public virtual byte[]?					Public  {get; set;}
 
 
@@ -2641,12 +2772,12 @@ public partial class PublicKeyBinary : Key {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<PublicKeyBinary> _binding = new (
 			new() {
 
 			{ "Public", new PropertyBinary ("Public", 
 					(IBinding data, byte[]? value) => {(data as PublicKeyBinary).Public = value;}, (IBinding data) => (data as PublicKeyBinary).Public )}
-        }, __Tag,() => new PublicKeyBinary(), Key._binding);
+        }, __Tag,() => new PublicKeyBinary(), () => new List<PublicKeyBinary>(), () => new Dictionary<string,PublicKeyBinary>(),Key._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2718,6 +2849,7 @@ public partial class PrivateKeyBinary : Key {
         ///The private key value
         /// </summary>
 
+	[JsonPropertyName("Public")]
 	public virtual byte[]?					Public  {get; set;}
 
 
@@ -2726,12 +2858,12 @@ public partial class PrivateKeyBinary : Key {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<PrivateKeyBinary> _binding = new (
 			new() {
 
 			{ "Public", new PropertyBinary ("Public", 
 					(IBinding data, byte[]? value) => {(data as PrivateKeyBinary).Public = value;}, (IBinding data) => (data as PrivateKeyBinary).Public )}
-        }, __Tag,() => new PrivateKeyBinary(), Key._binding);
+        }, __Tag,() => new PrivateKeyBinary(), () => new List<PrivateKeyBinary>(), () => new Dictionary<string,PrivateKeyBinary>(),Key._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;

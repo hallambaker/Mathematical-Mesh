@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/17/2025 1:32:00 AM
+//  This file was automatically generated at 5/1/2025 6:02:41 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -39,6 +39,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -86,6 +88,24 @@ public abstract partial class ServiceManagement : global::Goedel.Protocol.JsonOb
 	    {"ServiceStatusResponse", ServiceStatusResponse._Factory}
 		};
 
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+
+	    {typeof(WsmpRequest), WsmpRequest._binding},
+	    {typeof(WsmpResponse), WsmpResponse._binding},
+	    {typeof(ServiceConfigRequest), ServiceConfigRequest._binding},
+	    {typeof(ServiceConfigResponse), ServiceConfigResponse._binding},
+	    {typeof(ServiceStatusRequest), ServiceStatusRequest._binding},
+	    {typeof(ServiceStatusResponse), ServiceStatusResponse._binding}
+		};
+
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -93,7 +113,10 @@ public abstract partial class ServiceManagement : global::Goedel.Protocol.JsonOb
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -294,10 +317,10 @@ public partial class WsmpRequest : Goedel.Protocol.Request {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<WsmpRequest> _binding = new (
 			new() {
 
-        }, __Tag,() => new WsmpRequest(), Goedel.Protocol.Request._binding);
+        }, __Tag,() => new WsmpRequest(), () => new List<WsmpRequest>(), () => new Dictionary<string,WsmpRequest>(),Goedel.Protocol.Request._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -371,10 +394,10 @@ public partial class WsmpResponse : Goedel.Protocol.Response {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<WsmpResponse> _binding = new (
 			new() {
 
-        }, __Tag,() => new WsmpResponse(), Goedel.Protocol.Response._binding);
+        }, __Tag,() => new WsmpResponse(), () => new List<WsmpResponse>(), () => new Dictionary<string,WsmpResponse>(),Goedel.Protocol.Response._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -445,10 +468,10 @@ public partial class ServiceConfigRequest : WsmpRequest {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ServiceConfigRequest> _binding = new (
 			new() {
 
-        }, __Tag,() => new ServiceConfigRequest(), WsmpRequest._binding);
+        }, __Tag,() => new ServiceConfigRequest(), () => new List<ServiceConfigRequest>(), () => new Dictionary<string,ServiceConfigRequest>(),WsmpRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -519,10 +542,10 @@ public partial class ServiceConfigResponse : WsmpResponse {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ServiceConfigResponse> _binding = new (
 			new() {
 
-        }, __Tag,() => new ServiceConfigResponse(), WsmpResponse._binding);
+        }, __Tag,() => new ServiceConfigResponse(), () => new List<ServiceConfigResponse>(), () => new Dictionary<string,ServiceConfigResponse>(),WsmpResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -593,10 +616,10 @@ public partial class ServiceStatusRequest : WsmpRequest {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ServiceStatusRequest> _binding = new (
 			new() {
 
-        }, __Tag,() => new ServiceStatusRequest(), WsmpRequest._binding);
+        }, __Tag,() => new ServiceStatusRequest(), () => new List<ServiceStatusRequest>(), () => new Dictionary<string,ServiceStatusRequest>(),WsmpRequest._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -664,26 +687,31 @@ public partial class ServiceStatusResponse : WsmpResponse {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Start")]
 	public virtual DateTime?					Start  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("End")]
 	public virtual DateTime?					End  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Started")]
 	public virtual int?					Started  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Completed")]
 	public virtual int?					Completed  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Pending")]
 	public virtual int?					Pending  {get; set;}
 
 
@@ -692,7 +720,7 @@ public partial class ServiceStatusResponse : WsmpResponse {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ServiceStatusResponse> _binding = new (
 			new() {
 
 			{ "Start", new PropertyDateTime ("Start", 
@@ -705,7 +733,7 @@ public partial class ServiceStatusResponse : WsmpResponse {
 					(IBinding data, int? value) => {(data as ServiceStatusResponse).Completed = value;}, (IBinding data) => (data as ServiceStatusResponse).Completed )},
 			{ "Pending", new PropertyInteger32 ("Pending", 
 					(IBinding data, int? value) => {(data as ServiceStatusResponse).Pending = value;}, (IBinding data) => (data as ServiceStatusResponse).Pending )}
-        }, __Tag,() => new ServiceStatusResponse(), WsmpResponse._binding);
+        }, __Tag,() => new ServiceStatusResponse(), () => new List<ServiceStatusResponse>(), () => new Dictionary<string,ServiceStatusResponse>(),WsmpResponse._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;

@@ -162,17 +162,17 @@ public class CatalogContact : Catalog<CatalogedContact> {
                     }
                 }
             }
-        if (contact.JsonWebKeys is not null) {
-            foreach (var cryptoKey in contact.JsonWebKeys) {
-                //if (DictionaryProfiles.TryGetValue(cryptoKey.Key, out var profiles)) {
-                //    profiles.Add(cryptoKey.Value);
-                //    }
-                //else {
-                //    profiles = [cryptoKey.Value];
-                //    DictionaryProfiles.Add(cryptoKey.Key, profiles);
-                //    }
-                }
-            }
+        //if (contact.JsonWebKeys is not null) {
+        //    foreach (var cryptoKey in contact.JsonWebKeys) {
+        //        //if (DictionaryProfiles.TryGetValue(cryptoKey.Key, out var profiles)) {
+        //        //    profiles.Add(cryptoKey.Value);
+        //        //    }
+        //        //else {
+        //        //    profiles = [cryptoKey.Value];
+        //        //    DictionaryProfiles.Add(cryptoKey.Key, profiles);
+        //        //    }
+        //        }
+        //    }
 
         // 
 

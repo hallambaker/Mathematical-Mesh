@@ -1291,6 +1291,11 @@
             Dictionary mapping tags to factory methods
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Server.CatalogItem._BindingDictionary">
+            <summary>
+            Dictionary mapping types to bindings
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Server.CatalogItem._Initialized">
             <summary>Variable used to force static initialization</summary> 
         </member>

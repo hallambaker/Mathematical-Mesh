@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/16/2025 12:41:53 PM
+//  This file was automatically generated at 5/1/2025 6:02:45 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -39,6 +39,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -81,6 +83,22 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 	    {"CatalogEntryTest", CatalogEntryTest._Factory}
 		};
 
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+
+	    {typeof(TestEntry), TestEntry._binding},
+	    {typeof(TestItem), TestItem._binding},
+	    {typeof(MessageTest), MessageTest._binding},
+	    {typeof(CatalogEntryTest), CatalogEntryTest._binding}
+		};
+
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -88,7 +106,10 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -118,12 +139,14 @@ abstract public partial class TestEntry : TestSchema {
         ///Time the pending item was created.
         /// </summary>
 
+	[JsonPropertyName("Created")]
 	public virtual DateTime?					Created  {get; set;}
 
         /// <summary>
         ///Time the pending item was last modified.
         /// </summary>
 
+	[JsonPropertyName("Modified")]
 	public virtual DateTime?					Modified  {get; set;}
 
 
@@ -132,14 +155,14 @@ abstract public partial class TestEntry : TestSchema {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<TestEntry> _binding = new (
 			new() {
 
 			{ "Created", new PropertyDateTime ("Created", 
 					(IBinding data, DateTime? value) => {(data as TestEntry).Created = value;}, (IBinding data) => (data as TestEntry).Created )},
 			{ "Modified", new PropertyDateTime ("Modified", 
 					(IBinding data, DateTime? value) => {(data as TestEntry).Modified = value;}, (IBinding data) => (data as TestEntry).Modified )}
-        }, __Tag,null, null);
+        }, __Tag,null, null, null,null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -207,12 +230,14 @@ public partial class TestItem : TestEntry {
         ///not case sensitive.
         /// </summary>
 
+	[JsonPropertyName("AccountID")]
 	public virtual string?					AccountID  {get; set;}
 
         /// <summary>
         ///Fingerprint of associated user profile
         /// </summary>
 
+	[JsonPropertyName("UserProfileUDF")]
 	public virtual string?					UserProfileUDF  {get; set;}
 
         /// <summary>
@@ -220,6 +245,7 @@ public partial class TestItem : TestEntry {
         ///'Suspended'
         /// </summary>
 
+	[JsonPropertyName("Status")]
 	public virtual string?					Status  {get; set;}
 
 
@@ -228,7 +254,7 @@ public partial class TestItem : TestEntry {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<TestItem> _binding = new (
 			new() {
 
 			{ "AccountID", new PropertyString ("AccountID", 
@@ -237,7 +263,7 @@ public partial class TestItem : TestEntry {
 					(IBinding data, string? value) => {(data as TestItem).UserProfileUDF = value;}, (IBinding data) => (data as TestItem).UserProfileUDF )},
 			{ "Status", new PropertyString ("Status", 
 					(IBinding data, string? value) => {(data as TestItem).Status = value;}, (IBinding data) => (data as TestItem).Status )}
-        }, __Tag,() => new TestItem(), TestEntry._binding);
+        }, __Tag,() => new TestItem(), () => new List<TestItem>(), () => new Dictionary<string,TestItem>(),TestEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -308,37 +334,44 @@ public partial class MessageTest : Goedel.Mesh.Message {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("UniqueId")]
 	public virtual string?					UniqueId  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("VersionId")]
 	public virtual string?					VersionId  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Seed")]
 	public virtual string?					Seed  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Serial")]
 	public virtual int?					Serial  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Version")]
 	public virtual int?					Version  {get; set;}
 
         /// <summary>
         ///If specified, the entry was generated with random length setting.
         /// </summary>
 
+	[JsonPropertyName("Length")]
 	public virtual int?					Length  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Data")]
 	public virtual byte[]?					Data  {get; set;}
 
 
@@ -347,7 +380,7 @@ public partial class MessageTest : Goedel.Mesh.Message {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<MessageTest> _binding = new (
 			new() {
 
 			{ "UniqueId", new PropertyString ("UniqueId", 
@@ -364,7 +397,7 @@ public partial class MessageTest : Goedel.Mesh.Message {
 					(IBinding data, int? value) => {(data as MessageTest).Length = value;}, (IBinding data) => (data as MessageTest).Length )},
 			{ "Data", new PropertyBinary ("Data", 
 					(IBinding data, byte[]? value) => {(data as MessageTest).Data = value;}, (IBinding data) => (data as MessageTest).Data )}
-        }, __Tag,() => new MessageTest(), Goedel.Mesh.Message._binding);
+        }, __Tag,() => new MessageTest(), () => new List<MessageTest>(), () => new Dictionary<string,MessageTest>(),Goedel.Mesh.Message._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -435,37 +468,44 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("UniqueId")]
 	public virtual string?					UniqueId  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("VersionId")]
 	public virtual string?					VersionId  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Seed")]
 	public virtual string?					Seed  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Serial")]
 	public virtual int?					Serial  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Version")]
 	public virtual int?					Version  {get; set;}
 
         /// <summary>
         ///If specified, the 
         /// </summary>
 
+	[JsonPropertyName("Length")]
 	public virtual int?					Length  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("Data")]
 	public virtual byte[]?					Data  {get; set;}
 
 
@@ -474,7 +514,7 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<CatalogEntryTest> _binding = new (
 			new() {
 
 			{ "UniqueId", new PropertyString ("UniqueId", 
@@ -491,7 +531,7 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
 					(IBinding data, int? value) => {(data as CatalogEntryTest).Length = value;}, (IBinding data) => (data as CatalogEntryTest).Length )},
 			{ "Data", new PropertyBinary ("Data", 
 					(IBinding data, byte[]? value) => {(data as CatalogEntryTest).Data = value;}, (IBinding data) => (data as CatalogEntryTest).Data )}
-        }, __Tag,() => new CatalogEntryTest(), Goedel.Mesh.CatalogedEntry._binding);
+        }, __Tag,() => new CatalogEntryTest(), () => new List<CatalogEntryTest>(), () => new Dictionary<string,CatalogEntryTest>(),Goedel.Mesh.CatalogedEntry._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;

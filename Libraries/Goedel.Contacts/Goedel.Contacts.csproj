@@ -25,6 +25,11 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="CalendarSchema.cs">
+			<DependentUpon>CalendarSchema.Protocol</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>	
 		<Compile Update="Exceptions.cs">
 			<DependentUpon>Exceptions.exceptional</DependentUpon>
 			<DesignTime>True</DesignTime>
@@ -45,7 +50,7 @@
 	<ItemGroup>
 
 		<None Update="CalendarSchema.Protocol">
-		  <LastGenOutput>ContactSchema - Copy.cs</LastGenOutput>
+		  <LastGenOutput>CalendarSchema.cs</LastGenOutput>
 		  <Generator>PROTOGEN</Generator>
 		</None>
 

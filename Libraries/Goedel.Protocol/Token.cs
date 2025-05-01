@@ -47,9 +47,20 @@ public interface IBinding {
 public record Binding(
             Dictionary<string, Property> Properties,
             string Tag,
-            Func<object> Factory,
-            Binding Parent = null
+            Func<object> factory,
+            Binding Parent = null,
+            string? TypeTag = null
             ) {
+    public Dictionary<string, Binding> TypeDictionary = [];
+    public virtual Func<object> Factory => factory;
+    public virtual Func<object> ListFactory => throw new NYI();
+    public virtual Func<object> DictionaryFactory => throw new NYI();
+
+    public virtual Action<object, object> ListAdd => throw new NYI();
+    public virtual Action<object, string, object> DictionaryAdd => throw new NYI();
+
+    public virtual Func<object, string> GetKey => throw new NYI();
+    public virtual Func<object, object> GetValue => throw new NYI();
 
     ///<summary>Dictionary binding sub classes to binding descriptions</summary> 
     public Dictionary<string, Binding>? ChildClasses = null;
@@ -59,6 +70,53 @@ public record Binding(
 
     ///<summary>Dictionary binding all properties to binding descriptions</summary> 
     public Dictionary<string, Property> FullProperties => AllProperties ?? Properties;
+    }
+
+
+/// <summary>
+/// Binding specification.
+/// </summary>
+/// <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
+/// <param name="Tag">JSON tag for this object.</param>
+/// <param name="Factory">Factory returning a new instance of this object.</param>
+/// <param name="Parent">Parent the object inherits from.</param>
+public record Binding<T>(
+            Dictionary<string, Property> Properties,
+            string Tag,
+            Func<T> OFactory,
+            Func<List<T>> LFactory,
+            Func<Dictionary<string, T>> DFactory,
+            Binding Parent = null,
+            string? TypeTag = null
+            ) : Binding(Properties, Tag, null, Parent, TypeTag) where T : class {
+
+    public override Func<object> Factory => () => OFactory();
+    public override Func<object> ListFactory => () => LFactory();
+    public override Func<object> DictionaryFactory => () => DFactory();
+
+    public override Func<object, string> GetKey =>
+             (object pair) => {
+                 var keyValue = (KeyValuePair<string, T>)pair;
+                 return keyValue.Key;
+             };
+
+    public override Func<object, object> GetValue =>
+            (object pair) => {
+                var keyValue = (KeyValuePair<string, T>)pair;
+                return keyValue.Value;
+            };
+
+    public override Action<object, object> ListAdd =>
+            (object llist, object item) => {
+                var list = llist as List<T>;
+                list?.Add(item as T);
+            };
+
+    public override Action<object, string, object> DictionaryAdd =>
+            (object ldict, string key, object value) => {
+                var list = ldict as Dictionary<string, T>;
+                list?.Add(key, value as T);
+            };
     }
 
 
@@ -799,6 +857,7 @@ public record PropertyDictionaryReal64(
 /// <param name="Tagged">If true, the property should be tagged.</param>
 public record PropertyStruct(
             string Tag,
+            Type type,
             Action<IBinding, object?> Set,
             Func<IBinding, object?> Get,
             bool Tagged = false,
@@ -826,6 +885,7 @@ public record PropertyStruct(
 /// <param name="Tagged">If true, the property should be tagged.</param>
 public record PropertyListStruct(
             string Tag,
+            Type type,
             Action<IBinding, object?> Set,
             Func<IBinding, object?> Get,
             bool Tagged = false,
@@ -870,6 +930,7 @@ public record PropertyListStruct(
 /// <param name="Enumerator">Returns an enumerator</param>
 public record PropertyDictionaryStruct(
             string Tag,
+            Type type,
             Action<IBinding, object?> Set,
             Func<IBinding, object?> Get,
             bool Tagged,

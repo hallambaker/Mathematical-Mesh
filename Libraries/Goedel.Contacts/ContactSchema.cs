@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/28/2025 5:41:19 PM
+//  This file was automatically generated at 5/1/2025 6:02:18 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -39,6 +39,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -73,7 +75,6 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 			new () {
 
 	    {"Card", JsContact._Factory},
-	    {"Relation", Relation._Factory},
 	    {"Resource", Resource._Factory},
 	    {"Name", Name._Factory},
 	    {"NameComponent", NameComponent._Factory},
@@ -102,9 +103,52 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	    {"Author", Author._Factory},
 	    {"PersonalInfo", PersonalInfo._Factory},
 	    {"Update", Update._Factory},
-	    {"Jwks", Jwks._Factory},
+	    {"JWK", Jwks._Factory},
 	    {"Group", Group._Factory}
 		};
+
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+
+	    {typeof(JsContact), JsContact._binding},
+	    {typeof(Resource), Resource._binding},
+	    {typeof(Name), Name._binding},
+	    {typeof(NameComponent), NameComponent._binding},
+	    {typeof(NickName), NickName._binding},
+	    {typeof(Organization), Organization._binding},
+	    {typeof(OrgUnit), OrgUnit._binding},
+	    {typeof(SpeakToAs), SpeakToAs._binding},
+	    {typeof(Pronouns), Pronouns._binding},
+	    {typeof(Title), Title._binding},
+	    {typeof(EmailAddress), EmailAddress._binding},
+	    {typeof(OnlineService), OnlineService._binding},
+	    {typeof(Phone), Phone._binding},
+	    {typeof(LanguagePref), LanguagePref._binding},
+	    {typeof(Calendar), Calendar._binding},
+	    {typeof(SchedulingAddress), SchedulingAddress._binding},
+	    {typeof(Address), Address._binding},
+	    {typeof(AddressComponent), AddressComponent._binding},
+	    {typeof(CryptoKey), CryptoKey._binding},
+	    {typeof(ContactDirectory), ContactDirectory._binding},
+	    {typeof(ResourceLink), ResourceLink._binding},
+	    {typeof(Media), Media._binding},
+	    {typeof(PatchObject), PatchObject._binding},
+	    {typeof(Anniversary), Anniversary._binding},
+	    {typeof(TimeStamp), TimeStamp._binding},
+	    {typeof(Note), Note._binding},
+	    {typeof(Author), Author._binding},
+	    {typeof(PersonalInfo), PersonalInfo._binding},
+	    {typeof(Update), Update._binding},
+	    {typeof(Jwks), Jwks._binding},
+	    {typeof(Group), Group._binding}
+		};
+
+
 
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
@@ -113,7 +157,10 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -143,6 +190,7 @@ public partial class JsContact : JmapBase {
         /// The JSContact version of this Card. If specified, value MUST be '1.0'
         /// </summary>
 
+	[JsonPropertyName("version")]
 	public virtual string?					Version  {get; set;}
 
         /// <summary>
@@ -155,6 +203,7 @@ public partial class JsContact : JmapBase {
         /// application: a software application
         /// </summary>
 
+	[JsonPropertyName("kind")]
 	public virtual string?					Kind  {get; set;}
 
         /// <summary>
@@ -164,6 +213,7 @@ public partial class JsContact : JmapBase {
         /// property.
         /// </summary>
 
+	[JsonPropertyName("language")]
 	public virtual string?					Language  {get; set;}
 
         /// <summary>
@@ -172,6 +222,7 @@ public partial class JsContact : JmapBase {
         /// If this property is set, then the value of the kind property MUST be "group"
         /// </summary>
 
+	[JsonPropertyName("members")]
 	public virtual Dictionary<string,string>?					Members  {get; set;}
 
         /// <summary>
@@ -179,18 +230,21 @@ public partial class JsContact : JmapBase {
         /// e.g., it can, but need not, be the legal name of a person.
         /// </summary>
 
+	[JsonPropertyName("name")]
 	public virtual Name?					Name  {get; set;}
 
         /// <summary>
         /// The nicknames of the entity represented by the Card.
         /// </summary>
 
+	[JsonPropertyName("nickNames")]
 	public virtual Dictionary<string,NickName>?					NickNames  {get; set;}
 
         /// <summary>
         /// The company or organization names and units associated with the Card.
         /// </summary>
 
+	[JsonPropertyName("organizations")]
 	public virtual Dictionary<string,Organization>?					Organizations  {get; set;}
 
         /// <summary>
@@ -198,18 +252,21 @@ public partial class JsContact : JmapBase {
         /// entity that is represented by the Card.
         /// </summary>
 
+	[JsonPropertyName("speakToAs")]
 	public virtual SpeakToAs?					SpeakToAs  {get; set;}
 
         /// <summary>
         /// The job titles or functional positions of the entity represented by the Card.
         /// </summary>
 
+	[JsonPropertyName("titles")]
 	public virtual Dictionary<string,Title>?					Titles  {get; set;}
 
         /// <summary>
         /// The email addresses in which to contact the entity represented by the Card.
         /// </summary>
 
+	[JsonPropertyName("emails")]
 	public virtual Dictionary<string,EmailAddress>?					Emails  {get; set;}
 
         /// <summary>
@@ -217,18 +274,21 @@ public partial class JsContact : JmapBase {
         /// This can be messaging services, social media profiles, and other.
         /// </summary>
 
+	[JsonPropertyName("onlineServices")]
 	public virtual Dictionary<string,OnlineService>?					OnlineServices  {get; set;}
 
         /// <summary>
         /// The phone numbers by which to contact the entity represented by the Card.
         /// </summary>
 
+	[JsonPropertyName("phones")]
 	public virtual Dictionary<string,Phone>?					Phones  {get; set;}
 
         /// <summary>
         /// The preferred languages for contacting the entity associated with the Card.
         /// </summary>
 
+	[JsonPropertyName("preferredLanguages")]
 	public virtual Dictionary<string,LanguagePref>?					PreferredLanguages  {get; set;}
 
         /// <summary>
@@ -236,6 +296,7 @@ public partial class JsContact : JmapBase {
         /// to look up free-busy information.
         /// </summary>
 
+	[JsonPropertyName("calendars")]
 	public virtual Dictionary<string,Calendar>?					Calendars  {get; set;}
 
         /// <summary>
@@ -243,6 +304,7 @@ public partial class JsContact : JmapBase {
         /// scheduling invitations.
         /// </summary>
 
+	[JsonPropertyName("schedulingAddresses")]
 	public virtual Dictionary<string,SchedulingAddress>?					SchedulingAddresses  {get; set;}
 
         /// <summary>
@@ -250,6 +312,7 @@ public partial class JsContact : JmapBase {
         /// or geographic locations.
         /// </summary>
 
+	[JsonPropertyName("addresses")]
 	public virtual Dictionary<string,Address>?					Addresses  {get; set;}
 
         /// <summary>
@@ -257,6 +320,7 @@ public partial class JsContact : JmapBase {
         /// with the entity represented by the Card.
         /// </summary>
 
+	[JsonPropertyName("cryptoKeys")]
 	public virtual Dictionary<string,CryptoKey>?					CryptoKeys  {get; set;}
 
         /// <summary>
@@ -264,6 +328,7 @@ public partial class JsContact : JmapBase {
         /// by the Card.
         /// </summary>
 
+	[JsonPropertyName("directories")]
 	public virtual Dictionary<string,ContactDirectory>?					Directories  {get; set;}
 
         /// <summary>
@@ -271,6 +336,7 @@ public partial class JsContact : JmapBase {
         /// use-case-specific resource properties.
         /// </summary>
 
+	[JsonPropertyName("links")]
 	public virtual Dictionary<string,ResourceLink>?					Links  {get; set;}
 
         /// <summary>
@@ -279,6 +345,7 @@ public partial class JsContact : JmapBase {
         /// with the entity represented by the Card.
         /// </summary>
 
+	[JsonPropertyName("media")]
 	public virtual Dictionary<string,Media>?					Media  {get; set;}
 
         /// <summary>
@@ -291,50 +358,50 @@ public partial class JsContact : JmapBase {
         /// property. A patch MUST NOT target the localizations property.
         /// </summary>
 
+	[JsonPropertyName("localizations")]
 	public virtual Dictionary<string,PatchObject>?					Localizations  {get; set;}
 
         /// <summary>
         /// The memorable dates and events for the entity represented by the Card.
         /// </summary>
 
+	[JsonPropertyName("anniversaries")]
 	public virtual Dictionary<string,Anniversary>?					Anniversaries  {get; set;}
 
         /// <summary>
         /// The set of free-text keywords, also known as tags.
         /// </summary>
 
+	[JsonPropertyName("keywords")]
 	public virtual Dictionary<string,bool>?					Keywords  {get; set;}
 
         /// <summary>
         /// The free-text notes that are associated with the Card.
         /// </summary>
 
+	[JsonPropertyName("notes")]
 	public virtual Dictionary<string,Note>?					Notes  {get; set;}
 
         /// <summary>
         /// The personal information of the entity represented by the Card.
         /// </summary>
 
+	[JsonPropertyName("personalInfo")]
 	public virtual Dictionary<string,PersonalInfo>?					PersonalInfo  {get; set;}
 
         /// <summary>
         /// 
         /// </summary>
 
+	[JsonPropertyName("updates")]
 	public virtual Dictionary<string,Update>?					Updates  {get; set;}
 
         /// <summary>
         /// 
         /// </summary>
 
+	[JsonPropertyName("groups")]
 	public virtual Dictionary<string,Group>?					Groups  {get; set;}
-
-        /// <summary>
-        /// The cryptographic resources such as public keys and certificates associated 
-        /// with the entity represented by the Card.
-        /// </summary>
-
-	public virtual Dictionary<string,Jwks>?					JsonWebKeys  {get; set;}
 
 
 
@@ -342,7 +409,7 @@ public partial class JsContact : JmapBase {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<JsContact> _binding = new (
 			new() {
 
 			{ "version", new PropertyString ("version", 
@@ -353,103 +420,103 @@ public partial class JsContact : JmapBase {
 					(IBinding data, string? value) => {(data as JsContact).Language = value;}, (IBinding data) => (data as JsContact).Language )},
 			{ "members", new PropertyDictionaryString ("members", 
 					(IBinding data, Dictionary<string,string>? value) => {(data as JsContact).Members = value;}, (IBinding data) => (data as JsContact).Members )},
-			{ "name", new PropertyStruct ("name", 
+			{ "name", new PropertyStruct ("name", typeof (Name),
 					(IBinding data, object? value) => {(data as JsContact).Name = value as Name;}, (IBinding data) => (data as JsContact).Name,
 					false, ()=>new  Name(), ()=>new Name())},
-			{ "nickNames", new PropertyDictionaryStruct ("nickNames", 
+			{ "nickNames", new PropertyDictionaryStruct ("nickNames", typeof (NickName),
 					(IBinding data, object? value) => {(data as JsContact).NickNames = value as Dictionary<string,NickName>;}, (IBinding data) => (data as JsContact).NickNames,
 					false, ()=>new  Dictionary<string,NickName>(), ()=>new NickName(),
 					(IBinding data) => (data as JsContact).NickNames.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,NickName>).Add (key as string,value as NickName);})},
-			{ "organizations", new PropertyDictionaryStruct ("organizations", 
+			{ "organizations", new PropertyDictionaryStruct ("organizations", typeof (Organization),
 					(IBinding data, object? value) => {(data as JsContact).Organizations = value as Dictionary<string,Organization>;}, (IBinding data) => (data as JsContact).Organizations,
 					false, ()=>new  Dictionary<string,Organization>(), ()=>new Organization(),
 					(IBinding data) => (data as JsContact).Organizations.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Organization>).Add (key as string,value as Organization);})},
-			{ "speakToAs", new PropertyStruct ("speakToAs", 
+			{ "speakToAs", new PropertyStruct ("speakToAs", typeof (SpeakToAs),
 					(IBinding data, object? value) => {(data as JsContact).SpeakToAs = value as SpeakToAs;}, (IBinding data) => (data as JsContact).SpeakToAs,
 					false, ()=>new  SpeakToAs(), ()=>new SpeakToAs())},
-			{ "titles", new PropertyDictionaryStruct ("titles", 
+			{ "titles", new PropertyDictionaryStruct ("titles", typeof (Title),
 					(IBinding data, object? value) => {(data as JsContact).Titles = value as Dictionary<string,Title>;}, (IBinding data) => (data as JsContact).Titles,
 					false, ()=>new  Dictionary<string,Title>(), ()=>new Title(),
 					(IBinding data) => (data as JsContact).Titles.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Title>).Add (key as string,value as Title);})},
-			{ "emails", new PropertyDictionaryStruct ("emails", 
+			{ "emails", new PropertyDictionaryStruct ("emails", typeof (EmailAddress),
 					(IBinding data, object? value) => {(data as JsContact).Emails = value as Dictionary<string,EmailAddress>;}, (IBinding data) => (data as JsContact).Emails,
 					false, ()=>new  Dictionary<string,EmailAddress>(), ()=>new EmailAddress(),
 					(IBinding data) => (data as JsContact).Emails.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,EmailAddress>).Add (key as string,value as EmailAddress);})},
-			{ "onlineServices", new PropertyDictionaryStruct ("onlineServices", 
+			{ "onlineServices", new PropertyDictionaryStruct ("onlineServices", typeof (OnlineService),
 					(IBinding data, object? value) => {(data as JsContact).OnlineServices = value as Dictionary<string,OnlineService>;}, (IBinding data) => (data as JsContact).OnlineServices,
 					false, ()=>new  Dictionary<string,OnlineService>(), ()=>new OnlineService(),
 					(IBinding data) => (data as JsContact).OnlineServices.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,OnlineService>).Add (key as string,value as OnlineService);})},
-			{ "phones", new PropertyDictionaryStruct ("phones", 
+			{ "phones", new PropertyDictionaryStruct ("phones", typeof (Phone),
 					(IBinding data, object? value) => {(data as JsContact).Phones = value as Dictionary<string,Phone>;}, (IBinding data) => (data as JsContact).Phones,
 					false, ()=>new  Dictionary<string,Phone>(), ()=>new Phone(),
 					(IBinding data) => (data as JsContact).Phones.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Phone>).Add (key as string,value as Phone);})},
-			{ "preferredLanguages", new PropertyDictionaryStruct ("preferredLanguages", 
+			{ "preferredLanguages", new PropertyDictionaryStruct ("preferredLanguages", typeof (LanguagePref),
 					(IBinding data, object? value) => {(data as JsContact).PreferredLanguages = value as Dictionary<string,LanguagePref>;}, (IBinding data) => (data as JsContact).PreferredLanguages,
 					false, ()=>new  Dictionary<string,LanguagePref>(), ()=>new LanguagePref(),
 					(IBinding data) => (data as JsContact).PreferredLanguages.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,LanguagePref>).Add (key as string,value as LanguagePref);})},
-			{ "calendars", new PropertyDictionaryStruct ("calendars", 
+			{ "calendars", new PropertyDictionaryStruct ("calendars", typeof (Calendar),
 					(IBinding data, object? value) => {(data as JsContact).Calendars = value as Dictionary<string,Calendar>;}, (IBinding data) => (data as JsContact).Calendars,
 					false, ()=>new  Dictionary<string,Calendar>(), ()=>new Calendar(),
 					(IBinding data) => (data as JsContact).Calendars.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Calendar>).Add (key as string,value as Calendar);})},
-			{ "schedulingAddresses", new PropertyDictionaryStruct ("schedulingAddresses", 
+			{ "schedulingAddresses", new PropertyDictionaryStruct ("schedulingAddresses", typeof (SchedulingAddress),
 					(IBinding data, object? value) => {(data as JsContact).SchedulingAddresses = value as Dictionary<string,SchedulingAddress>;}, (IBinding data) => (data as JsContact).SchedulingAddresses,
 					false, ()=>new  Dictionary<string,SchedulingAddress>(), ()=>new SchedulingAddress(),
 					(IBinding data) => (data as JsContact).SchedulingAddresses.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,SchedulingAddress>).Add (key as string,value as SchedulingAddress);})},
-			{ "addresses", new PropertyDictionaryStruct ("addresses", 
+			{ "addresses", new PropertyDictionaryStruct ("addresses", typeof (Address),
 					(IBinding data, object? value) => {(data as JsContact).Addresses = value as Dictionary<string,Address>;}, (IBinding data) => (data as JsContact).Addresses,
 					false, ()=>new  Dictionary<string,Address>(), ()=>new Address(),
 					(IBinding data) => (data as JsContact).Addresses.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Address>).Add (key as string,value as Address);})},
-			{ "cryptoKeys", new PropertyDictionaryStruct ("cryptoKeys", 
+			{ "cryptoKeys", new PropertyDictionaryStruct ("cryptoKeys", typeof (CryptoKey),
 					(IBinding data, object? value) => {(data as JsContact).CryptoKeys = value as Dictionary<string,CryptoKey>;}, (IBinding data) => (data as JsContact).CryptoKeys,
 					false, ()=>new  Dictionary<string,CryptoKey>(), ()=>new CryptoKey(),
 					(IBinding data) => (data as JsContact).CryptoKeys.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,CryptoKey>).Add (key as string,value as CryptoKey);})},
-			{ "directories", new PropertyDictionaryStruct ("directories", 
+			{ "directories", new PropertyDictionaryStruct ("directories", typeof (ContactDirectory),
 					(IBinding data, object? value) => {(data as JsContact).Directories = value as Dictionary<string,ContactDirectory>;}, (IBinding data) => (data as JsContact).Directories,
 					false, ()=>new  Dictionary<string,ContactDirectory>(), ()=>new ContactDirectory(),
 					(IBinding data) => (data as JsContact).Directories.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,ContactDirectory>).Add (key as string,value as ContactDirectory);})},
-			{ "links", new PropertyDictionaryStruct ("links", 
+			{ "links", new PropertyDictionaryStruct ("links", typeof (ResourceLink),
 					(IBinding data, object? value) => {(data as JsContact).Links = value as Dictionary<string,ResourceLink>;}, (IBinding data) => (data as JsContact).Links,
 					false, ()=>new  Dictionary<string,ResourceLink>(), ()=>new ResourceLink(),
 					(IBinding data) => (data as JsContact).Links.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,ResourceLink>).Add (key as string,value as ResourceLink);})},
-			{ "media", new PropertyDictionaryStruct ("media", 
+			{ "media", new PropertyDictionaryStruct ("media", typeof (Media),
 					(IBinding data, object? value) => {(data as JsContact).Media = value as Dictionary<string,Media>;}, (IBinding data) => (data as JsContact).Media,
 					false, ()=>new  Dictionary<string,Media>(), ()=>new Media(),
 					(IBinding data) => (data as JsContact).Media.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Media>).Add (key as string,value as Media);})},
-			{ "localizations", new PropertyDictionaryStruct ("localizations", 
+			{ "localizations", new PropertyDictionaryStruct ("localizations", typeof (PatchObject),
 					(IBinding data, object? value) => {(data as JsContact).Localizations = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as JsContact).Localizations,
 					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject(),
 					(IBinding data) => (data as JsContact).Localizations.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,PatchObject>).Add (key as string,value as PatchObject);})},
-			{ "anniversaries", new PropertyDictionaryStruct ("anniversaries", 
+			{ "anniversaries", new PropertyDictionaryStruct ("anniversaries", typeof (Anniversary),
 					(IBinding data, object? value) => {(data as JsContact).Anniversaries = value as Dictionary<string,Anniversary>;}, (IBinding data) => (data as JsContact).Anniversaries,
 					false, ()=>new  Dictionary<string,Anniversary>(), ()=>new Anniversary(),
 					(IBinding data) => (data as JsContact).Anniversaries.GetEnumerable(),
@@ -457,37 +524,31 @@ public partial class JsContact : JmapBase {
 						 {(dictionary as Dictionary<string,Anniversary>).Add (key as string,value as Anniversary);})},
 			{ "keywords", new PropertyDictionaryBoolean ("keywords", 
 					(IBinding data, Dictionary<string,bool>? value) => {(data as JsContact).Keywords = value;}, (IBinding data) => (data as JsContact).Keywords )},
-			{ "notes", new PropertyDictionaryStruct ("notes", 
+			{ "notes", new PropertyDictionaryStruct ("notes", typeof (Note),
 					(IBinding data, object? value) => {(data as JsContact).Notes = value as Dictionary<string,Note>;}, (IBinding data) => (data as JsContact).Notes,
 					false, ()=>new  Dictionary<string,Note>(), ()=>new Note(),
 					(IBinding data) => (data as JsContact).Notes.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Note>).Add (key as string,value as Note);})},
-			{ "personalInfo", new PropertyDictionaryStruct ("personalInfo", 
+			{ "personalInfo", new PropertyDictionaryStruct ("personalInfo", typeof (PersonalInfo),
 					(IBinding data, object? value) => {(data as JsContact).PersonalInfo = value as Dictionary<string,PersonalInfo>;}, (IBinding data) => (data as JsContact).PersonalInfo,
 					false, ()=>new  Dictionary<string,PersonalInfo>(), ()=>new PersonalInfo(),
 					(IBinding data) => (data as JsContact).PersonalInfo.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,PersonalInfo>).Add (key as string,value as PersonalInfo);})},
-			{ "updates", new PropertyDictionaryStruct ("updates", 
+			{ "updates", new PropertyDictionaryStruct ("updates", typeof (Update),
 					(IBinding data, object? value) => {(data as JsContact).Updates = value as Dictionary<string,Update>;}, (IBinding data) => (data as JsContact).Updates,
 					false, ()=>new  Dictionary<string,Update>(), ()=>new Update(),
 					(IBinding data) => (data as JsContact).Updates.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Update>).Add (key as string,value as Update);})},
-			{ "groups", new PropertyDictionaryStruct ("groups", 
+			{ "groups", new PropertyDictionaryStruct ("groups", typeof (Group),
 					(IBinding data, object? value) => {(data as JsContact).Groups = value as Dictionary<string,Group>;}, (IBinding data) => (data as JsContact).Groups,
 					false, ()=>new  Dictionary<string,Group>(), ()=>new Group(),
 					(IBinding data) => (data as JsContact).Groups.GetEnumerable(),
 					(object dictionary, object key, object value) =>
-						 {(dictionary as Dictionary<string,Group>).Add (key as string,value as Group);})},
-			{ "jwks", new PropertyDictionaryStruct ("jwks", 
-					(IBinding data, object? value) => {(data as JsContact).JsonWebKeys = value as Dictionary<string,Jwks>;}, (IBinding data) => (data as JsContact).JsonWebKeys,
-					false, ()=>new  Dictionary<string,Jwks>(), ()=>new Jwks(),
-					(IBinding data) => (data as JsContact).JsonWebKeys.GetEnumerable(),
-					(object dictionary, object key, object value) =>
-						 {(dictionary as Dictionary<string,Jwks>).Add (key as string,value as Jwks);})}
-        }, __Tag,() => new JsContact(), JmapBase._binding);
+						 {(dictionary as Dictionary<string,Group>).Add (key as string,value as Group);})}
+        }, __Tag,() => new JsContact(), () => new List<JsContact>(), () => new Dictionary<string,JsContact>(),JmapBase._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -551,93 +612,13 @@ public partial class JsContact : JmapBase {
 
 	/// <summary>
 	/// </summary>
-public partial class Relation : Contacts {
-        /// <summary>
-        /// The relationships, each one MUST have the value true.
-        /// </summary>
-
-	public virtual Dictionary<string,bool>?					Relationships  {get; set;}
-
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
-			new() {
-
-			{ "relationships", new PropertyDictionaryBoolean ("relationships", 
-					(IBinding data, Dictionary<string,bool>? value) => {(data as Relation).Relationships = value;}, (IBinding data) => (data as Relation).Relationships )}
-        }, __Tag,() => new Relation(), null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "Relation";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Relation();
-
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new Relation FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Relation;
-			}
-		var Result = new Relation ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-
-	}
-
-
-	/// <summary>
-	/// </summary>
 public partial class Resource : Contacts {
         /// <summary>
         /// The JSContact type of the object. The value MUST NOT be "Resource"; 
         /// instead, the value MUST be the name of a concrete resource type
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
@@ -646,37 +627,55 @@ public partial class Resource : Contacts {
         /// property definitions may change this property from being optional to mandatory.
         /// </summary>
 
+	[JsonPropertyName("kind")]
 	public virtual string?					Kind  {get; set;}
 
         /// <summary>
         /// 
         /// </summary>
 
+	[JsonPropertyName("uri")]
 	public virtual string?					Uri  {get; set;}
 
         /// <summary>
         /// The media type [RFC2046] of the resource identified by the uri property value.
         /// </summary>
 
+	[JsonPropertyName("mediaType")]
 	public virtual string?					MediaType  {get; set;}
 
         /// <summary>
         /// The contexts in which to use this resource. 
         /// </summary>
 
+	[JsonPropertyName("contexts")]
 	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
         /// The preference of the resource in relation to other resources.
         /// </summary>
 
+	[JsonPropertyName("pref")]
 	public virtual int?					Pref  {get; set;}
 
         /// <summary>
         /// A custom label for the value. 
         /// </summary>
 
+	[JsonPropertyName("label")]
 	public virtual string?					Label  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	[JsonPropertyName("data")]
+	public virtual byte[]?					Data  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	[JsonPropertyName("jwk")]
+	public virtual JWK?					Jwk  {get; set;}
 
 
 
@@ -684,7 +683,7 @@ public partial class Resource : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Resource> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
@@ -700,8 +699,13 @@ public partial class Resource : Contacts {
 			{ "pref", new PropertyInteger32 ("pref", 
 					(IBinding data, int? value) => {(data as Resource).Pref = value;}, (IBinding data) => (data as Resource).Pref )},
 			{ "label", new PropertyString ("label", 
-					(IBinding data, string? value) => {(data as Resource).Label = value;}, (IBinding data) => (data as Resource).Label )}
-        }, __Tag,() => new Resource(), null);
+					(IBinding data, string? value) => {(data as Resource).Label = value;}, (IBinding data) => (data as Resource).Label )},
+			{ "data", new PropertyBinary ("data", 
+					(IBinding data, byte[]? value) => {(data as Resource).Data = value;}, (IBinding data) => (data as Resource).Data )},
+			{ "jwk", new PropertyStruct ("jwk", typeof (JWK),
+					(IBinding data, object? value) => {(data as Resource).Jwk = value as JWK;}, (IBinding data) => (data as Resource).Jwk,
+					false, ()=>new  JWK(), ()=>new JWK())}
+        }, __Tag,() => new Resource(), () => new List<Resource>(), () => new Dictionary<string,Resource>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -770,6 +774,7 @@ public partial class Name : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
@@ -779,11 +784,13 @@ public partial class Name : Contacts {
         /// property value than "separator".
         /// </summary>
 
+	[JsonPropertyName("components")]
 	public virtual List<NameComponent>?					Components  {get; set;}
         /// <summary>
         /// The indicator if the name components in the components property are ordered.
         /// </summary>
 
+	[JsonPropertyName("isOrdered")]
 	public virtual bool?					IsOrdered  {get; set;}
 
         /// <summary>
@@ -795,6 +802,7 @@ public partial class Name : Contacts {
         /// if the components property is not set.
         /// </summary>
 
+	[JsonPropertyName("defaultSeparator")]
 	public virtual string?					DefaultSeparator  {get; set;}
 
         /// <summary>
@@ -802,6 +810,7 @@ public partial class Name : Contacts {
         /// if the components property is not set.
         /// </summary>
 
+	[JsonPropertyName("full")]
 	public virtual string?					Full  {get; set;}
 
         /// <summary>
@@ -815,18 +824,21 @@ public partial class Name : Contacts {
         /// components property is not set.
         /// </summary>
 
+	[JsonPropertyName("sortAs")]
 	public virtual string?					SortAs  {get; set;}
 
         /// <summary>
         /// The script used in the value of the NameComponent phonetic property.
         /// </summary>
 
+	[JsonPropertyName("phoneticScript")]
 	public virtual string?					PhoneticScript  {get; set;}
 
         /// <summary>
         /// The phonetic system used in the NameComponent phonetic property.
         /// </summary>
 
+	[JsonPropertyName("phoneticSystem")]
 	public virtual string?					PhoneticSystem  {get; set;}
 
 
@@ -835,12 +847,12 @@ public partial class Name : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Name> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as Name).Type = value;}, (IBinding data) => (data as Name).Type )},
-			{ "components", new PropertyListStruct ("components", 
+			{ "components", new PropertyListStruct ("components", typeof (NameComponent),
 					(IBinding data, object? value) => {(data as Name).Components = value as List<NameComponent>;}, (IBinding data) => (data as Name).Components,
 					false, ()=>new  List<NameComponent>(), ()=>new NameComponent())},
 			{ "isOrdered", new PropertyBoolean ("isOrdered", 
@@ -855,7 +867,7 @@ public partial class Name : Contacts {
 					(IBinding data, string? value) => {(data as Name).PhoneticScript = value;}, (IBinding data) => (data as Name).PhoneticScript )},
 			{ "phoneticSystem", new PropertyString ("phoneticSystem", 
 					(IBinding data, string? value) => {(data as Name).PhoneticSystem = value;}, (IBinding data) => (data as Name).PhoneticSystem )}
-        }, __Tag,() => new Name(), null);
+        }, __Tag,() => new Name(), () => new List<Name>(), () => new Dictionary<string,Name>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -924,12 +936,14 @@ public partial class NameComponent : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// 
         /// </summary>
 
+	[JsonPropertyName("value")]
 	public virtual string?					Value  {get; set;}
 
         /// <summary>
@@ -943,11 +957,13 @@ public partial class NameComponent : Contacts {
         /// separator: a formatting separator between two ordered name non-separator components. 
         /// </summary>
 
+	[JsonPropertyName("kind")]
 	public virtual string?					Kind  {get; set;}
 
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("phonetic")]
 	public virtual string?					Phonetic  {get; set;}
 
 
@@ -956,7 +972,7 @@ public partial class NameComponent : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<NameComponent> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
@@ -967,7 +983,7 @@ public partial class NameComponent : Contacts {
 					(IBinding data, string? value) => {(data as NameComponent).Kind = value;}, (IBinding data) => (data as NameComponent).Kind )},
 			{ "phonetic", new PropertyString ("phonetic", 
 					(IBinding data, string? value) => {(data as NameComponent).Phonetic = value;}, (IBinding data) => (data as NameComponent).Phonetic )}
-        }, __Tag,() => new NameComponent(), null);
+        }, __Tag,() => new NameComponent(), () => new List<NameComponent>(), () => new Dictionary<string,NameComponent>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1034,24 +1050,28 @@ public partial class NickName : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The nickname.
         /// </summary>
 
+	[JsonPropertyName("name")]
 	public virtual string?					Name  {get; set;}
 
         /// <summary>
         /// The contexts in which to use the nickname.
         /// </summary>
 
+	[JsonPropertyName("contexts")]
 	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
         /// The preference of the nickname in relation to other nicknames. 
         /// </summary>
 
+	[JsonPropertyName("pref")]
 	public virtual int?					Pref  {get; set;}
 
 
@@ -1060,7 +1080,7 @@ public partial class NickName : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<NickName> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
@@ -1071,7 +1091,7 @@ public partial class NickName : Contacts {
 					(IBinding data, Dictionary<string,bool>? value) => {(data as NickName).Contexts = value;}, (IBinding data) => (data as NickName).Contexts )},
 			{ "pref", new PropertyInteger32 ("pref", 
 					(IBinding data, int? value) => {(data as NickName).Pref = value;}, (IBinding data) => (data as NickName).Pref )}
-        }, __Tag,() => new NickName(), null);
+        }, __Tag,() => new NickName(), () => new List<NickName>(), () => new Dictionary<string,NickName>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1138,12 +1158,14 @@ public partial class Organization : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The name of the organization.
         /// </summary>
 
+	[JsonPropertyName("name")]
 	public virtual string?					Name  {get; set;}
 
         /// <summary>
@@ -1152,6 +1174,7 @@ public partial class Organization : Contacts {
         /// within that division). If set, the list MUST contain at least one entry.
         /// </summary>
 
+	[JsonPropertyName("units")]
 	public virtual List<OrgUnit>?					Units  {get; set;}
         /// <summary>
         /// The value to lexicographically sort the organization in relation to 
@@ -1160,6 +1183,7 @@ public partial class Organization : Contacts {
         /// the name property value MAY be used for comparison.
         /// </summary>
 
+	[JsonPropertyName("sortAs")]
 	public virtual string?					SortAs  {get; set;}
 
         /// <summary>
@@ -1167,6 +1191,7 @@ public partial class Organization : Contacts {
         /// example, membership in a choir may only apply in a private context.
         /// </summary>
 
+	[JsonPropertyName("contexts")]
 	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
 
@@ -1175,21 +1200,21 @@ public partial class Organization : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Organization> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as Organization).Type = value;}, (IBinding data) => (data as Organization).Type )},
 			{ "name", new PropertyString ("name", 
 					(IBinding data, string? value) => {(data as Organization).Name = value;}, (IBinding data) => (data as Organization).Name )},
-			{ "units", new PropertyListStruct ("units", 
+			{ "units", new PropertyListStruct ("units", typeof (OrgUnit),
 					(IBinding data, object? value) => {(data as Organization).Units = value as List<OrgUnit>;}, (IBinding data) => (data as Organization).Units,
 					false, ()=>new  List<OrgUnit>(), ()=>new OrgUnit())},
 			{ "sortAs", new PropertyString ("sortAs", 
 					(IBinding data, string? value) => {(data as Organization).SortAs = value;}, (IBinding data) => (data as Organization).SortAs )},
 			{ "contexts", new PropertyDictionaryBoolean ("contexts", 
 					(IBinding data, Dictionary<string,bool>? value) => {(data as Organization).Contexts = value;}, (IBinding data) => (data as Organization).Contexts )}
-        }, __Tag,() => new Organization(), null);
+        }, __Tag,() => new Organization(), () => new List<Organization>(), () => new Dictionary<string,Organization>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1257,6 +1282,7 @@ public partial class OrgUnit : Contacts {
         /// The name of the organizational unit.
         /// </summary>
 
+	[JsonPropertyName("name")]
 	public virtual string?					Name  {get; set;}
 
         /// <summary>
@@ -1268,6 +1294,7 @@ public partial class OrgUnit : Contacts {
         /// property, the name property value MAY be used for comparison.
         /// </summary>
 
+	[JsonPropertyName("sortAs")]
 	public virtual string?					SortAs  {get; set;}
 
 
@@ -1276,14 +1303,14 @@ public partial class OrgUnit : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<OrgUnit> _binding = new (
 			new() {
 
 			{ "name", new PropertyString ("name", 
 					(IBinding data, string? value) => {(data as OrgUnit).Name = value;}, (IBinding data) => (data as OrgUnit).Name )},
 			{ "sortAs", new PropertyString ("sortAs", 
 					(IBinding data, string? value) => {(data as OrgUnit).SortAs = value;}, (IBinding data) => (data as OrgUnit).SortAs )}
-        }, __Tag,() => new OrgUnit(), null);
+        }, __Tag,() => new OrgUnit(), () => new List<OrgUnit>(), () => new Dictionary<string,OrgUnit>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1350,6 +1377,7 @@ public partial class SpeakToAs : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
@@ -1359,12 +1387,14 @@ public partial class SpeakToAs : Contacts {
         /// (masculine)
         /// </summary>
 
+	[JsonPropertyName("grammaticalGender")]
 	public virtual string?					GrammaticalGender  {get; set;}
 
         /// <summary>
         /// The pronouns that the contact chooses to use for themselves.
         /// </summary>
 
+	[JsonPropertyName("pronouns")]
 	public virtual Dictionary<string,Pronouns>?					Pronouns  {get; set;}
 
 
@@ -1373,20 +1403,20 @@ public partial class SpeakToAs : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<SpeakToAs> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as SpeakToAs).Type = value;}, (IBinding data) => (data as SpeakToAs).Type )},
 			{ "grammaticalGender", new PropertyString ("grammaticalGender", 
 					(IBinding data, string? value) => {(data as SpeakToAs).GrammaticalGender = value;}, (IBinding data) => (data as SpeakToAs).GrammaticalGender )},
-			{ "pronouns", new PropertyDictionaryStruct ("pronouns", 
+			{ "pronouns", new PropertyDictionaryStruct ("pronouns", typeof (Pronouns),
 					(IBinding data, object? value) => {(data as SpeakToAs).Pronouns = value as Dictionary<string,Pronouns>;}, (IBinding data) => (data as SpeakToAs).Pronouns,
 					false, ()=>new  Dictionary<string,Pronouns>(), ()=>new Pronouns(),
 					(IBinding data) => (data as SpeakToAs).Pronouns.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Pronouns>).Add (key as string,value as Pronouns);})}
-        }, __Tag,() => new SpeakToAs(), null);
+        }, __Tag,() => new SpeakToAs(), () => new List<SpeakToAs>(), () => new Dictionary<string,SpeakToAs>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1453,6 +1483,7 @@ public partial class Pronouns : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
@@ -1461,18 +1492,21 @@ public partial class Pronouns : Contacts {
         /// property.
         /// </summary>
 
+	[JsonPropertyName("pronouns")]
 	public virtual string?					Values  {get; set;}
 
         /// <summary>
         /// The contexts in which to use the pronouns.
         /// </summary>
 
+	[JsonPropertyName("contexts")]
 	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
         /// The preference of the pronouns in relation to other pronouns in the same context.
         /// </summary>
 
+	[JsonPropertyName("pref")]
 	public virtual int?					Pref  {get; set;}
 
 
@@ -1481,7 +1515,7 @@ public partial class Pronouns : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Pronouns> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
@@ -1492,7 +1526,7 @@ public partial class Pronouns : Contacts {
 					(IBinding data, Dictionary<string,bool>? value) => {(data as Pronouns).Contexts = value;}, (IBinding data) => (data as Pronouns).Contexts )},
 			{ "pref", new PropertyInteger32 ("pref", 
 					(IBinding data, int? value) => {(data as Pronouns).Pref = value;}, (IBinding data) => (data as Pronouns).Pref )}
-        }, __Tag,() => new Pronouns(), null);
+        }, __Tag,() => new Pronouns(), () => new List<Pronouns>(), () => new Dictionary<string,Pronouns>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1559,12 +1593,14 @@ public partial class Title : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The title or role name of the entity represented by the Card.
         /// </summary>
 
+	[JsonPropertyName("name")]
 	public virtual string?					Name  {get; set;}
 
         /// <summary>
@@ -1573,12 +1609,14 @@ public partial class Title : Contacts {
         /// as more temporary assignments such as in project management.
         /// </summary>
 
+	[JsonPropertyName("kind")]
 	public virtual string?					Kind  {get; set;}
 
         /// <summary>
         /// 
         /// </summary>
 
+	[JsonPropertyName("organizationId")]
 	public virtual string?					OrganizationId  {get; set;}
 
 
@@ -1587,7 +1625,7 @@ public partial class Title : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Title> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
@@ -1598,7 +1636,7 @@ public partial class Title : Contacts {
 					(IBinding data, string? value) => {(data as Title).Kind = value;}, (IBinding data) => (data as Title).Kind )},
 			{ "organizationId", new PropertyString ("organizationId", 
 					(IBinding data, string? value) => {(data as Title).OrganizationId = value;}, (IBinding data) => (data as Title).OrganizationId )}
-        }, __Tag,() => new Title(), null);
+        }, __Tag,() => new Title(), () => new List<Title>(), () => new Dictionary<string,Title>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1665,18 +1703,21 @@ public partial class EmailAddress : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The email address. This MUST be an addr-spec value as defined in Section 3.4.1 of [RFC5322].
         /// </summary>
 
+	[JsonPropertyName("address")]
 	public virtual string?					Address  {get; set;}
 
         /// <summary>
         /// The contexts in which to use this email address. Also see Section 1.5.1.
         /// </summary>
 
+	[JsonPropertyName("contexts")]
 	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
@@ -1684,24 +1725,28 @@ public partial class EmailAddress : Contacts {
         /// see Section 1.5.3.
         /// </summary>
 
+	[JsonPropertyName("pref")]
 	public virtual int?					Pref  {get; set;}
 
         /// <summary>
         /// A custom label for the value. 
         /// </summary>
 
+	[JsonPropertyName("label")]
 	public virtual string?					Label  {get; set;}
 
         /// <summary>
         /// The groups that the email address is a member of 
         /// </summary>
 
+	[JsonPropertyName("groups")]
 	public virtual List<string>?					Groups  {get; set;}
         /// <summary>
         /// The identifiers of the set of cryptographic keys to be used to 
         /// authenticate the updated contact information and their use.
         /// </summary>
 
+	[JsonPropertyName("keys")]
 	public virtual Dictionary<string,string>?					Keys  {get; set;}
 
 
@@ -1710,7 +1755,7 @@ public partial class EmailAddress : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<EmailAddress> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
@@ -1727,7 +1772,7 @@ public partial class EmailAddress : Contacts {
 					(IBinding data, List<string>? value) => {(data as EmailAddress).Groups = value;}, (IBinding data) => (data as EmailAddress).Groups )},
 			{ "keys", new PropertyDictionaryString ("keys", 
 					(IBinding data, Dictionary<string,string>? value) => {(data as EmailAddress).Keys = value;}, (IBinding data) => (data as EmailAddress).Keys )}
-        }, __Tag,() => new EmailAddress(), null);
+        }, __Tag,() => new EmailAddress(), () => new List<EmailAddress>(), () => new Dictionary<string,EmailAddress>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1794,6 +1839,7 @@ public partial class OnlineService : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
@@ -1803,6 +1849,7 @@ public partial class OnlineService : Contacts {
         /// "kakao", and "Mastodon"
         /// </summary>
 
+	[JsonPropertyName("service")]
 	public virtual string?					Service  {get; set;}
 
         /// <summary>
@@ -1810,6 +1857,7 @@ public partial class OnlineService : Contacts {
         /// This MUST be a URI as defined in Section 3 of [RFC3986].
         /// </summary>
 
+	[JsonPropertyName("uri")]
 	public virtual string?					Uri  {get; set;}
 
         /// <summary>
@@ -1817,36 +1865,42 @@ public partial class OnlineService : Contacts {
         /// free-text value is allowed. The service property SHOULD be set.
         /// </summary>
 
+	[JsonPropertyName("user")]
 	public virtual string?					User  {get; set;}
 
         /// <summary>
         /// The contexts in which to use the service.
         /// </summary>
 
+	[JsonPropertyName("contexts")]
 	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
         /// The preference of the service in relation to other services.
         /// </summary>
 
+	[JsonPropertyName("pref")]
 	public virtual int?					Pref  {get; set;}
 
         /// <summary>
         /// A custom label for the value. 
         /// </summary>
 
+	[JsonPropertyName("label")]
 	public virtual string?					Label  {get; set;}
 
         /// <summary>
         /// The groups that the service is a member of 
         /// </summary>
 
+	[JsonPropertyName("groups")]
 	public virtual List<string>?					Groups  {get; set;}
         /// <summary>
         /// The identifiers of the set of cryptographic keys to be used to 
         /// authenticate the updated contact information and their use.
         /// </summary>
 
+	[JsonPropertyName("keys")]
 	public virtual Dictionary<string,string>?					Keys  {get; set;}
 
 
@@ -1855,7 +1909,7 @@ public partial class OnlineService : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<OnlineService> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
@@ -1876,7 +1930,7 @@ public partial class OnlineService : Contacts {
 					(IBinding data, List<string>? value) => {(data as OnlineService).Groups = value;}, (IBinding data) => (data as OnlineService).Groups )},
 			{ "keys", new PropertyDictionaryString ("keys", 
 					(IBinding data, Dictionary<string,string>? value) => {(data as OnlineService).Keys = value;}, (IBinding data) => (data as OnlineService).Keys )}
-        }, __Tag,() => new OnlineService(), null);
+        }, __Tag,() => new OnlineService(), () => new List<OnlineService>(), () => new Dictionary<string,OnlineService>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -1943,6 +1997,7 @@ public partial class Phone : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
@@ -1950,6 +2005,7 @@ public partial class Phone : Contacts {
         /// "tel" [RFC3966] or "sip" [RFC3261], but any URI scheme is allowed.
         /// </summary>
 
+	[JsonPropertyName("number")]
 	public virtual string?					Number  {get; set;}
 
         /// <summary>
@@ -1968,24 +2024,28 @@ public partial class Phone : Contacts {
         /// pager: this number is for a pager or beeper.
         /// </summary>
 
+	[JsonPropertyName("features")]
 	public virtual Dictionary<string,bool>?					Features  {get; set;}
 
         /// <summary>
         /// The contexts in which to use the number. 
         /// </summary>
 
+	[JsonPropertyName("contexts")]
 	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
         /// The preference of the number in relation to other numbers.
         /// </summary>
 
+	[JsonPropertyName("pref")]
 	public virtual int?					Pref  {get; set;}
 
         /// <summary>
         /// A custom label for the value.
         /// </summary>
 
+	[JsonPropertyName("label")]
 	public virtual string?					Label  {get; set;}
 
 
@@ -1994,7 +2054,7 @@ public partial class Phone : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Phone> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
@@ -2009,7 +2069,7 @@ public partial class Phone : Contacts {
 					(IBinding data, int? value) => {(data as Phone).Pref = value;}, (IBinding data) => (data as Phone).Pref )},
 			{ "label", new PropertyString ("label", 
 					(IBinding data, string? value) => {(data as Phone).Label = value;}, (IBinding data) => (data as Phone).Label )}
-        }, __Tag,() => new Phone(), null);
+        }, __Tag,() => new Phone(), () => new List<Phone>(), () => new Dictionary<string,Phone>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2076,24 +2136,28 @@ public partial class LanguagePref : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The preferred language. This MUST be a language tag as defined in [RFC5646] .
         /// </summary>
 
+	[JsonPropertyName("language")]
 	public virtual string?					Language  {get; set;}
 
         /// <summary>
         /// The contexts in which to use the language.
         /// </summary>
 
+	[JsonPropertyName("contexts")]
 	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
         /// The preference of the language in relation to other languages of the same contexts. 
         /// </summary>
 
+	[JsonPropertyName("pref")]
 	public virtual int?					Pref  {get; set;}
 
 
@@ -2102,7 +2166,7 @@ public partial class LanguagePref : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<LanguagePref> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
@@ -2113,7 +2177,7 @@ public partial class LanguagePref : Contacts {
 					(IBinding data, Dictionary<string,bool>? value) => {(data as LanguagePref).Contexts = value;}, (IBinding data) => (data as LanguagePref).Contexts )},
 			{ "pref", new PropertyInteger32 ("pref", 
 					(IBinding data, int? value) => {(data as LanguagePref).Pref = value;}, (IBinding data) => (data as LanguagePref).Pref )}
-        }, __Tag,() => new LanguagePref(), null);
+        }, __Tag,() => new LanguagePref(), () => new List<LanguagePref>(), () => new Dictionary<string,LanguagePref>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2186,10 +2250,10 @@ public partial class Calendar : Resource {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Calendar> _binding = new (
 			new() {
 
-        }, __Tag,() => new Calendar(), Resource._binding);
+        }, __Tag,() => new Calendar(), () => new List<Calendar>(), () => new Dictionary<string,Calendar>(),Resource._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2259,6 +2323,7 @@ public partial class SchedulingAddress : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
@@ -2266,23 +2331,27 @@ public partial class SchedulingAddress : Contacts {
         /// be a URI as defined in Section 3 of [RFC3986].
         /// </summary>
 
+	[JsonPropertyName("uri")]
 	public virtual string?					Uri  {get; set;}
 
         /// <summary>
         /// The contexts in which to use the scheduling address. 
         /// </summary>
 
+	[JsonPropertyName("contexts")]
 	public virtual List<Boolean>?					Contexts  {get; set;}
         /// <summary>
         /// The preference of the scheduling address in relation to other scheduling addresses.
         /// </summary>
 
+	[JsonPropertyName("pref")]
 	public virtual int?					Pref  {get; set;}
 
         /// <summary>
         /// A custom label for the scheduling address. 
         /// </summary>
 
+	[JsonPropertyName("label")]
 	public virtual string?					Label  {get; set;}
 
 
@@ -2291,21 +2360,21 @@ public partial class SchedulingAddress : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<SchedulingAddress> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as SchedulingAddress).Type = value;}, (IBinding data) => (data as SchedulingAddress).Type )},
 			{ "uri", new PropertyString ("uri", 
 					(IBinding data, string? value) => {(data as SchedulingAddress).Uri = value;}, (IBinding data) => (data as SchedulingAddress).Uri )},
-			{ "contexts", new PropertyListStruct ("contexts", 
+			{ "contexts", new PropertyListStruct ("contexts", typeof (Boolean),
 					(IBinding data, object? value) => {(data as SchedulingAddress).Contexts = value as List<Boolean>;}, (IBinding data) => (data as SchedulingAddress).Contexts,
 					false, ()=>new  List<Boolean>(), ()=>new Boolean())},
 			{ "pref", new PropertyInteger32 ("pref", 
 					(IBinding data, int? value) => {(data as SchedulingAddress).Pref = value;}, (IBinding data) => (data as SchedulingAddress).Pref )},
 			{ "label", new PropertyString ("label", 
 					(IBinding data, string? value) => {(data as SchedulingAddress).Label = value;}, (IBinding data) => (data as SchedulingAddress).Label )}
-        }, __Tag,() => new SchedulingAddress(), null);
+        }, __Tag,() => new SchedulingAddress(), () => new List<SchedulingAddress>(), () => new Dictionary<string,SchedulingAddress>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2375,6 +2444,7 @@ public partial class Address : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
@@ -2383,23 +2453,27 @@ public partial class Address : Contacts {
         /// than "separator".
         /// </summary>
 
+	[JsonPropertyName("components")]
 	public virtual List<AddressComponent>?					Components  {get; set;}
         /// <summary>
         /// The indicator if the address components in the components property are ordered.
         /// </summary>
 
+	[JsonPropertyName("isOrdered")]
 	public virtual string?					IsOrdered  {get; set;}
 
         /// <summary>
         /// The Alpha-2 country code [ISO.3166-1].
         /// </summary>
 
+	[JsonPropertyName("countryCode")]
 	public virtual string?					CountryCode  {get; set;}
 
         /// <summary>
         /// A "geo:" URI [RFC5870] for the address.
         /// </summary>
 
+	[JsonPropertyName("coordinates")]
 	public virtual string?					Coordinates  {get; set;}
 
         /// <summary>
@@ -2407,12 +2481,14 @@ public partial class Address : Contacts {
         /// name registered in the IANA Time Zone Database [IANA-TZ].
         /// </summary>
 
+	[JsonPropertyName("timeZone")]
 	public virtual string?					TimeZone  {get; set;}
 
         /// <summary>
         /// The contexts in which to use this address. 
         /// </summary>
 
+	[JsonPropertyName("contexts")]
 	public virtual Dictionary<string,bool>?					Contexts  {get; set;}
 
         /// <summary>
@@ -2421,6 +2497,7 @@ public partial class Address : Contacts {
         /// components are not known.
         /// </summary>
 
+	[JsonPropertyName("full")]
 	public virtual string?					Full  {get; set;}
 
         /// <summary>
@@ -2432,24 +2509,28 @@ public partial class Address : Contacts {
         /// property is not set.
         /// </summary>
 
+	[JsonPropertyName("defaultSeparator")]
 	public virtual string?					DefaultSeparator  {get; set;}
 
         /// <summary>
         /// The preference of the address in relation to other addresses. 
         /// </summary>
 
+	[JsonPropertyName("pref")]
 	public virtual int?					Pref  {get; set;}
 
         /// <summary>
         /// The script used in the value of the AddressComponent phonetic property.
         /// </summary>
 
+	[JsonPropertyName("phoneticScript")]
 	public virtual string?					PhoneticScript  {get; set;}
 
         /// <summary>
         /// The phonetic system used in the AddressComponent phonetic property.
         /// </summary>
 
+	[JsonPropertyName("phoneticSystem")]
 	public virtual string?					PhoneticSystem  {get; set;}
 
 
@@ -2458,12 +2539,12 @@ public partial class Address : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Address> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as Address).Type = value;}, (IBinding data) => (data as Address).Type )},
-			{ "components", new PropertyListStruct ("components", 
+			{ "components", new PropertyListStruct ("components", typeof (AddressComponent),
 					(IBinding data, object? value) => {(data as Address).Components = value as List<AddressComponent>;}, (IBinding data) => (data as Address).Components,
 					false, ()=>new  List<AddressComponent>(), ()=>new AddressComponent())},
 			{ "isOrdered", new PropertyString ("isOrdered", 
@@ -2486,7 +2567,7 @@ public partial class Address : Contacts {
 					(IBinding data, string? value) => {(data as Address).PhoneticScript = value;}, (IBinding data) => (data as Address).PhoneticScript )},
 			{ "phoneticSystem", new PropertyString ("phoneticSystem", 
 					(IBinding data, string? value) => {(data as Address).PhoneticSystem = value;}, (IBinding data) => (data as Address).PhoneticSystem )}
-        }, __Tag,() => new Address(), null);
+        }, __Tag,() => new Address(), () => new List<Address>(), () => new Dictionary<string,Address>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2555,18 +2636,21 @@ public partial class AddressComponent : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The value of the address component.
         /// </summary>
 
+	[JsonPropertyName("value")]
 	public virtual string?					Value  {get; set;}
 
         /// <summary>
         /// The kind of the address component. 
         /// </summary>
 
+	[JsonPropertyName("kind")]
 	public virtual string?					Kind  {get; set;}
 
         /// <summary>
@@ -2575,6 +2659,7 @@ public partial class AddressComponent : Contacts {
         /// properties MUST be set. 
         /// </summary>
 
+	[JsonPropertyName("phonetic")]
 	public virtual string?					Phonetic  {get; set;}
 
 
@@ -2583,7 +2668,7 @@ public partial class AddressComponent : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<AddressComponent> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
@@ -2594,7 +2679,7 @@ public partial class AddressComponent : Contacts {
 					(IBinding data, string? value) => {(data as AddressComponent).Kind = value;}, (IBinding data) => (data as AddressComponent).Kind )},
 			{ "phonetic", new PropertyString ("phonetic", 
 					(IBinding data, string? value) => {(data as AddressComponent).Phonetic = value;}, (IBinding data) => (data as AddressComponent).Phonetic )}
-        }, __Tag,() => new AddressComponent(), null);
+        }, __Tag,() => new AddressComponent(), () => new List<AddressComponent>(), () => new Dictionary<string,AddressComponent>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2667,10 +2752,10 @@ public partial class CryptoKey : Resource {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<CryptoKey> _binding = new (
 			new() {
 
-        }, __Tag,() => new CryptoKey(), Resource._binding);
+        }, __Tag,() => new CryptoKey(), () => new List<CryptoKey>(), () => new Dictionary<string,CryptoKey>(),Resource._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2745,6 +2830,7 @@ public partial class ContactDirectory : Resource {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("listAs")]
 	public virtual int?					ListAs  {get; set;}
 
 
@@ -2753,12 +2839,12 @@ public partial class ContactDirectory : Resource {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ContactDirectory> _binding = new (
 			new() {
 
 			{ "listAs", new PropertyInteger32 ("listAs", 
 					(IBinding data, int? value) => {(data as ContactDirectory).ListAs = value;}, (IBinding data) => (data as ContactDirectory).ListAs )}
-        }, __Tag,() => new ContactDirectory(), Resource._binding);
+        }, __Tag,() => new ContactDirectory(), () => new List<ContactDirectory>(), () => new Dictionary<string,ContactDirectory>(),Resource._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2831,10 +2917,10 @@ public partial class ResourceLink : Resource {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<ResourceLink> _binding = new (
 			new() {
 
-        }, __Tag,() => new ResourceLink(), Resource._binding);
+        }, __Tag,() => new ResourceLink(), () => new List<ResourceLink>(), () => new Dictionary<string,ResourceLink>(),Resource._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2908,10 +2994,10 @@ public partial class Media : Resource {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Media> _binding = new (
 			new() {
 
-        }, __Tag,() => new Media(), Resource._binding);
+        }, __Tag,() => new Media(), () => new List<Media>(), () => new Dictionary<string,Media>(),Resource._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -2984,10 +3070,10 @@ public partial class PatchObject : JmapBase {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<PatchObject> _binding = new (
 			new() {
 
-        }, __Tag,() => new PatchObject(), JmapBase._binding);
+        }, __Tag,() => new PatchObject(), () => new List<PatchObject>(), () => new Dictionary<string,PatchObject>(),JmapBase._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3057,12 +3143,14 @@ public partial class Anniversary : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The kind of anniversary.
         /// </summary>
 
+	[JsonPropertyName("kind")]
 	public virtual string?					Kind  {get; set;}
 
         /// <summary>
@@ -3072,12 +3160,14 @@ public partial class Anniversary : Contacts {
         /// (see the definition of the Timestamp and PartialDate object types below).
         /// </summary>
 
+	[JsonPropertyName("date")]
 	public virtual TimeStamp?					Date  {get; set;}
 
         /// <summary>
         /// An address associated with this anniversary, e.g., the place of birth or death.
         /// </summary>
 
+	[JsonPropertyName("place")]
 	public virtual Address?					Place  {get; set;}
 
 
@@ -3086,20 +3176,20 @@ public partial class Anniversary : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Anniversary> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as Anniversary).Type = value;}, (IBinding data) => (data as Anniversary).Type )},
 			{ "kind", new PropertyString ("kind", 
 					(IBinding data, string? value) => {(data as Anniversary).Kind = value;}, (IBinding data) => (data as Anniversary).Kind )},
-			{ "date", new PropertyStruct ("date", 
+			{ "date", new PropertyStruct ("date", typeof (TimeStamp),
 					(IBinding data, object? value) => {(data as Anniversary).Date = value as TimeStamp;}, (IBinding data) => (data as Anniversary).Date,
 					false, ()=>new  TimeStamp(), ()=>new TimeStamp())},
-			{ "place", new PropertyStruct ("place", 
+			{ "place", new PropertyStruct ("place", typeof (Address),
 					(IBinding data, object? value) => {(data as Anniversary).Place = value as Address;}, (IBinding data) => (data as Anniversary).Place,
 					false, ()=>new  Address(), ()=>new Address())}
-        }, __Tag,() => new Anniversary(), null);
+        }, __Tag,() => new Anniversary(), () => new List<Anniversary>(), () => new Dictionary<string,Anniversary>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3168,12 +3258,14 @@ public partial class TimeStamp : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The calendar year.
         /// </summary>
 
+	[JsonPropertyName("year")]
 	public virtual int?					Year  {get; set;}
 
         /// <summary>
@@ -3181,6 +3273,7 @@ public partial class TimeStamp : Contacts {
         /// this property is set, then either the year or the day property MUST be set.
         /// </summary>
 
+	[JsonPropertyName("month")]
 	public virtual int?					Month  {get; set;}
 
         /// <summary>
@@ -3189,6 +3282,7 @@ public partial class TimeStamp : Contacts {
         /// is set, then the month property MUST be set.
         /// </summary>
 
+	[JsonPropertyName("day")]
 	public virtual int?					Day  {get; set;}
 
         /// <summary>
@@ -3200,12 +3294,14 @@ public partial class TimeStamp : Contacts {
         /// between the Gregorian calendar and the respective calendar system.
         /// </summary>
 
+	[JsonPropertyName("calendarScale")]
 	public virtual string?					CalendarScale  {get; set;}
 
         /// <summary>
         /// The point in time in UTC time.
         /// </summary>
 
+	[JsonPropertyName("utc")]
 	public virtual string?					Utc  {get; set;}
 
 
@@ -3214,7 +3310,7 @@ public partial class TimeStamp : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<TimeStamp> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
@@ -3229,7 +3325,7 @@ public partial class TimeStamp : Contacts {
 					(IBinding data, string? value) => {(data as TimeStamp).CalendarScale = value;}, (IBinding data) => (data as TimeStamp).CalendarScale )},
 			{ "utc", new PropertyString ("utc", 
 					(IBinding data, string? value) => {(data as TimeStamp).Utc = value;}, (IBinding data) => (data as TimeStamp).Utc )}
-        }, __Tag,() => new TimeStamp(), null);
+        }, __Tag,() => new TimeStamp(), () => new List<TimeStamp>(), () => new Dictionary<string,TimeStamp>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3298,24 +3394,28 @@ public partial class Note : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The free-text value of this note.
         /// </summary>
 
+	[JsonPropertyName("Note")]
 	public virtual string?					Value  {get; set;}
 
         /// <summary>
         /// The date and time when this note was created.
         /// </summary>
 
+	[JsonPropertyName("created")]
 	public virtual string?					Created  {get; set;}
 
         /// <summary>
         /// The author of this note.
         /// </summary>
 
+	[JsonPropertyName("author")]
 	public virtual Author?					Author  {get; set;}
 
 
@@ -3324,7 +3424,7 @@ public partial class Note : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Note> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
@@ -3333,10 +3433,10 @@ public partial class Note : Contacts {
 					(IBinding data, string? value) => {(data as Note).Value = value;}, (IBinding data) => (data as Note).Value )},
 			{ "created", new PropertyString ("created", 
 					(IBinding data, string? value) => {(data as Note).Created = value;}, (IBinding data) => (data as Note).Created )},
-			{ "author", new PropertyStruct ("author", 
+			{ "author", new PropertyStruct ("author", typeof (Author),
 					(IBinding data, object? value) => {(data as Note).Author = value as Author;}, (IBinding data) => (data as Note).Author,
 					false, ()=>new  Author(), ()=>new Author())}
-        }, __Tag,() => new Note(), null);
+        }, __Tag,() => new Note(), () => new List<Note>(), () => new Dictionary<string,Note>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3406,18 +3506,21 @@ public partial class Author : Contacts {
         /// The JSContact type of the object. The value MUST be "Author", if set.
         /// </summary>
 
+	[JsonPropertyName("type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The name of this author.
         /// </summary>
 
+	[JsonPropertyName("name")]
 	public virtual string?					Name  {get; set;}
 
         /// <summary>
         /// The URI value that identifies the author.
         /// </summary>
 
+	[JsonPropertyName("uri")]
 	public virtual string?					Uri  {get; set;}
 
 
@@ -3426,7 +3529,7 @@ public partial class Author : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Author> _binding = new (
 			new() {
 
 			{ "type", new PropertyString ("type", 
@@ -3435,7 +3538,7 @@ public partial class Author : Contacts {
 					(IBinding data, string? value) => {(data as Author).Name = value;}, (IBinding data) => (data as Author).Name )},
 			{ "uri", new PropertyString ("uri", 
 					(IBinding data, string? value) => {(data as Author).Uri = value;}, (IBinding data) => (data as Author).Uri )}
-        }, __Tag,() => new Author(), null);
+        }, __Tag,() => new Author(), () => new List<Author>(), () => new Dictionary<string,Author>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3504,24 +3607,28 @@ public partial class PersonalInfo : Contacts {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("@type")]
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
         /// The kind of personal information
         /// </summary>
 
+	[JsonPropertyName("kind")]
 	public virtual string?					Kind  {get; set;}
 
         /// <summary>
         /// The actual information
         /// </summary>
 
+	[JsonPropertyName("value")]
 	public virtual string?					Value  {get; set;}
 
         /// <summary>
         /// The level of expertise or engagement in hobby or interest. 
         /// </summary>
 
+	[JsonPropertyName("level")]
 	public virtual string?					Level  {get; set;}
 
         /// <summary>
@@ -3532,12 +3639,14 @@ public partial class PersonalInfo : Contacts {
         /// entries is implementation-specific.
         /// </summary>
 
+	[JsonPropertyName("listAs")]
 	public virtual int?					ListAs  {get; set;}
 
         /// <summary>
         /// A custom label. 
         /// </summary>
 
+	[JsonPropertyName("label")]
 	public virtual string?					Label  {get; set;}
 
 
@@ -3546,7 +3655,7 @@ public partial class PersonalInfo : Contacts {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<PersonalInfo> _binding = new (
 			new() {
 
 			{ "@type", new PropertyStringTag ("@type", 
@@ -3561,7 +3670,7 @@ public partial class PersonalInfo : Contacts {
 					(IBinding data, int? value) => {(data as PersonalInfo).ListAs = value;}, (IBinding data) => (data as PersonalInfo).ListAs )},
 			{ "label", new PropertyString ("label", 
 					(IBinding data, string? value) => {(data as PersonalInfo).Label = value;}, (IBinding data) => (data as PersonalInfo).Label )}
-        }, __Tag,() => new PersonalInfo(), null);
+        }, __Tag,() => new PersonalInfo(), () => new List<PersonalInfo>(), () => new Dictionary<string,PersonalInfo>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3629,6 +3738,7 @@ public partial class Update : Resource {
         /// The IANA update protocol identifier
         /// </summary>
 
+	[JsonPropertyName("protocol")]
 	public virtual string?					Protocol  {get; set;}
 
         /// <summary>
@@ -3636,6 +3746,7 @@ public partial class Update : Resource {
         /// authenticate the updated contact information and their use.
         /// </summary>
 
+	[JsonPropertyName("keys")]
 	public virtual Dictionary<string,string>?					Keys  {get; set;}
 
 
@@ -3644,14 +3755,14 @@ public partial class Update : Resource {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Update> _binding = new (
 			new() {
 
 			{ "protocol", new PropertyString ("protocol", 
 					(IBinding data, string? value) => {(data as Update).Protocol = value;}, (IBinding data) => (data as Update).Protocol )},
 			{ "keys", new PropertyDictionaryString ("keys", 
 					(IBinding data, Dictionary<string,string>? value) => {(data as Update).Keys = value;}, (IBinding data) => (data as Update).Keys )}
-        }, __Tag,() => new Update(), Resource._binding);
+        }, __Tag,() => new Update(), () => new List<Update>(), () => new Dictionary<string,Update>(),Resource._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3715,38 +3826,24 @@ public partial class Update : Resource {
 
 	/// <summary>
 	/// </summary>
-public partial class Jwks : Resource {
-        /// <summary>
-        /// </summary>
-
-	public virtual byte[]?					Data  {get; set;}
-
-        /// <summary>
-        /// </summary>
-
-	public virtual List<JWK>?					Jwk  {get; set;}
+public partial class Jwks : CryptoKey {
 
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Jwks> _binding = new (
 			new() {
 
-			{ "data", new PropertyBinary ("data", 
-					(IBinding data, byte[]? value) => {(data as Jwks).Data = value;}, (IBinding data) => (data as Jwks).Data )},
-			{ "jwk", new PropertyListStruct ("jwk", 
-					(IBinding data, object? value) => {(data as Jwks).Jwk = value as List<JWK>;}, (IBinding data) => (data as Jwks).Jwk,
-					false, ()=>new  List<JWK>(), ()=>new JWK())}
-        }, __Tag,() => new Jwks(), Resource._binding);
+        }, __Tag,() => new Jwks(), () => new List<Jwks>(), () => new Dictionary<string,Jwks>(),CryptoKey._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
 	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Resource._binding, _binding);
+			Combine(CryptoKey._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3768,7 +3865,7 @@ public partial class Jwks : Resource {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Jwks";
+	public new const string __Tag = "JWK";
 
 	/// <summary>
     /// Factory method
@@ -3808,6 +3905,7 @@ public partial class Group : Resource {
         /// 
         /// </summary>
 
+	[JsonPropertyName("members")]
 	public virtual Dictionary<string,bool>?					Members  {get; set;}
 
 
@@ -3816,12 +3914,12 @@ public partial class Group : Resource {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Group> _binding = new (
 			new() {
 
 			{ "members", new PropertyDictionaryBoolean ("members", 
 					(IBinding data, Dictionary<string,bool>? value) => {(data as Group).Members = value;}, (IBinding data) => (data as Group).Members )}
-        }, __Tag,() => new Group(), Resource._binding);
+        }, __Tag,() => new Group(), () => new List<Group>(), () => new Dictionary<string,Group>(),Resource._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;

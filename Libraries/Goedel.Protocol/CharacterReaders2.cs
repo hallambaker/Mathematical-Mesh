@@ -22,6 +22,10 @@
 
 namespace Goedel.Protocol;
 
+
+
+
+
 /// <summary>
 /// A character stream reader that takes a TextReader as the input source.
 /// The input stream is only read in the forward direction.

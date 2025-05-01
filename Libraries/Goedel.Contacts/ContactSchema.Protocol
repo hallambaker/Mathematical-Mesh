@@ -212,19 +212,12 @@
 				| 
 
 		// JsonWebKeys
-		Struct Jwks		JsonWebKeys
-			Tag "jwks"
-			Dictionary
-			Description
-				| The cryptographic resources such as public keys and certificates associated 
-				| with the entity represented by the Card.
-
-
-	Structure Relation
-		Boolean					Relationships
-			Dictionary
-			Description
-				| The relationships, each one MUST have the value true.
+		//Struct Jwks		JsonWebKeys
+		//	Tag "jwks"
+		//	Dictionary
+		//	Description
+		//		| The cryptographic resources such as public keys and certificates associated 
+		//		| with the entity represented by the Card.
 
 
 	Structure Resource
@@ -257,7 +250,8 @@
 		String					Label
 			Description
 				| A custom label for the value. 
-
+		Binary					Data
+		Struct JWK				Jwk
 
 
 	// 2.2.1.1. Name Object
@@ -834,10 +828,11 @@
 				| authenticate the updated contact information and their use.
 
 	Structure Jwks
-		Inherits				Resource
-		Binary					Data
-		Struct JWK				Jwk
-			Multiple
+		Inherits				CryptoKey
+		Tag	"JWK"
+		//Binary					Data
+		//Struct JWK				Jwk
+		//	Multiple
 
 	Structure Group 
 		Inherits				Resource

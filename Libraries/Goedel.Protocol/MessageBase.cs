@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 4/28/2025 5:41:18 PM
+//  This file was automatically generated at 5/1/2025 6:02:15 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -39,6 +39,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -82,6 +84,24 @@ public abstract partial class BaseMessage : global::Goedel.Protocol.JsonObject {
 	    {"HelloResponse", HelloResponse._Factory}
 		};
 
+
+	/// <summary>
+    /// Dictionary mapping types to bindings
+    /// </summary>
+	public static Dictionary<System.Type, Binding> _BindingDictionary=> _bindingDictionary;
+	static Dictionary<System.Type, Binding> _bindingDictionary = 
+			new () {
+
+	    {typeof(Request), Request._binding},
+	    {typeof(Response), Response._binding},
+	    {typeof(Version), Version._binding},
+	    {typeof(Encoding), Encoding._binding},
+	    {typeof(HelloRequest), HelloRequest._binding},
+	    {typeof(HelloResponse), HelloResponse._binding}
+		};
+
+
+
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -89,7 +109,10 @@ public abstract partial class BaseMessage : global::Goedel.Protocol.JsonObject {
 		_Initialize();
 		}
 
-    internal static void _Initialize() => AddDictionary(ref _tagDictionary);
+    internal static void _Initialize() {
+		AddDictionary(ref _tagDictionary);
+		AddDictionary(ref _bindingDictionary);
+		}
 
 
 	/// <summary>
@@ -119,6 +142,7 @@ abstract public partial class Request : BaseMessage {
         ///Name of the Service to which the request is directed.
         /// </summary>
 
+	[JsonPropertyName("Service")]
 	public virtual string?					Service  {get; set;}
 
         /// <summary>
@@ -126,6 +150,7 @@ abstract public partial class Request : BaseMessage {
         ///duplicates.
         /// </summary>
 
+	[JsonPropertyName("ID")]
 	public virtual byte[]?					ID  {get; set;}
 
 
@@ -134,14 +159,14 @@ abstract public partial class Request : BaseMessage {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Request> _binding = new (
 			new() {
 
 			{ "Service", new PropertyString ("Service", 
 					(IBinding data, string? value) => {(data as Request).Service = value;}, (IBinding data) => (data as Request).Service )},
 			{ "ID", new PropertyBinary ("ID", 
 					(IBinding data, byte[]? value) => {(data as Request).ID = value;}, (IBinding data) => (data as Request).ID )}
-        }, __Tag,null, null);
+        }, __Tag,null, null, null,null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -214,12 +239,14 @@ abstract public partial class Response : BaseMessage {
         ///3xx = incomplete, 4xx = failure is followed.
         /// </summary>
 
+	[JsonPropertyName("Status")]
 	public virtual int?					Status  {get; set;}
 
         /// <summary>
         ///Application level status report giving additional information.
         /// </summary>
 
+	[JsonPropertyName("StatusExtended")]
 	public virtual int?					StatusExtended  {get; set;}
 
         /// <summary>
@@ -227,12 +254,14 @@ abstract public partial class Response : BaseMessage {
         ///and log file use.
         /// </summary>
 
+	[JsonPropertyName("StatusDescription")]
 	public virtual string?					StatusDescription  {get; set;}
 
         /// <summary>
         ///The request to which the response corresponds.
         /// </summary>
 
+	[JsonPropertyName("ID")]
 	public virtual byte[]?					ID  {get; set;}
 
 
@@ -241,7 +270,7 @@ abstract public partial class Response : BaseMessage {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Response> _binding = new (
 			new() {
 
 			{ "Status", new PropertyInteger32 ("Status", 
@@ -252,7 +281,7 @@ abstract public partial class Response : BaseMessage {
 					(IBinding data, string? value) => {(data as Response).StatusDescription = value;}, (IBinding data) => (data as Response).StatusDescription )},
 			{ "ID", new PropertyBinary ("ID", 
 					(IBinding data, byte[]? value) => {(data as Response).ID = value;}, (IBinding data) => (data as Response).ID )}
-        }, __Tag,null, null);
+        }, __Tag,null, null, null,null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -319,12 +348,14 @@ public partial class Version : BaseMessage {
         ///Major version number of the service protocol. A higher
         /// </summary>
 
+	[JsonPropertyName("Major")]
 	public virtual int?					Major  {get; set;}
 
         /// <summary>
         ///Minor version number of the service protocol.
         /// </summary>
 
+	[JsonPropertyName("Minor")]
 	public virtual int?					Minor  {get; set;}
 
         /// <summary>
@@ -333,12 +364,14 @@ public partial class Version : BaseMessage {
         ///JSON encoding is assumed.
         /// </summary>
 
+	[JsonPropertyName("Encodings")]
 	public virtual List<Encoding>?					Encodings  {get; set;}
         /// <summary>
         ///The preferred URI for this service. This MAY be used to effect
         ///a redirect in the case that a service moves.
         /// </summary>
 
+	[JsonPropertyName("URI")]
 	public virtual List<string>?					URI  {get; set;}
 
 
@@ -346,19 +379,19 @@ public partial class Version : BaseMessage {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Version> _binding = new (
 			new() {
 
 			{ "Major", new PropertyInteger32 ("Major", 
 					(IBinding data, int? value) => {(data as Version).Major = value;}, (IBinding data) => (data as Version).Major )},
 			{ "Minor", new PropertyInteger32 ("Minor", 
 					(IBinding data, int? value) => {(data as Version).Minor = value;}, (IBinding data) => (data as Version).Minor )},
-			{ "Encodings", new PropertyListStruct ("Encodings", 
+			{ "Encodings", new PropertyListStruct ("Encodings", typeof (Encoding),
 					(IBinding data, object? value) => {(data as Version).Encodings = value as List<Encoding>;}, (IBinding data) => (data as Version).Encodings,
 					false, ()=>new  List<Encoding>(), ()=>new Encoding())},
 			{ "URI", new PropertyListString ("URI", 
 					(IBinding data, List<string>? value) => {(data as Version).URI = value;}, (IBinding data) => (data as Version).URI )}
-        }, __Tag,() => new Version(), null);
+        }, __Tag,() => new Version(), () => new List<Version>(), () => new Dictionary<string,Version>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -428,6 +461,7 @@ public partial class Encoding : BaseMessage {
         ///The IANA encoding name
         /// </summary>
 
+	[JsonPropertyName("ID")]
 	public virtual List<string>?					ID  {get; set;}
         /// <summary>
         ///For encodings that employ a named dictionary for tag or data
@@ -435,6 +469,7 @@ public partial class Encoding : BaseMessage {
         ///encoding scheme. 
         /// </summary>
 
+	[JsonPropertyName("Dictionary")]
 	public virtual List<string>?					Dictionary  {get; set;}
 
 
@@ -442,14 +477,14 @@ public partial class Encoding : BaseMessage {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<Encoding> _binding = new (
 			new() {
 
 			{ "ID", new PropertyListString ("ID", 
 					(IBinding data, List<string>? value) => {(data as Encoding).ID = value;}, (IBinding data) => (data as Encoding).ID )},
 			{ "Dictionary", new PropertyListString ("Dictionary", 
 					(IBinding data, List<string>? value) => {(data as Encoding).Dictionary = value;}, (IBinding data) => (data as Encoding).Dictionary )}
-        }, __Tag,() => new Encoding(), null);
+        }, __Tag,() => new Encoding(), () => new List<Encoding>(), () => new Dictionary<string,Encoding>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -521,10 +556,10 @@ public partial class HelloRequest : Request {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<HelloRequest> _binding = new (
 			new() {
 
-        }, __Tag,() => new HelloRequest(), Request._binding);
+        }, __Tag,() => new HelloRequest(), () => new List<HelloRequest>(), () => new Dictionary<string,HelloRequest>(),Request._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -595,12 +630,14 @@ public partial class HelloResponse : Response {
         ///Enumerates the protocol versions supported
         /// </summary>
 
+	[JsonPropertyName("Version")]
 	public virtual Version?					Version  {get; set;}
 
         /// <summary>
         ///Enumerates alternate protocol version(s) supported
         /// </summary>
 
+	[JsonPropertyName("Alternates")]
 	public virtual List<Version>?					Alternates  {get; set;}
 
 
@@ -608,16 +645,16 @@ public partial class HelloResponse : Response {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	static protected new Binding _binding = new (
+	public static readonly new Binding<HelloResponse> _binding = new (
 			new() {
 
-			{ "Version", new PropertyStruct ("Version", 
+			{ "Version", new PropertyStruct ("Version", typeof (Version),
 					(IBinding data, object? value) => {(data as HelloResponse).Version = value as Version;}, (IBinding data) => (data as HelloResponse).Version,
 					false, ()=>new  Version(), ()=>new Version())},
-			{ "Alternates", new PropertyListStruct ("Alternates", 
+			{ "Alternates", new PropertyListStruct ("Alternates", typeof (Version),
 					(IBinding data, object? value) => {(data as HelloResponse).Alternates = value as List<Version>;}, (IBinding data) => (data as HelloResponse).Alternates,
 					false, ()=>new  List<Version>(), ()=>new Version())}
-        }, __Tag,() => new HelloResponse(), Response._binding);
+        }, __Tag,() => new HelloResponse(), () => new List<HelloResponse>(), () => new Dictionary<string,HelloResponse>(),Response._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;

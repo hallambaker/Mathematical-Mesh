@@ -1,5 +1,6 @@
 ﻿Protocol Goedel.Contacts  Devices Devices
 	Extern JmapBase
+	Extern Resource
 	CamelCase
 
 	//  Uses some funky formatting, need to extend the serializer
@@ -63,37 +64,40 @@
 			Description
 				|
 
-		String					Images
+		Struct Media			Images
 			Description
 				|
 
-		String					Media
+		Struct Media			Manuals
+			Description
+				|
+
+		Struct Media			Guides
+			Description
+				|
+
+		Struct Bootstrap		Bootstraps
+			Description
+				|
+
+		Struct Provisioning		Provisioning
 			Description
 				|
 
 
-		String					Bootstraps
+		Struct Service			Services
 			Description
 				|
 
-		String					Provisioning
+		Struct Maintenance		Maintenance
 			Description
 				|
 
-
-		String					Services
+		Struct Consumable		Consumables
 			Description
 				|
 
-		String					Maintenance
-			Description
-				|
-
-		String					Consumables
-			Description
-				|
-
-		String					Accessories
+		Struct Accessory		Accessories
 			Description
 				|
 
@@ -122,14 +126,9 @@
 				| with the entity represented by the Card.
 
 
-	Structure Image
-		Inherits Resource
-
-
-	Structure Media
-		Inherits Resource
-
 	Structure Bootstrap
+
+	Structure Provisioning
 
 	Structure Network
 

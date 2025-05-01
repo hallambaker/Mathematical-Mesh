@@ -5385,6 +5385,11 @@
             Dictionary mapping tags to factory methods
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.MeshmanShellResult._BindingDictionary">
+            <summary>
+            Dictionary mapping types to bindings
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell.MeshmanShellResult._Initialized">
             <summary>Variable used to force static initialization</summary> 
         </member>

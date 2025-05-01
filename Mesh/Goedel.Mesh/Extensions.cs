@@ -453,8 +453,8 @@ public static partial class Extensions {
             Data = cryptoData,
             MediaType = mediaType
             };
-        contact.JsonWebKeys ??= [];
-        contact.JsonWebKeys.Add(key, jwks);                                                                                                                                                     
+        contact.CryptoKeys ??= [];
+        contact.CryptoKeys.Add(key, jwks);                                                                                                                                                     
 
         service.Keys.Add(key, "");
 
@@ -547,10 +547,10 @@ public static partial class Extensions {
 
         var jwk = JWK.Factory(keyData.GetKeyPair());
         var jwks = new Jwks() {
-            Jwk = [jwk]
+            Jwk = jwk
             };
-        contact.JsonWebKeys ??= [];
-        contact.JsonWebKeys.Add(key, jwks);
+        contact.CryptoKeys ??= [];
+        contact.CryptoKeys.Add(key, jwks);
 
         keys.Add(key, serviceId);
 
