@@ -1,0 +1,26 @@
+﻿
+Card
+  created 2025-05-02T20:43:11Z
+  updated 2025-05-02T20:43:11Z
+  version "1.0"
+  kind individual
+  language en
+
+  speakToAs
+    SpeakToAs
+      grammaticalGender "feminine"
+      pronouns
+        p1 Pronouns
+          pronouns "she/her"
+
+  titles
+    t1 Title
+      name "Research Scientist"
+      kind title
+
+  emails
+    e1
+      EmailAddress
+        address": "jqpublic@xyz.example.com"
+        contexts 
+          work true

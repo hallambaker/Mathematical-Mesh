@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/2/2025 3:39:46 PM
+//  This file was automatically generated at 5/2/2025 5:30:24 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -197,6 +197,13 @@ public partial class JsDevice : JmapBase {
         ///
         /// </summary>
 
+	[JsonPropertyName("modelName")]
+	public virtual string?					ModelName  {get; set;}
+
+        /// <summary>
+        ///
+        /// </summary>
+
 	[JsonPropertyName("manufacturer")]
 	public virtual string?					Manufacturer  {get; set;}
 
@@ -205,71 +212,62 @@ public partial class JsDevice : JmapBase {
         /// </summary>
 
 	[JsonPropertyName("dateManufacture")]
-	public virtual string?					DateManufacture  {get; set;}
+	public virtual DateTime?					DateManufacture  {get; set;}
 
         /// <summary>
         ///
         /// </summary>
 
 	[JsonPropertyName("images")]
-	public virtual Media?					Images  {get; set;}
-
+	public virtual List<Media>?					Images  {get; set;}
         /// <summary>
         ///
         /// </summary>
 
 	[JsonPropertyName("manuals")]
-	public virtual Media?					Manuals  {get; set;}
-
+	public virtual List<Media>?					Manuals  {get; set;}
         /// <summary>
         ///
         /// </summary>
 
 	[JsonPropertyName("guides")]
-	public virtual Media?					Guides  {get; set;}
-
+	public virtual List<Media>?					Guides  {get; set;}
         /// <summary>
         ///
         /// </summary>
 
 	[JsonPropertyName("bootstraps")]
-	public virtual Bootstrap?					Bootstraps  {get; set;}
-
+	public virtual List<Bootstrap>?					Bootstraps  {get; set;}
         /// <summary>
         ///
         /// </summary>
 
 	[JsonPropertyName("provisioning")]
-	public virtual Provisioning?					Provisioning  {get; set;}
-
+	public virtual List<Provisioning>?					Provisioning  {get; set;}
         /// <summary>
         ///
         /// </summary>
 
 	[JsonPropertyName("services")]
-	public virtual Service?					Services  {get; set;}
-
+	public virtual List<Service>?					Services  {get; set;}
         /// <summary>
         ///
         /// </summary>
 
 	[JsonPropertyName("maintenance")]
-	public virtual Maintenance?					Maintenance  {get; set;}
-
+	public virtual List<Maintenance>?					Maintenance  {get; set;}
         /// <summary>
         ///
         /// </summary>
 
 	[JsonPropertyName("consumables")]
-	public virtual Consumable?					Consumables  {get; set;}
-
+	public virtual List<Consumable>?					Consumables  {get; set;}
         /// <summary>
         ///
         /// </summary>
 
 	[JsonPropertyName("accessories")]
-	public virtual Accessory?					Accessories  {get; set;}
-
+	public virtual List<Accessory>?					Accessories  {get; set;}
         /// <summary>
         /// The property values localized to languages other than the main language 
         /// (Section 2.1.5) of the Card. Localizations provide language-specific alternatives 
@@ -312,37 +310,39 @@ public partial class JsDevice : JmapBase {
 					(IBinding data, string? value) => {(data as JsDevice).DeviceId = value;}, (IBinding data) => (data as JsDevice).DeviceId )},
 			{ "modelId", new PropertyString ("modelId", 
 					(IBinding data, string? value) => {(data as JsDevice).ModelId = value;}, (IBinding data) => (data as JsDevice).ModelId )},
+			{ "modelName", new PropertyString ("modelName", 
+					(IBinding data, string? value) => {(data as JsDevice).ModelName = value;}, (IBinding data) => (data as JsDevice).ModelName )},
 			{ "manufacturer", new PropertyString ("manufacturer", 
 					(IBinding data, string? value) => {(data as JsDevice).Manufacturer = value;}, (IBinding data) => (data as JsDevice).Manufacturer )},
-			{ "dateManufacture", new PropertyString ("dateManufacture", 
-					(IBinding data, string? value) => {(data as JsDevice).DateManufacture = value;}, (IBinding data) => (data as JsDevice).DateManufacture )},
-			{ "images", new PropertyStruct ("images", typeof (Media),
-					(IBinding data, object? value) => {(data as JsDevice).Images = value as Media;}, (IBinding data) => (data as JsDevice).Images,
-					false, ()=>new  Media(), ()=>new Media())},
-			{ "manuals", new PropertyStruct ("manuals", typeof (Media),
-					(IBinding data, object? value) => {(data as JsDevice).Manuals = value as Media;}, (IBinding data) => (data as JsDevice).Manuals,
-					false, ()=>new  Media(), ()=>new Media())},
-			{ "guides", new PropertyStruct ("guides", typeof (Media),
-					(IBinding data, object? value) => {(data as JsDevice).Guides = value as Media;}, (IBinding data) => (data as JsDevice).Guides,
-					false, ()=>new  Media(), ()=>new Media())},
-			{ "bootstraps", new PropertyStruct ("bootstraps", typeof (Bootstrap),
-					(IBinding data, object? value) => {(data as JsDevice).Bootstraps = value as Bootstrap;}, (IBinding data) => (data as JsDevice).Bootstraps,
-					false, ()=>new  Bootstrap(), ()=>new Bootstrap())},
-			{ "provisioning", new PropertyStruct ("provisioning", typeof (Provisioning),
-					(IBinding data, object? value) => {(data as JsDevice).Provisioning = value as Provisioning;}, (IBinding data) => (data as JsDevice).Provisioning,
-					false, ()=>new  Provisioning(), ()=>new Provisioning())},
-			{ "services", new PropertyStruct ("services", typeof (Service),
-					(IBinding data, object? value) => {(data as JsDevice).Services = value as Service;}, (IBinding data) => (data as JsDevice).Services,
-					false, ()=>new  Service(), ()=>new Service())},
-			{ "maintenance", new PropertyStruct ("maintenance", typeof (Maintenance),
-					(IBinding data, object? value) => {(data as JsDevice).Maintenance = value as Maintenance;}, (IBinding data) => (data as JsDevice).Maintenance,
-					false, ()=>new  Maintenance(), ()=>new Maintenance())},
-			{ "consumables", new PropertyStruct ("consumables", typeof (Consumable),
-					(IBinding data, object? value) => {(data as JsDevice).Consumables = value as Consumable;}, (IBinding data) => (data as JsDevice).Consumables,
-					false, ()=>new  Consumable(), ()=>new Consumable())},
-			{ "accessories", new PropertyStruct ("accessories", typeof (Accessory),
-					(IBinding data, object? value) => {(data as JsDevice).Accessories = value as Accessory;}, (IBinding data) => (data as JsDevice).Accessories,
-					false, ()=>new  Accessory(), ()=>new Accessory())},
+			{ "dateManufacture", new PropertyDateTime ("dateManufacture", 
+					(IBinding data, DateTime? value) => {(data as JsDevice).DateManufacture = value;}, (IBinding data) => (data as JsDevice).DateManufacture )},
+			{ "images", new PropertyListStruct ("images", typeof (Media),
+					(IBinding data, object? value) => {(data as JsDevice).Images = value as List<Media>;}, (IBinding data) => (data as JsDevice).Images,
+					false, ()=>new  List<Media>(), ()=>new Media())},
+			{ "manuals", new PropertyListStruct ("manuals", typeof (Media),
+					(IBinding data, object? value) => {(data as JsDevice).Manuals = value as List<Media>;}, (IBinding data) => (data as JsDevice).Manuals,
+					false, ()=>new  List<Media>(), ()=>new Media())},
+			{ "guides", new PropertyListStruct ("guides", typeof (Media),
+					(IBinding data, object? value) => {(data as JsDevice).Guides = value as List<Media>;}, (IBinding data) => (data as JsDevice).Guides,
+					false, ()=>new  List<Media>(), ()=>new Media())},
+			{ "bootstraps", new PropertyListStruct ("bootstraps", typeof (Bootstrap),
+					(IBinding data, object? value) => {(data as JsDevice).Bootstraps = value as List<Bootstrap>;}, (IBinding data) => (data as JsDevice).Bootstraps,
+					false, ()=>new  List<Bootstrap>(), ()=>new Bootstrap())},
+			{ "provisioning", new PropertyListStruct ("provisioning", typeof (Provisioning),
+					(IBinding data, object? value) => {(data as JsDevice).Provisioning = value as List<Provisioning>;}, (IBinding data) => (data as JsDevice).Provisioning,
+					false, ()=>new  List<Provisioning>(), ()=>new Provisioning())},
+			{ "services", new PropertyListStruct ("services", typeof (Service),
+					(IBinding data, object? value) => {(data as JsDevice).Services = value as List<Service>;}, (IBinding data) => (data as JsDevice).Services,
+					false, ()=>new  List<Service>(), ()=>new Service())},
+			{ "maintenance", new PropertyListStruct ("maintenance", typeof (Maintenance),
+					(IBinding data, object? value) => {(data as JsDevice).Maintenance = value as List<Maintenance>;}, (IBinding data) => (data as JsDevice).Maintenance,
+					false, ()=>new  List<Maintenance>(), ()=>new Maintenance())},
+			{ "consumables", new PropertyListStruct ("consumables", typeof (Consumable),
+					(IBinding data, object? value) => {(data as JsDevice).Consumables = value as List<Consumable>;}, (IBinding data) => (data as JsDevice).Consumables,
+					false, ()=>new  List<Consumable>(), ()=>new Consumable())},
+			{ "accessories", new PropertyListStruct ("accessories", typeof (Accessory),
+					(IBinding data, object? value) => {(data as JsDevice).Accessories = value as List<Accessory>;}, (IBinding data) => (data as JsDevice).Accessories,
+					false, ()=>new  List<Accessory>(), ()=>new Accessory())},
 			{ "localizations", new PropertyDictionaryStruct ("localizations", typeof (PatchObject),
 					(IBinding data, object? value) => {(data as JsDevice).Localizations = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as JsDevice).Localizations,
 					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject(),

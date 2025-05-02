@@ -164,9 +164,11 @@ public abstract partial class JsonObject : IBinding {
     /// <param name="dictionary">The dictionary to append the values to.</param>
     public static void AddDictionary(
                     ref Dictionary<Type, Binding> dictionary) {
+
+        
         foreach (var pair in dictionary) {
             var binding = pair.Value;
-
+            //Console.WriteLine($"Add {binding.Tag}");
 
             if (!BindingDictionary.ContainsKey(pair.Key)) {
                 BindingDictionary.Add (pair.Key, binding);
@@ -790,6 +792,24 @@ public abstract partial class JsonObject : IBinding {
             Base.AddSafe(Entry.Key, Entry.Value);
             }
         }
+
+
+    /// <summary>
+    /// Parse the JSON document <paramref name="document"/> returning an
+    /// object instance of type <typeparamref name="T"/>.
+    /// </summary>
+    /// <typeparam name="T">Type of the object to return.</typeparam>
+    /// <param name="document">The document to parse.</param>
+    /// <param name="collectUparsed">If true, collect up unknown elements in the 
+    /// returned instance.</param>
+    /// <returns>The parsed object.</returns>
+    public static T? Parse<T>(
+                    byte[] data,
+                    bool collectUparsed = false) where T : JsonObject, new() {
+        var document = JsonDocument.Parse(data);
+        return Parse<T>(document.RootElement, collectUparsed);
+        }
+
 
     /// <summary>
     /// Parse the JSON document <paramref name="document"/> returning an

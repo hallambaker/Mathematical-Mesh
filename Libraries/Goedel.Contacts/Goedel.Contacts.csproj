@@ -41,7 +41,7 @@
 			<AutoGen>True</AutoGen>
 		</Compile>
 		<Compile Update="DeviceSchema.cs">
-			<DependentUpon>DeviceSchema.constant</DependentUpon>
+			<DependentUpon>DeviceSchema.Protocol</DependentUpon>
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 		</Compile>

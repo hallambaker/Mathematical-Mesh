@@ -3425,6 +3425,9 @@
         <member name="T:Goedel.Cryptography.Dare.EarlSignature">
             <summary>
             </summary>
+            <summary>
+            EARL Signature property.
+            </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.EarlSignature.Alg">
              <summary>
@@ -3484,6 +3487,25 @@
             <param name="jsonReader">The input stream</param>
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSignature.#ctor">
+            <summary>
+            Constructor used for deserialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSignature.#ctor(Goedel.Cryptography.KeyPair)">
+            <summary>
+            Constructor returning a signature entry for use in an unprotected header before
+            the manifest has been computed.
+            </summary>
+            <param name="key">The key to sign under.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSignature.#ctor(Goedel.Cryptography.KeyPair,System.Byte[])">
+            <summary>
+            Constructor returning a signature entry specifying the signature value..
+            </summary>
+            <param name="key">The key to sign under.</param>
+            <param name="manifest">The manfest to be signed.</param>
         </member>
         <member name="T:Goedel.Cryptography.Dare.EarlEnvelopeReader">
             <summary>
@@ -3573,6 +3595,238 @@
             <summary>
             EARL Envelope Writer
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Header">
+            <summary>The parsed unprotected header.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Trailer">
+            <summary>The parsed trailer.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Type">
+            <summary>The envelope type, 0 or 1.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeWriter.State">
+            <summary>The writer state.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeWriter.MetadataDigest">
+            <summary>The metadata digest.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeWriter.PayloadDigest">
+            <summary>The payload digest.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Manifest">
+            <summary>The envelope manifest</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.#ctor(System.Byte[],System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Constructor returning an instance with content metadata and payload,
+            <paramref name="contentMeta"/> and <paramref name="payload"/>. With optional
+            uprotected header and trailer sections.
+            </summary>
+            <param name="payload">The payload data</param>
+            <param name="contentMeta">The content metadata.</param>
+            <param name="unprotectedHeader">Optional unprotected header.</param>
+            <param name="trailer">Optional trailer.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.#ctor(Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair},Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Constructor creating an instance for an envelope of type 1 with signers 
+            <paramref name="signers"/> and digest identifier <paramref name="digestId"/>.
+            </summary>
+            <param name="contentMeta">The content metadata.</param>
+            <param name="signers">Optional signature keys to be used to sign the envelope data.</param>
+            <param name="digestId">The digest algorithm to use.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.#ctor">
+            <summary>
+            Constructor creating an instance for an envelope of type 1 (i.e. indeterminate length chunks).
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Begin(Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair},Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Begin writing the envelope data.
+            </summary>
+            <param name="contentMeta">The content metadata.</param>
+            <param name="signers">Optional signature keys to be used to sign the envelope data.. MUST match the
+            list given in <see cref="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.End(System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair})"/></param>
+            <param name="digestId">The digest algorithm to use.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Write(System.Byte[])">
+            <summary>
+            Write the bytes <paramref name="chunk"/> to the envelope.
+            </summary>
+            <param name="chunk">The bytes to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Write(System.String)">
+            <summary>
+            Write the string <paramref name="chunk"/> to the envelope.
+            </summary>
+            <param name="chunk">The string to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.End(System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair})">
+            <summary>
+            Complete writing the envelope using the optional signature keys <paramref name="signers"/>
+            </summary>
+            <param name="signers">Optional signature keys to be used to sign the envelope data.. MUST match the
+            list given in <see cref="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Begin(Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair},Goedel.Cryptography.CryptoAlgorithmId)"/></param>
+            <returns>The envelope bytes.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.ToArray">
+            <summary>
+            Return the writer output as an array of bytes.
+            </summary>
+            <returns>The writer output.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteUnprotected(System.Byte[])">
+            <summary>
+            Write the unprotected header bytes <paramref name="unprotectedHeader"/> to the envelope.
+            </summary>
+            <param name="unprotectedHeader">The bytes to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteContentMeta(System.Byte[])">
+            <summary>
+            Write the content metadata bytes <paramref name="contentMeta"/> to the envelope.
+            </summary>
+            <param name="contentMeta">The bytes to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WritePayload(System.Byte[])">
+            <summary>
+            Write the payload bytes <paramref name="payload"/> to the envelope.
+            </summary>
+            <param name="payload">The bytes to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteTrailer(System.Byte[])">
+            <summary>
+            Write the trailer bytes <paramref name="trailer"/> to the envelope.
+            </summary>
+            <param name="trailer">The bytes to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.GetManifest(Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Compute the manifest of  <paramref name="contentMetadataDigest"/>, 
+            <paramref name="payloadDigest"/> and optional <paramref name="protectedData"/> using
+            the digest algorithm <paramref name="digest"/>
+            </summary>
+            <param name="digest">The digest algorithm.</param>
+            <param name="contentMetadataDigest">Digest of the Content Metadata.</param>
+            <param name="payloadDigest">Digest of the payload.</param>
+            <param name="protectedData">Optional additional protected data.</param>
+            <returns>The manifest bytes.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.GetBytes(System.Byte[],System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Return an envelope containing the content metadata <paramref name="contentMeta"/> 
+            and payload <paramref name="payload"/> with optional uprotected header
+            <paramref name="unprotectedHeader"/> and trailer <paramref name="trailer"/>.
+            </summary>
+            <param name="contentMeta">The content metadata.</param>
+            <param name="payload">The payload.</param>
+            <param name="unprotectedHeader">Optional unprotected header.</param>
+            <param name="trailer">Optional trailer.</param>
+            <returns>The enveloped bytes</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.GetBytes(Goedel.Cryptography.Dare.ContentMeta,System.Byte[])">
+            <summary>
+            Return an envelope containing the content metadata <paramref name="contentMeta"/> 
+            and payload <paramref name="payload"/>
+            </summary>
+            <param name="contentMeta">The content metadata.</param>
+            <param name="payload">The payload.</param>
+            <returns>The enveloped bytes</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.GetProtectedHeader(Goedel.Cryptography.Dare.ContentMeta)">
+            <summary>
+            Return the protected header as a byte array.
+            </summary>
+            <param name="contentMeta">The protected header to write.</param>
+            <returns>The converted bytes.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteBytes(System.IO.Stream,System.Byte[])">
+            <summary>
+            
+            </summary>
+            <param name="stream">The stream to write to.</param>
+            <param name="data">The data to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteVarint(System.IO.Stream,System.Int64)">
+            <summary>
+            Write <paramref name="value"/> to <paramref name="stream"/> as a QUIC 
+            varint.
+            </summary>
+            <param name="stream">The stream to write to.</param>
+            <param name="value">The value to write.</param>
+            <exception cref="T:Goedel.Cryptography.Dare.InvalidLength"></exception>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.EarlSet">
+            <summary>
+            Record returning all the information relating to construction of an EARFL.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSet.Earl">
+            <summary>The earl key in Base32-dash form.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSet.Locator">
+            <summary>The locator key.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSet.Ciphertext">
+            <summary>The EARL ciphertext.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSet.Scheme">
+            <summary>The EARL URI scheme.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSet.Uri">
+            <summary>The EARL URI.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSet.WellKnown">
+            <summary>The HTTPS Well Known Service fo rretrieval of the EARL ciphertext.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSet.Authority">
+            <summary>The authority section of the EARL URI, a DNS name.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSet.Password">
+            <summary>Password value computed from the EARL key.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSet.Username">
+            <summary>Username value computed from the EARL key.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSet.#ctor(System.Byte[],System.String,System.String,System.Int32)">
+            <summary>
+            Constructor returning an instance with the specified parameters.
+            </summary>
+            <param name="envelope">The enveloped data bytes.</param>
+            <param name="authority">The authority section of the EARL URI, a DNS name.</param>
+            <param name="scheme">The EARL URI scheme.</param>
+            <param name="precision">The desired work factor in bits.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSet.#ctor(Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.String,System.String,System.Int32)">
+            <summary>
+            Constructor returning an instance with the specified parameters.
+            </summary>
+            <param name="contentMeta">The content metadata.</param>
+            <param name="payload">The payload bytes.</param>
+            <param name="authority">The authority section of the EARL URI, a DNS name.</param>
+            <param name="scheme">The EARL URI scheme.</param>
+            <param name="precision">The desired work factor in bits.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSet.#ctor(Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair},System.String,System.String,System.Int32)">
+            <summary>
+            Constructor returning an instance with the specified parameters.
+            </summary>
+            <param name="contentMeta">The content metadata.</param>
+            <param name="payload">The payload bytes.</param>
+            <param name="signers">A list of signing keys.</param>
+            <param name="authority">The authority section of the EARL URI, a DNS name.</param>
+            <param name="scheme">The EARL URI scheme.</param>
+            <param name="precision">The desired work factor in bits.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSet.GetWellKnown(System.String,System.String)">
+            <summary>
+            Convenience routine computing the well-known service for locating the ciphertext
+            package from authority <paramref name="authority"/> using locator <paramref name="locator"/>.
+            </summary>
+            <param name="authority">The authority section of the EARL URI, a DNS name.</param>
+            <param name="locator">The locator key.</param>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Cryptography.Dare.EnvelopeValidation">
             <summary>

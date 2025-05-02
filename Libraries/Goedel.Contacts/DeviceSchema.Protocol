@@ -56,48 +56,61 @@
 			Description
 				|
 
+
+		String					ModelName
+			Description
+				|
+
 		String					Manufacturer
 			Description
 				|
 
-		String					DateManufacture
+		DateTime				DateManufacture
 			Description
 				|
 
 		Struct Media			Images
+			Multiple
 			Description
 				|
 
 		Struct Media			Manuals
+			Multiple
 			Description
 				|
 
 		Struct Media			Guides
+			Multiple
 			Description
 				|
 
 		Struct Bootstrap		Bootstraps
+			Multiple
 			Description
 				|
 
 		Struct Provisioning		Provisioning
+			Multiple
 			Description
 				|
 
-
 		Struct Service			Services
+			Multiple
 			Description
 				|
 
 		Struct Maintenance		Maintenance
+			Multiple
 			Description
 				|
 
 		Struct Consumable		Consumables
+			Multiple
 			Description
 				|
 
 		Struct Accessory		Accessories
+			Multiple
 			Description
 				|
 

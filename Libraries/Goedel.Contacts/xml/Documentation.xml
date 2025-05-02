@@ -4395,6 +4395,11 @@
             
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.JsDevice.ModelName">
+             <summary>
+            
+             </summary>
+        </member>
         <member name="P:Goedel.Contacts.JsDevice.Manufacturer">
              <summary>
             

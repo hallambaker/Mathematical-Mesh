@@ -41,6 +41,11 @@ namespace Goedel.XUnit;
 
 
 public partial class Jmap {
+
+
+
+
+
     public static Jmap Test() => new();
     [Fact]
     public void TestContactAlice() {
@@ -85,6 +90,91 @@ public partial class Jmap {
         Verify(contact);
         }
 
+    [Fact]
+    public void TestDeviceFridge() {
+        Devices._Initialized.TestTrue();
+
+        var date = DateTime.UtcNow;
+
+        var device = new JsDevice() {
+            Version = "1.0",
+            Created = date,
+            Updated = date,
+
+            Kind = "device",
+            Language = "en",
+
+            DeviceId = Udf.FixedNonce("Some device"),
+            ModelId = Udf.FixedNonce("Some model"),
+
+            ModelName = "Acme Encabulator/2.1",
+
+            Manufacturer = "Acme Corp.",
+            DateManufacture = date,
+
+            Manuals = [
+                new() { 
+                    Uri = "https://media.example.com/Encabulator_2_1.Manual.pdf"
+                    }
+                ],
+
+            Guides = [
+                new() {
+                    Uri = "https://media.example.com/Encabulator_2_1.GettingStarted.pdf"
+                    }
+                ],
+
+            Images = [
+                new() {
+                    Kind = "front",
+                    MediaType = "image/png",
+                    Uri = "https://media.example.com/Encabulator_2_1.front.png"
+                    },
+                new() {
+                    Kind = "rear",
+                    MediaType = "image/png",
+                    Uri = "https://media.example.com/Encabulator_2_1.rear.png"
+                    },
+                new() {
+                    Kind = "schematic",
+                    MediaType = "image/svg",
+                    Uri = "https://media.example.com/Encabulator_2_1.schematic.svg"
+                    }
+                ],
+
+            Consumables = [
+                new() {
+                    MediaType = "application/jsdevice",
+                    Label = "Dingle Arms",
+                    Uri = "https://media.example.com/EncabulatorDingleArm.jsdevice"
+                    }
+                ],
+
+            Accessories = [
+                new() {
+                    MediaType = "application/jsdevice",
+                    Label = "Parametric Fam",
+                    Uri = "https://media.example.com/EncabulatorParametricFam.jsdevice"
+                    }
+                ]
+
+
+            };
+
+
+        var asBytes = device.GetJson(false);
+
+        Console.WriteLine(asBytes.ToUTF8());
+
+        var parsed = JsonObject.Parse<JsDevice>(asBytes);
+
+
+        var parsedAsString = parsed.GetJson(false).ToUTF8();
+
+        Console.WriteLine(parsedAsString);
+        }
+
+
 
 
     bool Verify (JsContact contact) {
@@ -93,7 +183,10 @@ public partial class Jmap {
         var asString = asBytes.ToUTF8();
         Console.WriteLine(asString);
 
-        var parsed = JsContact.FromJson(new JsonReader (asString), false);
+        //var parsed = JsContact.FromJson(new JsonReader (asString), false);
+
+        var parsed = JsonObject.Parse<JsContact>(asBytes);
+
         var parsedAsString = parsed.GetJson(false).ToUTF8();
 
         Console.WriteLine(parsedAsString);

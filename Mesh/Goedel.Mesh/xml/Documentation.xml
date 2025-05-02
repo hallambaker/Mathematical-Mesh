@@ -2934,6 +2934,13 @@
             <param name="catalogedDevice">The device to activate.</param>
             <returns>The activation record.</returns>
         </member>
+        <member name="M:Goedel.Mesh.CatalogedApplication.GetIdentifier(Goedel.Cryptography.KeyPair)">
+            <summary>
+            Return an identifier for the key pair <paramref name="keyPair"/>
+            </summary>
+            <param name="keyPair">The key to return the identifier of.</param>
+            <returns>The key identifier.</returns>
+        </member>
         <member name="M:Goedel.Mesh.CatalogedApplication.GetEscrow">
             <summary>
             Construct an activation record for the application.
@@ -7115,7 +7122,7 @@
         </member>
         <member name="M:Goedel.Mesh.Extensions.AddServiceData(Goedel.Contacts.JsContact,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String})">
             <summary>
-            Add a service with the specified parameters and credential <paramref name="cryptoUri"/> to 
+            Add a service with the specified parameters and credentials
             the contact with separate service and CryptoKey entries.
             </summary>
             <param name="contact">The contact to add the key to.</param>

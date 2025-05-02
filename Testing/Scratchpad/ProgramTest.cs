@@ -66,7 +66,10 @@ partial class Program {
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
         //TestService.Test().TestCredentialAccount();
-        GoedelProtocol.Test().TestEncodeDecode2();
+        //Jmap.Test().TestContactAlice();
+        Jmap.Test().TestDeviceFridge();
+
+
         //var examples = new CreateExamples();
         //var earl = new EarlResults(examples);
         //var jscontact = new JsContactResults(examples);

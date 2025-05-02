@@ -3253,6 +3253,17 @@
             <param name="Base">Base dictionary to merge into</param>
             <param name="Dictionary">Second dictionary to merge</param>
         </member>
+        <member name="M:Goedel.Protocol.JsonObject.Parse``1(System.Byte[],System.Boolean)">
+            <summary>
+            Parse the JSON document <paramref name="document"/> returning an
+            object instance of type <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="T">Type of the object to return.</typeparam>
+            <param name="document">The document to parse.</param>
+            <param name="collectUparsed">If true, collect up unknown elements in the 
+            returned instance.</param>
+            <returns>The parsed object.</returns>
+        </member>
         <member name="M:Goedel.Protocol.JsonObject.Parse``1(System.Text.Json.JsonDocument,System.Boolean)">
             <summary>
             Parse the JSON document <paramref name="document"/> returning an
@@ -3266,7 +3277,7 @@
         </member>
         <member name="M:Goedel.Protocol.JsonObject.Parse``1(System.Text.Json.JsonElement,System.Boolean)">
             <summary>
-            Parse the JSON element <paramref name="document"/> returning an
+            Parse the JSON element <paramref name="element"/> returning an
             object instance of type <typeparamref name="T"/>.
             </summary>
             <typeparam name="T">Type of the object to return.</typeparam>
@@ -3277,10 +3288,9 @@
         </member>
         <member name="M:Goedel.Protocol.JsonObject.Parse(System.Text.Json.JsonElement,Goedel.Protocol.Binding,System.Boolean)">
             <summary>
-            Parse the JSON element <paramref name="document"/> returning an
-            object instance of type <typeparamref name="T"/>.
+            Parse the JSON element <paramref name="element"/> returning a JsonObject
+            of the type specified by <paramref name="binding"/>.
             </summary>
-            <typeparam name="T">Type of the object to return.</typeparam>
             <param name="element">The document to parse.</param>
             <param name="binding">The type binding describing the object class.</param>
             <param name="collectUparsed">If true, collect up unknown elements in the 

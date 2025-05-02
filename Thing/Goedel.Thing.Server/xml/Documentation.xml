@@ -87,6 +87,72 @@
             Well Known services.
             </summary>
         </member>
+        <member name="F:Goedel.Acme.WellKnownService.HTTP">
+            <summary>HTTP</summary> 
+        </member>
+        <member name="F:Goedel.Acme.WellKnownService.HTTPS">
+            <summary>HTTP over TLS.</summary> 
+        </member>
+        <member name="F:Goedel.Acme.WellKnownService.HTTP2">
+            <summary>HTTP/2</summary> 
+        </member>
+        <member name="F:Goedel.Acme.WellKnownService.HTTP3">
+            <summary>HTTP/3</summary> 
+        </member>
+        <member name="F:Goedel.Acme.WellKnownService.Git">
+            <summary>Git</summary> 
+        </member>
+        <member name="F:Goedel.Acme.WellKnownService.SSH">
+            <summary>SSH</summary> 
+        </member>
+        <member name="F:Goedel.Acme.WellKnownService.AFS">
+            <summary>Andrews File System</summary> 
+        </member>
+        <member name="F:Goedel.Acme.WellKnownService.SMB2">
+            <summary>Windows Server Message Block 2 file server</summary> 
+        </member>
+        <member name="F:Goedel.Acme.WellKnownService.SMB3">
+            <summary>Windows Server Message Block 3 file server</summary> 
+        </member>
+        <member name="F:Goedel.Acme.WellKnownService.NFS3">
+            <summary>Network File Server v3</summary> 
+        </member>
+        <member name="F:Goedel.Acme.WellKnownService.NFS4">
+            <summary>Network File Server v4</summary> 
+        </member>
+        <member name="F:Goedel.Acme.WellKnownService.Mesh">
+            <summary>Mathematical Mesh</summary> 
+        </member>
+        <member name="F:Goedel.Acme.WellKnownService.IPP">
+            <summary>Internet Printing Protocol.</summary> 
+        </member>
+        <member name="T:Goedel.Acme.Extensions">
+            <summary>
+            Extensions class.
+            </summary>
+        </member>
+        <member name="M:Goedel.Acme.Extensions.GetProtocol(Goedel.Acme.WellKnownService)">
+            <summary>
+            Return the service prefix for <paramref name="service"/>.
+            </summary>
+            <param name="service">The service to return the information for.</param>
+            <returns>The IANA protocol identifier</returns>
+        </member>
+        <member name="M:Goedel.Acme.Extensions.GetPort(Goedel.Acme.WellKnownService,System.Int32)">
+            <summary>
+            Return the default for <paramref name="service"/>.
+            </summary>
+            <param name="service">The service to return the information for.</param>
+            <returns>The IANA protocol identifier</returns>
+        </member>
+        <member name="M:Goedel.Acme.Extensions.GetConfiguration(Goedel.Acme.WellKnownService,System.String)">
+            <summary>
+            Return the configuration  for <paramref name="service"/>.
+            </summary>
+            <param name="service">The service to return the information for.</param>
+            <param name="configuration">The configuration data.</param>
+            <returns>The IANA protocol identifier</returns>
+        </member>
         <member name="T:Goedel.Thing.Server.TBS">
             <summary>
             TBS
