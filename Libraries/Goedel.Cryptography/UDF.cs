@@ -762,13 +762,19 @@ public record Udf(
         return TypeBDSToString(UdfTypeIdentifier.Nonce, data, bits + 8);
         }
 
+    /// <summary>
+    /// Return a nonce with a value fixed by <paramref name="seed"/> for
+    /// use in example documentation.
+    /// </summary>
+    /// <param name="seed">The fixed length seed</param>
+    /// <param name="bits">Number of random bits in the string</param>
+    /// <returns>A randomly generated UDF string.</returns>
     public static string FixedNonce(string seed, int bits=0) {
         bits = bits <= 0 ? DefaultBits - 8 : bits;
 
         var data = SHAKE256.HashData (seed.ToUTF8 (), 1+ bits/8);
         return TypeBDSToString(UdfTypeIdentifier.Nonce, data, bits + 8);
         }
-
 
 
 
@@ -851,6 +857,7 @@ public record Udf(
     /// Create an EARL from the data <paramref name="data"/>
     /// </summary>
     /// <param name="data">The data to analyze.</param>
+    /// <param name="precision">The desired work factor in bits.</param>
     /// <returns>The EARL locator.</returns>
     public static (string, string, byte[]) Earl(byte[] data,
                 int precision = 140) {

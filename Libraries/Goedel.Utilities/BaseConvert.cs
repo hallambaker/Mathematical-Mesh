@@ -517,6 +517,7 @@ public static partial class BaseConvert {
     /// function converts both types of data.
     /// </summary>
     /// <param name="data">The string to convert</param>
+    /// <param name="partial">If true, ignore partial values (i.e. take 8 bits of a 12 bit value.)</param>
     /// <returns>The resulting binary data.</returns>
     public static byte[] FromBase64(this string data, bool partial = false) =>
         StreamConvertString.Convert(BASE64Value, 6, data, partial);
@@ -533,6 +534,7 @@ public static partial class BaseConvert {
     /// Convert Base32 character string data to binary data.
     /// </summary>
     /// <param name="data">The string to convert</param>
+    /// <param name="partial">If true, ignore partial values (i.e. take 8 bits of a 12 bit value.)</param>
     /// <returns>The resulting binary data.</returns>
     public static byte[] FromBase32(this string data, bool partial = false) =>
         StreamConvertString.Convert(BASE32Value, 5, data, partial);
@@ -549,6 +551,7 @@ public static partial class BaseConvert {
     /// Convert Base16 character string data to binary data.
     /// </summary>
     /// <param name="data">The string to convert</param>
+    /// <param name="partial">If true, ignore partial values (i.e. take 8 bits of a 12 bit value.)</param>
     /// <returns>The resulting binary data.</returns>
     public static byte[] FromBase16(this string data, bool partial = false) =>
         StreamConvertString.Convert(BASE16Value, 4, data, partial);

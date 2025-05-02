@@ -3060,6 +3060,9 @@
         <member name="P:Goedel.Protocol.JsonObject.TagDictionary">
             <summary>The tag dictionary for decoding entries.</summary>
         </member>
+        <member name="F:Goedel.Protocol.JsonObject.BindingDictionary">
+            <summary>Dictionary mapping types to binding definitions.</summary> 
+        </member>
         <member name="M:Goedel.Protocol.JsonObject.AddDictionary(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate})">
             <summary>
             Add a dictionary to the persistence store decoder.
@@ -3089,6 +3092,9 @@
         </member>
         <member name="F:Goedel.Protocol.JsonObject._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject.UnparsedProperties">
+            <summary>Adcditional unparsed properties.</summary> 
         </member>
         <member name="M:Goedel.Protocol.JsonObject.Combine(Goedel.Protocol.Binding,Goedel.Protocol.Binding)">
             <summary>
@@ -4655,21 +4661,25 @@
         </member>
         <member name="T:Goedel.Protocol.Binding">
             <summary>
-            Binding specification.
+            Untyped binding specification. The untyped binding provides the necessary factory,
+            sequence addition and key/value pair extraction functions for serialization and
+            deserialization.
             </summary>
             <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
             <param name="Tag">JSON tag for this object.</param>
-            <param name="Factory">Factory returning a new instance of this object.</param>
             <param name="Parent">Parent the object inherits from.</param>
+            <param name="TypeTag">Specifies the property name for the property specifying the type.</param>
         </member>
-        <member name="M:Goedel.Protocol.Binding.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,System.Func{System.Object},Goedel.Protocol.Binding,System.String)">
+        <member name="M:Goedel.Protocol.Binding.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,Goedel.Protocol.Binding,System.String)">
             <summary>
-            Binding specification.
+            Untyped binding specification. The untyped binding provides the necessary factory,
+            sequence addition and key/value pair extraction functions for serialization and
+            deserialization.
             </summary>
             <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
             <param name="Tag">JSON tag for this object.</param>
-            <param name="Factory">Factory returning a new instance of this object.</param>
             <param name="Parent">Parent the object inherits from.</param>
+            <param name="TypeTag">Specifies the property name for the property specifying the type.</param>
         </member>
         <member name="P:Goedel.Protocol.Binding.Properties">
             <summary>Dictionary mapping the property tag to the field specification.</summary>
@@ -4679,6 +4689,33 @@
         </member>
         <member name="P:Goedel.Protocol.Binding.Parent">
             <summary>Parent the object inherits from.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Binding.TypeTag">
+            <summary>Specifies the property name for the property specifying the type.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Binding.TypeDictionary">
+            <summary>Dictionary mapping child type tags to type definitions.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.Factory">
+            <summary>Factory returning a new object.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.ListFactory">
+            <summary>Factory returning a new list of objects.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.DictionaryFactory">
+            <summary>Factory returning a new Dictionary object.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.ListAdd">
+            <summary>Action adding an element to a list of the bound type.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.DictionaryAdd">
+            <summary>Action adding a key/value pair to a dictionary of the bound type.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.GetKey">
+            <summary>Return the key of a key/value pair.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.GetValue">
+            <summary>Return the value of a key/value pair.</summary> 
         </member>
         <member name="F:Goedel.Protocol.Binding.ChildClasses">
             <summary>Dictionary binding sub classes to binding descriptions</summary> 
@@ -4695,8 +4732,11 @@
             </summary>
             <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
             <param name="Tag">JSON tag for this object.</param>
-            <param name="Factory">Factory returning a new instance of this object.</param>
             <param name="Parent">Parent the object inherits from.</param>
+            <param name="OFactory">Object instance factory.</param>
+            <param name="LFactory">List instance factory.</param>
+            <param name="DFactory">Dictionary instance factory type.</param>
+            <param name="TypeTag">The type tag used to distinguish objects of this type.</param>
         </member>
         <member name="M:Goedel.Protocol.Binding`1.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,System.Func{`0},System.Func{System.Collections.Generic.List{`0}},System.Func{System.Collections.Generic.Dictionary{System.String,`0}},Goedel.Protocol.Binding,System.String)">
             <summary>
@@ -4704,8 +4744,41 @@
             </summary>
             <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
             <param name="Tag">JSON tag for this object.</param>
-            <param name="Factory">Factory returning a new instance of this object.</param>
             <param name="Parent">Parent the object inherits from.</param>
+            <param name="OFactory">Object instance factory.</param>
+            <param name="LFactory">List instance factory.</param>
+            <param name="DFactory">Dictionary instance factory type.</param>
+            <param name="TypeTag">The type tag used to distinguish objects of this type.</param>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.OFactory">
+            <summary>Object instance factory.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.LFactory">
+            <summary>List instance factory.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.DFactory">
+            <summary>Dictionary instance factory type.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.Factory">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.ListFactory">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.DictionaryFactory">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.GetKey">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.GetValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.ListAdd">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.DictionaryAdd">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Protocol.Property">
             <summary>
@@ -5445,6 +5518,7 @@
             Metadata record representing a property.
             </summary>
             <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Type">The type of the struct object.</param>
             <param name="Set">Set the property to the specified value.</param>
             <param name="Get">Return the value of the property.</param>
             <param name="Factory">Factory returning an instance of the object.</param>
@@ -5457,12 +5531,16 @@
             Metadata record representing a property.
             </summary>
             <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Type">The type of the struct object.</param>
             <param name="Set">Set the property to the specified value.</param>
             <param name="Get">Return the value of the property.</param>
             <param name="Factory">Factory returning an instance of the object.</param>
             <param name="IFactory">For a collection object, factory returning an instance of an
             object in the collection.</param>
             <param name="Tagged">If true, the property should be tagged.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyStruct.Type">
+            <summary>The type of the struct object.</summary>
         </member>
         <member name="P:Goedel.Protocol.PropertyStruct.Set">
             <summary>Set the property to the specified value.</summary>
@@ -5488,6 +5566,7 @@
             Metadata record representing a property.
             </summary>
             <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Type">The base type of the list object.</param>
             <param name="Set">Set the property to the specified value.</param>
             <param name="Get">Return the value of the property.</param>
             <param name="Factory">Factory returning an instance of the object.</param>
@@ -5500,12 +5579,16 @@
             Metadata record representing a property.
             </summary>
             <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Type">The base type of the list object.</param>
             <param name="Set">Set the property to the specified value.</param>
             <param name="Get">Return the value of the property.</param>
             <param name="Factory">Factory returning an instance of the object.</param>
             <param name="IFactory">For a collection object, factory returning an instance of an
             object in the collection.</param>
             <param name="Tagged">If true, the property should be tagged.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListStruct.Type">
+            <summary>The base type of the list object.</summary>
         </member>
         <member name="P:Goedel.Protocol.PropertyListStruct.Set">
             <summary>Set the property to the specified value.</summary>
@@ -5531,6 +5614,7 @@
             Metadata record representing a property.
             </summary>
             <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Type">The type of the dictionary object.</param>
             <param name="Set">Set the property to the specified value.</param>
             <param name="Get">Return the value of the property.</param>
             <param name="Factory">Factory returning an instance of the object.</param>
@@ -5545,6 +5629,7 @@
             Metadata record representing a property.
             </summary>
             <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Type">The type of the dictionary object.</param>
             <param name="Set">Set the property to the specified value.</param>
             <param name="Get">Return the value of the property.</param>
             <param name="Factory">Factory returning an instance of the object.</param>
@@ -5553,6 +5638,9 @@
             <param name="Tagged">If true, the property should be tagged.</param>
             <param name="Add">Add struct to dictionary</param>
             <param name="Enumerator">Returns an enumerator</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyDictionaryStruct.Type">
+            <summary>The type of the dictionary object.</summary>
         </member>
         <member name="P:Goedel.Protocol.PropertyDictionaryStruct.Set">
             <summary>Set the property to the specified value.</summary>

@@ -33,234 +33,52 @@ using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare;
 
-
-
-public partial class EarlEnvelopeReader {
-    Stream Stream { get; }
-
-    public int Version { get; private set; }
-
-    public Unprotected? UnprotectedHeader { get; private set; } = null;
-
-    public ContentMeta? ContentMeta { get; private set; } = null;
-
-    public Unprotected? Trailer { get; private set; } = null;
-
-    HashAlgorithm? Digest = null;
-    CryptoAlgorithmId DigestId;
-    byte[]? MetadataDigest = null;
-    public EarlEnvelopeReader(Stream stream) {
-        Stream = stream;
-        Version = (int)ReadVarint(Stream);
-        }
-
-    public EarlEnvelopeReader(byte[] bytes) : this(new MemoryStream(bytes)) {
-
-        }
-
-
-    public static (ContentMeta, byte[]) Parse(byte[] bytes,
-            KeyCollection? keyCollection=null) {
-
-        var reader = new EarlEnvelopeReader(bytes);
-        reader.ReadMetadata();
-
-        var buffer = new MemoryStream();
-        while (reader.CopyPayload(buffer)) {
-            }
-
-        reader.Verify(keyCollection).AssertTrue(NYI.Throw);
-
-        return (reader.ContentMeta, buffer.ToArray());
-
-        }
-
-
-    public ContentMeta ReadMetadata() {
-        if (Version == 1) {
-            var unprotectedHeader = ReadBlock(Stream);
-            if (unprotectedHeader.Length > 0) {
-                UnprotectedHeader = Unprotected.FromJson(new JsonReader(unprotectedHeader), false);
-                if (UnprotectedHeader.DigestAlgorithm is not null) {
-                    DigestId = UnprotectedHeader.DigestAlgorithm.ToCryptoAlgorithmID();
-                    Digest = DigestId.CreateDigest();
-                    }
-
-
-
-                }
-            }
-        var contentMeta = ReadBlock(Stream);
-        if (contentMeta.Length > 0) {
-            ContentMeta = ContentMeta.FromJson(new JsonReader(contentMeta), false);
-            }
-        if (Digest is not null) {
-            var metaDigest = DigestId.CreateDigest();
-            MetadataDigest = metaDigest.ComputeHash(contentMeta);
-
-            }
-
-
-        return ContentMeta;
-        }
-
-    /// <summary>
-    /// Copy bytes from the 
-    /// </summary>
-    /// <param name="output"></param>
-    /// <returns>True if there is more payload to be read</returns>
-    public bool CopyPayload(Stream output) {
-        var length = ReadVarint(Stream);
-        if (length == 0) {
-            return false;
-            }
-
-        if (Digest is null) {
-            Stream.CopyTo(output, length);
-            }
-        else {
-            Stream.HashCopyTo(output, length, Digest);
-            }
-
-        return Version == 1;
-        }
-
-    public bool Verify(
-            KeyCollection? keyCollection = null) {
-        if (Version == 0) {
-            return true;
-            }
-
-        var trailer = ReadBlock(Stream);
-        if (trailer.Length > 0) {
-            Trailer = Unprotected.FromJson(new JsonReader(trailer), false);
-            }
-
-        var signatures = UnprotectedHeader?.Signatures ?? Trailer?.Signatures;
-        if (signatures is null & UnprotectedHeader?.Signers is null) {
-            return true; // There are no signatures to verify.
-            }
-
-        // Check that there is exactly one Signatures property.
-        (Trailer?.Signatures is null | UnprotectedHeader?.Signatures is null).AssertTrue(NYI.Throw);
-
-        if (UnprotectedHeader?.Signers is not null) {
-            (UnprotectedHeader.Signers.Count == Trailer.Signatures.Count).AssertTrue(NYI.Throw);
-
-            foreach (var signature in signatures) {
-                var signer = Find(UnprotectedHeader.Signers, signature.KeyIdentifier);
-                signature.Alg ??= signer.Alg;
-                }
-            }
-
-        // Check that we computed a digest.
-        (Digest is not null).AssertTrue(NYI.Throw);
-
-        var value = Digest.GetValue();
-        Console.WriteLine($"Digest Value = {value.ToStringBase16FormatHex()}");
-
-        var manifest = EarlEnvelopeWriter.GetManifest(DigestId, MetadataDigest, value);
-        Console.WriteLine($"Manifest Value = {manifest.ToStringBase16FormatHex()}");
-
-        ContentMeta.VerifiedSignatures = [];
-        foreach (var signature in signatures) {
-            if (signature?.Value is null) {
-                return false;
-                }
-            if (!keyCollection.TryFindPublicKey(signature.KeyIdentifier, out var key)) {
-                // unknown key.
-                return false;
-                }
-            if (!key.VerifyManifest(manifest, signature.Value)) {
-                return false;
-                }
-
-            ContentMeta.VerifiedSignatures.Add(signature);
-            }
-
-        return true;
-        }
-
-
-    EarlSignature Find(IEnumerable<EarlSignature> signers, string keyId) {
-        foreach (var signer in signers) {
-            if (signer.KeyIdentifier == keyId) {
-                return signer;
-                }
-            }
-
-        throw new NYI();
-        }
-
-    public static byte[] ReadBlock(Stream stream) {
-        var length = ReadVarint(stream);
-        var buffer = new byte[length];
-        stream.ReadExactly(buffer, 0, (int) length);
-        return buffer;
-        }
-
-    public static ulong ReadVarint(Stream stream) {
-        ulong result;
-
-        var read = ReadByteExact(stream);
-        var type = read & 0b1100_0000;
-        result = (ulong)read & 0b0011_1111;
-
-        var count = type switch {
-            0 => 0,
-            0b0100_0000 => 1,
-            0b1000_0000 => 3,
-            0b1100_0000 => 7,
-            };
-
-        for (var i = 0; i < count; i++) {
-            read = ReadByteExact(stream);
-            result <<= 8;
-            if (read < 0) {
-                throw new EndOfStreamException();
-                }
-
-            result |= (byte) read;
-            }
-
-        return result;
-        }
-
-    public static byte ReadByteExact(Stream stream) {
-        var read = stream.ReadByte();
-        if (read < 0) {
-            throw new EndOfStreamException();
-            }
-
-        return (byte) read;
-        }
-
-
-    }
-
-
+/// <summary>
+/// EARL Envelope Writer
+/// </summary>
 public partial class EarlEnvelopeWriter {
 
-    MemoryStream Buffer = new MemoryStream();
+    readonly MemoryStream Buffer = new ();
+
+    ///<summary>The parsed unprotected header.</summary> 
     public Unprotected? Header { get; private set; }
+
+    ///<summary>The parsed trailer.</summary>
     public Unprotected? Trailer { get; private set; }
+
+    ///<summary>The envelope type, 0 or 1.</summary>
     int Type { get; }
 
+    ///<summary>The writer state.</summary> 
     int State { get; set; }
 
-    CryptoStream DigestStream = null;
     HashAlgorithm Digest = null;
     CryptoAlgorithmId DigestId;
 
+
+    ///<summary>The metadata digest.</summary>
     public byte[]? MetadataDigest { get; private set; } = null;
+
+    ///<summary>The payload digest.</summary>
     public byte[]? PayloadDigest { get; private set; } = null;
 
+
+    ///<summary>The envelope manifest</summary>
     public byte[]? Manifest { get; private set; } = null;
 
-
+    #region // Constructors
+    /// <summary>
+    /// Constructor returning an instance with content metadata and payload,
+    /// <paramref name="contentMeta"/> and <paramref name="payload"/>. With optional
+    /// uprotected header and trailer sections.
+    /// </summary>
+    /// <param name="payload">The payload data</param>
+    /// <param name="contentMeta">The content metadata.</param>
+    /// <param name="unprotectedHeader">Optional unprotected header.</param>
+    /// <param name="trailer">Optional trailer.</param>
     public EarlEnvelopeWriter(
             byte[] payload,
-            byte[]? metadata = null,
+            byte[]? contentMeta = null,
             byte[]? unprotectedHeader = null,
             byte[]? trailer = null) {
 
@@ -270,7 +88,7 @@ public partial class EarlEnvelopeWriter {
         if (Type == 1) {
             WriteBytes(Buffer, unprotectedHeader);
             }
-        WriteBytes(Buffer, metadata);
+        WriteBytes(Buffer, contentMeta);
         WriteBytes(Buffer, payload);
 
         if (Type == 1) {
@@ -280,23 +98,40 @@ public partial class EarlEnvelopeWriter {
             }
         }
 
+    /// <summary>
+    /// Constructor creating an instance for an envelope of type 1 with signers 
+    /// <paramref name="signers"/> and digest identifier <paramref name="digestId"/>.
+    /// </summary>
+    /// <param name="contentMeta">The content metadata.</param>
+    /// <param name="signers">Optional signature keys to be used to sign the envelope data.</param>
+    /// <param name="digestId">The digest algorithm to use.</param>
     public EarlEnvelopeWriter(
-            ContentMeta metadata,
+            ContentMeta contentMeta,
             IEnumerable<KeyPair> signers = null,
-            CryptoAlgorithmId digest = CryptoAlgorithmId.Default) : this (){
-        Begin(metadata, signers);
+            CryptoAlgorithmId digestId = CryptoAlgorithmId.Default) : this() {
+        Begin(contentMeta, signers);
 
         }
 
+    /// <summary>
+    /// Constructor creating an instance for an envelope of type 1 (i.e. indeterminate length chunks).
+    /// </summary>
     public EarlEnvelopeWriter() {
         Type = 1;
         WriteVarint(Buffer, Type);
         State = 0;
         }
 
-
+    #endregion
+    /// <summary>
+    /// Begin writing the envelope data.
+    /// </summary>
+    /// <param name="contentMeta">The content metadata.</param>
+    /// <param name="signers">Optional signature keys to be used to sign the envelope data.. MUST match the
+    /// list given in <see cref="End"/></param>
+    /// <param name="digestId">The digest algorithm to use.</param>
     public void Begin(
-            ContentMeta metadata,
+            ContentMeta contentMeta,
             IEnumerable<KeyPair> signers=null,
             CryptoAlgorithmId digestId = CryptoAlgorithmId.Default) {
 
@@ -313,7 +148,7 @@ public partial class EarlEnvelopeWriter {
             }
 
         DigestId = digestId;
-        var metadataBytes = metadata.GetJson(false);
+        var metadataBytes = contentMeta.GetJson(false);
 
         if (signers.Count() > 0) {
             var metaDigest = DigestId.CreateDigest();
@@ -339,10 +174,14 @@ public partial class EarlEnvelopeWriter {
             WriteUnprotected();
             }
 
-        WriteMetadata(metadataBytes);
+        WriteContentMeta(metadataBytes);
 
         }
 
+    /// <summary>
+    /// Write the bytes <paramref name="chunk"/> to the envelope.
+    /// </summary>
+    /// <param name="chunk">The bytes to write.</param>
     public void Write(
             byte[] chunk) {
         if (Digest is not null) {
@@ -352,9 +191,19 @@ public partial class EarlEnvelopeWriter {
 
         }
 
+    /// <summary>
+    /// Write the string <paramref name="chunk"/> to the envelope.
+    /// </summary>
+    /// <param name="chunk">The string to write.</param>
     public void Write(
         string chunk) => Write (chunk.ToUTF8());
 
+    /// <summary>
+    /// Complete writing the envelope using the optional signature keys <paramref name="signers"/>
+    /// </summary>
+    /// <param name="signers">Optional signature keys to be used to sign the envelope data.. MUST match the
+    /// list given in <see cref="Begin"/></param>
+    /// <returns>The envelope bytes.</returns>
     public byte[] End(
         IEnumerable<KeyPair> signers) {
 
@@ -372,7 +221,7 @@ public partial class EarlEnvelopeWriter {
 
 
             foreach (var key in signers) {
-                var signer = new EarlSignature(key, Manifest, DigestId);
+                var signer = new EarlSignature(key, Manifest);
                 Trailer.Signatures.Add(signer);
                 }
 
@@ -386,47 +235,51 @@ public partial class EarlEnvelopeWriter {
         return Buffer.ToArray();
         }
 
-    public static byte[] GetManifest(
-                CryptoAlgorithmId digest,
-                byte[] metadataDigest,
-                byte[] contentDigest,
-                byte[]? protectedData=null) {
-        var oid = digest.ToOID().ParseOid();
-        var stream = new MemoryStream();
+    /// <summary>
+    /// Return the writer output as an array of bytes.
+    /// </summary>
+    /// <returns>The writer output.</returns>
+    public byte[] ToArray() => Buffer.ToArray();
 
 
-        stream.Write(oid);
-        stream.Write( metadataDigest);
-        stream.Write( contentDigest);
-        if (protectedData != null) {
-            stream.Write( protectedData);
-            }
 
-        return stream.ToArray();
-        }
 
+    #region // Write chunks
+
+    /// <summary>
+    /// Write the unprotected header bytes <paramref name="unprotectedHeader"/> to the envelope.
+    /// </summary>
+    /// <param name="unprotectedHeader">The bytes to write.</param>
     public void WriteUnprotected(
-                byte[]? unprotectedHeader=null) {
+                byte[]? unprotectedHeader = null) {
         (State == 0).AssertTrue(NYI.Throw);
         WriteBytes(Buffer, unprotectedHeader);
         State = 1;
         }
 
-    public void WriteMetadata(
-            byte[]? metadata = null) {
-        (State <2).AssertTrue(NYI.Throw);
+    /// <summary>
+    /// Write the content metadata bytes <paramref name="contentMeta"/> to the envelope.
+    /// </summary>
+    /// <param name="contentMeta">The bytes to write.</param>
+    public void WriteContentMeta(
+            byte[]? contentMeta = null) {
+        (State < 2).AssertTrue(NYI.Throw);
         if (State == 0) {
             WriteUnprotected();
             }
-        WriteBytes(Buffer, metadata);
+        WriteBytes(Buffer, contentMeta);
         State = 2;
         }
 
+    /// <summary>
+    /// Write the payload bytes <paramref name="payload"/> to the envelope.
+    /// </summary>
+    /// <param name="payload">The bytes to write.</param>
     public void WritePayload(
             byte[] payload) {
         (State < 3).AssertTrue(NYI.Throw);
         if (State < 2) {
-            WriteMetadata();
+            WriteContentMeta();
             }
         if (payload.Length > 0) {
             WriteBytes(Buffer, payload);
@@ -434,11 +287,15 @@ public partial class EarlEnvelopeWriter {
 
         }
 
+    /// <summary>
+    /// Write the trailer bytes <paramref name="trailer"/> to the envelope.
+    /// </summary>
+    /// <param name="trailer">The bytes to write.</param>
     public void WriteTrailer(
-            byte[]? trailer=null) {
+            byte[]? trailer = null) {
         (State < 3).AssertTrue(NYI.Throw);
         if (State < 2) {
-            WriteMetadata();
+            WriteContentMeta();
             }
         WriteVarint(Buffer, 0); // last payload chunk
         WriteBytes(Buffer, trailer);
@@ -447,31 +304,87 @@ public partial class EarlEnvelopeWriter {
 
 
 
+    #endregion
+    #region // Static convenience routines.
+    
+    /// <summary>
+    /// Compute the manifest of  <paramref name="contentMetadataDigest"/>, 
+    /// <paramref name="payloadDigest"/> and optional <paramref name="protectedData"/> using
+    /// the digest algorithm <paramref name="digest"/>
+    /// </summary>
+    /// <param name="digest">The digest algorithm.</param>
+    /// <param name="contentMetadataDigest">Digest of the Content Metadata.</param>
+    /// <param name="payloadDigest">Digest of the payload.</param>
+    /// <param name="protectedData">Optional additional protected data.</param>
+    /// <returns>The manifest bytes.</returns>
+    public static byte[] GetManifest(
+                CryptoAlgorithmId digest,
+                byte[] contentMetadataDigest,
+                byte[] payloadDigest,
+                byte[]? protectedData = null) {
+        var oid = digest.ToOID().ParseOid();
+        var stream = new MemoryStream();
+
+        stream.Write(oid);
+        stream.Write(contentMetadataDigest);
+        stream.Write(payloadDigest);
+        if (protectedData != null) {
+            stream.Write(protectedData);
+            }
+
+        return stream.ToArray();
+        }
+
+    /// <summary>
+    /// Return an envelope containing the content metadata <paramref name="contentMeta"/> 
+    /// and payload <paramref name="payload"/> with optional uprotected header
+    /// <paramref name="unprotectedHeader"/> and trailer <paramref name="trailer"/>.
+    /// </summary>
+    /// <param name="contentMeta">The content metadata.</param>
+    /// <param name="payload">The payload.</param>
+    /// <param name="unprotectedHeader">Optional unprotected header.</param>
+    /// <param name="trailer">Optional trailer.</param>
+    /// <returns>The enveloped bytes</returns>
     public static byte[] GetBytes(
             byte[] payload,
-            byte[]? protectedHeader = null,
+            byte[]? contentMeta = null,
             byte[]? unprotectedHeader = null,
             byte[]? trailer = null) =>
-        new EarlEnvelopeWriter(payload, protectedHeader, unprotectedHeader, trailer).ToArray();
+        new EarlEnvelopeWriter(payload, contentMeta, unprotectedHeader, trailer).ToArray();
 
-
+    /// <summary>
+    /// Return an envelope containing the content metadata <paramref name="contentMeta"/> 
+    /// and payload <paramref name="payload"/>
+    /// </summary>
+    /// <param name="contentMeta">The content metadata.</param>
+    /// <param name="payload">The payload.</param>
+    /// <returns>The enveloped bytes</returns>
     public static byte[]? GetBytes(
         ContentMeta? contentMeta,
         byte[] payload) {
 
-        var protectedHeader = GetProtectedHeader (contentMeta);
-        return GetBytes (payload, protectedHeader);
+        var protectedHeader = GetProtectedHeader(contentMeta);
+        return GetBytes(payload, protectedHeader);
         }
 
-
+    /// <summary>
+    /// Return the protected header as a byte array.
+    /// </summary>
+    /// <param name="contentMeta">The protected header to write.</param>
+    /// <returns>The converted bytes.</returns>
     public static byte[]? GetProtectedHeader(
             ContentMeta? contentMeta) => contentMeta is null ? null : contentMeta.GetJson(false);
 
 
-    public byte[] ToArray() => Buffer.ToArray();
 
+    #endregion
+    #region // Static buffer write utilities.
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="stream">The stream to write to.</param>
+    /// <param name="data">The data to write.</param>
     public static void WriteBytes(
             Stream stream,
             byte[]? data) {
@@ -484,9 +397,16 @@ public partial class EarlEnvelopeWriter {
             WriteVarint(stream, data.Length);
             stream.Write(data);
             }
-        
+
         }
 
+    /// <summary>
+    /// Write <paramref name="value"/> to <paramref name="stream"/> as a QUIC 
+    /// varint.
+    /// </summary>
+    /// <param name="stream">The stream to write to.</param>
+    /// <param name="value">The value to write.</param>
+    /// <exception cref="InvalidLength"></exception>
     public static void WriteVarint(
                 Stream stream,
                 long value) {
@@ -541,4 +461,5 @@ public partial class EarlEnvelopeWriter {
         }
 
 
+    #endregion
     }

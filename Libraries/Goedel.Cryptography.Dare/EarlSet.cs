@@ -21,49 +21,86 @@
 #endregion
 namespace Goedel.Cryptography.Dare;
 
+/// <summary>
+/// Record returning all the information relating to construction of an EARFL.
+/// </summary>
 public record EarlSet {
 
+    ///<summary>The earl key in Base32-dash form.</summary> 
     public string Earl { get; }
+
+    ///<summary>The locator key.</summary> 
     public string Locator { get; }
+
+    ///<summary>The EARL ciphertext.</summary> 
     public byte[] Ciphertext { get; }
 
+    ///<summary>The EARL URI scheme.</summary> 
     public string Scheme { get; }
 
+    ///<summary>The EARL URI.</summary> 
     public string Uri => Scheme + ":" + Authority + Earl;
 
+    ///<summary>The HTTPS Well Known Service fo rretrieval of the EARL ciphertext.</summary> 
     public string WellKnown => GetWellKnown(Authority, Locator);
 
+    ///<summary>The authority section of the EARL URI, a DNS name.</summary> 
     public string Authority { get; }
 
+    ///<summary>Password value computed from the EARL key.</summary> 
     public string Password => Udf.EarlLocator1(Earl);
 
+    ///<summary>Username value computed from the EARL key.</summary> 
     public string Username => Password;
 
+    /// <summary>
+    /// Constructor returning an instance with the specified parameters.
+    /// </summary>
+    /// <param name="envelope">The enveloped data bytes.</param>
+    /// <param name="authority">The authority section of the EARL URI, a DNS name.</param>
+    /// <param name="scheme">The EARL URI scheme.</param>
+    /// <param name="precision">The desired work factor in bits.</param>
     public EarlSet(
                 byte[] envelope,
-                string? service = null,
+                string? authority = null,
                 string scheme = "earl",
                 int precision = 140) {
         (Earl, Locator, Ciphertext) = Udf.Earl(envelope);
         Scheme = scheme;
-        Authority = service == null ? "" : $"//{service}/";
+        Authority = authority == null ? "" : $"//{authority}/";
         }
 
+    /// <summary>
+    /// Constructor returning an instance with the specified parameters.
+    /// </summary>
+    /// <param name="contentMeta">The content metadata.</param>
+    /// <param name="payload">The payload bytes.</param>
+    /// <param name="authority">The authority section of the EARL URI, a DNS name.</param>
+    /// <param name="scheme">The EARL URI scheme.</param>
+    /// <param name="precision">The desired work factor in bits.</param>
     public EarlSet(
             ContentMeta contentMeta,
             byte[] payload,
-            string? service = null,
+            string? authority = null,
             string scheme = "earl",
                 int precision = 140) : this(
-                 EarlEnvelopeWriter.GetBytes(contentMeta, payload), service, scheme, precision) {
+                 EarlEnvelopeWriter.GetBytes(contentMeta, payload), authority, scheme, precision) {
         }
 
-
+    /// <summary>
+    /// Constructor returning an instance with the specified parameters.
+    /// </summary>
+    /// <param name="contentMeta">The content metadata.</param>
+    /// <param name="payload">The payload bytes.</param>
+    /// <param name="signers">A list of signing keys.</param>
+    /// <param name="authority">The authority section of the EARL URI, a DNS name.</param>
+    /// <param name="scheme">The EARL URI scheme.</param>
+    /// <param name="precision">The desired work factor in bits.</param>
     public EarlSet(
             ContentMeta contentMeta,
             byte[] payload,
             IEnumerable<KeyPair> signers,
-            string? service = null,
+            string? authority = null,
             string scheme = "earl",
                 int precision = 140) {
 
@@ -73,11 +110,17 @@ public record EarlSet {
 
         (Earl, Locator, Ciphertext) = Udf.Earl(envelope);
         Scheme = scheme;
-        Authority = service == null ? "" : $"//{service}/";
+        Authority = authority == null ? "" : $"//{authority}/";
 
         }
 
-
+    /// <summary>
+    /// Convenience routine computing the well-known service for locating the ciphertext
+    /// package from authority <paramref name="authority"/> using locator <paramref name="locator"/>.
+    /// </summary>
+    /// <param name="authority">The authority section of the EARL URI, a DNS name.</param>
+    /// <param name="locator">The locator key.</param>
+    /// <returns></returns>
     public static string GetWellKnown(
                 string authority,
                 string locator) => $"https://{authority}/.well-known/earl/{locator}";

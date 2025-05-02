@@ -425,6 +425,7 @@ public static partial class Extensions {
     /// <param name="parent">Parent service if a member of a group.</param>
     /// <param name="cryptoUri">The CryptoData representing the key.</param>
     /// <param name="mediaType">The Key media type.</param>
+    /// <param name="cryptoData">The associated cryptographic keys.</param>
     /// <returns>The service entry.</returns>
     public static void AddServiceKeyData(
                     this JsContact contact,
@@ -480,7 +481,7 @@ public static partial class Extensions {
 
 
     /// <summary>
-    /// Add a service with the specified parameters and credential <paramref name="cryptoUri"/> to 
+    /// Add a service with the specified parameters and credentials
     /// the contact with separate service and CryptoKey entries.
     /// </summary>
     /// <param name="contact">The contact to add the key to.</param>
@@ -490,9 +491,6 @@ public static partial class Extensions {
     /// <param name="uri">The service URI</param>
     /// <param name="label">The service description.</param>
     /// <param name="contexts">Contexts in which the service is to be used.</param>
-    /// <param name="parent">Parent service if a member of a group.</param>
-    /// <param name="cryptoUri">The CryptoData representing the key.</param>
-    /// <param name="mediaType">The Key media type.</param>
     /// <returns>The service entry.</returns>
     public static OnlineService AddServiceData(
                     this JsContact contact,
@@ -531,7 +529,7 @@ public static partial class Extensions {
     /// <param name="contact">The contact to add the key to.</param>
     /// <param name="keyData">The key data to add.</param>
     /// <param name="serviceId">The Sevice type.</param>
-    /// <param name="accountAddress">The account address to specify.</param>
+    /// <param name="keys">Dictionary mapping key identifiers to uses.</param>
     /// <param name="contexts">The contexts in which the identifier is to be used.</param>
     public static void AddKeyData(
                     this JsContact contact,

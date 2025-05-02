@@ -265,8 +265,6 @@ public partial class EmailAddress {
     ///<summary>The dictionary key (filled by calling Analyze)</summary> 
     public string Key { get; set; }
 
-
-    public AnalysizedContact Analysis { get; set; }
     }
 
 

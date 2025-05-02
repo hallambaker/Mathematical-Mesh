@@ -13,7 +13,7 @@ public partial class JWK {
 
 
     /// <summary>
-    /// Facotry method returning an instance for the key <paramref name="keyPair"/>
+    /// Factory method returning an instance for the key <paramref name="keyPair"/>
     /// </summary>
     /// <param name="keyPair">The key to return the JWK for.</param>
     /// <returns>The created instance.</returns>
@@ -35,7 +35,11 @@ public partial class JWK {
         return result;
         }
 
-
+    /// <summary>
+    /// Factory method returning an instance for the Elliptic Cuve key <paramref name="keyPairECDHNist"/>
+    /// </summary>
+    /// <param name="keyPairECDHNist">The key to return the JWK for.</param>
+    /// <returns>The created instance.</returns>
     public static JWK Factory(KeyPairECDHNist keyPairECDHNist) => new() {
         KeyType = "EC",
         Curve = "P-256",
@@ -45,7 +49,11 @@ public partial class JWK {
         Kid = keyPairECDHNist.KeyIdentifier
         };
 
-
+    /// <summary>
+    /// Factory method returning an instance for the Elliptic Cuve key <paramref name="keyPairECDH"/>
+    /// </summary>
+    /// <param name="keyPairECDH">The key to return the JWK for.</param>
+    /// <returns>The created instance.</returns>
     public static JWK Factory(KeyPairECDH keyPairECDH) => new(){
         KeyType = "OKP",
         Curve = GetCurve(keyPairECDH),
@@ -54,11 +62,23 @@ public partial class JWK {
         };
 
 
-    public static JWK Factory(KeyPairBaseRSA baseRSA) => new() {
+    /// <summary>
+    /// Factory method returning an instance for the RSA key <paramref name="keyPairRsa"/>
+    /// </summary>
+    /// <param name="keyPairRsa">The key to return the JWK for.</param>
+    /// <returns>The created instance.</returns>
+    public static JWK Factory(KeyPairBaseRSA keyPairRsa) => new() {
         KeyType = "RSA",
-        N = baseRSA.PkixPublicKeyRsa.Modulus.ToStringBase64url(),
-        E = baseRSA.PkixPublicKeyRsa.PublicExponent.ToStringBase64url()
+        N = keyPairRsa.PkixPublicKeyRsa.Modulus.ToStringBase64url(),
+        E = keyPairRsa.PkixPublicKeyRsa.PublicExponent.ToStringBase64url()
         };
+
+    /// <summary>
+    /// Map ECDH key pair curve to JOSE curve specifier.
+    /// </summary>
+    /// <param name="keyPairECDH">The key pair</param>
+    /// <returns>The curve identifier.</returns>
+    /// <exception cref="NYI">The key is not of a known curve.</exception>
     public static string GetCurve(KeyPairECDH keyPairECDH) => keyPairECDH switch {
         KeyPairEd25519 => "Ed25519",
         KeyPairEd448 => "Ed448",

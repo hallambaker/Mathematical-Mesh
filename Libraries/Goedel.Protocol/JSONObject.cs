@@ -135,6 +135,7 @@ public abstract partial class JsonObject : IBinding {
     static Dictionary<string, JsonFactoryDelegate> tagDictionary;
 
 
+    ///<summary>Dictionary mapping types to binding definitions.</summary> 
     public static Dictionary<Type, Binding> BindingDictionary = [];
 
     /// <summary>
@@ -205,7 +206,7 @@ public abstract partial class JsonObject : IBinding {
     public readonly static Dictionary<string, Property> _StaticAllProperties = new() {
         };
 
-
+    ///<summary>Adcditional unparsed properties.</summary> 
     public Dictionary<string, JsonElement> UnparsedProperties { get; set; }
 
 
@@ -805,7 +806,7 @@ public abstract partial class JsonObject : IBinding {
         Parse<T>(document.RootElement, collectUparsed);
 
     /// <summary>
-    /// Parse the JSON element <paramref name="document"/> returning an
+    /// Parse the JSON element <paramref name="element"/> returning an
     /// object instance of type <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">Type of the object to return.</typeparam>
@@ -830,10 +831,10 @@ public abstract partial class JsonObject : IBinding {
 
 
     /// <summary>
-    /// Parse the JSON element <paramref name="document"/> returning an
-    /// object instance of type <typeparamref name="T"/>.
+    /// Parse the JSON element <paramref name="element"/> returning a JsonObject
+    /// of the type specified by <paramref name="binding"/>.
     /// </summary>
-    /// <typeparam name="T">Type of the object to return.</typeparam>
+
     /// <param name="element">The document to parse.</param>
     /// <param name="binding">The type binding describing the object class.</param>
     /// <param name="collectUparsed">If true, collect up unknown elements in the 
@@ -1266,7 +1267,7 @@ public abstract partial class JsonObject : IBinding {
             #region // Struct
             case PropertyStruct subProperty: {
                 if (element.ValueKind == JsonValueKind.Object) {
-                    if (!BindingDictionary.TryGetValue(subProperty.type, out var binding)) {
+                    if (!BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
                         return false;
                         }
                     if (subProperty.Tagged) {
@@ -1282,7 +1283,7 @@ public abstract partial class JsonObject : IBinding {
                 }
             case PropertyListStruct subProperty: {
                 if (element.ValueKind == JsonValueKind.Array) {
-                    if (!BindingDictionary.TryGetValue(subProperty.type, out var binding)) {
+                    if (!BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
                         return false;
                         }
                     var collected = true;
@@ -1311,7 +1312,7 @@ public abstract partial class JsonObject : IBinding {
                 }
             case PropertyDictionaryStruct subProperty: {
                 if (element.ValueKind == JsonValueKind.Object) {
-                    if (!BindingDictionary.TryGetValue(subProperty.type, out var binding)) {
+                    if (!BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
                         return false;
                         }
                     var collected = true;

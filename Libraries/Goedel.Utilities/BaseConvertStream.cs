@@ -145,6 +145,7 @@ public static partial class BaseConvert {
         /// <param name="table">The conversion table.</param>
         /// <param name="stride">The number of bits corresponding to each output character.</param>
         /// <param name="data">String to be transformed.</param>
+        /// <param name="partial">If true, ignore partial values (i.e. take 8 bits of a 12 bit value.)</param>
         /// <returns>The result of the transformation</returns>
         public static byte[] Convert(byte[] table, int stride, string data, bool partial=false) {
             if (data == null) {

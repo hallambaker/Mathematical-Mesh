@@ -400,7 +400,6 @@ public static class Assert {
 
     /// <summary>Test to see if two values are equal.
     /// </summary>
-    /// <typeparam name="T">The type of the argument.</typeparam>
     /// <param name="test1">First test value</param>
     /// <param name="test2">Second test value</param>
     /// <param name="throwDelegate">Delegate that creates the exception to be thrown if

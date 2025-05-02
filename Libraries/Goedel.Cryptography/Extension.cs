@@ -54,6 +54,8 @@ public static class ExtensionMethods {
     /// </summary>
     /// <param name="hashAlgorithm">The digest function to use.</param>
     /// <param name="buffer">The data to be digested.</param>
+    /// <param name="offset">Location of first byte to digest.</param>
+    /// <param name="length">Number of bytes to digest.</param>
     public static void Digest(
                 this HashAlgorithm hashAlgorithm, 
                 byte[] buffer, 
@@ -65,6 +67,12 @@ public static class ExtensionMethods {
         }
 
     static readonly byte[] Last = [];
+
+    /// <summary>
+    /// Return the digest value.
+    /// </summary>
+    /// <param name="hashAlgorithm">The digest algorithm.</param>
+    /// <returns>The digest value.</returns>
     public static byte[] GetValue(
                 this HashAlgorithm hashAlgorithm) {
         hashAlgorithm.TransformFinalBlock(Last, 0, 0);
@@ -225,7 +233,14 @@ public static class ExtensionMethods {
 
 
 
-
+    /// <summary>
+    /// Copy <paramref name="length"/> bytes from <paramref name="input"/> to
+    /// <paramref name="output"/>. This is functionally identical to the base stream
+    /// copy method except that it uses a 64 bit length specifier.
+    /// </summary>
+    /// <param name="input">The input stream.</param>
+    /// <param name="output">The output stream.</param>
+    /// <param name="length">Number of bytres to copy.</param>
     public static void CopyTo(this Stream input, Stream output, ulong length) {
         var chunk = (int)CopyBufferSize;
         var buffer = new byte[length < CopyBufferSize ? length : CopyBufferSize];
@@ -241,7 +256,15 @@ public static class ExtensionMethods {
             }
         }
 
-
+    /// <summary>
+    /// Copy <paramref name="length"/> bytes from <paramref name="input"/> to
+    /// <paramref name="output"/>, presenting each block of data to the digest
+    /// instance <paramref name="digest"/>.
+    /// </summary>
+    /// <param name="input">The input stream.</param>
+    /// <param name="output">The output stream.</param>
+    /// <param name="length">Number of bytres to copy.</param>
+    /// <param name="digest">The digest algorithm to apply during the copy.</param>
     public static void HashCopyTo(
                 this Stream input, 
                 Stream output, 

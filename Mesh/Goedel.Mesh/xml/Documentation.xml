@@ -3471,14 +3471,6 @@
         <member name="P:Goedel.Mesh.NetworkProtocolEntry.Expire">
             <summary>The expiry time for the derived keys.</summary>
         </member>
-        <member name="M:Goedel.Mesh.NetworkProtocolEntry.#ctor(Goedel.Contacts.JsContact,Goedel.Contacts.OnlineService)">
-            <summary>
-            The constructor, creates a new entry for <paramref name="networkAddress"/> obtained
-            from <paramref name="catalogedContact"/>.
-            </summary>
-            <param name="catalogedContact">The cataloged contact.</param>
-            <param name="networkAddress">The network address entry.</param>
-        </member>
         <member name="T:Goedel.Mesh.CatalogCredential">
             <summary>
             Device catalog. Describes the properties of all devices connected to the user's Mesh account.
@@ -7118,6 +7110,7 @@
             <param name="parent">Parent service if a member of a group.</param>
             <param name="cryptoUri">The CryptoData representing the key.</param>
             <param name="mediaType">The Key media type.</param>
+            <param name="cryptoData">The associated cryptographic keys.</param>
             <returns>The service entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.Extensions.AddServiceData(Goedel.Contacts.JsContact,System.String,System.String,System.String,System.String,System.String,System.Collections.Generic.List{System.String})">
@@ -7132,9 +7125,6 @@
             <param name="uri">The service URI</param>
             <param name="label">The service description.</param>
             <param name="contexts">Contexts in which the service is to be used.</param>
-            <param name="parent">Parent service if a member of a group.</param>
-            <param name="cryptoUri">The CryptoData representing the key.</param>
-            <param name="mediaType">The Key media type.</param>
             <returns>The service entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.Extensions.AddKeyData(Goedel.Contacts.JsContact,Goedel.Mesh.KeyData,System.String,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.List{System.String})">
@@ -7144,7 +7134,7 @@
             <param name="contact">The contact to add the key to.</param>
             <param name="keyData">The key data to add.</param>
             <param name="serviceId">The Sevice type.</param>
-            <param name="accountAddress">The account address to specify.</param>
+            <param name="keys">Dictionary mapping key identifiers to uses.</param>
             <param name="contexts">The contexts in which the identifier is to be used.</param>
         </member>
         <member name="M:Goedel.Mesh.Extensions.GetMeshKeyType(Goedel.Cryptography.UdfAlgorithmIdentifier)">

@@ -38,29 +38,44 @@ public interface IBinding {
     }
 
 /// <summary>
-/// Binding specification.
+/// Untyped binding specification. The untyped binding provides the necessary factory,
+/// sequence addition and key/value pair extraction functions for serialization and
+/// deserialization.
 /// </summary>
 /// <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
 /// <param name="Tag">JSON tag for this object.</param>
-/// <param name="Factory">Factory returning a new instance of this object.</param>
 /// <param name="Parent">Parent the object inherits from.</param>
-public record Binding(
+/// <param name="TypeTag">Specifies the property name for the property specifying the type.</param>
+public abstract record Binding(
             Dictionary<string, Property> Properties,
             string Tag,
-            Func<object> factory,
             Binding Parent = null,
             string? TypeTag = null
             ) {
+
+    ///<summary>Dictionary mapping child type tags to type definitions.</summary> 
     public Dictionary<string, Binding> TypeDictionary = [];
-    public virtual Func<object> Factory => factory;
-    public virtual Func<object> ListFactory => throw new NYI();
-    public virtual Func<object> DictionaryFactory => throw new NYI();
 
-    public virtual Action<object, object> ListAdd => throw new NYI();
-    public virtual Action<object, string, object> DictionaryAdd => throw new NYI();
+    ///<summary>Factory returning a new object.</summary> 
+    public abstract Func<object> Factory { get; }
 
-    public virtual Func<object, string> GetKey => throw new NYI();
-    public virtual Func<object, object> GetValue => throw new NYI();
+    ///<summary>Factory returning a new list of objects.</summary> 
+    public abstract Func<object> ListFactory { get; }
+
+    ///<summary>Factory returning a new Dictionary object.</summary> 
+    public abstract Func<object> DictionaryFactory { get; }
+
+    ///<summary>Action adding an element to a list of the bound type.</summary> 
+    public abstract Action<object, object> ListAdd { get; }
+
+    ///<summary>Action adding a key/value pair to a dictionary of the bound type.</summary> 
+    public abstract Action<object, string, object> DictionaryAdd { get; }
+
+    ///<summary>Return the key of a key/value pair.</summary> 
+    public abstract Func<object, string> GetKey { get; }
+
+    ///<summary>Return the value of a key/value pair.</summary> 
+    public abstract Func<object, object> GetValue { get; }
 
     ///<summary>Dictionary binding sub classes to binding descriptions</summary> 
     public Dictionary<string, Binding>? ChildClasses = null;
@@ -78,8 +93,11 @@ public record Binding(
 /// </summary>
 /// <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
 /// <param name="Tag">JSON tag for this object.</param>
-/// <param name="Factory">Factory returning a new instance of this object.</param>
 /// <param name="Parent">Parent the object inherits from.</param>
+/// <param name="OFactory">Object instance factory.</param>
+/// <param name="LFactory">List instance factory.</param>
+/// <param name="DFactory">Dictionary instance factory type.</param>
+/// <param name="TypeTag">The type tag used to distinguish objects of this type.</param>
 public record Binding<T>(
             Dictionary<string, Property> Properties,
             string Tag,
@@ -88,30 +106,39 @@ public record Binding<T>(
             Func<Dictionary<string, T>> DFactory,
             Binding Parent = null,
             string? TypeTag = null
-            ) : Binding(Properties, Tag, null, Parent, TypeTag) where T : class {
+            ) : Binding(Properties, Tag, Parent, TypeTag) where T : class {
 
+    ///<inheritdoc/>
     public override Func<object> Factory => () => OFactory();
+
+    ///<inheritdoc/>
     public override Func<object> ListFactory => () => LFactory();
+
+    ///<inheritdoc/>
     public override Func<object> DictionaryFactory => () => DFactory();
 
+    ///<inheritdoc/>
     public override Func<object, string> GetKey =>
              (object pair) => {
                  var keyValue = (KeyValuePair<string, T>)pair;
                  return keyValue.Key;
              };
 
+    ///<inheritdoc/>
     public override Func<object, object> GetValue =>
             (object pair) => {
                 var keyValue = (KeyValuePair<string, T>)pair;
                 return keyValue.Value;
             };
 
+    ///<inheritdoc/>
     public override Action<object, object> ListAdd =>
             (object llist, object item) => {
                 var list = llist as List<T>;
                 list?.Add(item as T);
             };
 
+    ///<inheritdoc/>
     public override Action<object, string, object> DictionaryAdd =>
             (object ldict, string key, object value) => {
                 var list = ldict as Dictionary<string, T>;
@@ -849,6 +876,7 @@ public record PropertyDictionaryReal64(
 /// Metadata record representing a property.
 /// </summary>
 /// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Type">The type of the struct object.</param>
 /// <param name="Set">Set the property to the specified value.</param>
 /// <param name="Get">Return the value of the property.</param>
 /// <param name="Factory">Factory returning an instance of the object.</param>
@@ -857,7 +885,7 @@ public record PropertyDictionaryReal64(
 /// <param name="Tagged">If true, the property should be tagged.</param>
 public record PropertyStruct(
             string Tag,
-            Type type,
+            Type Type,
             Action<IBinding, object?> Set,
             Func<IBinding, object?> Get,
             bool Tagged = false,
@@ -877,6 +905,7 @@ public record PropertyStruct(
 /// Metadata record representing a property.
 /// </summary>
 /// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Type">The base type of the list object.</param>
 /// <param name="Set">Set the property to the specified value.</param>
 /// <param name="Get">Return the value of the property.</param>
 /// <param name="Factory">Factory returning an instance of the object.</param>
@@ -885,7 +914,7 @@ public record PropertyStruct(
 /// <param name="Tagged">If true, the property should be tagged.</param>
 public record PropertyListStruct(
             string Tag,
-            Type type,
+            Type Type,
             Action<IBinding, object?> Set,
             Func<IBinding, object?> Get,
             bool Tagged = false,
@@ -920,6 +949,7 @@ public record PropertyListStruct(
 /// Metadata record representing a property.
 /// </summary>
 /// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Type">The type of the dictionary object.</param>
 /// <param name="Set">Set the property to the specified value.</param>
 /// <param name="Get">Return the value of the property.</param>
 /// <param name="Factory">Factory returning an instance of the object.</param>
@@ -930,7 +960,7 @@ public record PropertyListStruct(
 /// <param name="Enumerator">Returns an enumerator</param>
 public record PropertyDictionaryStruct(
             string Tag,
-            Type type,
+            Type Type,
             Action<IBinding, object?> Set,
             Func<IBinding, object?> Get,
             bool Tagged,
@@ -940,7 +970,7 @@ public record PropertyDictionaryStruct(
             Action<object, object, object> Add = null
 
 
-    ) : Property(Tag, true) {
+    ) : Property(Tag, true, Tagged) {
 
 
     ///<inheritdoc/>

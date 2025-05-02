@@ -1026,7 +1026,6 @@
         <member name="M:Goedel.Utilities.Assert.AssertEqualSeconds(System.DateTime,System.DateTime,Goedel.Utilities.ThrowDelegate,System.Object[])">
             <summary>Test to see if two values are equal.
             </summary>
-            <typeparam name="T">The type of the argument.</typeparam>
             <param name="test1">First test value</param>
             <param name="test2">Second test value</param>
             <param name="throwDelegate">Delegate that creates the exception to be thrown if
@@ -1411,6 +1410,7 @@
             function converts both types of data.
             </summary>
             <param name="data">The string to convert</param>
+            <param name="partial">If true, ignore partial values (i.e. take 8 bits of a 12 bit value.)</param>
             <returns>The resulting binary data.</returns>
         </member>
         <member name="M:Goedel.Utilities.BaseConvert.FromBase32">
@@ -1425,6 +1425,7 @@
             Convert Base32 character string data to binary data.
             </summary>
             <param name="data">The string to convert</param>
+            <param name="partial">If true, ignore partial values (i.e. take 8 bits of a 12 bit value.)</param>
             <returns>The resulting binary data.</returns>
         </member>
         <member name="M:Goedel.Utilities.BaseConvert.FromBase16">
@@ -1439,6 +1440,7 @@
             Convert Base16 character string data to binary data.
             </summary>
             <param name="data">The string to convert</param>
+            <param name="partial">If true, ignore partial values (i.e. take 8 bits of a 12 bit value.)</param>
             <returns>The resulting binary data.</returns>
         </member>
         <member name="T:Goedel.Utilities.BaseConvert.StreamConvertString">
@@ -1481,6 +1483,7 @@
             <param name="table">The conversion table.</param>
             <param name="stride">The number of bits corresponding to each output character.</param>
             <param name="data">String to be transformed.</param>
+            <param name="partial">If true, ignore partial values (i.e. take 8 bits of a 12 bit value.)</param>
             <returns>The result of the transformation</returns>
         </member>
         <member name="T:Goedel.Utilities.BaseConvert.ByteStreamFormatter">

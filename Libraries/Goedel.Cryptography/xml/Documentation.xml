@@ -4026,6 +4026,15 @@
             </summary>
             <param name="hashAlgorithm">The digest function to use.</param>
             <param name="buffer">The data to be digested.</param>
+            <param name="offset">Location of first byte to digest.</param>
+            <param name="length">Number of bytes to digest.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.ExtensionMethods.GetValue(System.Security.Cryptography.HashAlgorithm)">
+            <summary>
+            Return the digest value.
+            </summary>
+            <param name="hashAlgorithm">The digest algorithm.</param>
+            <returns>The digest value.</returns>
         </member>
         <member name="M:Goedel.Cryptography.ExtensionMethods.Sha3_512(System.String)">
             <summary>
@@ -4116,6 +4125,27 @@
             <param name="cryptoAlgorithmID">The identifier to convert</param>
             <param name="keysize">Key size (if needed)</param>
             <returns>The UDF identifier.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.ExtensionMethods.CopyTo(System.IO.Stream,System.IO.Stream,System.UInt64)">
+            <summary>
+            Copy <paramref name="length"/> bytes from <paramref name="input"/> to
+            <paramref name="output"/>. This is functionally identical to the base stream
+            copy method except that it uses a 64 bit length specifier.
+            </summary>
+            <param name="input">The input stream.</param>
+            <param name="output">The output stream.</param>
+            <param name="length">Number of bytres to copy.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.ExtensionMethods.HashCopyTo(System.IO.Stream,System.IO.Stream,System.UInt64,System.Security.Cryptography.HashAlgorithm)">
+            <summary>
+            Copy <paramref name="length"/> bytes from <paramref name="input"/> to
+            <paramref name="output"/>, presenting each block of data to the digest
+            instance <paramref name="digest"/>.
+            </summary>
+            <param name="input">The input stream.</param>
+            <param name="output">The output stream.</param>
+            <param name="length">Number of bytres to copy.</param>
+            <param name="digest">The digest algorithm to apply during the copy.</param>
         </member>
         <member name="T:Goedel.Cryptography.IJson">
             <summary>
@@ -12614,6 +12644,15 @@
             <param name="bits">Number of random bits in the string</param>
             <returns>A randomly generated UDF string.</returns>
         </member>
+        <member name="M:Goedel.Cryptography.Udf.FixedNonce(System.String,System.Int32)">
+            <summary>
+            Return a nonce with a value fixed by <paramref name="seed"/> for
+            use in example documentation.
+            </summary>
+            <param name="seed">The fixed length seed</param>
+            <param name="bits">Number of random bits in the string</param>
+            <returns>A randomly generated UDF string.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Udf.OID(Goedel.Cryptography.KeyPair)">
             <summary>
             Return the OID Sequence describing the public key <paramref name="keyPair"/>.
@@ -12670,6 +12709,7 @@
             Create an EARL from the data <paramref name="data"/>
             </summary>
             <param name="data">The data to analyze.</param>
+            <param name="precision">The desired work factor in bits.</param>
             <returns>The EARL locator.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Udf.EarlEncryptionKey(System.Byte[],System.Int32)">

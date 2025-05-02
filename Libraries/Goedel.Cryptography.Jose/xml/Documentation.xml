@@ -1286,10 +1286,39 @@
         </member>
         <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPair)">
             <summary>
-            Facotry method returning an instance for the key <paramref name="keyPair"/>
+            Factory method returning an instance for the key <paramref name="keyPair"/>
             </summary>
             <param name="keyPair">The key to return the JWK for.</param>
             <returns>The created instance.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPairECDHNist)">
+            <summary>
+            Factory method returning an instance for the Elliptic Cuve key <paramref name="keyPairECDHNist"/>
+            </summary>
+            <param name="keyPairECDHNist">The key to return the JWK for.</param>
+            <returns>The created instance.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPairECDH)">
+            <summary>
+            Factory method returning an instance for the Elliptic Cuve key <paramref name="keyPairECDH"/>
+            </summary>
+            <param name="keyPairECDH">The key to return the JWK for.</param>
+            <returns>The created instance.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPairBaseRSA)">
+            <summary>
+            Factory method returning an instance for the RSA key <paramref name="keyPairRsa"/>
+            </summary>
+            <param name="keyPairRsa">The key to return the JWK for.</param>
+            <returns>The created instance.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JWK.GetCurve(Goedel.Cryptography.KeyPairECDH)">
+            <summary>
+            Map ECDH key pair curve to JOSE curve specifier.
+            </summary>
+            <param name="keyPairECDH">The key pair</param>
+            <returns>The curve identifier.</returns>
+            <exception cref="T:Goedel.Utilities.NYI">The key is not of a known curve.</exception>
         </member>
         <member name="T:Goedel.Cryptography.Jose.JwtHeader">
             <summary>

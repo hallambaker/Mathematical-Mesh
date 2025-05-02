@@ -635,16 +635,16 @@ public class NetworkProtocolEntry {
     public System.DateTime? Expire { get; private set; }
 
 
-    /// <summary>
-    /// The constructor, creates a new entry for <paramref name="networkAddress"/> obtained
-    /// from <paramref name="catalogedContact"/>.
-    /// </summary>
-    /// <param name="catalogedContact">The cataloged contact.</param>
-    /// <param name="networkAddress">The network address entry.</param>
-    public NetworkProtocolEntry(JsContact contact, OnlineService service) {
-        //CatalogedContact = catalogedContact;
-        //NetworkAddress = networkAddress;
-        }
+    ///// <summary>
+    ///// The constructor, creates a new entry for <paramref name="networkAddress"/> obtained
+    ///// from <paramref name="catalogedContact"/>.
+    ///// </summary>
+    ///// <param name="catalogedContact">The cataloged contact.</param>
+    ///// <param name="networkAddress">The network address entry.</param>
+    //public NetworkProtocolEntry(JsContact contact, OnlineService service) {
+    //    //CatalogedContact = catalogedContact;
+    //    //NetworkAddress = networkAddress;
+    //    }
 
     CryptographicKey SetKeys(ref CryptographicKey keyPair) {
 

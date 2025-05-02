@@ -22,13 +22,22 @@
 
 namespace Goedel.Cryptography.Dare;
 
+/// <summary>
+/// EARL Signature property.
+/// </summary>
 public partial class EarlSignature {
 
-
+    /// <summary>
+    /// Constructor used for deserialization.
+    /// </summary>
     public EarlSignature() {
         }
 
-
+    /// <summary>
+    /// Constructor returning a signature entry for use in an unprotected header before
+    /// the manifest has been computed.
+    /// </summary>
+    /// <param name="key">The key to sign under.</param>
     public EarlSignature(
                 KeyPair key) {
         Alg = key.CryptoAlgorithmId.ToJoseID();
@@ -36,13 +45,17 @@ public partial class EarlSignature {
 
         }
 
+    /// <summary>
+    /// Constructor returning a signature entry specifying the signature value..
+    /// </summary>
+    /// <param name="key">The key to sign under.</param>
+    /// <param name="manifest">The manfest to be signed.</param>
     public EarlSignature(
                 KeyPair key,
-                byte[] manifest, 
-                CryptoAlgorithmId digestId) {
+                byte[] manifest) {
 
         KeyIdentifier = key.KeyIdentifier;
-        (Value, digestId) = key.SignManifest(manifest);
+        (Value, _) = key.SignManifest(manifest);
         }
 
     }

@@ -2209,6 +2209,10 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.ContentMeta.VerifiedSignatures">
+            <summary>List of signatures over the data that have been verified against
+            the referenced signature key.</summary> 
+        </member>
         <member name="M:Goedel.Cryptography.Dare.ContentMeta.GetContentMetaData">
             <summary>
             Encode the content metadata bytes.
@@ -3481,12 +3485,94 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
+        <member name="T:Goedel.Cryptography.Dare.EarlEnvelopeReader">
+            <summary>
+            Envelope Reader
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeReader.Version">
+            <summary>The envelope version (0 or 1).</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeReader.UnprotectedHeader">
+            <summary>The parsed unprotected header.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeReader.ContentMeta">
+            <summary>The parsed content metadata header.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeReader.Trailer">
+            <summary>The parsed trailer.</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.#ctor(System.IO.Stream)">
+            <summary>
+            Constructor returning an instance reading from <paramref name="stream"/>.
+            Only the initial version number is read from the stream.
+            </summary>
+            <param name="stream">The stream to read from.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.#ctor(System.Byte[])">
+            <summary>
+            Constructor returning an instance reading from <paramref name="bytes"/>.
+            Only the initial version number is read from the stream.
+            </summary>
+            <param name="bytes">The data to read.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.Parse(System.Byte[],Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Parse the data contained in <paramref name="bytes"/> using the key collection
+            <paramref name="keyCollection"/> to verify signatures.
+            </summary>
+            <param name="bytes">The bytes to read.</param>
+            <param name="keyCollection">Key collection to verify signatures.</param>
+            <returns>The parsed content metadata and the payload plaintext.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.ReadMetadata">
+            <summary>
+            ReadMetadata from the stream.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.CopyPayload(System.IO.Stream)">
             <summary>
-            Copy bytes from the 
+            Copy payload bytes to <paramref name="output"/>. 
             </summary>
-            <param name="output"></param>
+            <param name="output">Destination for the payload bytes.</param>
             <returns>True if there is more payload to be read</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.Verify(Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Verify the header/trailer signatures against the keys in <paramref name="keyCollection"/>.
+            </summary>
+            <param name="keyCollection">Key collection to verify signatures.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.ReadBlock(System.IO.Stream)">
+            <summary>
+            Read chunk of payload bytes from <paramref name="stream"/> and return as an array.
+            </summary>
+            <param name="stream">The stream to read.</param>
+            <returns>The bytes read.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.ReadVarint(System.IO.Stream)">
+            <summary>
+            Read a varint from <paramref name="stream"/> and return as an unsigned 64 bit integer.
+            </summary>
+            <param name="stream">The stream to read.</param>
+            <returns>The value read.</returns>
+            <exception cref="T:System.IO.EndOfStreamException"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.ReadByteExact(System.IO.Stream)">
+            <summary>
+            Read a byte from the stream <paramref name="stream"/> throwing the exception 
+            <see cref="T:System.IO.EndOfStreamException"/> if there is no more data to be read.
+            </summary>
+            <param name="stream">The stream to read.</param>
+            <returns>The byte read.</returns>
+            <exception cref="T:System.IO.EndOfStreamException"></exception>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.EarlEnvelopeWriter">
+            <summary>
+            EARL Envelope Writer
+            </summary>
         </member>
         <member name="T:Goedel.Cryptography.Dare.EnvelopeValidation">
             <summary>

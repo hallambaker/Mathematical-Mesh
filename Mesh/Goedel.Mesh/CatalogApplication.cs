@@ -194,7 +194,11 @@ public partial class CatalogedApplication {
     /// <returns>The activation record.</returns>
     public abstract ApplicationEntry? GetActivation(CatalogedDevice catalogedDevice);
 
-
+    /// <summary>
+    /// Return an identifier for the key pair <paramref name="keyPair"/>
+    /// </summary>
+    /// <param name="keyPair">The key to return the identifier of.</param>
+    /// <returns>The key identifier.</returns>
     public static string GetIdentifier(KeyPair keyPair) => Udf.ContentDigestOfDataString(keyPair.UDFBytes, "");
 
 
