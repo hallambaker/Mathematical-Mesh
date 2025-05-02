@@ -105,7 +105,7 @@ public partial class TBSCertificate {
     /// </summary>
     /// <param name="TimeSpan">Time interval.</param>
     public void SetValidity(TimeSpan TimeSpan) {
-        System.DateTime NotBefore = System.DateTime.Now.ToUniversalTime();
+        System.DateTime NotBefore = System.DateTime.UtcNow;
         System.DateTime NotAfter = NotBefore.Add(TimeSpan);
 
         // Predate the certificate by one day plus an hour to avoid issues with the day roll round

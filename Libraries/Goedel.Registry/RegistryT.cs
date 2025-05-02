@@ -55,10 +55,10 @@ public abstract class Parser {
 /// <summary>Track start and end time of parse.</summary>
 public abstract class Dispatch {
     /// <summary>Record start time.</summary>
-    public DateTime Started = DateTime.Now;
+    public DateTime Started = DateTime.UtcNow;
 
     /// <summary>Calculate elapsed time.</summary>
-    public TimeSpan Elapsed => DateTime.Now - Started;
+    public TimeSpan Elapsed => DateTime.UtcNow - Started;
 
     }
 

@@ -1918,6 +1918,11 @@
             e.g., it can, but need not, be the legal name of a person.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.JsContact.AltNames">
+            <summary>
+            Alternative names.
+            </summary>
+        </member>
         <member name="P:Goedel.Contacts.JsContact.NickNames">
             <summary>
             The nicknames of the entity represented by the Card.

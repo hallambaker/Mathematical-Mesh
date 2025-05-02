@@ -333,7 +333,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
 
         var pin = Udf.AuthenticationKey(bits);
-        var expires = System.DateTime.Now.AddTicks(validity);
+        var expires = System.DateTime.UtcNow.AddTicks(validity);
         var messagePin = new MessagePin(pin, automatic, expires, ServiceAddress, action) {
             Roles = roles
             };

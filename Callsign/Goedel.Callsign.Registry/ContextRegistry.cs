@@ -313,7 +313,7 @@ public class ContextRegistry : ContextAccount {
             var id = Udf.Nonce();
 
             var registration = new Registration() {
-                Submitted = DateTime.Now,
+                Submitted = DateTime.UtcNow,
                 Id = id,
                 Entry = registrationRequest.EnvelopedCallsignBinding,
                 Reason = previous == null ?

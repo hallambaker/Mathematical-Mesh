@@ -174,7 +174,7 @@ public partial class GoedelProtocol {
     static readonly MultiInstance TestDataBasic = new() {
         FieldBoolean = true,
         FieldInteger = 1,
-        FieldDateTime = System.DateTime.Now,
+        FieldDateTime = System.DateTime.UtcNow,
         FieldString = "This is a test",
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 }
         };
@@ -182,12 +182,12 @@ public partial class GoedelProtocol {
     static readonly MultiArray TestDataArray = new() {
         FieldBoolean = true,
         FieldInteger = 1,
-        FieldDateTime = System.DateTime.Now,
+        FieldDateTime = System.DateTime.UtcNow,
         FieldString = "This is a test",
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 },
         ArrayBoolean = new List<bool> { true, false, true, false },
         ArrayInteger = new List<int> { 0, 2, 4, 8 },
-        ArrayDateTime = new List<System.DateTime> { System.DateTime.Now },
+        ArrayDateTime = new List<System.DateTime> { System.DateTime.UtcNow },
         ArrayString = new List<string> { "Alice", "Bob", "Carol", },
         ArrayBinary = new List<byte[]> { "One".ToBytes(), "Two".ToBytes() }
         };
@@ -196,12 +196,12 @@ public partial class GoedelProtocol {
     static readonly DictArray TestDataDict = new() {
         FieldBoolean = true,
         FieldInteger = 1,
-        FieldDateTime = System.DateTime.Now,
+        FieldDateTime = System.DateTime.UtcNow,
         FieldString = "This is a test",
         FieldBinary = [0, 1, 2, 3, 4],
         ArrayBoolean = [true, false, true, false],
         ArrayInteger = [0, 2, 4, 8],
-        ArrayDateTime = [System.DateTime.Now],
+        ArrayDateTime = [System.DateTime.UtcNow],
         ArrayString = ["Alice", "Bob", "Carol",],
         ArrayBinary = ["One".ToBytes(), "Two".ToBytes()],
 
@@ -236,7 +236,7 @@ public partial class GoedelProtocol {
     static readonly MultiInstance Struct1 = new() {
         FieldBoolean = true,
         FieldInteger = 1,
-        FieldDateTime = System.DateTime.Now,
+        FieldDateTime = System.DateTime.UtcNow,
         FieldString = "This is a test",
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 }
         };
@@ -244,7 +244,7 @@ public partial class GoedelProtocol {
     static readonly MultiInstance Struct2 = new() {
         FieldBoolean = true,
         FieldInteger = 1,
-        FieldDateTime = System.DateTime.Now,
+        FieldDateTime = System.DateTime.UtcNow,
         FieldString = "This is a test",
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 }
         };
@@ -252,7 +252,7 @@ public partial class GoedelProtocol {
     static readonly MultiArray Struct3 = new() {
         FieldBoolean = true,
         FieldInteger = 1,
-        FieldDateTime = System.DateTime.Now,
+        FieldDateTime = System.DateTime.UtcNow,
         FieldString = "This is a test",
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 },
         ArrayBoolean = new List<bool> { true, false, true, false }
@@ -262,12 +262,12 @@ public partial class GoedelProtocol {
     public static readonly MultiStruct TestDataStruct = new() {
         FieldBoolean = true,
         FieldInteger = 1,
-        FieldDateTime = System.DateTime.Now,
+        FieldDateTime = System.DateTime.UtcNow,
         FieldString = "This is a test",
         FieldBinary = new byte[] { 0, 1, 2, 3, 4 },
         ArrayBoolean = new List<bool> { true, false, true, false },
         ArrayInteger = new List<int> { 0, 2, 4, 8 },
-        ArrayDateTime = new List<System.DateTime> { System.DateTime.Now },
+        ArrayDateTime = new List<System.DateTime> { System.DateTime.UtcNow },
         ArrayString = new List<string> { "Alice", "Bob", "Carol", },
         ArrayBinary = new List<byte[]> { "One".ToBytes(), "Two".ToBytes() },
         FieldMultiInstance = Struct1,

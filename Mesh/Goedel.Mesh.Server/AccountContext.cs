@@ -79,7 +79,7 @@ public class AccountContext : Disposable {
         LockedAccountEntry = lockedAccountEntry;
         KeyCollection = keyCollection;
 
-        Created = Accessed = System.DateTime.Now;
+        Created = Accessed = System.DateTime.UtcNow;
         ProfileAccount = (AccountEntry as AccountUser)?.GetProfileAccount();
 
         PermitPublicReadAccess = ProfileAccount switch {
@@ -106,7 +106,7 @@ public class AccountContext : Disposable {
     /// last access timestamp to allow intelligent cache management.
     /// </summary>
     public void Close() {
-        Accessed = System.DateTime.Now;
+        Accessed = System.DateTime.UtcNow;
         }
 
     /// <summary>

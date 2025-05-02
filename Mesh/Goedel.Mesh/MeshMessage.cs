@@ -204,7 +204,7 @@ public partial class MessageValidated {
         if (!messagePin.MessageStatus.IsOpen()) {
             return ProcessingResult.PinUsed;
             }
-        if (messagePin.Expires != null && messagePin.Expires < System.DateTime.Now) {
+        if (messagePin.Expires != null && messagePin.Expires < System.DateTime.UtcNow) {
             return ProcessingResult.PinExpired;
             }
         var pinWitness = MessagePin.GetPinWitness(
@@ -291,7 +291,7 @@ public partial class MessagePin {
         if (!messagePin.MessageStatus.IsOpen()) {
             return ProcessingResult.PinUsed;
             }
-        if (messagePin.Expires != null && messagePin.Expires < System.DateTime.Now) {
+        if (messagePin.Expires != null && messagePin.Expires < System.DateTime.UtcNow) {
             return ProcessingResult.PinExpired;
             }
         var pinWitness = MessagePin.GetPinWitness(

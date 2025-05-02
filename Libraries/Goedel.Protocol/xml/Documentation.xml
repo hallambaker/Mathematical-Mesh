@@ -3247,6 +3247,50 @@
             <param name="Base">Base dictionary to merge into</param>
             <param name="Dictionary">Second dictionary to merge</param>
         </member>
+        <member name="M:Goedel.Protocol.JsonObject.Parse``1(System.Text.Json.JsonDocument,System.Boolean)">
+            <summary>
+            Parse the JSON document <paramref name="document"/> returning an
+            object instance of type <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="T">Type of the object to return.</typeparam>
+            <param name="document">The document to parse.</param>
+            <param name="collectUparsed">If true, collect up unknown elements in the 
+            returned instance.</param>
+            <returns>The parsed object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.Parse``1(System.Text.Json.JsonElement,System.Boolean)">
+            <summary>
+            Parse the JSON element <paramref name="document"/> returning an
+            object instance of type <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="T">Type of the object to return.</typeparam>
+            <param name="element">The document to parse.</param>
+            <param name="collectUparsed">If true, collect up unknown elements in the 
+            returned instance.</param>
+            <returns>The parsed object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.Parse(System.Text.Json.JsonElement,Goedel.Protocol.Binding,System.Boolean)">
+            <summary>
+            Parse the JSON element <paramref name="document"/> returning an
+            object instance of type <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="T">Type of the object to return.</typeparam>
+            <param name="element">The document to parse.</param>
+            <param name="binding">The type binding describing the object class.</param>
+            <param name="collectUparsed">If true, collect up unknown elements in the 
+            returned instance.</param>
+            <returns>The parsed object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.MapProperty(Goedel.Protocol.JsonObject,System.Text.Json.JsonElement,Goedel.Protocol.Property)">
+            <summary>
+            Map the JSON element <paramref name="element"/> onto the object <paramref name="target"/>
+            under the property description <paramref name="specifier"/>.
+            </summary>
+            <param name="target"></param>
+            <param name="element"></param>
+            <param name="specifier"></param>
+            <returns>True if successful, otherwise false.</returns>
+        </member>
         <member name="T:Goedel.Protocol.JSONReaderFactoryDelegate">
             <summary>
             Delegate method for creating structured readers

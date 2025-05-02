@@ -177,7 +177,7 @@ public record LogTransaction {
     /// </summary>
     /// <param name="logService">The service to log.</param>
     public LogTransaction(LogService logService) {
-        Start = System.DateTime.Now;
+        Start = System.DateTime.UtcNow;
         LogService = logService;
         }
 
@@ -186,7 +186,7 @@ public record LogTransaction {
     /// </summary>
     /// <param name="response">The response object.</param>
     public void Success(IReport response) {
-        Finish = System.DateTime.Now;
+        Finish = System.DateTime.UtcNow;
         Response = response;
         LogService.Success(this);
         }
@@ -197,7 +197,7 @@ public record LogTransaction {
     /// <param name="exception">The exception raised.</param>
     /// <param name="response">The response object.</param>
     public void Fail(Exception exception, IReport response = null) {
-        Finish = System.DateTime.Now;
+        Finish = System.DateTime.UtcNow;
         Exception = exception;
         Response = response;
         LogService.Fail(this);

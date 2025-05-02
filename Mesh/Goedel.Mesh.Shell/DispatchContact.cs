@@ -139,7 +139,7 @@ public partial class Shell {
     /// <returns>Mesh result instance</returns>
     public override ShellResult ContactDynamic(ContactDynamic options) {
         var contextUser = GetContextUser(options);
-        var expiry = System.DateTime.Now.AddTicks(MeshConstants.DayInTicks);
+        var expiry = System.DateTime.UtcNow.AddTicks(MeshConstants.DayInTicks);
 
         var uri = contextUser.ContactUri(true, expiry).Sync();
 

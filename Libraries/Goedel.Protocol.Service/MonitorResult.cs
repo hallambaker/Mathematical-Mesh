@@ -37,7 +37,7 @@ public class MonitorResult {
 
     ///<summary>The elapsed time.</summary> 
     public long TimeElapsed =>
-        (timeEnd == System.DateTime.MaxValue.Ticks ? System.DateTime.Now.Ticks : timeEnd) - timeBegin;
+        (timeEnd == System.DateTime.MaxValue.Ticks ? System.DateTime.UtcNow.Ticks : timeEnd) - timeBegin;
 
     long timeBegin;
     long timeEnd;
@@ -66,7 +66,7 @@ public class MonitorResult {
     /// <param name="listeners">The number of listener threads.</param>
     /// <param name="dispatchers">The number of dispatcher threads.</param>
     public MonitorResult(int listeners, int dispatchers) {
-        timeBegin = System.DateTime.Now.Ticks;
+        timeBegin = System.DateTime.UtcNow.Ticks;
         timeEnd = System.DateTime.MaxValue.Ticks;
         listenerRequests = new int[listeners];
         dispatcherRequests = new int[dispatchers];

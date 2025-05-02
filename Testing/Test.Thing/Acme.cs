@@ -145,7 +145,7 @@ public class Acme {
             DeviceIdentifier = Udf.Nonce(),
             Manufacturer = "Freddly Manufacturing Co. Ltd.",
             CountryOfOrigin = "UK",
-            Manufactured = DateTime.Now,
+            Manufactured = DateTime.UtcNow,
             OfferedServices = offered,
             UsedServices = used,
             Images = [imageFront, imageRear],

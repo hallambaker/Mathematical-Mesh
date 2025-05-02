@@ -755,7 +755,6 @@ public abstract partial class JsonObject : IBinding {
                     }
 
                 default: {
-
                     break;
                     }
                 }
@@ -791,18 +790,32 @@ public abstract partial class JsonObject : IBinding {
             }
         }
 
+    /// <summary>
+    /// Parse the JSON document <paramref name="document"/> returning an
+    /// object instance of type <typeparamref name="T"/>.
+    /// </summary>
+    /// <typeparam name="T">Type of the object to return.</typeparam>
+    /// <param name="document">The document to parse.</param>
+    /// <param name="collectUparsed">If true, collect up unknown elements in the 
+    /// returned instance.</param>
+    /// <returns>The parsed object.</returns>
     public static T? Parse<T>(
                     JsonDocument document,
-                    Dictionary<string, JsonFactoryDelegate> dictionary = null,
                     bool collectUparsed = false) where T : JsonObject, new() =>
-        Parse<T> (document.RootElement, dictionary, collectUparsed);
+        Parse<T>(document.RootElement, collectUparsed);
 
-
+    /// <summary>
+    /// Parse the JSON element <paramref name="document"/> returning an
+    /// object instance of type <typeparamref name="T"/>.
+    /// </summary>
+    /// <typeparam name="T">Type of the object to return.</typeparam>
+    /// <param name="element">The document to parse.</param>
+    /// <param name="collectUparsed">If true, collect up unknown elements in the 
+    /// returned instance.</param>
+    /// <returns>The parsed object.</returns>
     public static T? Parse<T>(
                 JsonElement element,
-                Dictionary<string, JsonFactoryDelegate> dictionary = null,
                 bool collectUparsed = false) where T : JsonObject, new() {
-        dictionary ??= TagDictionary;
         if (element.ValueKind != JsonValueKind.Object) {
             return null;
             }
@@ -815,6 +828,17 @@ public abstract partial class JsonObject : IBinding {
         return Parse(element, binding, collectUparsed) as T;
         }
 
+
+    /// <summary>
+    /// Parse the JSON element <paramref name="document"/> returning an
+    /// object instance of type <typeparamref name="T"/>.
+    /// </summary>
+    /// <typeparam name="T">Type of the object to return.</typeparam>
+    /// <param name="element">The document to parse.</param>
+    /// <param name="binding">The type binding describing the object class.</param>
+    /// <param name="collectUparsed">If true, collect up unknown elements in the 
+    /// returned instance.</param>
+    /// <returns>The parsed object.</returns>
     public static JsonObject Parse (
                 JsonElement element,
                 Binding binding,
@@ -851,32 +875,28 @@ public abstract partial class JsonObject : IBinding {
         return template;
         }
 
-
-
-    public  string? FindTypeTag() {
-        foreach (var propertyPair in _AllProperties) {
-            if (propertyPair.Value is PropertyStringTag tag) {
-                return propertyPair.Key;
-                }
-            }
-        return null;
-        }
-
-
+    /// <summary>
+    /// Map the JSON element <paramref name="element"/> onto the object <paramref name="target"/>
+    /// under the property description <paramref name="specifier"/>.
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="element"></param>
+    /// <param name="specifier"></param>
+    /// <returns>True if successful, otherwise false.</returns>
     public static bool MapProperty(
-                JsonObject jsonObject,
+                JsonObject target,
                 JsonElement element,
-                Property property) {
+                Property specifier) {
 
-        switch (property) {
+        switch (specifier) {
             #region // Boolean
             case PropertyBoolean subProperty: {
                 if (element.ValueKind == JsonValueKind.True) {
-                    subProperty.Set(jsonObject, true);
+                    subProperty.Set(target, true);
                     return true;
                     }
                 if (element.ValueKind == JsonValueKind.False) {
-                    subProperty.Set(jsonObject, false);
+                    subProperty.Set(target, false);
                     return false;
                     }
                 return false;
@@ -885,7 +905,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Array) {
                     var collected = true;
                     var array = new List<bool>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateArray()) {
                         if (member.ValueKind == JsonValueKind.True) {
@@ -906,7 +926,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Object) {
                     var collected = true;
                     var array = new Dictionary<string, bool>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateObject()) {
                         if (member.Value.ValueKind == JsonValueKind.True) {
@@ -928,7 +948,7 @@ public abstract partial class JsonObject : IBinding {
 
             case PropertyString subProperty: {
                 if (element.ValueKind == JsonValueKind.String) {
-                    subProperty.Set(jsonObject, element.GetString());
+                    subProperty.Set(target, element.GetString());
                     return true;
                     }
                 return false;
@@ -937,7 +957,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Array) {
                     var collected = true;
                     var array = new List<string>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateArray()) {
                         if (member.ValueKind == JsonValueKind.String) {
@@ -955,7 +975,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Object) {
                     var collected = true;
                     var array = new Dictionary<string, string>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateObject()) {
                         if (member.Value.ValueKind == JsonValueKind.String) {
@@ -973,7 +993,7 @@ public abstract partial class JsonObject : IBinding {
             #region // Int32
             case PropertyInteger32 subProperty: {
                 if (element.ValueKind == JsonValueKind.Number) {
-                    subProperty.Set(jsonObject, element.GetInt32());
+                    subProperty.Set(target, element.GetInt32());
                     return true;
                     }
                 return false;
@@ -982,7 +1002,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Array) {
                     var collected = true;
                     var array = new List<int>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateArray()) {
                         if (member.ValueKind == JsonValueKind.Number) {
@@ -1000,7 +1020,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Object) {
                     var collected = true;
                     var array = new Dictionary<string, int>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateObject()) {
                         if (member.Value.ValueKind == JsonValueKind.Number) {
@@ -1018,7 +1038,7 @@ public abstract partial class JsonObject : IBinding {
             #region // Int64
             case PropertyInteger64 subProperty: {
                 if (element.ValueKind == JsonValueKind.Number) {
-                    subProperty.Set(jsonObject, element.GetInt64());
+                    subProperty.Set(target, element.GetInt64());
                     return true;
                     }
                 return false;
@@ -1027,7 +1047,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Array) {
                     var collected = true;
                     var array = new List<long>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateArray()) {
                         if (member.ValueKind == JsonValueKind.Number) {
@@ -1045,7 +1065,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Object) {
                     var collected = true;
                     var array = new Dictionary<string, long>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateObject()) {
                         if (member.Value.ValueKind == JsonValueKind.Number) {
@@ -1063,7 +1083,7 @@ public abstract partial class JsonObject : IBinding {
             #region // Real32
             case PropertyReal32 subProperty: {
                 if (element.ValueKind == JsonValueKind.Number) {
-                    subProperty.Set(jsonObject, element.GetSingle());
+                    subProperty.Set(target, element.GetSingle());
                     return true;
                     }
                 return false;
@@ -1072,7 +1092,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Array) {
                     var collected = true;
                     var array = new List<float>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateArray()) {
                         if (member.ValueKind == JsonValueKind.Number) {
@@ -1090,7 +1110,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Object) {
                     var collected = true;
                     var array = new Dictionary<string, float>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateObject()) {
                         if (member.Value.ValueKind == JsonValueKind.Number) {
@@ -1108,7 +1128,7 @@ public abstract partial class JsonObject : IBinding {
             #region // Real64
             case PropertyReal64 subProperty: {
                 if (element.ValueKind == JsonValueKind.Number) {
-                    subProperty.Set(jsonObject, element.GetDouble());
+                    subProperty.Set(target, element.GetDouble());
                     return true;
                     }
                 return false;
@@ -1117,7 +1137,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Array) {
                     var collected = true;
                     var array = new List<double>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateArray()) {
                         if (member.ValueKind == JsonValueKind.Number) {
@@ -1135,7 +1155,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Object) {
                     var collected = true;
                     var array = new Dictionary<string, double>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateObject()) {
                         if (member.Value.ValueKind == JsonValueKind.Number) {
@@ -1153,7 +1173,7 @@ public abstract partial class JsonObject : IBinding {
             #region // DateTime
             case PropertyDateTime subProperty: {
                 if (element.ValueKind == JsonValueKind.String) {
-                    subProperty.Set(jsonObject, element.GetDateTime());
+                    subProperty.Set(target, element.GetDateTime());
                     return true;
                     }
                 return false;
@@ -1162,7 +1182,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Array) {
                     var collected = true;
                     var array = new List<DateTime>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateArray()) {
                         if (member.ValueKind == JsonValueKind.String) {
@@ -1180,7 +1200,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Object) {
                     var collected = true;
                     var array = new Dictionary<string, DateTime>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateObject()) {
                         if (member.Value.ValueKind == JsonValueKind.String) {
@@ -1199,7 +1219,7 @@ public abstract partial class JsonObject : IBinding {
             case PropertyBinary subProperty: {
                 if (element.ValueKind == JsonValueKind.String) {
                     var value = element.GetString().FromBase64();
-                    subProperty.Set(jsonObject, value);
+                    subProperty.Set(target, value);
                     return true;
                     }
                 return false;
@@ -1208,7 +1228,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Array) {
                     var collected = true;
                     var array = new List<byte[]>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateArray()) {
                         if (member.ValueKind == JsonValueKind.String) {
@@ -1227,7 +1247,7 @@ public abstract partial class JsonObject : IBinding {
                 if (element.ValueKind == JsonValueKind.Object) {
                     var collected = true;
                     var array = new Dictionary<string, byte[]>();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateObject()) {
                         if (member.Value.ValueKind == JsonValueKind.String) {
@@ -1244,7 +1264,6 @@ public abstract partial class JsonObject : IBinding {
                 }
             #endregion
             #region // Struct
-
             case PropertyStruct subProperty: {
                 if (element.ValueKind == JsonValueKind.Object) {
                     if (!BindingDictionary.TryGetValue(subProperty.type, out var binding)) {
@@ -1252,11 +1271,11 @@ public abstract partial class JsonObject : IBinding {
                         }
                     if (subProperty.Tagged) {
                         var item = ParseTagged(element, binding);
-                        subProperty.Set(jsonObject, item);
+                        subProperty.Set(target, item);
                         }
                     else {
                         var item = Parse(element, binding);
-                        subProperty.Set(jsonObject, item);
+                        subProperty.Set(target, item);
                         }
                     }
                 return false;
@@ -1268,7 +1287,7 @@ public abstract partial class JsonObject : IBinding {
                         }
                     var collected = true;
                     var array = binding.ListFactory();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateArray()) {
                         if (member.ValueKind == JsonValueKind.Object) {
@@ -1297,7 +1316,7 @@ public abstract partial class JsonObject : IBinding {
                         }
                     var collected = true;
                     var array = binding.DictionaryFactory();
-                    subProperty.Set(jsonObject, array);
+                    subProperty.Set(target, array);
 
                     foreach (var member in element.EnumerateObject()) {
                         if (member.Value.ValueKind == JsonValueKind.Object) {
@@ -1318,12 +1337,7 @@ public abstract partial class JsonObject : IBinding {
                     }
                 return false;
                 }
-
             #endregion
-            #region // TStruct
-            #endregion
-
-
             }
 
         return false;

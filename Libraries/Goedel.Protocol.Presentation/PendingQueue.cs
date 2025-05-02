@@ -39,7 +39,7 @@ public class PendingQueue<T> where T : IQueuableTask {
     /// so as to avoid timer length limit.
     /// </summary>
     public TimeSpan Sleep => new TimeSpan(
-        (WakeAt - System.DateTime.Now).Ticks.BoundInt32());
+        (WakeAt - System.DateTime.UtcNow).Ticks.BoundInt32());
 
     ///<summary>The number of items currently in the queue.</summary> 
     public int Count => Queue.Count;
@@ -81,7 +81,7 @@ public class PendingQueue<T> where T : IQueuableTask {
     /// <param name="task">The task to queue.</param>
     /// <param name="wakeAtMilliseconds">The wakeup time in ticks from the current time.</param>
     public void Insert(T task, int wakeAtMilliseconds) =>
-        Insert(task, System.DateTime.Now.AddMilliseconds(wakeAtMilliseconds));
+        Insert(task, System.DateTime.UtcNow.AddMilliseconds(wakeAtMilliseconds));
 
     /// <summary>
     /// If the queue is not empty and either <paramref name="ifWoken"/> is false 
@@ -97,7 +97,7 @@ public class PendingQueue<T> where T : IQueuableTask {
                 return default;
                 }
             var next = Queue.GetValueAtIndex(0);
-            if (ifWoken && next.WakeAt > System.DateTime.Now) {
+            if (ifWoken && next.WakeAt > System.DateTime.UtcNow) {
                 return default;
                 }
 

@@ -112,7 +112,7 @@ public class TraceDictionary {
     /// </summary>
     /// <param name="Payload">The message Payload</param>
     /// <returns>The trace message entry</returns>
-    public TraceMessage Request(JsonObject Payload) => new(Current, Payload, System.DateTime.Now, true);
+    public TraceMessage Request(JsonObject Payload) => new(Current, Payload, System.DateTime.UtcNow, true);
 
 
     /// <summary>
@@ -122,7 +122,7 @@ public class TraceDictionary {
     /// <param name="Payload">The message Payload</param>
     /// <returns>The trace message entry</returns>
     public TraceMessage Response(string Status, JsonObject Payload) {
-        var Message = new TraceMessage(Current, Payload, System.DateTime.Now, false) {
+        var Message = new TraceMessage(Current, Payload, System.DateTime.UtcNow, false) {
             Status = Status
             };
 

@@ -57,7 +57,7 @@ public record PortHistory {
     /// <summary>
     /// Constructor, initialize the last challenge time to now.
     /// </summary>
-    public PortHistory() => LastChallenge = System.DateTime.Now;
+    public PortHistory() => LastChallenge = System.DateTime.UtcNow;
 
     #endregion
     }

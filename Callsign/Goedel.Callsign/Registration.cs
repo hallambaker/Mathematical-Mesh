@@ -144,7 +144,7 @@ public partial class Registration {
             RegistrationReason registrationReason = RegistrationReason.Update) {
         Id = Udf.Nonce();
         Entry = callsign.Enveloped as Enveloped<CallsignBinding>;
-        Submitted = System.DateTime.Now;
+        Submitted = System.DateTime.UtcNow;
 
         if (registration is null) {
             Reason = CallsignConstants.RegistrationReasonInitialTag;

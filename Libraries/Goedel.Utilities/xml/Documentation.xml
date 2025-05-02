@@ -907,7 +907,7 @@
              <summary>
              Provides a means of optionally expiring a value specified by <paramref name="value"/>.
              If <paramref name="expiry"/> is not null and specifies a time value that is strictly 
-             less than the value of <see cref="P:System.DateTime.Now"/>, the value null is returned. Otherwise
+             less than the value of <see cref="P:System.DateTime.UtcNow"/>, the value null is returned. Otherwise
              the value <paramref name="value"/> is returned.
              </summary>
              <typeparam name="T">The type to return and of <paramref name="value"/>.</typeparam>

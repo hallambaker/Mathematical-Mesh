@@ -46,13 +46,13 @@ public record PresenceBindingDevice : IQueuableTask, IPresenceDevice {
     public PresenceBindingAccount AccountBinding { get; init; }
 
     ///<summary>Time at which the binding was created.</summary> 
-    public System.DateTime FirstContact { get; } = System.DateTime.Now;
+    public System.DateTime FirstContact { get; } = System.DateTime.UtcNow;
 
     ///<summary>Time at which the binding was last used.</summary> 
-    public System.DateTime LastContact { get; set; } = System.DateTime.Now;
+    public System.DateTime LastContact { get; set; } = System.DateTime.UtcNow;
 
     ///<summary>Time at which the binding was last used.</summary> 
-    public System.DateTime Expire { get; set; } = System.DateTime.Now;
+    public System.DateTime Expire { get; set; } = System.DateTime.UtcNow;
 
     ///<summary>The last endpoint from which the device was accessed.</summary> 
     public IPEndPoint CurrentEndpoint { get; set; }

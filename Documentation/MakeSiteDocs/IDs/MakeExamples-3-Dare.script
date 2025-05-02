@@ -67,13 +67,25 @@ $$$ Missing data $$$
 #end method
 
 
+#method2 CardExample string parent JsonObject example
+{
+    "@type":"Card",
+    ...
+    "#{parent}" : #!
+#{JSONDebugWriter.Write(example)},
+    ...
+    }
+#end method2
+
+
 #zfile CreateExamples JSContactKeys "Examples\\JSContactKeys.md" Example
 #% var jscontact = Example.JSContact;
 #% // For example, Bob is trying to send an encrypted email to Alice, her 
 #% //contact card lists two X.509v3 certificates but only one is an encryption 
 #% // certificate with the JWK use parameter:
 ~~~~
-#{JSONDebugWriter.Write(jscontact.EmailAddress)}
+#!{JSONDebugWriter.Write(jscontact.EmailAddress)}
+#% CardExample ("emails", jscontact.EmailAddress);
 ~~~~
 #end zfile
 
@@ -101,7 +113,8 @@ _jscontact.#{CreateExamples.DnsHandleAlice} TXT "jscontact=#{jscontact.EARL}"
 #zfile CreateExamples JSContactGroups "Examples\\JSContactGroups.md" Example
 #% var jscontact = Example.JSContact;
 ~~~~
-#{JSONDebugWriter.Write(jscontact.Group)}
+#! {JSONDebugWriter.Write(jscontact.Group)}
+#% CardExample ("groups", jscontact.Group);
 ~~~~
 
 Each group identifier is specified as an online service:
@@ -114,9 +127,14 @@ Each group identifier is specified as an online service:
 #zfile CreateExamples JSContactUpdate "Examples\\JSContactUpdate.md" Example
 #% var jscontact = Example.JSContact;
 ~~~~
-#{JSONDebugWriter.Write(jscontact.Update)}
-
-#% Write(jscontact.UpdateKeys);
+{
+    "@type":"Card",
+    ...
+#% WriteUpdates(jscontact.Contact.Updates);
+    ...
+#% WriteCryptoKeys(jscontact.UpdateKeys);
+    ...
+    }
 ~~~~
 #end zfile
 
@@ -162,7 +180,10 @@ Each group identifier is specified as an online service:
 #end zfile
 
 #method2 Write Dictionary<string,OnlineService> services bool part=false
-[#!
+{
+    "@type":"Card",
+    ...
+    "onlineServices" : {#!
 #% var sep = new Separator (",\n");
 #foreach (var service in services)
 #{sep}#!
@@ -172,11 +193,14 @@ Each group identifier is specified as an online service:
 
 ...
 #end if
-]
+}
 #end method2
 
 #method2 Write Dictionary<string,CryptoKey> jsonKeys bool part=false
-[#!
+{
+    "@type":"Card",
+    ...
+    "cryptoKeys" : {#!
 #% var sep = new Separator  (",\n");
 #foreach (var jsonKey in jsonKeys)
 #{sep}#!
@@ -186,8 +210,29 @@ Each group identifier is specified as an online service:
 
 ...
 #end if
-]
+}
 #end method2
+
+#method WriteUpdates Dictionary<string,Update> jsonKeys
+    "updates" : {
+#% var sep = new Separator  (",\n");
+#foreach (var jsonKey in jsonKeys)
+#{sep}#!
+"#{jsonKey.Key}" : #{JSONDebugWriter.Write(jsonKey.Value, false)}#!
+#end foreach
+}
+#end method
+
+
+#method WriteCryptoKeys Dictionary<string,CryptoKey> jsonKeys
+    "cryptoKeys" : {
+#% var sep = new Separator  (",\n");
+#foreach (var jsonKey in jsonKeys)
+#{sep}#!
+"#{jsonKey.Key}" : #{JSONDebugWriter.Write(jsonKey.Value, false)}#!
+#end foreach
+}
+#end method
 
 #zfile CreateExamples EarlExamples "Examples\\EarlExamples.md" Example
 #% var earl = Example.Earl;

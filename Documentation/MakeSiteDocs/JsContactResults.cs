@@ -75,6 +75,7 @@ public class JsContactResults {
 
     public JsContactResults(CreateExamples createExamples) {
 
+
         CreateExamples = createExamples;
         var testEnvironmentCommon = CreateExamples.TestEnvironment;
         var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
@@ -115,15 +116,58 @@ public class JsContactResults {
         // write to file
         Contact = catalogedContact.Contact;
 
+        Contact.Name = new() {
+            Components = [
+                new () {
+                    Kind = "given",
+                    Value = "Alice"
+                    },
+                new () {
+                    Kind = "surname",
+                    Value = "Example"
+                    }
+                ],
+            Full = "Alice Example",
+            IsOrdered = true
+            };
+        Contact.NickNames = new() {
+            { "maiden",  new () {
+                    Name = "Alice Cryptographer"
+                    }
+                }
+            };
+
+
+        Contact.AltNames = new() {
+            { "maiden",  new () {
+                    Components = [
+                        new () {
+                            Kind = "given",
+                            Value = "Alice"
+                            },
+                        new () {
+                            Kind = "surname",
+                            Value = "Cryptographer"
+                            }
+                        ],
+                    Full = "Alice Cryptographer",
+                    IsOrdered = true
+                    }
+                }
+            };
+
+
         var update1 = new Update() {
-            Keys =[]
+            Keys =[],
+            Uri = $"https://contacts.example.com/{Contact.Uid}"
             };
 
         update1.Keys.Add(SignatureEd448.KeyIdentifier, "sign");
 
 
-        Contact.Updates = new();
-        Contact.Updates.Add("update", update1);
+        Contact.Updates = new() {
+                { "update1", update1 }
+            };
 
         var jwk = JWK.Factory(SignatureEd448);
         var jwks = new Jwks() {
@@ -135,10 +179,10 @@ public class JsContactResults {
 
         //Console.WriteLine(contact.ToString());
 
-        Console.WriteLine(JSONDebugWriter.Write(Contact));
+        Console.WriteLine(JSONDebugWriter.Write(Contact, false));
 
         var contactBytes = Contact.GetJson(false);
-        EarlSet = new EarlSet(ProtectedHeaderJson, contactBytes, [SignatureEd448], 
+        EarlSet = new EarlSet(ProtectedHeaderJson, contactBytes, [SignatureEd448],
             scheme:"jscontact", service: CreateExamples.AliceService);
         // create an EARL for the contact here.
 

@@ -146,7 +146,7 @@ public static class Extensions {
         var hostConfiguration = new GenericHostConfiguration {
             // HostUdf later
             // DeviceUdf later
-            Description = $"New service configuration created on {DateTime.Now.ToRFC3339()}",
+            Description = $"New service configuration created on {DateTime.UtcNow.ToRFC3339()}",
             HostDns = hostDns,
             IP = ip,
             RunAs = hostAccount,

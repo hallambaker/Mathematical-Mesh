@@ -41,10 +41,10 @@ public class PresenceBindingAccount : IPresenceAccount {
     public string AccountId;
 
     ///<summary>Time at which the binding was created.</summary> 
-    public System.DateTime FirstContact { get; } = System.DateTime.Now;
+    public System.DateTime FirstContact { get; } = System.DateTime.UtcNow;
 
     ///<summary>Time at which the binding was last used.</summary> 
-    public System.DateTime LastContact { get; set; } = System.DateTime.Now;
+    public System.DateTime LastContact { get; set; } = System.DateTime.UtcNow;
 
     ///<summary>Dictionary of connected devices.</summary> 
     public Dictionary<ulong, PresenceBindingDevice> ConnectedDevices { get; } = new();

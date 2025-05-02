@@ -81,6 +81,21 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			}
 		}
 	
+	/// <summary>	
+	/// CardExample
+	/// </summary>
+	/// <param name="parent"></param>
+	/// <param name="example"></param>
+	public void CardExample (string parent, JsonObject example) {
+		_Output.Write ("{{\n{0}", _Indent);
+		_Output.Write ("    \"@type\":\"Card\",\n{0}", _Indent);
+		_Output.Write ("    ...\n{0}", _Indent);
+		_Output.Write ("    \"{1}\" : ", _Indent, parent);
+		_Output.Write ("{1},\n{0}", _Indent, JSONDebugWriter.Write(example));
+		_Output.Write ("    ...\n{0}", _Indent);
+		_Output.Write ("    }}\n{0}", _Indent);
+		}
+	
 
 	//
 	// JSContactKeys
@@ -97,7 +112,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			 //contact card lists two X.509v3 certificates but only one is an encryption 
 			 // certificate with the JWK use parameter:
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write(jscontact.EmailAddress));
+			 CardExample ("emails", jscontact.EmailAddress);
 			_Output.Write ("~~~~\n{0}", _Indent);
 				}
 	
@@ -165,7 +180,8 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 
 			 var jscontact = Example.JSContact;
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write(jscontact.Group));
+			// {JSONDebugWriter.Write(jscontact.Group)}
+			 CardExample ("groups", jscontact.Group);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Each group identifier is specified as an online service:\n{0}", _Indent);
@@ -188,9 +204,14 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 
 			 var jscontact = Example.JSContact;
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write(jscontact.Update));
-			_Output.Write ("\n{0}", _Indent);
-			 Write(jscontact.UpdateKeys);
+			_Output.Write ("{{\n{0}", _Indent);
+			_Output.Write ("    \"@type\":\"Card\",\n{0}", _Indent);
+			_Output.Write ("    ...\n{0}", _Indent);
+			 WriteUpdates(jscontact.Contact.Updates);
+			_Output.Write ("    ...\n{0}", _Indent);
+			 WriteCryptoKeys(jscontact.UpdateKeys);
+			_Output.Write ("    ...\n{0}", _Indent);
+			_Output.Write ("    }}\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 				}
 	
@@ -291,7 +312,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <param name="services"></param>
 	/// <param name="part=false"></param>
 	public void Write (Dictionary<string,OnlineService> services, bool part=false) {
-		_Output.Write ("[", _Indent);
+		_Output.Write ("{{\n{0}", _Indent);
+		_Output.Write ("    \"@type\":\"Card\",\n{0}", _Indent);
+		_Output.Write ("    ...\n{0}", _Indent);
+		_Output.Write ("    \"onlineServices\" : {{", _Indent);
 		 var sep = new Separator (",\n");
 		foreach  (var service in services) {
 			_Output.Write ("{1}", _Indent, sep);
@@ -301,7 +325,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("...\n{0}", _Indent);
 			}
-		_Output.Write ("]\n{0}", _Indent);
+		_Output.Write ("}}\n{0}", _Indent);
 		}
 	
 	/// <summary>	
@@ -310,7 +334,10 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// <param name="jsonKeys"></param>
 	/// <param name="part=false"></param>
 	public void Write (Dictionary<string,CryptoKey> jsonKeys, bool part=false) {
-		_Output.Write ("[", _Indent);
+		_Output.Write ("{{\n{0}", _Indent);
+		_Output.Write ("    \"@type\":\"Card\",\n{0}", _Indent);
+		_Output.Write ("    ...\n{0}", _Indent);
+		_Output.Write ("    \"cryptoKeys\" : {{", _Indent);
 		 var sep = new Separator  (",\n");
 		foreach  (var jsonKey in jsonKeys) {
 			_Output.Write ("{1}", _Indent, sep);
@@ -320,7 +347,35 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("...\n{0}", _Indent);
 			}
-		_Output.Write ("]\n{0}", _Indent);
+		_Output.Write ("}}\n{0}", _Indent);
+		}
+	
+	/// <summary>	
+	/// WriteUpdates
+	/// </summary>
+	/// <param name="jsonKeys"></param>
+	public void WriteUpdates (Dictionary<string,Update> jsonKeys) {
+		_Output.Write ("    \"updates\" : {{\n{0}", _Indent);
+		 var sep = new Separator  (",\n");
+		foreach  (var jsonKey in jsonKeys) {
+			_Output.Write ("{1}", _Indent, sep);
+			_Output.Write ("\"{1}\" : {2}", _Indent, jsonKey.Key, JSONDebugWriter.Write(jsonKey.Value, false));
+			}
+		_Output.Write ("}}\n{0}", _Indent);
+		}
+	
+	/// <summary>	
+	/// WriteCryptoKeys
+	/// </summary>
+	/// <param name="jsonKeys"></param>
+	public void WriteCryptoKeys (Dictionary<string,CryptoKey> jsonKeys) {
+		_Output.Write ("    \"cryptoKeys\" : {{\n{0}", _Indent);
+		 var sep = new Separator  (",\n");
+		foreach  (var jsonKey in jsonKeys) {
+			_Output.Write ("{1}", _Indent, sep);
+			_Output.Write ("\"{1}\" : {2}", _Indent, jsonKey.Key, JSONDebugWriter.Write(jsonKey.Value, false));
+			}
+		_Output.Write ("}}\n{0}", _Indent);
 		}
 	
 

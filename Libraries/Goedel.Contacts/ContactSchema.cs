@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/1/2025 6:02:18 PM
+//  This file was automatically generated at 5/2/2025 12:21:19 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -234,6 +234,13 @@ public partial class JsContact : JmapBase {
 	public virtual Name?					Name  {get; set;}
 
         /// <summary>
+        /// Alternative names.
+        /// </summary>
+
+	[JsonPropertyName("altNames")]
+	public virtual Dictionary<string,Name>?					AltNames  {get; set;}
+
+        /// <summary>
         /// The nicknames of the entity represented by the Card.
         /// </summary>
 
@@ -423,6 +430,12 @@ public partial class JsContact : JmapBase {
 			{ "name", new PropertyStruct ("name", typeof (Name),
 					(IBinding data, object? value) => {(data as JsContact).Name = value as Name;}, (IBinding data) => (data as JsContact).Name,
 					false, ()=>new  Name(), ()=>new Name())},
+			{ "altNames", new PropertyDictionaryStruct ("altNames", typeof (Name),
+					(IBinding data, object? value) => {(data as JsContact).AltNames = value as Dictionary<string,Name>;}, (IBinding data) => (data as JsContact).AltNames,
+					false, ()=>new  Dictionary<string,Name>(), ()=>new Name(),
+					(IBinding data) => (data as JsContact).AltNames.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Name>).Add (key as string,value as Name);})},
 			{ "nickNames", new PropertyDictionaryStruct ("nickNames", typeof (NickName),
 					(IBinding data, object? value) => {(data as JsContact).NickNames = value as Dictionary<string,NickName>;}, (IBinding data) => (data as JsContact).NickNames,
 					false, ()=>new  Dictionary<string,NickName>(), ()=>new NickName(),

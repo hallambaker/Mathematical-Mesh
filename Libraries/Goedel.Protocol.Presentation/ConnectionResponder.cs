@@ -105,7 +105,7 @@ public partial class ConnectionResponder : RudConnection {
 
         EphemeralExtensionsCurrent = new List<PacketExtension> { extension };
         //EphemeralsCreated = DateTime.Now;
-        EphemeralsExpire = System.DateTime.Now + EphemeralValidity;
+        EphemeralsExpire = System.DateTime.UtcNow + EphemeralValidity;
         }
 
 
@@ -121,7 +121,7 @@ public partial class ConnectionResponder : RudConnection {
 
     ///<inheritdoc/>
     public override void AddEphemerals(byte[] destinationId, List<PacketExtension> extensions) {
-        if (EphemeralsCurrent == null | System.DateTime.Now > EphemeralsExpire) {
+        if (EphemeralsCurrent == null | System.DateTime.UtcNow > EphemeralsExpire) {
             RollEphemerals();
             }
         foreach (var ephemeral in EphemeralExtensionsCurrent) {

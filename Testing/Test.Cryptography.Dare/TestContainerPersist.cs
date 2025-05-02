@@ -45,7 +45,7 @@ public partial class TestPersist : UnitTestSet {
     static readonly string AccountIDInvalid = "invalid";
 
     // create new
-    readonly static System.DateTime Now = System.DateTime.Now;
+    readonly static System.DateTime Now = System.DateTime.UtcNow;
     readonly static TestItem TestAccountAlice = new() {
         AccountID = AccountIDAlice,
         Status = "Open",

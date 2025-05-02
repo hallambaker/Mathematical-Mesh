@@ -155,9 +155,9 @@ public class ContextPresence : Disposable {
 
 
     int retryCount = 0;
-    System.DateTime WakeupHeartbeat { get; set; } = System.DateTime.Now;
+    System.DateTime WakeupHeartbeat { get; set; } = System.DateTime.UtcNow;
 
-    System.DateTime WakeupUnacknowledged { get; set; } = System.DateTime.Now;
+    System.DateTime WakeupUnacknowledged { get; set; } = System.DateTime.UtcNow;
 
 
 
@@ -245,13 +245,13 @@ public class ContextPresence : Disposable {
 
         // Send out the original connection request.
         MakeConnectRequest();
-        System.DateTime wakeTime = System.DateTime.Now;
+        System.DateTime wakeTime = System.DateTime.UtcNow;
         while (ListenerActive) {
             try {
-                var wakeup = GetDateTime().Subtract(DateTime.Now);
+                var wakeup = GetDateTime().Subtract(DateTime.UtcNow);
                 while (wakeup <= TimeSpan.Zero) {
                     Timeout();
-                    wakeup = GetDateTime().Subtract(DateTime.Now);
+                    wakeup = GetDateTime().Subtract(DateTime.UtcNow);
                     }
 
                 var waitTask = UdpReceiveBuffer.ReceiveAsync(wakeup, ListenerCancel.Token);
@@ -349,7 +349,7 @@ public class ContextPresence : Disposable {
             return;
             }
         PresenceListenerState = PresenceListenerState.Connected;
-        WakeupHeartbeat = System.DateTime.Now.AddMilliseconds(HeartbeatMilliSeconds);
+        WakeupHeartbeat = System.DateTime.UtcNow.AddMilliseconds(HeartbeatMilliSeconds);
         ReleaseWait();
         }
 
@@ -381,14 +381,14 @@ public class ContextPresence : Disposable {
                 break;
                 }
             case PresenceListenerState.Unacknowledged: {
-                if (System.DateTime.Now > WakeupUnacknowledged) {
+                if (System.DateTime.UtcNow > WakeupUnacknowledged) {
                     TimeoutUnacknowledged();
                     }
                 break;
                 }
             case PresenceListenerState.Connected:
             case PresenceListenerState.Disconnected: {
-                if (System.DateTime.Now > WakeupHeartbeat) {
+                if (System.DateTime.UtcNow > WakeupHeartbeat) {
                     TimeoutHeartbeat();
                     }
                 break;
@@ -428,7 +428,7 @@ public class ContextPresence : Disposable {
             return;
             }
 
-        WakeupUnacknowledged = DateTime.Now.AddMilliseconds(RetransmitOrReconnect);
+        WakeupUnacknowledged = DateTime.UtcNow.AddMilliseconds(RetransmitOrReconnect);
         var connectRequest = new PresenceConnectRequest() {
             };
         SendData(connectRequest, ServiceAccessToken.Token);
@@ -443,7 +443,7 @@ public class ContextPresence : Disposable {
         var heartbeat = new PresenceHeartbeat() {
             };
 
-        WakeupUnacknowledged = DateTime.Now.AddMilliseconds(RetransmitOrReconnect);
+        WakeupUnacknowledged = DateTime.UtcNow.AddMilliseconds(RetransmitOrReconnect);
         SendData(heartbeat, ServiceAccessToken.Token);
         //Trace.WriteLine($"Send Heartbeat: {heartbeat.ToString()}");
         }

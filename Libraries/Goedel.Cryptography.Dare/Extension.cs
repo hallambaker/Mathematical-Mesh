@@ -125,7 +125,7 @@ public static partial class Extension {
 
         var contentMeta = new ContentMeta() {
             UniqueId = jsonObject._PrimaryKey,
-            Created = System.DateTime.Now,
+            Created = System.DateTime.UtcNow,
             ContentType = jsonObject.IanaMediaType,
             MessageType = jsonObject._Tag
             };

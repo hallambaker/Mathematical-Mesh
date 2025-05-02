@@ -101,13 +101,13 @@ public class HostMonitor {
     /// <summary>
     /// Mark the start of period when the service is blocked because no dispatcher threads are available.
     /// </summary>
-    public void StartBusy() => busyStart = System.DateTime.Now;
+    public void StartBusy() => busyStart = System.DateTime.UtcNow;
 
     /// <summary>
     /// Mark the end of period when the service is blocked because no dispatcher threads are available.
     /// </summary>
     public void EndBusy() {
-        var now = System.DateTime.Now;
+        var now = System.DateTime.UtcNow;
         var interval = (now - busyStart).Milliseconds;
         Interlocked.Add(ref (current.Busy), interval);
         }
@@ -117,7 +117,7 @@ public class HostMonitor {
     /// </summary>
     /// <param name="dispatch">Index of the thread that was started.</param>
     public void StartDispatch(int dispatch) {
-        dispatcherStart[dispatch] = System.DateTime.Now;
+        dispatcherStart[dispatch] = System.DateTime.UtcNow;
         Interlocked.Increment(ref (current.DispatcherRequests[dispatch]));
         }
 
@@ -126,7 +126,7 @@ public class HostMonitor {
     /// </summary>
     /// <param name="dispatch">Index of the thread that was ended.</param>
     public void EndDispatch(int dispatch) {
-        var now = System.DateTime.Now;
+        var now = System.DateTime.UtcNow;
         var interval = (now - dispatcherStart[dispatch]).Milliseconds;
         Interlocked.Add(ref (current.DispatcherBusy[dispatch]), interval);
         }

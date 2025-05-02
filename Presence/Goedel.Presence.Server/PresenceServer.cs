@@ -378,13 +378,13 @@ public class PresenceServer : PresenceService, IPresence {
                     };
                 Accounts.Add(accountHandle.AccountAddress, accountBinding);
                 }
-            accountBinding.LastContact = System.DateTime.Now;
+            accountBinding.LastContact = System.DateTime.UtcNow;
 
             var deviceBinding = new PresenceBindingDevice() {
                 DeviceId = accountHandle.EnvelopedCatalogedDevice.EnvelopeId,
                 AccountBinding = accountBinding,
                 ConnectionId = connectionId,
-                LastContact = System.DateTime.Now
+                LastContact = System.DateTime.UtcNow
                 };
 
             accountBinding.ConnectedDevices.Add(connectionId, deviceBinding);
@@ -499,7 +499,7 @@ public class PresenceServer : PresenceService, IPresence {
             // ToDo: Will require some sophistication to prevent a MitM attack here.
             deviceBinding.CurrentEndpoint = connectRequest.SourceEndPoint;
             deviceBinding.DeviceState = DeviceState.Connected;
-            deviceBinding.Expire = DateTime.Now.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
+            deviceBinding.Expire = DateTime.UtcNow.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
 
             var response = new PresenceConnectResponse() {
                 ConnectionTimeout = TimeOutHeartbeatMilliSeconds
@@ -518,7 +518,7 @@ public class PresenceServer : PresenceService, IPresence {
             // have recieved a keepalive here so update the connection state
 
             QueueResponse(deviceBinding, message, heartbeat.SourceEndPoint);
-            deviceBinding.Expire = DateTime.Now.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
+            deviceBinding.Expire = DateTime.UtcNow.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
             }
         }
 
@@ -531,7 +531,7 @@ public class PresenceServer : PresenceService, IPresence {
             // have recieved a keepalive here so update the connection state
 
             QueueResponse(deviceBinding, message, request.SourceEndPoint);
-            deviceBinding.Expire = DateTime.Now.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
+            deviceBinding.Expire = DateTime.UtcNow.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
             }
         }
 
@@ -540,7 +540,7 @@ public class PresenceServer : PresenceService, IPresence {
         //Console.WriteLine($"Received Acknowledge");
         lock (deviceBinding) {
             // have recieved a keepalive here so update the connection state
-            deviceBinding.Expire = DateTime.Now.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
+            deviceBinding.Expire = DateTime.UtcNow.AddMilliseconds(TimeOutHeartbeatMilliSeconds);
             }
         }
 

@@ -105,7 +105,7 @@ public partial class ServiceAnything {
 
         while (!context.Finished) {
             while (!service.RegistrationContinue(context)) {
-                Task.Delay(context.TryAfter - DateTime.Now);
+                Task.Delay(context.TryAfter - DateTime.UtcNow);
                 }
             thing.Process(context);
             }

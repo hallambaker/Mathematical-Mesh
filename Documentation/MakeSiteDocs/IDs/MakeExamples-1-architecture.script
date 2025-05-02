@@ -35,7 +35,7 @@
 
 #zfile CreateExamples Colophon "Examples\\Colophon.md" Example
 
-The examples in this document were created on #{DateTime.Now.ToString()}. 
+The examples in this document were created on #{DateTime.UtcNow.ToString()}. 
 Out of #{TestCLI.CountTotal} examples,
 #if (TestCLI.ErrorCountTotal ==0)
 all passed.

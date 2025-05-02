@@ -73,8 +73,8 @@ public partial class JsContact {
 
         return new JsContact() {
             Version = "1.0",
-            Created = DateTime.Now,
-            Updated = DateTime.Now,
+            Created = DateTime.UtcNow,
+            Updated = DateTime.UtcNow,
             Kind = kind,
 
             Uid = Udf.Nonce(),
@@ -130,7 +130,7 @@ public partial class JsContact {
     /// Update the contact updated time.
     /// </summary>
     public void Update() {
-        Updated = DateTime.Now;
+        Updated = DateTime.UtcNow;
         }
 
 

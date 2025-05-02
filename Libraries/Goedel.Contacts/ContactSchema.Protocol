@@ -53,6 +53,10 @@
 				| The name of the entity represented by the Card. This can be any type of name, 
 				| e.g., it can, but need not, be the legal name of a person.
 		
+		Struct Name				AltNames
+			Dictionary
+			Description
+				| Alternative names.
 		
 		Struct NickName			NickNames
 			Dictionary

@@ -80,7 +80,7 @@ public class DocumentCache<K,T> where T: class?{
     /// <returns>The value if found, otherwise null.</returns>
     public async Task<T?> GetValueAsync(K key) {
         if (Dictionary.TryGetValue(key, out var handle)) {
-            if (handle.Refreshed + Expire > DateTime.Now) { 
+            if (handle.Refreshed + Expire > DateTime.UtcNow) { 
                 // Value has not expired.
                 handle.AccessedThis++;
                 return handle.Value;
@@ -89,7 +89,7 @@ public class DocumentCache<K,T> where T: class?{
             if (newData != null){ 
                 // Resolution succeeded.
                 handle.Value = newData;
-                handle.Refreshed = DateTime.Now;
+                handle.Refreshed = DateTime.UtcNow;
                 handle.AccessedThis++;
                 return handle.Value;
                 }
@@ -103,7 +103,7 @@ public class DocumentCache<K,T> where T: class?{
         if (fetchedData != null) { // Resolution succeeded.
             handle = new CachedDocument<T>() {
                 Value = fetchedData,
-                Refreshed = DateTime.Now
+                Refreshed = DateTime.UtcNow
                 };
             Dictionary.Add(key, handle);
             return handle.Value;
