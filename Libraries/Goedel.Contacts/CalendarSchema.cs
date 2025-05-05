@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/2/2025 5:30:24 PM
+//  This file was automatically generated at 5/4/2025 5:41:08 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -74,8 +74,6 @@ public abstract partial class Calandars : global::Goedel.Protocol.JsonObject {
 	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
 			new () {
 
-	    {"JmapBase", JmapBase._Factory},
-	    {"Relation", Relation._Factory},
 	    {"JsCalendarEntry", JsCalendarEntry._Factory},
 	    {"JsEvent", JsEvent._Factory},
 	    {"JsTask", JsTask._Factory},
@@ -101,8 +99,6 @@ public abstract partial class Calandars : global::Goedel.Protocol.JsonObject {
 	static Dictionary<System.Type, Binding> _bindingDictionary = 
 			new () {
 
-	    {typeof(JmapBase), JmapBase._binding},
-	    {typeof(Relation), Relation._binding},
 	    {typeof(JsCalendarEntry), JsCalendarEntry._binding},
 	    {typeof(JsEvent), JsEvent._binding},
 	    {typeof(JsTask), JsTask._binding},
@@ -152,227 +148,6 @@ public abstract partial class Calandars : global::Goedel.Protocol.JsonObject {
 
 
 	// Transaction Classes
-
-	/// <summary>
-	/// </summary>
-public partial class JmapBase : Calandars {
-        /// <summary>
-        /// This specifies the type that this object represents. The allowed value 
-        /// differs by object type and is defined in Sections 2.1, 2.2, and 2.3.
-        /// </summary>
-
-	[JsonPropertyName("@type")]
-	public virtual string?					Type  {get; set;}
-
-        /// <summary>
-        /// This is a globally unique identifier used to associate objects representing
-        /// the same event, task, group, or other object across different systems, 
-        /// calendars, and views. For recurring events and tasks, the UID is associated 
-        /// with the base object and therefore is the same for all occurrences; the 
-        /// combination of the UID with a recurrenceId identifies a particular instance.
-        /// </summary>
-
-	[JsonPropertyName("uid")]
-	public virtual string?					Uid  {get; set;}
-
-        /// <summary>
-        /// This relates the object to other JSCalendar objects. This is represented as 
-        /// a map of the UIDs of the related objects to information about the relation.
-        /// </summary>
-
-	[JsonPropertyName("relatedTo")]
-	public virtual Dictionary<string,Relation>?					RelatedTo  {get; set;}
-
-        /// <summary>
-        /// This is the identifier for the product that last updated the JSCalendar 
-        /// object. This should be set whenever the data in the object is modified 
-        /// (i.e., whenever the updated property is set).
-        /// </summary>
-
-	[JsonPropertyName("prodId")]
-	public virtual string?					ProdId  {get; set;}
-
-        /// <summary>
-        /// This is the date and time this object was initially created.
-        /// </summary>
-
-	[JsonPropertyName("created")]
-	public virtual DateTime?					Created  {get; set;}
-
-        /// <summary>
-        ///The date and time when the data in the Card was last modified.
-        /// </summary>
-
-	[JsonPropertyName("updated")]
-	public virtual DateTime?					Updated  {get; set;}
-
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<JmapBase> _binding = new (
-			new() {
-
-			{ "@type", new PropertyStringTag ("@type", 
-					(IBinding data, string? value) => {(data as JmapBase).Type = value;}, (IBinding data) => (data as JmapBase).Type )},
-			{ "uid", new PropertyString ("uid", 
-					(IBinding data, string? value) => {(data as JmapBase).Uid = value;}, (IBinding data) => (data as JmapBase).Uid )},
-			{ "relatedTo", new PropertyDictionaryStruct ("relatedTo", typeof (Relation),
-					(IBinding data, object? value) => {(data as JmapBase).RelatedTo = value as Dictionary<string,Relation>;}, (IBinding data) => (data as JmapBase).RelatedTo,
-					false, ()=>new  Dictionary<string,Relation>(), ()=>new Relation(),
-					(IBinding data) => (data as JmapBase).RelatedTo.GetEnumerable(),
-					(object dictionary, object key, object value) =>
-						 {(dictionary as Dictionary<string,Relation>).Add (key as string,value as Relation);})},
-			{ "prodId", new PropertyString ("prodId", 
-					(IBinding data, string? value) => {(data as JmapBase).ProdId = value;}, (IBinding data) => (data as JmapBase).ProdId )},
-			{ "created", new PropertyDateTime ("created", 
-					(IBinding data, DateTime? value) => {(data as JmapBase).Created = value;}, (IBinding data) => (data as JmapBase).Created )},
-			{ "updated", new PropertyDateTime ("updated", 
-					(IBinding data, DateTime? value) => {(data as JmapBase).Updated = value;}, (IBinding data) => (data as JmapBase).Updated )}
-        }, __Tag,() => new JmapBase(), () => new List<JmapBase>(), () => new Dictionary<string,JmapBase>(),null, TypeTag:"@type" );
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "JmapBase";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new JmapBase();
-
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new JmapBase FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as JmapBase;
-			}
-		var Result = new JmapBase ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-
-	}
-
-
-	/// <summary>
-	/// </summary>
-public partial class Relation : Calandars {
-        /// <summary>
-        /// The relationships, each one MUST have the value true.
-        /// </summary>
-
-	[JsonPropertyName("relationships")]
-	public virtual Dictionary<string,bool>?					Relationships  {get; set;}
-
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<Relation> _binding = new (
-			new() {
-
-			{ "relationships", new PropertyDictionaryBoolean ("relationships", 
-					(IBinding data, Dictionary<string,bool>? value) => {(data as Relation).Relationships = value;}, (IBinding data) => (data as Relation).Relationships )}
-        }, __Tag,() => new Relation(), () => new List<Relation>(), () => new Dictionary<string,Relation>(),null);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "Relation";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Relation();
-
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new Relation FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Relation;
-			}
-		var Result = new Relation ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-
-	}
-
 
 	/// <summary>
 	/// </summary>

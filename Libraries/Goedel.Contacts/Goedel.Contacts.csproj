@@ -20,6 +20,12 @@
 
 	<ItemGroup>
 
+		<Compile Update="JmapBase.cs">
+		  <DependentUpon>JmapBase.Protocol</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+
 		<Compile Update="ContactSchema.cs">
 			<DependentUpon>ContactSchema.Protocol</DependentUpon>
 			<DesignTime>True</DesignTime>
@@ -48,6 +54,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+
+		<None Update="JmapBase.Protocol">
+		  <LastGenOutput>JmapBase.cs</LastGenOutput>
+		  <Generator>PROTOGEN</Generator>
+		</None>
 
 		<None Update="CalendarSchema.Protocol">
 		  <LastGenOutput>CalendarSchema.cs</LastGenOutput>

@@ -231,6 +231,7 @@ public partial class CreateExamples {
 
         MakeEarl();
         MakeJSContact();
+        MakeJSDevice();
 
         if (false) {
 
@@ -325,7 +326,16 @@ public partial class CreateExamples {
 
         }
 
+    public void MakeJSDevice(
+            ) {
+        SetWorkingDirectory();
+        JSContact = new JsDeviceResults(this);
 
+
+        SetOutputDirectory();
+        MakeJSContactExamples(this);
+
+        }
 
     void SetWorkingDirectory() => Directory.SetCurrentDirectory(WorkingDirectory);
     void SetOutputDirectory() => Directory.SetCurrentDirectory(DraftsDirectory);

@@ -16,11 +16,11 @@
 		Description
 			| Metadata, 
 
-
 		String					Version
 			Required
 			Description
-				| The JSContact version of this Card. If specified, value MUST be '1.0'
+				|The JSDevice version of this description. The value MUST be one 
+				|of the IANA-registered JSDevice Version values for the version property. 
 
 
 		String					Kind
@@ -50,70 +50,77 @@
 
 		String					DeviceId
 			Description
-				|
+				| A URI that uniquely identifies the device.
 
 		String					ModelId
 			Description
-				|
-
+				| A URI that uniquely identifies the device model.
 
 		String					ModelName
 			Description
-				|
+				| Human readable model name.
 
 		String					Manufacturer
 			Description
-				|
+				| Device manufacturer name.
 
 		DateTime				DateManufacture
 			Description
-				|
+				| Date of manufacture.
 
 		Struct Media			Images
 			Multiple
 			Description
-				|
+				| Photographs and schematics of the device or model.
 
 		Struct Media			Manuals
 			Multiple
 			Description
-				|
-
-		Struct Media			Guides
-			Multiple
-			Description
-				|
+				| Manuals describing the device.
 
 		Struct Bootstrap		Bootstraps
 			Multiple
 			Description
-				|
+				| Bootstrap protocols supported.
 
 		Struct Provisioning		Provisioning
 			Multiple
 			Description
-				|
+				| Provisioning protocols supported for acquisition of DNS names, IP addresses,
+				| etc.
 
 		Struct Service			Services
 			Multiple
 			Description
-				|
+				| Services supported by the device.
 
 		Struct Maintenance		Maintenance
 			Multiple
 			Description
-				|
+				| List of maintenance events associated with the device.
+		DateTime EndSupport
+			Description
+				| Date at which support for the device is scheduled to end.
+		DateTime EndLife
+			Description
+				| Date at which it is advised the device be taken out of service.
+
 
 		Struct Consumable		Consumables
 			Multiple
 			Description
-				|
+				| Consumables related to the device. For example, ink cartridges, parts
+				| likely to wear etc.
 
 		Struct Accessory		Accessories
 			Multiple
 			Description
-				|
+				| Accessories related to the device. For example paper handlers.
 
+		Struct Supplier			Suppliers
+			Multiple
+			Description
+				| Suppliers for the device and related accessories.
 
 		// 2.7.  Multilingual Properties
 		// 2.7.1.  localizations
@@ -128,31 +135,94 @@
 				| in the PatchObject are relative to the Card that includes the localizations
 				| property. A patch MUST NOT target the localizations property.
 
-
-
 		// JsonWebKeys
-		Struct Jwks		JsonWebKeys
-			Tag "jwks"
+		Struct CryptoKey		CryptoKeys
 			Dictionary
 			Description
 				| The cryptographic resources such as public keys and certificates associated 
-				| with the entity represented by the Card.
+				| with the device
 
+
+	Structure Protocol
+		String		Address
+			Multiple
+			Description
+				|The Internet Protocol Address(es)
+		String		Identifier
+			Description
+				|The IANA protocol identifier
+		Integer		Port
+		String					Keys
+			Dictionary
+			Description
+				| The identifiers of the set of device keys that MAY be used in combination
+				| with this protocol
 
 	Structure Bootstrap
+		Inherits Protocol
+		Description
+			| Bootstrap protocol configuration that MAY be used to provide initial
+			| network capabilities to the device.
 
 	Structure Provisioning
-
-	Structure Network
+		Inherits Protocol
+		Description
+			| Provisioning protocol configuration that MAY be used to provision necessary
+			|network identifiers (e.g. Internet Addresses, DNS names, etc.)
 
 	Structure Service
-
+		Inherits Protocol
+		Description
+			| Service protocols supported by the device, e.g. 
 
 	Structure Maintenance
+		Description
+			| Maintenance events associated with the device.
+		Inherits Resource
+		Boolean Recurring
+			Description
+				| If true (default), the mainenance event recurs as specified by the
+				|days, months and years properties. If false, the maintenance event 
+				| is a one-time operation occuring the specified interval after installation.
+		Integer	Days
+			Description
+				| Interval days.
+		Integer	Months
+			Description
+				| Interval months. If specified, the days property is ignored.
+		Integer	Years
+			Description
+				| Interval years. If specified, the days and months properties are ignored.
+
+	Structure Supplier
+		Description
+			| Suppliers for devices and accessories related to the device.
+		Inherits Resource
+
+	Structure RelatedItem
+		Description
+			| A related accessory, consumable or part
+		Inherits Resource
+		String					ModelId
+			Multiple
+			Description
+				|A list of URIs specifying model identifiers. These MAY include
+				|related variations of the same item. For example, different 
+				|sizes of the same color ink.
+		Struct Supplier			Suppliers
+			Multiple
+			Description
+				|A list of URIs linking to suppliers for the consumable.
 
 	Structure Consumable
-		Inherits Resource
-
+		Inherits RelatedItem
+		Description
+			| A consumable compatible with the device.
 
 	Structure Accessory
-		Inherits Resource
+		Inherits RelatedItem
+		Description
+			| An accessory compatible with the device.
+
+
+

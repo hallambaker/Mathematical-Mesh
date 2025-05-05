@@ -90,6 +90,13 @@ public partial class Jmap {
         Verify(contact);
         }
 
+
+
+
+
+
+
+
     [Fact]
     public void TestDeviceFridge() {
         Devices._Initialized.TestTrue();
@@ -155,6 +162,18 @@ public partial class Jmap {
                     MediaType = "application/jsdevice",
                     Label = "Parametric Fam",
                     Uri = "https://media.example.com/EncabulatorParametricFam.jsdevice"
+                    }
+                ],
+
+            Provisioning = [
+                new () {
+                    Identifier = "dns"
+                    },
+                new () {
+                    Identifier = "ipv4"
+                    },
+                new () {
+                    Identifier = "ipv6"
                     }
                 ]
 

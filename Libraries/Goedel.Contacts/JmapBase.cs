@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/4/2025 5:41:21 PM
+//  This file was automatically generated at 5/4/2025 5:41:08 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -48,18 +48,14 @@ using Goedel.Utilities;
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
 
-using Goedel.Cryptography.Jose;
-using Goedel.Cryptography.Dare;
 
 
-namespace Goedel.Mesh.Server;
+namespace Goedel.Contacts;
 
 
 	/// <summary>
-	///
-	/// An entry in the Mesh linked logchain.
 	/// </summary>
-public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
+public abstract partial class JmapBaseSchema : global::Goedel.Protocol.JsonObject {
 
 	/// <summary>
     /// Tag identifying this class
@@ -69,7 +65,7 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "CatalogItem";
+	public new const string __Tag = "JmapBaseSchema";
 
 	/// <summary>
     /// Dictionary mapping tags to factory methods
@@ -78,8 +74,8 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
 			new () {
 
-	    {"AccountEntry", AccountEntry._Factory},
-	    {"AccountUser", AccountUser._Factory}
+	    {"JmapBase", JmapBase._Factory},
+	    {"Relation", Relation._Factory}
 		};
 
 
@@ -90,8 +86,8 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 	static Dictionary<System.Type, Binding> _bindingDictionary = 
 			new () {
 
-	    {typeof(AccountEntry), AccountEntry._binding},
-	    {typeof(AccountUser), AccountUser._binding}
+	    {typeof(JmapBase), JmapBase._binding},
+	    {typeof(Relation), Relation._binding}
 		};
 
 
@@ -99,7 +95,7 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
-	static CatalogItem() {
+	static JmapBaseSchema() {
 		_Initialize();
 		}
 
@@ -128,44 +124,55 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 	// Transaction Classes
 
 	/// <summary>
-	///
-	/// Represents a Mesh Account.
 	/// </summary>
-abstract public partial class AccountEntry : CatalogedEntry {
+public partial class JmapBase : JmapBaseSchema {
         /// <summary>
-        ///Subdirectory containing the catalogs and spools for the account.
+        /// This specifies the type that this object represents. The allowed value 
+        /// differs by object type and is defined in Sections 2.1, 2.2, and 2.3.
         /// </summary>
 
-	[JsonPropertyName("Directory")]
-	public virtual string?					Directory  {get; set;}
+	[JsonPropertyName("@type")]
+	public virtual string?					Type  {get; set;}
 
         /// <summary>
-        ///The fingerprint of the profile
+        /// This is a globally unique identifier used to associate objects representing
+        /// the same item. Updates to the document describing the same item MUST have the 
+        ///same UID.
         /// </summary>
 
-	[JsonPropertyName("ProfileUdf")]
-	public virtual string?					ProfileUdf  {get; set;}
+	[JsonPropertyName("uid")]
+	public virtual string?					Uid  {get; set;}
 
         /// <summary>
-        ///The quota assigned to this user in KB
+        /// This relates the object to other JSCalendar objects. This is represented as 
+        /// a map of the UIDs of the related objects to information about the relation.
         /// </summary>
 
-	[JsonPropertyName("Quota")]
-	public virtual int?					Quota  {get; set;}
+	[JsonPropertyName("relatedTo")]
+	public virtual Dictionary<string,Relation>?					RelatedTo  {get; set;}
 
         /// <summary>
-        ///The profile status. Valid values are "Pending", "Connected", "Blocked"
+        /// This is the identifier for the product that last updated the JSCalendar 
+        /// object. This should be set whenever the data in the object is modified 
+        /// (i.e., whenever the updated property is set).
         /// </summary>
 
-	[JsonPropertyName("Status")]
-	public virtual string?					Status  {get; set;}
+	[JsonPropertyName("prodId")]
+	public virtual string?					ProdId  {get; set;}
 
         /// <summary>
-        ///Account address in user@domain format
+        /// This is the date and time this object was initially created.
         /// </summary>
 
-	[JsonPropertyName("LocalAddress")]
-	public virtual string?					LocalAddress  {get; set;}
+	[JsonPropertyName("created")]
+	public virtual DateTime?					Created  {get; set;}
+
+        /// <summary>
+        ///The date and time when the data in the Card was last modified.
+        /// </summary>
+
+	[JsonPropertyName("updated")]
+	public virtual DateTime?					Updated  {get; set;}
 
 
 
@@ -173,27 +180,32 @@ abstract public partial class AccountEntry : CatalogedEntry {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	public static readonly new Binding<AccountEntry> _binding = new (
+	public static readonly new Binding<JmapBase> _binding = new (
 			new() {
 
-			{ "Directory", new PropertyString ("Directory", 
-					(IBinding data, string? value) => {(data as AccountEntry).Directory = value;}, (IBinding data) => (data as AccountEntry).Directory )},
-			{ "ProfileUdf", new PropertyString ("ProfileUdf", 
-					(IBinding data, string? value) => {(data as AccountEntry).ProfileUdf = value;}, (IBinding data) => (data as AccountEntry).ProfileUdf )},
-			{ "Quota", new PropertyInteger32 ("Quota", 
-					(IBinding data, int? value) => {(data as AccountEntry).Quota = value;}, (IBinding data) => (data as AccountEntry).Quota )},
-			{ "Status", new PropertyString ("Status", 
-					(IBinding data, string? value) => {(data as AccountEntry).Status = value;}, (IBinding data) => (data as AccountEntry).Status )},
-			{ "LocalAddress", new PropertyString ("LocalAddress", 
-					(IBinding data, string? value) => {(data as AccountEntry).LocalAddress = value;}, (IBinding data) => (data as AccountEntry).LocalAddress )}
-        }, __Tag,null, null, null,CatalogedEntry._binding);
+			{ "@type", new PropertyStringTag ("@type", 
+					(IBinding data, string? value) => {(data as JmapBase).Type = value;}, (IBinding data) => (data as JmapBase).Type )},
+			{ "uid", new PropertyString ("uid", 
+					(IBinding data, string? value) => {(data as JmapBase).Uid = value;}, (IBinding data) => (data as JmapBase).Uid )},
+			{ "relatedTo", new PropertyDictionaryStruct ("relatedTo", typeof (Relation),
+					(IBinding data, object? value) => {(data as JmapBase).RelatedTo = value as Dictionary<string,Relation>;}, (IBinding data) => (data as JmapBase).RelatedTo,
+					false, ()=>new  Dictionary<string,Relation>(), ()=>new Relation(),
+					(IBinding data) => (data as JmapBase).RelatedTo.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Relation>).Add (key as string,value as Relation);})},
+			{ "prodId", new PropertyString ("prodId", 
+					(IBinding data, string? value) => {(data as JmapBase).ProdId = value;}, (IBinding data) => (data as JmapBase).ProdId )},
+			{ "created", new PropertyDateTime ("created", 
+					(IBinding data, DateTime? value) => {(data as JmapBase).Created = value;}, (IBinding data) => (data as JmapBase).Created )},
+			{ "updated", new PropertyDateTime ("updated", 
+					(IBinding data, DateTime? value) => {(data as JmapBase).Updated = value;}, (IBinding data) => (data as JmapBase).Updated )}
+        }, __Tag,() => new JmapBase(), () => new List<JmapBase>(), () => new Dictionary<string,JmapBase>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(CatalogedEntry._binding, _binding);
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
 
 
     ///<inheritdoc/>
@@ -215,13 +227,13 @@ abstract public partial class AccountEntry : CatalogedEntry {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "AccountEntry";
+	public new const string __Tag = "JmapBase";
 
 	/// <summary>
-    /// Factory method. Throws exception as this is an abstract class.
+    /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
+	public static new JsonObject _Factory () => new JmapBase();
 
 
     /// <summary>
@@ -230,15 +242,18 @@ abstract public partial class AccountEntry : CatalogedEntry {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new AccountEntry FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new JmapBase FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as AccountEntry;
+			return Out as JmapBase;
 			}
-		throw new CannotCreateAbstract();
+		var Result = new JmapBase ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
 		}
 
 
@@ -246,24 +261,14 @@ abstract public partial class AccountEntry : CatalogedEntry {
 
 
 	/// <summary>
-	///
-	/// Represents a Mesh Account
 	/// </summary>
-public partial class AccountUser : AccountEntry {
+public partial class Relation : JmapBaseSchema {
         /// <summary>
-        ///The signed assertion describing the account.
+        /// The relationships, each one MUST have the value true.
         /// </summary>
 
-	[JsonPropertyName("EnvelopedProfileUser")]
-	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileUser  {get; set;}
-
-        /// <summary>
-        ///The enveloped assignment describing how the client should
-        ///discover the host and encrypt data to it.
-        /// </summary>
-
-	[JsonPropertyName("EnvelopedAccountHostAssignment")]
-	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;}
+	[JsonPropertyName("relationships")]
+	public virtual Dictionary<string,bool>?					Relationships  {get; set;}
 
 
 
@@ -271,23 +276,18 @@ public partial class AccountUser : AccountEntry {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	public static readonly new Binding<AccountUser> _binding = new (
+	public static readonly new Binding<Relation> _binding = new (
 			new() {
 
-			{ "EnvelopedProfileUser", new PropertyStruct ("EnvelopedProfileUser", typeof (Enveloped<ProfileAccount>),
-					(IBinding data, object? value) => {(data as AccountUser).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as AccountUser).EnvelopedProfileUser,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
-			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped<AccountHostAssignment>),
-					(IBinding data, object? value) => {(data as AccountUser).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as AccountUser).EnvelopedAccountHostAssignment,
-					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())}
-        }, __Tag,() => new AccountUser(), () => new List<AccountUser>(), () => new Dictionary<string,AccountUser>(),AccountEntry._binding);
+			{ "relationships", new PropertyDictionaryBoolean ("relationships", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as Relation).Relationships = value;}, (IBinding data) => (data as Relation).Relationships )}
+        }, __Tag,() => new Relation(), () => new List<Relation>(), () => new Dictionary<string,Relation>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(AccountEntry._binding, _binding);
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
 
 
     ///<inheritdoc/>
@@ -309,13 +309,13 @@ public partial class AccountUser : AccountEntry {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "AccountUser";
+	public new const string __Tag = "Relation";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new AccountUser();
+	public static new JsonObject _Factory () => new Relation();
 
 
     /// <summary>
@@ -324,15 +324,15 @@ public partial class AccountUser : AccountEntry {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new AccountUser FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new Relation FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as AccountUser;
+			return Out as Relation;
 			}
-		var Result = new AccountUser ();
+		var Result = new Relation ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

@@ -24,11 +24,15 @@ LinkFiles = \
     Goedel.Protocol.dll
 
 ToolTargets = \
+	JmapBase.cs\
 	CalendarSchema.cs\
 	DeviceSchema.cs\
 	ContactSchema.cs\
 	Exceptions.cs\
 	ContactConstants.cs
+JmapBase.cs : JmapBase.Protocol 
+	protogen JmapBase.Protocol  /cs  JmapBase.cs
+
 CalendarSchema.cs : CalendarSchema.Protocol 
 	protogen CalendarSchema.Protocol  /cs  CalendarSchema.cs
 

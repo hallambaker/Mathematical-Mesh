@@ -1,0 +1,50 @@
+﻿Protocol Goedel.Contacts  JmapBaseSchema JmapBaseSchema
+	CamelCase
+	Structure JmapBase
+		// 4.1. Metadata Properties
+		// 4.1.1. @type
+		String					Type
+			Tag "@type"
+			TypeTag
+			Required
+			Description
+				| This specifies the type that this object represents. The allowed value 
+				| differs by object type and is defined in Sections 2.1, 2.2, and 2.3.
+
+		// 4.1.2. uid
+		String					Uid 
+			Required
+			Description
+				| This is a globally unique identifier used to associate objects representing
+				| the same item. Updates to the document describing the same item MUST have the 
+				|same UID.
+
+		// 4.1.3. relatedTo
+		Struct Relation			RelatedTo
+			Dictionary
+			Description
+				| This relates the object to other objects. This is represented as 
+				| a map of the UIDs of the related objects to information about the relation.
+
+		// 4.1.4. prodId
+		String					ProdId
+			Description
+				| This is the identifier for the product that last updated the JSCalendar 
+				| object. This should be set whenever the data in the object is modified 
+				| (i.e., whenever the updated property is set).
+
+		// 4.1.5. created
+		DateTime				Created
+			Description
+				| This is the date and time this object was initially created.
+
+		// 4.1.6. updated
+		DateTime				Updated
+			Description
+				|The date and time when the data in the Card was last modified.
+
+	Structure Relation
+		Boolean					Relationships
+			Dictionary
+			Description
+				| The relationships, each one MUST have the value true.

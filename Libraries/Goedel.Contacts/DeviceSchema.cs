@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/2/2025 5:30:24 PM
+//  This file was automatically generated at 5/4/2025 5:41:08 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -75,13 +75,16 @@ public abstract partial class Devices : global::Goedel.Protocol.JsonObject {
 			new () {
 
 	    {"Device", JsDevice._Factory},
+	    {"Protocol", Protocol._Factory},
 	    {"Bootstrap", Bootstrap._Factory},
 	    {"Provisioning", Provisioning._Factory},
 	    {"Network", Network._Factory},
 	    {"Service", Service._Factory},
 	    {"Maintenance", Maintenance._Factory},
+	    {"MaintenanceEvent", MaintenanceEvent._Factory},
 	    {"Consumable", Consumable._Factory},
-	    {"Accessory", Accessory._Factory}
+	    {"Accessory", Accessory._Factory},
+	    {"Supplier", Supplier._Factory}
 		};
 
 
@@ -93,13 +96,16 @@ public abstract partial class Devices : global::Goedel.Protocol.JsonObject {
 			new () {
 
 	    {typeof(JsDevice), JsDevice._binding},
+	    {typeof(Protocol), Protocol._binding},
 	    {typeof(Bootstrap), Bootstrap._binding},
 	    {typeof(Provisioning), Provisioning._binding},
 	    {typeof(Network), Network._binding},
 	    {typeof(Service), Service._binding},
 	    {typeof(Maintenance), Maintenance._binding},
+	    {typeof(MaintenanceEvent), MaintenanceEvent._binding},
 	    {typeof(Consumable), Consumable._binding},
-	    {typeof(Accessory), Accessory._binding}
+	    {typeof(Accessory), Accessory._binding},
+	    {typeof(Supplier), Supplier._binding}
 		};
 
 
@@ -141,7 +147,8 @@ public abstract partial class Devices : global::Goedel.Protocol.JsonObject {
 	/// </summary>
 public partial class JsDevice : JmapBase {
         /// <summary>
-        /// The JSContact version of this Card. If specified, value MUST be '1.0'
+        ///The JSDevice version of this description. The value MUST be one 
+        ///of the IANA-registered JSDevice Version values for the version property. 
         /// </summary>
 
 	[JsonPropertyName("version")]
@@ -269,6 +276,12 @@ public partial class JsDevice : JmapBase {
 	[JsonPropertyName("accessories")]
 	public virtual List<Accessory>?					Accessories  {get; set;}
         /// <summary>
+        ///
+        /// </summary>
+
+	[JsonPropertyName("suppliers")]
+	public virtual List<Supplier>?					Suppliers  {get; set;}
+        /// <summary>
         /// The property values localized to languages other than the main language 
         /// (Section 2.1.5) of the Card. Localizations provide language-specific alternatives 
         /// for existing property values and SHOULD NOT add new properties. The keys in 
@@ -343,6 +356,9 @@ public partial class JsDevice : JmapBase {
 			{ "accessories", new PropertyListStruct ("accessories", typeof (Accessory),
 					(IBinding data, object? value) => {(data as JsDevice).Accessories = value as List<Accessory>;}, (IBinding data) => (data as JsDevice).Accessories,
 					false, ()=>new  List<Accessory>(), ()=>new Accessory())},
+			{ "suppliers", new PropertyListStruct ("suppliers", typeof (Supplier),
+					(IBinding data, object? value) => {(data as JsDevice).Suppliers = value as List<Supplier>;}, (IBinding data) => (data as JsDevice).Suppliers,
+					false, ()=>new  List<Supplier>(), ()=>new Supplier())},
 			{ "localizations", new PropertyDictionaryStruct ("localizations", typeof (PatchObject),
 					(IBinding data, object? value) => {(data as JsDevice).Localizations = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as JsDevice).Localizations,
 					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject(),
@@ -419,7 +435,117 @@ public partial class JsDevice : JmapBase {
 
 	/// <summary>
 	/// </summary>
-public partial class Bootstrap : Devices {
+public partial class Protocol : Devices {
+        /// <summary>
+        ///The Internet Protocol Address(es)
+        /// </summary>
+
+	[JsonPropertyName("address")]
+	public virtual List<string>?					Address  {get; set;}
+        /// <summary>
+        ///The IANA protocol identifier
+        /// </summary>
+
+	[JsonPropertyName("identifier")]
+	public virtual string?					Identifier  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	[JsonPropertyName("port")]
+	public virtual int?					Port  {get; set;}
+
+        /// <summary>
+        /// The identifiers of the set of device keys that MAY be used in combination
+        /// with this protocol
+        /// </summary>
+
+	[JsonPropertyName("keys")]
+	public virtual Dictionary<string,string>?					Keys  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<Protocol> _binding = new (
+			new() {
+
+			{ "address", new PropertyListString ("address", 
+					(IBinding data, List<string>? value) => {(data as Protocol).Address = value;}, (IBinding data) => (data as Protocol).Address )},
+			{ "identifier", new PropertyString ("identifier", 
+					(IBinding data, string? value) => {(data as Protocol).Identifier = value;}, (IBinding data) => (data as Protocol).Identifier )},
+			{ "port", new PropertyInteger32 ("port", 
+					(IBinding data, int? value) => {(data as Protocol).Port = value;}, (IBinding data) => (data as Protocol).Port )},
+			{ "keys", new PropertyDictionaryString ("keys", 
+					(IBinding data, Dictionary<string,string>? value) => {(data as Protocol).Keys = value;}, (IBinding data) => (data as Protocol).Keys )}
+        }, __Tag,() => new Protocol(), () => new List<Protocol>(), () => new Dictionary<string,Protocol>(),null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "Protocol";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new Protocol();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new Protocol FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as Protocol;
+			}
+		var Result = new Protocol ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	///
+	///  
+	/// </summary>
+public partial class Bootstrap : Protocol {
 
 
     ///<summary>Implement IBinding</summary> 
@@ -429,13 +555,14 @@ public partial class Bootstrap : Devices {
 	public static readonly new Binding<Bootstrap> _binding = new (
 			new() {
 
-        }, __Tag,() => new Bootstrap(), () => new List<Bootstrap>(), () => new Dictionary<string,Bootstrap>(),null);
+        }, __Tag,() => new Bootstrap(), () => new List<Bootstrap>(), () => new Dictionary<string,Bootstrap>(),Protocol._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(Protocol._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -491,8 +618,10 @@ public partial class Bootstrap : Devices {
 
 
 	/// <summary>
+	///
+	///  
 	/// </summary>
-public partial class Provisioning : Devices {
+public partial class Provisioning : Protocol {
 
 
     ///<summary>Implement IBinding</summary> 
@@ -502,13 +631,14 @@ public partial class Provisioning : Devices {
 	public static readonly new Binding<Provisioning> _binding = new (
 			new() {
 
-        }, __Tag,() => new Provisioning(), () => new List<Provisioning>(), () => new Dictionary<string,Provisioning>(),null);
+        }, __Tag,() => new Provisioning(), () => new List<Provisioning>(), () => new Dictionary<string,Provisioning>(),Protocol._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(Protocol._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -564,8 +694,10 @@ public partial class Provisioning : Devices {
 
 
 	/// <summary>
+	///
+	///  
 	/// </summary>
-public partial class Network : Devices {
+public partial class Network : Protocol {
 
 
     ///<summary>Implement IBinding</summary> 
@@ -575,13 +707,14 @@ public partial class Network : Devices {
 	public static readonly new Binding<Network> _binding = new (
 			new() {
 
-        }, __Tag,() => new Network(), () => new List<Network>(), () => new Dictionary<string,Network>(),null);
+        }, __Tag,() => new Network(), () => new List<Network>(), () => new Dictionary<string,Network>(),Protocol._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(Protocol._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -637,8 +770,10 @@ public partial class Network : Devices {
 
 
 	/// <summary>
+	///
+	///  
 	/// </summary>
-public partial class Service : Devices {
+public partial class Service : Protocol {
 
 
     ///<summary>Implement IBinding</summary> 
@@ -648,13 +783,14 @@ public partial class Service : Devices {
 	public static readonly new Binding<Service> _binding = new (
 			new() {
 
-        }, __Tag,() => new Service(), () => new List<Service>(), () => new Dictionary<string,Service>(),null);
+        }, __Tag,() => new Service(), () => new List<Service>(), () => new Dictionary<string,Service>(),Protocol._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(Protocol._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -712,6 +848,12 @@ public partial class Service : Devices {
 	/// <summary>
 	/// </summary>
 public partial class Maintenance : Devices {
+        /// <summary>
+        /// List of maintenance events associated with the device.
+        /// </summary>
+
+	[JsonPropertyName("events")]
+	public virtual List<MaintenanceEvent>?					Events  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -721,6 +863,9 @@ public partial class Maintenance : Devices {
 	public static readonly new Binding<Maintenance> _binding = new (
 			new() {
 
+			{ "events", new PropertyListStruct ("events", typeof (MaintenanceEvent),
+					(IBinding data, object? value) => {(data as Maintenance).Events = value as List<MaintenanceEvent>;}, (IBinding data) => (data as Maintenance).Events,
+					false, ()=>new  List<MaintenanceEvent>(), ()=>new MaintenanceEvent())}
         }, __Tag,() => new Maintenance(), () => new List<Maintenance>(), () => new Dictionary<string,Maintenance>(),null);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -783,8 +928,146 @@ public partial class Maintenance : Devices {
 
 
 	/// <summary>
+	///
+	///  
+	/// </summary>
+public partial class MaintenanceEvent : Resource {
+        /// <summary>
+        ///
+        /// </summary>
+
+	[JsonPropertyName("recurring")]
+	public virtual bool?					Recurring  {get; set;}
+
+        /// <summary>
+        ///
+        /// </summary>
+
+	[JsonPropertyName("days")]
+	public virtual int?					Days  {get; set;}
+
+        /// <summary>
+        ///
+        /// </summary>
+
+	[JsonPropertyName("months")]
+	public virtual int?					Months  {get; set;}
+
+        /// <summary>
+        ///
+        /// </summary>
+
+	[JsonPropertyName("years")]
+	public virtual int?					Years  {get; set;}
+
+        /// <summary>
+        ///
+        /// </summary>
+
+	[JsonPropertyName("endSupport")]
+	public virtual DateTime?					EndSupport  {get; set;}
+
+        /// <summary>
+        ///
+        /// </summary>
+
+	[JsonPropertyName("endLife")]
+	public virtual DateTime?					EndLife  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<MaintenanceEvent> _binding = new (
+			new() {
+
+			{ "recurring", new PropertyBoolean ("recurring", 
+					(IBinding data, bool? value) => {(data as MaintenanceEvent).Recurring = value;}, (IBinding data) => (data as MaintenanceEvent).Recurring )},
+			{ "days", new PropertyInteger32 ("days", 
+					(IBinding data, int? value) => {(data as MaintenanceEvent).Days = value;}, (IBinding data) => (data as MaintenanceEvent).Days )},
+			{ "months", new PropertyInteger32 ("months", 
+					(IBinding data, int? value) => {(data as MaintenanceEvent).Months = value;}, (IBinding data) => (data as MaintenanceEvent).Months )},
+			{ "years", new PropertyInteger32 ("years", 
+					(IBinding data, int? value) => {(data as MaintenanceEvent).Years = value;}, (IBinding data) => (data as MaintenanceEvent).Years )},
+			{ "endSupport", new PropertyDateTime ("endSupport", 
+					(IBinding data, DateTime? value) => {(data as MaintenanceEvent).EndSupport = value;}, (IBinding data) => (data as MaintenanceEvent).EndSupport )},
+			{ "endLife", new PropertyDateTime ("endLife", 
+					(IBinding data, DateTime? value) => {(data as MaintenanceEvent).EndLife = value;}, (IBinding data) => (data as MaintenanceEvent).EndLife )}
+        }, __Tag,() => new MaintenanceEvent(), () => new List<MaintenanceEvent>(), () => new Dictionary<string,MaintenanceEvent>(),Resource._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(Resource._binding, _binding);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "MaintenanceEvent";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new MaintenanceEvent();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new MaintenanceEvent FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as MaintenanceEvent;
+			}
+		var Result = new MaintenanceEvent ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	///
+	///  
 	/// </summary>
 public partial class Consumable : Resource {
+        /// <summary>
+        ///
+        /// </summary>
+
+	[JsonPropertyName("suppliers")]
+	public virtual List<Supplier>?					Suppliers  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -794,6 +1077,9 @@ public partial class Consumable : Resource {
 	public static readonly new Binding<Consumable> _binding = new (
 			new() {
 
+			{ "suppliers", new PropertyListStruct ("suppliers", typeof (Supplier),
+					(IBinding data, object? value) => {(data as Consumable).Suppliers = value as List<Supplier>;}, (IBinding data) => (data as Consumable).Suppliers,
+					false, ()=>new  List<Supplier>(), ()=>new Supplier())}
         }, __Tag,() => new Consumable(), () => new List<Consumable>(), () => new Dictionary<string,Consumable>(),Resource._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -857,8 +1143,16 @@ public partial class Consumable : Resource {
 
 
 	/// <summary>
+	///
+	///  
 	/// </summary>
 public partial class Accessory : Resource {
+        /// <summary>
+        ///
+        /// </summary>
+
+	[JsonPropertyName("suppliers")]
+	public virtual List<Supplier>?					Suppliers  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -868,6 +1162,9 @@ public partial class Accessory : Resource {
 	public static readonly new Binding<Accessory> _binding = new (
 			new() {
 
+			{ "suppliers", new PropertyListStruct ("suppliers", typeof (Supplier),
+					(IBinding data, object? value) => {(data as Accessory).Suppliers = value as List<Supplier>;}, (IBinding data) => (data as Accessory).Suppliers,
+					false, ()=>new  List<Supplier>(), ()=>new Supplier())}
         }, __Tag,() => new Accessory(), () => new List<Accessory>(), () => new Dictionary<string,Accessory>(),Resource._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -921,6 +1218,82 @@ public partial class Accessory : Resource {
 			return Out as Accessory;
 			}
 		var Result = new Accessory ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	///
+	///  
+	/// </summary>
+public partial class Supplier : Resource {
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<Supplier> _binding = new (
+			new() {
+
+        }, __Tag,() => new Supplier(), () => new List<Supplier>(), () => new Dictionary<string,Supplier>(),Resource._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(Resource._binding, _binding);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "Supplier";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new Supplier();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new Supplier FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as Supplier;
+			}
+		var Result = new Supplier ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;
