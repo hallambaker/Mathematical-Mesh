@@ -165,7 +165,7 @@
 
 		// 2.7.  Multilingual Properties
 		// 2.7.1.  localizations
-		Struct PatchObject		Localizations
+		Struct JsContact	Localizations
 			Dictionary
 			Description
 				| The property values localized to languages other than the main language 
@@ -704,10 +704,10 @@
 
 	// 2.7.  Multilingual Properties
 	// 2.7.1.  localizations
-	Structure PatchObject
-		Inherits				JmapBase
-		Description
-			| A ContactCard used to overwrite parts of a contact card.
+	//Structure PatchObject
+	//	Inherits				JmapBase
+	//	Description
+	//		| A ContactCard used to overwrite parts of a contact card.
 
 
 	// 2.8.  Additional Properties

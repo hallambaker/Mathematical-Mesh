@@ -3,11 +3,6 @@
 	Extern Resource
 	CamelCase
 
-	//  Uses some funky formatting, need to extend the serializer
-	// Where Multiple is marked // Funky
-	//  "member1", "member2"] is encoded as
-	// { "member1" : true, "member2" : true }
-
 	// 2. Card
 	Structure JsDevice
 		Inherits JmapBase
@@ -22,30 +17,16 @@
 				|The JSDevice version of this description. The value MUST be one 
 				|of the IANA-registered JSDevice Version values for the version property. 
 
-
 		String					Kind
 			Description
-				| The kind of the entity the Card represents.
-				| individual: a single person
-				| group: a group of people or entities
-				| org: an organization
-				| location: a named location
-				| device: a device such as an appliance, a computer, or a network element
-				| application: a software application
+				| The kind of the entity described
 		
 		String					Language
 			Description
 				| The language tag, as defined in [RFC5646], that best describes the language 
-				| used for text in the Card, optionally including additional information such 
+				| used for text in the description, optionally including additional information such 
 				| as the script. Note that values MAY be localized in the localizations 
 				| property.
-
-		String					Members
-			Dictionary
-			Description
-				| The set of Cards that are members of this group Card. Each key in the set is 
-				| the uid property value of the member, and each boolean value MUST be "true".
-				| If this property is set, then the value of the kind property MUST be "group"
 
 
 		String					DeviceId
@@ -68,6 +49,19 @@
 			Description
 				| Date of manufacture.
 
+		// 2.7.  Multilingual Properties
+		// 2.7.1.  localizations
+		Struct JsDevice		Localizations
+			Dictionary
+			Description
+				| The property values localized to languages other than the main language 
+				| (Section 2.1.5) of the Card. Localizations provide language-specific alternatives 
+				| for existing property values and SHOULD NOT add new properties. The keys in 
+				| the localizations property value are language tags [RFC5646]; the values 
+				| are of type PatchObject and localize the Card in that language tag. The paths 
+				| in the PatchObject are relative to the Card that includes the localizations
+				| property. A patch MUST NOT target the localizations property.
+
 		Struct Media			Images
 			Multiple
 			Description
@@ -78,21 +72,7 @@
 			Description
 				| Manuals describing the device.
 
-		Struct Bootstrap		Bootstraps
-			Multiple
-			Description
-				| Bootstrap protocols supported.
 
-		Struct Provisioning		Provisioning
-			Multiple
-			Description
-				| Provisioning protocols supported for acquisition of DNS names, IP addresses,
-				| etc.
-
-		Struct Service			Services
-			Multiple
-			Description
-				| Services supported by the device.
 
 		Struct Maintenance		Maintenance
 			Multiple
@@ -122,18 +102,23 @@
 			Description
 				| Suppliers for the device and related accessories.
 
-		// 2.7.  Multilingual Properties
-		// 2.7.1.  localizations
-		Struct PatchObject		Localizations
-			Dictionary
+
+
+		Struct Bootstrap		Bootstraps
+			Multiple
 			Description
-				| The property values localized to languages other than the main language 
-				| (Section 2.1.5) of the Card. Localizations provide language-specific alternatives 
-				| for existing property values and SHOULD NOT add new properties. The keys in 
-				| the localizations property value are language tags [RFC5646]; the values 
-				| are of type PatchObject and localize the Card in that language tag. The paths 
-				| in the PatchObject are relative to the Card that includes the localizations
-				| property. A patch MUST NOT target the localizations property.
+				| Bootstrap protocols supported.
+
+		Struct Provisioning		Provisioning
+			Multiple
+			Description
+				| Provisioning protocols supported for acquisition of DNS names, IP addresses,
+				| etc.
+
+		Struct Service			Services
+			Multiple
+			Description
+				| Services supported by the device.
 
 		// JsonWebKeys
 		Struct CryptoKey		CryptoKeys
@@ -152,11 +137,14 @@
 			Description
 				|The IANA protocol identifier
 		Integer		Port
+		String Endpoints
+			Multiple
 		String					Keys
 			Dictionary
 			Description
 				| The identifiers of the set of device keys that MAY be used in combination
 				| with this protocol
+
 
 	Structure Bootstrap
 		Inherits Protocol
@@ -175,6 +163,9 @@
 		Description
 			| Service protocols supported by the device, e.g. 
 
+		String Permissions
+			Multiple
+
 	Structure Maintenance
 		Description
 			| Maintenance events associated with the device.
@@ -190,9 +181,6 @@
 		Integer	Months
 			Description
 				| Interval months. If specified, the days property is ignored.
-		Integer	Years
-			Description
-				| Interval years. If specified, the days and months properties are ignored.
 
 	Structure Supplier
 		Description

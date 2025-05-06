@@ -228,10 +228,10 @@ public partial class CreateExamples {
         TestFile5.WriteFileNew(TestText5.ToString());
         GitHub = true;
 
-
+        MakeJSDevice();
         MakeEarl();
         MakeJSContact();
-        MakeJSDevice();
+
 
         if (false) {
 
@@ -329,11 +329,11 @@ public partial class CreateExamples {
     public void MakeJSDevice(
             ) {
         SetWorkingDirectory();
-        JSContact = new JsDeviceResults(this);
+        JSDevice = new JsDeviceResults(this);
 
 
         SetOutputDirectory();
-        MakeJSContactExamples(this);
+        MakeJSDeviceExamples(this);
 
         }
 

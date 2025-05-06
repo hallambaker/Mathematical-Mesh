@@ -24,6 +24,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\buildtools\Protogen\Goedel.Tool.Protogen\Goedel.Tool.Protogen.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Discovery\Goedel.Discovery.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.IO\Goedel.IO.csproj" />
@@ -62,6 +63,24 @@
 			<DependentUpon>MakeExamples-2-UDF.script</DependentUpon>
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
+		</Compile>
+
+		<Compile Update="IDs\MakeExamples-JsContact.cs">
+		  <DependentUpon>MakeExamples-JsContact.script</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+
+		<Compile Update="IDs\MakeExamples-JsDevice.cs">
+			<DependentUpon>MakeExamples-JsDevice.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
+
+		<Compile Update="IDs\MakeExamples-Earl.cs">
+		  <DependentUpon>MakeExamples-Earl.script</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
 		</Compile>
 
 		<Compile Update="IDs\MakeExamples-3-Dare.cs">
@@ -206,6 +225,21 @@
 		<None Update="IDs\MakeExamples-2-UDF.script">
 			<LastGenOutput>MakeExamples-2-UDF.cs</LastGenOutput>
 			<Generator>gscript</Generator>
+		</None>
+
+		<None Update="IDs\MakeExamples-Earl.script">
+		  <LastGenOutput>MakeExamples-Earl.cs</LastGenOutput>
+		  <Generator>gscript</Generator>
+		</None>
+
+		<None Update="IDs\MakeExamples-JsContact.script">
+		  <LastGenOutput>MakeExamples-JsContact</LastGenOutput>
+		  <Generator>gscript</Generator>
+		</None>
+
+		<None Update="IDs\MakeExamples-JsDevice.script">
+		  <LastGenOutput>MakeExamples-JsDevice.cs</LastGenOutput>
+		  <Generator>gscript</Generator>
 		</None>
 
 		<None Update="IDs\MakeExamples-3-Dare.script">

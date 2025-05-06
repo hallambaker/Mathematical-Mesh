@@ -125,11 +125,11 @@ public partial class Jmap {
                     }
                 ],
 
-            Guides = [
-                new() {
-                    Uri = "https://media.example.com/Encabulator_2_1.GettingStarted.pdf"
-                    }
-                ],
+            //Guides = [
+            //    new() {
+            //        Uri = "https://media.example.com/Encabulator_2_1.GettingStarted.pdf"
+            //        }
+            //    ],
 
             Images = [
                 new() {

@@ -152,7 +152,7 @@
 				| recurrenceRules property, as described in Section 4.3.
 
 		// 4.3.5. recurrenceOverrides
-		Struct PatchObject		RecurrenceOverrides
+		Struct JsCalendarEntry		RecurrenceOverrides
 			Dictionary
 			Description
 				| Maps recurrence ids (the date-time produced by the recurrence rule) 
@@ -262,7 +262,7 @@
 
 		// 4.6. Multilingual Properties
 		// 4.6.1. localizations
-		Struct PatchObject		Localizations
+		Struct JsCalendarEntry		Localizations
 			Dictionary
 			Description
 				| A map where each key is a language tag [RFC5646], and the 

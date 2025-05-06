@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Configurations>Debug;Release;Yaschema</Configurations>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+	  <DefineConstants>_Github_</DefineConstants>
+  </PropertyGroup>
+	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Command\Goedel.Command.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Discovery\Goedel.Discovery.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.FSR\Goedel.FSR.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.IO\Goedel.IO.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Registry\Goedel.Registry.csproj" />
+    <ProjectReference Include="..\..\..\mmm\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
+  </ItemGroup>
+
+</Project>

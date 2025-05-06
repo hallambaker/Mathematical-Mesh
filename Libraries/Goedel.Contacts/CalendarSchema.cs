@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/4/2025 5:41:08 PM
+//  This file was automatically generated at 5/6/2025 12:30:58 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -322,7 +322,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// </summary>
 
 	[JsonPropertyName("recurrenceOverrides")]
-	public virtual Dictionary<string,PatchObject>?					RecurrenceOverrides  {get; set;}
+	public virtual Dictionary<string,JsCalendarEntry>?					RecurrenceOverrides  {get; set;}
 
         /// <summary>
         /// This defines if this object is an overridden, excluded instance 
@@ -443,7 +443,7 @@ public partial class JsCalendarEntry : JmapBase {
         /// </summary>
 
 	[JsonPropertyName("localizations")]
-	public virtual Dictionary<string,PatchObject>?					Localizations  {get; set;}
+	public virtual Dictionary<string,JsCalendarEntry>?					Localizations  {get; set;}
 
         /// <summary>
         /// This identifies the time zone the object is scheduled in or
@@ -522,12 +522,12 @@ public partial class JsCalendarEntry : JmapBase {
 			{ "excludedRecurrenceRules", new PropertyListStruct ("excludedRecurrenceRules", typeof (RecurrenceRule),
 					(IBinding data, object? value) => {(data as JsCalendarEntry).ExcludedRecurrenceRules = value as List<RecurrenceRule>;}, (IBinding data) => (data as JsCalendarEntry).ExcludedRecurrenceRules,
 					false, ()=>new  List<RecurrenceRule>(), ()=>new RecurrenceRule())},
-			{ "recurrenceOverrides", new PropertyDictionaryStruct ("recurrenceOverrides", typeof (PatchObject),
-					(IBinding data, object? value) => {(data as JsCalendarEntry).RecurrenceOverrides = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as JsCalendarEntry).RecurrenceOverrides,
-					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject(),
+			{ "recurrenceOverrides", new PropertyDictionaryStruct ("recurrenceOverrides", typeof (JsCalendarEntry),
+					(IBinding data, object? value) => {(data as JsCalendarEntry).RecurrenceOverrides = value as Dictionary<string,JsCalendarEntry>;}, (IBinding data) => (data as JsCalendarEntry).RecurrenceOverrides,
+					false, ()=>new  Dictionary<string,JsCalendarEntry>(), ()=>new JsCalendarEntry(),
 					(IBinding data) => (data as JsCalendarEntry).RecurrenceOverrides.GetEnumerable(),
 					(object dictionary, object key, object value) =>
-						 {(dictionary as Dictionary<string,PatchObject>).Add (key as string,value as PatchObject);})},
+						 {(dictionary as Dictionary<string,JsCalendarEntry>).Add (key as string,value as JsCalendarEntry);})},
 			{ "excluded", new PropertyBoolean ("excluded", 
 					(IBinding data, bool? value) => {(data as JsCalendarEntry).Excluded = value;}, (IBinding data) => (data as JsCalendarEntry).Excluded )},
 			{ "priority", new PropertyInteger32 ("priority", 
@@ -556,12 +556,12 @@ public partial class JsCalendarEntry : JmapBase {
 					(IBinding data) => (data as JsCalendarEntry).Alerts.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Alert>).Add (key as string,value as Alert);})},
-			{ "localizations", new PropertyDictionaryStruct ("localizations", typeof (PatchObject),
-					(IBinding data, object? value) => {(data as JsCalendarEntry).Localizations = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as JsCalendarEntry).Localizations,
-					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject(),
+			{ "localizations", new PropertyDictionaryStruct ("localizations", typeof (JsCalendarEntry),
+					(IBinding data, object? value) => {(data as JsCalendarEntry).Localizations = value as Dictionary<string,JsCalendarEntry>;}, (IBinding data) => (data as JsCalendarEntry).Localizations,
+					false, ()=>new  Dictionary<string,JsCalendarEntry>(), ()=>new JsCalendarEntry(),
 					(IBinding data) => (data as JsCalendarEntry).Localizations.GetEnumerable(),
 					(object dictionary, object key, object value) =>
-						 {(dictionary as Dictionary<string,PatchObject>).Add (key as string,value as PatchObject);})},
+						 {(dictionary as Dictionary<string,JsCalendarEntry>).Add (key as string,value as JsCalendarEntry);})},
 			{ "timeZone", new PropertyString ("timeZone", 
 					(IBinding data, string? value) => {(data as JsCalendarEntry).TimeZone = value;}, (IBinding data) => (data as JsCalendarEntry).TimeZone )},
 			{ "timeZones", new PropertyDictionaryStruct ("timeZones", typeof (TimeZone),

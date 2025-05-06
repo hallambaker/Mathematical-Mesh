@@ -41,6 +41,9 @@ ToolTargets = \
 	Exceptions.cs\
 	IDs\MakeExamples-1-architecture.cs\
 	IDs\MakeExamples-2-UDF.cs\
+	IDs\MakeExamples-Earl.cs\
+	IDs\MakeExamples-JsContact.cs\
+	IDs\MakeExamples-JsDevice.cs\
 	IDs\MakeExamples-3-Dare.cs\
 	IDs\MakeExamples-4-Schema.cs\
 	IDs\MakeExamples-6-Presentation.cs\
@@ -72,6 +75,15 @@ IDs\MakeExamples-1-architecture.cs : IDs\MakeExamples-1-architecture.script
 
 IDs\MakeExamples-2-UDF.cs : IDs\MakeExamples-2-UDF.script 
 	gscript IDs\MakeExamples-2-UDF.script  IDs\MakeExamples-2-UDF.cs
+
+IDs\MakeExamples-Earl.cs : IDs\MakeExamples-Earl.script 
+	gscript IDs\MakeExamples-Earl.script  IDs\MakeExamples-Earl.cs
+
+IDs\MakeExamples-JsContact.cs : IDs\MakeExamples-JsContact.script 
+	gscript IDs\MakeExamples-JsContact.script  IDs\MakeExamples-JsContact.cs
+
+IDs\MakeExamples-JsDevice.cs : IDs\MakeExamples-JsDevice.script 
+	gscript IDs\MakeExamples-JsDevice.script  IDs\MakeExamples-JsDevice.cs
 
 IDs\MakeExamples-3-Dare.cs : IDs\MakeExamples-3-Dare.script 
 	gscript IDs\MakeExamples-3-Dare.script  IDs\MakeExamples-3-Dare.cs

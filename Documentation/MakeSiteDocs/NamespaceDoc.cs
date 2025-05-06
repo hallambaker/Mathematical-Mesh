@@ -21,6 +21,7 @@
 #endregion
 
 global using Goedel.Contacts;
+global using Goedel.Registry;
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]

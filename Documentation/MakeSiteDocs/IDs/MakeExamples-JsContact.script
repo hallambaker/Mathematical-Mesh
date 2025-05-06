@@ -1,0 +1,206 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Protocol
+#using Goedel.Utilities
+#using Goedel.Cryptography
+#using Goedel.Cryptography.Dare
+#% #pragma warning disable IDE0022
+#% #pragma warning disable IDE0060
+#% #pragma warning disable IDE1006
+#xclass ExampleGenerator CreateExamples
+
+
+
+#method MakeJSContactExamples CreateExamples Example
+#% JSContactKeys(Example);
+#% JSContactJWK(Example);
+#% JSContactEARL(Example);
+#% JSContactDNS(Example);
+#% JSContactGroups(Example);
+#% JSContactUpdate(Example);
+#% JSContactSMIME(Example);
+#% JSContactOpenPGP(Example);
+#% JSContactSSH(Example);
+#% JSContactCode(Example);
+#% JSContactCommit(Example);
+#end method
+
+
+#method WriteBytesHex byte[] data
+#if (data != null)
+#{data.ToStringBase16FormatHex()}
+#else
+$$$ Missing data $$$
+#end if
+#end method
+
+
+#method2 CardExample string parent JsonObject example
+{
+    "@type":"Card",
+    ...
+    "#{parent}" : #!
+#{JSONDebugWriter.Write(example)},
+    ...
+    }
+#end method2
+
+
+#zfile CreateExamples JSContactKeys "Examples\\JSContactKeys.md" Example
+#% var jscontact = Example.JSContact;
+#% // For example, Bob is trying to send an encrypted email to Alice, her 
+#% //contact card lists two X.509v3 certificates but only one is an encryption 
+#% // certificate with the JWK use parameter:
+~~~~
+#!{JSONDebugWriter.Write(jscontact.EmailAddress)}
+#% CardExample ("emails", jscontact.EmailAddress);
+~~~~
+#end zfile
+
+#zfile CreateExamples JSContactJWK "Examples\\JSContactJWK.md" Example
+#% var jscontact = Example.JSContact;
+~~~~
+#% Write(jscontact.JSContactSmime, true);
+~~~~
+#end zfile
+
+#zfile CreateExamples JSContactEARL "Examples\\JSContactEARL.md" Example
+#% var jscontact = Example.JSContact;
+#% var earl = Example.Earl;
+#{jscontact.EARL}
+#end zfile
+
+#zfile CreateExamples JSContactDNS "Examples\\JSContactDNS.md" Example
+#% var jscontact = Example.JSContact;
+#% var earl = Example.Earl;
+~~~~
+_jscontact.#{CreateExamples.DnsHandleAlice} TXT "jscontact=#{jscontact.EARL}"
+~~~~
+#end zfile
+
+#zfile CreateExamples JSContactGroups "Examples\\JSContactGroups.md" Example
+#% var jscontact = Example.JSContact;
+~~~~
+#! {JSONDebugWriter.Write(jscontact.Group)}
+#% CardExample ("groups", jscontact.Group);
+~~~~
+
+Each group identifier is specified as an online service:
+
+~~~~
+#% Write(jscontact.GroupMembers, true);
+~~~~
+#end zfile
+
+#zfile CreateExamples JSContactUpdate "Examples\\JSContactUpdate.md" Example
+#% var jscontact = Example.JSContact;
+~~~~
+{
+    "@type":"Card",
+    ...
+#% WriteUpdates(jscontact.Contact.Updates);
+    ...
+#% WriteCryptoKeys(jscontact.UpdateKeys);
+    ...
+    }
+~~~~
+#end zfile
+
+#zfile CreateExamples JSContactSMIME "Examples\\JSContactSMIME.md" Example
+#% var jscontact = Example.JSContact;
+~~~~
+#% Write(jscontact.JSContactSmime, true);
+~~~~
+#end zfile
+
+#zfile CreateExamples JSContactOpenPGP "Examples\\JSContactOpenPGP.md" Example
+#% var jscontact = Example.JSContact;
+~~~~
+#% Write(jscontact.JSContactOpenpgp, true);
+~~~~
+#end zfile
+
+#zfile CreateExamples JSContactSSH "Examples\\JSContactSSH.md" Example
+#% var jscontact = Example.JSContact;
+~~~~
+#% Write(jscontact.Ssh);
+
+#% Write(jscontact.SshKeys);
+~~~~
+#end zfile
+
+#zfile CreateExamples JSContactCommit "Examples\\JSContactCommit.md" Example
+#% var jscontact = Example.JSContact;
+~~~~
+#% Write(jscontact.Commit);
+
+#% Write(jscontact.CommitKeys);
+~~~~
+#end zfile
+
+#zfile CreateExamples JSContactCode "Examples\\JSContactCode.md" Example
+#% var jscontact = Example.JSContact;
+~~~~
+#% Write(jscontact.CodeSign);
+
+#% Write(jscontact.CodeSignKeys);
+~~~~
+#end zfile
+
+#method2 Write Dictionary<string,OnlineService> services bool part=false
+{
+    "@type":"Card",
+    ...
+    "onlineServices" : {#!
+#% var sep = new Separator (",\n");
+#foreach (var service in services)
+#{sep}#!
+"#{service.Key}" : #{JSONDebugWriter.Write(service.Value, false)}#!
+#end foreach
+#if (part) 
+
+...
+#end if
+}
+#end method2
+
+#method2 Write Dictionary<string,CryptoKey> jsonKeys bool part=false
+{
+    "@type":"Card",
+    ...
+    "cryptoKeys" : {#!
+#% var sep = new Separator  (",\n");
+#foreach (var jsonKey in jsonKeys)
+#{sep}#!
+"#{jsonKey.Key}" : #{JSONDebugWriter.Write(jsonKey.Value, false)}#!
+#end foreach
+#if (part) 
+
+...
+#end if
+}
+#end method2
+
+#method WriteUpdates Dictionary<string,Update> jsonKeys
+    "updates" : {
+#% var sep = new Separator  (",\n");
+#foreach (var jsonKey in jsonKeys)
+#{sep}#!
+"#{jsonKey.Key}" : #{JSONDebugWriter.Write(jsonKey.Value, false)}#!
+#end foreach
+}
+#end method
+
+
+#method WriteCryptoKeys Dictionary<string,CryptoKey> jsonKeys
+    "cryptoKeys" : {
+#% var sep = new Separator  (",\n");
+#foreach (var jsonKey in jsonKeys)
+#{sep}#!
+"#{jsonKey.Key}" : #{JSONDebugWriter.Write(jsonKey.Value, false)}#!
+#end foreach
+}
+#end method
+
+
+#end xclass

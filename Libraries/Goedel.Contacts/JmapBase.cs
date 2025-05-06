@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/4/2025 5:41:08 PM
+//  This file was automatically generated at 5/6/2025 12:30:57 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -144,7 +144,7 @@ public partial class JmapBase : JmapBaseSchema {
 	public virtual string?					Uid  {get; set;}
 
         /// <summary>
-        /// This relates the object to other JSCalendar objects. This is represented as 
+        /// This relates the object to other objects. This is represented as 
         /// a map of the UIDs of the related objects to information about the relation.
         /// </summary>
 

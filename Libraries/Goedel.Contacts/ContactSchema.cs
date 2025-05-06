@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/4/2025 5:41:09 PM
+//  This file was automatically generated at 5/6/2025 12:30:58 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -96,7 +96,6 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	    {"Directory", ContactDirectory._Factory},
 	    {"ResourceLink", ResourceLink._Factory},
 	    {"Media", Media._Factory},
-	    {"PatchObject", PatchObject._Factory},
 	    {"Anniversary", Anniversary._Factory},
 	    {"TimeStamp", TimeStamp._Factory},
 	    {"Note", Note._Factory},
@@ -137,7 +136,6 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	    {typeof(ContactDirectory), ContactDirectory._binding},
 	    {typeof(ResourceLink), ResourceLink._binding},
 	    {typeof(Media), Media._binding},
-	    {typeof(PatchObject), PatchObject._binding},
 	    {typeof(Anniversary), Anniversary._binding},
 	    {typeof(TimeStamp), TimeStamp._binding},
 	    {typeof(Note), Note._binding},
@@ -366,7 +364,7 @@ public partial class JsContact : JmapBase {
         /// </summary>
 
 	[JsonPropertyName("localizations")]
-	public virtual Dictionary<string,PatchObject>?					Localizations  {get; set;}
+	public virtual Dictionary<string,JsContact>?					Localizations  {get; set;}
 
         /// <summary>
         /// The memorable dates and events for the entity represented by the Card.
@@ -523,12 +521,12 @@ public partial class JsContact : JmapBase {
 					(IBinding data) => (data as JsContact).Media.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Media>).Add (key as string,value as Media);})},
-			{ "localizations", new PropertyDictionaryStruct ("localizations", typeof (PatchObject),
-					(IBinding data, object? value) => {(data as JsContact).Localizations = value as Dictionary<string,PatchObject>;}, (IBinding data) => (data as JsContact).Localizations,
-					false, ()=>new  Dictionary<string,PatchObject>(), ()=>new PatchObject(),
+			{ "localizations", new PropertyDictionaryStruct ("localizations", typeof (JsContact),
+					(IBinding data, object? value) => {(data as JsContact).Localizations = value as Dictionary<string,JsContact>;}, (IBinding data) => (data as JsContact).Localizations,
+					false, ()=>new  Dictionary<string,JsContact>(), ()=>new JsContact(),
 					(IBinding data) => (data as JsContact).Localizations.GetEnumerable(),
 					(object dictionary, object key, object value) =>
-						 {(dictionary as Dictionary<string,PatchObject>).Add (key as string,value as PatchObject);})},
+						 {(dictionary as Dictionary<string,JsContact>).Add (key as string,value as JsContact);})},
 			{ "anniversaries", new PropertyDictionaryStruct ("anniversaries", typeof (Anniversary),
 					(IBinding data, object? value) => {(data as JsContact).Anniversaries = value as Dictionary<string,Anniversary>;}, (IBinding data) => (data as JsContact).Anniversaries,
 					false, ()=>new  Dictionary<string,Anniversary>(), ()=>new Anniversary(),
@@ -3063,82 +3061,6 @@ public partial class Media : Resource {
 			return Out as Media;
 			}
 		var Result = new Media ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-
-
-	}
-
-
-	/// <summary>
-	///
-	///  A ContactCard used to overwrite parts of a contact card.
-	/// </summary>
-public partial class PatchObject : JmapBase {
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<PatchObject> _binding = new (
-			new() {
-
-        }, __Tag,() => new PatchObject(), () => new List<PatchObject>(), () => new Dictionary<string,PatchObject>(),JmapBase._binding);
-
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(JmapBase._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "PatchObject";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new PatchObject();
-
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PatchObject FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PatchObject;
-			}
-		var Result = new PatchObject ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

@@ -3578,57 +3578,6 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Contacts.PatchObject">
-             <summary>
-            
-              A ContactCard used to overwrite parts of a contact card.
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.PatchObject._Binding">
-            <summary>Implement IBinding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.PatchObject._binding">
-            <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.PatchObject._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.PatchObject._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.PatchObject._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.PatchObject._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.PatchObject._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.PatchObject._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Contacts.PatchObject.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Contacts.PatchObject._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.PatchObject.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Anniversary">
              <summary>
             
@@ -4221,104 +4170,41 @@
         </member>
         <member name="P:Goedel.Contacts.JsDevice.Kind">
             <summary>
-            The kind of the entity the Card represents.
-            individual: a single person
-            group: a group of people or entities
-            org: an organization
-            location: a named location
-            device: a device such as an appliance, a computer, or a network element
-            application: a software application
+            The kind of the entity described
             </summary>
         </member>
         <member name="P:Goedel.Contacts.JsDevice.Language">
             <summary>
             The language tag, as defined in [RFC5646], that best describes the language 
-            used for text in the Card, optionally including additional information such 
+            used for text in the description, optionally including additional information such 
             as the script. Note that values MAY be localized in the localizations 
             property.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.JsDevice.Members">
+        <member name="P:Goedel.Contacts.JsDevice.DeviceId">
             <summary>
-            The set of Cards that are members of this group Card. Each key in the set is 
-            the uid property value of the member, and each boolean value MUST be "true".
-            If this property is set, then the value of the kind property MUST be "group"
+            A URI that uniquely identifies the device.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.JsDevice.DeviceId">
-             <summary>
-            
-             </summary>
-        </member>
         <member name="P:Goedel.Contacts.JsDevice.ModelId">
-             <summary>
-            
-             </summary>
+            <summary>
+            A URI that uniquely identifies the device model.
+            </summary>
         </member>
         <member name="P:Goedel.Contacts.JsDevice.ModelName">
-             <summary>
-            
-             </summary>
+            <summary>
+            Human readable model name.
+            </summary>
         </member>
         <member name="P:Goedel.Contacts.JsDevice.Manufacturer">
-             <summary>
-            
-             </summary>
+            <summary>
+            Device manufacturer name.
+            </summary>
         </member>
         <member name="P:Goedel.Contacts.JsDevice.DateManufacture">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice.Images">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice.Manuals">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice.Guides">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice.Bootstraps">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice.Provisioning">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice.Services">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice.Maintenance">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice.Consumables">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice.Accessories">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice.Suppliers">
-             <summary>
-            
-             </summary>
+            <summary>
+            Date of manufacture.
+            </summary>
         </member>
         <member name="P:Goedel.Contacts.JsDevice.Localizations">
             <summary>
@@ -4331,10 +4217,67 @@
             property. A patch MUST NOT target the localizations property.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.JsDevice.JsonWebKeys">
+        <member name="P:Goedel.Contacts.JsDevice.Images">
+            <summary>
+            Photographs and schematics of the device or model.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.Manuals">
+            <summary>
+            Manuals describing the device.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.Maintenance">
+            <summary>
+            List of maintenance events associated with the device.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.EndSupport">
+            <summary>
+            Date at which support for the device is scheduled to end.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.EndLife">
+            <summary>
+            Date at which it is advised the device be taken out of service.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.Consumables">
+            <summary>
+            Consumables related to the device. For example, ink cartridges, parts
+            likely to wear etc.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.Accessories">
+            <summary>
+            Accessories related to the device. For example paper handlers.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.Suppliers">
+            <summary>
+            Suppliers for the device and related accessories.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.Bootstraps">
+            <summary>
+            Bootstrap protocols supported.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.Provisioning">
+            <summary>
+            Provisioning protocols supported for acquisition of DNS names, IP addresses,
+            etc.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.Services">
+            <summary>
+            Services supported by the device.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.CryptoKeys">
             <summary>
             The cryptographic resources such as public keys and certificates associated 
-            with the entity represented by the Card.
+            with the device
             </summary>
         </member>
         <member name="P:Goedel.Contacts.JsDevice._Binding">
@@ -4400,6 +4343,10 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Protocol.Endpoints">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Contacts.Protocol.Keys">
             <summary>
             The identifiers of the set of device keys that MAY be used in combination
@@ -4454,7 +4401,8 @@
         <member name="T:Goedel.Contacts.Bootstrap">
              <summary>
             
-              
+              Bootstrap protocol configuration that MAY be used to provide initial
+              network capabilities to the device.
              </summary>
         </member>
         <member name="P:Goedel.Contacts.Bootstrap._Binding">
@@ -4505,7 +4453,8 @@
         <member name="T:Goedel.Contacts.Provisioning">
              <summary>
             
-              
+              Provisioning protocol configuration that MAY be used to provision necessary
+             network identifiers (e.g. Internet Addresses, DNS names, etc.)
              </summary>
         </member>
         <member name="P:Goedel.Contacts.Provisioning._Binding">
@@ -4553,62 +4502,15 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Contacts.Network">
-             <summary>
-            
-              
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.Network._Binding">
-            <summary>Implement IBinding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Network._binding">
-            <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Network._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Network._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Network._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Network._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Network._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Network._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Contacts.Network.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Contacts.Network._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.Network.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Service">
              <summary>
             
-              
+              Service protocols supported by the device, e.g. 
              </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Service.Permissions">
+            <summary>
+            </summary>
         </member>
         <member name="P:Goedel.Contacts.Service._Binding">
             <summary>Implement IBinding</summary> 
@@ -4656,12 +4558,26 @@
             <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.Maintenance">
+             <summary>
+            
+              Maintenance events associated with the device.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Maintenance.Recurring">
+             <summary>
+             If true (default), the mainenance event recurs as specified by the
+            days, months and years properties. If false, the maintenance event 
+             is a one-time operation occuring the specified interval after installation.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Maintenance.Days">
             <summary>
+            Interval days.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Maintenance.Events">
+        <member name="P:Goedel.Contacts.Maintenance.Months">
             <summary>
-            List of maintenance events associated with the device.
+            Interval months. If specified, the days property is ignored.
             </summary>
         </member>
         <member name="P:Goedel.Contacts.Maintenance._Binding">
@@ -4709,80 +4625,113 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Contacts.MaintenanceEvent">
+        <member name="T:Goedel.Contacts.Supplier">
              <summary>
             
-              
+              Suppliers for devices and accessories related to the device.
              </summary>
         </member>
-        <member name="P:Goedel.Contacts.MaintenanceEvent.Recurring">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.MaintenanceEvent.Days">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.MaintenanceEvent.Months">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.MaintenanceEvent.Years">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.MaintenanceEvent.EndSupport">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.MaintenanceEvent.EndLife">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.MaintenanceEvent._Binding">
+        <member name="P:Goedel.Contacts.Supplier._Binding">
             <summary>Implement IBinding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.MaintenanceEvent._binding">
+        <member name="F:Goedel.Contacts.Supplier._binding">
             <summary>Binding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.MaintenanceEvent._StaticProperties">
+        <member name="F:Goedel.Contacts.Supplier._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="F:Goedel.Contacts.MaintenanceEvent._StaticAllProperties">
+        <member name="F:Goedel.Contacts.Supplier._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="P:Goedel.Contacts.MaintenanceEvent._AllProperties">
+        <member name="P:Goedel.Contacts.Supplier._AllProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.MaintenanceEvent._Properties">
+        <member name="P:Goedel.Contacts.Supplier._Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.MaintenanceEvent._ParentProperties">
+        <member name="P:Goedel.Contacts.Supplier._ParentProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.MaintenanceEvent._Tag">
+        <member name="P:Goedel.Contacts.Supplier._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Contacts.MaintenanceEvent.__Tag">
+        <member name="F:Goedel.Contacts.Supplier.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Contacts.MaintenanceEvent._Factory">
+        <member name="M:Goedel.Contacts.Supplier._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.MaintenanceEvent.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Contacts.Supplier.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.RelatedItem">
+             <summary>
+            
+              A related accessory, consumable or part
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RelatedItem.ModelId">
+             <summary>
+            A list of URIs specifying model identifiers. These MAY include
+            related variations of the same item. For example, different 
+            sizes of the same color ink.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RelatedItem.Suppliers">
+             <summary>
+            A list of URIs linking to suppliers for the consumable.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.RelatedItem._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.RelatedItem._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.RelatedItem._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.RelatedItem._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.RelatedItem._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.RelatedItem._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.RelatedItem._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.RelatedItem._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.RelatedItem.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.RelatedItem._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.RelatedItem.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -4793,12 +4742,7 @@
         <member name="T:Goedel.Contacts.Consumable">
              <summary>
             
-              
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.Consumable.Suppliers">
-             <summary>
-            
+              A consumable compatible with the device.
              </summary>
         </member>
         <member name="P:Goedel.Contacts.Consumable._Binding">
@@ -4849,12 +4793,7 @@
         <member name="T:Goedel.Contacts.Accessory">
              <summary>
             
-              
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.Accessory.Suppliers">
-             <summary>
-            
+              An accessory compatible with the device.
              </summary>
         </member>
         <member name="P:Goedel.Contacts.Accessory._Binding">
@@ -4895,57 +4834,6 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Contacts.Accessory.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="T:Goedel.Contacts.Supplier">
-             <summary>
-            
-              
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.Supplier._Binding">
-            <summary>Implement IBinding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Supplier._binding">
-            <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Supplier._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Supplier._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Supplier._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Supplier._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Supplier._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Supplier._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Contacts.Supplier.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Contacts.Supplier._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.Supplier.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -5034,7 +4922,7 @@
         </member>
         <member name="P:Goedel.Contacts.JmapBase.RelatedTo">
             <summary>
-            This relates the object to other JSCalendar objects. This is represented as 
+            This relates the object to other objects. This is represented as 
             a map of the UIDs of the related objects to information about the relation.
             </summary>
         </member>
