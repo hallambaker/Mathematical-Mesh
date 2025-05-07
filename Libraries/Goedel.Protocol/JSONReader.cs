@@ -257,6 +257,9 @@ public partial class JsonReader : Reader {
     /// <summary>The current token binary values</summary>
     public virtual byte[] ResultBinary { get; set; }
 
+    /// <summary>The current token binary values</summary>
+    public virtual DateTime ResultDateTime { get; set; }
+
     /// <summary>Last Real32/single precision floating point values.</summary>
     public float ResultFloat;
 
@@ -524,44 +527,7 @@ public partial class JsonReader : Reader {
                 return false; // end of object reached
                 }
 
-            case Token.Invalid:
-            break;
-            case Token.StartObject:
-            break;
-            case Token.StartArray:
-            break;
-            case Token.EndArray:
-            break;
-            case Token.Colon:
-            break;
-            case Token.String:
-            break;
-            case Token.Tag:
-            break;
-            case Token.Number:
-            break;
-            case Token.Integer:
-            break;
-            case Token.Real32:
-            break;
-            case Token.Real64:
-            break;
-            case Token.Litteral:
-            break;
-            case Token.True:
-            break;
-            case Token.False:
-            break;
-            case Token.Null:
-            break;
-            case Token.EndRecord:
-            break;
-            case Token.Binary:
-            break;
-            case Token.JSONBCD:
-            break;
-            case Token.Empty:
-            break;
+
             default:
             break;
             }

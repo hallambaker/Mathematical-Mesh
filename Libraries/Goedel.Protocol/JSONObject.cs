@@ -29,6 +29,7 @@ using Goedel.Cryptography.Nist;
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace Goedel.Protocol;
 
@@ -138,6 +139,11 @@ public abstract partial class JsonObject : IBinding {
     ///<summary>Dictionary mapping types to binding definitions.</summary> 
     public static Dictionary<Type, Binding> BindingDictionary = [];
 
+    ///<summary>Dictionary mapping types to binding definitions.</summary> 
+    public static Dictionary<string, Binding> BindingNameDictionary = [];
+
+
+
     /// <summary>
     /// Add a dictionary to the persistence store decoder.
     /// </summary>
@@ -173,6 +179,12 @@ public abstract partial class JsonObject : IBinding {
             if (!BindingDictionary.ContainsKey(pair.Key)) {
                 BindingDictionary.Add (pair.Key, binding);
                 }
+
+            if (!BindingNameDictionary.ContainsKey(binding.Tag)) {
+                BindingNameDictionary.Add(binding.Tag, binding);
+                }
+
+
             binding.TypeDictionary.Add(binding.Tag, binding);
             AddToParents(binding, binding.Parent);
             }
@@ -444,12 +456,12 @@ public abstract partial class JsonObject : IBinding {
 
         bool going = jsonReader.StartObject();
         while (going) {
-            string Token = jsonReader.ReadToken();
-            if (Token == null) {
+            string tag = jsonReader.ReadToken();
+            if (tag == null) {
                 going = false;
                 }
             else {
-                DeserializeToken3(jsonReader, Token);
+                DeserializeToken3(jsonReader, tag);
 
                 going = jsonReader.NextObject();
                 }
@@ -849,6 +861,39 @@ public abstract partial class JsonObject : IBinding {
         return Parse(element, binding, collectUparsed) as T;
         }
 
+    public static JsonObject Parse(
+                byte[] data,
+                bool collectUparsed = false) {
+
+        var reader = new JsonBcdReader(data);
+        var element = JsonElement2.Parse(reader);
+
+        //var document = JsonDocument.Parse(data);
+
+        (element.Properties.Count == 1).AssertTrue(NYI.Throw);
+        var typename = element.Properties[0].Name;
+
+        if (!BindingNameDictionary.TryGetValue(typename, out var binding)){
+            throw new NYI();
+            }
+
+        // Here we look at the root element, find the binding in the Tag dictionaries
+
+        //if (document.RootElement.ValueKind != JsonValueKind.Object) {
+        //    throw new NYI();
+        //    }
+
+        ////if 
+
+
+        //return Parse(document.RootElement, binding, collectUparsed);
+
+
+        throw new NYI();
+        }
+
+
+
 
     /// <summary>
     /// Parse the JSON element <paramref name="element"/> returning a JsonObject
@@ -918,7 +963,7 @@ public abstract partial class JsonObject : IBinding {
                     }
                 if (element.ValueKind == JsonValueKind.False) {
                     subProperty.Set(target, false);
-                    return false;
+                    return true;
                     }
                 return false;
                 }

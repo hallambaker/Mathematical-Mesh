@@ -3063,6 +3063,9 @@
         <member name="F:Goedel.Protocol.JsonObject.BindingDictionary">
             <summary>Dictionary mapping types to binding definitions.</summary> 
         </member>
+        <member name="F:Goedel.Protocol.JsonObject.BindingNameDictionary">
+            <summary>Dictionary mapping types to binding definitions.</summary> 
+        </member>
         <member name="M:Goedel.Protocol.JsonObject.AddDictionary(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate})">
             <summary>
             Add a dictionary to the persistence store decoder.

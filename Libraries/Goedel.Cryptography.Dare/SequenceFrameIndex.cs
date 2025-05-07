@@ -430,6 +430,9 @@ public partial class SequenceIndexEntry : DareEnvelope {
             }
 
         //var text = bytes.ToUTF8();
+
+
+        Parse(bytes);
         var result = bytes.JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
         result.Enveloped = this;
 

@@ -324,6 +324,7 @@ public partial class CreateExamples {
     public void MakeJSContact(
             ) {
         SetWorkingDirectory();
+        
         JSContact = new JsContactResults(this);
 
 
