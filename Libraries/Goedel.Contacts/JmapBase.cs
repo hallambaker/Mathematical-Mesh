@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/7/2025 12:44:05 AM
+//  This file was automatically generated at 5/7/2025 1:23:07 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -135,8 +135,8 @@ public partial class JmapBase : JmapBaseSchema {
 	public virtual string?					Type  {get; set;}
 
         /// <summary>
-        /// This is a globally unique identifier used to associate objects representing
-        /// the same item. Updates to the document describing the same item MUST have the 
+        ///This is a globally unique identifier used to associate objects representing
+        ///the same item. Updates to the document describing the same item MUST have the 
         ///same UID.
         /// </summary>
 
@@ -144,31 +144,23 @@ public partial class JmapBase : JmapBaseSchema {
 	public virtual string?					Uid  {get; set;}
 
         /// <summary>
-        /// This relates the object to other objects. This is represented as 
-        /// a map of the UIDs of the related objects to information about the relation.
-        /// </summary>
-
-	[JsonPropertyName("relatedTo")]
-	public virtual Dictionary<string,Relation>?					RelatedTo  {get; set;}
-
-        /// <summary>
-        /// This is the identifier for the product that last updated the JSCalendar 
-        /// object. This should be set whenever the data in the object is modified 
-        /// (i.e., whenever the updated property is set).
+        ///An identifier for the product that last updated the JSCalendar 
+        ///object. This should be set whenever the data in the object is modified 
+        ///(i.e., whenever the updated property is set).
         /// </summary>
 
 	[JsonPropertyName("prodId")]
 	public virtual string?					ProdId  {get; set;}
 
         /// <summary>
-        /// This is the date and time this object was initially created.
+        ///The date and time this object was initially created.
         /// </summary>
 
 	[JsonPropertyName("created")]
 	public virtual DateTime?					Created  {get; set;}
 
         /// <summary>
-        ///The date and time when the data in the Card was last modified.
+        ///The date and time this object was last modified.
         /// </summary>
 
 	[JsonPropertyName("updated")]
@@ -187,12 +179,6 @@ public partial class JmapBase : JmapBaseSchema {
 					(IBinding data, string? value) => {(data as JmapBase).Type = value;}, (IBinding data) => (data as JmapBase).Type )},
 			{ "uid", new PropertyString ("uid", 
 					(IBinding data, string? value) => {(data as JmapBase).Uid = value;}, (IBinding data) => (data as JmapBase).Uid )},
-			{ "relatedTo", new PropertyDictionaryStruct ("relatedTo", typeof (Relation),
-					(IBinding data, object? value) => {(data as JmapBase).RelatedTo = value as Dictionary<string,Relation>;}, (IBinding data) => (data as JmapBase).RelatedTo,
-					false, ()=>new  Dictionary<string,Relation>(), ()=>new Relation(),
-					(IBinding data) => (data as JmapBase).RelatedTo.GetEnumerable(),
-					(object dictionary, object key, object value) =>
-						 {(dictionary as Dictionary<string,Relation>).Add (key as string,value as Relation);})},
 			{ "prodId", new PropertyString ("prodId", 
 					(IBinding data, string? value) => {(data as JmapBase).ProdId = value;}, (IBinding data) => (data as JmapBase).ProdId )},
 			{ "created", new PropertyDateTime ("created", 

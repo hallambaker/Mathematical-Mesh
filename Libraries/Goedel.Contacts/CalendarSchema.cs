@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/7/2025 12:44:05 AM
+//  This file was automatically generated at 5/7/2025 1:23:07 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -152,6 +152,14 @@ public abstract partial class Calandars : global::Goedel.Protocol.JsonObject {
 	/// <summary>
 	/// </summary>
 public partial class JsCalendarEntry : JmapBase {
+        /// <summary>
+        ///This relates the object to other objects. This is represented as 
+        ///a map of the UIDs of the related objects to information about the relation.
+        /// </summary>
+
+	[JsonPropertyName("relatedTo")]
+	public virtual Dictionary<string,Relation>?					RelatedTo  {get; set;}
+
         /// <summary>
         /// Initially zero, this MUST be incremented by one every time a change is 
         /// made to the object, except if the change only modifies the participants 
@@ -474,6 +482,12 @@ public partial class JsCalendarEntry : JmapBase {
 	public static readonly new Binding<JsCalendarEntry> _binding = new (
 			new() {
 
+			{ "relatedTo", new PropertyDictionaryStruct ("relatedTo", typeof (Relation),
+					(IBinding data, object? value) => {(data as JsCalendarEntry).RelatedTo = value as Dictionary<string,Relation>;}, (IBinding data) => (data as JsCalendarEntry).RelatedTo,
+					false, ()=>new  Dictionary<string,Relation>(), ()=>new Relation(),
+					(IBinding data) => (data as JsCalendarEntry).RelatedTo.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Relation>).Add (key as string,value as Relation);})},
 			{ "sequence", new PropertyInteger32 ("sequence", 
 					(IBinding data, int? value) => {(data as JsCalendarEntry).Sequence = value;}, (IBinding data) => (data as JsCalendarEntry).Sequence )},
 			{ "method", new PropertyString ("method", 

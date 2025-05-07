@@ -12,6 +12,8 @@
 		Inherits JmapBase
 		Tag "Card"
 
+
+
 		Description
 			| Metadata, see section 2.1
 
@@ -83,6 +85,13 @@
 			Dictionary
 			Description
 				| The job titles or functional positions of the entity represented by the Card.
+
+		// 4.1.3. relatedTo
+		Struct Relation			RelatedTo
+			Dictionary
+			Description
+				|This relates the object to other objects. This is represented as 
+				|a map of the UIDs of the related objects to information about the relation.
 
 		// 2.3.  Contact Properties
 		// 2.3.1.  emails
@@ -215,13 +224,6 @@
 			Description
 				| 
 
-		// JsonWebKeys
-		//Struct Jwks		JsonWebKeys
-		//	Tag "jwks"
-		//	Dictionary
-		//	Description
-		//		| The cryptographic resources such as public keys and certificates associated 
-		//		| with the entity represented by the Card.
 
 
 	Structure Resource
@@ -254,8 +256,7 @@
 		String					Label
 			Description
 				| A custom label for the value. 
-		Binary					Data
-		Struct JWK				Jwk
+
 
 
 	// 2.2.1.1. Name Object
@@ -436,7 +437,7 @@
 
 	// 2.3.  Contact Properties
 	// 2.3.1.  emails
-	Structure EmailAddress
+	Structure EmailAddressRFC9553
 		String					Type
 			Tag "@type" //  MUST be "EmailAddress" if set
 			TypeTag
@@ -458,15 +459,17 @@
 			Multiple
 			Description
 				| The groups that the email address is a member of 
-		String					Keys
+
+	Structure EmailAddress
+		Inherits EmailAddressRFC9553
+		String					CryptoKeyIds
 			Dictionary
 			Description
 				| The identifiers of the set of cryptographic keys to be used to 
 				| authenticate the updated contact information and their use.
 
-
 	// 2.3.2.  onlineServices
-	Structure OnlineService
+	Structure OnlineServiceRFC9553
 		String					Type
 			Tag "@type" //  MUST be "OnlineService" if set
 			TypeTag
@@ -498,7 +501,10 @@
 			Multiple
 			Description
 				| The groups that the service is a member of 
-		String					Keys
+
+	Structure OnlineService
+		Inherits OnlineServiceRFC9553
+		String					CryptoKeyIds
 			Dictionary
 			Description
 				| The identifiers of the set of cryptographic keys to be used to 
@@ -831,12 +837,12 @@
 				| The identifiers of the set of cryptographic keys to be used to 
 				| authenticate the updated contact information and their use.
 
-	Structure Jwks
+	Structure JsonWebKeySet
 		Inherits				CryptoKey
 		Tag	"JWK"
-		//Binary					Data
-		//Struct JWK				Jwk
-		//	Multiple
+		Binary					Data
+		Struct JWK				Jwk
+			Multiple
 
 	Structure Group 
 		Inherits				Resource

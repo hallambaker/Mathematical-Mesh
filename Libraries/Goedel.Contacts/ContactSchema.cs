@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/7/2025 12:44:06 AM
+//  This file was automatically generated at 5/7/2025 1:23:07 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -84,7 +84,9 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	    {"SpeakToAs", SpeakToAs._Factory},
 	    {"Pronouns", Pronouns._Factory},
 	    {"Title", Title._Factory},
+	    {"EmailAddressRFC9553", EmailAddressRFC9553._Factory},
 	    {"EmailAddress", EmailAddress._Factory},
+	    {"OnlineServiceRFC9553", OnlineServiceRFC9553._Factory},
 	    {"OnlineService", OnlineService._Factory},
 	    {"Phone", Phone._Factory},
 	    {"LanguagePref", LanguagePref._Factory},
@@ -102,7 +104,7 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	    {"Author", Author._Factory},
 	    {"PersonalInfo", PersonalInfo._Factory},
 	    {"Update", Update._Factory},
-	    {"JWK", Jwks._Factory},
+	    {"JWK", JsonWebKeySet._Factory},
 	    {"Group", Group._Factory}
 		};
 
@@ -124,7 +126,9 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	    {typeof(SpeakToAs), SpeakToAs._binding},
 	    {typeof(Pronouns), Pronouns._binding},
 	    {typeof(Title), Title._binding},
+	    {typeof(EmailAddressRFC9553), EmailAddressRFC9553._binding},
 	    {typeof(EmailAddress), EmailAddress._binding},
+	    {typeof(OnlineServiceRFC9553), OnlineServiceRFC9553._binding},
 	    {typeof(OnlineService), OnlineService._binding},
 	    {typeof(Phone), Phone._binding},
 	    {typeof(LanguagePref), LanguagePref._binding},
@@ -142,7 +146,7 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 	    {typeof(Author), Author._binding},
 	    {typeof(PersonalInfo), PersonalInfo._binding},
 	    {typeof(Update), Update._binding},
-	    {typeof(Jwks), Jwks._binding},
+	    {typeof(JsonWebKeySet), JsonWebKeySet._binding},
 	    {typeof(Group), Group._binding}
 		};
 
@@ -266,6 +270,14 @@ public partial class JsContact : JmapBase {
 
 	[JsonPropertyName("titles")]
 	public virtual Dictionary<string,Title>?					Titles  {get; set;}
+
+        /// <summary>
+        ///This relates the object to other objects. This is represented as 
+        ///a map of the UIDs of the related objects to information about the relation.
+        /// </summary>
+
+	[JsonPropertyName("relatedTo")]
+	public virtual Dictionary<string,Relation>?					RelatedTo  {get; set;}
 
         /// <summary>
         /// The email addresses in which to contact the entity represented by the Card.
@@ -455,6 +467,12 @@ public partial class JsContact : JmapBase {
 					(IBinding data) => (data as JsContact).Titles.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Title>).Add (key as string,value as Title);})},
+			{ "relatedTo", new PropertyDictionaryStruct ("relatedTo", typeof (Relation),
+					(IBinding data, object? value) => {(data as JsContact).RelatedTo = value as Dictionary<string,Relation>;}, (IBinding data) => (data as JsContact).RelatedTo,
+					false, ()=>new  Dictionary<string,Relation>(), ()=>new Relation(),
+					(IBinding data) => (data as JsContact).RelatedTo.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Relation>).Add (key as string,value as Relation);})},
 			{ "emails", new PropertyDictionaryStruct ("emails", typeof (EmailAddress),
 					(IBinding data, object? value) => {(data as JsContact).Emails = value as Dictionary<string,EmailAddress>;}, (IBinding data) => (data as JsContact).Emails,
 					false, ()=>new  Dictionary<string,EmailAddress>(), ()=>new EmailAddress(),
@@ -676,18 +694,6 @@ public partial class Resource : Contacts {
 	[JsonPropertyName("label")]
 	public virtual string?					Label  {get; set;}
 
-        /// <summary>
-        /// </summary>
-
-	[JsonPropertyName("data")]
-	public virtual byte[]?					Data  {get; set;}
-
-        /// <summary>
-        /// </summary>
-
-	[JsonPropertyName("jwk")]
-	public virtual JWK?					Jwk  {get; set;}
-
 
 
     ///<summary>Implement IBinding</summary> 
@@ -710,12 +716,7 @@ public partial class Resource : Contacts {
 			{ "pref", new PropertyInteger32 ("pref", 
 					(IBinding data, int? value) => {(data as Resource).Pref = value;}, (IBinding data) => (data as Resource).Pref )},
 			{ "label", new PropertyString ("label", 
-					(IBinding data, string? value) => {(data as Resource).Label = value;}, (IBinding data) => (data as Resource).Label )},
-			{ "data", new PropertyBinary ("data", 
-					(IBinding data, byte[]? value) => {(data as Resource).Data = value;}, (IBinding data) => (data as Resource).Data )},
-			{ "jwk", new PropertyStruct ("jwk", typeof (JWK),
-					(IBinding data, object? value) => {(data as Resource).Jwk = value as JWK;}, (IBinding data) => (data as Resource).Jwk,
-					false, ()=>new  JWK(), ()=>new JWK())}
+					(IBinding data, string? value) => {(data as Resource).Label = value;}, (IBinding data) => (data as Resource).Label )}
         }, __Tag,() => new Resource(), () => new List<Resource>(), () => new Dictionary<string,Resource>(),null, TypeTag:"@type" );
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -1710,7 +1711,7 @@ public partial class Title : Contacts {
 
 	/// <summary>
 	/// </summary>
-public partial class EmailAddress : Contacts {
+public partial class EmailAddressRFC9553 : Contacts {
         /// <summary>
         /// </summary>
 
@@ -1752,13 +1753,98 @@ public partial class EmailAddress : Contacts {
 
 	[JsonPropertyName("groups")]
 	public virtual List<string>?					Groups  {get; set;}
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<EmailAddressRFC9553> _binding = new (
+			new() {
+
+			{ "@type", new PropertyStringTag ("@type", 
+					(IBinding data, string? value) => {(data as EmailAddressRFC9553).Type = value;}, (IBinding data) => (data as EmailAddressRFC9553).Type )},
+			{ "address", new PropertyString ("address", 
+					(IBinding data, string? value) => {(data as EmailAddressRFC9553).Address = value;}, (IBinding data) => (data as EmailAddressRFC9553).Address )},
+			{ "contexts", new PropertyDictionaryBoolean ("contexts", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as EmailAddressRFC9553).Contexts = value;}, (IBinding data) => (data as EmailAddressRFC9553).Contexts )},
+			{ "pref", new PropertyInteger32 ("pref", 
+					(IBinding data, int? value) => {(data as EmailAddressRFC9553).Pref = value;}, (IBinding data) => (data as EmailAddressRFC9553).Pref )},
+			{ "label", new PropertyString ("label", 
+					(IBinding data, string? value) => {(data as EmailAddressRFC9553).Label = value;}, (IBinding data) => (data as EmailAddressRFC9553).Label )},
+			{ "groups", new PropertyListString ("groups", 
+					(IBinding data, List<string>? value) => {(data as EmailAddressRFC9553).Groups = value;}, (IBinding data) => (data as EmailAddressRFC9553).Groups )}
+        }, __Tag,() => new EmailAddressRFC9553(), () => new List<EmailAddressRFC9553>(), () => new Dictionary<string,EmailAddressRFC9553>(),null, TypeTag:"@type" );
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "EmailAddressRFC9553";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new EmailAddressRFC9553();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new EmailAddressRFC9553 FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as EmailAddressRFC9553;
+			}
+		var Result = new EmailAddressRFC9553 ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class EmailAddress : EmailAddressRFC9553 {
         /// <summary>
         /// The identifiers of the set of cryptographic keys to be used to 
         /// authenticate the updated contact information and their use.
         /// </summary>
 
-	[JsonPropertyName("keys")]
-	public virtual Dictionary<string,string>?					Keys  {get; set;}
+	[JsonPropertyName("cryptoKeyIds")]
+	public virtual Dictionary<string,string>?					CryptoKeyIds  {get; set;}
 
 
 
@@ -1769,27 +1855,16 @@ public partial class EmailAddress : Contacts {
 	public static readonly new Binding<EmailAddress> _binding = new (
 			new() {
 
-			{ "@type", new PropertyStringTag ("@type", 
-					(IBinding data, string? value) => {(data as EmailAddress).Type = value;}, (IBinding data) => (data as EmailAddress).Type )},
-			{ "address", new PropertyString ("address", 
-					(IBinding data, string? value) => {(data as EmailAddress).Address = value;}, (IBinding data) => (data as EmailAddress).Address )},
-			{ "contexts", new PropertyDictionaryBoolean ("contexts", 
-					(IBinding data, Dictionary<string,bool>? value) => {(data as EmailAddress).Contexts = value;}, (IBinding data) => (data as EmailAddress).Contexts )},
-			{ "pref", new PropertyInteger32 ("pref", 
-					(IBinding data, int? value) => {(data as EmailAddress).Pref = value;}, (IBinding data) => (data as EmailAddress).Pref )},
-			{ "label", new PropertyString ("label", 
-					(IBinding data, string? value) => {(data as EmailAddress).Label = value;}, (IBinding data) => (data as EmailAddress).Label )},
-			{ "groups", new PropertyListString ("groups", 
-					(IBinding data, List<string>? value) => {(data as EmailAddress).Groups = value;}, (IBinding data) => (data as EmailAddress).Groups )},
-			{ "keys", new PropertyDictionaryString ("keys", 
-					(IBinding data, Dictionary<string,string>? value) => {(data as EmailAddress).Keys = value;}, (IBinding data) => (data as EmailAddress).Keys )}
-        }, __Tag,() => new EmailAddress(), () => new List<EmailAddress>(), () => new Dictionary<string,EmailAddress>(),null, TypeTag:"@type" );
+			{ "cryptoKeyIds", new PropertyDictionaryString ("cryptoKeyIds", 
+					(IBinding data, Dictionary<string,string>? value) => {(data as EmailAddress).CryptoKeyIds = value;}, (IBinding data) => (data as EmailAddress).CryptoKeyIds )}
+        }, __Tag,() => new EmailAddress(), () => new List<EmailAddress>(), () => new Dictionary<string,EmailAddress>(),EmailAddressRFC9553._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(EmailAddressRFC9553._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -1846,7 +1921,7 @@ public partial class EmailAddress : Contacts {
 
 	/// <summary>
 	/// </summary>
-public partial class OnlineService : Contacts {
+public partial class OnlineServiceRFC9553 : Contacts {
         /// <summary>
         /// </summary>
 
@@ -1906,13 +1981,102 @@ public partial class OnlineService : Contacts {
 
 	[JsonPropertyName("groups")]
 	public virtual List<string>?					Groups  {get; set;}
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<OnlineServiceRFC9553> _binding = new (
+			new() {
+
+			{ "@type", new PropertyStringTag ("@type", 
+					(IBinding data, string? value) => {(data as OnlineServiceRFC9553).Type = value;}, (IBinding data) => (data as OnlineServiceRFC9553).Type )},
+			{ "service", new PropertyString ("service", 
+					(IBinding data, string? value) => {(data as OnlineServiceRFC9553).Service = value;}, (IBinding data) => (data as OnlineServiceRFC9553).Service )},
+			{ "uri", new PropertyString ("uri", 
+					(IBinding data, string? value) => {(data as OnlineServiceRFC9553).Uri = value;}, (IBinding data) => (data as OnlineServiceRFC9553).Uri )},
+			{ "user", new PropertyString ("user", 
+					(IBinding data, string? value) => {(data as OnlineServiceRFC9553).User = value;}, (IBinding data) => (data as OnlineServiceRFC9553).User )},
+			{ "contexts", new PropertyDictionaryBoolean ("contexts", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as OnlineServiceRFC9553).Contexts = value;}, (IBinding data) => (data as OnlineServiceRFC9553).Contexts )},
+			{ "pref", new PropertyInteger32 ("pref", 
+					(IBinding data, int? value) => {(data as OnlineServiceRFC9553).Pref = value;}, (IBinding data) => (data as OnlineServiceRFC9553).Pref )},
+			{ "label", new PropertyString ("label", 
+					(IBinding data, string? value) => {(data as OnlineServiceRFC9553).Label = value;}, (IBinding data) => (data as OnlineServiceRFC9553).Label )},
+			{ "groups", new PropertyListString ("groups", 
+					(IBinding data, List<string>? value) => {(data as OnlineServiceRFC9553).Groups = value;}, (IBinding data) => (data as OnlineServiceRFC9553).Groups )}
+        }, __Tag,() => new OnlineServiceRFC9553(), () => new List<OnlineServiceRFC9553>(), () => new Dictionary<string,OnlineServiceRFC9553>(),null, TypeTag:"@type" );
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "OnlineServiceRFC9553";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new OnlineServiceRFC9553();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new OnlineServiceRFC9553 FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as OnlineServiceRFC9553;
+			}
+		var Result = new OnlineServiceRFC9553 ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class OnlineService : OnlineServiceRFC9553 {
         /// <summary>
         /// The identifiers of the set of cryptographic keys to be used to 
         /// authenticate the updated contact information and their use.
         /// </summary>
 
-	[JsonPropertyName("keys")]
-	public virtual Dictionary<string,string>?					Keys  {get; set;}
+	[JsonPropertyName("cryptoKeyIds")]
+	public virtual Dictionary<string,string>?					CryptoKeyIds  {get; set;}
 
 
 
@@ -1923,31 +2087,16 @@ public partial class OnlineService : Contacts {
 	public static readonly new Binding<OnlineService> _binding = new (
 			new() {
 
-			{ "@type", new PropertyStringTag ("@type", 
-					(IBinding data, string? value) => {(data as OnlineService).Type = value;}, (IBinding data) => (data as OnlineService).Type )},
-			{ "service", new PropertyString ("service", 
-					(IBinding data, string? value) => {(data as OnlineService).Service = value;}, (IBinding data) => (data as OnlineService).Service )},
-			{ "uri", new PropertyString ("uri", 
-					(IBinding data, string? value) => {(data as OnlineService).Uri = value;}, (IBinding data) => (data as OnlineService).Uri )},
-			{ "user", new PropertyString ("user", 
-					(IBinding data, string? value) => {(data as OnlineService).User = value;}, (IBinding data) => (data as OnlineService).User )},
-			{ "contexts", new PropertyDictionaryBoolean ("contexts", 
-					(IBinding data, Dictionary<string,bool>? value) => {(data as OnlineService).Contexts = value;}, (IBinding data) => (data as OnlineService).Contexts )},
-			{ "pref", new PropertyInteger32 ("pref", 
-					(IBinding data, int? value) => {(data as OnlineService).Pref = value;}, (IBinding data) => (data as OnlineService).Pref )},
-			{ "label", new PropertyString ("label", 
-					(IBinding data, string? value) => {(data as OnlineService).Label = value;}, (IBinding data) => (data as OnlineService).Label )},
-			{ "groups", new PropertyListString ("groups", 
-					(IBinding data, List<string>? value) => {(data as OnlineService).Groups = value;}, (IBinding data) => (data as OnlineService).Groups )},
-			{ "keys", new PropertyDictionaryString ("keys", 
-					(IBinding data, Dictionary<string,string>? value) => {(data as OnlineService).Keys = value;}, (IBinding data) => (data as OnlineService).Keys )}
-        }, __Tag,() => new OnlineService(), () => new List<OnlineService>(), () => new Dictionary<string,OnlineService>(),null, TypeTag:"@type" );
+			{ "cryptoKeyIds", new PropertyDictionaryString ("cryptoKeyIds", 
+					(IBinding data, Dictionary<string,string>? value) => {(data as OnlineService).CryptoKeyIds = value;}, (IBinding data) => (data as OnlineService).CryptoKeyIds )}
+        }, __Tag,() => new OnlineService(), () => new List<OnlineService>(), () => new Dictionary<string,OnlineService>(),OnlineServiceRFC9553._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
 	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(OnlineServiceRFC9553._binding, _binding);
 
 
     ///<inheritdoc/>
@@ -3761,17 +3910,33 @@ public partial class Update : Resource {
 
 	/// <summary>
 	/// </summary>
-public partial class Jwks : CryptoKey {
+public partial class JsonWebKeySet : CryptoKey {
+        /// <summary>
+        /// </summary>
+
+	[JsonPropertyName("data")]
+	public virtual byte[]?					Data  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
+	[JsonPropertyName("jwk")]
+	public virtual List<JWK>?					Jwk  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	public static readonly new Binding<Jwks> _binding = new (
+	public static readonly new Binding<JsonWebKeySet> _binding = new (
 			new() {
 
-        }, __Tag,() => new Jwks(), () => new List<Jwks>(), () => new Dictionary<string,Jwks>(),CryptoKey._binding);
+			{ "data", new PropertyBinary ("data", 
+					(IBinding data, byte[]? value) => {(data as JsonWebKeySet).Data = value;}, (IBinding data) => (data as JsonWebKeySet).Data )},
+			{ "jwk", new PropertyListStruct ("jwk", typeof (JWK),
+					(IBinding data, object? value) => {(data as JsonWebKeySet).Jwk = value as List<JWK>;}, (IBinding data) => (data as JsonWebKeySet).Jwk,
+					false, ()=>new  List<JWK>(), ()=>new JWK())}
+        }, __Tag,() => new JsonWebKeySet(), () => new List<JsonWebKeySet>(), () => new Dictionary<string,JsonWebKeySet>(),CryptoKey._binding);
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
@@ -3806,7 +3971,7 @@ public partial class Jwks : CryptoKey {
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Jwks();
+	public static new JsonObject _Factory () => new JsonWebKeySet();
 
 
     /// <summary>
@@ -3815,15 +3980,15 @@ public partial class Jwks : CryptoKey {
     /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
     /// <returns>The created object.</returns>		
-    public static new Jwks FromJson (JsonReader jsonReader, bool tagged=true) {
+    public static new JsonWebKeySet FromJson (JsonReader jsonReader, bool tagged=true) {
 		if (jsonReader == null) {
 			return null;
 			}
 		if (tagged) {
 			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Jwks;
+			return Out as JsonWebKeySet;
 			}
-		var Result = new Jwks ();
+		var Result = new JsonWebKeySet ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

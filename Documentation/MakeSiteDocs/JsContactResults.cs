@@ -170,8 +170,8 @@ public class JsContactResults {
             };
 
         var jwk = JWK.Factory(SignatureEd448);
-        var jwks = new Jwks() {
-            Jwk = jwk
+        var jwks = new JsonWebKeySet() {
+            Jwk = [jwk]
             };
         Contact.CryptoKeys.Add(SignatureEd448.KeyIdentifier, jwks);
 
@@ -194,7 +194,7 @@ public class JsContactResults {
             }
 
         // email address
-        foreach (var key in EmailAddress.Keys) {
+        foreach (var key in EmailAddress.CryptoKeyIds) {
             if (key.Value == "smime") {
                 if (Contact.CryptoKeys.TryGetValue(key.Key, out var jsonWebKey)) {
                     JSContactSmime.Add(key.Key, jsonWebKey);
@@ -211,15 +211,15 @@ public class JsContactResults {
             var service= servicePair.Value;
             if (service.Service == "ssh") {
                 Ssh.Add(servicePair.Key, servicePair.Value);
-                CollectKeys(service.Keys, SshKeys);
+                CollectKeys(service.CryptoKeyIds, SshKeys);
                 }
             if (service.Service == "code") {
                 CodeSign.Add(servicePair.Key, servicePair.Value);
-                CollectKeys(service.Keys, CodeSignKeys);
+                CollectKeys(service.CryptoKeyIds, CodeSignKeys);
                 }
             if (service.Service == "commit") {
                 Commit.Add(servicePair.Key, servicePair.Value);
-                CollectKeys(service.Keys, CommitKeys);
+                CollectKeys(service.CryptoKeyIds, CommitKeys);
                 }
             }
 

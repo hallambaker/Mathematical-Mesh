@@ -288,7 +288,7 @@ public static partial class Extensions {
         var emailAddress = new EmailAddress() {
             Address = application.AccountAddress,
             Label = application.Description ,
-            Keys = new()
+            CryptoKeyIds = new()
             };
         contact.Emails ??= [];
         var id = contact.Emails.AddUniqueKeyed("mail", emailAddress);
@@ -296,12 +296,12 @@ public static partial class Extensions {
 
         // ToDo: need to read the encoded JSContact OpenPGP/SMIME keys and check they can actually be used.
         // Conditionally add the S/MIME keys
-        contact.AddKeyData(application.SmimeSign, "smime", emailAddress.Keys, ["sig"]);
-        contact.AddKeyData(application.SmimeEncrypt, "smime", emailAddress.Keys, ["enc"]);
+        contact.AddKeyData(application.SmimeSign, "smime", emailAddress.CryptoKeyIds, ["sig"]);
+        contact.AddKeyData(application.SmimeEncrypt, "smime", emailAddress.CryptoKeyIds, ["enc"]);
 
         // Conditionally add the OpenPGP keys
-        contact.AddKeyData(application.OpenpgpSign, "openpgp", emailAddress.Keys, ["sig"]);
-        contact.AddKeyData(application.OpenpgpEncrypt, "openpgp", emailAddress.Keys, ["enc"]);
+        contact.AddKeyData(application.OpenpgpSign, "openpgp", emailAddress.CryptoKeyIds, ["sig"]);
+        contact.AddKeyData(application.OpenpgpEncrypt, "openpgp", emailAddress.CryptoKeyIds, ["enc"]);
 
         contact.Update();
         }
@@ -317,12 +317,12 @@ public static partial class Extensions {
             Service = "ssh",
             User = application.AccountAddress,
             Label = application.Description,
-            Keys = []
+            CryptoKeyIds = []
             };
         contact.OnlineServices ??= [];
         contact.OnlineServices.Add(application.Key, service);
 
-        contact.AddKeyData(application.ClientKey, "ssh", service.Keys, ["auth"]);
+        contact.AddKeyData(application.ClientKey, "ssh", service.CryptoKeyIds, ["auth"]);
 
 
         contact.Update();
@@ -346,13 +346,13 @@ public static partial class Extensions {
             Service = application.Kind ?? "credential",
             User = application.AccountAddress,
             Label = application.Description,
-            Keys = [],
+            CryptoKeyIds = [],
             Contexts = contexts
             };
         contact.OnlineServices ??= [];
         contact.OnlineServices.Add(application.Key, service);
 
-        contact.AddKeyData(application.Primary, "credential", service.Keys, ["sign"]);
+        contact.AddKeyData(application.Primary, "credential", service.CryptoKeyIds, ["sign"]);
         contact.Update();
         }
 
@@ -449,7 +449,7 @@ public static partial class Extensions {
 
         var service = contact.AddServiceData(key, serviceId, uri, user, label, contexts);
 
-        var jwks = new Jwks() {
+        var jwks = new JsonWebKeySet() {
             Uri = cryptoUri,
             Data = cryptoData,
             MediaType = mediaType
@@ -457,7 +457,7 @@ public static partial class Extensions {
         contact.CryptoKeys ??= [];
         contact.CryptoKeys.Add(key, jwks);                                                                                                                                                     
 
-        service.Keys.Add(key, "");
+        service.CryptoKeyIds.Add(key, "");
 
         //var groups = contact.CheckClaim(key);
 
@@ -514,7 +514,7 @@ public static partial class Extensions {
             Uri = uri,
             Label = label,
             Contexts = contextsD,
-            Keys = []
+            CryptoKeyIds = []
             };
         contact.OnlineServices ??= [];
         contact.OnlineServices.AddUniqueKeyed(key, service);
@@ -544,8 +544,8 @@ public static partial class Extensions {
         //var (media, cryptoData) = keyData.GetDataUri();
 
         var jwk = JWK.Factory(keyData.GetKeyPair());
-        var jwks = new Jwks() {
-            Jwk = jwk
+        var jwks = new JsonWebKeySet() {
+            Jwk = [jwk]
             };
         contact.CryptoKeys ??= [];
         contact.CryptoKeys.Add(key, jwks);

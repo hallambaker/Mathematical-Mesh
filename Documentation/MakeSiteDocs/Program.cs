@@ -330,6 +330,18 @@ public partial class CreateExamples {
         SetOutputDirectory();
         MakeJSContactExamples(this);
 
+        var include1 = new HashSet<string>() { "Groups" };
+        using (var outfile = "Examples\\JSContactSchema1.md".OpenTextWriterNew()) {
+            Proto.AnnotateSchema.DocumentStructure(JSDevice.JmapBaseSchemaFile,
+                JSContact.Contact, outfile, baseTag: "JsContact", include: include1);
+            }
+
+        using (var outfile = "Examples\\JSContactSchema2.md".OpenTextWriterNew()) {
+            Proto.AnnotateSchema.DocumentStructure(JSDevice.JmapBaseSchemaFile,
+                JSContact.Contact, outfile, baseTags: [
+                    "EmailAddress", "OnlineService", "JsonWebKeySet", "Update", "Group"]);
+            }
+
         }
 
     public void MakeJSDevice(
@@ -339,7 +351,7 @@ public partial class CreateExamples {
         SetOutputDirectory();
 
         using (var outfile = "Examples\\JSDeviceSchema.md".OpenTextWriterNew()) {
-            Proto.AnnotateSchema.DocumentStructure(JSDevice.JsDeviceSchemaFile, 
+            Proto.AnnotateSchema.DocumentStructure(JSDevice.JsDeviceSchemaFile,
                 JSDevice.JsDevice, outfile);
             }
         using (var outfile = "Examples\\JSDeviceBaseSchema.md".OpenTextWriterNew()) {

@@ -5,6 +5,13 @@
 	Structure JsCalendarEntry
 		Inherits JmapBase
 
+		// 4.1.3. relatedTo
+		Struct Relation			RelatedTo
+			Dictionary
+			Description
+				|This relates the object to other objects. This is represented as 
+				|a map of the UIDs of the related objects to information about the relation.
+
 		// 4.1.7. sequence
 		Integer					Sequence
 			Description
