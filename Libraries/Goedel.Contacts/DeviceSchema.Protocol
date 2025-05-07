@@ -72,12 +72,6 @@
 			Description
 				| Manuals describing the device.
 
-
-
-		Struct Maintenance		Maintenance
-			Multiple
-			Description
-				| List of maintenance events associated with the device.
 		DateTime EndSupport
 			Description
 				| Date at which support for the device is scheduled to end.
@@ -85,40 +79,26 @@
 			Description
 				| Date at which it is advised the device be taken out of service.
 
-
-		Struct Consumable		Consumables
-			Multiple
-			Description
-				| Consumables related to the device. For example, ink cartridges, parts
-				| likely to wear etc.
-
-		Struct Accessory		Accessories
-			Multiple
-			Description
-				| Accessories related to the device. For example paper handlers.
-
 		Struct Supplier			Suppliers
 			Multiple
 			Description
 				| Suppliers for the device and related accessories.
 
-
-
-		Struct Bootstrap		Bootstraps
-			Multiple
+		Struct Maintenance		Maintenance
+			Dictionary
 			Description
-				| Bootstrap protocols supported.
+				| List of maintenance events associated with the device.
 
-		Struct Provisioning		Provisioning
-			Multiple
+		Struct RelatedItem		RelatedItems
+			Dictionary
 			Description
-				| Provisioning protocols supported for acquisition of DNS names, IP addresses,
-				| etc.
+				| Accessories, parts and consumables related to the device. 
+				|For example, ink cartridges, parts likely to wear etc.
 
-		Struct Service			Services
-			Multiple
+		Struct Network			Network
+			Dictionary
 			Description
-				| Services supported by the device.
+				| The network protocol connections supported.
 
 		// JsonWebKeys
 		Struct CryptoKey		CryptoKeys
@@ -126,9 +106,13 @@
 			Description
 				| The cryptographic resources such as public keys and certificates associated 
 				| with the device
+			Description
+				| The CryptoKey object is defined in JSContact and JSContact Cryptographic Extensions.
 
-
-	Structure Protocol
+	Structure Network
+		String		Kind
+			Description
+				| The network connection kind
 		String		Address
 			Multiple
 			Description
@@ -136,7 +120,10 @@
 		String		Identifier
 			Description
 				|The IANA protocol identifier
-		Integer		Port
+		Integer		Ports
+			Multiple
+			Description
+				|The default IP ports.
 		String Endpoints
 			Multiple
 		String					Keys
@@ -144,27 +131,12 @@
 			Description
 				| The identifiers of the set of device keys that MAY be used in combination
 				| with this protocol
-
-
-	Structure Bootstrap
-		Inherits Protocol
-		Description
-			| Bootstrap protocol configuration that MAY be used to provide initial
-			| network capabilities to the device.
-
-	Structure Provisioning
-		Inherits Protocol
-		Description
-			| Provisioning protocol configuration that MAY be used to provision necessary
-			|network identifiers (e.g. Internet Addresses, DNS names, etc.)
-
-	Structure Service
-		Inherits Protocol
-		Description
-			| Service protocols supported by the device, e.g. 
-
 		String Permissions
 			Multiple
+			Description
+				|Permission identifiers used to assign access rights to control of the
+				|device.
+
 
 	Structure Maintenance
 		Description
@@ -172,9 +144,9 @@
 		Inherits Resource
 		Boolean Recurring
 			Description
-				| If true (default), the mainenance event recurs as specified by the
+				| If true (default), the maintenance event recurs as specified by the
 				|days, months and years properties. If false, the maintenance event 
-				| is a one-time operation occuring the specified interval after installation.
+				| is a one-time operation occurring the specified interval after installation.
 		Integer	Days
 			Description
 				| Interval days.
@@ -202,15 +174,7 @@
 			Description
 				|A list of URIs linking to suppliers for the consumable.
 
-	Structure Consumable
-		Inherits RelatedItem
-		Description
-			| A consumable compatible with the device.
 
-	Structure Accessory
-		Inherits RelatedItem
-		Description
-			| An accessory compatible with the device.
 
 
 

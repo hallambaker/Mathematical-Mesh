@@ -149,34 +149,36 @@ public partial class Jmap {
                     }
                 ],
 
-            Consumables = [
-                new() {
-                    MediaType = "application/jsdevice",
-                    Label = "Dingle Arms",
-                    Uri = "https://media.example.com/EncabulatorDingleArm.jsdevice"
-                    }
-                ],
+            //Consumables = [
+            //    new() {
+            //        MediaType = "application/jsdevice",
+            //        Label = "Dingle Arms",
+            //        Uri = "https://media.example.com/EncabulatorDingleArm.jsdevice"
+            //        }
+            //    ],
 
-            Accessories = [
-                new() {
-                    MediaType = "application/jsdevice",
-                    Label = "Parametric Fam",
-                    Uri = "https://media.example.com/EncabulatorParametricFam.jsdevice"
-                    }
-                ],
+            //Accessories = [
+            //    new() {
+            //        MediaType = "application/jsdevice",
+            //        Label = "Parametric Fam",
+            //        Uri = "https://media.example.com/EncabulatorParametricFam.jsdevice"
+            //        }
+            //    ],
 
-            Provisioning = [
-                new () {
-                    Identifier = "dns"
+            Network = new() {
+                {"boot1", new Network () {
+                        Identifier = "dns"
+                            }
                     },
-                new () {
-                    Identifier = "ipv4"
+                {"disc1", new Network () {
+                        Identifier = "ipv4"
+                            }
                     },
-                new () {
-                    Identifier = "ipv6"
+                {"disc1", new Network () {
+                        Identifier = "ipv6"
+                        }
                     }
-                ]
-
+                }
 
             };
 

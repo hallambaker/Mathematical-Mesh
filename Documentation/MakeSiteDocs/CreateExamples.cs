@@ -39,7 +39,7 @@ namespace ExampleGenerator;
 /// </summary>
 public partial class CreateExamples {
 
-    public string SourceDirectrory => @"C:\Users\hallam\source\repos\mmm";
+
 
 
     ///<summary></summary> 

@@ -26,6 +26,7 @@ using Goedel.IO;
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
 using Goedel.Test;
+using Proto=Goedel.Tool.ProtoGen;
 using Goedel.Utilities;
 
 using System;
@@ -193,6 +194,8 @@ public partial class CreateExamples {
     public const string AliceDevice4 = "Alice4";
     public const string AliceDevice5 = "Alice5";
 
+
+    public string SourceDirectory { get; set; }
     string WorkingDirectory { get; set; }
     string DraftsDirectory { get; set; }
 
@@ -211,6 +214,9 @@ public partial class CreateExamples {
     public void Examples() {
         var output = Console.Out;
         WorkingDirectory = Directory.GetCurrentDirectory();
+        SourceDirectory = Path.Combine(WorkingDirectory, "..");
+
+
         Directory.SetCurrentDirectory("..\\Outputs\\Documents");
         DraftsDirectory = Directory.GetCurrentDirectory();
 
@@ -330,9 +336,17 @@ public partial class CreateExamples {
             ) {
         SetWorkingDirectory();
         JSDevice = new JsDeviceResults(this);
-
-
         SetOutputDirectory();
+
+        using (var outfile = "Examples\\JSDeviceSchema.md".OpenTextWriterNew()) {
+            Proto.AnnotateSchema.DocumentStructure(JSDevice.JsDeviceSchemaFile, 
+                JSDevice.JsDevice, outfile);
+            }
+        using (var outfile = "Examples\\JSDeviceBaseSchema.md".OpenTextWriterNew()) {
+            Proto.AnnotateSchema.DocumentStructure(JSDevice.JmapBaseSchemaFile,
+                JSDevice.JsDevice, outfile, baseTag: "JmapBase");
+            }
+
         MakeJSDeviceExamples(this);
 
         }

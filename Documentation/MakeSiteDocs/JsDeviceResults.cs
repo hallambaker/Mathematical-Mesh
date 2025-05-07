@@ -27,7 +27,7 @@ using Goedel.Discovery;
 using Goedel.Mesh;
 using Goedel.Protocol;
 using Goedel.Protocol.Service;
-using Proto=Goedel.Tool.ProtoGen;
+//using Proto=Goedel.Tool.ProtoGen;
 
 using Microsoft.VisualStudio.TestPlatform.Utilities;
 
@@ -43,8 +43,14 @@ namespace ExampleGenerator;
 
 public class JsDeviceResults {
     CreateExamples CreateExamples { get; }
-    public string DefinitionFile => 
-            Path.Combine(CreateExamples.SourceDirectrory, @"Libraries\Goedel.Contacts\DeviceSchema.Protocol");
+
+    public JsDevice JsDevice { get; }
+
+    public string JmapBaseSchemaFile =>
+        Path.Combine(CreateExamples.SourceDirectory, @"Libraries\Goedel.Contacts\JmapBase.Protocol");
+
+    public string JsDeviceSchemaFile => 
+            Path.Combine(CreateExamples.SourceDirectory, @"Libraries\Goedel.Contacts\DeviceSchema.Protocol");
 
 
     public JsDeviceResults(CreateExamples createExamples) {
@@ -57,7 +63,7 @@ public class JsDeviceResults {
 
         var date = DateTime.UtcNow;
         //For example, a webcam has a QR code containing a JSDevice QR code printed on it:
-        var device = new JsDevice() {
+        JsDevice = new JsDevice() {
             Uid = Udf.FixedNonce("Some device"),
             Created = date,
             Updated = date,
@@ -72,8 +78,11 @@ public class JsDeviceResults {
             Manufacturer = "Acme Corp.",
             DateManufacture = date,
 
+            EndSupport = date.AddYears(5),
+            EndLife = date.AddYears(10),
+            ProdId = "Configulator/1.0",
             Localizations =
-                new () {
+                new() {
                         { "cy", new JsDevice() {
                             ModelName = "Acme GweGamera 4K"
                             } }
@@ -84,13 +93,13 @@ public class JsDeviceResults {
                     new () {
                         Uri = "https://acme.example.net/media/webcam4k.front.png",
                         MediaType = "image/png",
-                        Kind = "photo",
+                        Kind = "front",
                         Label = "Front View"
                         },
                     new () {
                         Uri = "httpe://acme.example.net/media/webcam4k.rear.png",
                         MediaType = "image/png",
-                        Kind = "photo",
+                        Kind = "rear",
                         Label = "Rear View"
                         },
                     new () {
@@ -101,7 +110,7 @@ public class JsDeviceResults {
                         }
                     ],
 
-            Manuals = [                    
+            Manuals = [
                     new () {
                         Uri = "httpe://acme.example.net/media/webcam4k.quickstart.pdf",
                         MediaType = "application/pdf",
@@ -126,30 +135,32 @@ public class JsDeviceResults {
             //tracking maintenance events by means of a button underneath a cover on the
             //camera which is pressed to signal a maintenance event was completed.The status
             //of this button is reported through another proprietary Web Service.
-            Maintenance = [
-                    new () {
+            Maintenance = new() {
+                {"maint1", new  () {
                         Label = "Lubricate mount",
                         Uri =  "https://acme.example.net/media/webcam4k.manual.pdf#lubrication",
                         Recurring = true,
                         Months =24
                         }
-                ],
+                    }
+                },
 
-            Consumables = [
-                    new () {
+            RelatedItems = new() {
+                {"part1", new  () {
+                        Kind = "part",
                         Label = "Mount bearing",
                         Uri =  "https://acme.example.net/media/bearings/24U.jsdevice",
                         MediaType = "application/jsdevice"
                         }
-                ],
-
-            Accessories = [
-                    new () {
+                    },
+                {"accessory1", new  () {
+                        Kind = "accessory",
                         Label = "Lens Kit",
                         Uri =  "https://acme.example.net/media/lenses/telephoto200.jsdevice",
                         MediaType = "application/jsdevice"
                         }
-                ],
+                    }
+                },
 
             Suppliers = [
                     new () {
@@ -159,61 +170,63 @@ public class JsDeviceResults {
                         }
                 ],
 
-            Bootstraps = [
-                new () {
-                    Identifier = "mmm-connect",
-                    Port = 80,
-                    Keys = new () { 
-                       {"id", "udf:MCBG-ZSI4-XSWX-UNEE-GU6X-YTBZ-XPH5" }  }
+            Network = new() {
+                {"boot1", new Network () {
+                        Kind="bootstrap",
+                        Identifier = "mmm-connect",
+                        Ports = [80],
+                        Keys = new () {
+                            {"id", "udf:MCBG-ZSI4-XSWX-UNEE-GU6X-YTBZ-XPH5" }  }
+                        }
                     },
-                ],
-
-            Provisioning = [
-                // DHCP - for IP address
-                new () {
-                    Identifier = "dhcp",
-                    Endpoints = [
-                        "ip"]
+                {"disc1", new Network () {
+                        Kind="discovery",
+                        Identifier = "dhcp",
+                        Endpoints = [
+                            "ip"]
+                        }
                     },
-
                 // Anything - for IP, DNS and WebPKI
-                new () {
-                    Identifier = "anything",
-                    Endpoints = [
-                        "ip", "dns", "webpki"]
+                {"disc2", new Network () {
+                        Kind="discovery",
+                        Identifier = "anything",
+                        Endpoints = [
+                            "ip", "dns", "webpki"]
+                        }
                     },
-                ],
 
-
-            Services = [
                 // Administration
-                new () {
-                    Identifier = "jsadmin",
-                    Port = 443,
-                    Endpoints = [
-                        "dns", "webpki"],
-                    Permissions = ["admin"]
-                    },
-
+                {"admin1", new Network () {
+                        Kind="service",
+                        Identifier = "jsadmin",
+                        Ports = [443],
+                        Endpoints = [
+                            "dns", "webpki"],
+                        Permissions = ["admin"]
+                        }
+                    }, 
                 // WebRTC site
-                new () {
-                    Identifier = "https",
-                    Port = 443,
-                    Endpoints = [
-                        "dns", "webpki"],
-                    Permissions = ["read"]
+                { "web1", new Network () {
+                        Kind="service",
+                        Identifier = "https",
+                        Ports = [443],
+                        Endpoints = [
+                            "dns", "webpki"],
+                        Permissions = ["read"]
+                        }
                     },
 
                 // MOQ service
-                new () {
-                    Identifier = "moq",
-                    Endpoints = [
-                        "dns", "webpki"],
-                    Permissions = ["read"]
-                    }
+                {"moq1", new Network () {
+                        Kind="service",
+                        Identifier = "moq",
+                        Endpoints = [
+                            "dns", "webpki"],
+                        Permissions = ["read"]
+                        }
 
-                ],
-
+                    },
+                },
             CryptoKeys = [
 
                 ]
@@ -241,124 +254,10 @@ public class JsDeviceResults {
 
 
 
-        Console.WriteLine(JSONDebugWriter.Write(device, false));
-
-        Proto.ProtoStruct Parse = new() {
-            };
-        using (Stream infile =
-            new FileStream(DefinitionFile, FileMode.Open, FileAccess.Read)) {
-            Lexer Schema = new(DefinitionFile);
-            Schema.Process(infile, Parse);
-            }
-
-        Parse.Complete();
-        var protocol = Parse.Top[0] as Proto.Protocol;
-
-
-        var jsDevice = GetStructure(protocol, "JsDevice");
-
-        foreach (var entry in jsDevice.Entries) {
-            string typeDeclarator = null;
-            List<Proto._Choice> options = null;
-
-            switch (entry) {
-                case Proto.String typeString: {
-                    typeDeclarator = "String";
-                    options = typeString.Options;
-                    break;
-                    }
-                case Proto.Struct typeStruct: {
-                    typeDeclarator = typeStruct.BaseType;
-                    options = typeStruct.Options;
-                    break;
-                    }
-                case Proto.DateTime typeDate: {
-                    typeDeclarator = "UTCDateTime";
-                    options = typeDate.Options;
-                    break;
-                    }
-                }
-
-
-            if (typeDeclarator is not null) {
-                Console.WriteLine(MakeType(entry, typeDeclarator));
-                var descriptions = GetDescription(options);
-
-                foreach (var line in descriptions) {
-                    Console.WriteLine(line);
-                    }
-                Console.WriteLine(GetExample(device, entry.ID));
-                }
-
-            }
-
+        //Console.WriteLine(JSONDebugWriter.Write(device, false));
 
         }
 
 
-    string GetExample(JsonObject jsonObject, string tag) {
-        var builder = new MemoryStream();
-        var writer = new JsonWriter(builder);
-
-        var binding = jsonObject._Binding;
-
-        if (binding.Properties.TryGetValue(tag, out var property)) {
-
-            property.Serialize(jsonObject, writer);
-
-            }
-        return builder.ToArray().ToUTF8();
-        }
-
-
-    List<string> GetDescription(List<Proto._Choice> options) {
-        var result = new List<string>();
-        foreach (var option in options) {
-            if (option is Proto.Description description) {
-                var para = "";
-                foreach (var line in description.Text1) {
-                    para = para + line + "\n";
-                    }
-                result.Add(para);
-                }
-            }
-
-        return result;
-        }
-
-    string MakeType(Proto._Choice entry, string type) {
-        var builder = new StringBuilder();
-        builder.Append("\"");
-        builder.Append(entry.ID);
-        builder.Append("\": ");
-
-        if (entry.Dictionary) {
-            builder.Append($"String[{type}]");
-            }
-        else if (entry.Multiple) {
-            builder.Append($"{type}[]");
-            }
-        else {
-            builder.Append(type);
-            }
-
-        builder.Append(entry.Required ? " (mandatory)" : " (optional)");
-
-
-            return builder.ToString();
-
-        }
-
-    Proto.Structure GetStructure(Goedel.Tool.ProtoGen.Protocol protocol, string tag) {
-        foreach (var entry in protocol.Entries) {
-            if (entry is Proto.Structure structure) {
-
-                if (structure.Id.Label == tag) {
-                    return structure;
-                    }
-                }
-            }
-        return null;
-        }
 
     }
