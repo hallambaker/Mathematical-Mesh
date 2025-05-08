@@ -136,7 +136,7 @@ public abstract record Binding(
 
 
                 if (member.Value is JsonElementObject child) {
-                    return Parse(child, binding, collectUparsed);
+                    return Parse(child, subBinding, collectUparsed);
                     }
                 }
             return null;
