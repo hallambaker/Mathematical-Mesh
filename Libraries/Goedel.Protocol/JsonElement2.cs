@@ -79,7 +79,7 @@ public abstract record JsonElement2 {
 
     public static JsonElementObject Parse(
                     JsonReader jsonReader) {
-        JsonReader.Trace = true;
+        //JsonReader.Trace = true;
         bool going = jsonReader.StartObject();
         var result = new JsonElementObject(jsonReader);
 
@@ -103,6 +103,7 @@ public record JsonElementString(
     public DateTime GetDateTime() => Value.FromRFC3339();
 
 
+    public byte[] GetBinary() => Value.FromBase64();
     }
 
 public record JsonElementDateTime(
@@ -128,15 +129,19 @@ public record JsonElementNumber(
     public Double GetReal64() => Double.Parse(Value);
     }
 
-public record JsonElement(
-            string Value) : JsonElement2 {
-
-    }
-
 
 public record JsonElementObject() : JsonElement2 {
     public bool TryGetProperty (string tag, out JsonElement2 element) =>
         Properties.TryGetValue (tag, out element);
+
+    public KeyValuePair<string,JsonElement2> SoloProperty() {
+        var enumerator = Properties.GetEnumerator();
+        if (!enumerator.MoveNext()) {
+            throw new NYI();
+            }
+        return enumerator.Current;
+        }
+
 
 
     public Dictionary<string, JsonElement2> Properties = [];
@@ -202,52 +207,58 @@ public record JsonElementObject() : JsonElement2 {
 
 public record JsonElementArray() : JsonElement2 {
 
-    public List<JsonElement2> EnumerateArray = [];
+    public List<JsonElement2> Items = [];
     public JsonElementArray(
         JsonReader jsonReader) : this() {
         var going = true;
         while (going) {
-                //AddProperty(jsonReader, tag);
-                jsonReader.GetToken();
-                switch (jsonReader.TokenType) {
-                    case Token.Null: {
-                        EnumerateArray.Add(new JsonElementNull());
-                        break;
-                        }
-                    case Token.True: {
-                        EnumerateArray.Add(new JsonElementBoolean(true));
-                        break;
-                        }
-                    case Token.False: {
-                        EnumerateArray.Add(new JsonElementBoolean(false));
-                        break;
-                        }
-                    case Token.String: {
-                        EnumerateArray.Add(new JsonElementString(jsonReader.ResultString));
-                        break;
-                        }
-                    case Token.Binary: {
-                        EnumerateArray.Add(new JsonElementBinary(jsonReader.ResultBinary));
-                        break;
-                        }
-                    case Token.StartObject: {
-                        EnumerateArray.Add(new JsonElementObject(jsonReader));
-                        break;
-                        }
-                    case Token.StartArray: {
-                        EnumerateArray.Add(new JsonElementArray(jsonReader));
-                        break;
-                        }
-                    case Token.EndArray: {
-                        going = false;
-                        break;
-                        }
-                jsonReader.GetToken();
-                going = jsonReader.TokenType == Token.Comma;
+            //AddProperty(jsonReader, tag);
+            jsonReader.GetToken();
+            switch (jsonReader.TokenType) {
+                case Token.Null: {
+                    Items.Add(new JsonElementNull());
+                    break;
+                    }
+                case Token.True: {
+                    Items.Add(new JsonElementBoolean(true));
+                    break;
+                    }
+                case Token.False: {
+                    Items.Add(new JsonElementBoolean(false));
+                    break;
+                    }
+                case Token.Number: {
+                    Items.Add(new JsonElementNumber(jsonReader.ResultString));
+                    break;
+                    }
+                case Token.String: {
+                    Items.Add(new JsonElementString(jsonReader.ResultString));
+                    break;
+                    }
+                case Token.Binary: {
+                    Items.Add(new JsonElementBinary(jsonReader.ResultBinary));
+                    break;
+                    }
+                case Token.StartObject: {
+                    Items.Add(new JsonElementObject(jsonReader));
+                    break;
+                    }
+                case Token.StartArray: {
+                    Items.Add(new JsonElementArray(jsonReader));
+                    break;
+                    }
+                case Token.EndArray: {
+                    going = false;
+                    break;
+                    }
+                default: {
+                    break;
+                    }
                 }
+            jsonReader.GetToken();
+            going = jsonReader.TokenType == Token.Comma;
+
             }
-
-
         }
     }
 

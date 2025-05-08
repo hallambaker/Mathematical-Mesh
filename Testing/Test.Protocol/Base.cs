@@ -100,17 +100,13 @@ public partial class GoedelProtocol {
     [Fact]
 
     public void TestEncodeDecode3() {
-
         var First = TestDataStruct;
 
         var FirstJSON = First.GetBytes(DataEncoding.JSON, true);
         Console.WriteLine($"Input: {FirstJSON.ToUTF8()}");
 
-
-        var element = JsonObject.Parse(FirstJSON);
-
-
-
+        var Second = JsonObject.Parse(FirstJSON) as MultiStruct;
+        CheckEqual(First, Second);
         }
 
     [Fact]

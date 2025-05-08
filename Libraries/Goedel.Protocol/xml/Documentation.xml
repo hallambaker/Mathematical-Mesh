@@ -4,6 +4,148 @@
         <name>Goedel.Protocol</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Protocol.Binding">
+            <summary>
+            Untyped binding specification. The untyped binding provides the necessary factory,
+            sequence addition and key/value pair extraction functions for serialization and
+            deserialization.
+            </summary>
+            <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
+            <param name="Tag">JSON tag for this object.</param>
+            <param name="Parent">Parent the object inherits from.</param>
+            <param name="TypeTag">Specifies the property name for the property specifying the type.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Binding.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,Goedel.Protocol.Binding,System.String)">
+            <summary>
+            Untyped binding specification. The untyped binding provides the necessary factory,
+            sequence addition and key/value pair extraction functions for serialization and
+            deserialization.
+            </summary>
+            <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
+            <param name="Tag">JSON tag for this object.</param>
+            <param name="Parent">Parent the object inherits from.</param>
+            <param name="TypeTag">Specifies the property name for the property specifying the type.</param>
+        </member>
+        <member name="P:Goedel.Protocol.Binding.Properties">
+            <summary>Dictionary mapping the property tag to the field specification.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Binding.Tag">
+            <summary>JSON tag for this object.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Binding.Parent">
+            <summary>Parent the object inherits from.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Binding.TypeTag">
+            <summary>Specifies the property name for the property specifying the type.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.Binding.TypeDictionary">
+            <summary>Dictionary mapping child type tags to type definitions.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.Factory">
+            <summary>Factory returning a new object.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.ListFactory">
+            <summary>Factory returning a new list of objects.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.DictionaryFactory">
+            <summary>Factory returning a new Dictionary object.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.ListAdd">
+            <summary>Action adding an element to a list of the bound type.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.DictionaryAdd">
+            <summary>Action adding a key/value pair to a dictionary of the bound type.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.GetKey">
+            <summary>Return the key of a key/value pair.</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.GetValue">
+            <summary>Return the value of a key/value pair.</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Binding.ChildClasses">
+            <summary>Dictionary binding sub classes to binding descriptions</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Binding.AllProperties">
+            <summary>Dictionary binding all properties to binding descriptions</summary> 
+        </member>
+        <member name="P:Goedel.Protocol.Binding.FullProperties">
+            <summary>Dictionary binding all properties to binding descriptions</summary> 
+        </member>
+        <member name="M:Goedel.Protocol.Binding.Parse(Goedel.Protocol.JsonElementObject,Goedel.Protocol.Binding,System.Boolean)">
+            <summary>
+            Parse the JSON element <paramref name="element"/> returning a JsonObject
+            of the type specified by <paramref name="binding"/>.
+            </summary>
+            <param name="element">The document to parse.</param>
+            <param name="binding">The type binding describing the object class.</param>
+            <param name="collectUparsed">If true, collect up unknown elements in the 
+            returned instance.</param>
+            <returns>The parsed object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Binding.MapProperty(Goedel.Protocol.JsonObject,Goedel.Protocol.JsonElement2,Goedel.Protocol.Property)">
+            <summary>
+            Map the JSON element <paramref name="element"/> onto the object <paramref name="target"/>
+            under the property description <paramref name="specifier"/>.
+            </summary>
+            <param name="target"></param>
+            <param name="element"></param>
+            <param name="specifier"></param>
+            <returns>True if successful, otherwise false.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.Binding`1">
+            <summary>
+            Binding specification.
+            </summary>
+            <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
+            <param name="Tag">JSON tag for this object.</param>
+            <param name="Parent">Parent the object inherits from.</param>
+            <param name="OFactory">Object instance factory.</param>
+            <param name="LFactory">List instance factory.</param>
+            <param name="DFactory">Dictionary instance factory type.</param>
+            <param name="TypeTag">The type tag used to distinguish objects of this type.</param>
+        </member>
+        <member name="M:Goedel.Protocol.Binding`1.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,System.Func{`0},System.Func{System.Collections.Generic.List{`0}},System.Func{System.Collections.Generic.Dictionary{System.String,`0}},Goedel.Protocol.Binding,System.String)">
+            <summary>
+            Binding specification.
+            </summary>
+            <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
+            <param name="Tag">JSON tag for this object.</param>
+            <param name="Parent">Parent the object inherits from.</param>
+            <param name="OFactory">Object instance factory.</param>
+            <param name="LFactory">List instance factory.</param>
+            <param name="DFactory">Dictionary instance factory type.</param>
+            <param name="TypeTag">The type tag used to distinguish objects of this type.</param>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.OFactory">
+            <summary>Object instance factory.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.LFactory">
+            <summary>List instance factory.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.DFactory">
+            <summary>Dictionary instance factory type.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.Factory">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.ListFactory">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.DictionaryFactory">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.GetKey">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.GetValue">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.ListAdd">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Protocol.Binding`1.DictionaryAdd">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Protocol.CharacterStreamTextReader">
             <summary>
             A character stream reader that takes a TextReader as the input source.
@@ -1243,6 +1385,14 @@
             </summary>
             <param name="Status">Status code returned by transaction.</param>
             <returns>true if and only iff the transaction succeeded.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.IBinding">
+            <summary>
+            Interface of a bindable object.
+            </summary>
+        </member>
+        <member name="P:Goedel.Protocol.IBinding._Binding">
+            <summary>The binding of the object.</summary> 
         </member>
         <member name="T:Goedel.Protocol.ICharacterStream">
             <summary>
@@ -3440,6 +3590,9 @@
         <member name="P:Goedel.Protocol.JsonReader.ResultBinary">
             <summary>The current token binary values</summary>
         </member>
+        <member name="P:Goedel.Protocol.JsonReader.ResultDateTime">
+            <summary>The current token binary values</summary>
+        </member>
         <member name="F:Goedel.Protocol.JsonReader.ResultFloat">
             <summary>Last Real32/single precision floating point values.</summary>
         </member>
@@ -4663,135 +4816,6 @@
             <summary>Write out the Date Time as a string in RFC3339 Format</summary>
             <param name="Output">The stream to write the output to</param>
             <param name="Data">Data to write</param>
-        </member>
-        <member name="T:Goedel.Protocol.IBinding">
-            <summary>
-            Interface of a bindable object.
-            </summary>
-        </member>
-        <member name="P:Goedel.Protocol.IBinding._Binding">
-            <summary>The binding of the object.</summary> 
-        </member>
-        <member name="T:Goedel.Protocol.Binding">
-            <summary>
-            Untyped binding specification. The untyped binding provides the necessary factory,
-            sequence addition and key/value pair extraction functions for serialization and
-            deserialization.
-            </summary>
-            <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
-            <param name="Tag">JSON tag for this object.</param>
-            <param name="Parent">Parent the object inherits from.</param>
-            <param name="TypeTag">Specifies the property name for the property specifying the type.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Binding.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,Goedel.Protocol.Binding,System.String)">
-            <summary>
-            Untyped binding specification. The untyped binding provides the necessary factory,
-            sequence addition and key/value pair extraction functions for serialization and
-            deserialization.
-            </summary>
-            <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
-            <param name="Tag">JSON tag for this object.</param>
-            <param name="Parent">Parent the object inherits from.</param>
-            <param name="TypeTag">Specifies the property name for the property specifying the type.</param>
-        </member>
-        <member name="P:Goedel.Protocol.Binding.Properties">
-            <summary>Dictionary mapping the property tag to the field specification.</summary>
-        </member>
-        <member name="P:Goedel.Protocol.Binding.Tag">
-            <summary>JSON tag for this object.</summary>
-        </member>
-        <member name="P:Goedel.Protocol.Binding.Parent">
-            <summary>Parent the object inherits from.</summary>
-        </member>
-        <member name="P:Goedel.Protocol.Binding.TypeTag">
-            <summary>Specifies the property name for the property specifying the type.</summary>
-        </member>
-        <member name="F:Goedel.Protocol.Binding.TypeDictionary">
-            <summary>Dictionary mapping child type tags to type definitions.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Binding.Factory">
-            <summary>Factory returning a new object.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Binding.ListFactory">
-            <summary>Factory returning a new list of objects.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Binding.DictionaryFactory">
-            <summary>Factory returning a new Dictionary object.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Binding.ListAdd">
-            <summary>Action adding an element to a list of the bound type.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Binding.DictionaryAdd">
-            <summary>Action adding a key/value pair to a dictionary of the bound type.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Binding.GetKey">
-            <summary>Return the key of a key/value pair.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Binding.GetValue">
-            <summary>Return the value of a key/value pair.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Binding.ChildClasses">
-            <summary>Dictionary binding sub classes to binding descriptions</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Binding.AllProperties">
-            <summary>Dictionary binding all properties to binding descriptions</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Binding.FullProperties">
-            <summary>Dictionary binding all properties to binding descriptions</summary> 
-        </member>
-        <member name="T:Goedel.Protocol.Binding`1">
-            <summary>
-            Binding specification.
-            </summary>
-            <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
-            <param name="Tag">JSON tag for this object.</param>
-            <param name="Parent">Parent the object inherits from.</param>
-            <param name="OFactory">Object instance factory.</param>
-            <param name="LFactory">List instance factory.</param>
-            <param name="DFactory">Dictionary instance factory type.</param>
-            <param name="TypeTag">The type tag used to distinguish objects of this type.</param>
-        </member>
-        <member name="M:Goedel.Protocol.Binding`1.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,System.Func{`0},System.Func{System.Collections.Generic.List{`0}},System.Func{System.Collections.Generic.Dictionary{System.String,`0}},Goedel.Protocol.Binding,System.String)">
-            <summary>
-            Binding specification.
-            </summary>
-            <param name="Properties">Dictionary mapping the property tag to the field specification.</param>
-            <param name="Tag">JSON tag for this object.</param>
-            <param name="Parent">Parent the object inherits from.</param>
-            <param name="OFactory">Object instance factory.</param>
-            <param name="LFactory">List instance factory.</param>
-            <param name="DFactory">Dictionary instance factory type.</param>
-            <param name="TypeTag">The type tag used to distinguish objects of this type.</param>
-        </member>
-        <member name="P:Goedel.Protocol.Binding`1.OFactory">
-            <summary>Object instance factory.</summary>
-        </member>
-        <member name="P:Goedel.Protocol.Binding`1.LFactory">
-            <summary>List instance factory.</summary>
-        </member>
-        <member name="P:Goedel.Protocol.Binding`1.DFactory">
-            <summary>Dictionary instance factory type.</summary>
-        </member>
-        <member name="P:Goedel.Protocol.Binding`1.Factory">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Binding`1.ListFactory">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Binding`1.DictionaryFactory">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Binding`1.GetKey">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Binding`1.GetValue">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Binding`1.ListAdd">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Binding`1.DictionaryAdd">
-            <inheritdoc/>
         </member>
         <member name="T:Goedel.Protocol.Property">
             <summary>

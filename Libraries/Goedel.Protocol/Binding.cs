@@ -172,7 +172,7 @@ public abstract record Binding(
                     var array = new List<bool>();
                     subProperty.Set(target, array);
 
-                    foreach (var member in jsonArray.EnumerateArray) {
+                    foreach (var member in jsonArray.Items) {
                         if (member is JsonElementBoolean jsonElement) {
                             array.Add(jsonElement.Value);
                             }
@@ -218,7 +218,7 @@ public abstract record Binding(
                     var array = new List<string>();
                     subProperty.Set(target, array);
 
-                    foreach (var member in jsonArray.EnumerateArray) {
+                    foreach (var member in jsonArray.Items) {
                         if (member is JsonElementString jsonElement) {
                             array.Add(jsonElement.Value);
                             }
@@ -263,7 +263,7 @@ public abstract record Binding(
                     var array = new List<int>();
                     subProperty.Set(target, array);
 
-                    foreach (var member in jsonArray.EnumerateArray) {
+                    foreach (var member in jsonArray.Items) {
                         if (member is JsonElementNumber jsonElement) {
                             array.Add(jsonElement.GetInt32());
                             }
@@ -308,7 +308,7 @@ public abstract record Binding(
                     var array = new List<long>();
                     subProperty.Set(target, array);
 
-                    foreach (var member in jsonArray.EnumerateArray) {
+                    foreach (var member in jsonArray.Items) {
                         if (member is JsonElementNumber jsonElement) {
                             array.Add(jsonElement.GetInt64());
                             }
@@ -353,7 +353,7 @@ public abstract record Binding(
                     var array = new List<float>();
                     subProperty.Set(target, array);
 
-                    foreach (var member in jsonArray.EnumerateArray) {
+                    foreach (var member in jsonArray.Items) {
                         if (member is JsonElementNumber jsonElement) {
                             array.Add(jsonElement.GetReal32());
                             }
@@ -398,7 +398,7 @@ public abstract record Binding(
                     var array = new List<double>();
                     subProperty.Set(target, array);
 
-                    foreach (var member in jsonArray.EnumerateArray) {
+                    foreach (var member in jsonArray.Items) {
                         if (member is JsonElementNumber jsonElement) {
                             array.Add(jsonElement.GetReal64());
                             }
@@ -431,9 +431,12 @@ public abstract record Binding(
             #endregion
             #region // DateTime
             case PropertyDateTime subProperty: {
-                if (element.ValueKind == JsonValueKind.String) {
-                    subProperty.Set(target, element.GetDateTime());
+                if (element is JsonElementDateTime jsonElement) {
+                    subProperty.Set(target, jsonElement.Value);
                     return true;
+                    }
+                else if (element is JsonElementString jsonElementString) {
+                    subProperty.Set(target, jsonElementString.GetDateTime());
                     }
                 return false;
                 }
@@ -443,9 +446,12 @@ public abstract record Binding(
                     var array = new List<DateTime>();
                     subProperty.Set(target, array);
 
-                    foreach (var member in jsonArray.EnumerateArray) {
-                        if (member.ValueKind == JsonValueKind.String) {
-                            array.Add(member.GetDateTime());
+                    foreach (var member in jsonArray.Items) {
+                        if (member is JsonElementDateTime jsonElement) {
+                            array.Add(jsonElement.Value);
+                            }
+                        else if (member is JsonElementString jsonElementString) {
+                            array.Add(jsonElementString.GetDateTime());
                             }
                         else {
                             collected = false;
@@ -462,8 +468,11 @@ public abstract record Binding(
                     subProperty.Set(target, array);
 
                     foreach (var member in jsonDictionary.Properties) {
-                        if (member.Value.ValueKind == JsonValueKind.String) {
-                            array.Add(member.Name, member.Value.GetDateTime());
+                        if (member.Value is JsonElementDateTime jsonElement) {
+                            array.Add(member.Key, jsonElement.Value);
+                            }
+                        else if (member.Value is JsonElementString jsonElementString) {
+                            array.Add(member.Key, jsonElementString.GetDateTime());
                             }
                         else {
                             collected = false;
@@ -476,9 +485,12 @@ public abstract record Binding(
             #endregion
             #region // Binary
             case PropertyBinary subProperty: {
-                if (element.ValueKind == JsonValueKind.String) {
-                    var value = element.GetString().FromBase64();
-                    subProperty.Set(target, value);
+                if (element is JsonElementString jsonElement) {
+                    subProperty.Set(target, jsonElement.GetBinary());
+                    return true;
+                    }
+                else if (element is JsonElementBinary jsonElementString) {
+                    subProperty.Set(target, jsonElementString.Value);
                     return true;
                     }
                 return false;
@@ -489,10 +501,12 @@ public abstract record Binding(
                     var array = new List<byte[]>();
                     subProperty.Set(target, array);
 
-                    foreach (var member in jsonArray.EnumerateArray) {
-                        if (member.ValueKind == JsonValueKind.String) {
-                            var value = member.GetString().FromBase64();
-                            array.Add(value);
+                    foreach (var member in jsonArray.Items) {
+                        if (member is JsonElementString jsonElement) {
+                            array.Add(jsonElement.GetBinary());
+                            }
+                        else if (member is JsonElementBinary jsonElementString) {
+                            array.Add(jsonElementString.Value);
                             }
                         else {
                             collected = false;
@@ -510,9 +524,11 @@ public abstract record Binding(
 
 
                     foreach (var member in jsonDictionary.Properties) {
-                        if (member.Value.ValueKind == JsonValueKind.String) {
-                            var value = member.Value.GetString().FromBase64();
-                            array.Add(member.Name, value);
+                        if (member.Value is JsonElementString jsonElement) {
+                            array.Add(member.Key, jsonElement.GetBinary());
+                            }
+                        else if (member.Value is JsonElementBinary jsonElementString) {
+                            array.Add(member.Key, jsonElementString.Value);
                             }
                         else {
                             collected = false;
@@ -525,16 +541,16 @@ public abstract record Binding(
             #endregion
             #region // Struct
             case PropertyStruct subProperty: {
-                if (element.ValueKind == JsonValueKind.Object) {
+                if (element is JsonElementObject jsonElement) {
                     if (!JsonObject.BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
                         return false;
                         }
                     if (subProperty.Tagged) {
-                        var item = ParseTagged(element, binding);
+                        var item = ParseTagged(jsonElement, binding);
                         subProperty.Set(target, item);
                         }
                     else {
-                        var item = Parse(element, binding);
+                        var item = Parse(jsonElement, binding);
                         subProperty.Set(target, item);
                         }
                     }
@@ -549,15 +565,15 @@ public abstract record Binding(
                     var array = binding.ListFactory();
                     subProperty.Set(target, array);
 
-                    foreach (var member in jsonArray.EnumerateArray) {
-                        if (member.ValueKind == JsonValueKind.Object) {
+                    foreach (var member in jsonArray.Items) {
+                        if (member is JsonElementObject jsonElement) {
 
                             if (subProperty.Tagged) {
-                                var item = ParseTagged(member, binding);
+                                var item = ParseTagged(jsonElement, binding);
                                 binding.ListAdd(array, item);
                                 }
                             else {
-                                var item = Parse(member, binding);
+                                var item = Parse(jsonElement, binding);
                                 binding.ListAdd(array, item);
                                 }
                             }
@@ -580,14 +596,14 @@ public abstract record Binding(
 
 
                     foreach (var member in jsonDictionary.Properties) {
-                        if (member.Value.ValueKind == JsonValueKind.Object) {
+                        if (member.Value is JsonElementObject jsonElement) {
                             if (subProperty.Tagged) {
-                                var item = ParseTagged(member.Value, binding);
-                                binding.DictionaryAdd(array, member.Name, item);
+                                var item = ParseTagged(jsonElement, binding);
+                                binding.DictionaryAdd(array, member.Key, item);
                                 }
                             else {
-                                var item = Parse(member.Value, binding);
-                                binding.DictionaryAdd(array, member.Name, item);
+                                var item = Parse(jsonElement, binding);
+                                binding.DictionaryAdd(array, member.Key, item);
                                 }
                             }
                         else {

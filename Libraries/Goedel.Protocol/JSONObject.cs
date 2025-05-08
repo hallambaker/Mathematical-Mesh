@@ -871,10 +871,17 @@ public abstract partial class JsonObject : IBinding {
         //var document = JsonDocument.Parse(data);
 
         (element.Properties.Count == 1).AssertTrue(NYI.Throw);
-        var typename = element.Properties[0].Name;
+        var p1 = element.SoloProperty();
 
-        if (!BindingNameDictionary.TryGetValue(typename, out var binding)){
+        var typename = p1.Key;
+
+        if (!BindingNameDictionary.TryGetValue(typename, out var binding)) {
             throw new NYI();
+            }
+        if (p1.Value is JsonElementObject jsonElementObject) {
+
+
+            return Binding.Parse(jsonElementObject, binding, collectUparsed);
             }
 
         // Here we look at the root element, find the binding in the Tag dictionaries
