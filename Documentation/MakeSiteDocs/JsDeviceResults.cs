@@ -37,12 +37,15 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Text;
 using Microsoft.Extensions.Primitives;
 using Goedel.Utilities;
+using Proto=Goedel.Tool.ProtoGen;
 
 
 namespace ExampleGenerator;
 
 public class JsDeviceResults {
     CreateExamples CreateExamples { get; }
+
+    public Proto.AnnotateSchema AnnotatedSchema { get; set; }
 
     public JsDevice JsDevice { get; }
 
@@ -81,13 +84,26 @@ public class JsDeviceResults {
             EndSupport = date.AddYears(5),
             EndLife = date.AddYears(10),
             ProdId = "Configulator/1.0",
-            Localizations =
-                new() {
-                        { "cy", new JsDevice() {
-                            ModelName = "Acme GweGamera 4K"
-                            } }
-                    },
+            Localizations = new() {
+                    { "cy", new () {
+                        ModelName = "Acme GweGamera 4K"
+                        } }
+                },
 
+
+            Components = new() {
+                { "main", new () {
+                    Dimensions =  new() {
+                        { "typical",   new Dimensions () {
+                            Kind="typical",
+                            Weight = 0.050,
+                            Width = 0.10,
+                            Height = 0.10,
+                            Depth = 0.10
+                            } }
+                        }
+                    } }
+                },
 
             Images = [
                     new () {
@@ -254,7 +270,7 @@ public class JsDeviceResults {
 
 
 
-        //Console.WriteLine(JSONDebugWriter.Write(device, false));
+        Console.WriteLine(JSONDebugWriter.Write(JsDevice, false));
 
         }
 

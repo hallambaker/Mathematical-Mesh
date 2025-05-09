@@ -12,6 +12,7 @@
 
 
 #method MakeJSContactExamples CreateExamples Example
+#% JSContactSchema(Example);
 #% JSContactKeys(Example);
 #% JSContactJWK(Example);
 #% JSContactEARL(Example);
@@ -35,6 +36,11 @@ $$$ Missing data $$$
 #end method
 
 
+
+
+
+
+
 #method2 CardExample string parent JsonObject example
 {
     "@type":"Card",
@@ -44,6 +50,34 @@ $$$ Missing data $$$
     ...
     }
 #end method2
+
+#zfile CreateExamples JSContactSchema "Examples\\JSContactSchema.md" Example
+#% var jscontact = Example.JSContact;
+
+#### Additional Card Properties
+
+The following properties are added to the Card object specified in [RFC9553].
+
+#% jscontact.AnnotatedSchema.DocumentProperties(_Output, "Card",[ "Updates", "Groups"]);
+
+
+#%
+
+#### Extended Objects
+
+The following objects specified in [RFC9553] are extended to add the specified properties.
+
+#% jscontact.AnnotatedSchema.DocumentStructure(_Output, "EmailAddress", ["CryptoKeyIds"]);
+#% jscontact.AnnotatedSchema.DocumentStructure(_Output, "OnlineService", ["CryptoKeyIds"]);
+
+#### New Objects
+
+The following object is defined:
+
+#% jscontact.AnnotatedSchema.DocumentStructure(_Output, "JsonWebKeySet");
+
+#end zfile
+
 
 
 #zfile CreateExamples JSContactKeys "Examples\\JSContactKeys.md" Example
@@ -67,7 +101,9 @@ $$$ Missing data $$$
 #zfile CreateExamples JSContactEARL "Examples\\JSContactEARL.md" Example
 #% var jscontact = Example.JSContact;
 #% var earl = Example.Earl;
+~~~~
 #{jscontact.EARL}
+~~~~
 #end zfile
 
 #zfile CreateExamples JSContactDNS "Examples\\JSContactDNS.md" Example

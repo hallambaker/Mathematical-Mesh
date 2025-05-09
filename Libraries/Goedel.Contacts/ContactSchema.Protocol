@@ -215,15 +215,14 @@
 		Struct Update		Updates
 			Dictionary
 			Description
-				| 
+				|Specifies mechanisms for obtaining updates to the card.
 
 		// 2.3.  Group Properties
 		// Groups
-		Struct Group		Groups
+		Struct ServiceGroup		ServiceGroups
 			Dictionary
 			Description
-				| 
-
+				|Specifies groups of related email addresses and online services.
 
 
 	Structure Resource
@@ -437,7 +436,7 @@
 
 	// 2.3.  Contact Properties
 	// 2.3.1.  emails
-	Structure EmailAddressRFC9553
+	Structure EmailAddress
 		String					Type
 			Tag "@type" //  MUST be "EmailAddress" if set
 			TypeTag
@@ -455,13 +454,8 @@
 		String					Label
 			Description
 				| A custom label for the value. 
-		String					Groups
-			Multiple
-			Description
-				| The groups that the email address is a member of 
 
-	Structure EmailAddress
-		Inherits EmailAddressRFC9553
+		// ****** NEW! Improved!
 		String					CryptoKeyIds
 			Dictionary
 			Description
@@ -469,7 +463,7 @@
 				| authenticate the updated contact information and their use.
 
 	// 2.3.2.  onlineServices
-	Structure OnlineServiceRFC9553
+	Structure OnlineService
 		String					Type
 			Tag "@type" //  MUST be "OnlineService" if set
 			TypeTag
@@ -497,13 +491,8 @@
 		String					Label
 			Description
 				| A custom label for the value. 
-		String					Groups
-			Multiple
-			Description
-				| The groups that the service is a member of 
 
-	Structure OnlineService
-		Inherits OnlineServiceRFC9553
+		// ****** NEW! Improved!
 		String					CryptoKeyIds
 			Dictionary
 			Description
@@ -839,14 +828,19 @@
 
 	Structure JsonWebKeySet
 		Inherits				CryptoKey
-		Tag	"JWK"
+		Tag	"JsonWebKeySet"
 		Binary					Data
+			Description
+				|Binary credential data (NB, may be moved to JWK.)
 		Struct JWK				Jwk
 			Multiple
+			Description
+				|A Json Web Key Set.
 
-	Structure Group 
+	Structure ServiceGroup 
 		Inherits				Resource
 		Boolean					Members
 			Dictionary
 			Description
-				| 
+				|The identifiers of the service group members. The boolean value corresponding
+				|to each MUST be true.

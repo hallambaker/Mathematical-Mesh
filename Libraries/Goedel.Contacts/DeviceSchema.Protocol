@@ -3,7 +3,7 @@
 	Extern Resource
 	CamelCase
 
-	// 2. Card
+	// 2. Device
 	Structure JsDevice
 		Inherits JmapBase
 		Tag "Device"
@@ -28,7 +28,6 @@
 				| as the script. Note that values MAY be localized in the localizations 
 				| property.
 
-
 		String					DeviceId
 			Description
 				| A URI that uniquely identifies the device.
@@ -48,6 +47,10 @@
 		DateTime				DateManufacture
 			Description
 				| Date of manufacture.
+		Struct Component	Components		
+			Dictionary
+			Description
+				|The physical components making up the device and their dimensions.
 
 		// 2.7.  Multilingual Properties
 		// 2.7.1.  localizations
@@ -177,4 +180,41 @@
 
 
 
+	Structure Component
+		Description
+			| The physical properties of the component parts of the device.
+			|The Width, Depth and Height values are given relative to its usual 
+			|orientation
+		Inherits Resource
+		Struct Dimensions Dimensions
+			Dictionary
+			Description
+				|The dimension specifications
 
+
+	Structure Dimensions
+		Description
+			|The physical properties of the component parts of the device.
+			|The Width, Depth and Height values are given relative to its typical orientation.
+			|All values are in SI units
+		String Kind
+			Description
+				|The type of dimensions specified, 'typical', 'maximum', 'shipping'
+		Float Weight
+			Description
+				|The weight of the component in kilograms
+		Float Width
+			Description
+				|The width of the component in meters
+		Float Depth
+			Description
+				|The depth of the component in meters
+		Float Height
+			Description
+				|The height of the component in meters
+		Float TemperatureMin
+			Description
+				|The minimum temperature for the device
+		Float TemperatureMax
+			Description
+				|The maximum temperature for the device

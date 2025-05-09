@@ -20,6 +20,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// </summary>
 	/// <param name="Example"></param>
 	public void MakeJSContactExamples (CreateExamples Example) {
+		 JSContactSchema(Example);
 		 JSContactKeys(Example);
 		 JSContactJWK(Example);
 		 JSContactEARL(Example);
@@ -59,6 +60,43 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		_Output.Write ("    ...\n{0}", _Indent);
 		_Output.Write ("    }}\n{0}", _Indent);
 		}
+	
+
+	//
+	// JSContactSchema
+	//
+	public static void JSContactSchema(CreateExamples Example) { /* XFile  */
+			using var _Output = new StreamWriter("Examples\\JSContactSchema.md");
+		Example._Output = _Output;
+		Example._JSContactSchema(Example);
+		}
+	public void _JSContactSchema(CreateExamples Example) {
+
+			 var jscontact = Example.JSContact;
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("## Additional Card Properties\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The following properties are added to the Card object specified in [RFC9553].\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			 jscontact.AnnotatedSchema.DocumentProperties(_Output, "Card",[ "Updates", "Groups"]);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("## Extended Objects\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The following objects specified in [RFC9553] are extended to add the specified properties.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			 jscontact.AnnotatedSchema.DocumentStructure(_Output, "EmailAddress", ["CryptoKeyIds"]);
+			 jscontact.AnnotatedSchema.DocumentStructure(_Output, "OnlineService", ["CryptoKeyIds"]);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("## New Objects\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The following object is defined:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			 jscontact.AnnotatedSchema.DocumentStructure(_Output, "JsonWebKeySet");
+			_Output.Write ("\n{0}", _Indent);
+				}
 	
 
 	//
@@ -110,7 +148,9 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 
 			 var jscontact = Example.JSContact;
 			 var earl = Example.Earl;
+			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("{1}\n{0}", _Indent, jscontact.EARL);
+			_Output.Write ("~~~~\n{0}", _Indent);
 				}
 	
 

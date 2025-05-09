@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/8/2025 12:44:24 AM
+//  This file was automatically generated at 5/9/2025 7:24:36 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -78,7 +78,9 @@ public abstract partial class Devices : global::Goedel.Protocol.JsonObject {
 	    {"Network", Network._Factory},
 	    {"Maintenance", Maintenance._Factory},
 	    {"Supplier", Supplier._Factory},
-	    {"RelatedItem", RelatedItem._Factory}
+	    {"RelatedItem", RelatedItem._Factory},
+	    {"Component", Component._Factory},
+	    {"Dimensions", Dimensions._Factory}
 		};
 
 
@@ -93,7 +95,9 @@ public abstract partial class Devices : global::Goedel.Protocol.JsonObject {
 	    {typeof(Network), Network._binding},
 	    {typeof(Maintenance), Maintenance._binding},
 	    {typeof(Supplier), Supplier._binding},
-	    {typeof(RelatedItem), RelatedItem._binding}
+	    {typeof(RelatedItem), RelatedItem._binding},
+	    {typeof(Component), Component._binding},
+	    {typeof(Dimensions), Dimensions._binding}
 		};
 
 
@@ -193,6 +197,13 @@ public partial class JsDevice : JmapBase {
 
 	[JsonPropertyName("dateManufacture")]
 	public virtual DateTime?					DateManufacture  {get; set;}
+
+        /// <summary>
+        ///The physical components making up the device and their dimensions.
+        /// </summary>
+
+	[JsonPropertyName("components")]
+	public virtual Dictionary<string,Component>?					Components  {get; set;}
 
         /// <summary>
         /// The property values localized to languages other than the main language 
@@ -295,6 +306,12 @@ public partial class JsDevice : JmapBase {
 					(IBinding data, string? value) => {(data as JsDevice).Manufacturer = value;}, (IBinding data) => (data as JsDevice).Manufacturer )},
 			{ "dateManufacture", new PropertyDateTime ("dateManufacture", 
 					(IBinding data, DateTime? value) => {(data as JsDevice).DateManufacture = value;}, (IBinding data) => (data as JsDevice).DateManufacture )},
+			{ "components", new PropertyDictionaryStruct ("components", typeof (Component),
+					(IBinding data, object? value) => {(data as JsDevice).Components = value as Dictionary<string,Component>;}, (IBinding data) => (data as JsDevice).Components,
+					false, ()=>new  Dictionary<string,Component>(), ()=>new Component(),
+					(IBinding data) => (data as JsDevice).Components.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Component>).Add (key as string,value as Component);})},
 			{ "localizations", new PropertyDictionaryStruct ("localizations", typeof (JsDevice),
 					(IBinding data, object? value) => {(data as JsDevice).Localizations = value as Dictionary<string,JsDevice>;}, (IBinding data) => (data as JsDevice).Localizations,
 					false, ()=>new  Dictionary<string,JsDevice>(), ()=>new JsDevice(),
@@ -800,6 +817,237 @@ public partial class RelatedItem : Resource {
 			return Out as RelatedItem;
 			}
 		var Result = new RelatedItem ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	///
+	///  The physical properties of the component parts of the device.
+	/// The Width, Depth and Height values are given relative to its usual 
+	/// orientation
+	/// </summary>
+public partial class Component : Resource {
+        /// <summary>
+        ///The dimension specifications
+        /// </summary>
+
+	[JsonPropertyName("dimensions")]
+	public virtual Dictionary<string,Dimensions>?					Dimensions  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<Component> _binding = new (
+			new() {
+
+			{ "dimensions", new PropertyDictionaryStruct ("dimensions", typeof (Dimensions),
+					(IBinding data, object? value) => {(data as Component).Dimensions = value as Dictionary<string,Dimensions>;}, (IBinding data) => (data as Component).Dimensions,
+					false, ()=>new  Dictionary<string,Dimensions>(), ()=>new Dimensions(),
+					(IBinding data) => (data as Component).Dimensions.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,Dimensions>).Add (key as string,value as Dimensions);})}
+        }, __Tag,() => new Component(), () => new List<Component>(), () => new Dictionary<string,Component>(),Resource._binding);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties =
+			Combine(Resource._binding, _binding);
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "Component";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new Component();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new Component FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as Component;
+			}
+		var Result = new Component ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+
+
+	}
+
+
+	/// <summary>
+	///
+	/// The physical properties of the component parts of the device.
+	/// The Width, Depth and Height values are given relative to its typical orientation.
+	/// All values are in SI units
+	/// </summary>
+public partial class Dimensions : Devices {
+        /// <summary>
+        ///The type of dimensions specified, 'typical', 'maximum', 'shipping'
+        /// </summary>
+
+	[JsonPropertyName("kind")]
+	public virtual string?					Kind  {get; set;}
+
+        /// <summary>
+        ///The weight of the component in kilograms
+        /// </summary>
+
+	[JsonPropertyName("weight")]
+	public virtual double?					Weight  {get; set;}
+
+        /// <summary>
+        ///The width of the component in meters
+        /// </summary>
+
+	[JsonPropertyName("width")]
+	public virtual double?					Width  {get; set;}
+
+        /// <summary>
+        ///The depth of the component in meters
+        /// </summary>
+
+	[JsonPropertyName("depth")]
+	public virtual double?					Depth  {get; set;}
+
+        /// <summary>
+        ///The height of the component in meters
+        /// </summary>
+
+	[JsonPropertyName("height")]
+	public virtual double?					Height  {get; set;}
+
+        /// <summary>
+        ///The minimum temperature for the device
+        /// </summary>
+
+	[JsonPropertyName("temperatureMin")]
+	public virtual double?					TemperatureMin  {get; set;}
+
+        /// <summary>
+        ///The maximum temperature for the device
+        /// </summary>
+
+	[JsonPropertyName("temperatureMax")]
+	public virtual double?					TemperatureMax  {get; set;}
+
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<Dimensions> _binding = new (
+			new() {
+
+			{ "kind", new PropertyString ("kind", 
+					(IBinding data, string? value) => {(data as Dimensions).Kind = value;}, (IBinding data) => (data as Dimensions).Kind )},
+			{ "weight", new PropertyReal64 ("weight", 
+					(IBinding data, double? value) => {(data as Dimensions).Weight = value;}, (IBinding data) => (data as Dimensions).Weight )},
+			{ "width", new PropertyReal64 ("width", 
+					(IBinding data, double? value) => {(data as Dimensions).Width = value;}, (IBinding data) => (data as Dimensions).Width )},
+			{ "depth", new PropertyReal64 ("depth", 
+					(IBinding data, double? value) => {(data as Dimensions).Depth = value;}, (IBinding data) => (data as Dimensions).Depth )},
+			{ "height", new PropertyReal64 ("height", 
+					(IBinding data, double? value) => {(data as Dimensions).Height = value;}, (IBinding data) => (data as Dimensions).Height )},
+			{ "temperatureMin", new PropertyReal64 ("temperatureMin", 
+					(IBinding data, double? value) => {(data as Dimensions).TemperatureMin = value;}, (IBinding data) => (data as Dimensions).TemperatureMin )},
+			{ "temperatureMax", new PropertyReal64 ("temperatureMax", 
+					(IBinding data, double? value) => {(data as Dimensions).TemperatureMax = value;}, (IBinding data) => (data as Dimensions).TemperatureMax )}
+        }, __Tag,() => new Dimensions(), () => new List<Dimensions>(), () => new Dictionary<string,Dimensions>(),null);
+
+    ///<summary>Dictionary describing the serializable properties.</summary> 
+    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+
+	///<summary>Dictionary describing the serializable properties.</summary> 
+	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
+
+
+    ///<inheritdoc/>
+	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _Properties => _StaticProperties;
+
+    ///<inheritdoc/>
+    public override Dictionary<string, Property> _ParentProperties => base._Properties;
+
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "Dimensions";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new Dimensions();
+
+
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
+	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+    /// <returns>The created object.</returns>		
+    public static new Dimensions FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as Dimensions;
+			}
+		var Result = new Dimensions ();
 		Result.Deserialize (jsonReader);
 		Result.PostDecode();
 		return Result;

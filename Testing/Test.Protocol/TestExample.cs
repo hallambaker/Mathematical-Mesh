@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/8/2025 12:19:28 AM
+//  This file was automatically generated at 5/9/2025 2:17:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -155,6 +155,12 @@ public partial class MultiInstance : TestSchema {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("FieldFloat")]
+	public virtual double?					FieldFloat  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
 	[JsonPropertyName("FieldDateTime")]
 	public virtual DateTime?					FieldDateTime  {get; set;}
 
@@ -185,6 +191,8 @@ public partial class MultiInstance : TestSchema {
 					(IBinding data, bool? value) => {(data as MultiInstance).FieldBoolean = value;}, (IBinding data) => (data as MultiInstance).FieldBoolean )},
 			{ "FieldInteger", new PropertyInteger32 ("FieldInteger", 
 					(IBinding data, int? value) => {(data as MultiInstance).FieldInteger = value;}, (IBinding data) => (data as MultiInstance).FieldInteger )},
+			{ "FieldFloat", new PropertyReal64 ("FieldFloat", 
+					(IBinding data, double? value) => {(data as MultiInstance).FieldFloat = value;}, (IBinding data) => (data as MultiInstance).FieldFloat )},
 			{ "FieldDateTime", new PropertyDateTime ("FieldDateTime", 
 					(IBinding data, DateTime? value) => {(data as MultiInstance).FieldDateTime = value;}, (IBinding data) => (data as MultiInstance).FieldDateTime )},
 			{ "FieldString", new PropertyString ("FieldString", 
@@ -268,6 +276,11 @@ public partial class MultiArray : MultiInstance {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("ArrayFloat")]
+	public virtual List<double>?					ArrayFloat  {get; set;}
+        /// <summary>
+        /// </summary>
+
 	[JsonPropertyName("ArrayDateTime")]
 	public virtual List<DateTime>?					ArrayDateTime  {get; set;}
         /// <summary>
@@ -293,6 +306,8 @@ public partial class MultiArray : MultiInstance {
 					(IBinding data, List<bool>? value) => {(data as MultiArray).ArrayBoolean = value;}, (IBinding data) => (data as MultiArray).ArrayBoolean )},
 			{ "ArrayInteger", new PropertyListInteger32 ("ArrayInteger", 
 					(IBinding data, List<int>? value) => {(data as MultiArray).ArrayInteger = value;}, (IBinding data) => (data as MultiArray).ArrayInteger )},
+			{ "ArrayFloat", new PropertyListReal64 ("ArrayFloat", 
+					(IBinding data, List<double>? value) => {(data as MultiArray).ArrayFloat = value;}, (IBinding data) => (data as MultiArray).ArrayFloat )},
 			{ "ArrayDateTime", new PropertyListDateTime ("ArrayDateTime", 
 					(IBinding data, List<DateTime>? value) => {(data as MultiArray).ArrayDateTime = value;}, (IBinding data) => (data as MultiArray).ArrayDateTime )},
 			{ "ArrayString", new PropertyListString ("ArrayString", 
@@ -379,6 +394,12 @@ public partial class DictArray : MultiArray {
         /// <summary>
         /// </summary>
 
+	[JsonPropertyName("DictFloat")]
+	public virtual Dictionary<string,double>?					DictFloat  {get; set;}
+
+        /// <summary>
+        /// </summary>
+
 	[JsonPropertyName("DictDateTime")]
 	public virtual Dictionary<string,DateTime>?					DictDateTime  {get; set;}
 
@@ -407,6 +428,8 @@ public partial class DictArray : MultiArray {
 					(IBinding data, Dictionary<string,bool>? value) => {(data as DictArray).DictBoolean = value;}, (IBinding data) => (data as DictArray).DictBoolean )},
 			{ "DictInteger", new PropertyDictionaryInteger32 ("DictInteger", 
 					(IBinding data, Dictionary<string,int>? value) => {(data as DictArray).DictInteger = value;}, (IBinding data) => (data as DictArray).DictInteger )},
+			{ "DictFloat", new PropertyDictionaryReal64 ("DictFloat", 
+					(IBinding data, Dictionary<string,double>? value) => {(data as DictArray).DictFloat = value;}, (IBinding data) => (data as DictArray).DictFloat )},
 			{ "DictDateTime", new PropertyDictionaryDateTime ("DictDateTime", 
 					(IBinding data, Dictionary<string,DateTime>? value) => {(data as DictArray).DictDateTime = value;}, (IBinding data) => (data as DictArray).DictDateTime )},
 			{ "DictString", new PropertyDictionaryString ("DictString", 

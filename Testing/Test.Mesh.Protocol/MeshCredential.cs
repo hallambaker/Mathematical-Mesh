@@ -233,7 +233,7 @@ public partial class TestService {
 
     bool Analyze(JsContact contact) {
 
-        contact.Analyze();
+        //contact.Analyze();
         var astext = contact.GetJson(false).ToUTF8();
 
 

@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.ASN;
 using Goedel.Contacts;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
@@ -28,11 +29,22 @@ using Goedel.Mesh;
 using Goedel.Mesh.Client;
 using Goedel.Mesh.Test;
 using Goedel.Protocol;
+using Proto = Goedel.Tool.ProtoGen;
 using Goedel.Utilities;
 
 namespace ExampleGenerator;
 
 public class JsContactResults {
+
+
+    public Proto.AnnotateSchema AnnotatedSchema { get; set; }
+
+    public string JmapBaseSchemaFile =>
+    Path.Combine(CreateExamples.SourceDirectory, @"Libraries\Goedel.Contacts\JmapBase.Protocol");
+
+    public string JsContactSchemaFile =>
+            Path.Combine(CreateExamples.SourceDirectory, @"Libraries\Goedel.Contacts\ContactSchema.Protocol");
+
 
     public JsContact Contact { get; }
     public CreateExamples CreateExamples { get; }
@@ -42,7 +54,7 @@ public class JsContactResults {
     public Dictionary<string, CryptoKey> JSContactOpenpgp { get; } = [];
     public EmailAddress EmailAddress { get; set; }
 
-    public Goedel.Contacts.Group Group { get; set; }
+    public Goedel.Contacts.ServiceGroup Group { get; set; }
 
 
     public Update Update { get; }
@@ -229,7 +241,7 @@ public class JsContactResults {
             }
 
 
-        foreach (var key in Contact.Groups) {
+        foreach (var key in Contact.ServiceGroups) {
             Group = key.Value;
 
             }

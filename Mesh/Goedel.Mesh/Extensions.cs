@@ -363,13 +363,13 @@ public static partial class Extensions {
     /// <param name="contact">The contact to add the application details to.</param>
     /// <param name="application">The application to add.</param>
     public static void AddDeveloper(this JsContact contact, CatalogedApplicationDeveloper application) {
-        var group = new Contacts.Group() {
+        var group = new Contacts.ServiceGroup() {
             Label = application.Description,
             Members = []
             };
         
-        contact.Groups ??= [];
-        contact.Groups.Add(application.Key, group);
+        contact.ServiceGroups ??= [];
+        contact.ServiceGroups.Add(application.Key, group);
 
         AddMembers (group, application.Ssh);
         AddMembers(group, application.Commit);
@@ -377,7 +377,7 @@ public static partial class Extensions {
 
         }
 
-    static void AddMembers(Contacts.Group group, List<string> members) {
+    static void AddMembers(Contacts.ServiceGroup group, List<string> members) {
         if (members is null) {
             return;
             }

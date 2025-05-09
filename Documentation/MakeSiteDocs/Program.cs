@@ -326,22 +326,31 @@ public partial class CreateExamples {
         SetWorkingDirectory();
         
         JSContact = new JsContactResults(this);
-
+        JSContact.AnnotatedSchema = new Proto.AnnotateSchema(JSContact.JsContactSchemaFile);
 
         SetOutputDirectory();
         MakeJSContactExamples(this);
 
-        var include1 = new HashSet<string>() { "Groups" };
-        using (var outfile = "Examples\\JSContactSchema1.md".OpenTextWriterNew()) {
-            Proto.AnnotateSchema.DocumentStructure(JSDevice.JmapBaseSchemaFile,
-                JSContact.Contact, outfile, baseTag: "JsContact", include: include1);
-            }
 
-        using (var outfile = "Examples\\JSContactSchema2.md".OpenTextWriterNew()) {
-            Proto.AnnotateSchema.DocumentStructure(JSDevice.JmapBaseSchemaFile,
-                JSContact.Contact, outfile, baseTags: [
-                    "EmailAddress", "OnlineService", "JsonWebKeySet", "Update", "Group"]);
-            }
+
+
+        //var include1 = new HashSet<string>() { "Groups" };
+        //using (var outfile = "Examples\\JSContactSchema1.md".OpenTextWriterNew()) {
+        //    Proto.AnnotateSchema.DocumentStructure(JSContact.JsContactSchemaFile,
+        //        JSContact.Contact, outfile, baseTag: "Card", include: include1);
+        //    }
+
+        //using (var outfile = "Examples\\JSContactSchema2.md".OpenTextWriterNew()) {
+        //    Proto.AnnotateSchema.DocumentStructure(JSContact.JsContactSchemaFile,
+        //        JSContact.Contact, outfile, baseTags: [
+        //            "EmailAddress", "OnlineService", "JsonWebKeySet", "Update", "Group"]);
+        //    }
+
+        //using (var outfile = "Examples\\JSContactSchema3.md".OpenTextWriterNew()) {
+        //    Proto.AnnotateSchema.DocumentStructure(JSContact.JsContactSchemaFile,
+        //        JSContact.Contact, outfile, baseTags: [
+        //            "EmailAddress", "OnlineService", "JsonWebKeySet", "Update", "Group"]);
+        //    }
 
         }
 
@@ -349,6 +358,8 @@ public partial class CreateExamples {
             ) {
         SetWorkingDirectory();
         JSDevice = new JsDeviceResults(this);
+        JSDevice.AnnotatedSchema = new Proto.AnnotateSchema(JSDevice.JsDeviceSchemaFile);
+
         SetOutputDirectory();
 
         using (var outfile = "Examples\\JSDeviceSchema.md".OpenTextWriterNew()) {

@@ -134,90 +134,90 @@ public partial class JsContact {
         }
 
 
-    /// <summary>
-    /// Analyze the contact to populate the property <see cref="Analysis"/>
-    /// </summary>
-    public void Analyze() {
-        Emails ??= [];
-        OnlineServices ??= [];
-        CryptoKeys ??= [];
+    ///// <summary>
+    ///// Analyze the contact to populate the property <see cref="Analysis"/>
+    ///// </summary>
+    //public void Analyze() {
+    //    Emails ??= [];
+    //    OnlineServices ??= [];
+    //    CryptoKeys ??= [];
 
-        Analysis = new();
+    //    Analysis = new();
 
-        var worklist = new Dictionary<string,OnlineService>();
-
-
-        foreach (var emailPair in Emails) {
-            var email = emailPair.Value;
-            email.Key = emailPair.Key;
-
-            var service = new OnlineService() {
-                Service = "smtp",
-                Key = emailPair.Key,
-                User = email.Address,
-                Contexts = email.Contexts,
-                Pref = email.Pref,
-                Label = email.Label,
-                Groups = email.Groups,
-                Analysis = new()
-                };
-            worklist.Add(service.Key, service);
-            }
-
-        foreach (var pair in OnlineServices) {
-            var service = pair.Value;
-            service.Analysis = new();
-
-            service.Key = pair.Key;
-            if (CryptoKeys.TryGetValue(service.Key, out var cryptoKey)) {
-                service.CryptoKey = cryptoKey;
-                }
-
-            worklist.Add(service.Key, service);
-            }
-
-        foreach (var pair in worklist) {
-            var item = pair.Value;
-            if (item.Groups != null && item.Groups.Count > 0) {
-                foreach (var member in item.Groups) {
-                    if (CheckNotCyclic(worklist, item) & worklist.TryGetValue(member, out var parent)) {
-                        AnalyzeService(parent.Analysis, item);
-
-                        parent.Analysis.Children.Add(item);
-                        item.Analysis.Parents.Add(parent);
-                        }
-                    }
-                }
-            else {
-                AnalyzeService(Analysis, item);
-                Analysis.Children.Add(item);
-                }
-            }
-        }
+    //    var worklist = new Dictionary<string,OnlineService>();
 
 
-    static bool CheckNotCyclic(
-                    Dictionary<string, OnlineService> worklist,
-                    OnlineService service,
-                    string? key = null) {
-        key ??= service.Key;
+    //    foreach (var emailPair in Emails) {
+    //        var email = emailPair.Value;
+    //        email.Key = emailPair.Key;
 
-        if (service.Groups is null || service.Groups.Count == 0) {
-            return true;
-            }
+    //        var service = new OnlineService() {
+    //            Service = "smtp",
+    //            Key = emailPair.Key,
+    //            User = email.Address,
+    //            Contexts = email.Contexts,
+    //            Pref = email.Pref,
+    //            Label = email.Label,
+    //            //ServiceGroups = email.Groups,
+    //            Analysis = new()
+    //            };
+    //        worklist.Add(service.Key, service);
+    //        }
 
-        foreach (var member in service.Groups) {
-            if (member == key) {
-                return false;
-                }
-            if (worklist.TryGetValue(member, out var parent)) {
-                if (!CheckNotCyclic(worklist, parent, key)) {
-                    return false;
-                    }
-                }
-            }
-        return true;
-        }
+    //    foreach (var pair in OnlineServices) {
+    //        var service = pair.Value;
+    //        service.Analysis = new();
+
+    //        service.Key = pair.Key;
+    //        if (CryptoKeys.TryGetValue(service.Key, out var cryptoKey)) {
+    //            service.CryptoKey = cryptoKey;
+    //            }
+
+    //        worklist.Add(service.Key, service);
+    //        }
+
+    //    foreach (var pair in worklist) {
+    //        var item = pair.Value;
+    //        if (item.Groups != null && item.Groups.Count > 0) {
+    //            foreach (var member in item.Groups) {
+    //                if (CheckNotCyclic(worklist, item) & worklist.TryGetValue(member, out var parent)) {
+    //                    AnalyzeService(parent.Analysis, item);
+
+    //                    parent.Analysis.Children.Add(item);
+    //                    item.Analysis.Parents.Add(parent);
+    //                    }
+    //                }
+    //            }
+    //        else {
+    //            AnalyzeService(Analysis, item);
+    //            Analysis.Children.Add(item);
+    //            }
+    //        }
+    //    }
+
+
+    //static bool CheckNotCyclic(
+    //                Dictionary<string, OnlineService> worklist,
+    //                OnlineService service,
+    //                string? key = null) {
+    //    key ??= service.Key;
+
+    //    if (service.Groups is null || service.Groups.Count == 0) {
+    //        return true;
+    //        }
+
+    //    foreach (var member in service.Groups) {
+    //        if (member == key) {
+    //            return false;
+    //            }
+    //        if (worklist.TryGetValue(member, out var parent)) {
+    //            if (!CheckNotCyclic(worklist, parent, key)) {
+    //                return false;
+    //                }
+    //            }
+    //        }
+    //    return true;
+    //    }
 
 
     static void AnalyzeService(AnalysizedContact analysis, OnlineService service) {

@@ -1911,14 +1911,14 @@
             </summary>
         </member>
         <member name="P:Goedel.Contacts.JsContact.Updates">
-            <summary>
-            
-            </summary>
+             <summary>
+            Specifies mechanisms for obtaining updates to the card.
+             </summary>
         </member>
-        <member name="P:Goedel.Contacts.JsContact.Groups">
-            <summary>
-            
-            </summary>
+        <member name="P:Goedel.Contacts.JsContact.ServiceGroups">
+             <summary>
+            Specifies groups of related email addresses and online services.
+             </summary>
         </member>
         <member name="P:Goedel.Contacts.JsContact._Binding">
             <summary>Implement IBinding</summary> 
@@ -1971,7 +1971,7 @@
         </member>
         <member name="P:Goedel.Contacts.JsContact.Analysis">
             <summary>Analyzed version of the contact. Note that this is not synchronized
-            and so a new call must be made to <see cref="M:Goedel.Contacts.JsContact.Analyze"/></summary> 
+            and so a new call must be made to <see cref="!:Analyze"/></summary> 
         </member>
         <member name="M:Goedel.Contacts.JsContact.#ctor">
             <summary>
@@ -1998,11 +1998,6 @@
         <member name="M:Goedel.Contacts.JsContact.Update">
             <summary>
             Update the contact updated time.
-            </summary>
-        </member>
-        <member name="M:Goedel.Contacts.JsContact.Analyze">
-            <summary>
-            Analyze the contact to populate the property <see cref="P:Goedel.Contacts.JsContact.Analysis"/>
             </summary>
         </member>
         <member name="T:Goedel.Contacts.Resource">
@@ -2691,87 +2686,33 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Contacts.EmailAddressRFC9553">
+        <member name="T:Goedel.Contacts.EmailAddress">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.EmailAddressRFC9553.Type">
+        <member name="P:Goedel.Contacts.EmailAddress.Type">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.EmailAddressRFC9553.Address">
+        <member name="P:Goedel.Contacts.EmailAddress.Address">
             <summary>
             The email address. This MUST be an addr-spec value as defined in Section 3.4.1 of [RFC5322].
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.EmailAddressRFC9553.Contexts">
+        <member name="P:Goedel.Contacts.EmailAddress.Contexts">
             <summary>
             The contexts in which to use this email address. Also see Section 1.5.1.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.EmailAddressRFC9553.Pref">
+        <member name="P:Goedel.Contacts.EmailAddress.Pref">
             <summary>
             The preference of the email address in relation to other email addresses. Also 
             see Section 1.5.3.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.EmailAddressRFC9553.Label">
+        <member name="P:Goedel.Contacts.EmailAddress.Label">
             <summary>
             A custom label for the value. 
-            </summary>
-        </member>
-        <member name="P:Goedel.Contacts.EmailAddressRFC9553.Groups">
-            <summary>
-            The groups that the email address is a member of 
-            </summary>
-        </member>
-        <member name="P:Goedel.Contacts.EmailAddressRFC9553._Binding">
-            <summary>Implement IBinding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.EmailAddressRFC9553._binding">
-            <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.EmailAddressRFC9553._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.EmailAddressRFC9553._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.EmailAddressRFC9553._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.EmailAddressRFC9553._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.EmailAddressRFC9553._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.EmailAddressRFC9553._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Contacts.EmailAddressRFC9553.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Contacts.EmailAddressRFC9553._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.EmailAddressRFC9553.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="T:Goedel.Contacts.EmailAddress">
-            <summary>
             </summary>
         </member>
         <member name="P:Goedel.Contacts.EmailAddress.CryptoKeyIds">
@@ -2828,15 +2769,15 @@
         <member name="P:Goedel.Contacts.EmailAddress.Key">
             <summary>The dictionary key (filled by calling Analyze)</summary> 
         </member>
-        <member name="T:Goedel.Contacts.OnlineServiceRFC9553">
+        <member name="T:Goedel.Contacts.OnlineService">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.OnlineServiceRFC9553.Type">
+        <member name="P:Goedel.Contacts.OnlineService.Type">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.OnlineServiceRFC9553.Service">
+        <member name="P:Goedel.Contacts.OnlineService.Service">
             <summary>
             The name of the online service or protocol. The name MAY be capitalized the 
             same as on the service's website, app, or publishing material, but names MUST 
@@ -2844,85 +2785,31 @@
             "kakao", and "Mastodon"
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.OnlineServiceRFC9553.Uri">
+        <member name="P:Goedel.Contacts.OnlineService.Uri">
             <summary>
             The identifier for the entity represented by the Card at the online service. 
             This MUST be a URI as defined in Section 3 of [RFC3986].
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.OnlineServiceRFC9553.User">
+        <member name="P:Goedel.Contacts.OnlineService.User">
             <summary>
             The name the entity represented by the Card at the online service. Any 
             free-text value is allowed. The service property SHOULD be set.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.OnlineServiceRFC9553.Contexts">
+        <member name="P:Goedel.Contacts.OnlineService.Contexts">
             <summary>
             The contexts in which to use the service.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.OnlineServiceRFC9553.Pref">
+        <member name="P:Goedel.Contacts.OnlineService.Pref">
             <summary>
             The preference of the service in relation to other services.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.OnlineServiceRFC9553.Label">
+        <member name="P:Goedel.Contacts.OnlineService.Label">
             <summary>
             A custom label for the value. 
-            </summary>
-        </member>
-        <member name="P:Goedel.Contacts.OnlineServiceRFC9553.Groups">
-            <summary>
-            The groups that the service is a member of 
-            </summary>
-        </member>
-        <member name="P:Goedel.Contacts.OnlineServiceRFC9553._Binding">
-            <summary>Implement IBinding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.OnlineServiceRFC9553._binding">
-            <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.OnlineServiceRFC9553._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.OnlineServiceRFC9553._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.OnlineServiceRFC9553._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.OnlineServiceRFC9553._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.OnlineServiceRFC9553._ParentProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.OnlineServiceRFC9553._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Contacts.OnlineServiceRFC9553.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Contacts.OnlineServiceRFC9553._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.OnlineServiceRFC9553.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="T:Goedel.Contacts.OnlineService">
-            <summary>
             </summary>
         </member>
         <member name="P:Goedel.Contacts.OnlineService.CryptoKeyIds">
@@ -4126,12 +4013,14 @@
             </summary>
         </member>
         <member name="P:Goedel.Contacts.JsonWebKeySet.Data">
-            <summary>
-            </summary>
+             <summary>
+            Binary credential data (NB, may be moved to JWK.)
+             </summary>
         </member>
         <member name="P:Goedel.Contacts.JsonWebKeySet.Jwk">
-            <summary>
-            </summary>
+             <summary>
+            A Json Web Key Set.
+             </summary>
         </member>
         <member name="P:Goedel.Contacts.JsonWebKeySet._Binding">
             <summary>Implement IBinding</summary> 
@@ -4178,53 +4067,54 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="T:Goedel.Contacts.Group">
+        <member name="T:Goedel.Contacts.ServiceGroup">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Group.Members">
-            <summary>
-            
-            </summary>
+        <member name="P:Goedel.Contacts.ServiceGroup.Members">
+             <summary>
+            The identifiers of the service group members. The boolean value corresponding
+            to each MUST be true.
+             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Group._Binding">
+        <member name="P:Goedel.Contacts.ServiceGroup._Binding">
             <summary>Implement IBinding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Group._binding">
+        <member name="F:Goedel.Contacts.ServiceGroup._binding">
             <summary>Binding</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Group._StaticProperties">
+        <member name="F:Goedel.Contacts.ServiceGroup._StaticProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="F:Goedel.Contacts.Group._StaticAllProperties">
+        <member name="F:Goedel.Contacts.ServiceGroup._StaticAllProperties">
             <summary>Dictionary describing the serializable properties.</summary> 
         </member>
-        <member name="P:Goedel.Contacts.Group._AllProperties">
+        <member name="P:Goedel.Contacts.ServiceGroup._AllProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Group._Properties">
+        <member name="P:Goedel.Contacts.ServiceGroup._Properties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Group._ParentProperties">
+        <member name="P:Goedel.Contacts.ServiceGroup._ParentProperties">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Contacts.Group._Tag">
+        <member name="P:Goedel.Contacts.ServiceGroup._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Contacts.Group.__Tag">
+        <member name="F:Goedel.Contacts.ServiceGroup.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Contacts.Group._Factory">
+        <member name="M:Goedel.Contacts.ServiceGroup._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Group.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Contacts.ServiceGroup.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -4315,6 +4205,11 @@
             <summary>
             Date of manufacture.
             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.Components">
+             <summary>
+            The physical components making up the device and their dimensions.
+             </summary>
         </member>
         <member name="P:Goedel.Contacts.JsDevice.Localizations">
             <summary>
@@ -4680,6 +4575,152 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Contacts.RelatedItem.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Component">
+             <summary>
+            
+              The physical properties of the component parts of the device.
+             The Width, Depth and Height values are given relative to its usual 
+             orientation
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Component.Dimensions">
+             <summary>
+            The dimension specifications
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Component._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Component._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Component._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Component._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Component._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Component._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Component._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Component._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Component.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Component._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Component.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="T:Goedel.Contacts.Dimensions">
+             <summary>
+            
+             The physical properties of the component parts of the device.
+             The Width, Depth and Height values are given relative to its typical orientation.
+             All values are in SI units
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Dimensions.Kind">
+             <summary>
+            The type of dimensions specified, 'typical', 'maximum', 'shipping'
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Dimensions.Weight">
+             <summary>
+            The weight of the component in kilograms
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Dimensions.Width">
+             <summary>
+            The width of the component in meters
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Dimensions.Depth">
+             <summary>
+            The depth of the component in meters
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Dimensions.Height">
+             <summary>
+            The height of the component in meters
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Dimensions.TemperatureMin">
+             <summary>
+            The minimum temperature for the device
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Dimensions.TemperatureMax">
+             <summary>
+            The maximum temperature for the device
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Dimensions._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Dimensions._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Dimensions._StaticProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Dimensions._StaticAllProperties">
+            <summary>Dictionary describing the serializable properties.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.Dimensions._AllProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Dimensions._Properties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Dimensions._ParentProperties">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Contacts.Dimensions._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.Dimensions.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Dimensions._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.Dimensions.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
