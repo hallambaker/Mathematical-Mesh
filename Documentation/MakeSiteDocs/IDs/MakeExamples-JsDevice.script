@@ -12,68 +12,79 @@
 
 
 #method MakeJSDeviceExamples CreateExamples Example
-#% JSDeviceInitial(Example);
-#% JSDeviceEarl(Example);
-#% JSDeviceNetwork(Example);
+#% JSDevicePreparation(Example);
+#% JSDeviceItself(Example);
+#% JSDeviceOperations(Example);
 #% JSDeviceMedia(Example);
-#% JSDeviceRelated(Example);
-#% JSDeviceServices(Example);
-#% JSDeviceMaint(Example);
+#% JSDeviceNetwork(Example);
+#% JSDeviceNetworkConfig(Example);
+#% JSDeviceNetworkBoot(Example);
 #end method
+
+
+
+
+#zfile CreateExamples JSDevicePreparation "Examples\\JSDevicePreparation.md" Example
+#% var jsdevice = Example.JSDevice.JsDevice;
+#% var jsmodel = Example.JSDevice.JsModel;
+~~~~
+#% _Output.Write(jsmodel, Example.JSDevice.GeneralProperties);
+~~~~
+#end zfile
+
+
+#zfile CreateExamples JSDeviceItself "Examples\\JSDeviceItself.md" Example
+#% var jsdevice = Example.JSDevice.JsDevice;
+#% var jsmodel = Example.JSDevice.JsModel;
+~~~~
+#% _Output.Write(jsdevice, Example.JSDevice.GeneralProperties);
+~~~~
+#end zfile
 
 
 #zfile CreateExamples JSDeviceEarl "Examples\\JSDeviceEarl.md" Example
 #% var jsdevice = Example.JSDevice;
 ~~~~
-
+#{jsdevice.EARL}
 ~~~~
 #end zfile
 
-#zfile CreateExamples JSDeviceInitial "Examples\\JSDeviceInitial.md" Example
-#% var jsdevice = Example.JSDevice;
-~~~~
 
+#zfile CreateExamples JSDeviceMedia "Examples\\JSDeviceMedia.md" Example
+#% var jsdevice = Example.JSDevice.JsDevice;
+~~~~
+#% _Output.Write(jsdevice, Example.JSDevice.MediaProperties);
+~~~~
+#end zfile
+
+#zfile CreateExamples JSDeviceOperations "Examples\\JSDeviceOperations.md" Example
+#% var jsdevice = Example.JSDevice.JsDevice;
+~~~~
+#% _Output.Write(jsdevice, Example.JSDevice.OperationsProperties);
+~~~~
+#end zfile
+
+
+#zfile CreateExamples JSDeviceNetworkBoot "Examples\\JSDeviceNetworkBoot.md" Example
+#% var jsdevice = Example.JSDevice.JsDevice;
+~~~~
+#% _Output.Write(jsdevice, Example.JSDevice.NetworkProperties, FilterNetworkBootstrap);
 ~~~~
 #end zfile
 
 #zfile CreateExamples JSDeviceNetwork "Examples\\JSDeviceNetwork.md" Example
-#% var jsdevice = Example.JSDevice;
+#% var jsdevice = Example.JSDevice.JsDevice;
 ~~~~
-
-~~~~
-#end zfile
-
-#zfile CreateExamples JSDeviceMedia "Examples\\JSDeviceMedia.md" Example
-#% var jsdevice = Example.JSDevice;
-~~~~
-
+#% _Output.Write(jsdevice, Example.JSDevice.NetworkProperties, FilterNetworkService);
 ~~~~
 #end zfile
 
-
-#zfile CreateExamples JSDeviceRelated "Examples\\JSDeviceRelated.md" Example
-#% var jsdevice = Example.JSDevice;
+#zfile CreateExamples JSDeviceNetworkConfig "Examples\\JSDeviceNetworkConfig.md" Example
+#% var jsdevice = Example.JSDevice.JsDevice;
 ~~~~
-
-~~~~
-#end zfile
-
-
-#zfile CreateExamples JSDeviceServices "Examples\\JSDeviceServices.md" Example
-#% var jsdevice = Example.JSDevice;
-~~~~
-
+#% _Output.Write(jsdevice, Example.JSDevice.NetworkProperties, FilterNetworkConfig);
 ~~~~
 #end zfile
-
-
-#zfile CreateExamples JSDeviceMaint "Examples\\JSDeviceMaint.md" Example
-#% var jsdevice = Example.JSDevice;
-~~~~
-
-~~~~
-#end zfile
-
 
 
 

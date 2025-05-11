@@ -48,7 +48,7 @@ public class MakeSiteDocs : CreateExamples {
         base.Contact = new LayerContact(this);
         Confirm = new LayerConfirm(this);
         Group = new LayerGroup(this);
-        NYI = new LayerNYI(this);
+        NotYetImplemented = new LayerNYI(this);
 
         //TestEnvironment = new TestEnvironmentCommon(DeterministicSeed.CreateParent()) {
         //    //JpcConnection = Protocol.JpcConnection.Rud

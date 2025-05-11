@@ -22,6 +22,7 @@
 
 global using Goedel.Contacts;
 global using Goedel.Registry;
+global using Goedel.Debug;
 
 #if !(_Github_)
 [assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]

@@ -33,6 +33,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+using Goedel.Protocol;
+
 #pragma warning disable IDE0059
 
 namespace ExampleGenerator;
@@ -206,7 +208,7 @@ public partial class CreateExamples {
     public LayerContact Contact;
     public LayerConfirm Confirm;
     public LayerGroup Group;
-    public LayerNYI NYI;
+    public LayerNYI NotYetImplemented;
 
     string deviceId;
 
@@ -252,7 +254,7 @@ public partial class CreateExamples {
             Contact = new LayerContact(this);
             Confirm = new LayerConfirm(this);
             Group = new LayerGroup(this);
-            NYI = new LayerNYI(this);
+            NotYetImplemented = new LayerNYI(this);
 
 
             PerformAll();
@@ -324,7 +326,9 @@ public partial class CreateExamples {
     public void MakeJSContact(
             ) {
         SetWorkingDirectory();
-        
+        Contacts._Initialized.AssertTrue(NYI.Throw);
+
+
         JSContact = new JsContactResults(this);
         JSContact.AnnotatedSchema = new Proto.AnnotateSchema(JSContact.JsContactSchemaFile);
 
@@ -333,47 +337,47 @@ public partial class CreateExamples {
 
 
 
-
-        //var include1 = new HashSet<string>() { "Groups" };
-        //using (var outfile = "Examples\\JSContactSchema1.md".OpenTextWriterNew()) {
-        //    Proto.AnnotateSchema.DocumentStructure(JSContact.JsContactSchemaFile,
-        //        JSContact.Contact, outfile, baseTag: "Card", include: include1);
-        //    }
-
-        //using (var outfile = "Examples\\JSContactSchema2.md".OpenTextWriterNew()) {
-        //    Proto.AnnotateSchema.DocumentStructure(JSContact.JsContactSchemaFile,
-        //        JSContact.Contact, outfile, baseTags: [
-        //            "EmailAddress", "OnlineService", "JsonWebKeySet", "Update", "Group"]);
-        //    }
-
-        //using (var outfile = "Examples\\JSContactSchema3.md".OpenTextWriterNew()) {
-        //    Proto.AnnotateSchema.DocumentStructure(JSContact.JsContactSchemaFile,
-        //        JSContact.Contact, outfile, baseTags: [
-        //            "EmailAddress", "OnlineService", "JsonWebKeySet", "Update", "Group"]);
-        //    }
-
         }
 
     public void MakeJSDevice(
             ) {
         SetWorkingDirectory();
+
+
         JSDevice = new JsDeviceResults(this);
         JSDevice.AnnotatedSchema = new Proto.AnnotateSchema(JSDevice.JsDeviceSchemaFile);
+        JSDevice.AnnotatedSchemaBase = new Proto.AnnotateSchema(JSDevice.JmapBaseSchemaFile);
 
         SetOutputDirectory();
 
-        using (var outfile = "Examples\\JSDeviceSchema.md".OpenTextWriterNew()) {
-            Proto.AnnotateSchema.DocumentStructure(JSDevice.JsDeviceSchemaFile,
-                JSDevice.JsDevice, outfile);
-            }
         using (var outfile = "Examples\\JSDeviceBaseSchema.md".OpenTextWriterNew()) {
-            Proto.AnnotateSchema.DocumentStructure(JSDevice.JmapBaseSchemaFile,
-                JSDevice.JsDevice, outfile, baseTag: "JmapBase");
+            JSDevice.AnnotatedSchemaBase.DocumentStructure(outfile, "JmapBase", example: JSDevice.JsDevice,
+                    writeHeading: false);
             }
+
+
+        using (var outfile = "Examples\\JSDeviceSchema.md".OpenTextWriterNew()) {
+            JSDevice.AnnotatedSchema.DocumentStructure(outfile, "Device", example: JSDevice.JsDevice,
+                    writeHeading: false);
+            }
+
+
+
 
         MakeJSDeviceExamples(this);
 
         }
+
+
+    public bool FilterNetworkBootstrap(JsonObject data) =>
+         (data as Network)?.Kind == "bootstrap";
+
+    public bool FilterNetworkConfig(JsonObject data) =>
+            (data as Network)?.Kind == "discovery";
+
+    public bool FilterNetworkService(JsonObject data) =>
+            (data as Network)?.Kind == "service";
+
 
     void SetWorkingDirectory() => Directory.SetCurrentDirectory(WorkingDirectory);
     void SetOutputDirectory() => Directory.SetCurrentDirectory(DraftsDirectory);

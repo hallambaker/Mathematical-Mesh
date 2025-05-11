@@ -238,7 +238,7 @@ public abstract partial class JsonObject : IBinding {
         first.ChildClasses ??= new();
         first.ChildClasses.Add(second.Tag, second);
 
-        second.AllProperties = Combine(first.FullProperties, second.Properties);
+        //second.AllProperties = Combine(first.FullProperties, second.Properties);
 
         return second.AllProperties;
         }
@@ -384,6 +384,11 @@ public abstract partial class JsonObject : IBinding {
             var property = entry.Value;
 
             if (!property.IsNull(this)) {
+                writer.WriteObjectSeparator(ref first);
+                writer.WriteToken(tag, 1);
+                property.Serialize(this, writer);
+                }
+            else if (property is PropertyStringTag) {
                 writer.WriteObjectSeparator(ref first);
                 writer.WriteToken(tag, 1);
                 property.Serialize(this, writer);

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/9/2025 7:24:36 PM
+//  This file was automatically generated at 5/11/2025 1:39:56 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -164,6 +164,19 @@ public partial class JsDevice : JmapBase {
 	public virtual string?					Language  {get; set;}
 
         /// <summary>
+        /// The property values localized to languages other than the main language 
+        /// (Section 2.1.5) of the Card. Localizations provide language-specific alternatives 
+        /// for existing property values and SHOULD NOT add new properties. The keys in 
+        /// the localizations property value are language tags [RFC5646]; the values 
+        /// are of type PatchObject and localize the Card in that language tag. The paths 
+        /// in the PatchObject are relative to the Card that includes the localizations
+        /// property. A patch MUST NOT target the localizations property.
+        /// </summary>
+
+	[JsonPropertyName("localizations")]
+	public virtual Dictionary<string,JsDevice>?					Localizations  {get; set;}
+
+        /// <summary>
         /// A URI that uniquely identifies the device.
         /// </summary>
 
@@ -199,38 +212,6 @@ public partial class JsDevice : JmapBase {
 	public virtual DateTime?					DateManufacture  {get; set;}
 
         /// <summary>
-        ///The physical components making up the device and their dimensions.
-        /// </summary>
-
-	[JsonPropertyName("components")]
-	public virtual Dictionary<string,Component>?					Components  {get; set;}
-
-        /// <summary>
-        /// The property values localized to languages other than the main language 
-        /// (Section 2.1.5) of the Card. Localizations provide language-specific alternatives 
-        /// for existing property values and SHOULD NOT add new properties. The keys in 
-        /// the localizations property value are language tags [RFC5646]; the values 
-        /// are of type PatchObject and localize the Card in that language tag. The paths 
-        /// in the PatchObject are relative to the Card that includes the localizations
-        /// property. A patch MUST NOT target the localizations property.
-        /// </summary>
-
-	[JsonPropertyName("localizations")]
-	public virtual Dictionary<string,JsDevice>?					Localizations  {get; set;}
-
-        /// <summary>
-        /// Photographs and schematics of the device or model.
-        /// </summary>
-
-	[JsonPropertyName("images")]
-	public virtual List<Media>?					Images  {get; set;}
-        /// <summary>
-        /// Manuals describing the device.
-        /// </summary>
-
-	[JsonPropertyName("manuals")]
-	public virtual List<Media>?					Manuals  {get; set;}
-        /// <summary>
         /// Date at which support for the device is scheduled to end.
         /// </summary>
 
@@ -244,6 +225,25 @@ public partial class JsDevice : JmapBase {
 	[JsonPropertyName("endLife")]
 	public virtual DateTime?					EndLife  {get; set;}
 
+        /// <summary>
+        ///The physical components making up the device and their dimensions.
+        /// </summary>
+
+	[JsonPropertyName("components")]
+	public virtual Dictionary<string,Component>?					Components  {get; set;}
+
+        /// <summary>
+        /// Photographs and schematics of the device or model.
+        /// </summary>
+
+	[JsonPropertyName("images")]
+	public virtual List<Media>?					Images  {get; set;}
+        /// <summary>
+        /// Manuals describing the device.
+        /// </summary>
+
+	[JsonPropertyName("documentation")]
+	public virtual List<Media>?					Documentation  {get; set;}
         /// <summary>
         /// Suppliers for the device and related accessories.
         /// </summary>
@@ -296,6 +296,12 @@ public partial class JsDevice : JmapBase {
 					(IBinding data, string? value) => {(data as JsDevice).Kind = value;}, (IBinding data) => (data as JsDevice).Kind )},
 			{ "language", new PropertyString ("language", 
 					(IBinding data, string? value) => {(data as JsDevice).Language = value;}, (IBinding data) => (data as JsDevice).Language )},
+			{ "localizations", new PropertyDictionaryStruct ("localizations", typeof (JsDevice),
+					(IBinding data, object? value) => {(data as JsDevice).Localizations = value as Dictionary<string,JsDevice>;}, (IBinding data) => (data as JsDevice).Localizations,
+					false, ()=>new  Dictionary<string,JsDevice>(), ()=>new JsDevice(),
+					(IBinding data) => (data as JsDevice).Localizations.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,JsDevice>).Add (key as string,value as JsDevice);})},
 			{ "deviceId", new PropertyString ("deviceId", 
 					(IBinding data, string? value) => {(data as JsDevice).DeviceId = value;}, (IBinding data) => (data as JsDevice).DeviceId )},
 			{ "modelId", new PropertyString ("modelId", 
@@ -306,28 +312,22 @@ public partial class JsDevice : JmapBase {
 					(IBinding data, string? value) => {(data as JsDevice).Manufacturer = value;}, (IBinding data) => (data as JsDevice).Manufacturer )},
 			{ "dateManufacture", new PropertyDateTime ("dateManufacture", 
 					(IBinding data, DateTime? value) => {(data as JsDevice).DateManufacture = value;}, (IBinding data) => (data as JsDevice).DateManufacture )},
+			{ "endSupport", new PropertyDateTime ("endSupport", 
+					(IBinding data, DateTime? value) => {(data as JsDevice).EndSupport = value;}, (IBinding data) => (data as JsDevice).EndSupport )},
+			{ "endLife", new PropertyDateTime ("endLife", 
+					(IBinding data, DateTime? value) => {(data as JsDevice).EndLife = value;}, (IBinding data) => (data as JsDevice).EndLife )},
 			{ "components", new PropertyDictionaryStruct ("components", typeof (Component),
 					(IBinding data, object? value) => {(data as JsDevice).Components = value as Dictionary<string,Component>;}, (IBinding data) => (data as JsDevice).Components,
 					false, ()=>new  Dictionary<string,Component>(), ()=>new Component(),
 					(IBinding data) => (data as JsDevice).Components.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Component>).Add (key as string,value as Component);})},
-			{ "localizations", new PropertyDictionaryStruct ("localizations", typeof (JsDevice),
-					(IBinding data, object? value) => {(data as JsDevice).Localizations = value as Dictionary<string,JsDevice>;}, (IBinding data) => (data as JsDevice).Localizations,
-					false, ()=>new  Dictionary<string,JsDevice>(), ()=>new JsDevice(),
-					(IBinding data) => (data as JsDevice).Localizations.GetEnumerable(),
-					(object dictionary, object key, object value) =>
-						 {(dictionary as Dictionary<string,JsDevice>).Add (key as string,value as JsDevice);})},
 			{ "images", new PropertyListStruct ("images", typeof (Media),
 					(IBinding data, object? value) => {(data as JsDevice).Images = value as List<Media>;}, (IBinding data) => (data as JsDevice).Images,
 					false, ()=>new  List<Media>(), ()=>new Media())},
-			{ "manuals", new PropertyListStruct ("manuals", typeof (Media),
-					(IBinding data, object? value) => {(data as JsDevice).Manuals = value as List<Media>;}, (IBinding data) => (data as JsDevice).Manuals,
+			{ "documentation", new PropertyListStruct ("documentation", typeof (Media),
+					(IBinding data, object? value) => {(data as JsDevice).Documentation = value as List<Media>;}, (IBinding data) => (data as JsDevice).Documentation,
 					false, ()=>new  List<Media>(), ()=>new Media())},
-			{ "endSupport", new PropertyDateTime ("endSupport", 
-					(IBinding data, DateTime? value) => {(data as JsDevice).EndSupport = value;}, (IBinding data) => (data as JsDevice).EndSupport )},
-			{ "endLife", new PropertyDateTime ("endLife", 
-					(IBinding data, DateTime? value) => {(data as JsDevice).EndLife = value;}, (IBinding data) => (data as JsDevice).EndLife )},
 			{ "suppliers", new PropertyListStruct ("suppliers", typeof (Supplier),
 					(IBinding data, object? value) => {(data as JsDevice).Suppliers = value as List<Supplier>;}, (IBinding data) => (data as JsDevice).Suppliers,
 					false, ()=>new  List<Supplier>(), ()=>new Supplier())},

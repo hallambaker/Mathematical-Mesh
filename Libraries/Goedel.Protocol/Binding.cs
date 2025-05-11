@@ -23,6 +23,7 @@
 
 using Goedel.Cryptography.Nist;
 
+using System.ComponentModel;
 using System.Text.Json;
 
 namespace Goedel.Protocol;
@@ -71,10 +72,23 @@ public abstract record Binding(
     public Dictionary<string, Binding>? ChildClasses = null;
 
     ///<summary>Dictionary binding all properties to binding descriptions</summary> 
-    public Dictionary<string, Property> AllProperties = null;
+    public Dictionary<string, Property> AllProperties => allProperties ??GetAllProperties().
+                CacheValue (out allProperties);
+    Dictionary<string, Property> allProperties;
+
+
 
     ///<summary>Dictionary binding all properties to binding descriptions</summary> 
     public Dictionary<string, Property> FullProperties => AllProperties ?? Properties;
+
+
+
+    Dictionary<string, Property> GetAllProperties() {
+        if (Parent is null) {
+            return Properties;
+            }
+        return JsonObject.Combine(Parent.AllProperties, Properties);
+        }
 
 
     /// <summary>

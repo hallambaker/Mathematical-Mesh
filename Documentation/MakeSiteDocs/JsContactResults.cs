@@ -63,6 +63,8 @@ public class JsContactResults {
     public Dictionary<string, OnlineService> GroupMembers { get; } = [];
 
 
+    public OnlineService OnlineServiceWithKeys { get; }
+    public CryptoKey CryptoKeyWithJwk { get; }
     public Dictionary<string, OnlineService> Ssh { get; } = [];
     public Dictionary<string, CryptoKey> SshKeys { get; } = [];
 
@@ -72,8 +74,11 @@ public class JsContactResults {
     public Dictionary<string, OnlineService> Commit { get; } = [];
     public Dictionary<string, CryptoKey> CommitKeys { get; } = [];
 
+
+
+
     public string EARL => EarlSet.Uri;
-    public string EARLDNS => "TBS";
+
 
     public KeyPairECDH SignatureEd448 { get; }
 
@@ -89,6 +94,8 @@ public class JsContactResults {
 
 
         CreateExamples = createExamples;
+        Contacts._Initialized.AssertTrue(NYI.Throw);
+
         var testEnvironmentCommon = CreateExamples.TestEnvironment;
         var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                  CreateExamples.AliceDevice1, CreateExamples.AliceAccount, "main", CreateExamples.HandleAlice);
@@ -170,7 +177,7 @@ public class JsContactResults {
 
 
         var update1 = new Update() {
-            Keys =[],
+            Keys = [],
             Uri = $"https://contacts.example.com/{Contact.Uid}"
             };
 
@@ -183,7 +190,7 @@ public class JsContactResults {
 
         var jwk = JWK.Factory(SignatureEd448);
         var jwks = new JsonWebKeySet() {
-            Jwk = [jwk]
+            JsonWebKeys = [jwk]
             };
         Contact.CryptoKeys.Add(SignatureEd448.KeyIdentifier, jwks);
 
@@ -195,7 +202,7 @@ public class JsContactResults {
 
         var contactBytes = Contact.GetJson(false);
         EarlSet = new EarlSet(ProtectedHeaderJson, contactBytes, [SignatureEd448],
-            scheme:"jscontact", authority: CreateExamples.AliceService);
+            scheme: "jscontact", authority: CreateExamples.AliceService);
         // create an EARL for the contact here.
 
         foreach (var servicePair in Contact.Emails) {
@@ -220,10 +227,13 @@ public class JsContactResults {
             }
 
         foreach (var servicePair in Contact.OnlineServices) {
-            var service= servicePair.Value;
+            var service = servicePair.Value;
             if (service.Service == "ssh") {
                 Ssh.Add(servicePair.Key, servicePair.Value);
+                OnlineServiceWithKeys = TryGetAny(Ssh);
+
                 CollectKeys(service.CryptoKeyIds, SshKeys);
+                CryptoKeyWithJwk = TryGetAny(SshKeys);
                 }
             if (service.Service == "code") {
                 CodeSign.Add(servicePair.Key, servicePair.Value);
@@ -249,7 +259,7 @@ public class JsContactResults {
         int count = 0;
 
         foreach (var key in Group.Members) {
-            if (count<3 & Contact.OnlineServices.TryGetValue(key.Key, out var member)) {
+            if (count < 3 & Contact.OnlineServices.TryGetValue(key.Key, out var member)) {
                 GroupMembers.Add(key.Key, member);
                 count++;
                 }
@@ -257,7 +267,7 @@ public class JsContactResults {
             }
         }
 
-    void CollectKeys(Dictionary<string,string> keys, Dictionary<string, CryptoKey> list) {
+    void CollectKeys(Dictionary<string, string> keys, Dictionary<string, CryptoKey> list) {
         foreach (var key in keys) {
             if (Contact.CryptoKeys.TryGetValue(key.Key, out var jsonWebKey)) {
                 list.Add(key.Key, jsonWebKey);
@@ -265,5 +275,11 @@ public class JsContactResults {
             }
         }
 
+    public T TryGetAny<T>(Dictionary<string, T> dictionary) {
+        foreach (var pair in dictionary) {
+            return pair.Value;
+            }
+        return default;
+        }
 
     }

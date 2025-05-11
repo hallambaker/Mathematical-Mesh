@@ -545,7 +545,7 @@ public static partial class Extensions {
 
         var jwk = JWK.Factory(keyData.GetKeyPair());
         var jwks = new JsonWebKeySet() {
-            Jwk = [jwk]
+            JsonWebKeys = [jwk]
             };
         contact.CryptoKeys ??= [];
         contact.CryptoKeys.Add(key, jwks);

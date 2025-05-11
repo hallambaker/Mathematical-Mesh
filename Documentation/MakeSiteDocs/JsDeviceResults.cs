@@ -38,6 +38,7 @@ using System.Text;
 using Microsoft.Extensions.Primitives;
 using Goedel.Utilities;
 using Proto=Goedel.Tool.ProtoGen;
+using Goedel.Cryptography.Dare;
 
 
 namespace ExampleGenerator;
@@ -46,21 +47,45 @@ public class JsDeviceResults {
     CreateExamples CreateExamples { get; }
 
     public Proto.AnnotateSchema AnnotatedSchema { get; set; }
+    public Proto.AnnotateSchema AnnotatedSchemaBase { get; set; }
+
 
     public JsDevice JsDevice { get; }
 
+    public JsDevice JsModel { get; }
     public string JmapBaseSchemaFile =>
         Path.Combine(CreateExamples.SourceDirectory, @"Libraries\Goedel.Contacts\JmapBase.Protocol");
 
     public string JsDeviceSchemaFile => 
             Path.Combine(CreateExamples.SourceDirectory, @"Libraries\Goedel.Contacts\DeviceSchema.Protocol");
 
+    public EarlSet EarlSet { get; }
+
+    public string EARL => EarlSet.Uri;
+
+    public ContentMeta ProtectedHeaderJson { get; } = new ContentMeta() {
+        ContentType = "application/jsdevice+json",
+        Nonce = Udf.FixedNonce("JSDevice")
+        };
+
+    public KeyPairECDH SignatureEd448 { get; }
+
+
+
+    public List<string> GeneralProperties = ["@type","uid", "version", "created", "updated",
+        "kind", "language", "modelName", "manufacturer", "prodId", "dateManufacture", "endSupport", "endLife"];
+
+    public List<string> PreparationProperties = ["components"];
+
+    public List<string> MediaProperties = ["images", "documentation"];
+
+    public List<string> OperationsProperties = ["suppliers", "maintenance", "relatedItems"];
+
+    public List<string> NetworkProperties = ["network"];
 
     public JsDeviceResults(CreateExamples createExamples) {
 
         CreateExamples = createExamples;
-
-
 
 
 
@@ -126,7 +151,7 @@ public class JsDeviceResults {
                         }
                     ],
 
-            Manuals = [
+            Documentation = [
                     new () {
                         Uri = "httpe://acme.example.net/media/webcam4k.quickstart.pdf",
                         MediaType = "application/pdf",
@@ -136,7 +161,7 @@ public class JsDeviceResults {
                     new () {
                         Uri = "https://acme.example.net/media/webcam4k.unboxing.pdf",
                         MediaType = "application/pdf",
-                        Kind = "unboxing",
+                        Kind = "unpacking",
                         Label = "Rear View"
                         },
                     new () {
@@ -212,9 +237,9 @@ public class JsDeviceResults {
                     },
 
                 // Administration
-                {"admin1", new Network () {
+                {"motor1", new Network () {
                         Kind="service",
-                        Identifier = "jsadmin",
+                        Identifier = "acme_cam_control",
                         Ports = [443],
                         Endpoints = [
                             "dns", "webpki"],
@@ -251,6 +276,34 @@ public class JsDeviceResults {
 
             };
 
+        var model = DateTime.UtcNow.AddDays (-4);
+
+        JsModel = new () {
+            Uid = Udf.FixedNonce("Some model"),
+            Created = model,
+
+            Version = JsDevice.Version,
+            Kind = "model",
+            Language = JsDevice.Language,
+
+            ModelName = JsDevice.ModelName,
+            Manufacturer = JsDevice.Manufacturer,
+
+            ProdId = JsDevice.ProdId,
+            Localizations = JsDevice.Localizations,
+
+            Components = JsDevice.Components,
+
+            Images = JsDevice.Images,
+            Documentation = JsDevice.Documentation,
+            Maintenance = JsDevice.Maintenance,
+            RelatedItems = JsDevice.RelatedItems,
+            Suppliers = JsDevice.Suppliers
+            };
+
+
+
+
         //For example, to add a webcam to her home security system, Alice needs to specify:
         //The DNS name by which the camera is to be addressed 
         //e.g. camera01.alice.example.com
@@ -268,7 +321,12 @@ public class JsDeviceResults {
         //The webcam supports viewing of the output via HTTP and MOQ and has a motorized
         //mount that can be controlled through the proprietary 'MoveMounting' Web Service:
 
+        var contactBytes = JsDevice.GetJson(false);
+        SignatureEd448 = KeyPairEd448.Generate(KeySecurity.Exportable, KeyUses.Sign);
+        //SigningKeys.Add(SignatureEd448.KeyPairPublic());
 
+        EarlSet = new EarlSet(ProtectedHeaderJson, contactBytes, [SignatureEd448],
+            scheme: "jsdevice", authority: CreateExamples.AliceService);
 
         Console.WriteLine(JSONDebugWriter.Write(JsDevice, false));
 

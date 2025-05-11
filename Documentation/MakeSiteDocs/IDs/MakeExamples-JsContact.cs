@@ -78,7 +78,8 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The following properties are added to the Card object specified in [RFC9553].\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			 jscontact.AnnotatedSchema.DocumentProperties(_Output, "Card",[ "Updates", "Groups"]);
+			 jscontact.AnnotatedSchema.DocumentProperties(_Output, "Card",[ "updates", "serviceGroups"],
+			        jscontact.Contact);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			
@@ -87,14 +88,16 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The following objects specified in [RFC9553] are extended to add the specified properties.\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			 jscontact.AnnotatedSchema.DocumentStructure(_Output, "EmailAddress", ["CryptoKeyIds"]);
-			 jscontact.AnnotatedSchema.DocumentStructure(_Output, "OnlineService", ["CryptoKeyIds"]);
+			 jscontact.AnnotatedSchema.DocumentStructure(_Output, "EmailAddress", ["cryptoKeyIds"], 
+			      jscontact.EmailAddress);
+			 jscontact.AnnotatedSchema.DocumentStructure(_Output, "OnlineService", ["cryptoKeyIds"],
+			      jscontact.OnlineServiceWithKeys);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("## New Objects\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The following object is defined:\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			 jscontact.AnnotatedSchema.DocumentStructure(_Output, "JsonWebKeySet");
+			 jscontact.AnnotatedSchema.DocumentStructure(_Output, "JsonWebKeySet", null, jscontact.CryptoKeyWithJwk);
 			_Output.Write ("\n{0}", _Indent);
 				}
 	

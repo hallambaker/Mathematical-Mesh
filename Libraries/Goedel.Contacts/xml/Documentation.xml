@@ -4017,7 +4017,7 @@
             Binary credential data (NB, may be moved to JWK.)
              </summary>
         </member>
-        <member name="P:Goedel.Contacts.JsonWebKeySet.Jwk">
+        <member name="P:Goedel.Contacts.JsonWebKeySet.JsonWebKeys">
              <summary>
             A Json Web Key Set.
              </summary>
@@ -4181,6 +4181,17 @@
             property.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.JsDevice.Localizations">
+            <summary>
+            The property values localized to languages other than the main language 
+            (Section 2.1.5) of the Card. Localizations provide language-specific alternatives 
+            for existing property values and SHOULD NOT add new properties. The keys in 
+            the localizations property value are language tags [RFC5646]; the values 
+            are of type PatchObject and localize the Card in that language tag. The paths 
+            in the PatchObject are relative to the Card that includes the localizations
+            property. A patch MUST NOT target the localizations property.
+            </summary>
+        </member>
         <member name="P:Goedel.Contacts.JsDevice.DeviceId">
             <summary>
             A URI that uniquely identifies the device.
@@ -4206,32 +4217,6 @@
             Date of manufacture.
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.JsDevice.Components">
-             <summary>
-            The physical components making up the device and their dimensions.
-             </summary>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice.Localizations">
-            <summary>
-            The property values localized to languages other than the main language 
-            (Section 2.1.5) of the Card. Localizations provide language-specific alternatives 
-            for existing property values and SHOULD NOT add new properties. The keys in 
-            the localizations property value are language tags [RFC5646]; the values 
-            are of type PatchObject and localize the Card in that language tag. The paths 
-            in the PatchObject are relative to the Card that includes the localizations
-            property. A patch MUST NOT target the localizations property.
-            </summary>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice.Images">
-            <summary>
-            Photographs and schematics of the device or model.
-            </summary>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice.Manuals">
-            <summary>
-            Manuals describing the device.
-            </summary>
-        </member>
         <member name="P:Goedel.Contacts.JsDevice.EndSupport">
             <summary>
             Date at which support for the device is scheduled to end.
@@ -4240,6 +4225,21 @@
         <member name="P:Goedel.Contacts.JsDevice.EndLife">
             <summary>
             Date at which it is advised the device be taken out of service.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.Components">
+             <summary>
+            The physical components making up the device and their dimensions.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.Images">
+            <summary>
+            Photographs and schematics of the device or model.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsDevice.Documentation">
+            <summary>
+            Manuals describing the device.
             </summary>
         </member>
         <member name="P:Goedel.Contacts.JsDevice.Suppliers">

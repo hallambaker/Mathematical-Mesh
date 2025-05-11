@@ -65,7 +65,7 @@
         <member name="F:Goedel.Protocol.Binding.ChildClasses">
             <summary>Dictionary binding sub classes to binding descriptions</summary> 
         </member>
-        <member name="F:Goedel.Protocol.Binding.AllProperties">
+        <member name="P:Goedel.Protocol.Binding.AllProperties">
             <summary>Dictionary binding all properties to binding descriptions</summary> 
         </member>
         <member name="P:Goedel.Protocol.Binding.FullProperties">

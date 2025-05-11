@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/9/2025 7:24:36 PM
+//  This file was automatically generated at 5/11/2025 1:39:56 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -3754,8 +3754,8 @@ public partial class JsonWebKeySet : CryptoKey {
         ///A Json Web Key Set.
         /// </summary>
 
-	[JsonPropertyName("jwk")]
-	public virtual List<JWK>?					Jwk  {get; set;}
+	[JsonPropertyName("jsonWebKeys")]
+	public virtual List<JWK>?					JsonWebKeys  {get; set;}
 
 
     ///<summary>Implement IBinding</summary> 
@@ -3767,8 +3767,8 @@ public partial class JsonWebKeySet : CryptoKey {
 
 			{ "data", new PropertyBinary ("data", 
 					(IBinding data, byte[]? value) => {(data as JsonWebKeySet).Data = value;}, (IBinding data) => (data as JsonWebKeySet).Data )},
-			{ "jwk", new PropertyListStruct ("jwk", typeof (JWK),
-					(IBinding data, object? value) => {(data as JsonWebKeySet).Jwk = value as List<JWK>;}, (IBinding data) => (data as JsonWebKeySet).Jwk,
+			{ "jsonWebKeys", new PropertyListStruct ("jsonWebKeys", typeof (JWK),
+					(IBinding data, object? value) => {(data as JsonWebKeySet).JsonWebKeys = value as List<JWK>;}, (IBinding data) => (data as JsonWebKeySet).JsonWebKeys,
 					false, ()=>new  List<JWK>(), ()=>new JWK())}
         }, __Tag,() => new JsonWebKeySet(), () => new List<JsonWebKeySet>(), () => new Dictionary<string,JsonWebKeySet>(),CryptoKey._binding);
 

@@ -10,6 +10,9 @@
 
 		Description
 			| Metadata, 
+		Section 2 "Metadata"
+			Description
+				|Information related to the description itself
 
 		String					Version
 			Required
@@ -27,6 +30,19 @@
 				| used for text in the description, optionally including additional information such 
 				| as the script. Note that values MAY be localized in the localizations 
 				| property.
+		Struct JsDevice		Localizations
+			Dictionary
+			Description
+				| The property values localized to languages other than the main language 
+				| (Section 2.1.5) of the Card. Localizations provide language-specific alternatives 
+				| for existing property values and SHOULD NOT add new properties. The keys in 
+				| the localizations property value are language tags [RFC5646]; the values 
+				| are of type PatchObject and localize the Card in that language tag. The paths 
+				| in the PatchObject are relative to the Card that includes the localizations
+				| property. A patch MUST NOT target the localizations property.
+		Section 2 "General"
+			Description
+				|General information related to the device and model.
 
 		String					DeviceId
 			Description
@@ -47,33 +63,7 @@
 		DateTime				DateManufacture
 			Description
 				| Date of manufacture.
-		Struct Component	Components		
-			Dictionary
-			Description
-				|The physical components making up the device and their dimensions.
 
-		// 2.7.  Multilingual Properties
-		// 2.7.1.  localizations
-		Struct JsDevice		Localizations
-			Dictionary
-			Description
-				| The property values localized to languages other than the main language 
-				| (Section 2.1.5) of the Card. Localizations provide language-specific alternatives 
-				| for existing property values and SHOULD NOT add new properties. The keys in 
-				| the localizations property value are language tags [RFC5646]; the values 
-				| are of type PatchObject and localize the Card in that language tag. The paths 
-				| in the PatchObject are relative to the Card that includes the localizations
-				| property. A patch MUST NOT target the localizations property.
-
-		Struct Media			Images
-			Multiple
-			Description
-				| Photographs and schematics of the device or model.
-
-		Struct Media			Manuals
-			Multiple
-			Description
-				| Manuals describing the device.
 
 		DateTime EndSupport
 			Description
@@ -81,6 +71,35 @@
 		DateTime EndLife
 			Description
 				| Date at which it is advised the device be taken out of service.
+
+		Section 2 "Physical"
+			Description
+				|Information related to the physical properties of the device.
+
+		Struct Component	Components		
+			Dictionary
+			Description
+				|The physical components making up the device and their dimensions.
+
+		Section 2 "Media"
+			Description
+				|Media related to the device and its operation.
+
+		Struct Media			Images
+			Multiple
+			Description
+				| Photographs and schematics of the device or model.
+
+		Struct Media			Documentation
+			Multiple
+			Description
+				| Manuals describing the device.
+
+
+
+		Section 2 "Operations"
+			Description
+				|Information related to operation of the device.
 
 		Struct Supplier			Suppliers
 			Multiple
@@ -97,6 +116,10 @@
 			Description
 				| Accessories, parts and consumables related to the device. 
 				|For example, ink cartridges, parts likely to wear etc.
+
+		Section 2 "Networking"
+			Description
+				|Information related to device netowrking (if supported)
 
 		Struct Network			Network
 			Dictionary

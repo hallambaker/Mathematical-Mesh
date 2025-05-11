@@ -54,7 +54,7 @@ public class JSONDebugWriter : JsonWriter {
 
 
     /// <summary>Write newline character</summary>
-    protected override void NewLine() {
+    public override void NewLine() {
         Output.WriteLine();
         OutputCol = 0;
         for (int i = 0; i < Indent; i++) {
@@ -70,11 +70,7 @@ public class JSONDebugWriter : JsonWriter {
     /// <param name="IndentIn">Current indent level.</param>
     public override void WriteToken(string Tag, int IndentIn) {
         NewLine();
-        var String = $"\"{Tag}\":";
-
-        if (Tag == "ContentMetaData") {
-            }
-
+        var String = $"\"{Tag}\": ";
         Output.Write(String);
         OutputCol += String.Length;
         }
@@ -123,6 +119,11 @@ public class JSONDebugWriter : JsonWriter {
         Output.Write("\"");
         }
 
+
+    public void WriteEllipsis() {
+        NewLine();
+        Output.Write("...");
+        }
 
     /// <summary>Write binary data as Base64Url encoded string.</summary>
     /// <param name="Data">Elements to write</param>

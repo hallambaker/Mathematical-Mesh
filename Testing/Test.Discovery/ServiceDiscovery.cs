@@ -119,7 +119,7 @@ public partial class Jmap {
             Manufacturer = "Acme Corp.",
             DateManufacture = date,
 
-            Manuals = [
+            Documentation = [
                 new() { 
                     Uri = "https://media.example.com/Encabulator_2_1.Manual.pdf"
                     }

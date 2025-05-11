@@ -22,6 +22,13 @@
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
+using Goedel.Protocol;
+using Goedel.Utilities;
+
+using System.Collections;
+using System.Collections.Generic;
+
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Debug;
 
@@ -29,6 +36,101 @@ namespace Goedel.Debug;
 /// Class containing static helper methods.
 /// </summary>
 public static partial class Extension {
+
+
+
+    public static void Write(
+        this TextWriter output,
+        JsonObject example,
+        List<string> includedProperties,
+        Func<JsonObject, bool>? filter=null) {
+
+        var include = new HashSet<string>();
+        foreach (var entry in includedProperties) {
+            include.Add(entry);
+            }
+
+        var buffer = new MemoryStream();
+        var writer = new JSONDebugWriter(buffer);
+
+        writer.WriteObjectStart();
+        var last = false;
+        var first = true;
+        foreach (var property in example._Binding.AllProperties) {
+            // Check if first
+            if (include.Contains(property.Key)) {
+                writer.WriteToken(property.Key, 0);
+                if (property.Value is PropertyDictionaryStruct propertyDictionary) {
+                    if (filter is not null) {
+                        WriteFiltered(writer, propertyDictionary, example, filter);
+                        }
+                    else {
+                        property.Value.Serialize(example, writer);
+                        }
+                    }
+                else {
+                    property.Value.Serialize(example, writer);
+                    }
+                first = false;
+                }
+            else if (first) {
+                writer.WriteEllipsis();
+                first = false;
+                }
+            else {
+                last = true;
+                }
+            }
+        // check if trailing
+        if (last) {
+            writer.WriteEllipsis();
+            }
+        buffer.Write("\r\n");
+        writer.WriteObjectEnd();
+        output.Write(buffer.ToArray().ToUTF8());
+        output.WriteLine();
+        }
+
+    static void WriteFiltered(
+                    JSONDebugWriter writer,
+                    PropertyDictionaryStruct property,
+                    IBinding data,
+                    Func<JsonObject, bool> filter) {
+
+        if (property.Get(data) is IEnumerable value) {
+            var first = true;
+            writer.WriteObjectStart();
+
+            if (property.Enumerator is not null) {
+                var firstTry = true;
+                var lastTry = false;
+                foreach (var entry in property.Enumerator(data)) {
+                    if (entry.Value is JsonObject typed) {
+                        if (filter(typed)) {
+                            writer.WriteObjectSeparator(ref first);
+                            writer.WriteToken(entry.Key, 1);
+                            typed.Serialize(writer, property.Tagged);
+                            }
+                        }
+                    else if (firstTry) {
+                        writer.WriteEllipsis();
+                        firstTry = false;
+                        }
+                    else {
+                        lastTry = true;
+                        }
+
+                    }
+                if (lastTry) {
+                    writer.WriteEllipsis();
+                    }
+                }
+
+            writer.WriteObjectEnd();
+            }
+
+        }
+
 
 
     /// <summary>

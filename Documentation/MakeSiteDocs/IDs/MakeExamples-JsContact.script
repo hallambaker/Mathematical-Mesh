@@ -58,7 +58,8 @@ $$$ Missing data $$$
 
 The following properties are added to the Card object specified in [RFC9553].
 
-#% jscontact.AnnotatedSchema.DocumentProperties(_Output, "Card",[ "Updates", "Groups"]);
+#% jscontact.AnnotatedSchema.DocumentProperties(_Output, "Card",[ "updates", "serviceGroups"],
+#%        jscontact.Contact);
 
 
 #%
@@ -67,14 +68,16 @@ The following properties are added to the Card object specified in [RFC9553].
 
 The following objects specified in [RFC9553] are extended to add the specified properties.
 
-#% jscontact.AnnotatedSchema.DocumentStructure(_Output, "EmailAddress", ["CryptoKeyIds"]);
-#% jscontact.AnnotatedSchema.DocumentStructure(_Output, "OnlineService", ["CryptoKeyIds"]);
+#% jscontact.AnnotatedSchema.DocumentStructure(_Output, "EmailAddress", ["cryptoKeyIds"], 
+#%      jscontact.EmailAddress);
+#% jscontact.AnnotatedSchema.DocumentStructure(_Output, "OnlineService", ["cryptoKeyIds"],
+#%      jscontact.OnlineServiceWithKeys);
 
 #### New Objects
 
 The following object is defined:
 
-#% jscontact.AnnotatedSchema.DocumentStructure(_Output, "JsonWebKeySet");
+#% jscontact.AnnotatedSchema.DocumentStructure(_Output, "JsonWebKeySet", null, jscontact.CryptoKeyWithJwk);
 
 #end zfile
 

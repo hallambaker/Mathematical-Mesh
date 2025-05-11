@@ -44,7 +44,7 @@ public class JsonWriter : Writer {
     protected int Indent = 0;
 
     /// <summary>Write newline character</summary>
-    protected virtual void NewLine() {
+    public virtual void NewLine() {
         Output.WriteLine();
         for (int i = 0; i < Indent; i++) {
             Output.Write("  ");

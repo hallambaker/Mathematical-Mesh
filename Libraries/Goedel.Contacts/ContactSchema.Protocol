@@ -832,7 +832,7 @@
 		Binary					Data
 			Description
 				|Binary credential data (NB, may be moved to JWK.)
-		Struct JWK				Jwk
+		Struct JWK				JsonWebKeys
 			Multiple
 			Description
 				|A Json Web Key Set.

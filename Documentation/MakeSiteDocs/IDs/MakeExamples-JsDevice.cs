@@ -20,14 +20,50 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 	/// </summary>
 	/// <param name="Example"></param>
 	public void MakeJSDeviceExamples (CreateExamples Example) {
-		 JSDeviceInitial(Example);
-		 JSDeviceEarl(Example);
-		 JSDeviceNetwork(Example);
+		 JSDevicePreparation(Example);
+		 JSDeviceItself(Example);
+		 JSDeviceOperations(Example);
 		 JSDeviceMedia(Example);
-		 JSDeviceRelated(Example);
-		 JSDeviceServices(Example);
-		 JSDeviceMaint(Example);
+		 JSDeviceNetwork(Example);
+		 JSDeviceNetworkConfig(Example);
+		 JSDeviceNetworkBoot(Example);
 		}
+	
+
+	//
+	// JSDevicePreparation
+	//
+	public static void JSDevicePreparation(CreateExamples Example) { /* XFile  */
+			using var _Output = new StreamWriter("Examples\\JSDevicePreparation.md");
+		Example._Output = _Output;
+		Example._JSDevicePreparation(Example);
+		}
+	public void _JSDevicePreparation(CreateExamples Example) {
+
+			 var jsdevice = Example.JSDevice.JsDevice;
+			 var jsmodel = Example.JSDevice.JsModel;
+			_Output.Write ("~~~~\n{0}", _Indent);
+			 _Output.Write(jsmodel, Example.JSDevice.GeneralProperties);
+			_Output.Write ("~~~~\n{0}", _Indent);
+				}
+	
+
+	//
+	// JSDeviceItself
+	//
+	public static void JSDeviceItself(CreateExamples Example) { /* XFile  */
+			using var _Output = new StreamWriter("Examples\\JSDeviceItself.md");
+		Example._Output = _Output;
+		Example._JSDeviceItself(Example);
+		}
+	public void _JSDeviceItself(CreateExamples Example) {
+
+			 var jsdevice = Example.JSDevice.JsDevice;
+			 var jsmodel = Example.JSDevice.JsModel;
+			_Output.Write ("~~~~\n{0}", _Indent);
+			 _Output.Write(jsdevice, Example.JSDevice.GeneralProperties);
+			_Output.Write ("~~~~\n{0}", _Indent);
+				}
 	
 
 	//
@@ -42,41 +78,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 
 			 var jsdevice = Example.JSDevice;
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-				}
-	
-
-	//
-	// JSDeviceInitial
-	//
-	public static void JSDeviceInitial(CreateExamples Example) { /* XFile  */
-			using var _Output = new StreamWriter("Examples\\JSDeviceInitial.md");
-		Example._Output = _Output;
-		Example._JSDeviceInitial(Example);
-		}
-	public void _JSDeviceInitial(CreateExamples Example) {
-
-			 var jsdevice = Example.JSDevice;
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-				}
-	
-
-	//
-	// JSDeviceNetwork
-	//
-	public static void JSDeviceNetwork(CreateExamples Example) { /* XFile  */
-			using var _Output = new StreamWriter("Examples\\JSDeviceNetwork.md");
-		Example._Output = _Output;
-		Example._JSDeviceNetwork(Example);
-		}
-	public void _JSDeviceNetwork(CreateExamples Example) {
-
-			 var jsdevice = Example.JSDevice;
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, jsdevice.EARL);
 			_Output.Write ("~~~~\n{0}", _Indent);
 				}
 	
@@ -91,60 +93,77 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 		}
 	public void _JSDeviceMedia(CreateExamples Example) {
 
-			 var jsdevice = Example.JSDevice;
+			 var jsdevice = Example.JSDevice.JsDevice;
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("~~~~\n{0}", _Indent);
-				}
-	
-
-	//
-	// JSDeviceRelated
-	//
-	public static void JSDeviceRelated(CreateExamples Example) { /* XFile  */
-			using var _Output = new StreamWriter("Examples\\JSDeviceRelated.md");
-		Example._Output = _Output;
-		Example._JSDeviceRelated(Example);
-		}
-	public void _JSDeviceRelated(CreateExamples Example) {
-
-			 var jsdevice = Example.JSDevice;
-			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			 _Output.Write(jsdevice, Example.JSDevice.MediaProperties);
 			_Output.Write ("~~~~\n{0}", _Indent);
 				}
 	
 
 	//
-	// JSDeviceServices
+	// JSDeviceOperations
 	//
-	public static void JSDeviceServices(CreateExamples Example) { /* XFile  */
-			using var _Output = new StreamWriter("Examples\\JSDeviceServices.md");
+	public static void JSDeviceOperations(CreateExamples Example) { /* XFile  */
+			using var _Output = new StreamWriter("Examples\\JSDeviceOperations.md");
 		Example._Output = _Output;
-		Example._JSDeviceServices(Example);
+		Example._JSDeviceOperations(Example);
 		}
-	public void _JSDeviceServices(CreateExamples Example) {
+	public void _JSDeviceOperations(CreateExamples Example) {
 
-			 var jsdevice = Example.JSDevice;
+			 var jsdevice = Example.JSDevice.JsDevice;
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			 _Output.Write(jsdevice, Example.JSDevice.OperationsProperties);
 			_Output.Write ("~~~~\n{0}", _Indent);
 				}
 	
 
 	//
-	// JSDeviceMaint
+	// JSDeviceNetworkBoot
 	//
-	public static void JSDeviceMaint(CreateExamples Example) { /* XFile  */
-			using var _Output = new StreamWriter("Examples\\JSDeviceMaint.md");
+	public static void JSDeviceNetworkBoot(CreateExamples Example) { /* XFile  */
+			using var _Output = new StreamWriter("Examples\\JSDeviceNetworkBoot.md");
 		Example._Output = _Output;
-		Example._JSDeviceMaint(Example);
+		Example._JSDeviceNetworkBoot(Example);
 		}
-	public void _JSDeviceMaint(CreateExamples Example) {
+	public void _JSDeviceNetworkBoot(CreateExamples Example) {
 
-			 var jsdevice = Example.JSDevice;
+			 var jsdevice = Example.JSDevice.JsDevice;
 			_Output.Write ("~~~~\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
+			 _Output.Write(jsdevice, Example.JSDevice.NetworkProperties, FilterNetworkBootstrap);
+			_Output.Write ("~~~~\n{0}", _Indent);
+				}
+	
+
+	//
+	// JSDeviceNetwork
+	//
+	public static void JSDeviceNetwork(CreateExamples Example) { /* XFile  */
+			using var _Output = new StreamWriter("Examples\\JSDeviceNetwork.md");
+		Example._Output = _Output;
+		Example._JSDeviceNetwork(Example);
+		}
+	public void _JSDeviceNetwork(CreateExamples Example) {
+
+			 var jsdevice = Example.JSDevice.JsDevice;
+			_Output.Write ("~~~~\n{0}", _Indent);
+			 _Output.Write(jsdevice, Example.JSDevice.NetworkProperties, FilterNetworkService);
+			_Output.Write ("~~~~\n{0}", _Indent);
+				}
+	
+
+	//
+	// JSDeviceNetworkConfig
+	//
+	public static void JSDeviceNetworkConfig(CreateExamples Example) { /* XFile  */
+			using var _Output = new StreamWriter("Examples\\JSDeviceNetworkConfig.md");
+		Example._Output = _Output;
+		Example._JSDeviceNetworkConfig(Example);
+		}
+	public void _JSDeviceNetworkConfig(CreateExamples Example) {
+
+			 var jsdevice = Example.JSDevice.JsDevice;
+			_Output.Write ("~~~~\n{0}", _Indent);
+			 _Output.Write(jsdevice, Example.JSDevice.NetworkProperties, FilterNetworkConfig);
 			_Output.Write ("~~~~\n{0}", _Indent);
 				}
 	}
