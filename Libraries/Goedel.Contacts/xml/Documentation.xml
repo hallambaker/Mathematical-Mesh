@@ -1971,7 +1971,7 @@
         </member>
         <member name="P:Goedel.Contacts.JsContact.Analysis">
             <summary>Analyzed version of the contact. Note that this is not synchronized
-            and so a new call must be made to <see cref="!:Analyze"/></summary> 
+            and so a new call must be made to <see cref="M:Goedel.Contacts.JsContact.Analyze"/></summary> 
         </member>
         <member name="M:Goedel.Contacts.JsContact.#ctor">
             <summary>
@@ -1998,6 +1998,11 @@
         <member name="M:Goedel.Contacts.JsContact.Update">
             <summary>
             Update the contact updated time.
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.Analyze">
+            <summary>
+            Analyze the contact to populate the property <see cref="P:Goedel.Contacts.JsContact.Analysis"/>
             </summary>
         </member>
         <member name="T:Goedel.Contacts.Resource">

@@ -30,17 +30,25 @@ public record AnalysizedContact {
     ///<summary>Mesh services</summary> 
     public List<OnlineService> Mesh { get; } = [];
 
-    ///<summary>Groups</summary> 
-    public List<OnlineService> Groups { get; } = [];
+
 
     ///<summary>Services of type SSH</summary> 
     public List<OnlineService> Ssh { get; } = [];
 
-    ///<summary>Services of type credential</summary> 
-    public List<OnlineService> Credentials{ get; } = [];
 
     ///<summary>Services not included in any other category.</summary> 
     public List<OnlineService> Other { get; } = [];
+
+
+
+
+    ///<summary>Groups</summary> 
+    public List<OnlineService> Groups { get; } = [];
+
+
+
+    ///<summary>Services of type credential</summary> 
+    public List<OnlineService> Credentials { get; } = [];
     }
 
 
@@ -134,66 +142,134 @@ public partial class JsContact {
         }
 
 
-    ///// <summary>
-    ///// Analyze the contact to populate the property <see cref="Analysis"/>
-    ///// </summary>
-    //public void Analyze() {
-    //    Emails ??= [];
-    //    OnlineServices ??= [];
-    //    CryptoKeys ??= [];
+    /// <summary>
+    /// Analyze the contact to populate the property <see cref="Analysis"/>
+    /// </summary>
+    public void Analyze() {
 
-    //    Analysis = new();
-
-    //    var worklist = new Dictionary<string,OnlineService>();
+        Analysis = new();
 
 
-    //    foreach (var emailPair in Emails) {
-    //        var email = emailPair.Value;
-    //        email.Key = emailPair.Key;
 
-    //        var service = new OnlineService() {
-    //            Service = "smtp",
-    //            Key = emailPair.Key,
-    //            User = email.Address,
-    //            Contexts = email.Contexts,
-    //            Pref = email.Pref,
-    //            Label = email.Label,
-    //            //ServiceGroups = email.Groups,
-    //            Analysis = new()
-    //            };
-    //        worklist.Add(service.Key, service);
-    //        }
+        foreach (var emailPair in Emails) {
+            var email = emailPair.Value;
+            email.Key = emailPair.Key;
 
-    //    foreach (var pair in OnlineServices) {
-    //        var service = pair.Value;
-    //        service.Analysis = new();
+            var service = new OnlineService() {
+                Service = "smtp",
+                Key = emailPair.Key,
+                User = email.Address,
+                Contexts = email.Contexts,
+                Pref = email.Pref,
+                Label = email.Label,
+                Analysis = new()
+                };
+            email.OnlineService = service;
+            Analysis.Emails.Add(service);
+            }
 
-    //        service.Key = pair.Key;
-    //        if (CryptoKeys.TryGetValue(service.Key, out var cryptoKey)) {
-    //            service.CryptoKey = cryptoKey;
-    //            }
+        foreach (var groupPair in ServiceGroups) {
+            var group = groupPair.Value;
 
-    //        worklist.Add(service.Key, service);
-    //        }
+            foreach (var memberPair in group.Members) {
+                var key = memberPair.Key;
 
-    //    foreach (var pair in worklist) {
-    //        var item = pair.Value;
-    //        if (item.Groups != null && item.Groups.Count > 0) {
-    //            foreach (var member in item.Groups) {
-    //                if (CheckNotCyclic(worklist, item) & worklist.TryGetValue(member, out var parent)) {
-    //                    AnalyzeService(parent.Analysis, item);
+                if (Emails.TryGetValue(key, out var email)) {
+                    email.OnlineService.ServiceGroups.Add(group);
+                    }
+                if (OnlineServices.TryGetValue(key, out var service)) {
+                    service.ServiceGroups.Add(group);
+                    }
+                }
+            }
 
-    //                    parent.Analysis.Children.Add(item);
-    //                    item.Analysis.Parents.Add(parent);
-    //                    }
-    //                }
-    //            }
-    //        else {
-    //            AnalyzeService(Analysis, item);
-    //            Analysis.Children.Add(item);
-    //            }
-    //        }
-    //    }
+
+        foreach (var pair in OnlineServices) {
+            var service = pair.Value;
+            service.Analysis = new();
+            service.Key = pair.Key;
+
+            switch (service.Service) {
+                case "http": {
+                    Analysis.Webs.Add(service);
+                    break;
+                    }
+                case "Mesh": {
+                    Analysis.Mesh.Add(service);
+                    break;
+                    }
+
+                case "ssh": {
+                    Analysis.Ssh.Add(service);
+                    break;
+                    }
+                default: {
+                    Analysis.Other.Add(service);
+                    break;
+                    }
+                }
+
+            }
+
+
+
+
+        //Emails ??= [];
+        //OnlineServices ??= [];
+        //CryptoKeys ??= [];
+
+
+
+        //var worklist = new Dictionary<string, OnlineService>();
+
+
+        //foreach (var emailPair in Emails) {
+        //    var email = emailPair.Value;
+        //    email.Key = emailPair.Key;
+
+        //    var service = new OnlineService() {
+        //        Service = "smtp",
+        //        Key = emailPair.Key,
+        //        User = email.Address,
+        //        Contexts = email.Contexts,
+        //        Pref = email.Pref,
+        //        Label = email.Label,
+        //        //ServiceGroups = email.Groups,
+        //        Analysis = new()
+        //        };
+        //    worklist.Add(service.Key, service);
+        //    }
+
+        //foreach (var pair in OnlineServices) {
+        //    var service = pair.Value;
+        //    service.Analysis = new();
+
+        //    service.Key = pair.Key;
+        //    //if (CryptoKeys.TryGetValue(service.Key, out var cryptoKey)) {
+        //    //    service.CryptoKey = cryptoKey;
+        //    //    }
+
+        //    //worklist.Add(service.Key, service);
+        //    }
+
+        ////foreach (var pair in worklist) {
+        ////    var item = pair.Value;
+        ////    if (item.Groups != null && item.Groups.Count > 0) {
+        ////        foreach (var member in item.Groups) {
+        ////            if (CheckNotCyclic(worklist, item) & worklist.TryGetValue(member, out var parent)) {
+        ////                AnalyzeService(parent.Analysis, item);
+
+        ////                parent.Analysis.Children.Add(item);
+        ////                item.Analysis.Parents.Add(parent);
+        ////                }
+        ////            }
+        ////        }
+        ////    else {
+        ////        AnalyzeService(Analysis, item);
+        ////        Analysis.Children.Add(item);
+        ////        }
+        ////    }
+        }
 
 
     //static bool CheckNotCyclic(
@@ -262,8 +338,11 @@ public partial class JsContact {
 
 public partial class EmailAddress {
 
+    public OnlineService OnlineService { get; set; }
+
     ///<summary>The dictionary key (filled by calling Analyze)</summary> 
     public string Key { get; set; }
+
 
     }
 
@@ -278,5 +357,8 @@ public partial class OnlineService {
 
     ///<summary>Analysis of the service parent and children.</summary> 
     public AnalysizedContact Analysis { get; set; }
+
+
+    public List<ServiceGroup> ServiceGroups { get; } = [];
 
     }

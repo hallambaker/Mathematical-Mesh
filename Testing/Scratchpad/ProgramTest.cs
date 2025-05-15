@@ -69,7 +69,7 @@ partial class Program {
         //GoedelProtocol.Test().TestEncodeDecode2();
 
 
-        GoedelProtocol.Test().TestEncodeDecode3();
+        //GoedelProtocol.Test().TestEncodeDecode3();
 
 
         //TestService.Test().TestCredentialAccount();
@@ -82,7 +82,7 @@ partial class Program {
         //var jscontact = new JsContactResults(examples);
 
         //Acme.Test().TestJsDevice().Sync();
-        //TestService.Test().TestCredentialAccountApps();
+        TestService.Test().TestCredentialAccountApps();
         //TestService.Test().TestCredentialFromHandle();
 
         //Jmap.Test().TestContactAlice();
