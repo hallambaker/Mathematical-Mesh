@@ -4941,13 +4941,14 @@
         <member name="F:Goedel.Cryptography.Dare.JbcdStream.LockGlobal">
             <summary>The reader writer lock for the underlying file.</summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.JbcdStream.#ctor(System.String,Goedel.IO.FileStatus,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.JbcdStream.#ctor(System.String,Goedel.IO.FileStatus,System.Boolean,System.Int32)">
             <summary>
             Constructor from a file
             </summary>
             <param name="fileName">The file to open.</param>
             <param name="fileStatus">The file access mode.</param>
             <param name="writeOnly">If true, the file is only opened in write mode.</param>
+            <param name="version">The encoding version 3 or 4</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.#ctor(System.IO.Stream,System.IO.Stream)">
             <summary>
@@ -5146,16 +5147,6 @@
             </summary>
             <returns>The total size of the frame.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.JbcdStream.WriteBinaryBegin(System.Int64,System.Boolean)">
-            <summary>Begin partial write of binary data. 
-            This is not yet implemented for standard streams.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.JbcdStream.WriteBinaryPart(System.Byte[],System.Int64,System.Int64)">
-            <summary>Write binary data as length-data item.</summary>
-            <param name="Data">Elements to write</param>
-            <param name="First">The index position of the first byte in the input data to process</param>
-            <param name="Length">The number of bytes to process</param>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadLength(System.Int32,System.Int64@)">
             <summary>
             Read a length value of known length in the forward direction.
@@ -5206,12 +5197,12 @@
             <summary>
              Read a frame in the forward direction.
             </summary>
-            <param name="MaxLength">The maximum length of data to read including the tags</param>
-            <param name="Data">The data that was read.</param>
+            <param name="maxLength">The maximum length of data to read including the tags</param>
+            <param name="data">The data that was read.</param>
             <returns>True if a tag was read or false if EOF was encountered.</returns>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileFormatException">The record data read from disk was invalid</exception>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadFrame(System.Byte[]@,System.Byte[]@,System.Byte[]@)">
+        <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadFrame(System.Byte[]@,System.Byte[]@,System.Byte[]@,System.Byte[]@)">
             <summary>
             Read a pair of wrapped frames in the forward direction.
             </summary>
@@ -5290,16 +5281,6 @@
             <summary>
             Read a pair of wrapped frames in the forward direction.
             </summary>
-            <param name="FrameHeader">The header data that was read.</param>
-            <returns>True if a tag was read or false if EOF was encountered.</returns>
-            <exception cref="T:Goedel.Cryptography.Dare.InvalidFileFormatException">The record data read from disk was invalid</exception>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadFrameReverse(System.Byte[]@,System.Byte[]@)">
-            <summary>
-            Read a pair of wrapped frames in the Reverse direction. This is typically done to read the last
-            record in a file to see how the file should be extended.
-            </summary>
-            <param name="FrameData">The payload data that was read.</param>
             <param name="FrameHeader">The header data that was read.</param>
             <returns>True if a tag was read or false if EOF was encountered.</returns>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileFormatException">The record data read from disk was invalid</exception>

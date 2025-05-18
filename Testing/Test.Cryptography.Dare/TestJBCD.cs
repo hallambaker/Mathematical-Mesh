@@ -41,7 +41,7 @@ public class TestJBCD : UnitTestSet {
     [InlineData(0)]
     [InlineData(1)]
     [InlineData(10)]
-    public void TestJBCDStream(int Records, int MaxSize = 0) {
+    public void TestJBCDStream(int Records, int MaxSize = 0, int version = 3) {
 
         Seed = DeterministicSeed.Auto(Records, MaxSize);
         var filename = Seed.GetFilename("JBCD");
@@ -50,7 +50,7 @@ public class TestJBCD : UnitTestSet {
         MaxSize = MaxSize == 0 ? Records + 1 : MaxSize;
 
 
-        using (var JBCDStream = new JbcdStream(filename, FileStatus.Overwrite)) {
+        using (var JBCDStream = new JbcdStream(filename, FileStatus.Overwrite, version: version)) {
             for (int i = 0; i < Records; i++) {
                 var Test1 = MakeConstant("Header ", ((i + 1) % MaxSize));
                 var Test2 = MakeConstant("Data ", ((i + 1) % MaxSize));
@@ -58,12 +58,12 @@ public class TestJBCD : UnitTestSet {
                 }
             }
 
-        using (var JBCDStream = new JbcdStream(filename, FileStatus.Read)) {
+        using (var JBCDStream = new JbcdStream(filename, FileStatus.Read, version: version)) {
             for (int i = 0; i < Records; i++) {
                 var Test1 = MakeConstant("Header ", ((i + 1) % MaxSize));
                 var Test2 = MakeConstant("Data ", ((i + 1) % MaxSize));
 
-                JBCDStream.ReadFrame(out var Header, out var Data, out var FrameTrailer);
+                JBCDStream.ReadFrame(out var Header, out _, out var Data, out var FrameTrailer);
 
                 Header.IsEqualTo(Test1).TestTrue();
                 Data.IsEqualTo(Test2).TestTrue();

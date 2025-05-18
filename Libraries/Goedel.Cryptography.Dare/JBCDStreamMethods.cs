@@ -23,8 +23,9 @@ namespace Goedel.Cryptography.Dare;
 
 
 // This file has the methods that operate on the stream
-public partial class JbcdStream {
+public partial class JbcdStream  {
 
+    #region // Constants
     /// <summary>JSON-B Code for unidirectional frame</summary>
     public const byte UFrame = 0xF0;
     /// <summary>JSON-B Code for bidirectional frame</summary>
@@ -47,21 +48,23 @@ public partial class JbcdStream {
     readonly static byte[] CodeSpaces = new byte[] { 2, 3, 5, 9, 4, 6, 10, 18 };
     readonly static byte[] TagSpaces = new byte[] { 1, 2, 4, 8 };
 
-    /* Static methods */
+    #endregion
+
+    #region // All the parts that depend on the framing bytes
 
     /// <summary>
     /// Return the shortest tag length for the specified production.
     /// </summary>
-    /// <param name="Length">Length of data to follow.</param>
+    /// <param name="length">Length of data to follow.</param>
     /// <returns>The tag length.</returns>
-    public static int TagLength(long Length) {
-        if (Length < 0x100) {
+    static int TagLength(long length) {
+        if (length < 0x100) {
             return 2;
             }
-        else if (Length < 0x10000) {
+        else if (length < 0x10000) {
             return 3;
             }
-        else if (Length < 0x100000000) {
+        else if (length < 0x100000000) {
             return 5;
             }
         else {
@@ -72,150 +75,177 @@ public partial class JbcdStream {
     /// <summary>
     /// Return the length of a code
     /// </summary>
-    /// <param name="Code">Base code.</param>
+    /// <param name="code">Base code.</param>
     /// <returns>The number of bytes required.</returns>
-    public static int TagSpace(int Code) => TagSpaces[Code & LengthMask];
+    static int TagSpace(int code) => TagSpaces[code & LengthMask];
 
 
     /// <summary>
     /// Return the length of a code
     /// </summary>
-    /// <param name="Code">Base code.</param>
+    /// <param name="code">Base code.</param>
     /// <returns>The number of bytes required.</returns>
-    public static int CodeSpace(int Code) {
-        Assert.AssertTrue(Code >= UFrame & Code <= (BFrame + Length64),
+    static int CodeSpace(int code) {
+        Assert.AssertTrue(code >= UFrame & code <= (BFrame + Length64),
             StreamDataCorrupt.Throw);
 
-        return CodeSpaces[Code - UFrame];
+        return CodeSpaces[code - UFrame];
 
         }
 
 
+    public virtual bool ReadTagStartFirstFrame (out long length) => ReadTag(out _, out length);
+
+    public virtual bool ReadTagStartFrame(out long length) =>ReadTag (out _, out length);
+
+    public virtual bool ReadTagStartRecord(out long length, out int codelength) {
+        var success = ReadTag(out var code, out length);
+        codelength = CodeSpace(code);
+
+        return success;
+        }
+
+    public virtual bool ReadTagEndFrame(long length) => CheckReversedLength(BFrame, length);
+
+
+    public virtual void WriteTagStartFrame(long Length) => WriteTag(BFrame, Length);
+    public virtual void WriteTagStartRecord(long Length) => WriteTag(UFrame, Length);
+    public virtual void WriteTagEndFrame(long Length) => WriteTagReverse(BFrame, Length);
+
+
+    #endregion
+    #region  // Static methods 
+
     /// <summary>
     /// Determine Tag length using the shortest possible production
     /// </summary>
-    /// <param name="Length">Length of data to follow.</param>
+    /// <param name="length">Length of data to follow.</param>
     /// <returns>The number of bytes required.</returns>
-    public static long TotalLength(long Length) => Length + TagLength(Length);
+    static long TotalLength(long length) => length + TagLength(length);
 
     /// <summary>
     /// Determine Tag length using the shortest possible production
     /// </summary>
-    /// <param name="Length">Length of data to follow.</param>
+    /// <param name="length">Length of data to follow.</param>
     /// /// <returns>The number of bytes required.</returns>
-    public static long TotalLength2(long Length) => Length + 2 * TagLength(Length);
+    static long TotalLength2(long length) => length + 2 * TagLength(length);
 
 
-    /* Write methods */
-
+    #endregion
+    #region  // Write methods
 
     /// <summary>
     /// Write out a Tag-Length value using the shortest possible production
     /// </summary>
-    /// <param name="Code">Base code.</param>
-    /// <param name="Length">Length of data to follow.</param>
-    public void WriteTag(byte Code, long Length) {
+    /// <param name="code">Base code.</param>
+    /// <param name="length">Length of data to follow.</param>
+    public void WriteTag(byte code, long length) {
         //Console.WriteLine($"Forward {Code} {Length}");
 
 
-        if (Length < 0x100) {
-            WriteByte((byte)(Code + Length8));
-            WriteByte((byte)(Length & 0xff));
+        if (length < 0x100) {
+            WriteByte((byte)(code + Length8));
+            WriteByte((byte)(length & 0xff));
             }
-        else if (Length < 0x10000) {
-            WriteByte((byte)(Code + Length16));
-            WriteByte((byte)((Length >> 8) & 0xff));
-            WriteByte((byte)(Length & 0xff));
+        else if (length < 0x10000) {
+            WriteByte((byte)(code + Length16));
+            WriteByte((byte)((length >> 8) & 0xff));
+            WriteByte((byte)(length & 0xff));
             }
-        else if (Length < 0x100000000) {
-            WriteByte((byte)(Code + Length32));
-            WriteByte((byte)((Length >> 24) & 0xff));
-            WriteByte((byte)((Length >> 16) & 0xff));
-            WriteByte((byte)((Length >> 8) & 0xff));
-            WriteByte((byte)(Length & 0xff));
+        else if (length < 0x100000000) {
+            WriteByte((byte)(code + Length32));
+            WriteByte((byte)((length >> 24) & 0xff));
+            WriteByte((byte)((length >> 16) & 0xff));
+            WriteByte((byte)((length >> 8) & 0xff));
+            WriteByte((byte)(length & 0xff));
             }
         else {
-            WriteByte((byte)(Code + Length64));
-            WriteByte((byte)((Length >> 56) & 0xff));
-            WriteByte((byte)((Length >> 48) & 0xff));
-            WriteByte((byte)((Length >> 40) & 0xff));
-            WriteByte((byte)((Length >> 32) & 0xff));
-            WriteByte((byte)((Length >> 24) & 0xff));
-            WriteByte((byte)((Length >> 16) & 0xff));
-            WriteByte((byte)((Length >> 8) & 0xff));
-            WriteByte((byte)(Length & 0xff));
+            WriteByte((byte)(code + Length64));
+            WriteByte((byte)((length >> 56) & 0xff));
+            WriteByte((byte)((length >> 48) & 0xff));
+            WriteByte((byte)((length >> 40) & 0xff));
+            WriteByte((byte)((length >> 32) & 0xff));
+            WriteByte((byte)((length >> 24) & 0xff));
+            WriteByte((byte)((length >> 16) & 0xff));
+            WriteByte((byte)((length >> 8) & 0xff));
+            WriteByte((byte)(length & 0xff));
             }
         }
 
     /// <summary>
     /// Write out a Tag-Length value using the shortest possible production
     /// </summary>
-    /// <param name="Code">Base code.</param>
-    /// <param name="Length">Length of data to follow.</param>
-    public void WriteTagReverse(byte Code, long Length) {
+    /// <param name="code">Base code.</param>
+    /// <param name="length">Length of data to follow.</param>
+    public void WriteTagReverse(byte code, long length) {
         //Console.WriteLine($"Reverse {Code} {Length}");
 
 
-        if (Length < 0x100) {
-            WriteByte((byte)(Length & 0xff));
-            WriteByte((byte)(Code + Length8));
+        if (length < 0x100) {
+            WriteByte((byte)(length & 0xff));
+            WriteByte((byte)(code + Length8));
             }
-        else if (Length < 0x10000) {
-            WriteByte((byte)(Length & 0xff));
-            WriteByte((byte)((Length >> 8) & 0xff));
-            WriteByte((byte)(Code + Length16));
+        else if (length < 0x10000) {
+            WriteByte((byte)(length & 0xff));
+            WriteByte((byte)((length >> 8) & 0xff));
+            WriteByte((byte)(code + Length16));
             }
-        else if (Length < 0x100000000) {
-            WriteByte((byte)(Length & 0xff));
-            WriteByte((byte)((Length >> 8) & 0xff));
-            WriteByte((byte)((Length >> 16) & 0xff));
-            WriteByte((byte)((Length >> 24) & 0xff));
-            WriteByte((byte)(Code + Length32));
+        else if (length < 0x100000000) {
+            WriteByte((byte)(length & 0xff));
+            WriteByte((byte)((length >> 8) & 0xff));
+            WriteByte((byte)((length >> 16) & 0xff));
+            WriteByte((byte)((length >> 24) & 0xff));
+            WriteByte((byte)(code + Length32));
             }
         else {
-            WriteByte((byte)(Length & 0xff));
-            WriteByte((byte)((Length >> 8) & 0xff));
-            WriteByte((byte)((Length >> 16) & 0xff));
-            WriteByte((byte)((Length >> 24) & 0xff));
-            WriteByte((byte)((Length >> 32) & 0xff));
-            WriteByte((byte)((Length >> 40) & 0xff));
-            WriteByte((byte)((Length >> 48) & 0xff));
-            WriteByte((byte)((Length >> 56) & 0xff));
-            WriteByte((byte)(Code + Length64));
+            WriteByte((byte)(length & 0xff));
+            WriteByte((byte)((length >> 8) & 0xff));
+            WriteByte((byte)((length >> 16) & 0xff));
+            WriteByte((byte)((length >> 24) & 0xff));
+            WriteByte((byte)((length >> 32) & 0xff));
+            WriteByte((byte)((length >> 40) & 0xff));
+            WriteByte((byte)((length >> 48) & 0xff));
+            WriteByte((byte)((length >> 56) & 0xff));
+            WriteByte((byte)(code + Length64));
             }
 
         //Console.WriteLine($"Reverse {Code} {Length} --- {PositionWrite}");
         }
 
 
+    #endregion
+    #region // Write Frame Methods
     /// <summary>
     /// Write a unidirectional or bidirectional frame to the current stream at the current write position. 
     /// The code does not currently support 64 bit frames as it should.
     /// </summary>
-    /// <param name="FrameData">The data to write.</param>
-    /// <param name="Offset">Offset within the data.</param>
-    /// <param name="Length">Number of bytes to write.</param>
-    /// <param name="Bidirectional">If true, a bidirectional frame is written.</param>
+    /// <param name="frameData">The data to write.</param>
+    /// <param name="offset">Offset within the data.</param>
+    /// <param name="length">Number of bytes to write.</param>
+    /// <param name="bidirectional">If true, a bidirectional frame is written.</param>
     /// <returns>The total size of the frame.</returns>
-    public long WriteFrame(byte[] FrameData,
-            long Offset = 0, long Length = -1, bool Bidirectional = false) {
-        Length = Length == -1 ? FrameData.LongLength : Length;
+    public long WriteFrame(
+                byte[] frameData,
+                long offset = 0, 
+                long length = -1, 
+                bool bidirectional = false) {
+        length = length == -1 ? frameData.LongLength : length;
 
-        Assert.AssertTrue(Length <= Int32.MaxValue, FrameTooLargeException.Throw);
+        Assert.AssertTrue(length <= Int32.MaxValue, FrameTooLargeException.Throw);
 
-        if (Bidirectional) {
-            WriteTag(BFrame, Length);
+        if (bidirectional) {
+            WriteTag(BFrame, length);
             }
         else {
-            WriteTag(UFrame, Length);
+            WriteTag(UFrame, length);
             }
-        Write(FrameData, (int)Offset, (int)Length);
-        if (Bidirectional) {
-            WriteTagReverse(BFrame, Length);
-            return TotalLength2(Length);
+        Write(frameData, (int)offset, (int)length);
+        if (bidirectional) {
+            WriteTagReverse(BFrame, length);
+            return TotalLength2(length);
             }
         else {
-            return TotalLength(Length);
+            return TotalLength(length);
             }
         }
 
@@ -227,15 +257,15 @@ public partial class JbcdStream {
     /// to the current stream at the current write position. 
     /// The code does not currently support 64 bit frames as it should.
     /// </summary>
-    /// <param name="FrameHeader">The header data to write.</param>
-    /// <param name="FrameData1">First data record, contains data content.</param>
-    /// <param name="FrameData2">Second data record, contains protected metadata.</param>
+    /// <param name="frameHeader">The header data to write.</param>
+    /// <param name="frameData1">First data record, contains data content.</param>
+    /// <param name="frameData2">Second data record, contains protected metadata.</param>
     /// <param name="flush">If true, flush the frame data value to the file.</param>
     /// <returns>The total size of the frame.</returns>
     public long WriteWrappedFrame(
-                byte[] FrameHeader,
-                byte[] FrameData1 = null,
-                byte[] FrameData2 = null,
+                byte[] frameHeader,
+                byte[] frameData1 = null,
+                byte[] frameData2 = null,
                 bool flush = true) {
 
         bool lockTaken = false;
@@ -247,41 +277,41 @@ public partial class JbcdStream {
                 LockGlobal.Enter();
                 }
 
-            var FrameLength = (FrameHeader == null ? 2 : TotalLength(FrameHeader.Length)) +
-                                (FrameData1 == null ? 2 : TotalLength(FrameData1.Length)) +
-                                (FrameData2 == null ? 2 : TotalLength(FrameData2.Length));
+            var frameLength = (frameHeader == null ? 2 : TotalLength(frameHeader.Length)) +
+                                (frameData1 == null ? 2 : TotalLength(frameData1.Length)) +
+                                (frameData2 == null ? 2 : TotalLength(frameData2.Length));
 
-            WriteTag(BFrame, FrameLength);
+            WriteTagStartFrame(frameLength);
 
-            var Check = PositionWrite;
-            if (FrameHeader != null) {
-                WriteFrame(FrameHeader);
+            var check = PositionWrite;
+            if (frameHeader != null) {
+                WriteFrame(frameHeader);
                 }
             else {
-                WriteTag(UFrame, 0);
+                WriteTagStartRecord(0);
                 }
 
             var result = PositionWrite;
 
-            if (FrameData1 != null) {
+            if (frameData1 != null) {
 
-                result += TagLength(FrameData1.LongLength);
+                result += TagLength(frameData1.LongLength);
 
-                WriteFrame(FrameData1);
+                WriteFrame(frameData1);
                 }
             else {
-                WriteTag(UFrame, 0);
+                WriteTagStartRecord(0);
                 }
-            if (FrameData2 != null) {
-                WriteFrame(FrameData2);
+            if (frameData2 != null) {
+                WriteFrame(frameData2);
                 }
             else {
-                WriteTag(UFrame, 0);
+                WriteTagStartRecord(0);
                 }
 
-            Assert.AssertTrue(PositionWrite == Check + FrameLength, Internal.Throw);
+            Assert.AssertTrue(PositionWrite == check + frameLength, Internal.Throw);
 
-            WriteTagReverse(BFrame, FrameLength);
+            WriteTagEndFrame(frameLength);
 
             if (flush) {
                 StreamWrite.Flush();
@@ -311,32 +341,32 @@ public partial class JbcdStream {
     /// to the current stream at the current write position. 
     /// The code does not currently support 64 bit frames as it should.
     /// </summary>
-    /// <param name="FrameHeader">The header data to write.</param>
-    /// <param name="FrameDataLength">Length of the frame payload.</param>
-    /// <param name="FrameTrailerLength">Length of the frame trailer.</param>
+    /// <param name="frameHeader">The header data to write.</param>
+    /// <param name="frameDataLength">Length of the frame payload.</param>
+    /// <param name="frameTrailerLength">Length of the frame trailer.</param>
     /// <returns>The total size of the frame.</returns>
     public (long, long) WriteWrappedFrameBegin(
-                byte[] FrameHeader,
-                long FrameDataLength = -1,
-                long FrameTrailerLength = -1) {
+                byte[] frameHeader,
+                long frameDataLength = -1,
+                long frameTrailerLength = -1) {
 
-        var HL = (FrameHeader == null ? 0 : TotalLength(FrameHeader.Length));
-        var DL = (FrameDataLength < 0 ? 0 : TotalLength(FrameDataLength));
-        var TL = (FrameTrailerLength < 0 ? 0 : TotalLength(FrameTrailerLength));
+        var hl = (frameHeader == null ? 0 : TotalLength(frameHeader.Length));
+        var dl = (frameDataLength < 0 ? 0 : TotalLength(frameDataLength));
+        var tl = (frameTrailerLength < 0 ? 0 : TotalLength(frameTrailerLength));
 
-        frameLength = HL + DL + TL;
+        frameLength = hl + dl + tl;
 
-        WriteTag(BFrame, frameLength);
+        WriteTagStartFrame(frameLength);
 
         check = PositionWrite;
-        if (FrameHeader != null) {
-            WriteFrame(FrameHeader);
+        if (frameHeader != null) {
+            WriteFrame(frameHeader);
             }
 
-        Assert.AssertTrue(PositionWrite == check + HL, Internal.Throw);
+        Assert.AssertTrue(PositionWrite == check + hl, Internal.Throw);
 
         // here write out the binary marker for the frame data.
-        WriteTag(UFrame, FrameDataLength);
+        WriteTagStartRecord(frameDataLength);
         var dataPosition = PositionWrite;
 
         return (TotalLength2(frameLength), dataPosition);
@@ -348,9 +378,10 @@ public partial class JbcdStream {
     /// does not match the length originally specified, an error is thrown.
     /// </summary>
     /// <returns>The total size of the frame.</returns>
-    public long WriteWrappedFrameEnd(byte[] FrameTrailer = null) {
-        if (FrameTrailer != null) {
-            WriteFrame(FrameTrailer);
+    public long WriteWrappedFrameEnd(
+                byte[] frameTrailer = null) {
+        if (frameTrailer != null) {
+            WriteFrame(frameTrailer);
             }
 
 
@@ -360,37 +391,31 @@ public partial class JbcdStream {
         // Missing or incorrect dummy trailers will cause this check to fail as will incorrect calculation
         // of the payload length.
 
-        WriteTagReverse(BFrame, frameLength);
+        WriteTagEndFrame(frameLength);
         StreamWrite.Flush(); // Force output of data
 
         return TotalLength2(frameLength);
         }
 
+    #endregion
 
-    /// <summary>Begin partial write of binary data. 
-    /// This is not yet implemented for standard streams.</summary>
-    public virtual void WriteBinaryBegin(long Length, bool Terminal = true) => throw new NYI();
-
-    /// <summary>Write binary data as length-data item.</summary>
-    /// <param name="Data">Elements to write</param>
-    /// <param name="First">The index position of the first byte in the input data to process</param>
-    /// <param name="Length">The number of bytes to process</param>
-    public virtual void WriteBinaryPart(byte[] Data, long First = 0, long Length = -1) => throw new NYI();
-
+    #region // Read methods
 
     /// <summary>
     /// Read a length value of known length in the forward direction.
     /// </summary>
-    /// <param name="LengthLength">The number of bytes to read.</param>
-    /// <param name="Length">The length value read.</param>
+    /// <param name="lengthLength">The number of bytes to read.</param>
+    /// <param name="length">The length value read.</param>
     /// <returns>Always true. All failures trigger exceptions.</returns>
     /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-    public virtual bool ReadLength(int LengthLength, out long Length) {
-        Length = 0;
-        for (var i = 0; i < LengthLength; i++) {
-            var Value = ReadByte();
-            Assert.AssertFalse(Value < 0, InvalidFileFormatException.Throw);
-            Length = (Length << 8) + Value;
+    public virtual bool ReadLength(
+                int lengthLength, 
+                out long length) {
+        length = 0;
+        for (var i = 0; i < lengthLength; i++) {
+            var value = ReadByte();
+            Assert.AssertFalse(value < 0, InvalidFileFormatException.Throw);
+            length = (length << 8) + value;
             }
         return true;
         }
@@ -399,38 +424,42 @@ public partial class JbcdStream {
     /// Check a reversed length value of known length in the forward direction (from the start of the
     /// file to the end).
     /// </summary>
-    /// <param name="Code">The code that was read</param>
-    /// <param name="LengthIn">The length value read.</param>
+    /// <param name="code">The code that was read</param>
+    /// <param name="lengthin">The length value read.</param>
     /// <returns>Always true. All failures trigger exceptions.</returns>
     /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-    public virtual bool CheckReversedLength(int Code, long LengthIn) {
+    public virtual bool CheckReversedLength(
+                int code, 
+                long lengthin) {
 
-        var LengthCount = TagLength(LengthIn) - 1;
-        long Length = 0;
-        for (var i = 0; i < LengthCount; i++) {
-            var Value = (long)ReadByte();
-            Assert.AssertFalse(Value < 0, InvalidFileFormatException.Throw);
-            Length += (Value >> 8 * i);
+        var lengthCount = TagLength(lengthin) - 1;
+        long length = 0;
+        for (var i = 0; i < lengthCount; i++) {
+            var value = (long)ReadByte();
+            Assert.AssertFalse(value < 0, InvalidFileFormatException.Throw);
+            length += (value >> 8 * i);
             }
-        var CheckTag = ReadByte();
-        Assert.AssertTrue(CheckTag == Code, InvalidFileFormatException.Throw);
-        return Length == LengthIn;
+        var checkTag = ReadByte();
+        Assert.AssertTrue(checkTag == code, InvalidFileFormatException.Throw);
+        return length == lengthin;
         }
 
     /// <summary>
     /// Read a length value of known length in the Reverse direction.
     /// </summary>
-    /// <param name="LengthLength">The number of bytes to read.</param>
-    /// <param name="Length">The length value read.</param>
+    /// <param name="lengthLength">The number of bytes to read.</param>
+    /// <param name="length">The length value read.</param>
     /// <returns>Always true. All failures trigger exceptions.</returns>
     /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-    public bool ReadLengthReverse(int LengthLength, out long Length) {
-        Length = 0;
+    public bool ReadLengthReverse(
+                int lengthLength, 
+                out long length) {
+        length = 0;
 
-        for (var i = 0; i < LengthLength; i++) {
-            var Value = ReadByteReverse();
-            Assert.AssertFalse(Value < 0, InvalidFileFormatException.Throw);
-            Length = (Length << 8) + Value;
+        for (var i = 0; i < lengthLength; i++) {
+            var value = ReadByteReverse();
+            Assert.AssertFalse(value < 0, InvalidFileFormatException.Throw);
+            length = (length << 8) + value;
             }
         return true;
         }
@@ -438,19 +467,21 @@ public partial class JbcdStream {
     /// <summary>
     /// Read a forward length tag in the forward direction
     /// </summary>
-    /// <param name="Code">The tag code that was read</param>
-    /// <param name="Length">The length that was read</param>
+    /// <param name="code">The tag code that was read</param>
+    /// <param name="length">The length that was read</param>
     /// <returns>True if a tag was read or false if EOF was encountered.</returns>
     /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-    public virtual bool ReadTag(out int Code, out long Length) {
-        Code = ReadByte();
+    public virtual bool ReadTag(
+                out int code, 
+                out long length) {
+        code = ReadByte();
 
-        if (Code < 0) {
-            Length = 0;
+        if (code < 0) {
+            length = 0;
             return false;
             }
 
-        return ReadLength(TagSpace(Code), out Length);
+        return ReadLength(TagSpace(code), out length);
 
         }
 
@@ -458,64 +489,69 @@ public partial class JbcdStream {
     /// <summary>
     /// Read a forward length tag in the Reverse direction
     /// </summary>
-    /// <param name="Code">The tag code that was read</param>
-    /// <param name="Length">The length that was read</param>
+    /// <param name="code">The tag code that was read</param>
+    /// <param name="length">The length that was read</param>
     /// <returns>True if a tag was read or false if EOF was encountered.</returns>
     /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-    public bool ReadTagReverse(out int Code, out long Length) {
+    public bool ReadTagReverse(out int code, out long length) {
         //Console.WriteLine($"Read Reverse from {PositionRead}");
 
 
         if (PositionRead <= 0) {
-            Code = -1;
-            Length = -1;
+            code = -1;
+            length = -1;
             return false;
             }
 
 
-        Code = ReadByteReverse();
+        code = ReadByteReverse();
 
-        if (Code < 0) {
-            Length = 0;
+        if (code < 0) {
+            length = 0;
             return false;
             }
 
-        return ReadLengthReverse(TagSpace(Code), out Length);
+        return ReadLengthReverse(TagSpace(code), out length);
 
         }
 
     static readonly byte[] Empty = Array.Empty<byte>();
 
 
+    #endregion
+    #region // Read Frame Methods
+
     /// <summary>
     ///  Read a frame in the forward direction.
     /// </summary>
-    /// <param name="MaxLength">The maximum length of data to read including the tags</param>
-    /// <param name="Data">The data that was read.</param>
+    /// <param name="maxLength">The maximum length of data to read including the tags</param>
+    /// <param name="data">The data that was read.</param>
     /// <returns>True if a tag was read or false if EOF was encountered.</returns>
     /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-    public bool ReadRecord(ref long MaxLength, out byte[] Data) {
-        Data = null;
-        var Success = ReadTag(out var Code, out var Length);
-        if (!Success) {
+    public bool ReadRecord(
+                ref long maxLength, 
+                out byte[] data) {
+        data = null;
+        var success = ReadTagStartRecord(out var length, out var codelength);
+        if (!success) {
             return false;
             }
 
-        MaxLength -= CodeSpace(Code);
-        Assert.AssertTrue(Length <= MaxLength, InvalidFileFormatException.Throw);
-        if (Length > 0) {
-            Data = new byte[Length];
-            var Bytes = Read(Data, 0, (int)Length);
-            Assert.AssertTrue(Bytes == Length, InvalidFileFormatException.Throw);
-            MaxLength -= Length;
+        maxLength -= codelength;
+        Assert.AssertTrue(length <= maxLength, InvalidFileFormatException.Throw);
+        if (length > 0) {
+            data = new byte[length];
+            var bytes = Read(data, 0, (int)length);
+            Assert.AssertTrue(bytes == length, InvalidFileFormatException.Throw);
+            maxLength -= length;
             }
         else {
-            Data = Empty;
+            data = Empty;
             }
 
-        if ((Code & TypeMask) == BFrame) {
-            CheckReversedLength(Code, Length);
-            }
+        //if ((Code & TypeMask) == BFrame) {
+        //    CheckReversedLength(Code, Length);
+        //    }
 
         return true;
         }
@@ -523,33 +559,39 @@ public partial class JbcdStream {
     /// <summary>
     /// Read a pair of wrapped frames in the forward direction.
     /// </summary>
-    /// <param name="FrameData">The payload data that was read.</param>
-    /// <param name="FrameHeader">The header data that was read.</param>
-    /// <param name="FrameTrailer">The trailer data that was read.</param>
+    /// <param name="frameData">The payload data that was read.</param>
+    /// <param name="frameHeader">The header data that was read.</param>
+    /// <param name="frameTrailer">The trailer data that was read.</param>
     /// <returns>True if a tag was read or false if EOF was encountered.</returns>
     /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-    public bool ReadFrame(out byte[] FrameHeader, out byte[] FrameData, out byte[] FrameTrailer) {
-        FrameHeader = null;
-        FrameData = null;
-        FrameTrailer = null;
+    public bool ReadFrame(
+                out byte[] frameHeader, 
+                out byte[] authenticatedHeader, 
+                out byte[] frameData, 
+                out byte[] frameTrailer) {
+        frameHeader = null;
+        frameData = null;
+        frameTrailer = null;
+        authenticatedHeader = null;
 
-        var Success = ReadTag(out var Code, out var Length);
-        var OriginalLength = Length;
-        if (!Success) {
+        var success = ReadTagStartFrame(out var Length);
+        var originalLength = Length;
+        if (!success) {
             return false;
             }
         if (Length > 0) {
-            ReadRecord(ref Length, out FrameHeader);
+            ReadRecord(ref Length, out frameHeader);
             }
         if (Length > 0) {
-            ReadRecord(ref Length, out FrameData);
+            ReadRecord(ref Length, out frameData);
             }
         if (Length > 0) {
-            ReadRecord(ref Length, out FrameTrailer);
+            ReadRecord(ref Length, out frameTrailer);
             }
-        if ((Code & TypeMask) == BFrame) {
-            CheckReversedLength(Code, OriginalLength);
-            }
+        //if ((Code & TypeMask) == BFrame) {
+
+        //    }
+        ReadTagEndFrame(originalLength);
 
         return true;
         }
@@ -563,16 +605,16 @@ public partial class JbcdStream {
     public bool Next() {
         StartLastFrameRead = PositionRead;
 
-        var Success = ReadTag(out var Code, out var Length);
-        var OriginalLength = Length;
-        if (!Success) {
+        var success = ReadTag(out var Code, out var length);
+        var originalLength = length;
+        if (!success) {
             return false;
             }
-        if (Length > 0) {
-            StreamRead.Seek(Length, System.IO.SeekOrigin.Current);
+        if (length > 0) {
+            StreamRead.Seek(length, System.IO.SeekOrigin.Current);
             }
         if ((Code & TypeMask) == BFrame) {
-            CheckReversedLength(Code, OriginalLength);
+            CheckReversedLength(Code, originalLength);
             }
         return true;
         }
@@ -583,24 +625,25 @@ public partial class JbcdStream {
     /// </summary>
     /// <returns></returns>
     public bool Previous() {
-        var Success = ReadTagReverse(out var Code, out var Length);
-        if (!Success) {
+        var success = ReadTagReverse(out var Code, out var length);
+        if (!success) {
             return false;
             }
 
         // Sanity check
-        var ThePosition = PositionRead;
-        Assert.AssertTrue(ThePosition >= Length, InvalidFileFormatException.Throw);
+        var thePosition = PositionRead;
+        Assert.AssertTrue(thePosition >= length, InvalidFileFormatException.Throw);
 
         // Make sure we return to the same position.
-        long Start = ThePosition - Length - TagSpace(Code) - 1;
+        long Start = thePosition - length - TagSpace(Code) - 1;
         PositionRead = Start;
 
         return true;
         }
 
+    #endregion
 
-    #region // The methods we want to switch to using.
+    #region // The new framer methods???
 
 
     /// <summary>
@@ -627,7 +670,9 @@ public partial class JbcdStream {
     /// <param name="previous">Read the previous frame.</param>
     /// <returns>The length of the frame if it could be read, otherwise an error
     /// is thrown.</returns>
-    public long FramerOpen(long position = 0, bool previous = false) {
+    public long FramerOpen(
+                long position = 0, 
+                bool previous = false) {
 
 
         // move the read position.
@@ -676,16 +721,13 @@ public partial class JbcdStream {
 
     bool FramerOpenRecord() {
         framerRecordStart = framerRecordNext;
-
-        //FrameDataPosition = FramerRecordStart; // just in case, legacy.
-
         if (framerRecordStart >= framerRecordsEnd) {
             return false;
             }
 
         StreamRead.Seek(framerRecordStart, SeekOrigin.Begin);
-        var Success = ReadTag(out var Code, out framerRecordLength);
-        if (!Success) {
+        var success = ReadTag(out var Code, out framerRecordLength);
+        if (!success) {
             return false;
             }
         framerRecordData = PositionRead;
@@ -703,33 +745,35 @@ public partial class JbcdStream {
             return null;
             }
 
-        var Result = new byte[framerRecordLength];
-        var Offset = 0;
-        var Length = StreamRead.Read(Result, Offset, framerRecordLength);
-        while (Length > 0) {
-            Offset += (int)Length;
-            Length = StreamRead.Read(Result, Offset, framerRecordLength - Offset);
+        var result = new byte[framerRecordLength];
+        var offset = 0;
+        var length = StreamRead.Read(result, offset, framerRecordLength);
+        while (length > 0) {
+            offset += (int)length;
+            length = StreamRead.Read(result, offset, framerRecordLength - offset);
             }
-        Assert.AssertTrue(Length == 0, DataRecordTruncated.Throw);
+        Assert.AssertTrue(length == 0, DataRecordTruncated.Throw);
 
-        return Result;
+        return result;
         }
 
 
     /// <summary>
     /// Read the next frame and return the starting and ending frame markers.
     /// </summary>
-    /// <param name="DataPosition"></param>
-    /// <param name="DataLength"></param>
-    public bool FramerGetFrameIndex(out long DataPosition, out long DataLength) {
+    /// <param name="dataPosition"></param>
+    /// <param name="dataLength"></param>
+    public bool FramerGetFrameIndex(
+                out long dataPosition, 
+                out long dataLength) {
         if (!FramerOpenRecord()) {
-            DataPosition = framerRecordStart;
-            DataLength = 0;
+            dataPosition = framerRecordStart;
+            dataLength = 0;
             return false;
             }
 
-        DataPosition = framerRecordData;
-        DataLength = framerRecordLength;
+        dataPosition = framerRecordData;
+        dataLength = framerRecordLength;
 
         PositionRead = framerRecordNext;
 
@@ -740,11 +784,13 @@ public partial class JbcdStream {
     /// <summary>
     /// Return a bounded stream reader for the frame payload data.
     /// </summary>
-    /// <param name="DataPosition">The position of the first byte of data.</param>
-    /// <param name="DataLength">The number of bytes to be read.</param>
+    /// <param name="dataPosition">The position of the first byte of data.</param>
+    /// <param name="dataLength">The number of bytes to be read.</param>
     /// <returns>The bounded stream reader.</returns>
-    public StreamReaderBounded FramerGetReader(long DataPosition, long DataLength) =>
-        new(StreamRead, DataPosition, DataLength);
+    public StreamReaderBounded FramerGetReader(
+                long dataPosition, 
+                long dataLength) =>
+        new(StreamRead, dataPosition, dataLength);
 
     /// <summary>
     /// Skip all remaining records in the frame and move to the next record.
@@ -770,17 +816,17 @@ public partial class JbcdStream {
     /// <code>false</code> the end of the stream has been reached.</returns>
     public bool FramerPrevious() {
         StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
-        var Success = ReadTagReverse(out var Code, out var Length);
-        if (!Success) {
+        var success = ReadTagReverse(out var Code, out var Length);
+        if (!success) {
             return false;
             }
 
         // Sanity check
-        var ThePosition = PositionRead;
-        Assert.AssertTrue(ThePosition >= Length, InvalidFileFormatException.Throw);
+        var thePosition = PositionRead;
+        Assert.AssertTrue(thePosition >= Length, InvalidFileFormatException.Throw);
 
         // Make sure we return to the same position.
-        long Start = ThePosition - Length - TagSpace(Code) - 1;
+        long Start = thePosition - Length - TagSpace(Code) - 1;
         framerFrameStart = Start;
         PositionRead = Start;
 
@@ -793,98 +839,67 @@ public partial class JbcdStream {
     #endregion
 
 
-
-
-
-
+    #region // Frame oriented
 
     /// <summary>
     /// Read a pair of wrapped frames in the forward direction.
     /// </summary>
-    /// <param name="FrameHeader">The header data that was read.</param>
+    /// <param name="frameHeader">The header data that was read.</param>
     /// <returns>True if a tag was read or false if EOF was encountered.</returns>
     /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-    public long ReadFrame(out byte[] FrameHeader) {
-        FrameHeader = null;
+    public long ReadFrame(
+                out byte[] frameHeader) {
+        frameHeader = null;
         StartLastFrameRead = PositionRead;
 
-        var Success = ReadTag(out var Code, out var Length);
-        var OriginalLength = Length;
-        if (!Success) {
+        var success = ReadTag(out var Code, out var Length);
+        var originalLength = Length;
+        if (!success) {
             return -1;
             }
         if (Length > 0) {
-            ReadRecord(ref Length, out FrameHeader);
+            ReadRecord(ref Length, out frameHeader);
             }
         if (Length > 0) {
             //FrameDataPosition = StreamRead.PositionRead;
             StreamRead.Seek(Length, System.IO.SeekOrigin.Current);
             }
         if ((Code & TypeMask) == BFrame) {
-            CheckReversedLength(Code, OriginalLength);
+            CheckReversedLength(Code, originalLength);
             }
 
         return Length;
         }
 
 
-    /// <summary>
-    /// Read a pair of wrapped frames in the Reverse direction. This is typically done to read the last
-    /// record in a file to see how the file should be extended.
-    /// </summary>
-    /// <param name="FrameData">The payload data that was read.</param>
-    /// <param name="FrameHeader">The header data that was read.</param>
-    /// <returns>True if a tag was read or false if EOF was encountered.</returns>
-    /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-    public bool ReadFrameReverse(out byte[] FrameHeader, out byte[] FrameData) {
-        var Success = ReadTagReverse(out var Code, out var Length);
-        if (!Success) {
-            FrameHeader = null;
-            FrameData = null;
-            return false;
-            }
-
-        // Sanity check
-        var ThePosition = PositionRead;
-        Assert.AssertTrue(ThePosition >= Length, InvalidFileFormatException.Throw);
-
-        // Make sure we return to the same position.
-        long Start = ThePosition - Length - TagSpace(Code) - 1;
-
-        PositionRead = Start;
-        ReadFrame(out FrameHeader, out FrameData, out var FrameTrailer);
-        PositionRead = Start;
-
-        return true;
-        }
-
 
     /// <summary>
     /// Read a pair of wrapped frames in the Reverse direction. This is typically done to read the last
     /// record in a file to see how the file should be extended.
     /// </summary>
-    /// <param name="FrameHeader">The header data that was read.</param>
+    /// <param name="frameHeader">The header data that was read.</param>
     /// <returns>True if a tag was read or false if EOF was encountered.</returns>
     /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-    public long ReadFrameReverse(out byte[] FrameHeader) {
-        var Success = ReadTagReverse(out var Code, out var Length);
-        if (!Success) {
-            FrameHeader = null;
+    public long ReadFrameReverse(
+                out byte[] frameHeader) {
+        var success = ReadTagReverse(out var Code, out var Length);
+        if (!success) {
+            frameHeader = null;
             return -1;
             }
 
         // Sanity check
-        var ThePosition = PositionRead;
-        Assert.AssertTrue(ThePosition >= Length, InvalidFileFormatException.Throw);
+        var thePosition = PositionRead;
+        Assert.AssertTrue(thePosition >= Length, InvalidFileFormatException.Throw);
 
         // Make sure we return to the same position.
-        long Start = ThePosition - Length - TagSpace(Code) - 1;
+        long Start = thePosition - Length - TagSpace(Code) - 1;
 
         PositionRead = Start;
-        var Result = ReadFrame(out FrameHeader);
+        var result = ReadFrame(out frameHeader);
         PositionRead = Start;
 
-        return Result;
+        return result;
         }
 
     /// <summary>
@@ -892,16 +907,16 @@ public partial class JbcdStream {
     /// </summary>
     /// <returns></returns>
     public long MoveFrameReverse() {
-        var Success = ReadTagReverse(out var Code, out var Length);
-        if (!Success) {
+        var success = ReadTagReverse(out var Code, out var Length);
+        if (!success) {
             return -1;
             }
         // Sanity check
-        var ThePosition = PositionRead;
-        Assert.AssertTrue(ThePosition >= Length, InvalidFileFormatException.Throw);
+        var thePosition = PositionRead;
+        Assert.AssertTrue(thePosition >= Length, InvalidFileFormatException.Throw);
 
         // Make sure we return to the same position.
-        long Start = ThePosition - Length - TagSpace(Code) - 1;
+        long Start = thePosition - Length - TagSpace(Code) - 1;
 
         PositionRead = Start;
         return PositionRead;
@@ -951,12 +966,14 @@ public partial class JbcdStream {
         return header;
         }
 
+    #endregion
+    #region // Read Envelope
     /// <summary>
     /// Return the current Sequence frame as a DareEnvelope.
     /// </summary>
     /// <returns>The Sequence data.</returns>
     public DareEnvelope ReadDareEnvelope() {
-        var found = ReadFrame(out var headerData, out var FrameData, out var trailerData);
+        var found = ReadFrame(out var headerData, out _, out var FrameData, out var trailerData);
         if (!found) {
             return null;
             }
@@ -973,5 +990,6 @@ public partial class JbcdStream {
         }
 
 
+    #endregion
 
     }

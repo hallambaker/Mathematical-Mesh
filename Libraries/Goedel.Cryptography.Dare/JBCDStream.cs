@@ -24,26 +24,6 @@
 namespace Goedel.Cryptography.Dare;
 
 
-//public class BinaryStream : Disposable {
-
-
-//    protected BinaryStream() {
-//        }
-
-
-//    public BinaryStream GetWriter(
-//                    Stream? writer = null) => new BinaryStream {
-//                        StreamWrite = writer ??= new MemoryStream()
-//                        };
-
-//    public BinaryStream GetReader(
-//                    Stream? writer = null) => new BinaryStream {
-//                        StreamWrite = writer ??= new MemoryStream()
-//                        };
-//    }
-
-
-
 /// <summary>
 /// Implements a highly restricted stream that supports exactly the functionality
 /// required by the JBCD Reader/Writer extensions. In the base class, the underlying
@@ -52,6 +32,8 @@ namespace Goedel.Cryptography.Dare;
 /// memory mapping of the files.
 /// </summary>
 public partial class JbcdStream : Disposable {
+
+    public int Version { get; }
 
     /// <summary>
     /// The underlying stream for stream write operations
@@ -105,9 +87,15 @@ public partial class JbcdStream : Disposable {
     /// <param name="fileName">The file to open.</param>
     /// <param name="fileStatus">The file access mode.</param>
     /// <param name="writeOnly">If true, the file is only opened in write mode.</param>
-    public JbcdStream(string fileName, FileStatus fileStatus = FileStatus.Read, bool writeOnly = false) {
+    /// <param name="version">The encoding version 3 or 4</param>
+    public JbcdStream(
+                    string fileName, 
+                    FileStatus fileStatus = FileStatus.Read, 
+                    bool writeOnly = false,
+                    int version = 3) {
+                      
         Filename = fileName;
-
+        Version = version;
 
         if (fileStatus == FileStatus.ConcurrentLocked) {
             LockGlobal = new LockGlobal(Udf.LockName(fileName));
@@ -145,11 +133,11 @@ public partial class JbcdStream : Disposable {
     /// Dispose method, frees all resources.
     /// </summary>
     protected override void Disposing() {
-        if (Path.GetFileName(Filename) == "Access.dcat") {
-            var sub = Filename.Split('\\');
-            if (sub[sub.Length - 3] != "Sparkly") {
-                }
-            }
+        //if (Path.GetFileName(Filename) == "Access.dcat") {
+        //    var sub = Filename.Split('\\');
+        //    if (sub[sub.Length - 3] != "Sparkly") {
+        //        }
+        //    }
 
         //Screen.WriteLine($"close {Filename} read {disposeStreamRead != null} write {disposeStreamWrite != null}");
         disposeStreamWrite?.Dispose();

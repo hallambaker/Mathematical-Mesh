@@ -4948,17 +4948,17 @@
         <member name="P:Goedel.Contacts.AnalysizedContact.Mesh">
             <summary>Mesh services</summary> 
         </member>
-        <member name="P:Goedel.Contacts.AnalysizedContact.Groups">
-            <summary>Groups</summary> 
-        </member>
         <member name="P:Goedel.Contacts.AnalysizedContact.Ssh">
             <summary>Services of type SSH</summary> 
         </member>
-        <member name="P:Goedel.Contacts.AnalysizedContact.Credentials">
-            <summary>Services of type credential</summary> 
-        </member>
         <member name="P:Goedel.Contacts.AnalysizedContact.Other">
             <summary>Services not included in any other category.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Groups">
+            <summary>Groups</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Credentials">
+            <summary>Services of type credential</summary> 
         </member>
         <member name="T:Goedel.Contacts.NamespaceDoc">
             <summary>

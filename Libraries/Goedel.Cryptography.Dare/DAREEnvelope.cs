@@ -332,23 +332,6 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     #region // Payload decoding routines 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /// <summary>
     /// Decode a streamed message
     /// </summary>
@@ -379,77 +362,6 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
             contentMeta, cloaked, dataSequences, chunk, cover);
         return outputStream.ToArray();
         }
-
-
-
-
-
-
-
-
-
-
-    ///// <summary>
-    ///// Decode a streamed message
-    ///// </summary>
-    ///// <param name="inputStream">The input stream, must support reading.</param>
-    ///// <param name="outputStream">The output stream, must support writing</param>
-    ///// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
-    ///// <param name="dareHeader">The header data.</param>
-    ///// <param name="verify">If true, verify the payload digest on the payload. The decoded data is 
-    ///// written out to a temporary file which is deleted if the verification fails and renamed
-    ///// to the output file otherwise.</param>
-
-    //public static bool TryDecode(
-    //    Stream inputStream,
-    //    Stream outputStream,
-    //    IKeyLocate keyCollection,
-    //    out DareHeader dareHeader,
-    //    bool verify = false
-    //    ) {
-    //    keyCollection ??= Cryptography.KeyCollection.Default;
-
-    //    var jsonBcdReader = new JsonBcdReader(inputStream);
-    //    using var message = DecodeHeader(jsonBcdReader);
-    //    dareHeader = message.Header;
-
-    //    try {
-    //        var decoder = message.Header.GetDecoder(
-    //            jsonBcdReader, out var Reader,
-    //            keyCollection: keyCollection,
-    //            verify: verify);
-
-    //        Reader.CopyTo(outputStream);
-    //        outputStream.Flush();
-
-    //        decoder.Close();
-
-    //        return true;
-    //        }
-    //    catch {
-    //        return false;
-    //        }
-    //    }
-
-
-
-
-
-
-
-
-
-    //public bool TestDecryption(
-    //                KeyPair keyPair
-    //                ) {
-
-    //    return false;
-    //    }
-
-
-
-
-
 
 
     #endregion
