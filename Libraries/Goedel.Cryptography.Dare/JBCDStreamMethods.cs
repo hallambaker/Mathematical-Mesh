@@ -93,10 +93,13 @@ public partial class JbcdStream  {
 
         }
 
-
-    public virtual bool ReadTagStartFirstFrame (out long length) => ReadTag(out _, out length);
-
-    public virtual bool ReadTagStartFrame(out long length) =>ReadTag (out _, out length);
+    /// <summary>
+    /// Read the first frame of a sequence.
+    /// </summary>
+    /// <param name="length">The frame length</param>
+    /// <param name="first">If true, this is a first frame.</param>
+    /// <returns></returns>
+    public virtual bool ReadTagStartFrame(out long length, bool first = false) => ReadTag (out _, out length);
 
     public virtual bool ReadTagStartRecord(out long length, out int codelength) {
         var success = ReadTag(out var code, out length);
@@ -106,6 +109,11 @@ public partial class JbcdStream  {
         }
 
     public virtual bool ReadTagEndFrame(long length) => CheckReversedLength(BFrame, length);
+
+
+    public virtual bool ReadTagFrameReversed(out long length) =>
+                ReadTagReverse(out _, out length);
+
 
 
     public virtual void WriteTagStartFrame(long Length) => WriteTag(BFrame, Length);
@@ -681,9 +689,12 @@ public partial class JbcdStream  {
 
         if (!previous) {
             framerFrameStart = position;
+            //StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
             StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
-            StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
-            success = ReadTag(out framerCode, out framerFrameLength);
+            //success = ReadTag(out framerCode, out framerFrameLength);
+            success = ReadTagStartFrame(out framerFrameLength);
+
+
             framerRecordsEnd = StreamRead.Position + framerFrameLength;
 
             var tagLength = PositionRead - framerFrameStart;
@@ -691,7 +702,7 @@ public partial class JbcdStream  {
             }
         else {
             framerFrameNext = position;
-            success = ReadTagReverse(out var code, out var length);
+            success = ReadTagFrameReversed(out var length);
             framerRecordsEnd = PositionRead;
 
             var tagLength = framerFrameNext - PositionRead;
@@ -705,8 +716,8 @@ public partial class JbcdStream  {
             PositionRead = framerFrameStart;
 
             // read the start tag and verify it is correct.
-            success = ReadTag(out framerCode, out framerFrameLength);
-            (code == framerCode).AssertTrue(InvalidFileFormatException.Throw);
+            success = ReadTagStartFrame(out framerFrameLength);
+            //(code == framerCode).AssertTrue(InvalidFileFormatException.Throw);
             (length == framerFrameLength).AssertTrue(InvalidFileFormatException.Throw);
             }
 
@@ -726,7 +737,7 @@ public partial class JbcdStream  {
             }
 
         StreamRead.Seek(framerRecordStart, SeekOrigin.Begin);
-        var success = ReadTag(out var Code, out framerRecordLength);
+        var success = ReadTagStartRecord(out framerRecordLength, out _);
         if (!success) {
             return false;
             }
@@ -845,30 +856,34 @@ public partial class JbcdStream  {
     /// Read a pair of wrapped frames in the forward direction.
     /// </summary>
     /// <param name="frameHeader">The header data that was read.</param>
+    /// <param name="first">If true, this is a first frame.</param>
     /// <returns>True if a tag was read or false if EOF was encountered.</returns>
     /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
     public long ReadFrame(
-                out byte[] frameHeader) {
+                out byte[] frameHeader,
+                bool first = false) {
         frameHeader = null;
         StartLastFrameRead = PositionRead;
 
-        var success = ReadTag(out var Code, out var Length);
-        var originalLength = Length;
+        var success = ReadTagStartFrame(out var length, first);
+        var originalLength = length;
         if (!success) {
             return -1;
             }
-        if (Length > 0) {
-            ReadRecord(ref Length, out frameHeader);
+        if (length > 0) {
+            ReadRecord(ref length, out frameHeader);
             }
-        if (Length > 0) {
+        if (length > 0) {
             //FrameDataPosition = StreamRead.PositionRead;
-            StreamRead.Seek(Length, System.IO.SeekOrigin.Current);
+            StreamRead.Seek(length, System.IO.SeekOrigin.Current);
             }
-        if ((Code & TypeMask) == BFrame) {
-            CheckReversedLength(Code, originalLength);
-            }
+        ReadTagEndFrame(length);
 
-        return Length;
+        //if ((Code & TypeMask) == BFrame) {
+        //    CheckReversedLength(Code, originalLength);
+        //    }
+
+        return length;
         }
 
 
@@ -927,13 +942,11 @@ public partial class JbcdStream  {
     /// Read the current frame header
     /// </summary>
     /// <returns>The current frame header</returns>
-    public DareHeader ReadFrameHeader() {
+    public DareHeader ReadFrameHeader(bool first = false) {
         var position = PositionRead;
         var length = ReadFrame(out var HeaderData);
 
         var header = DareHeader.FromJson(HeaderData.JsonReader(), false);
-        //header.FrameStart= position;
-        //header.FrameLength = length;
 
         return header;
         }
@@ -945,7 +958,7 @@ public partial class JbcdStream  {
     /// <returns>The last frame header</returns>
     public DareHeader ReadFirstFrameHeader() {
         Begin();
-        return ReadFrameHeader();
+        return ReadFrameHeader(true);
         }
 
     /// <summary>
@@ -957,7 +970,6 @@ public partial class JbcdStream  {
         var position = PositionRead;
         var length = ReadFrameReverse(out var HeaderData);
         End();
-
 
         var header = DareHeader.FromJson(HeaderData.JsonReader(), false);
         //header.FrameStart = position - length;
