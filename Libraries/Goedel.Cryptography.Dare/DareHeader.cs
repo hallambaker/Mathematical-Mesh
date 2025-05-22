@@ -294,7 +294,7 @@ public partial class DareHeader {
 /// <summary>
 /// Extensions classes.
 /// </summary>
-public static class Extensions {
+public static partial class Extensions {
     /// <summary>
     /// Attempt to decrypt a decryption blob from a list of recipient entries.
     /// </summary>

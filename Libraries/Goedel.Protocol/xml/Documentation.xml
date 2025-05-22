@@ -3712,6 +3712,18 @@
             </summary>
             <returns>The data read</returns>
         </member>
+        <member name="M:Goedel.Protocol.JsonReader.ReadFloat32">
+            <summary>
+            Attempt to read Integer 32 from input.
+            </summary>
+            <returns>The data read</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonReader.ReadFloat64">
+            <summary>
+            Attempt to read Integer 64 from input.
+            </summary>
+            <returns>The data read</returns>
+        </member>
         <member name="M:Goedel.Protocol.JsonReader.ReadBoolean">
             <summary>
             Attempt to read boolean from input.

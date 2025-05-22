@@ -25,6 +25,8 @@ using ExampleGenerator;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
+using Goedel.Cryptography.Dare;
+
 //using Test.Cryptography.Oauth;
 
 //using Goedel.Cryptography.Nist;
@@ -71,7 +73,19 @@ partial class Program {
 
         //GoedelProtocol.Test().TestEncodeDecode3();
 
+        StoreTests.Test().TestCatalog();
+        StoreTests.Test().TestSpoolSingle();
 
+        TestService.Test().TestCredentialFromHandle();
+        TestService.Test().MeshDeviceConnectPIN();
+        TestService.Test().MeshDeviceDirectKey();
+
+        //Acme.Test().TestEnroll().Sync();
+        //Acme.Test().TestJsDevice().Sync();
+
+
+
+        //TestDareArchive.Test().ArchiveRelativeDirectory();
         //TestService.Test().TestCredentialAccount();
         //Jmap.Test().TestContactAlice();
         //Jmap.Test().TestDeviceFridge();
@@ -82,7 +96,7 @@ partial class Program {
         //var jscontact = new JsContactResults(examples);
 
         //Acme.Test().TestJsDevice().Sync();
-        TestService.Test().TestCredentialAccountApps();
+        //TestService.Test().TestCredentialAccountApps();
         //TestService.Test().TestCredentialFromHandle();
 
         //Jmap.Test().TestContactAlice();

@@ -50,7 +50,7 @@ public partial class EarlEnvelopeReader {
     /// <param name="stream">The stream to read from.</param>
     public EarlEnvelopeReader(Stream stream) {
         Stream = stream;
-        Version = (int)ReadVarint(Stream);
+        Version = (int)Stream.ReadVarint();
         }
 
     /// <summary>
@@ -116,7 +116,7 @@ public partial class EarlEnvelopeReader {
     /// <param name="output">Destination for the payload bytes.</param>
     /// <returns>True if there is more payload to be read</returns>
     public bool CopyPayload(Stream output) {
-        var length = ReadVarint(Stream);
+        var length = Stream.ReadVarint();
         if (length == 0) {
             return false;
             }
@@ -209,61 +209,15 @@ public partial class EarlEnvelopeReader {
     /// <param name="stream">The stream to read.</param>
     /// <returns>The bytes read.</returns>
     public static byte[] ReadBlock(Stream stream) {
-        var length = ReadVarint(stream);
+        var length = stream.ReadVarint();
         var buffer = new byte[length];
         stream.ReadExactly(buffer, 0, (int) length);
         return buffer;
         }
 
-    /// <summary>
-    /// Read a varint from <paramref name="stream"/> and return as an unsigned 64 bit integer.
-    /// </summary>
-    /// <param name="stream">The stream to read.</param>
-    /// <returns>The value read.</returns>
-    /// <exception cref="EndOfStreamException"></exception>
-    public static ulong ReadVarint(Stream stream) {
-        ulong result;
 
-        var read = ReadByteExact(stream);
-        var type = read & 0b1100_0000;
-        result = (ulong)read & 0b0011_1111;
 
-        var count = type switch {
-            0 => 0,
-            0b0100_0000 => 1,
-            0b1000_0000 => 3,
-            0b1100_0000 => 7,
-            _ => throw new NYI()
-            };
 
-        for (var i = 0; i < count; i++) {
-            read = ReadByteExact(stream);
-            result <<= 8;
-            if (read < 0) {
-                throw new EndOfStreamException();
-                }
-
-            result |= (byte) read;
-            }
-
-        return result;
-        }
-
-    /// <summary>
-    /// Read a byte from the stream <paramref name="stream"/> throwing the exception 
-    /// <see cref="EndOfStreamException"/> if there is no more data to be read.
-    /// </summary>
-    /// <param name="stream">The stream to read.</param>
-    /// <returns>The byte read.</returns>
-    /// <exception cref="EndOfStreamException"></exception>
-    public static byte ReadByteExact(Stream stream) {
-        var read = stream.ReadByte();
-        if (read < 0) {
-            throw new EndOfStreamException();
-            }
-
-        return (byte) read;
-        }
 
 
     }

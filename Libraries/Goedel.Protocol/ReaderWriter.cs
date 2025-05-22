@@ -55,11 +55,11 @@ public abstract class Reader : Disposable {
 
     /// <summary>Read Integer32</summary>
     /// <returns>Elements read</returns>
-    virtual public int ReadFloat32() => throw new NYI();
+    abstract public float ReadFloat32();
 
     /// <summary>Read Integer64</summary>
     /// <returns>Elements read</returns>
-    virtual public double ReadFloat64() => throw new NYI();
+    abstract public double ReadFloat64();
 
 
     /// <summary>Read boolen values</summary>

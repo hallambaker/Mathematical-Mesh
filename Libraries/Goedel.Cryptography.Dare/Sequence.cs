@@ -472,7 +472,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
         var sequenceIndexEntryFactoryDelegate = store?.SequenceIndexEntryFactory ?? SequenceIndexEntry.Factory;
         decrypt.Future();
 
-        var sequenceIndexEntryFirst = SequenceIndexEntry.Read(jbcdStream, 0, sequence: SequenceDummy);
+        var sequenceIndexEntryFirst = SequenceIndexEntry.Read(
+                jbcdStream, jbcdStream.StartFirstFrame, sequence: SequenceDummy);
 
         SequenceIndexEntry sequenceIndexEntryLast = null;
         if (jbcdStream.Length > sequenceIndexEntryFirst.FramePositionNext) {
@@ -620,6 +621,8 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             };
 
         // Initialize the sequence
+
+
         var sequence = MakeNewSequence(jbcdStream, decrypt,
                      sequenceIndexEntryFactoryDelegate,
                      sequenceType: sequenceType);
@@ -1031,7 +1034,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
 
         var payloadLength = header.OutputLength(dataLength);
         var dummyTrailer = FillDummyTrailer(CryptoStack);
-        var lengthTrailer = dummyTrailer == null ? -1 : dummyTrailer.GetBytes(false).Length;
+        var lengthTrailer = dummyTrailer == null ? 0 : dummyTrailer.GetBytes(false).Length;
         var dataPayload = header.GetBytes(false);
         var (frameLength, dataPosition) = JbcdStream.WriteWrappedFrameBegin(dataPayload, payloadLength, lengthTrailer);
         header.MakeBodyWriter(JbcdStream.StreamWrite);

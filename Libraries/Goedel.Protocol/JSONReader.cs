@@ -586,6 +586,34 @@ public partial class JsonReader : Reader {
         }
 
     /// <summary>
+    /// Attempt to read Integer 32 from input.
+    /// </summary>
+    /// <returns>The data read</returns>
+    public override float ReadFloat32() {
+        GetToken();
+        return TokenType switch {
+            Token.Number => Convert.ToSingle(ResultString),
+            Token.Integer => ResultInt64,
+            _ => throw new InvalidInput("Expected Number"),
+            };
+        }
+
+    /// <summary>
+    /// Attempt to read Integer 64 from input.
+    /// </summary>
+    /// <returns>The data read</returns>
+    public override double ReadFloat64() {
+        GetToken();
+        return TokenType switch {
+            Token.Number => Convert.ToDouble(ResultString),
+            Token.Integer => ResultInt64,
+            _ => throw new InvalidInput("Expected Number"),
+            };
+        }
+
+
+
+    /// <summary>
     /// Attempt to read boolean from input.
     /// </summary>
     /// <returns>The data read</returns>

@@ -26,6 +26,14 @@ namespace Goedel.Cryptography.Dare;
 public partial class JbcdStream  {
 
     #region // Constants
+
+    /// <summary>Basic envelope, just metadata and content</summary>
+    public const byte EnvelopeType0     = 0;
+    /// <summary>Signed envelope with unauthenticated header and trailer.</summary>
+    public const byte EnvelopeType1     = 1;
+    /// <summary>Sequence with JSON metadata.</summary>
+    public const byte SequenceTypeJson  = 0x10;
+
     /// <summary>JSON-B Code for unidirectional frame</summary>
     public const byte UFrame = 0xF0;
     /// <summary>JSON-B Code for bidirectional frame</summary>
@@ -48,6 +56,10 @@ public partial class JbcdStream  {
     readonly static byte[] CodeSpaces = new byte[] { 2, 3, 5, 9, 4, 6, 10, 18 };
     readonly static byte[] TagSpaces = new byte[] { 1, 2, 4, 8 };
 
+
+    public bool IsVersion4 => Version == 4;
+
+
     #endregion
 
     #region // All the parts that depend on the framing bytes
@@ -57,20 +69,22 @@ public partial class JbcdStream  {
     /// </summary>
     /// <param name="length">Length of data to follow.</param>
     /// <returns>The tag length.</returns>
-    static int TagLength(long length) {
-        if (length < 0x100) {
-            return 2;
-            }
-        else if (length < 0x10000) {
-            return 3;
-            }
-        else if (length < 0x100000000) {
-            return 5;
+    int TagLength(long length) {
+        if (IsVersion4) {
+            return Extensions.TagLength(length);
             }
         else {
+            if (length < 0x100) {
+                return 2;
+                }
+            if (length < 0x10000) {
+                return 3;
+                }
+            if (length < 0x100000000) {
+                return 5;
+                }
             return 9;
             }
-
         }
     /// <summary>
     /// Return the length of a code
@@ -94,49 +108,171 @@ public partial class JbcdStream  {
         }
 
     /// <summary>
-    /// Read the first frame of a sequence.
+    /// Read the start length tag of a frame
     /// </summary>
     /// <param name="length">The frame length</param>
-    /// <param name="first">If true, this is a first frame.</param>
-    /// <returns></returns>
-    public virtual bool ReadTagStartFrame(out long length, bool first = false) => ReadTag (out _, out length);
+    /// <param name="tagLength">The total length of the frame tags, start and end.</param>
+    /// <returns>Returns <c>true</c> if successful, otherwise <c>false</c> .</returns>
+    public virtual bool ReadTagStartFrame(out long length, out int tagLength) {
+        if (IsVersion4 & PositionRead == 0) {
+            
+            //var firstByte = ReadByte();
+            //Version = firstByte == SequenceTypeJson ? 4 : 3;
+            //if (!IsVersion4) {
+            //    Begin();
+            //    }
+            }
+        if (IsVersion4) {
+            length = (long) StreamRead.ReadVarint(out tagLength);
+            //tagLength = PositionRead == 1tagLength << 1 : tagLength << 1;
 
-    public virtual bool ReadTagStartRecord(out long length, out int codelength) {
-        var success = ReadTag(out var code, out length);
-        codelength = CodeSpace(code);
-
-        return success;
+            tagLength <<= 1; // report start AND end tag lengths
+            return true;
+            }
+        else {
+            var success = ReadTag(out var code, out length);
+            tagLength = CodeSpace(code);
+            return true;
+            }
         }
 
-    public virtual bool ReadTagEndFrame(long length) => CheckReversedLength(BFrame, length);
+
+    /// <summary>
+    /// Read the end length tag of a frame.
+    /// </summary>
+    /// <param name="length">The frame length given at its start.</param>
+    /// <returns>Returns <c>true</c> if successful, otherwise <c>false</c> .</returns>
+    /// <param name="tagLength"></param>
+    public virtual bool ReadTagEndFrame(long length, int tagLength) {
+        if (IsVersion4) {
+            var endlength = (long)StreamRead.ReadTnirav(tagLength>>1);
+            //endlength <<= 1; // check start AND end tag lengths
+            //(length== endlength).AssertTrue(NYI.Throw);
+            return true;
+            }
+        else {
+            return CheckReversedLength(BFrame, length);
+            }
+        }
+
+    /// <summary>
+    /// Read the end length tag of the previous frame.
+    /// </summary>
+    /// <param name="length">The frame length given at its start.</param>
+    /// <returns>Returns <c>true</c> if successful, otherwise <c>false</c> .</returns>
+    /// <param name="tagLength">Combined length of the start and end tags.</param>
+    public virtual bool ReadTagFrameReversed(out long length, out int tagLength) {
+        if (IsVersion4) {
+            length = (long)StreamRead.ReadTnirav(out tagLength);
+            tagLength <<= 1;
+            return true;
+            }
+        else {
+            var success = ReadTagReverse(out var code, out length);
+            tagLength = CodeSpace(code);
+            return success;
+            }
+        }
 
 
-    public virtual bool ReadTagFrameReversed(out long length) =>
-                ReadTagReverse(out _, out length);
+
+    /// <summary>
+    /// Read the length tag of a record.
+    /// </summary>
+    /// <param name="length">The record length.</param>
+    /// <param name="codelength">The number of bytes taken up by the tag.</param>
+    /// <returns>Returns <c>true</c> if successful, otherwise <c>false</c> .</returns>
+    public virtual bool ReadTagStartRecord(out long length, out int codelength) {
+        if (IsVersion4) {
+            length = (long)StreamRead.ReadVarint(out codelength);
+            return true;
+            }
+        else {
+            var success = ReadTag(out var code, out length);
+            codelength = CodeSpace(code);
+            return success;
+            }
+        }
 
 
+    /// <summary>
+    /// Write the first tag in a frame, if the file write pointer is at BOF,
+    /// and we have a version 4 sequence, write the file version type marker.
+    /// </summary>
+    /// <param name="Length">The length of the frame.</param>
+    public virtual void WriteTagStartFrame(long Length) {
+        if (IsVersion4) {
+            if (StreamWrite.Position == 0) {
+                StreamWrite.WriteByte (SequenceTypeJson);
+                }
+            Console.WriteLine($"{StreamWrite.Position}: Start frame {Length}");
+            StreamWrite.WriteVarint (Length);
+            }
+        else {
+            WriteTag(BFrame, Length);
+            }
+        }
 
-    public virtual void WriteTagStartFrame(long Length) => WriteTag(BFrame, Length);
-    public virtual void WriteTagStartRecord(long Length) => WriteTag(UFrame, Length);
-    public virtual void WriteTagEndFrame(long Length) => WriteTagReverse(BFrame, Length);
+    /// <summary>
+    /// Write a record to the frame, the length of the record MUST NOT cause it to 
+    /// exceed the boundary of the enclosing frame.
+    /// </summary>
+    /// <param name="Length"></param>
+    public virtual void WriteTagStartRecord(long Length) {
+        if (IsVersion4) {
+            Console.WriteLine($"{StreamWrite.Position}: Start record {Length}");
+            StreamWrite.WriteVarint(Length);
+
+            //throw new NYI();
+            }
+        else {
+            WriteTag(UFrame, Length);
+            }
+        }
+
+    /// <summary>
+    /// Write the end tag to a frame.
+    /// </summary>
+    /// <param name="Length">The length specified at the frame start, this MUST 
+    /// match.</param>
+    public virtual void WriteTagEndFrame(long Length) {
+        if (IsVersion4) {
+            Console.WriteLine($"{StreamWrite.Position}: End frame {Length}");
+            StreamWrite.WriteTnirav(Length);
+            //throw new NYI();
+            }
+        else {
+            WriteTagReverse(BFrame, Length);
+            }
+        }
+
 
 
     #endregion
     #region  // Static methods 
 
     /// <summary>
+    /// Determine Tag length tol encode the array <paramref name="data"/> using the 
+    /// shortest possible production encoding a null array as if zero length.
+    /// </summary>
+    /// <param name="data">Array giving length of data to follow.</param>
+    /// <returns>The number of bytes required.</returns>
+    long TotalLength(byte[]? data) => data is null ? TagLength (0) :
+        data.Length + TagLength(data.Length);
+
+    /// <summary>
     /// Determine Tag length using the shortest possible production
     /// </summary>
     /// <param name="length">Length of data to follow.</param>
     /// <returns>The number of bytes required.</returns>
-    static long TotalLength(long length) => length + TagLength(length);
+    long TotalLength(long length) => length + TagLength(length);
 
     /// <summary>
     /// Determine Tag length using the shortest possible production
     /// </summary>
     /// <param name="length">Length of data to follow.</param>
     /// /// <returns>The number of bytes required.</returns>
-    static long TotalLength2(long length) => length + 2 * TagLength(length);
+    long TotalLength2(long length) => length + 2 * TagLength(length);
 
 
     #endregion
@@ -230,33 +366,24 @@ public partial class JbcdStream  {
     /// <param name="frameData">The data to write.</param>
     /// <param name="offset">Offset within the data.</param>
     /// <param name="length">Number of bytes to write.</param>
-    /// <param name="bidirectional">If true, a bidirectional frame is written.</param>
     /// <returns>The total size of the frame.</returns>
-    public long WriteFrame(
-                byte[] frameData,
+    public long WriteRecord(
+                byte[]? frameData,
                 long offset = 0, 
-                long length = -1, 
-                bool bidirectional = false) {
-        length = length == -1 ? frameData.LongLength : length;
+                long length = -1) {
+        if (frameData == null) {
+            WriteTagStartRecord(0);
+            return 0;
+            }
 
+        length = length == -1 ? frameData.LongLength : length;
         Assert.AssertTrue(length <= Int32.MaxValue, FrameTooLargeException.Throw);
 
-        if (bidirectional) {
-            WriteTag(BFrame, length);
-            }
-        else {
-            WriteTag(UFrame, length);
-            }
+        WriteTagStartRecord(length);
         Write(frameData, (int)offset, (int)length);
-        if (bidirectional) {
-            WriteTagReverse(BFrame, length);
-            return TotalLength2(length);
-            }
-        else {
-            return TotalLength(length);
-            }
-        }
 
+        return TotalLength(length);
+        }
 
 
 
@@ -285,15 +412,16 @@ public partial class JbcdStream  {
                 LockGlobal.Enter();
                 }
 
-            var frameLength = (frameHeader == null ? 2 : TotalLength(frameHeader.Length)) +
-                                (frameData1 == null ? 2 : TotalLength(frameData1.Length)) +
-                                (frameData2 == null ? 2 : TotalLength(frameData2.Length));
+            
+            var frameLength = TotalLength(frameHeader) +
+                               TotalLength(frameData1) +
+                               TotalLength(frameData2);
 
             WriteTagStartFrame(frameLength);
 
             var check = PositionWrite;
             if (frameHeader != null) {
-                WriteFrame(frameHeader);
+                WriteRecord(frameHeader);
                 }
             else {
                 WriteTagStartRecord(0);
@@ -305,13 +433,13 @@ public partial class JbcdStream  {
 
                 result += TagLength(frameData1.LongLength);
 
-                WriteFrame(frameData1);
+                WriteRecord(frameData1);
                 }
             else {
                 WriteTagStartRecord(0);
                 }
             if (frameData2 != null) {
-                WriteFrame(frameData2);
+                WriteRecord(frameData2);
                 }
             else {
                 WriteTagStartRecord(0);
@@ -343,7 +471,9 @@ public partial class JbcdStream  {
 
     long frameLength;
     long check;
-
+    long hl;
+    long dl;
+    long tl;
     /// <summary>
     /// Write a wrapped frame containing a header and an optional data section
     /// to the current stream at the current write position. 
@@ -355,12 +485,14 @@ public partial class JbcdStream  {
     /// <returns>The total size of the frame.</returns>
     public (long, long) WriteWrappedFrameBegin(
                 byte[] frameHeader,
-                long frameDataLength = -1,
-                long frameTrailerLength = -1) {
+                long frameDataLength,
+                long frameTrailerLength) {
+        (frameDataLength >= 0 &frameTrailerLength >= 0).AssertTrue(Internal.Throw);
 
-        var hl = (frameHeader == null ? 0 : TotalLength(frameHeader.Length));
-        var dl = (frameDataLength < 0 ? 0 : TotalLength(frameDataLength));
-        var tl = (frameTrailerLength < 0 ? 0 : TotalLength(frameTrailerLength));
+
+        hl = TotalLength(frameHeader);
+        dl = TotalLength(frameDataLength);
+        tl = TotalLength(frameTrailerLength);
 
         frameLength = hl + dl + tl;
 
@@ -368,7 +500,7 @@ public partial class JbcdStream  {
 
         check = PositionWrite;
         if (frameHeader != null) {
-            WriteFrame(frameHeader);
+            WriteRecord(frameHeader);
             }
 
         Assert.AssertTrue(PositionWrite == check + hl, Internal.Throw);
@@ -388,10 +520,11 @@ public partial class JbcdStream  {
     /// <returns>The total size of the frame.</returns>
     public long WriteWrappedFrameEnd(
                 byte[] frameTrailer = null) {
-        if (frameTrailer != null) {
-            WriteFrame(frameTrailer);
-            }
 
+
+        Assert.AssertTrue(PositionWrite == check + hl + dl, Internal.Throw);
+
+        WriteRecord(frameTrailer);
 
         check += frameLength;
         Assert.AssertTrue(PositionWrite == check, Internal.Throw);
@@ -447,7 +580,7 @@ public partial class JbcdStream  {
             Assert.AssertFalse(value < 0, InvalidFileFormatException.Throw);
             length += (value >> 8 * i);
             }
-        var checkTag = ReadByte();
+        var checkTag = ReadByte() & TypeMask;
         Assert.AssertTrue(checkTag == code, InvalidFileFormatException.Throw);
         return length == lengthin;
         }
@@ -510,7 +643,6 @@ public partial class JbcdStream  {
             length = -1;
             return false;
             }
-
 
         code = ReadByteReverse();
 
@@ -582,7 +714,7 @@ public partial class JbcdStream  {
         frameTrailer = null;
         authenticatedHeader = null;
 
-        var success = ReadTagStartFrame(out var Length);
+        var success = ReadTagStartFrame(out var Length, out var tagLength);
         var originalLength = Length;
         if (!success) {
             return false;
@@ -599,7 +731,7 @@ public partial class JbcdStream  {
         //if ((Code & TypeMask) == BFrame) {
 
         //    }
-        ReadTagEndFrame(originalLength);
+        ReadTagEndFrame(originalLength, tagLength);
 
         return true;
         }
@@ -613,7 +745,7 @@ public partial class JbcdStream  {
     public bool Next() {
         StartLastFrameRead = PositionRead;
 
-        var success = ReadTag(out var Code, out var length);
+        var success = ReadTagStartFrame(out var length, out var tagLength);
         var originalLength = length;
         if (!success) {
             return false;
@@ -621,9 +753,7 @@ public partial class JbcdStream  {
         if (length > 0) {
             StreamRead.Seek(length, System.IO.SeekOrigin.Current);
             }
-        if ((Code & TypeMask) == BFrame) {
-            CheckReversedLength(Code, originalLength);
-            }
+        ReadTagEndFrame(originalLength, tagLength);
         return true;
         }
 
@@ -633,7 +763,7 @@ public partial class JbcdStream  {
     /// </summary>
     /// <returns></returns>
     public bool Previous() {
-        var success = ReadTagReverse(out var Code, out var length);
+        var success = ReadTagFrameReversed(out var length, out var tagLength);
         if (!success) {
             return false;
             }
@@ -642,9 +772,9 @@ public partial class JbcdStream  {
         var thePosition = PositionRead;
         Assert.AssertTrue(thePosition >= length, InvalidFileFormatException.Throw);
 
-        // Make sure we return to the same position.
-        long Start = thePosition - length - TagSpace(Code) - 1;
-        PositionRead = Start;
+        ReadTagStartFrame(out var checkLength, out var checkTagLength);
+        Assert.AssertTrue(length == checkLength, InvalidFileFormatException.Throw);
+        Assert.AssertTrue(tagLength == checkTagLength, InvalidFileFormatException.Throw);
 
         return true;
         }
@@ -688,37 +818,40 @@ public partial class JbcdStream  {
         bool success = false;
 
         if (!previous) {
-            framerFrameStart = position;
+            //framerFrameStart = position;
             //StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
-            StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
+            StreamRead.Seek(position, System.IO.SeekOrigin.Begin);
             //success = ReadTag(out framerCode, out framerFrameLength);
-            success = ReadTagStartFrame(out framerFrameLength);
+            framerFrameStart = StreamRead.Position;
+            success = ReadTagStartFrame(out framerFrameLength, out var tagLength);
 
 
             framerRecordsEnd = StreamRead.Position + framerFrameLength;
 
-            var tagLength = PositionRead - framerFrameStart;
-            framerFrameNext = PositionRead + tagLength + framerFrameLength;
+            //var tagLength = PositionRead - framerFrameStart;
+            framerFrameNext = framerFrameStart + tagLength + framerFrameLength;
             }
         else {
             framerFrameNext = position;
-            success = ReadTagFrameReversed(out var length);
+
+            success = ReadTagFrameReversed(out var length, out var tagLength);
             framerRecordsEnd = PositionRead;
 
-            var tagLength = framerFrameNext - PositionRead;
-            framerFrameStart = framerRecordsEnd - length - tagLength;
+            //var tagLength = framerFrameNext - PositionRead;
+            framerFrameStart = framerFrameNext - length - tagLength;
 
             //Console.WriteLine($"Frame is [ {framerFrameStart}-{framerFrameNext}] ");
 
             // sanity check, cannot read past the start of the file.
-            (framerFrameStart >= 0).AssertTrue(InvalidFileFormatException.Throw);
+            (framerFrameStart >= StartFirstFrame).AssertTrue(InvalidFileFormatException.Throw);
 
             PositionRead = framerFrameStart;
 
             // read the start tag and verify it is correct.
-            success = ReadTagStartFrame(out framerFrameLength);
+            success = ReadTagStartFrame(out framerFrameLength, out var checkTagLength);
             //(code == framerCode).AssertTrue(InvalidFileFormatException.Throw);
             (length == framerFrameLength).AssertTrue(InvalidFileFormatException.Throw);
+            (tagLength == checkTagLength).AssertTrue(InvalidFileFormatException.Throw);
             }
 
 
@@ -827,17 +960,17 @@ public partial class JbcdStream  {
     /// <code>false</code> the end of the stream has been reached.</returns>
     public bool FramerPrevious() {
         StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
-        var success = ReadTagReverse(out var Code, out var Length);
+        var success = ReadTagReverse(out var Code, out var length);
         if (!success) {
             return false;
             }
 
         // Sanity check
         var thePosition = PositionRead;
-        Assert.AssertTrue(thePosition >= Length, InvalidFileFormatException.Throw);
+        Assert.AssertTrue(thePosition >= length, InvalidFileFormatException.Throw);
 
         // Make sure we return to the same position.
-        long Start = thePosition - Length - TagSpace(Code) - 1;
+        long Start = thePosition - length - TagSpace(Code) - 1;
         framerFrameStart = Start;
         PositionRead = Start;
 
@@ -865,7 +998,7 @@ public partial class JbcdStream  {
         frameHeader = null;
         StartLastFrameRead = PositionRead;
 
-        var success = ReadTagStartFrame(out var length, first);
+        var success = ReadTagStartFrame(out var length, out var tagLength);
         var originalLength = length;
         if (!success) {
             return -1;
@@ -877,7 +1010,7 @@ public partial class JbcdStream  {
             //FrameDataPosition = StreamRead.PositionRead;
             StreamRead.Seek(length, System.IO.SeekOrigin.Current);
             }
-        ReadTagEndFrame(length);
+        ReadTagEndFrame(originalLength, tagLength);
 
         //if ((Code & TypeMask) == BFrame) {
         //    CheckReversedLength(Code, originalLength);

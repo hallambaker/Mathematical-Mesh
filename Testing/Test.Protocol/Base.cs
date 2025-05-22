@@ -284,7 +284,7 @@ public partial class GoedelProtocol {
         ArrayString = ["Alice", "Bob", "Carol",],
         ArrayBinary = ["One".ToBytes(), "Two".ToBytes()],
         FieldMultiInstance = Struct1,
-        ArrayMultiInstance = [Struct1, Struct2, Struct3],
+        ArrayMultiInstance = [Struct1, Struct2],
         TFieldMultiInstance = Struct3,
         TArrayMultiInstance = [Struct1, Struct2, Struct3]
         };

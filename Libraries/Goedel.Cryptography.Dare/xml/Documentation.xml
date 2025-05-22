@@ -2102,6 +2102,9 @@
             <summary>
             Extensions classes.
             </summary>
+            <summary>
+            Extension methods
+            </summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Extensions.Decrypt(Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareRecipient},Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
@@ -2111,6 +2114,154 @@
             <param name="recipients">The recipient entry.</param>
             <param name="algorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.WriteVarint(System.IO.Stream,System.Int64)">
+            <summary>
+            Write <paramref name="value"/> to <paramref name="stream"/> as a QUIC 
+            varint.
+            </summary>
+            <param name="stream">The stream to write to.</param>
+            <param name="value">The value to write.</param>
+            <exception cref="T:Goedel.Cryptography.Dare.InvalidLength"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.WriteTnirav(System.IO.Stream,System.Int64)">
+            <summary>
+            Write <paramref name="value"/> to <paramref name="stream"/> as a reversed QUIC 
+            varint.
+            </summary>
+            <param name="stream">The stream to write to.</param>
+            <param name="value">The value to write.</param>
+            <exception cref="T:Goedel.Cryptography.Dare.InvalidLength"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.ReadVarint(System.IO.Stream)">
+            <summary>
+            Read a varint from <paramref name="stream"/> and return as an unsigned 64 bit integer.
+            </summary>
+            <param name="stream">The stream to read.</param>
+            <returns>The value read.</returns>
+            <exception cref="T:System.IO.EndOfStreamException"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.ReadVarint(System.IO.Stream,System.Int32@)">
+            <summary>
+            Read a varint from <paramref name="stream"/> and return as an unsigned 64 bit integer.
+            </summary>
+            <param name="stream">The stream to read.</param>
+            <returns>The value read.</returns>
+            <exception cref="T:System.IO.EndOfStreamException"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.ReadByteExact(System.IO.Stream)">
+            <summary>
+            Read a byte from the stream <paramref name="stream"/> throwing the exception 
+            <see cref="T:System.IO.EndOfStreamException"/> if there is no more data to be read.
+            </summary>
+            <param name="stream">The stream to read.</param>
+            <returns>The byte read.</returns>
+            <exception cref="T:System.IO.EndOfStreamException"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.ReadTnirav(System.IO.Stream,System.Int32)">
+            <summary>
+            Read a varint from <paramref name="stream"/> and return as an unsigned 64 bit integer.
+            </summary>
+            <param name="stream">The stream to read.</param>
+            <returns>The value read.</returns>
+            <exception cref="T:System.IO.EndOfStreamException"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.ReadTnirav(System.IO.Stream,System.Int32@)">
+            <summary>
+            Read a varint from <paramref name="stream"/> in the forwared direction and return 
+            as an unsigned 64 bit integer.
+            </summary>
+            <param name="stream">The stream to read.</param>
+            <returns>The value read.</returns>
+            <exception cref="T:System.IO.EndOfStreamException"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.ReadByteExactPrior(System.IO.Stream)">
+            <summary>
+            Read a byte from the stream <paramref name="stream"/> throwing the exception 
+            <see cref="T:System.IO.EndOfStreamException"/> if there is no more data to be read.
+            </summary>
+            <param name="stream">The stream to read.</param>
+            <returns>The byte read.</returns>
+            <exception cref="T:System.IO.EndOfStreamException"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.DataUri(Goedel.Protocol.JsonObject)">
+            <summary>
+            Serialize <paramref name="jsonObject"/> as JSON and return the result as a 
+            data: URI.
+            </summary>
+            <param name="jsonObject">The object to serialize.</param>
+            <returns>The constructed URI.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.Envelope(Goedel.Protocol.JsonObject,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Protocol.ObjectEncoding)">
+            <summary>
+            Sign and encrypt the JsonObject under <paramref name="signingKey"/> and
+            <paramref name="encryptionKey"/>..
+            </summary>
+            <param name="jsonObject">The object to sign.</param>
+            <param name="signingKey">Optional signature key.</param>
+            <param name="encryptionKey">Optional encryption key.</param>
+            <param name="objectEncoding">The encoding to use to compute the inner object.</param>
+            <returns>Envelope containing the signed profile. Also updates the property
+            <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.Envelope(Goedel.Protocol.JsonObject,System.Collections.Generic.List{Goedel.Cryptography.CryptographicKey},System.Collections.Generic.List{Goedel.Cryptography.CryptographicKey},Goedel.Protocol.ObjectEncoding,System.Boolean)">
+            <summary>
+            Sign and encrypt the object <paramref name="jsonObject"/> under 
+            <paramref name="signingKeys"/> and <paramref name="encryptionKeys"/>.
+            </summary>
+            <param name="jsonObject">The object to sign.</param>
+            <param name="signingKeys">Optional list of signature keys.</param>
+            <param name="encryptionKeys">Optional list of encryption keys.</param>
+            <param name="objectEncoding">The encoding to use to compute the inner object.</param>
+            <param name="includeSignatureKey">If true include the public key parameters in the
+            signature.</param>
+            <returns>Envelope containing the signed profile. Also updates the property
+            <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.Envelope(Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Protocol.ObjectEncoding)">
+            <summary>
+            Sign and encrypt the object <paramref name="jsonObject"/> under 
+            <paramref name="cryptoParameters"/>.
+            </summary>
+             <param name="jsonObject">The object to sign.</param>
+            <param name="cryptoParameters">The cryptographic parameters.</param>
+            <param name="objectEncoding">The encoding to use to compute the inner object.</param>
+            <returns>Envelope containing the signed profile. Also updates the property
+            <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.Envelope``1(``0,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
+            <summary>
+            Returns a new typed envelope containing the object <paramref name="data"/>
+            optionally encrypted under <paramref name="encryptionKey"/> and signed under
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="data">The object to be enveloped.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <param name="contentMeta">The value of the ContentMeta Header tag.</param>
+            <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
+            <returns>The enveloped data</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.Class(Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Return the algorithm class of an algorithm identifier.
+            </summary>
+            <param name="cryptoAlgorithmID">The algorithm identifier to categorize.</param>
+            <returns>The class of algorithm specified by <paramref name="cryptoAlgorithmID"/></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.ToKeyValuePairs(System.Collections.Generic.List{Goedel.Cryptography.Dare.KeyValue})">
+            <summary>
+            Convert list of index terms to key value pairs.
+            </summary>
+            <param name="Input">List of index terms to convert</param>
+            <returns>The input list as a KeyValue pair.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.ToKeyValues(System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+            <summary>
+            Convert list of key value pairs to index terms.
+            </summary>
+            <param name="Input">List of key valye pairs to convert</param>
+            <returns>The input list as a KeyValue Pair.</returns>
         </member>
         <member name="T:Goedel.Cryptography.Dare.DareTrailer">
              <summary>
@@ -3574,23 +3725,6 @@
             <param name="stream">The stream to read.</param>
             <returns>The bytes read.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.ReadVarint(System.IO.Stream)">
-            <summary>
-            Read a varint from <paramref name="stream"/> and return as an unsigned 64 bit integer.
-            </summary>
-            <param name="stream">The stream to read.</param>
-            <returns>The value read.</returns>
-            <exception cref="T:System.IO.EndOfStreamException"></exception>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.ReadByteExact(System.IO.Stream)">
-            <summary>
-            Read a byte from the stream <paramref name="stream"/> throwing the exception 
-            <see cref="T:System.IO.EndOfStreamException"/> if there is no more data to be read.
-            </summary>
-            <param name="stream">The stream to read.</param>
-            <returns>The byte read.</returns>
-            <exception cref="T:System.IO.EndOfStreamException"></exception>
-        </member>
         <member name="T:Goedel.Cryptography.Dare.EarlEnvelopeWriter">
             <summary>
             EARL Envelope Writer
@@ -3747,15 +3881,6 @@
             </summary>
             <param name="stream">The stream to write to.</param>
             <param name="data">The data to write.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteVarint(System.IO.Stream,System.Int64)">
-            <summary>
-            Write <paramref name="value"/> to <paramref name="stream"/> as a QUIC 
-            varint.
-            </summary>
-            <param name="stream">The stream to write to.</param>
-            <param name="value">The value to write.</param>
-            <exception cref="T:Goedel.Cryptography.Dare.InvalidLength"></exception>
         </member>
         <member name="T:Goedel.Cryptography.Dare.EarlSet">
             <summary>
@@ -4653,90 +4778,6 @@
             Static initializer, is called once when the module loads.
             </summary>
         </member>
-        <member name="T:Goedel.Cryptography.Dare.Extension">
-            <summary>
-            Extension methods
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Extension.DataUri(Goedel.Protocol.JsonObject)">
-            <summary>
-            Serialize <paramref name="jsonObject"/> as JSON and return the result as a 
-            data: URI.
-            </summary>
-            <param name="jsonObject">The object to serialize.</param>
-            <returns>The constructed URI.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Extension.Envelope(Goedel.Protocol.JsonObject,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Protocol.ObjectEncoding)">
-            <summary>
-            Sign and encrypt the JsonObject under <paramref name="signingKey"/> and
-            <paramref name="encryptionKey"/>..
-            </summary>
-            <param name="jsonObject">The object to sign.</param>
-            <param name="signingKey">Optional signature key.</param>
-            <param name="encryptionKey">Optional encryption key.</param>
-            <param name="objectEncoding">The encoding to use to compute the inner object.</param>
-            <returns>Envelope containing the signed profile. Also updates the property
-            <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Extension.Envelope(Goedel.Protocol.JsonObject,System.Collections.Generic.List{Goedel.Cryptography.CryptographicKey},System.Collections.Generic.List{Goedel.Cryptography.CryptographicKey},Goedel.Protocol.ObjectEncoding,System.Boolean)">
-            <summary>
-            Sign and encrypt the object <paramref name="jsonObject"/> under 
-            <paramref name="signingKeys"/> and <paramref name="encryptionKeys"/>.
-            </summary>
-            <param name="jsonObject">The object to sign.</param>
-            <param name="signingKeys">Optional list of signature keys.</param>
-            <param name="encryptionKeys">Optional list of encryption keys.</param>
-            <param name="objectEncoding">The encoding to use to compute the inner object.</param>
-            <param name="includeSignatureKey">If true include the public key parameters in the
-            signature.</param>
-            <returns>Envelope containing the signed profile. Also updates the property
-            <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Extension.Envelope(Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Protocol.ObjectEncoding)">
-            <summary>
-            Sign and encrypt the object <paramref name="jsonObject"/> under 
-            <paramref name="cryptoParameters"/>.
-            </summary>
-             <param name="jsonObject">The object to sign.</param>
-            <param name="cryptoParameters">The cryptographic parameters.</param>
-            <param name="objectEncoding">The encoding to use to compute the inner object.</param>
-            <returns>Envelope containing the signed profile. Also updates the property
-            <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Extension.Envelope``1(``0,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
-            <summary>
-            Returns a new typed envelope containing the object <paramref name="data"/>
-            optionally encrypted under <paramref name="encryptionKey"/> and signed under
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="data">The object to be enveloped.</param>
-            <param name="signingKey">The signature key.</param>
-            <param name="encryptionKey">The encryption key.</param>
-            <param name="contentMeta">The value of the ContentMeta Header tag.</param>
-            <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
-            <returns>The enveloped data</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Extension.Class(Goedel.Cryptography.CryptoAlgorithmId)">
-            <summary>
-            Return the algorithm class of an algorithm identifier.
-            </summary>
-            <param name="cryptoAlgorithmID">The algorithm identifier to categorize.</param>
-            <returns>The class of algorithm specified by <paramref name="cryptoAlgorithmID"/></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Extension.ToKeyValuePairs(System.Collections.Generic.List{Goedel.Cryptography.Dare.KeyValue})">
-            <summary>
-            Convert list of index terms to key value pairs.
-            </summary>
-            <param name="Input">List of index terms to convert</param>
-            <returns>The input list as a KeyValue pair.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Extension.ToKeyValues(System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
-            <summary>
-            Convert list of key value pairs to index terms.
-            </summary>
-            <param name="Input">List of key valye pairs to convert</param>
-            <returns>The input list as a KeyValue Pair.</returns>
-        </member>
         <member name="T:Goedel.Cryptography.Dare.FileCollection">
             <summary>
             Class tracking a set of files in a Sequence.
@@ -5032,6 +5073,15 @@
             <returns>The byte read or -1.</returns>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileFormatException">The record data read from disk was invalid</exception>
         </member>
+        <member name="F:Goedel.Cryptography.Dare.JbcdStream.EnvelopeType0">
+            <summary>Basic envelope, just metadata and content</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.JbcdStream.EnvelopeType1">
+            <summary>Signed envelope with unauthenticated header and trailer.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.JbcdStream.SequenceTypeJson">
+            <summary>Sequence with JSON metadata.</summary>
+        </member>
         <member name="F:Goedel.Cryptography.Dare.JbcdStream.UFrame">
             <summary>JSON-B Code for unidirectional frame</summary>
         </member>
@@ -5060,60 +5110,120 @@
             <summary>
             Return the shortest tag length for the specified production.
             </summary>
-            <param name="Length">Length of data to follow.</param>
+            <param name="length">Length of data to follow.</param>
             <returns>The tag length.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.TagSpace(System.Int32)">
             <summary>
             Return the length of a code
             </summary>
-            <param name="Code">Base code.</param>
+            <param name="code">Base code.</param>
             <returns>The number of bytes required.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.CodeSpace(System.Int32)">
             <summary>
             Return the length of a code
             </summary>
-            <param name="Code">Base code.</param>
+            <param name="code">Base code.</param>
+            <returns>The number of bytes required.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadTagStartFrame(System.Int64@,System.Int32@)">
+            <summary>
+            Read the start length tag of a frame
+            </summary>
+            <param name="length">The frame length</param>
+            <param name="tagLength">The total length of the frame tags, start and end.</param>
+            <returns>Returns <c>true</c> if successful, otherwise <c>false</c> .</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadTagEndFrame(System.Int64,System.Int32)">
+            <summary>
+            Read the end length tag of a frame.
+            </summary>
+            <param name="length">The frame length given at its start.</param>
+            <returns>Returns <c>true</c> if successful, otherwise <c>false</c> .</returns>
+            <param name="tagLength"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadTagFrameReversed(System.Int64@,System.Int32@)">
+            <summary>
+            Read the end length tag of the previous frame.
+            </summary>
+            <param name="length">The frame length given at its start.</param>
+            <returns>Returns <c>true</c> if successful, otherwise <c>false</c> .</returns>
+            <param name="tagLength">Combined length of the start and end tags.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadTagStartRecord(System.Int64@,System.Int32@)">
+            <summary>
+            Read the length tag of a record.
+            </summary>
+            <param name="length">The record length.</param>
+            <param name="codelength">The number of bytes taken up by the tag.</param>
+            <returns>Returns <c>true</c> if successful, otherwise <c>false</c> .</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.JbcdStream.WriteTagStartFrame(System.Int64)">
+            <summary>
+            Write the first tag in a frame, if the file write pointer is at BOF,
+            and we have a version 4 sequence, write the file version type marker.
+            </summary>
+            <param name="Length">The length of the frame.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.JbcdStream.WriteTagStartRecord(System.Int64)">
+            <summary>
+            Write a record to the frame, the length of the record MUST NOT cause it to 
+            exceed the boundary of the enclosing frame.
+            </summary>
+            <param name="Length"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.JbcdStream.WriteTagEndFrame(System.Int64)">
+            <summary>
+            Write the end tag to a frame.
+            </summary>
+            <param name="Length">The length specified at the frame start, this MUST 
+            match.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.JbcdStream.TotalLength(System.Byte[])">
+            <summary>
+            Determine Tag length tol encode the array <paramref name="data"/> using the 
+            shortest possible production encoding a null array as if zero length.
+            </summary>
+            <param name="data">Array giving length of data to follow.</param>
             <returns>The number of bytes required.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.TotalLength(System.Int64)">
             <summary>
             Determine Tag length using the shortest possible production
             </summary>
-            <param name="Length">Length of data to follow.</param>
+            <param name="length">Length of data to follow.</param>
             <returns>The number of bytes required.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.TotalLength2(System.Int64)">
             <summary>
             Determine Tag length using the shortest possible production
             </summary>
-            <param name="Length">Length of data to follow.</param>
+            <param name="length">Length of data to follow.</param>
             /// <returns>The number of bytes required.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.WriteTag(System.Byte,System.Int64)">
             <summary>
             Write out a Tag-Length value using the shortest possible production
             </summary>
-            <param name="Code">Base code.</param>
-            <param name="Length">Length of data to follow.</param>
+            <param name="code">Base code.</param>
+            <param name="length">Length of data to follow.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.WriteTagReverse(System.Byte,System.Int64)">
             <summary>
             Write out a Tag-Length value using the shortest possible production
             </summary>
-            <param name="Code">Base code.</param>
-            <param name="Length">Length of data to follow.</param>
+            <param name="code">Base code.</param>
+            <param name="length">Length of data to follow.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.JbcdStream.WriteFrame(System.Byte[],System.Int64,System.Int64,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.JbcdStream.WriteRecord(System.Byte[],System.Int64,System.Int64)">
             <summary>
             Write a unidirectional or bidirectional frame to the current stream at the current write position. 
             The code does not currently support 64 bit frames as it should.
             </summary>
-            <param name="FrameData">The data to write.</param>
-            <param name="Offset">Offset within the data.</param>
-            <param name="Length">Number of bytes to write.</param>
-            <param name="Bidirectional">If true, a bidirectional frame is written.</param>
+            <param name="frameData">The data to write.</param>
+            <param name="offset">Offset within the data.</param>
+            <param name="length">Number of bytes to write.</param>
             <returns>The total size of the frame.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.WriteWrappedFrame(System.Byte[],System.Byte[],System.Byte[],System.Boolean)">
@@ -5122,9 +5232,9 @@
             to the current stream at the current write position. 
             The code does not currently support 64 bit frames as it should.
             </summary>
-            <param name="FrameHeader">The header data to write.</param>
-            <param name="FrameData1">First data record, contains data content.</param>
-            <param name="FrameData2">Second data record, contains protected metadata.</param>
+            <param name="frameHeader">The header data to write.</param>
+            <param name="frameData1">First data record, contains data content.</param>
+            <param name="frameData2">Second data record, contains protected metadata.</param>
             <param name="flush">If true, flush the frame data value to the file.</param>
             <returns>The total size of the frame.</returns>
         </member>
@@ -5134,9 +5244,9 @@
             to the current stream at the current write position. 
             The code does not currently support 64 bit frames as it should.
             </summary>
-            <param name="FrameHeader">The header data to write.</param>
-            <param name="FrameDataLength">Length of the frame payload.</param>
-            <param name="FrameTrailerLength">Length of the frame trailer.</param>
+            <param name="frameHeader">The header data to write.</param>
+            <param name="frameDataLength">Length of the frame payload.</param>
+            <param name="frameTrailerLength">Length of the frame trailer.</param>
             <returns>The total size of the frame.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.WriteWrappedFrameEnd(System.Byte[])">
@@ -5151,8 +5261,8 @@
             <summary>
             Read a length value of known length in the forward direction.
             </summary>
-            <param name="LengthLength">The number of bytes to read.</param>
-            <param name="Length">The length value read.</param>
+            <param name="lengthLength">The number of bytes to read.</param>
+            <param name="length">The length value read.</param>
             <returns>Always true. All failures trigger exceptions.</returns>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileFormatException">The record data read from disk was invalid</exception>
         </member>
@@ -5161,8 +5271,8 @@
             Check a reversed length value of known length in the forward direction (from the start of the
             file to the end).
             </summary>
-            <param name="Code">The code that was read</param>
-            <param name="LengthIn">The length value read.</param>
+            <param name="code">The code that was read</param>
+            <param name="lengthin">The length value read.</param>
             <returns>Always true. All failures trigger exceptions.</returns>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileFormatException">The record data read from disk was invalid</exception>
         </member>
@@ -5170,8 +5280,8 @@
             <summary>
             Read a length value of known length in the Reverse direction.
             </summary>
-            <param name="LengthLength">The number of bytes to read.</param>
-            <param name="Length">The length value read.</param>
+            <param name="lengthLength">The number of bytes to read.</param>
+            <param name="length">The length value read.</param>
             <returns>Always true. All failures trigger exceptions.</returns>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileFormatException">The record data read from disk was invalid</exception>
         </member>
@@ -5179,8 +5289,8 @@
             <summary>
             Read a forward length tag in the forward direction
             </summary>
-            <param name="Code">The tag code that was read</param>
-            <param name="Length">The length that was read</param>
+            <param name="code">The tag code that was read</param>
+            <param name="length">The length that was read</param>
             <returns>True if a tag was read or false if EOF was encountered.</returns>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileFormatException">The record data read from disk was invalid</exception>
         </member>
@@ -5188,8 +5298,8 @@
             <summary>
             Read a forward length tag in the Reverse direction
             </summary>
-            <param name="Code">The tag code that was read</param>
-            <param name="Length">The length that was read</param>
+            <param name="code">The tag code that was read</param>
+            <param name="length">The length that was read</param>
             <returns>True if a tag was read or false if EOF was encountered.</returns>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileFormatException">The record data read from disk was invalid</exception>
         </member>
@@ -5206,9 +5316,9 @@
             <summary>
             Read a pair of wrapped frames in the forward direction.
             </summary>
-            <param name="FrameData">The payload data that was read.</param>
-            <param name="FrameHeader">The header data that was read.</param>
-            <param name="FrameTrailer">The trailer data that was read.</param>
+            <param name="frameData">The payload data that was read.</param>
+            <param name="frameHeader">The header data that was read.</param>
+            <param name="frameTrailer">The trailer data that was read.</param>
             <returns>True if a tag was read or false if EOF was encountered.</returns>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileFormatException">The record data read from disk was invalid</exception>
         </member>
@@ -5250,15 +5360,15 @@
             <summary>
             Read the next frame and return the starting and ending frame markers.
             </summary>
-            <param name="DataPosition"></param>
-            <param name="DataLength"></param>
+            <param name="dataPosition"></param>
+            <param name="dataLength"></param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.FramerGetReader(System.Int64,System.Int64)">
             <summary>
             Return a bounded stream reader for the frame payload data.
             </summary>
-            <param name="DataPosition">The position of the first byte of data.</param>
-            <param name="DataLength">The number of bytes to be read.</param>
+            <param name="dataPosition">The position of the first byte of data.</param>
+            <param name="dataLength">The number of bytes to be read.</param>
             <returns>The bounded stream reader.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.JbcdStream.FramerNext">
@@ -5277,11 +5387,12 @@
             <returns>If <code>true</code>, there are more frames to be read. If 
             <code>false</code> the end of the stream has been reached.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadFrame(System.Byte[]@)">
+        <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadFrame(System.Byte[]@,System.Boolean)">
             <summary>
             Read a pair of wrapped frames in the forward direction.
             </summary>
-            <param name="FrameHeader">The header data that was read.</param>
+            <param name="frameHeader">The header data that was read.</param>
+            <param name="first">If true, this is a first frame.</param>
             <returns>True if a tag was read or false if EOF was encountered.</returns>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileFormatException">The record data read from disk was invalid</exception>
         </member>
@@ -5290,7 +5401,7 @@
             Read a pair of wrapped frames in the Reverse direction. This is typically done to read the last
             record in a file to see how the file should be extended.
             </summary>
-            <param name="FrameHeader">The header data that was read.</param>
+            <param name="frameHeader">The header data that was read.</param>
             <returns>True if a tag was read or false if EOF was encountered.</returns>
             <exception cref="T:Goedel.Cryptography.Dare.InvalidFileFormatException">The record data read from disk was invalid</exception>
         </member>
@@ -5300,7 +5411,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadFrameHeader">
+        <member name="M:Goedel.Cryptography.Dare.JbcdStream.ReadFrameHeader(System.Boolean)">
             <summary>
             Read the current frame header
             </summary>

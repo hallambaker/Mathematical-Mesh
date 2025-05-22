@@ -174,7 +174,7 @@ public partial class Jmap {
                         Identifier = "ipv4"
                             }
                     },
-                {"disc1", new Network () {
+                {"disc2", new Network () {
                         Identifier = "ipv6"
                         }
                     }

@@ -83,7 +83,7 @@ public partial class EarlEnvelopeWriter {
             byte[]? trailer = null) {
 
         Type = (unprotectedHeader == null && trailer == null) ? 0 : 1;
-        WriteVarint(Buffer, Type);
+        Buffer.WriteVarint(Type);
 
         if (Type == 1) {
             WriteBytes(Buffer, unprotectedHeader);
@@ -93,7 +93,7 @@ public partial class EarlEnvelopeWriter {
 
         if (Type == 1) {
             // close the data chunks
-            WriteVarint(Buffer, 0);
+            Buffer.WriteVarint(0);
             WriteBytes(Buffer, trailer);
             }
         }
@@ -118,7 +118,7 @@ public partial class EarlEnvelopeWriter {
     /// </summary>
     public EarlEnvelopeWriter() {
         Type = 1;
-        WriteVarint(Buffer, Type);
+        Buffer.WriteVarint(Type);
         State = 0;
         }
 
@@ -297,7 +297,7 @@ public partial class EarlEnvelopeWriter {
         if (State < 2) {
             WriteContentMeta();
             }
-        WriteVarint(Buffer, 0); // last payload chunk
+        Buffer.WriteVarint(0); // last payload chunk
         WriteBytes(Buffer, trailer);
         State = 3;
         }
@@ -394,71 +394,13 @@ public partial class EarlEnvelopeWriter {
 
             }
         else {
-            WriteVarint(stream, data.Length);
+            stream.WriteVarint(data.Length);
             stream.Write(data);
             }
 
         }
 
-    /// <summary>
-    /// Write <paramref name="value"/> to <paramref name="stream"/> as a QUIC 
-    /// varint.
-    /// </summary>
-    /// <param name="stream">The stream to write to.</param>
-    /// <param name="value">The value to write.</param>
-    /// <exception cref="InvalidLength"></exception>
-    public static void WriteVarint(
-                Stream stream,
-                long value) {
 
-        if (value < 64) {
-            stream.Write((byte)value);
-            return;
-            }
-
-        if (value < 16383) {
-            var v2 = (value >> 8);
-
-            stream.Write((byte)(v2 | 0b0100_0000));
-            stream.Write((byte)value);
-            return;
-            }
-
-        if (value < 1073741823) {
-            var v2 = (value >> 8);
-            var v3 = (v2 >> 8);
-            var v4 = (v3 >> 8);
-
-            stream.Write((byte)(v4 | 0b1000_0000));
-            stream.Write((byte)v3);
-            stream.Write((byte)v2);
-            stream.Write((byte)value);
-            return;
-            }
-
-        if (value < 4611686018427387903) {
-            var v2 = (value >> 8);
-            var v3 = (v2 >> 8);
-            var v4 = (v3 >> 8);
-            var v5 = (v4 >> 8);
-            var v6 = (v5 >> 8);
-            var v7 = (v6 >> 8);
-            var v8 = (v7 >> 8);
-
-            stream.Write((byte)(v8 | 0b1100_0000));
-            stream.Write((byte)v7);
-            stream.Write((byte)v6);
-            stream.Write((byte)v5);
-            stream.Write((byte)v4);
-            stream.Write((byte)v3);
-            stream.Write((byte)v2);
-            stream.Write((byte)value);
-            return;
-            }
-
-        else throw new InvalidLength();
-
-        }
 
 
     #endregion

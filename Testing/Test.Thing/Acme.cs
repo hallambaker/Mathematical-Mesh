@@ -46,7 +46,7 @@ public class Acme {
     static string MintUri(string zone) => $"udf://{zone}/{Udf.Nonce()}";
 
 
-     [Fact]
+    [Fact(Skip = "Need DNS update to automate")]
     public async Task TestJsDevice() {
         //var bytes = "e9fb9e3b8254041333e89333a78beca9a557d1a6cf2b045420087dc9ec15dd1d2abfa588c46972e95e131f65cbde659aa9b2984914d75a5a00".FromBase16();
         //var base64 = bytes.ToStringBase64url();
@@ -160,7 +160,7 @@ public class Acme {
 
 
 
-    [Fact]
+    [Fact(Skip = "Need DNS update to automate")]
     public async Task TestEnroll5() {
 
         var thingService = new ServiceThingClient();
@@ -174,7 +174,7 @@ public class Acme {
 
 
 
-    [Fact]
+    [Fact(Skip = "Need DNS update to automate")]
     public async Task TestEnroll4() {
 
         var thingService = new ServiceThingClient();
@@ -184,7 +184,7 @@ public class Acme {
 
 
 
-    [Fact]
+    [Fact(Skip = "Need DNS update to automate")]
     public async Task TestEnroll3() {
 
         // Service config here 
@@ -213,7 +213,7 @@ public class Acme {
 
 
 
-    [Fact]
+    [Fact(Skip = "Need DNS update to automate")]
     public async Task TestEnroll2() {
 
         var account = await AcmeAccount.Create(AcmeAccountAddress, true);
@@ -237,7 +237,7 @@ public class Acme {
 
 
 
-    [Fact]
+    [Fact(Skip = "Need DNS update to automate")]
     public async Task TestEnroll() {
 
         // Creating new ACME account:

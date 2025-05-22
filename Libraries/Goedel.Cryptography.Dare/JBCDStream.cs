@@ -33,7 +33,10 @@ namespace Goedel.Cryptography.Dare;
 /// </summary>
 public partial class JbcdStream : Disposable {
 
-    public int Version { get; }
+    public int Version { get; private set; }
+
+
+    public long StartFirstFrame { get; private set; }
 
     /// <summary>
     /// The underlying stream for stream write operations
@@ -57,7 +60,7 @@ public partial class JbcdStream : Disposable {
     /// </summary>
     public long PositionWrite {
         get => StreamWrite.Position;
-        set => StreamWrite.Seek(0, SeekOrigin.Begin);
+        //set => StreamWrite.Seek(0, SeekOrigin.Begin);
         }
 
     /// <summary>
@@ -89,11 +92,11 @@ public partial class JbcdStream : Disposable {
     /// <param name="writeOnly">If true, the file is only opened in write mode.</param>
     /// <param name="version">The encoding version 3 or 4</param>
     public JbcdStream(
-                    string fileName, 
-                    FileStatus fileStatus = FileStatus.Read, 
+                    string fileName,
+                    FileStatus fileStatus = FileStatus.Read,
                     bool writeOnly = false,
                     int version = 3) {
-                      
+
         Filename = fileName;
         Version = version;
 
@@ -108,13 +111,31 @@ public partial class JbcdStream : Disposable {
             disposeStreamWrite = StreamWrite;
             StreamWrite.Seek(0, SeekOrigin.End);
             }
-        if (!writeOnly) {
-            //Screen.WriteLine($"Open for read {fileName}");
+
+        Screen.WriteLine($"Open for read {fileName}");
 
 
-            StreamRead = fileName.FileStream(FileStatus.Read);
+        StreamRead = fileName.FileStream(FileStatus.Read);
+        if (StreamRead.Length > 0) {
+            var versionCode = StreamRead.ReadVarint();
+            if (versionCode == SequenceTypeJson) {
+                Version = 4;
+                }
+            }
+
+        if (!IsVersion4) {
+            StreamRead.Position = 0;
+            }
+        StartFirstFrame = StreamRead.Position;
+
+        if (writeOnly) {
+            StreamRead.Close();
+            StreamRead = null;
+            }
+        else {
             disposeStreamRead = StreamRead;
             }
+
         }
 
 
@@ -159,7 +180,7 @@ public partial class JbcdStream : Disposable {
     /// </summary>
     /// <returns>The new position within the current stream.</returns>
     public virtual long Begin() {
-        framerFrameStart = StreamRead.Seek(0, SeekOrigin.Begin);
+        framerFrameStart = StreamRead.Seek(StartFirstFrame, SeekOrigin.Begin);
         return framerFrameStart;
         }
 
