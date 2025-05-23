@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:08 AM
+//  This file was automatically generated at 5/23/2025 1:46:34 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -241,6 +241,7 @@ public partial class DareEnvelopeSequence : Dare {
 	public static new JsonObject _Factory () => new DareEnvelopeSequence();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -260,7 +261,7 @@ public partial class DareEnvelopeSequence : Dare {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -371,6 +372,7 @@ public partial class DareSignatureHeader : Dare {
 	public static new JsonObject _Factory () => new DareSignatureHeader();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -390,7 +392,7 @@ public partial class DareSignatureHeader : Dare {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -497,6 +499,7 @@ public partial class DareTrailer : DareSignatureHeader {
 	public static new JsonObject _Factory () => new DareTrailer();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -516,7 +519,7 @@ public partial class DareTrailer : DareSignatureHeader {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -735,6 +738,7 @@ public partial class DareHeader : DareTrailer {
 	public static new JsonObject _Factory () => new DareHeader();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -754,7 +758,7 @@ public partial class DareHeader : DareTrailer {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -943,6 +947,7 @@ public partial class ContentMeta : Dare {
 	public static new JsonObject _Factory () => new ContentMeta();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -962,7 +967,7 @@ public partial class ContentMeta : Dare {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1094,6 +1099,7 @@ public partial class DareSignature : Dare {
 	public static new JsonObject _Factory () => new DareSignature();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1113,7 +1119,7 @@ public partial class DareSignature : Dare {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1188,6 +1194,7 @@ public partial class IntervalSignature : Dare {
 	public static new JsonObject _Factory () => new IntervalSignature();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1207,7 +1214,7 @@ public partial class IntervalSignature : Dare {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1280,6 +1287,7 @@ public partial class SignedEnvelope : Dare {
 	public static new JsonObject _Factory () => new SignedEnvelope();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1299,7 +1307,7 @@ public partial class SignedEnvelope : Dare {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1371,6 +1379,7 @@ public partial class X509Certificate : Dare {
 	public static new JsonObject _Factory () => new X509Certificate();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1390,7 +1399,7 @@ public partial class X509Certificate : Dare {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1493,6 +1502,7 @@ public partial class DareRecipient : Dare {
 	public static new JsonObject _Factory () => new DareRecipient();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1512,7 +1522,7 @@ public partial class DareRecipient : Dare {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1652,6 +1662,7 @@ public partial class DarePolicy : Dare {
 	public static new JsonObject _Factory () => new DarePolicy();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1671,7 +1682,7 @@ public partial class DarePolicy : Dare {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1770,6 +1781,7 @@ public partial class FileEntry : Dare {
 	public static new JsonObject _Factory () => new FileEntry();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1789,7 +1801,7 @@ public partial class FileEntry : Dare {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1881,6 +1893,7 @@ public partial class Witness : Dare {
 	public static new JsonObject _Factory () => new Witness();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1900,7 +1913,7 @@ public partial class Witness : Dare {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1993,6 +2006,7 @@ public partial class Proof : Dare {
 	public static new JsonObject _Factory () => new Proof();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2012,7 +2026,7 @@ public partial class Proof : Dare {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2091,6 +2105,7 @@ public partial class Unprotected : Dare {
 	public static new JsonObject _Factory () => new Unprotected();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2110,7 +2125,7 @@ public partial class Unprotected : Dare {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2190,6 +2205,7 @@ public partial class EarlSignature : Dare {
 	public static new JsonObject _Factory () => new EarlSignature();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2209,7 +2225,7 @@ public partial class EarlSignature : Dare {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:08 AM
+//  This file was automatically generated at 5/23/2025 1:46:34 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -265,6 +265,7 @@ public partial class SequenceInfo : SequenceData {
 	public static new JsonObject _Factory () => new SequenceInfo();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -284,7 +285,7 @@ public partial class SequenceInfo : SequenceData {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -361,6 +362,7 @@ public partial class SequenceIndex : SequenceData {
 	public static new JsonObject _Factory () => new SequenceIndex();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -380,7 +382,7 @@ public partial class SequenceIndex : SequenceData {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -463,6 +465,7 @@ public partial class IndexPosition : SequenceData {
 	public static new JsonObject _Factory () => new IndexPosition();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -482,7 +485,7 @@ public partial class IndexPosition : SequenceData {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -556,6 +559,7 @@ public partial class KeyValue : SequenceData {
 	public static new JsonObject _Factory () => new KeyValue();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -575,7 +579,7 @@ public partial class KeyValue : SequenceData {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -631,6 +635,7 @@ public partial class ProofChain : SequenceData {
 	public static new JsonObject _Factory () => new ProofChain();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -650,7 +655,7 @@ public partial class ProofChain : SequenceData {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

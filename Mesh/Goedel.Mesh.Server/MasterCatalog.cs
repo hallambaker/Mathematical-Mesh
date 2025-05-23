@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:21 AM
+//  This file was automatically generated at 5/23/2025 1:46:38 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -224,6 +224,7 @@ abstract public partial class AccountEntry : CatalogedEntry {
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -240,7 +241,7 @@ abstract public partial class AccountEntry : CatalogedEntry {
 			}
 		throw new CannotCreateAbstract();
 		}
-
+	*/
 
 	}
 
@@ -318,6 +319,7 @@ public partial class AccountUser : AccountEntry {
 	public static new JsonObject _Factory () => new AccountUser();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -337,7 +339,7 @@ public partial class AccountUser : AccountEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

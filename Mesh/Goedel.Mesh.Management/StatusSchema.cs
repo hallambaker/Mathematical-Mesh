@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:27 AM
+//  This file was automatically generated at 5/23/2025 1:46:40 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -358,6 +358,7 @@ public partial class WsmpRequest : Goedel.Protocol.Request {
 	public static new JsonObject _Factory () => new WsmpRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -377,7 +378,7 @@ public partial class WsmpRequest : Goedel.Protocol.Request {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -435,6 +436,7 @@ public partial class WsmpResponse : Goedel.Protocol.Response {
 	public static new JsonObject _Factory () => new WsmpResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -454,7 +456,7 @@ public partial class WsmpResponse : Goedel.Protocol.Response {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -509,6 +511,7 @@ public partial class ServiceConfigRequest : WsmpRequest {
 	public static new JsonObject _Factory () => new ServiceConfigRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -528,7 +531,7 @@ public partial class ServiceConfigRequest : WsmpRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -583,6 +586,7 @@ public partial class ServiceConfigResponse : WsmpResponse {
 	public static new JsonObject _Factory () => new ServiceConfigResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -602,7 +606,7 @@ public partial class ServiceConfigResponse : WsmpResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -657,6 +661,7 @@ public partial class ServiceStatusRequest : WsmpRequest {
 	public static new JsonObject _Factory () => new ServiceStatusRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -676,7 +681,7 @@ public partial class ServiceStatusRequest : WsmpRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -771,6 +776,7 @@ public partial class ServiceStatusResponse : WsmpResponse {
 	public static new JsonObject _Factory () => new ServiceStatusResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -790,7 +796,7 @@ public partial class ServiceStatusResponse : WsmpResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

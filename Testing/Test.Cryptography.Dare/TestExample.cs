@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:34 AM
+//  This file was automatically generated at 5/23/2025 1:46:41 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -199,6 +199,7 @@ abstract public partial class TestEntry : TestSchema {
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -215,7 +216,7 @@ abstract public partial class TestEntry : TestSchema {
 			}
 		throw new CannotCreateAbstract();
 		}
-
+	*/
 
 	}
 
@@ -301,6 +302,7 @@ public partial class TestItem : TestEntry {
 	public static new JsonObject _Factory () => new TestItem();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -320,7 +322,7 @@ public partial class TestItem : TestEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -435,6 +437,7 @@ public partial class MessageTest : Goedel.Mesh.Message {
 	public static new JsonObject _Factory () => new MessageTest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -454,7 +457,7 @@ public partial class MessageTest : Goedel.Mesh.Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -569,6 +572,7 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogEntryTest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -588,7 +592,7 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

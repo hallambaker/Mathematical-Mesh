@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:19 AM
+//  This file was automatically generated at 5/23/2025 1:46:38 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -227,6 +227,7 @@ public partial class CatalogedRegistry : CatalogedApplication {
 	public static new JsonObject _Factory () => new CatalogedRegistry();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -246,7 +247,7 @@ public partial class CatalogedRegistry : CatalogedApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -321,6 +322,7 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
 	public static new JsonObject _Factory () => new ActivationApplicationRegistry();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -340,7 +342,7 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -415,6 +417,7 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
 	public static new JsonObject _Factory () => new ApplicationEntryRegistry();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -434,7 +437,7 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

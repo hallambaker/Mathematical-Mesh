@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:12 AM
+//  This file was automatically generated at 5/23/2025 1:46:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -452,6 +452,7 @@ public partial class KeyData : MeshItem {
 	public static new JsonObject _Factory () => new KeyData();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -471,7 +472,7 @@ public partial class KeyData : MeshItem {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -566,6 +567,7 @@ public partial class KeyShare : Key {
 	public static new JsonObject _Factory () => new KeyShare();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -585,7 +587,7 @@ public partial class KeyShare : Key {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -669,6 +671,7 @@ public partial class CompositePrivate : Key {
 	public static new JsonObject _Factory () => new CompositePrivate();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -688,7 +691,7 @@ public partial class CompositePrivate : Key {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -784,6 +787,7 @@ abstract public partial class Assertion : MeshItem {
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -800,7 +804,7 @@ abstract public partial class Assertion : MeshItem {
 			}
 		throw new CannotCreateAbstract();
 		}
-
+	*/
 
 	}
 
@@ -856,6 +860,7 @@ abstract public partial class Condition : MeshItem {
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -872,7 +877,7 @@ abstract public partial class Condition : MeshItem {
 			}
 		throw new CannotCreateAbstract();
 		}
-
+	*/
 
 	}
 
@@ -949,6 +954,7 @@ public partial class Activation : Assertion {
 	public static new JsonObject _Factory () => new Activation();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -968,7 +974,7 @@ public partial class Activation : Assertion {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1061,6 +1067,7 @@ public partial class ActivationEntry : MeshItem {
 	public static new JsonObject _Factory () => new ActivationEntry();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1080,7 +1087,7 @@ public partial class ActivationEntry : MeshItem {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1156,6 +1163,7 @@ abstract public partial class Profile : Assertion {
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1172,7 +1180,7 @@ abstract public partial class Profile : Assertion {
 			}
 		throw new CannotCreateAbstract();
 		}
-
+	*/
 
 	}
 
@@ -1263,6 +1271,7 @@ public partial class ProfileDevice : Profile {
 	public static new JsonObject _Factory () => new ProfileDevice();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1282,7 +1291,7 @@ public partial class ProfileDevice : Profile {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1411,6 +1420,7 @@ public partial class ProfileAccount : Profile {
 	public static new JsonObject _Factory () => new ProfileAccount();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1430,7 +1440,7 @@ public partial class ProfileAccount : Profile {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1497,6 +1507,7 @@ public partial class ProfileUser : ProfileAccount {
 	public static new JsonObject _Factory () => new ProfileUser();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1516,7 +1527,7 @@ public partial class ProfileUser : ProfileAccount {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1585,6 +1596,7 @@ public partial class ProfileGroup : ProfileAccount {
 	public static new JsonObject _Factory () => new ProfileGroup();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1604,7 +1616,7 @@ public partial class ProfileGroup : ProfileAccount {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1691,6 +1703,7 @@ public partial class ProfileService : Profile {
 	public static new JsonObject _Factory () => new ProfileService();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1710,7 +1723,7 @@ public partial class ProfileService : Profile {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1767,6 +1780,7 @@ public partial class ProfileMeshService : ProfileService {
 	public static new JsonObject _Factory () => new ProfileMeshService();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1786,7 +1800,7 @@ public partial class ProfileMeshService : ProfileService {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1843,6 +1857,7 @@ public partial class ProfileHost : ProfileDevice {
 	public static new JsonObject _Factory () => new ProfileHost();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1862,7 +1877,7 @@ public partial class ProfileHost : ProfileDevice {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1945,6 +1960,7 @@ public partial class Connection : Assertion {
 	public static new JsonObject _Factory () => new Connection();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1964,7 +1980,7 @@ public partial class Connection : Assertion {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2104,6 +2120,7 @@ public partial class CallsignBinding : Assertion {
 	public static new JsonObject _Factory () => new CallsignBinding();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2123,7 +2140,7 @@ public partial class CallsignBinding : Assertion {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2251,6 +2268,7 @@ public partial class Accreditation : Assertion {
 	public static new JsonObject _Factory () => new Accreditation();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2270,7 +2288,7 @@ public partial class Accreditation : Assertion {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2337,6 +2355,7 @@ public partial class ConnectionStripped : Connection {
 	public static new JsonObject _Factory () => new ConnectionStripped();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2356,7 +2375,7 @@ public partial class ConnectionStripped : Connection {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2422,6 +2441,7 @@ public partial class ConnectionService : Connection {
 	public static new JsonObject _Factory () => new ConnectionService();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2441,7 +2461,7 @@ public partial class ConnectionService : Connection {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2525,6 +2545,7 @@ public partial class ConnectionDevice : ConnectionService {
 	public static new JsonObject _Factory () => new ConnectionDevice();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2544,7 +2565,7 @@ public partial class ConnectionDevice : ConnectionService {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2601,6 +2622,7 @@ public partial class ConnectionApplication : Connection {
 	public static new JsonObject _Factory () => new ConnectionApplication();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2620,7 +2642,7 @@ public partial class ConnectionApplication : Connection {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2677,6 +2699,7 @@ public partial class ConnectionGroup : Connection {
 	public static new JsonObject _Factory () => new ConnectionGroup();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2696,7 +2719,7 @@ public partial class ConnectionGroup : Connection {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2798,6 +2821,7 @@ public partial class AccountHostAssignment : Assertion {
 	public static new JsonObject _Factory () => new AccountHostAssignment();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2817,7 +2841,7 @@ public partial class AccountHostAssignment : Assertion {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2872,6 +2896,7 @@ public partial class ConnectionHost : Connection {
 	public static new JsonObject _Factory () => new ConnectionHost();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2891,7 +2916,7 @@ public partial class ConnectionHost : Connection {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2958,6 +2983,7 @@ public partial class ActivationAccount : Activation {
 	public static new JsonObject _Factory () => new ActivationAccount();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2977,7 +3003,7 @@ public partial class ActivationAccount : Activation {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3035,6 +3061,7 @@ public partial class ActivationHost : ActivationAccount {
 	public static new JsonObject _Factory () => new ActivationHost();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3054,7 +3081,7 @@ public partial class ActivationHost : ActivationAccount {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3160,6 +3187,7 @@ public partial class ActivationCommon : Activation {
 	public static new JsonObject _Factory () => new ActivationCommon();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3179,7 +3207,7 @@ public partial class ActivationCommon : Activation {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3234,6 +3262,7 @@ public partial class ActivationApplication : Activation {
 	public static new JsonObject _Factory () => new ActivationApplication();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3253,7 +3282,7 @@ public partial class ActivationApplication : Activation {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3318,6 +3347,7 @@ public partial class ActivationApplicationSsh : ActivationApplication {
 	public static new JsonObject _Factory () => new ActivationApplicationSsh();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3337,7 +3367,7 @@ public partial class ActivationApplicationSsh : ActivationApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3432,6 +3462,7 @@ public partial class ActivationApplicationMail : ActivationApplication {
 	public static new JsonObject _Factory () => new ActivationApplicationMail();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3451,7 +3482,7 @@ public partial class ActivationApplicationMail : ActivationApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3549,6 +3580,7 @@ public partial class ActivationApplicationGroup : ActivationApplication {
 	public static new JsonObject _Factory () => new ActivationApplicationGroup();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3568,7 +3600,7 @@ public partial class ActivationApplicationGroup : ActivationApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3623,6 +3655,7 @@ public partial class ActivationApplicationDeveloper : ActivationApplication {
 	public static new JsonObject _Factory () => new ActivationApplicationDeveloper();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3642,7 +3675,7 @@ public partial class ActivationApplicationDeveloper : ActivationApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3697,6 +3730,7 @@ public partial class ActivationApplicationCredential : ActivationApplication {
 	public static new JsonObject _Factory () => new ActivationApplicationCredential();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3716,7 +3750,7 @@ public partial class ActivationApplicationCredential : ActivationApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3778,6 +3812,7 @@ abstract public partial class ApplicationEntry : MeshItem {
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3794,7 +3829,7 @@ abstract public partial class ApplicationEntry : MeshItem {
 			}
 		throw new CannotCreateAbstract();
 		}
-
+	*/
 
 	}
 
@@ -3858,6 +3893,7 @@ public partial class ApplicationEntrySsh : ApplicationEntry {
 	public static new JsonObject _Factory () => new ApplicationEntrySsh();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3877,7 +3913,7 @@ public partial class ApplicationEntrySsh : ApplicationEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3941,6 +3977,7 @@ public partial class ApplicationEntryGroup : ApplicationEntry {
 	public static new JsonObject _Factory () => new ApplicationEntryGroup();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3960,7 +3997,7 @@ public partial class ApplicationEntryGroup : ApplicationEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4024,6 +4061,7 @@ public partial class ApplicationEntryMail : ApplicationEntry {
 	public static new JsonObject _Factory () => new ApplicationEntryMail();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4043,7 +4081,7 @@ public partial class ApplicationEntryMail : ApplicationEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4107,6 +4145,7 @@ public partial class ApplicationEntryDeveloper : ApplicationEntry {
 	public static new JsonObject _Factory () => new ApplicationEntryDeveloper();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4126,7 +4165,7 @@ public partial class ApplicationEntryDeveloper : ApplicationEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4190,6 +4229,7 @@ public partial class ApplicationEntryCredential : ApplicationEntry {
 	public static new JsonObject _Factory () => new ApplicationEntryCredential();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4209,7 +4249,7 @@ public partial class ApplicationEntryCredential : ApplicationEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4286,6 +4326,7 @@ public partial class Bookmark : MeshItem {
 	public static new JsonObject _Factory () => new Bookmark();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4305,7 +4346,7 @@ public partial class Bookmark : MeshItem {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4386,6 +4427,7 @@ public partial class Reference : MeshItem {
 	public static new JsonObject _Factory () => new Reference();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4405,7 +4447,7 @@ public partial class Reference : MeshItem {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4562,6 +4604,7 @@ public partial class Engagement : MeshItem {
 	public static new JsonObject _Factory () => new Engagement();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4581,7 +4624,7 @@ public partial class Engagement : MeshItem {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4643,6 +4686,7 @@ public partial class WorkTask : Engagement {
 	public static new JsonObject _Factory () => new WorkTask();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4662,7 +4706,7 @@ public partial class WorkTask : Engagement {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4754,6 +4798,7 @@ abstract public partial class CatalogedEntry : MeshItem {
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4770,7 +4815,7 @@ abstract public partial class CatalogedEntry : MeshItem {
 			}
 		throw new CannotCreateAbstract();
 		}
-
+	*/
 
 	}
 
@@ -4953,6 +4998,7 @@ public partial class CatalogedDevice : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedDevice();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4972,7 +5018,7 @@ public partial class CatalogedDevice : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5089,6 +5135,7 @@ public partial class DeviceDescription : MeshItem {
 	public static new JsonObject _Factory () => new DeviceDescription();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -5108,7 +5155,7 @@ public partial class DeviceDescription : MeshItem {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5165,6 +5212,7 @@ public partial class CatalogedSignature : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedSignature();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -5184,7 +5232,7 @@ public partial class CatalogedSignature : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5326,6 +5374,7 @@ public partial class CatalogedDocument : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedDocument();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -5345,7 +5394,7 @@ public partial class CatalogedDocument : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5440,6 +5489,7 @@ public partial class CatalogedPublication : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedPublication();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -5459,7 +5509,7 @@ public partial class CatalogedPublication : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5564,6 +5614,7 @@ public partial class CatalogedCredential : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedCredential();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -5583,7 +5634,7 @@ public partial class CatalogedCredential : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5670,6 +5721,7 @@ public partial class CatalogedNetwork : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedNetwork();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -5689,7 +5741,7 @@ public partial class CatalogedNetwork : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5772,6 +5824,7 @@ public partial class CatalogedContact : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedContact();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -5791,7 +5844,7 @@ public partial class CatalogedContact : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5858,6 +5911,7 @@ public partial class CatalogedAccess : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedAccess();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -5877,7 +5931,7 @@ public partial class CatalogedAccess : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5987,6 +6041,7 @@ abstract public partial class Capability : MeshItem {
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -6003,7 +6058,7 @@ abstract public partial class Capability : MeshItem {
 			}
 		throw new CannotCreateAbstract();
 		}
-
+	*/
 
 	}
 
@@ -6058,6 +6113,7 @@ public partial class NullCapability : Capability {
 	public static new JsonObject _Factory () => new NullCapability();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -6077,7 +6133,7 @@ public partial class NullCapability : Capability {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -6159,6 +6215,7 @@ public partial class AccessCapability : Capability {
 	public static new JsonObject _Factory () => new AccessCapability();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -6178,7 +6235,7 @@ public partial class AccessCapability : Capability {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -6264,6 +6321,7 @@ public partial class PublicationCapability : Capability {
 	public static new JsonObject _Factory () => new PublicationCapability();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -6283,7 +6341,7 @@ public partial class PublicationCapability : Capability {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -6374,6 +6432,7 @@ abstract public partial class CryptographicCapability : Capability {
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -6390,7 +6449,7 @@ abstract public partial class CryptographicCapability : Capability {
 			}
 		throw new CannotCreateAbstract();
 		}
-
+	*/
 
 	}
 
@@ -6447,6 +6506,7 @@ public partial class CapabilityDecrypt : CryptographicCapability {
 	public static new JsonObject _Factory () => new CapabilityDecrypt();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -6466,7 +6526,7 @@ public partial class CapabilityDecrypt : CryptographicCapability {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -6523,6 +6583,7 @@ public partial class CapabilityDecryptPartial : CapabilityDecrypt {
 	public static new JsonObject _Factory () => new CapabilityDecryptPartial();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -6542,7 +6603,7 @@ public partial class CapabilityDecryptPartial : CapabilityDecrypt {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -6609,6 +6670,7 @@ public partial class CapabilityDecryptServiced : CapabilityDecrypt {
 	public static new JsonObject _Factory () => new CapabilityDecryptServiced();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -6628,7 +6690,7 @@ public partial class CapabilityDecryptServiced : CapabilityDecrypt {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -6685,6 +6747,7 @@ public partial class CapabilitySign : CryptographicCapability {
 	public static new JsonObject _Factory () => new CapabilitySign();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -6704,7 +6767,7 @@ public partial class CapabilitySign : CryptographicCapability {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -6761,6 +6824,7 @@ public partial class CapabilityKeyGenerate : CryptographicCapability {
 	public static new JsonObject _Factory () => new CapabilityKeyGenerate();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -6780,7 +6844,7 @@ public partial class CapabilityKeyGenerate : CryptographicCapability {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -6839,6 +6903,7 @@ public partial class CapabilityFairExchange : CryptographicCapability {
 	public static new JsonObject _Factory () => new CapabilityFairExchange();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -6858,7 +6923,7 @@ public partial class CapabilityFairExchange : CryptographicCapability {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -6940,6 +7005,7 @@ public partial class NamedService : MeshItem {
 	public static new JsonObject _Factory () => new NamedService();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -6959,7 +7025,7 @@ public partial class NamedService : MeshItem {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -7032,6 +7098,7 @@ public partial class ServiceAccessToken : NamedService {
 	public static new JsonObject _Factory () => new ServiceAccessToken();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -7051,7 +7118,7 @@ public partial class ServiceAccessToken : NamedService {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -7130,6 +7197,7 @@ public partial class CatalogedBookmark : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedBookmark();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -7149,7 +7217,7 @@ public partial class CatalogedBookmark : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -7221,6 +7289,7 @@ public partial class CatalogedTask : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedTask();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -7240,7 +7309,7 @@ public partial class CatalogedTask : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -7343,6 +7412,7 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -7359,7 +7429,7 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
 			}
 		throw new CannotCreateAbstract();
 		}
-
+	*/
 
 	}
 
@@ -7438,6 +7508,7 @@ public partial class CatalogedMember : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedMember();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -7457,7 +7528,7 @@ public partial class CatalogedMember : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -7542,6 +7613,7 @@ public partial class CatalogedGroup : CatalogedApplication {
 	public static new JsonObject _Factory () => new CatalogedGroup();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -7561,7 +7633,7 @@ public partial class CatalogedGroup : CatalogedApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -7624,6 +7696,7 @@ public partial class CatalogedFeed : CatalogedBookmark {
 	public static new JsonObject _Factory () => new CatalogedFeed();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -7643,7 +7716,7 @@ public partial class CatalogedFeed : CatalogedBookmark {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -7762,6 +7835,7 @@ public partial class CatalogedApplicationMail : CatalogedApplication {
 	public static new JsonObject _Factory () => new CatalogedApplicationMail();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -7781,7 +7855,7 @@ public partial class CatalogedApplicationMail : CatalogedApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -7854,6 +7928,7 @@ public partial class CatalogedApplicationSsh : CatalogedApplication {
 	public static new JsonObject _Factory () => new CatalogedApplicationSsh();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -7873,7 +7948,7 @@ public partial class CatalogedApplicationSsh : CatalogedApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -7971,6 +8046,7 @@ public partial class CatalogedApplicationCredential : CatalogedApplication {
 	public static new JsonObject _Factory () => new CatalogedApplicationCredential();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -7990,7 +8066,7 @@ public partial class CatalogedApplicationCredential : CatalogedApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -8077,6 +8153,7 @@ public partial class CatalogedApplicationService : CatalogedApplication {
 	public static new JsonObject _Factory () => new CatalogedApplicationService();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -8096,7 +8173,7 @@ public partial class CatalogedApplicationService : CatalogedApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -8201,6 +8278,7 @@ public partial class CatalogedApplicationDeveloper : CatalogedApplication {
 	public static new JsonObject _Factory () => new CatalogedApplicationDeveloper();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -8220,7 +8298,7 @@ public partial class CatalogedApplicationDeveloper : CatalogedApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -8275,6 +8353,7 @@ public partial class MessageInvoice : Message {
 	public static new JsonObject _Factory () => new MessageInvoice();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -8294,7 +8373,7 @@ public partial class MessageInvoice : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -8349,6 +8428,7 @@ public partial class CatalogedReceipt : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedReceipt();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -8368,7 +8448,7 @@ public partial class CatalogedReceipt : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -8423,6 +8503,7 @@ public partial class CatalogedTicket : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedTicket();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -8442,7 +8523,7 @@ public partial class CatalogedTicket : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -8517,6 +8598,7 @@ public partial class DevicePreconfigurationPublic : MeshItem {
 	public static new JsonObject _Factory () => new DevicePreconfigurationPublic();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -8536,7 +8618,7 @@ public partial class DevicePreconfigurationPublic : MeshItem {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -8633,6 +8715,7 @@ public partial class DevicePreconfigurationPrivate : DevicePreconfigurationPubli
 	public static new JsonObject _Factory () => new DevicePreconfigurationPrivate();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -8652,7 +8735,7 @@ public partial class DevicePreconfigurationPrivate : DevicePreconfigurationPubli
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -8733,6 +8816,7 @@ public partial class Message : MeshItem {
 	public static new JsonObject _Factory () => new Message();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -8752,7 +8836,7 @@ public partial class Message : MeshItem {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -8815,6 +8899,7 @@ public partial class MessageError : Message {
 	public static new JsonObject _Factory () => new MessageError();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -8834,7 +8919,7 @@ public partial class MessageError : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -8897,6 +8982,7 @@ public partial class MessageComplete : Message {
 	public static new JsonObject _Factory () => new MessageComplete();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -8916,7 +9002,7 @@ public partial class MessageComplete : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -9008,6 +9094,7 @@ public partial class MessageValidated : Message {
 	public static new JsonObject _Factory () => new MessageValidated();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -9027,7 +9114,7 @@ public partial class MessageValidated : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -9134,6 +9221,7 @@ public partial class MessagePin : Message {
 	public static new JsonObject _Factory () => new MessagePin();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -9153,7 +9241,7 @@ public partial class MessagePin : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -9219,6 +9307,7 @@ public partial class RequestConnection : MessageValidated {
 	public static new JsonObject _Factory () => new RequestConnection();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -9238,7 +9327,7 @@ public partial class RequestConnection : MessageValidated {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -9324,6 +9413,7 @@ public partial class AcknowledgeConnection : Message {
 	public static new JsonObject _Factory () => new AcknowledgeConnection();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -9343,7 +9433,7 @@ public partial class AcknowledgeConnection : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -9421,6 +9511,7 @@ public partial class RespondConnection : Message {
 	public static new JsonObject _Factory () => new RespondConnection();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -9440,7 +9531,7 @@ public partial class RespondConnection : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -9524,6 +9615,7 @@ public partial class MessageContact : MessageValidated {
 	public static new JsonObject _Factory () => new MessageContact();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -9543,7 +9635,7 @@ public partial class MessageContact : MessageValidated {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -9616,6 +9708,7 @@ public partial class GroupInvitation : Message {
 	public static new JsonObject _Factory () => new GroupInvitation();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -9635,7 +9728,7 @@ public partial class GroupInvitation : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -9698,6 +9791,7 @@ public partial class MessageMail : Message {
 	public static new JsonObject _Factory () => new MessageMail();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -9717,7 +9811,7 @@ public partial class MessageMail : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -9780,6 +9874,7 @@ public partial class RequestConfirmation : Message {
 	public static new JsonObject _Factory () => new RequestConfirmation();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -9799,7 +9894,7 @@ public partial class RequestConfirmation : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -9871,6 +9966,7 @@ public partial class ResponseConfirmation : Message {
 	public static new JsonObject _Factory () => new ResponseConfirmation();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -9890,7 +9986,7 @@ public partial class ResponseConfirmation : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -9945,6 +10041,7 @@ public partial class RequestTask : Message {
 	public static new JsonObject _Factory () => new RequestTask();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -9964,7 +10061,7 @@ public partial class RequestTask : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -10051,6 +10148,7 @@ public partial class MessageClaim : Message {
 	public static new JsonObject _Factory () => new MessageClaim();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -10070,7 +10168,7 @@ public partial class MessageClaim : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -10144,6 +10242,7 @@ public partial class ProcessResult : Message {
 	public static new JsonObject _Factory () => new ProcessResult();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -10163,7 +10262,7 @@ public partial class ProcessResult : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -10220,6 +10319,7 @@ public partial class ProcessResultNotSupported : ProcessResult {
 	public static new JsonObject _Factory () => new ProcessResultNotSupported();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -10239,7 +10339,7 @@ public partial class ProcessResultNotSupported : ProcessResult {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -10294,6 +10394,7 @@ public partial class ProcessResultNotFound : ProcessResult {
 	public static new JsonObject _Factory () => new ProcessResultNotFound();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -10313,7 +10414,7 @@ public partial class ProcessResultNotFound : ProcessResult {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:27 AM
+//  This file was automatically generated at 5/23/2025 1:46:40 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -182,6 +182,7 @@ public partial class Result : ShellResult {
 	public static new JsonObject _Factory () => new Result();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -201,7 +202,7 @@ public partial class Result : ShellResult {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -256,6 +257,7 @@ public partial class ResultServiceConfiguration : Result {
 	public static new JsonObject _Factory () => new ResultServiceConfiguration();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -275,7 +277,7 @@ public partial class ResultServiceConfiguration : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -394,6 +396,7 @@ public partial class ResultAbout : Result {
 	public static new JsonObject _Factory () => new ResultAbout();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -413,7 +416,7 @@ public partial class ResultAbout : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

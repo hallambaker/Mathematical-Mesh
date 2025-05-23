@@ -27,6 +27,7 @@
 using Goedel.Cryptography.Nist;
 
 using System.Collections.Generic;
+using System.IO;
 using System.IO.IsolatedStorage;
 using System.Text.Json;
 using System.Xml.Linq;
@@ -422,15 +423,15 @@ public abstract partial class JsonObject : IBinding {
         return FromJson(reader, true);
         }
 
-    /// <summary>
-    /// Factory method to construct object from string data.
-    /// </summary>
-    /// <param name="input">Source</param>
-    /// <returns>Constructed object</returns>
-    public static JsonObject From(string input) {
-        using var reader = input.JsonReader();
-        return FromJson(reader, true);
-        }
+    ///// <summary>
+    ///// Factory method to construct object from string data.
+    ///// </summary>
+    ///// <param name="input">Source</param>
+    ///// <returns>Constructed object</returns>
+    //public static JsonObject From(string input) {
+    //    using var reader = input.JsonReader();
+    //    return FromJson(reader, true);
+    //    }
 
     /// <summary>
     /// Deserialize a tagged stream.
@@ -811,6 +812,90 @@ public abstract partial class JsonObject : IBinding {
         }
 
 
+
+    /// <summary>
+    /// Perform a one pass streaming parse on data read from the file <paramref name="filename"/> 
+    /// returning an object of type <paramref name="type"/>. This
+    /// parser does not (currently) support schemas in which a variant object type is
+    /// specified by the object property.
+    /// </summary>
+    /// <param name="type">The type of the object to return.</param>
+    /// <param name="stream">The data to parse</param>
+    /// <param name="tagged">If true, the data object has a typed wrapper.</param>
+    /// <param name="collectUparsed">If true, collect unparseable items during the
+    /// parse.</param>
+    /// <returns>The typed, parsed object.</returns>
+    public static JsonObject? StreamParse(
+                Type type,
+                string filename,
+                bool tagged = true,
+                bool collectUparsed = false) {
+        using var inputStream = filename.OpenFileRead();
+
+        return StreamParse(type, new JsonBcdReader(inputStream), tagged, collectUparsed);
+        }
+
+
+
+
+    /// <summary>
+    /// Perform a one pass streaming parse on data read from <paramref name="stream"/> returning
+    /// an object of type <paramref name="type"/>. This
+    /// parser does not (currently) support schemas in which a variant object type is
+    /// specified by the object property.
+    /// </summary>
+    /// <param name="type">The type of the object to return.</param>
+    /// <param name="stream">The data to parse</param>
+    /// <param name="tagged">If true, the data object has a typed wrapper.</param>
+    /// <param name="collectUparsed">If true, collect unparseable items during the
+    /// parse.</param>
+    /// <returns>The typed, parsed object.</returns>
+    public static JsonObject? StreamParse(
+                Type type,
+                Stream stream,
+                bool tagged = true,
+                bool collectUparsed = false) => StreamParse(type,
+                    new JsonBcdReader(stream), tagged, collectUparsed);
+
+
+    /// <summary>
+    /// Perform a one pass streaming parse on the data <paramref name="data"/> returning
+    /// an object of type <paramref name="type"/>. This
+    /// parser does not (currently) support schemas in which a variant object type is
+    /// specified by the object property.
+    /// </summary>
+    /// <param name="type">The type of the object to return.</param>
+    /// <param name="data">The data to parse</param>
+    /// <param name="tagged">If true, the data object has a typed wrapper.</param>
+    /// <param name="collectUparsed">If true, collect unparseable items during the
+    /// parse.</param>
+    /// <returns>The typed, parsed object.</returns>
+    public static JsonObject? StreamParse(
+                Type type,
+                byte[] data,
+                bool tagged = true,
+                bool collectUparsed = false) => StreamParse (type, 
+                    new JsonBcdReader (data), tagged, collectUparsed);
+
+
+    /// <summary>
+    /// Perform a one pass streaming parse on the data <paramref name="data"/>. This
+    /// parser does not (currently) support schemas in which a variant object type is
+    /// specified by the object property.
+    /// </summary>
+    /// <typeparam name="T">The type of the object to be returned.</typeparam>
+    /// <param name="data">The data to parse</param>
+    /// <param name="tagged">If true, the data object has a typed wrapper.</param>
+    /// <param name="collectUparsed">If true, collect unparseable items during the
+    /// parse.</param>
+    /// <returns>The typed, parsed object.</returns>
+    public static T? StreamParse<T>(
+                    byte[] data,
+                    bool tagged = true,
+                    bool collectUparsed = false) where T : JsonObject, new() => 
+                        StreamParse(typeof(T), data, tagged, collectUparsed) as T;
+
+
     /// <summary>
     /// Parse the JSON document <paramref name="document"/> returning an
     /// object instance of type <typeparamref name="T"/>.
@@ -884,26 +969,31 @@ public abstract partial class JsonObject : IBinding {
             throw new NYI();
             }
         if (p1.Value is JsonElementObject jsonElementObject) {
-
-
             return Binding.Parse(jsonElementObject, binding, collectUparsed);
             }
-
-        // Here we look at the root element, find the binding in the Tag dictionaries
-
-        //if (document.RootElement.ValueKind != JsonValueKind.Object) {
-        //    throw new NYI();
-        //    }
-
-        ////if 
-
-
-        //return Parse(document.RootElement, binding, collectUparsed);
-
 
         throw new NYI();
         }
 
+    /// <summary>
+    /// Perform a one pass streaming parse on the stream read using <paramref name="jsonReader"/> 
+    /// returning an object of type <paramref name="type"/>. This
+    /// parser does not (currently) support schemas in which a variant object type is
+    /// specified by the object property.
+    /// </summary>
+    /// <param name="type">The type of the object to return.</param>
+    /// <param name="jsonReader">A reader for the data.</param>
+    /// <param name="tagged">If true, the data object has a typed wrapper.</param>
+    /// <param name="collectUparsed">If true, collect unparseable items during the
+    /// parse.</param>
+    /// <returns>The typed, parsed object.</returns>
+    public static JsonObject? StreamParse(
+                Type type,
+                JsonReader jsonReader,
+                bool tagged = true,
+                bool collectUparsed = false) {
+        throw new NotImplementedException();
+        }
 
 
 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:17 AM
+//  This file was automatically generated at 5/23/2025 1:46:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -210,6 +210,7 @@ public partial class ProfileRegistry : ProfileAccount {
 	public static new JsonObject _Factory () => new ProfileRegistry();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -229,7 +230,7 @@ public partial class ProfileRegistry : ProfileAccount {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -296,6 +297,7 @@ public partial class ProfileResolver : ProfileService {
 	public static new JsonObject _Factory () => new ProfileResolver();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -315,7 +317,7 @@ public partial class ProfileResolver : ProfileService {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -427,6 +429,7 @@ public partial class Registration : CallsignEntry {
 	public static new JsonObject _Factory () => new Registration();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -446,7 +449,7 @@ public partial class Registration : CallsignEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -529,6 +532,7 @@ public partial class CatalogedRegistration : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedRegistration();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -548,7 +552,7 @@ public partial class CatalogedRegistration : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -629,6 +633,7 @@ public partial class Page : CallsignEntry {
 	public static new JsonObject _Factory () => new Page();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -648,7 +653,7 @@ public partial class Page : CallsignEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -721,6 +726,7 @@ public partial class CharacterSpan : CallsignEntry {
 	public static new JsonObject _Factory () => new CharacterSpan();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -740,7 +746,7 @@ public partial class CharacterSpan : CallsignEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -797,6 +803,7 @@ public partial class Canonical : CharacterSpan {
 	public static new JsonObject _Factory () => new Canonical();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -816,7 +823,7 @@ public partial class Canonical : CharacterSpan {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -883,6 +890,7 @@ public partial class MapChar : CharacterSpan {
 	public static new JsonObject _Factory () => new MapChar();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -902,7 +910,7 @@ public partial class MapChar : CharacterSpan {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -970,6 +978,7 @@ public partial class MapString : CharacterSpan {
 	public static new JsonObject _Factory () => new MapString();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -989,7 +998,7 @@ public partial class MapString : CharacterSpan {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1063,6 +1072,7 @@ public partial class Notarization : CallsignEntry {
 	public static new JsonObject _Factory () => new Notarization();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1082,7 +1092,7 @@ public partial class Notarization : CallsignEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1155,6 +1165,7 @@ public partial class Challenge : Assertion {
 	public static new JsonObject _Factory () => new Challenge();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1174,7 +1185,7 @@ public partial class Challenge : Assertion {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1251,6 +1262,7 @@ public partial class CallsignRegistrationRequest : MessageValidated {
 	public static new JsonObject _Factory () => new CallsignRegistrationRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1270,7 +1282,7 @@ public partial class CallsignRegistrationRequest : MessageValidated {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1363,6 +1375,7 @@ public partial class CallsignRegistrationResponse : Message {
 	public static new JsonObject _Factory () => new CallsignRegistrationResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1382,7 +1395,7 @@ public partial class CallsignRegistrationResponse : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1446,6 +1459,7 @@ public partial class ProcessResultCallsignRegistration : ProcessResult {
 	public static new JsonObject _Factory () => new ProcessResultCallsignRegistration();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1465,7 +1479,7 @@ public partial class ProcessResultCallsignRegistration : ProcessResult {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1569,6 +1583,7 @@ public partial class CatalogedApplicationCallsign : CatalogedApplication {
 	public static new JsonObject _Factory () => new CatalogedApplicationCallsign();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1588,7 +1603,7 @@ public partial class CatalogedApplicationCallsign : CatalogedApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1653,6 +1668,7 @@ public partial class ProcessResultCallsign : ProcessResult {
 	public static new JsonObject _Factory () => new ProcessResultCallsign();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1672,7 +1688,7 @@ public partial class ProcessResultCallsign : ProcessResult {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

@@ -94,14 +94,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Command.Json.ShellResult.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="M:Goedel.Command.Json.ShellResult.#ctor">
             <summary>
             Default constructor, initialize the value <see cref="P:Goedel.Command.Json.ShellResult.Success"/> to <see langword="true"/>.

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:15 AM
+//  This file was automatically generated at 5/23/2025 1:46:36 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -255,6 +255,7 @@ public partial class CatalogedMachine : HostCatalogItem {
 	public static new JsonObject _Factory () => new CatalogedMachine();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -274,7 +275,7 @@ public partial class CatalogedMachine : HostCatalogItem {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -390,6 +391,7 @@ public partial class CatalogedService : CatalogedMachine {
 	public static new JsonObject _Factory () => new CatalogedService();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -409,7 +411,7 @@ public partial class CatalogedService : CatalogedMachine {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -466,6 +468,7 @@ public partial class CatalogedStandard : CatalogedMachine {
 	public static new JsonObject _Factory () => new CatalogedStandard();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -485,7 +488,7 @@ public partial class CatalogedStandard : CatalogedMachine {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -581,6 +584,7 @@ public partial class CatalogedPending : CatalogedMachine {
 	public static new JsonObject _Factory () => new CatalogedPending();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -600,7 +604,7 @@ public partial class CatalogedPending : CatalogedMachine {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -724,6 +728,7 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 	public static new JsonObject _Factory () => new CatalogedPreconfigured();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -743,7 +748,7 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -824,6 +829,7 @@ public partial class ShellDispatch : HostCatalogItem {
 	public static new JsonObject _Factory () => new ShellDispatch();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -843,7 +849,7 @@ public partial class ShellDispatch : HostCatalogItem {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -933,6 +939,7 @@ public partial class ShellAction : HostCatalogItem {
 	public static new JsonObject _Factory () => new ShellAction();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -952,7 +959,7 @@ public partial class ShellAction : HostCatalogItem {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

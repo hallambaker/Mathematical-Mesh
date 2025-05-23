@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:08 AM
+//  This file was automatically generated at 5/23/2025 1:46:34 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -622,6 +622,7 @@ public partial class JsCalendarEntry : JmapBase {
 	public static new JsonObject _Factory () => new JsCalendarEntry();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -641,7 +642,7 @@ public partial class JsCalendarEntry : JmapBase {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -732,6 +733,7 @@ public partial class JsEvent : JsCalendarEntry {
 	public static new JsonObject _Factory () => new JsEvent();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -751,7 +753,7 @@ public partial class JsEvent : JsCalendarEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -869,6 +871,7 @@ public partial class JsTask : JsCalendarEntry {
 	public static new JsonObject _Factory () => new JsTask();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -888,7 +891,7 @@ public partial class JsTask : JsCalendarEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -963,6 +966,7 @@ public partial class JsGroup : JsCalendarEntry {
 	public static new JsonObject _Factory () => new JsGroup();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -982,7 +986,7 @@ public partial class JsGroup : JsCalendarEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1124,6 +1128,7 @@ public partial class Location : Calandars {
 	public static new JsonObject _Factory () => new Location();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1143,7 +1148,7 @@ public partial class Location : Calandars {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1271,6 +1276,7 @@ public partial class Link : Calandars {
 	public static new JsonObject _Factory () => new Link();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1290,7 +1296,7 @@ public partial class Link : Calandars {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1391,6 +1397,7 @@ public partial class VirtualLocation : Calandars {
 	public static new JsonObject _Factory () => new VirtualLocation();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1410,7 +1417,7 @@ public partial class VirtualLocation : Calandars {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1742,6 +1749,7 @@ public partial class Participant : Calandars {
 	public static new JsonObject _Factory () => new Participant();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1761,7 +1769,7 @@ public partial class Participant : Calandars {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2014,6 +2022,7 @@ public partial class RecurrenceRule : Calandars {
 	public static new JsonObject _Factory () => new RecurrenceRule();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2033,7 +2042,7 @@ public partial class RecurrenceRule : Calandars {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2106,6 +2115,7 @@ public partial class NDay : Calandars {
 	public static new JsonObject _Factory () => new NDay();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2125,7 +2135,7 @@ public partial class NDay : Calandars {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2240,6 +2250,7 @@ public partial class Alert : Calandars {
 	public static new JsonObject _Factory () => new Alert();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2259,7 +2270,7 @@ public partial class Alert : Calandars {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2353,6 +2364,7 @@ public partial class Trigger : Calandars {
 	public static new JsonObject _Factory () => new Trigger();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2372,7 +2384,7 @@ public partial class Trigger : Calandars {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2508,6 +2520,7 @@ public partial class TimeZone : Calandars {
 	public static new JsonObject _Factory () => new TimeZone();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2527,7 +2540,7 @@ public partial class TimeZone : Calandars {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2668,6 +2681,7 @@ public partial class TimeZoneRule : Calandars {
 	public static new JsonObject _Factory () => new TimeZoneRule();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2687,7 +2701,7 @@ public partial class TimeZoneRule : Calandars {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2743,6 +2757,7 @@ public partial class EmptyPatchObject : Calandars {
 	public static new JsonObject _Factory () => new EmptyPatchObject();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2762,7 +2777,7 @@ public partial class EmptyPatchObject : Calandars {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

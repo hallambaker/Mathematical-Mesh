@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:24 AM
+//  This file was automatically generated at 5/23/2025 1:46:39 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -276,6 +276,7 @@ public partial class Result : ShellResult {
 	public static new JsonObject _Factory () => new Result();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -295,7 +296,7 @@ public partial class Result : ShellResult {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -414,6 +415,7 @@ public partial class ResultAbout : Result {
 	public static new JsonObject _Factory () => new ResultAbout();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -433,7 +435,7 @@ public partial class ResultAbout : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -488,6 +490,7 @@ public partial class ResultFail : Result {
 	public static new JsonObject _Factory () => new ResultFail();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -507,7 +510,7 @@ public partial class ResultFail : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -579,6 +582,7 @@ public partial class ResultHello : Result {
 	public static new JsonObject _Factory () => new ResultHello();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -598,7 +602,7 @@ public partial class ResultHello : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -678,6 +682,7 @@ public partial class ResultSelf : Result {
 	public static new JsonObject _Factory () => new ResultSelf();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -697,7 +702,7 @@ public partial class ResultSelf : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -752,6 +757,7 @@ public partial class ResultInfo : Result {
 	public static new JsonObject _Factory () => new ResultInfo();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -771,7 +777,7 @@ public partial class ResultInfo : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -849,6 +855,7 @@ public partial class ResultKey : Result {
 	public static new JsonObject _Factory () => new ResultKey();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -868,7 +875,7 @@ public partial class ResultKey : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -947,6 +954,7 @@ public partial class ResultDigest : Result {
 	public static new JsonObject _Factory () => new ResultDigest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -966,7 +974,7 @@ public partial class ResultDigest : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1045,6 +1053,7 @@ public partial class ResultFile : Result {
 	public static new JsonObject _Factory () => new ResultFile();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1064,7 +1073,7 @@ public partial class ResultFile : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1151,6 +1160,7 @@ public partial class ResultKeyFile : ResultFile {
 	public static new JsonObject _Factory () => new ResultKeyFile();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1170,7 +1180,7 @@ public partial class ResultKeyFile : ResultFile {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1241,6 +1251,7 @@ public partial class ResultListLog : Result {
 	public static new JsonObject _Factory () => new ResultListLog();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1260,7 +1271,7 @@ public partial class ResultListLog : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1323,6 +1334,7 @@ public partial class ResultLog : Result {
 	public static new JsonObject _Factory () => new ResultLog();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1342,7 +1354,7 @@ public partial class ResultLog : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1429,6 +1441,7 @@ public partial class ResultArchive : Result {
 	public static new JsonObject _Factory () => new ResultArchive();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1448,7 +1461,7 @@ public partial class ResultArchive : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1512,6 +1525,7 @@ public partial class ResultFileDare : ResultFile {
 	public static new JsonObject _Factory () => new ResultFileDare();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1531,7 +1545,7 @@ public partial class ResultFileDare : ResultFile {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1610,6 +1624,7 @@ public partial class ResultFileEARL : Result {
 	public static new JsonObject _Factory () => new ResultFileEARL();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1629,7 +1644,7 @@ public partial class ResultFileEARL : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1693,6 +1708,7 @@ public partial class ResultDump : Result {
 	public static new JsonObject _Factory () => new ResultDump();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1712,7 +1728,7 @@ public partial class ResultDump : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1784,6 +1800,7 @@ public partial class ResultList : Result {
 	public static new JsonObject _Factory () => new ResultList();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1803,7 +1820,7 @@ public partial class ResultList : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1867,6 +1884,7 @@ public partial class ResultAccountConnect : Result {
 	public static new JsonObject _Factory () => new ResultAccountConnect();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1886,7 +1904,7 @@ public partial class ResultAccountConnect : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1949,6 +1967,7 @@ public partial class ResultPublish : ResultCreateDevice {
 	public static new JsonObject _Factory () => new ResultPublish();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1968,7 +1987,7 @@ public partial class ResultPublish : ResultCreateDevice {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2057,6 +2076,7 @@ public partial class ResultPublishDevice : ResultCreateDevice {
 	public static new JsonObject _Factory () => new ResultPublishDevice();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2076,7 +2096,7 @@ public partial class ResultPublishDevice : ResultCreateDevice {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2156,6 +2176,7 @@ public partial class ResultCreateDevice : Result {
 	public static new JsonObject _Factory () => new ResultCreateDevice();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2175,7 +2196,7 @@ public partial class ResultCreateDevice : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2238,6 +2259,7 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
 	public static new JsonObject _Factory () => new ResultCreatePersonal();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2257,7 +2279,7 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2330,6 +2352,7 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 	public static new JsonObject _Factory () => new ResultCreateAccount();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2349,7 +2372,7 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2412,6 +2435,7 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
 	public static new JsonObject _Factory () => new ResultDeleteAccount();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2431,7 +2455,7 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2494,6 +2518,7 @@ public partial class ResultRegisterService : ResultCreateAccount {
 	public static new JsonObject _Factory () => new ResultRegisterService();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2513,7 +2538,7 @@ public partial class ResultRegisterService : ResultCreateAccount {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2568,6 +2593,7 @@ public partial class ResultRecover : ResultCreatePersonal {
 	public static new JsonObject _Factory () => new ResultRecover();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2587,7 +2613,7 @@ public partial class ResultRecover : ResultCreatePersonal {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2651,6 +2677,7 @@ public partial class ResultStatus : Result {
 	public static new JsonObject _Factory () => new ResultStatus();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2670,7 +2697,7 @@ public partial class ResultStatus : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2750,6 +2777,7 @@ public partial class ResultSync : Result {
 	public static new JsonObject _Factory () => new ResultSync();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2769,7 +2797,7 @@ public partial class ResultSync : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2839,6 +2867,7 @@ public partial class ResultEscrow : Result {
 	public static new JsonObject _Factory () => new ResultEscrow();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2858,7 +2887,7 @@ public partial class ResultEscrow : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2921,6 +2950,7 @@ public partial class ResultMachine : Result {
 	public static new JsonObject _Factory () => new ResultMachine();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2940,7 +2970,7 @@ public partial class ResultMachine : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3012,6 +3042,7 @@ public partial class ResultPIN : Result {
 	public static new JsonObject _Factory () => new ResultPIN();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3031,7 +3062,7 @@ public partial class ResultPIN : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3095,6 +3126,7 @@ public partial class ResultSequence : Result {
 	public static new JsonObject _Factory () => new ResultSequence();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3114,7 +3146,7 @@ public partial class ResultSequence : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3224,6 +3256,7 @@ public partial class LogEntry : MeshmanShellResult {
 	public static new JsonObject _Factory () => new LogEntry();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3243,7 +3276,7 @@ public partial class LogEntry : MeshmanShellResult {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3307,6 +3340,7 @@ public partial class ResultEntry : Result {
 	public static new JsonObject _Factory () => new ResultEntry();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3326,7 +3360,7 @@ public partial class ResultEntry : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3399,6 +3433,7 @@ public partial class ResultEntrySent : Result {
 	public static new JsonObject _Factory () => new ResultEntrySent();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3418,7 +3453,7 @@ public partial class ResultEntrySent : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3473,6 +3508,7 @@ public partial class ResultMail : ResultEntry {
 	public static new JsonObject _Factory () => new ResultMail();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3492,7 +3528,7 @@ public partial class ResultMail : ResultEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3547,6 +3583,7 @@ public partial class ResultSSH : ResultEntry {
 	public static new JsonObject _Factory () => new ResultSSH();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3566,7 +3603,7 @@ public partial class ResultSSH : ResultEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3621,6 +3658,7 @@ public partial class ResultGroupCreate : ResultEntry {
 	public static new JsonObject _Factory () => new ResultGroupCreate();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3640,7 +3678,7 @@ public partial class ResultGroupCreate : ResultEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3712,6 +3750,7 @@ public partial class ResultSent : Result {
 	public static new JsonObject _Factory () => new ResultSent();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3731,7 +3770,7 @@ public partial class ResultSent : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3794,6 +3833,7 @@ public partial class ResultPending : Result {
 	public static new JsonObject _Factory () => new ResultPending();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3813,7 +3853,7 @@ public partial class ResultPending : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3877,6 +3917,7 @@ public partial class ResultAuthorize : Result {
 	public static new JsonObject _Factory () => new ResultAuthorize();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3896,7 +3937,7 @@ public partial class ResultAuthorize : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3960,6 +4001,7 @@ public partial class ResultProcess : Result {
 	public static new JsonObject _Factory () => new ResultProcess();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3979,7 +4021,7 @@ public partial class ResultProcess : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4097,6 +4139,7 @@ public partial class ResultConnect : Result {
 	public static new JsonObject _Factory () => new ResultConnect();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4116,7 +4159,7 @@ public partial class ResultConnect : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4179,6 +4222,7 @@ public partial class ResultTransactionRequest : Result {
 	public static new JsonObject _Factory () => new ResultTransactionRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4198,7 +4242,7 @@ public partial class ResultTransactionRequest : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4270,6 +4314,7 @@ public partial class ResultReceived : Result {
 	public static new JsonObject _Factory () => new ResultReceived();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4289,7 +4334,7 @@ public partial class ResultReceived : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4353,6 +4398,7 @@ public partial class ResultApplication : Result {
 	public static new JsonObject _Factory () => new ResultApplication();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4372,7 +4418,7 @@ public partial class ResultApplication : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4436,6 +4482,7 @@ public partial class ResultApplicationList : Result {
 	public static new JsonObject _Factory () => new ResultApplicationList();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4455,7 +4502,7 @@ public partial class ResultApplicationList : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4528,6 +4575,7 @@ public partial class ResultCallsign : Result {
 	public static new JsonObject _Factory () => new ResultCallsign();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4547,7 +4595,7 @@ public partial class ResultCallsign : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4620,6 +4668,7 @@ public partial class ResultCallsignResolution : Result {
 	public static new JsonObject _Factory () => new ResultCallsignResolution();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4639,7 +4688,7 @@ public partial class ResultCallsignResolution : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4702,6 +4751,7 @@ public partial class ResultCallsignList : Result {
 	public static new JsonObject _Factory () => new ResultCallsignList();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4721,7 +4771,7 @@ public partial class ResultCallsignList : Result {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

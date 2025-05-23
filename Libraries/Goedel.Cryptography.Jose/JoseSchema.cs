@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:05 AM
+//  This file was automatically generated at 5/23/2025 1:46:31 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -253,6 +253,7 @@ public partial class JoseWebSignature : Jose {
 	public static new JsonObject _Factory () => new JoseWebSignature();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -272,7 +273,7 @@ public partial class JoseWebSignature : Jose {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -392,6 +393,7 @@ public partial class JoseWebEncryption : JoseWebSignature {
 	public static new JsonObject _Factory () => new JoseWebEncryption();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -411,7 +413,7 @@ public partial class JoseWebEncryption : JoseWebSignature {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -473,6 +475,7 @@ public partial class JWKS : Jose {
 	public static new JsonObject _Factory () => new JWKS();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -492,7 +495,7 @@ public partial class JWKS : Jose {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -658,6 +661,7 @@ public partial class JWK : Jose {
 	public static new JsonObject _Factory () => new JWK();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -677,7 +681,7 @@ public partial class JWK : Jose {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -759,6 +763,7 @@ public partial class JwtHeader : Jose {
 	public static new JsonObject _Factory () => new JwtHeader();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -778,7 +783,7 @@ public partial class JwtHeader : Jose {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -861,6 +866,7 @@ public partial class Signed : Jose {
 	public static new JsonObject _Factory () => new Signed();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -880,7 +886,7 @@ public partial class Signed : Jose {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -973,6 +979,7 @@ public partial class Encrypted : Jose {
 	public static new JsonObject _Factory () => new Encrypted();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -992,7 +999,7 @@ public partial class Encrypted : Jose {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1054,6 +1061,7 @@ public partial class JsonWebKeys : Jose {
 	public static new JsonObject _Factory () => new JsonWebKeys();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1073,7 +1081,7 @@ public partial class JsonWebKeys : Jose {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1202,6 +1210,7 @@ public partial class KeyCore : Jose {
 	public static new JsonObject _Factory () => new KeyCore();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1221,7 +1230,7 @@ public partial class KeyCore : Jose {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1352,6 +1361,7 @@ public partial class Header : KeyCore {
 	public static new JsonObject _Factory () => new Header();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1371,7 +1381,7 @@ public partial class Header : KeyCore {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1455,6 +1465,7 @@ public partial class Signature : Jose {
 	public static new JsonObject _Factory () => new Signature();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1474,7 +1485,7 @@ public partial class Signature : Jose {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1548,6 +1559,7 @@ public partial class KeyContainer : Jose {
 	public static new JsonObject _Factory () => new KeyContainer();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1567,7 +1579,7 @@ public partial class KeyContainer : Jose {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1670,6 +1682,7 @@ public partial class Key : KeyCore {
 	public static new JsonObject _Factory () => new Key();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1689,7 +1702,7 @@ public partial class Key : KeyCore {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1764,6 +1777,7 @@ public partial class Recipient : Jose {
 	public static new JsonObject _Factory () => new Recipient();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1783,7 +1797,7 @@ public partial class Recipient : Jose {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1858,6 +1872,7 @@ public partial class PublicKeyRSA : Key {
 	public static new JsonObject _Factory () => new PublicKeyRSA();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1877,7 +1892,7 @@ public partial class PublicKeyRSA : Key {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1988,6 +2003,7 @@ public partial class PrivateKeyRSA : PublicKeyRSA {
 	public static new JsonObject _Factory () => new PrivateKeyRSA();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2007,7 +2023,7 @@ public partial class PrivateKeyRSA : PublicKeyRSA {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2082,6 +2098,7 @@ public partial class PublicKeyDH : Key {
 	public static new JsonObject _Factory () => new PublicKeyDH();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2101,7 +2118,7 @@ public partial class PublicKeyDH : Key {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2167,6 +2184,7 @@ public partial class PrivateKeyDH : PublicKeyDH {
 	public static new JsonObject _Factory () => new PrivateKeyDH();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2186,7 +2204,7 @@ public partial class PrivateKeyDH : PublicKeyDH {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2261,6 +2279,7 @@ public partial class PublicKeyECDH : Key {
 	public static new JsonObject _Factory () => new PublicKeyECDH();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2280,7 +2299,7 @@ public partial class PublicKeyECDH : Key {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2346,6 +2365,7 @@ public partial class PrivateKeyECDH : PublicKeyECDH {
 	public static new JsonObject _Factory () => new PrivateKeyECDH();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2365,7 +2385,7 @@ public partial class PrivateKeyECDH : PublicKeyECDH {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2475,6 +2495,7 @@ public partial class PrivateKeyUDF : Key {
 	public static new JsonObject _Factory () => new PrivateKeyUDF();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2494,7 +2515,7 @@ public partial class PrivateKeyUDF : Key {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2550,6 +2571,7 @@ public partial class KeyAgreement : Jose {
 	public static new JsonObject _Factory () => new KeyAgreement();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2569,7 +2591,7 @@ public partial class KeyAgreement : Jose {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2635,6 +2657,7 @@ public partial class KeyAgreementDH : KeyAgreement {
 	public static new JsonObject _Factory () => new KeyAgreementDH();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2654,7 +2677,7 @@ public partial class KeyAgreementDH : KeyAgreement {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2729,6 +2752,7 @@ public partial class KeyAgreementECDH : KeyAgreement {
 	public static new JsonObject _Factory () => new KeyAgreementECDH();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2748,7 +2772,7 @@ public partial class KeyAgreementECDH : KeyAgreement {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2815,6 +2839,7 @@ public partial class PublicKeyBinary : Key {
 	public static new JsonObject _Factory () => new PublicKeyBinary();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2834,7 +2859,7 @@ public partial class PublicKeyBinary : Key {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2901,6 +2926,7 @@ public partial class PrivateKeyBinary : Key {
 	public static new JsonObject _Factory () => new PrivateKeyBinary();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2920,7 +2946,7 @@ public partial class PrivateKeyBinary : Key {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

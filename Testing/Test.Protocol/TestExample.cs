@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:25 AM
+//  This file was automatically generated at 5/23/2025 1:46:39 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -236,6 +236,7 @@ public partial class MultiInstance : TestSchema {
 	public static new JsonObject _Factory () => new MultiInstance();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -255,7 +256,7 @@ public partial class MultiInstance : TestSchema {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -352,6 +353,7 @@ public partial class MultiArray : MultiInstance {
 	public static new JsonObject _Factory () => new MultiArray();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -371,7 +373,7 @@ public partial class MultiArray : MultiInstance {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -474,6 +476,7 @@ public partial class DictArray : MultiArray {
 	public static new JsonObject _Factory () => new DictArray();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -493,7 +496,7 @@ public partial class DictArray : MultiArray {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -583,6 +586,7 @@ public partial class MultiStruct : MultiArray {
 	public static new JsonObject _Factory () => new MultiStruct();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -602,7 +606,7 @@ public partial class MultiStruct : MultiArray {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

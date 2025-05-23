@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:17 AM
+//  This file was automatically generated at 5/23/2025 1:46:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -292,6 +292,7 @@ public partial class ProfileAnything : ProfileService {
 	public static new JsonObject _Factory () => new ProfileAnything();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -311,7 +312,7 @@ public partial class ProfileAnything : ProfileService {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -382,6 +383,7 @@ public partial class CatalogedIdentity : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedIdentity();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -401,7 +403,7 @@ public partial class CatalogedIdentity : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -463,6 +465,7 @@ abstract public partial class Identity : AnythingProtocol {
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -479,7 +482,7 @@ abstract public partial class Identity : AnythingProtocol {
 			}
 		throw new CannotCreateAbstract();
 		}
-
+	*/
 
 	}
 
@@ -534,6 +537,7 @@ public partial class DnsIdentity : Identity {
 	public static new JsonObject _Factory () => new DnsIdentity();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -553,7 +557,7 @@ public partial class DnsIdentity : Identity {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -608,6 +612,7 @@ public partial class LocalIdentity : Identity {
 	public static new JsonObject _Factory () => new LocalIdentity();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -627,7 +632,7 @@ public partial class LocalIdentity : Identity {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -682,6 +687,7 @@ public partial class CallsignIdentity : Identity {
 	public static new JsonObject _Factory () => new CallsignIdentity();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -701,7 +707,7 @@ public partial class CallsignIdentity : Identity {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -778,6 +784,7 @@ public partial class CatalogedThing : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedThing();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -797,7 +804,7 @@ public partial class CatalogedThing : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -890,6 +897,7 @@ public partial class CatalogedAnything : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedAnything();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -909,7 +917,7 @@ public partial class CatalogedAnything : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -966,6 +974,7 @@ public partial class AnythingRequest : Goedel.Protocol.Request {
 	public static new JsonObject _Factory () => new AnythingRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -985,7 +994,7 @@ public partial class AnythingRequest : Goedel.Protocol.Request {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1043,6 +1052,7 @@ public partial class AnythingResponse : Goedel.Protocol.Response {
 	public static new JsonObject _Factory () => new AnythingResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1062,7 +1072,7 @@ public partial class AnythingResponse : Goedel.Protocol.Response {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

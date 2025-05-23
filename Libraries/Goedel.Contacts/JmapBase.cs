@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:08 AM
+//  This file was automatically generated at 5/23/2025 1:46:34 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -222,6 +222,7 @@ public partial class JmapBase : JmapBaseSchema {
 	public static new JsonObject _Factory () => new JmapBase();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -241,7 +242,7 @@ public partial class JmapBase : JmapBaseSchema {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -304,6 +305,7 @@ public partial class Relation : JmapBaseSchema {
 	public static new JsonObject _Factory () => new Relation();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -323,7 +325,7 @@ public partial class Relation : JmapBaseSchema {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

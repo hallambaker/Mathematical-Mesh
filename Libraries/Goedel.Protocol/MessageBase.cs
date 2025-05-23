@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:03 AM
+//  This file was automatically generated at 5/23/2025 1:46:30 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -203,6 +203,7 @@ abstract public partial class Request : BaseMessage {
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -219,7 +220,7 @@ abstract public partial class Request : BaseMessage {
 			}
 		throw new CannotCreateAbstract();
 		}
-
+	*/
 
 	}
 
@@ -318,6 +319,7 @@ abstract public partial class Response : BaseMessage {
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -334,7 +336,7 @@ abstract public partial class Response : BaseMessage {
 			}
 		throw new CannotCreateAbstract();
 		}
-
+	*/
 
 	}
 
@@ -428,6 +430,7 @@ public partial class Version : BaseMessage {
 	public static new JsonObject _Factory () => new Version();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -447,7 +450,7 @@ public partial class Version : BaseMessage {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -521,6 +524,7 @@ public partial class Encoding : BaseMessage {
 	public static new JsonObject _Factory () => new Encoding();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -540,7 +544,7 @@ public partial class Encoding : BaseMessage {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -597,6 +601,7 @@ public partial class HelloRequest : Request {
 	public static new JsonObject _Factory () => new HelloRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -616,7 +621,7 @@ public partial class HelloRequest : Request {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -692,6 +697,7 @@ public partial class HelloResponse : Response {
 	public static new JsonObject _Factory () => new HelloResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -711,7 +717,7 @@ public partial class HelloResponse : Response {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

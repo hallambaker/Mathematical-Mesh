@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:17 AM
+//  This file was automatically generated at 5/23/2025 1:46:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -306,6 +306,7 @@ public partial class JsDevice : ThingDevice {
 	public static new JsonObject _Factory () => new JsDevice();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -325,7 +326,7 @@ public partial class JsDevice : ThingDevice {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -406,6 +407,7 @@ public partial class Resource : ThingDevice {
 	public static new JsonObject _Factory () => new Resource();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -425,7 +427,7 @@ public partial class Resource : ThingDevice {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -480,6 +482,7 @@ public partial class DeviceCredential : Resource {
 	public static new JsonObject _Factory () => new DeviceCredential();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -499,7 +502,7 @@ public partial class DeviceCredential : Resource {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -565,6 +568,7 @@ public partial class DeviceImage : Resource {
 	public static new JsonObject _Factory () => new DeviceImage();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -584,7 +588,7 @@ public partial class DeviceImage : Resource {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -685,6 +689,7 @@ public partial class Service : ThingDevice {
 	public static new JsonObject _Factory () => new Service();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -704,7 +709,7 @@ public partial class Service : ThingDevice {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -785,6 +790,7 @@ public partial class Physical : ThingDevice {
 	public static new JsonObject _Factory () => new Physical();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -804,7 +810,7 @@ public partial class Physical : ThingDevice {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -894,6 +900,7 @@ public partial class Storage : ThingDevice {
 	public static new JsonObject _Factory () => new Storage();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -913,7 +920,7 @@ public partial class Storage : ThingDevice {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

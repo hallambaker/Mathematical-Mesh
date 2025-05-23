@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:17 AM
+//  This file was automatically generated at 5/23/2025 1:46:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -358,6 +358,7 @@ public partial class ResolverRequest : Goedel.Protocol.Request {
 	public static new JsonObject _Factory () => new ResolverRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -377,7 +378,7 @@ public partial class ResolverRequest : Goedel.Protocol.Request {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -435,6 +436,7 @@ public partial class ResolverResponse : Goedel.Protocol.Response {
 	public static new JsonObject _Factory () => new ResolverResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -454,7 +456,7 @@ public partial class ResolverResponse : Goedel.Protocol.Response {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -539,6 +541,7 @@ public partial class QueryRequest : ResolverRequest {
 	public static new JsonObject _Factory () => new QueryRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -558,7 +561,7 @@ public partial class QueryRequest : ResolverRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -635,6 +638,7 @@ public partial class QueryResponse : ResolverResponse {
 	public static new JsonObject _Factory () => new QueryResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -654,7 +658,7 @@ public partial class QueryResponse : ResolverResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -711,6 +715,7 @@ public partial class SyncRequest : ResolverRequest {
 	public static new JsonObject _Factory () => new SyncRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -730,7 +735,7 @@ public partial class SyncRequest : ResolverRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -787,6 +792,7 @@ public partial class SyncResponse : ResolverResponse {
 	public static new JsonObject _Factory () => new SyncResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -806,7 +812,7 @@ public partial class SyncResponse : ResolverResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

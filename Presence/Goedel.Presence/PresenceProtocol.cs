@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:17 AM
+//  This file was automatically generated at 5/23/2025 1:46:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -326,6 +326,7 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
 	public static new JsonObject _Factory () => new PresenceFromClient();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -345,7 +346,7 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -402,6 +403,7 @@ public partial class PresenceConnectRequest : PresenceFromClient {
 	public static new JsonObject _Factory () => new PresenceConnectRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -421,7 +423,7 @@ public partial class PresenceConnectRequest : PresenceFromClient {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -476,6 +478,7 @@ public partial class PresenceHeartbeat : PresenceFromClient {
 	public static new JsonObject _Factory () => new PresenceHeartbeat();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -495,7 +498,7 @@ public partial class PresenceHeartbeat : PresenceFromClient {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -550,6 +553,7 @@ public partial class PresenceEndpointRequest : PresenceFromClient {
 	public static new JsonObject _Factory () => new PresenceEndpointRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -569,7 +573,7 @@ public partial class PresenceEndpointRequest : PresenceFromClient {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -624,6 +628,7 @@ public partial class PresenceAcknowledge : PresenceFromClient {
 	public static new JsonObject _Factory () => new PresenceAcknowledge();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -643,7 +648,7 @@ public partial class PresenceAcknowledge : PresenceFromClient {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -706,6 +711,7 @@ public partial class PresenceResolveRequest : PresenceFromClient {
 	public static new JsonObject _Factory () => new PresenceResolveRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -725,7 +731,7 @@ public partial class PresenceResolveRequest : PresenceFromClient {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -808,6 +814,7 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
 	public static new JsonObject _Factory () => new PresenceFromService();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -827,7 +834,7 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -894,6 +901,7 @@ public partial class PresenceConnectResponse : PresenceFromService {
 	public static new JsonObject _Factory () => new PresenceConnectResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -913,7 +921,7 @@ public partial class PresenceConnectResponse : PresenceFromService {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -976,6 +984,7 @@ public partial class PresenceErrorInvalidSerial : PresenceFromService {
 	public static new JsonObject _Factory () => new PresenceErrorInvalidSerial();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -995,7 +1004,7 @@ public partial class PresenceErrorInvalidSerial : PresenceFromService {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1050,6 +1059,7 @@ public partial class PresenceStatus : PresenceFromService {
 	public static new JsonObject _Factory () => new PresenceStatus();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1069,7 +1079,7 @@ public partial class PresenceStatus : PresenceFromService {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1124,6 +1134,7 @@ public partial class PresenceEndpointResponse : PresenceFromService {
 	public static new JsonObject _Factory () => new PresenceEndpointResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1143,7 +1154,7 @@ public partial class PresenceEndpointResponse : PresenceFromService {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1214,6 +1225,7 @@ public partial class PresenceNotify : PresenceFromService {
 	public static new JsonObject _Factory () => new PresenceNotify();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1233,7 +1245,7 @@ public partial class PresenceNotify : PresenceFromService {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1296,6 +1308,7 @@ public partial class PresenceResolveResponse : PresenceFromService {
 	public static new JsonObject _Factory () => new PresenceResolveResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1315,7 +1328,7 @@ public partial class PresenceResolveResponse : PresenceFromService {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1402,6 +1415,7 @@ public partial class SessionRequest : Message {
 	public static new JsonObject _Factory () => new SessionRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1421,7 +1435,7 @@ public partial class SessionRequest : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1508,6 +1522,7 @@ public partial class SessionResponse : Message {
 	public static new JsonObject _Factory () => new SessionResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1527,7 +1542,7 @@ public partial class SessionResponse : Message {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1612,6 +1627,7 @@ public partial class SessionEndpoint : PresenceProtocol {
 	public static new JsonObject _Factory () => new SessionEndpoint();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1631,7 +1647,7 @@ public partial class SessionEndpoint : PresenceProtocol {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1701,6 +1717,7 @@ public partial class UdpEndpoint : PresenceProtocol {
 	public static new JsonObject _Factory () => new UdpEndpoint();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1720,7 +1737,7 @@ public partial class UdpEndpoint : PresenceProtocol {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

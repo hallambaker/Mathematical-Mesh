@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:17 AM
+//  This file was automatically generated at 5/23/2025 1:46:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -325,6 +325,7 @@ public partial class ProfileRepository : ProfileAccount {
 	public static new JsonObject _Factory () => new ProfileRepository();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -344,7 +345,7 @@ public partial class ProfileRepository : ProfileAccount {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -429,6 +430,7 @@ public partial class CatalogedRepository : CatalogedApplication {
 	public static new JsonObject _Factory () => new CatalogedRepository();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -448,7 +450,7 @@ public partial class CatalogedRepository : CatalogedApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -534,6 +536,7 @@ public partial class ActivationApplicationRepository : ActivationApplication {
 	public static new JsonObject _Factory () => new ActivationApplicationRepository();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -553,7 +556,7 @@ public partial class ActivationApplicationRepository : ActivationApplication {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -617,6 +620,7 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
 	public static new JsonObject _Factory () => new ApplicationEntryRepository();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -636,7 +640,7 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -693,6 +697,7 @@ public partial class PersistanceRequest : Goedel.Protocol.Request {
 	public static new JsonObject _Factory () => new PersistanceRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -712,7 +717,7 @@ public partial class PersistanceRequest : Goedel.Protocol.Request {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -770,6 +775,7 @@ public partial class PersistanceResponse : Goedel.Protocol.Response {
 	public static new JsonObject _Factory () => new PersistanceResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -789,7 +795,7 @@ public partial class PersistanceResponse : Goedel.Protocol.Response {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -846,6 +852,7 @@ public partial class QueryRequest : PersistanceRequest {
 	public static new JsonObject _Factory () => new QueryRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -865,7 +872,7 @@ public partial class QueryRequest : PersistanceRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -922,6 +929,7 @@ public partial class QueryResponse : PersistanceResponse {
 	public static new JsonObject _Factory () => new QueryResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -941,7 +949,7 @@ public partial class QueryResponse : PersistanceResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

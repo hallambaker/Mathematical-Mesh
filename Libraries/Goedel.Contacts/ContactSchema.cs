@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:08 AM
+//  This file was automatically generated at 5/23/2025 1:46:34 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -611,6 +611,7 @@ public partial class JsContact : JmapBase {
 	public static new JsonObject _Factory () => new JsContact();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -630,7 +631,7 @@ public partial class JsContact : JmapBase {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -750,6 +751,7 @@ public partial class Resource : Contacts {
 	public static new JsonObject _Factory () => new Resource();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -769,7 +771,7 @@ public partial class Resource : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -912,6 +914,7 @@ public partial class Name : Contacts {
 	public static new JsonObject _Factory () => new Name();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -931,7 +934,7 @@ public partial class Name : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1028,6 +1031,7 @@ public partial class NameComponent : Contacts {
 	public static new JsonObject _Factory () => new NameComponent();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1047,7 +1051,7 @@ public partial class NameComponent : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1136,6 +1140,7 @@ public partial class NickName : Contacts {
 	public static new JsonObject _Factory () => new NickName();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1155,7 +1160,7 @@ public partial class NickName : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1259,6 +1264,7 @@ public partial class Organization : Contacts {
 	public static new JsonObject _Factory () => new Organization();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1278,7 +1284,7 @@ public partial class Organization : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1355,6 +1361,7 @@ public partial class OrgUnit : Contacts {
 	public static new JsonObject _Factory () => new OrgUnit();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1374,7 +1381,7 @@ public partial class OrgUnit : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1461,6 +1468,7 @@ public partial class SpeakToAs : Contacts {
 	public static new JsonObject _Factory () => new SpeakToAs();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1480,7 +1488,7 @@ public partial class SpeakToAs : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1571,6 +1579,7 @@ public partial class Pronouns : Contacts {
 	public static new JsonObject _Factory () => new Pronouns();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1590,7 +1599,7 @@ public partial class Pronouns : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1681,6 +1690,7 @@ public partial class Title : Contacts {
 	public static new JsonObject _Factory () => new Title();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1700,7 +1710,7 @@ public partial class Title : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1809,6 +1819,7 @@ public partial class EmailAddress : Contacts {
 	public static new JsonObject _Factory () => new EmailAddress();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1828,7 +1839,7 @@ public partial class EmailAddress : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1959,6 +1970,7 @@ public partial class OnlineService : Contacts {
 	public static new JsonObject _Factory () => new OnlineService();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1978,7 +1990,7 @@ public partial class OnlineService : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2098,6 +2110,7 @@ public partial class Phone : Contacts {
 	public static new JsonObject _Factory () => new Phone();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2117,7 +2130,7 @@ public partial class Phone : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2206,6 +2219,7 @@ public partial class LanguagePref : Contacts {
 	public static new JsonObject _Factory () => new LanguagePref();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2225,7 +2239,7 @@ public partial class LanguagePref : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2283,6 +2297,7 @@ public partial class Calendar : Resource {
 	public static new JsonObject _Factory () => new Calendar();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2302,7 +2317,7 @@ public partial class Calendar : Resource {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2403,6 +2418,7 @@ public partial class SchedulingAddress : Contacts {
 	public static new JsonObject _Factory () => new SchedulingAddress();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2422,7 +2438,7 @@ public partial class SchedulingAddress : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2596,6 +2612,7 @@ public partial class Address : Contacts {
 	public static new JsonObject _Factory () => new Address();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2615,7 +2632,7 @@ public partial class Address : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2708,6 +2725,7 @@ public partial class AddressComponent : Contacts {
 	public static new JsonObject _Factory () => new AddressComponent();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2727,7 +2745,7 @@ public partial class AddressComponent : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2785,6 +2803,7 @@ public partial class CryptoKey : Resource {
 	public static new JsonObject _Factory () => new CryptoKey();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2804,7 +2823,7 @@ public partial class CryptoKey : Resource {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2874,6 +2893,7 @@ public partial class ContactDirectory : Resource {
 	public static new JsonObject _Factory () => new ContactDirectory();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2893,7 +2913,7 @@ public partial class ContactDirectory : Resource {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2950,6 +2970,7 @@ public partial class ResourceLink : Resource {
 	public static new JsonObject _Factory () => new ResourceLink();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2969,7 +2990,7 @@ public partial class ResourceLink : Resource {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3027,6 +3048,7 @@ public partial class Media : Resource {
 	public static new JsonObject _Factory () => new Media();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3046,7 +3068,7 @@ public partial class Media : Resource {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3142,6 +3164,7 @@ public partial class Anniversary : Contacts {
 	public static new JsonObject _Factory () => new Anniversary();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3161,7 +3184,7 @@ public partial class Anniversary : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3278,6 +3301,7 @@ public partial class TimeStamp : Contacts {
 	public static new JsonObject _Factory () => new TimeStamp();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3297,7 +3321,7 @@ public partial class TimeStamp : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3389,6 +3413,7 @@ public partial class Note : Contacts {
 	public static new JsonObject _Factory () => new Note();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3408,7 +3433,7 @@ public partial class Note : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3491,6 +3516,7 @@ public partial class Author : Contacts {
 	public static new JsonObject _Factory () => new Author();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3510,7 +3536,7 @@ public partial class Author : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3623,6 +3649,7 @@ public partial class PersonalInfo : Contacts {
 	public static new JsonObject _Factory () => new PersonalInfo();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3642,7 +3669,7 @@ public partial class PersonalInfo : Contacts {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3716,6 +3743,7 @@ public partial class Update : Resource {
 	public static new JsonObject _Factory () => new Update();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3735,7 +3763,7 @@ public partial class Update : Resource {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3808,6 +3836,7 @@ public partial class JsonWebKeySet : CryptoKey {
 	public static new JsonObject _Factory () => new JsonWebKeySet();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3827,7 +3856,7 @@ public partial class JsonWebKeySet : CryptoKey {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3892,6 +3921,7 @@ public partial class ServiceGroup : Resource {
 	public static new JsonObject _Factory () => new ServiceGroup();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3911,7 +3941,7 @@ public partial class ServiceGroup : Resource {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

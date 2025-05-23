@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:05 AM
+//  This file was automatically generated at 5/23/2025 1:46:31 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -188,6 +188,7 @@ public partial class ShellResult : JsonShellResult {
 	public static new JsonObject _Factory () => new ShellResult();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -207,7 +208,7 @@ public partial class ShellResult : JsonShellResult {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

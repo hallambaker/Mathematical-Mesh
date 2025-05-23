@@ -76,7 +76,7 @@ partial class Program {
         //StoreTests.Test().TestCatalog();
         //StoreTests.Test().TestSpoolSingle();
 
-        TestService.Test().TestCredentialFromHandle();
+
         TestService.Test().MeshDeviceConnectPIN();
         TestService.Test().MeshDeviceDirectKey();
 

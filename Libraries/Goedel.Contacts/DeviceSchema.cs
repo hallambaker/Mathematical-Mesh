@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:08 AM
+//  This file was automatically generated at 5/23/2025 1:46:34 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -393,6 +393,7 @@ public partial class JsDevice : JmapBase {
 	public static new JsonObject _Factory () => new JsDevice();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -412,7 +413,7 @@ public partial class JsDevice : JmapBase {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -526,6 +527,7 @@ public partial class Network : Devices {
 	public static new JsonObject _Factory () => new Network();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -545,7 +547,7 @@ public partial class Network : Devices {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -631,6 +633,7 @@ public partial class Maintenance : Resource {
 	public static new JsonObject _Factory () => new Maintenance();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -650,7 +653,7 @@ public partial class Maintenance : Resource {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -707,6 +710,7 @@ public partial class Supplier : Resource {
 	public static new JsonObject _Factory () => new Supplier();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -726,7 +730,7 @@ public partial class Supplier : Resource {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -802,6 +806,7 @@ public partial class RelatedItem : Resource {
 	public static new JsonObject _Factory () => new RelatedItem();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -821,7 +826,7 @@ public partial class RelatedItem : Resource {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -893,6 +898,7 @@ public partial class Component : Resource {
 	public static new JsonObject _Factory () => new Component();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -912,7 +918,7 @@ public partial class Component : Resource {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1033,6 +1039,7 @@ public partial class Dimensions : Devices {
 	public static new JsonObject _Factory () => new Dimensions();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1052,7 +1059,7 @@ public partial class Dimensions : Devices {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

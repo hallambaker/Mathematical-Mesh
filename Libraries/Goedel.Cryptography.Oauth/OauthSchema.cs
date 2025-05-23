@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:08 AM
+//  This file was automatically generated at 5/23/2025 1:46:34 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -243,6 +243,7 @@ public partial class ResourceServerMetadata : Oauth {
 	public static new JsonObject _Factory () => new ResourceServerMetadata();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -262,7 +263,7 @@ public partial class ResourceServerMetadata : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -520,6 +521,7 @@ public partial class AuthorizationServerMetadata : Oauth {
 	public static new JsonObject _Factory () => new AuthorizationServerMetadata();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -539,7 +541,7 @@ public partial class AuthorizationServerMetadata : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -686,6 +688,7 @@ public partial class AuthorizationRequest : Oauth {
 	public static new JsonObject _Factory () => new AuthorizationRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -705,7 +708,7 @@ public partial class AuthorizationRequest : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -777,6 +780,7 @@ public partial class AuthorizationRequest2 : Oauth {
 	public static new JsonObject _Factory () => new AuthorizationRequest2();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -796,7 +800,7 @@ public partial class AuthorizationRequest2 : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -876,6 +880,7 @@ public partial class PushedAuthorizationResponse : Oauth {
 	public static new JsonObject _Factory () => new PushedAuthorizationResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -895,7 +900,7 @@ public partial class PushedAuthorizationResponse : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -984,6 +989,7 @@ public partial class AuthorizationResponse : Oauth {
 	public static new JsonObject _Factory () => new AuthorizationResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1003,7 +1009,7 @@ public partial class AuthorizationResponse : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1125,6 +1131,7 @@ public partial class ErrorResponse : Oauth {
 	public static new JsonObject _Factory () => new ErrorResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1144,7 +1151,7 @@ public partial class ErrorResponse : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1316,6 +1323,7 @@ public partial class ClientMetadata : Oauth {
 	public static new JsonObject _Factory () => new ClientMetadata();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1335,7 +1343,7 @@ public partial class ClientMetadata : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1427,6 +1435,7 @@ public partial class DidDocument : Oauth {
 	public static new JsonObject _Factory () => new DidDocument();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1446,7 +1455,7 @@ public partial class DidDocument : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1538,6 +1547,7 @@ public partial class AuthorizationCodeGrant : Oauth {
 	public static new JsonObject _Factory () => new AuthorizationCodeGrant();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1557,7 +1567,7 @@ public partial class AuthorizationCodeGrant : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1620,6 +1630,7 @@ public partial class ClientCredentialsGrant : Oauth {
 	public static new JsonObject _Factory () => new ClientCredentialsGrant();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1639,7 +1650,7 @@ public partial class ClientCredentialsGrant : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1720,6 +1731,7 @@ public partial class RefreshTokenGrant : Oauth {
 	public static new JsonObject _Factory () => new RefreshTokenGrant();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1739,7 +1751,7 @@ public partial class RefreshTokenGrant : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1825,6 +1837,7 @@ public partial class DidVerificationMethod : Oauth {
 	public static new JsonObject _Factory () => new DidVerificationMethod();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1844,7 +1857,7 @@ public partial class DidVerificationMethod : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1922,6 +1935,7 @@ public partial class DidService : Oauth {
 	public static new JsonObject _Factory () => new DidService();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1941,7 +1955,7 @@ public partial class DidService : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2019,6 +2033,7 @@ public partial class AuthenticationResponse : Oauth {
 	public static new JsonObject _Factory () => new AuthenticationResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2038,7 +2053,7 @@ public partial class AuthenticationResponse : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2167,6 +2182,7 @@ public partial class DpopPayload : Oauth {
 	public static new JsonObject _Factory () => new DpopPayload();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2186,7 +2202,7 @@ public partial class DpopPayload : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2252,6 +2268,7 @@ public partial class DpopConfirmation : Oauth {
 	public static new JsonObject _Factory () => new DpopConfirmation();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2271,7 +2288,7 @@ public partial class DpopConfirmation : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2351,6 +2368,7 @@ public partial class JwtDpop : Oauth {
 	public static new JsonObject _Factory () => new JwtDpop();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2370,7 +2388,7 @@ public partial class JwtDpop : Oauth {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

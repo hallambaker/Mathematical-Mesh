@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:17 AM
+//  This file was automatically generated at 5/23/2025 1:46:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -280,6 +280,7 @@ public partial class ProfileThing : ProfileService {
 	public static new JsonObject _Factory () => new ProfileThing();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -299,7 +300,7 @@ public partial class ProfileThing : ProfileService {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -392,6 +393,7 @@ public partial class CatalogedThing : CatalogedEntry {
 	public static new JsonObject _Factory () => new CatalogedThing();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -411,7 +413,7 @@ public partial class CatalogedThing : CatalogedEntry {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -468,6 +470,7 @@ public partial class ThingRequest : Goedel.Protocol.Request {
 	public static new JsonObject _Factory () => new ThingRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -487,7 +490,7 @@ public partial class ThingRequest : Goedel.Protocol.Request {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -545,6 +548,7 @@ public partial class ThingResponse : Goedel.Protocol.Response {
 	public static new JsonObject _Factory () => new ThingResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -564,7 +568,7 @@ public partial class ThingResponse : Goedel.Protocol.Response {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 

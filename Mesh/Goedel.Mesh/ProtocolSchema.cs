@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 12:52:12 AM
+//  This file was automatically generated at 5/23/2025 1:46:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -909,28 +909,18 @@ public partial class MeshRequest : Goedel.Protocol.Request {
 	public static new JsonObject _Factory () => new MeshRequest();
 
 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
+
+	/// <summary>
+	/// Deserialize a tagged stream
+	/// </summary>
+	/// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new MeshRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as MeshRequest;
-			}
-		var Result = new MeshRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
+	/// <returns>The created object.</returns>		
+	public static new MeshRequest FromJson(JsonReader jsonReader, bool tagged = true) =>
+				StreamParse(typeof(T), jsonReader, tagged);
 
 
-	}
+    }
 
 
 	/// <summary>
@@ -1014,6 +1004,7 @@ public partial class MeshRequestUser : MeshRequest {
 	public static new JsonObject _Factory () => new MeshRequestUser();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1033,16 +1024,16 @@ public partial class MeshRequestUser : MeshRequest {
 		Result.PostDecode();
 		return Result;
 		}
+	*/
+
+    }
 
 
-	}
-
-
-	/// <summary>
-	///
-	/// Base class for all response messages. Contains only the
-	/// status code and status description fields.
-	/// </summary>
+/// <summary>
+///
+/// Base class for all response messages. Contains only the
+/// status code and status description fields.
+/// </summary>
 public partial class MeshResponse : Goedel.Protocol.Response {
 
 
@@ -1091,6 +1082,7 @@ public partial class MeshResponse : Goedel.Protocol.Response {
 	public static new JsonObject _Factory () => new MeshResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1110,7 +1102,7 @@ public partial class MeshResponse : Goedel.Protocol.Response {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1185,6 +1177,7 @@ public partial class KeyValue : MeshProtocol {
 	public static new JsonObject _Factory () => new KeyValue();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1204,7 +1197,7 @@ public partial class KeyValue : MeshProtocol {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1324,6 +1317,7 @@ public partial class ConstraintsSelect : MeshProtocol {
 	public static new JsonObject _Factory () => new ConstraintsSelect();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1343,7 +1337,7 @@ public partial class ConstraintsSelect : MeshProtocol {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1454,6 +1448,7 @@ public partial class ConstraintsData : MeshProtocol {
 	public static new JsonObject _Factory () => new ConstraintsData();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1473,7 +1468,7 @@ public partial class ConstraintsData : MeshProtocol {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1560,6 +1555,7 @@ public partial class PolicyAccount : MeshProtocol {
 	public static new JsonObject _Factory () => new PolicyAccount();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1579,7 +1575,7 @@ public partial class PolicyAccount : MeshProtocol {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1659,6 +1655,7 @@ public partial class StoreStatus : MeshProtocol {
 	public static new JsonObject _Factory () => new StoreStatus();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1678,7 +1675,7 @@ public partial class StoreStatus : MeshProtocol {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1762,6 +1759,7 @@ public partial class StoreUpdate : StoreStatus {
 	public static new JsonObject _Factory () => new StoreUpdate();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1781,7 +1779,7 @@ public partial class StoreUpdate : StoreStatus {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1846,6 +1844,7 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
 	public static new JsonObject _Factory () => new MeshHelloRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1865,7 +1864,7 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -1971,6 +1970,7 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 	public static new JsonObject _Factory () => new MeshHelloResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -1990,7 +1990,7 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2075,6 +2075,7 @@ public partial class BindRequest : MeshRequest {
 	public static new JsonObject _Factory () => new BindRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2094,7 +2095,7 @@ public partial class BindRequest : MeshRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2181,6 +2182,7 @@ public partial class BindResponse : MeshResponse {
 	public static new JsonObject _Factory () => new BindResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2200,7 +2202,7 @@ public partial class BindResponse : MeshResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2259,6 +2261,7 @@ public partial class UnbindRequest : MeshRequestUser {
 	public static new JsonObject _Factory () => new UnbindRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2278,7 +2281,7 @@ public partial class UnbindRequest : MeshRequestUser {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2335,6 +2338,7 @@ public partial class UnbindResponse : MeshResponse {
 	public static new JsonObject _Factory () => new UnbindResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2354,7 +2358,7 @@ public partial class UnbindResponse : MeshResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2427,6 +2431,7 @@ public partial class ConnectRequest : MeshRequest {
 	public static new JsonObject _Factory () => new ConnectRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2446,7 +2451,7 @@ public partial class ConnectRequest : MeshRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2521,6 +2526,7 @@ public partial class ConnectResponse : MeshResponse {
 	public static new JsonObject _Factory () => new ConnectResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2540,7 +2546,7 @@ public partial class ConnectResponse : MeshResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2611,6 +2617,7 @@ public partial class CompleteRequest : StatusRequest {
 	public static new JsonObject _Factory () => new CompleteRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2630,7 +2637,7 @@ public partial class CompleteRequest : StatusRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2706,6 +2713,7 @@ public partial class CompleteResponse : MeshResponse {
 	public static new JsonObject _Factory () => new CompleteResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2725,7 +2733,7 @@ public partial class CompleteResponse : MeshResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2825,6 +2833,7 @@ public partial class StatusRequest : MeshRequestUser {
 	public static new JsonObject _Factory () => new StatusRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2844,7 +2853,7 @@ public partial class StatusRequest : MeshRequestUser {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -2971,6 +2980,7 @@ public partial class StatusResponse : MeshResponse {
 	public static new JsonObject _Factory () => new StatusResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -2990,7 +3000,7 @@ public partial class StatusResponse : MeshResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3076,6 +3086,7 @@ public partial class DeviceStatus : MeshProtocol {
 	public static new JsonObject _Factory () => new DeviceStatus();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3095,7 +3106,7 @@ public partial class DeviceStatus : MeshProtocol {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3201,6 +3212,7 @@ public partial class DownloadRequest : MeshRequestUser {
 	public static new JsonObject _Factory () => new DownloadRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3220,7 +3232,7 @@ public partial class DownloadRequest : MeshRequestUser {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3308,6 +3320,7 @@ public partial class DownloadResponse : MeshResponse {
 	public static new JsonObject _Factory () => new DownloadResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3327,7 +3340,7 @@ public partial class DownloadResponse : MeshResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3402,6 +3415,7 @@ public partial class UploadRequest : MeshRequestUser {
 	public static new JsonObject _Factory () => new UploadRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3421,7 +3435,7 @@ public partial class UploadRequest : MeshRequestUser {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3478,6 +3492,7 @@ public partial class UploadResponse : MeshResponse {
 	public static new JsonObject _Factory () => new UploadResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3497,7 +3512,7 @@ public partial class UploadResponse : MeshResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3563,6 +3578,7 @@ public partial class GetDataRequest : MeshRequest {
 	public static new JsonObject _Factory () => new GetDataRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3582,7 +3598,7 @@ public partial class GetDataRequest : MeshRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3648,6 +3664,7 @@ public partial class GetDataResponse : MeshResponse {
 	public static new JsonObject _Factory () => new GetDataResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3667,7 +3684,7 @@ public partial class GetDataResponse : MeshResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3772,6 +3789,7 @@ public partial class TransactRequest : MeshRequestUser {
 	public static new JsonObject _Factory () => new TransactRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3791,7 +3809,7 @@ public partial class TransactRequest : MeshRequestUser {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3877,6 +3895,7 @@ public partial class TransactResponse : MeshResponse {
 	public static new JsonObject _Factory () => new TransactResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -3896,7 +3915,7 @@ public partial class TransactResponse : MeshResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -3991,6 +4010,7 @@ public partial class EntryResponse : MeshProtocol {
 	public static new JsonObject _Factory () => new EntryResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4010,7 +4030,7 @@ public partial class EntryResponse : MeshProtocol {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4067,6 +4087,7 @@ public partial class PublicRequest : DownloadRequest {
 	public static new JsonObject _Factory () => new PublicRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4086,7 +4107,7 @@ public partial class PublicRequest : DownloadRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4160,6 +4181,7 @@ public partial class PostRequest : MeshRequest {
 	public static new JsonObject _Factory () => new PostRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4179,7 +4201,7 @@ public partial class PostRequest : MeshRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4236,6 +4258,7 @@ public partial class PostResponse : TransactResponse {
 	public static new JsonObject _Factory () => new PostResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4255,7 +4278,7 @@ public partial class PostResponse : TransactResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4320,6 +4343,7 @@ public partial class ClaimRequest : MeshRequest {
 	public static new JsonObject _Factory () => new ClaimRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4339,7 +4363,7 @@ public partial class ClaimRequest : MeshRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4404,6 +4428,7 @@ public partial class ClaimResponse : MeshResponse {
 	public static new JsonObject _Factory () => new ClaimResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4423,7 +4448,7 @@ public partial class ClaimResponse : MeshResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4496,6 +4521,7 @@ public partial class PollClaimRequest : MeshRequest {
 	public static new JsonObject _Factory () => new PollClaimRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4515,7 +4541,7 @@ public partial class PollClaimRequest : MeshRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4580,6 +4606,7 @@ public partial class PollClaimResponse : MeshResponse {
 	public static new JsonObject _Factory () => new PollClaimResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4599,7 +4626,7 @@ public partial class PollClaimResponse : MeshResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4671,6 +4698,7 @@ abstract public partial class CryptographicOperation : MeshProtocol {
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4687,7 +4715,7 @@ abstract public partial class CryptographicOperation : MeshProtocol {
 			}
 		throw new CannotCreateAbstract();
 		}
-
+	*/
 
 	}
 
@@ -4760,6 +4788,7 @@ public partial class CryptographicOperationSign : CryptographicOperation {
 	public static new JsonObject _Factory () => new CryptographicOperationSign();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4779,7 +4808,7 @@ public partial class CryptographicOperationSign : CryptographicOperation {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4844,6 +4873,7 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
 	public static new JsonObject _Factory () => new CryptographicOperationKeyAgreement();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4863,7 +4893,7 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -4918,6 +4948,7 @@ public partial class CryptographicOperationGenerate : CryptographicOperation {
 	public static new JsonObject _Factory () => new CryptographicOperationGenerate();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -4937,7 +4968,7 @@ public partial class CryptographicOperationGenerate : CryptographicOperation {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5008,6 +5039,7 @@ public partial class CryptographicOperationShare : CryptographicOperation {
 	public static new JsonObject _Factory () => new CryptographicOperationShare();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -5027,7 +5059,7 @@ public partial class CryptographicOperationShare : CryptographicOperation {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5089,6 +5121,7 @@ public partial class CryptographicResult : MeshProtocol {
 	public static new JsonObject _Factory () => new CryptographicResult();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -5108,7 +5141,7 @@ public partial class CryptographicResult : MeshProtocol {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5172,6 +5205,7 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
 	public static new JsonObject _Factory () => new CryptographicResultKeyAgreement();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -5191,7 +5225,7 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5246,6 +5280,7 @@ public partial class CryptographicResultShare : CryptographicResult {
 	public static new JsonObject _Factory () => new CryptographicResultShare();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -5265,7 +5300,7 @@ public partial class CryptographicResultShare : CryptographicResult {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5338,6 +5373,7 @@ public partial class OperateRequest : MeshRequest {
 	public static new JsonObject _Factory () => new OperateRequest();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -5357,7 +5393,7 @@ public partial class OperateRequest : MeshRequest {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
@@ -5421,6 +5457,7 @@ public partial class OperateResponse : MeshResponse {
 	public static new JsonObject _Factory () => new OperateResponse();
 
 
+    /* 
     /// <summary>
     /// Deserialize a tagged stream
     /// </summary>
@@ -5440,7 +5477,7 @@ public partial class OperateResponse : MeshResponse {
 		Result.PostDecode();
 		return Result;
 		}
-
+	*/
 
 	}
 
