@@ -3283,6 +3283,12 @@
             </summary>
             <returns>Data as string.</returns>
         </member>
+        <member name="M:Goedel.Protocol.JsonObject.ToBytes">
+            <summary>
+            Convert object to string in JSON form and return as a byte array.
+            </summary>
+            <returns>The data as a byte array.</returns>
+        </member>
         <member name="M:Goedel.Protocol.JsonObject.ToBuilder(System.Text.StringBuilder,System.Int32)">
             <summary>
             Pretty print the object to the string builder <paramref name="builder"/>
@@ -3296,12 +3302,6 @@
             Write the object to the console using the method defined by ToBuilder.
             </summary>
             <param name="indent">Number of indentation units.</param>
-        </member>
-        <member name="M:Goedel.Protocol.JsonObject.GetUTF8">
-            <summary>
-            Convert object to string in JSON form.
-            </summary>
-            <returns>Data as string.</returns>
         </member>
         <member name="M:Goedel.Protocol.JsonObject.GetBytes(System.Boolean,Goedel.Protocol.ObjectEncoding)">
             <summary>

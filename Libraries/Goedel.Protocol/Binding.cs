@@ -139,7 +139,7 @@ public abstract record Binding(
 
 
 
-    static JsonObject ParseTagged(
+    public static JsonObject ParseTagged(
                 JsonElementObject element,
                 Binding binding,
                 bool collectUparsed = false)

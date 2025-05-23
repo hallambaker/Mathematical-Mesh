@@ -67,8 +67,8 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-
-        //GoedelProtocol.Test().TestEncodeDecode2();
+        Goedel.Protocol.JsonReader.Trace = true;
+        TestDareLog.Test().TestLog0();
 
 
         //GoedelProtocol.Test().TestEncodeDecode3();

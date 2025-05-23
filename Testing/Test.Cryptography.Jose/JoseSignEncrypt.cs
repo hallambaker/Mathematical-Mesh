@@ -83,7 +83,7 @@ public partial class TestCryptographyJose {
         // Limit - make use of KeyCollection.
 
         var JWE = new JoseWebEncryption(TestString, EncrypterKeyPair);
-        var JWEText = JWE.ToString();
+        var JWEText = JWE.ToBytes();
         var JWEProt = JWE.Protected.ToUTF8();
 
         var JWE2 = JsonObject.StreamParse < JoseWebEncryption>(JWEText, false);
@@ -100,7 +100,7 @@ public partial class TestCryptographyJose {
 
         var Key = Platform.GetRandomBits(256);
         var JWE = new JoseWebEncryption(TestString, Key);
-        var JWEText = JWE.ToString();
+        var JWEText = JWE.ToBytes();
 
         var JWE2 = JsonObject.StreamParse<JoseWebEncryption>(JWEText, false);
 
@@ -114,7 +114,7 @@ public partial class TestCryptographyJose {
     [Fact]
     public void Test_Jose_Sign() {
         var JWS = new JoseWebSignature(TestString, SignerKeyPair);
-        var JWSText = JWS.ToString();
+        var JWSText = JWS.ToBytes();
 
         foreach (var Signer in JWS.Signatures) {
             var JWSProt = Signer.Protected.ToUTF8();
@@ -134,7 +134,7 @@ public partial class TestCryptographyJose {
     public void Test_Jose_Sign_Encrypt() {
 
         var JWES = new JoseWebEncryption(TestString, EncrypterKeyPair, SignerKeyPair);
-        var JWESText = JWES.ToString();
+        var JWESText = JWES.ToBytes();
         var JWESProt = JWES.Protected.ToUTF8();
 
         foreach (var Signer in JWES.Signatures) {

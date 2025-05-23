@@ -179,7 +179,7 @@ public class SessionManager : Disposable {
         var uri = "https://plc.directory/" + did.Identifier;
 
         Screen.WriteLine($"Resolve DID {uri}");
-        var result = await UriClient.DownloadStringAsync(uri);
+        var result = await UriClient.DownloadByteArrayAsync(uri);
 
         var didDocument = Protocol.JsonObject.StreamParse<DidDocument>(result, false);
 
@@ -215,7 +215,7 @@ public class SessionManager : Disposable {
             CachedDocument<ResourceServerMetadata>? last) {
         var uri = key.AddPath(".well-known/oauth-protected-resource");
 
-        var result = await UriClient.DownloadStringAsync(uri);
+        var result = await UriClient.DownloadByteArrayAsync(uri);
         using var jsonReader = new JsonReader(result);
         var resourceMeta = Protocol.JsonObject.StreamParse<ResourceServerMetadata>(result, false);
 
@@ -235,7 +235,7 @@ public class SessionManager : Disposable {
             CachedDocument<AuthorizationServerMetadata>? last) {
         var uri = key.AddPath(".well-known/oauth-authorization-server");
 
-        var result = await UriClient.DownloadStringAsync(uri);
+        var result = await UriClient.DownloadByteArrayAsync(uri);
         var authMeta = Protocol.JsonObject.StreamParse < AuthorizationServerMetadata>(result, false);
 
         return authMeta;

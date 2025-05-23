@@ -301,8 +301,7 @@ public partial class SequenceIndexEntry : DareEnvelope {
         var TrailerBytes = jbcdStream.FramerGetData();
         DareTrailer trailer = null;
         if (TrailerBytes != null && TrailerBytes.Length > 0) {
-            var TrailerText = TrailerBytes.ToUTF8();
-            trailer = StreamParse<DareTrailer>(TrailerText, false);
+            trailer = StreamParse<DareTrailer>(TrailerBytes, false);
             }
 
         return sequence.SequenceIndexEntryFactoryDelegate(

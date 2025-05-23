@@ -64,26 +64,11 @@ namespace Goedel.Protocol;
 public abstract record JsonElement2 {
 
 
-    //public virtual JsonValueKind2 ValueKind2 { get; }
-
-    //public JsonElement2[] Item { get; } = [];
-
-    //public List<JsonProperty2> EnumerateObject { get; } = [];
-    //public IEnumerable<JsonElement2> EnumerateArray => Item;
-
-    public JsonElement2() {
-        }
-
-    public static JsonElementObject Parse(byte[] data) =>
-        Parse (new JsonBcdReader(data));  
-
-    public static JsonElementObject Parse(
+    public static JsonElementObject? Parse(
                     JsonReader jsonReader) {
         //JsonReader.Trace = true;
         bool going = jsonReader.StartObject();
-        var result = new JsonElementObject(jsonReader);
-
-        return result;
+        return going ? new JsonElementObject(jsonReader) : null;
         }
 
 
@@ -183,6 +168,7 @@ public record JsonElementObject() : JsonElement2 {
                         break;
                         }
                     case Token.Binary: {
+                        jsonReader.ReadBinaryData();
                         Properties.Add(tag, new JsonElementBinary(jsonReader.ResultBinary));
                         break;
                         }
@@ -236,6 +222,7 @@ public record JsonElementArray() : JsonElement2 {
                     break;
                     }
                 case Token.Binary: {
+                    jsonReader.ReadBinaryData();
                     Items.Add(new JsonElementBinary(jsonReader.ResultBinary));
                     break;
                     }

@@ -205,6 +205,11 @@ public class JsonBWriter : JsonWriter {
     /// <param name="first">If true, this is the first element. 
     /// The values is set false on each call</param>
     public override void WriteArraySeparator(ref bool first) {
+        if (!first) {
+            Output.Write(",");
+            NewLine();
+            }
+        first = false;
         }
 
 

@@ -294,6 +294,9 @@ public partial class TestDare {
         Console.WriteLine(envelopeBytes.ToUTF8());
         CheckDecodeDirect(cryptoParameters, envelopeBytes, plaintext, dataSequences, contentType);
 
+        Console.WriteLine();
+        Console.WriteLine();
+
         var EnvelopeBytesB = envelope.GetJsonB(false);
         CheckDecodeDirect(cryptoParameters, EnvelopeBytesB, plaintext, dataSequences, contentType);
         }

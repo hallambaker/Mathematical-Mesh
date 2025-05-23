@@ -32,6 +32,8 @@ using System.IO.IsolatedStorage;
 using System.Text.Json;
 using System.Xml.Linq;
 
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace Goedel.Protocol;
 
 
@@ -307,6 +309,12 @@ public abstract partial class JsonObject : IBinding {
         }
 
     /// <summary>
+    /// Convert object to string in JSON form and return as a byte array.
+    /// </summary>
+    /// <returns>The data as a byte array.</returns>
+    public byte[] ToBytes() => ToString().ToUTF8();
+
+    /// <summary>
     /// Pretty print the object to the string builder <paramref name="builder"/>
     /// prefixed by <paramref name="indent"/> indent units.
     /// </summary>
@@ -327,16 +335,6 @@ public abstract partial class JsonObject : IBinding {
         //Console.WriteLine(StringBuilder.ToString());
         }
 
-
-    /// <summary>
-    /// Convert object to string in JSON form.
-    /// </summary>
-    /// <returns>Data as string.</returns>
-    public virtual string GetUTF8() {
-        var _JSONWriter = new JsonWriter();
-        Serialize(_JSONWriter, true);
-        return _JSONWriter.GetUTF8;
-        }
 
     /// <summary>
     /// Convert object to byte sequence in JSON form.
@@ -940,11 +938,16 @@ public abstract partial class JsonObject : IBinding {
         return Parse(element, binding, collectUparsed) as T;
         }
 
+
     public static JsonObject Parse(
-                byte[] data,
+            byte[] data,
+            bool collectUparsed = false) => Parse(new JsonBcdReader(data), collectUparsed);
+
+    public static JsonObject Parse(
+                JsonReader reader,
                 bool collectUparsed = false) {
 
-        var reader = new JsonBcdReader(data);
+        //var reader = new JsonBcdReader(data);
         var element = JsonElement2.Parse(reader);
 
         //var document = JsonDocument.Parse(data);
@@ -981,7 +984,26 @@ public abstract partial class JsonObject : IBinding {
                 JsonReader jsonReader,
                 bool tagged = true,
                 bool collectUparsed = false) {
-        throw new NotImplementedException();
+
+        if (!BindingDictionary.TryGetValue (type, out var binding)) {
+            Console.WriteLine($"Type {type.FullName} not registered");
+            throw new NYI();
+            }
+
+        // read the next object in the stream
+        var element = JsonElement2.Parse(jsonReader);
+
+        if (element is null) {
+            return binding.Factory() as JsonObject;
+            }
+
+        if (tagged) {
+            return Binding.ParseTagged(element, binding, collectUparsed);
+            }
+
+        else {
+            return Binding.Parse(element, binding, collectUparsed);
+            }
         }
 
 
