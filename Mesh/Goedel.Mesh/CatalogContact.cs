@@ -464,47 +464,47 @@ public partial class CatalogedContact {
 
 
 
-public partial class ContactPerson {
-    ///<summary>Base constructor</summary>
-    public ContactPerson() {
-        }
+//public partial class ContactPerson {
+//    ///<summary>Base constructor</summary>
+//    public ContactPerson() {
+//        }
 
-    /// <summary>
-    /// Convenience constructor filling in basic fields
-    /// </summary>
-    /// <param name="first">The first name</param>
-    /// <param name="last">The last name</param>
-    /// <param name="prefix">Optional prefix</param>
-    /// <param name="suffix">Optional suffix</param>
-    /// <param name="email">Optional SMTP email address</param>
-    public ContactPerson(
-                    string first,
-                    string last,
-                    string prefix = null,
-                    string suffix = null,
-                    string email = null) {
+//    /// <summary>
+//    /// Convenience constructor filling in basic fields
+//    /// </summary>
+//    /// <param name="first">The first name</param>
+//    /// <param name="last">The last name</param>
+//    /// <param name="prefix">Optional prefix</param>
+//    /// <param name="suffix">Optional suffix</param>
+//    /// <param name="email">Optional SMTP email address</param>
+//    public ContactPerson(
+//                    string first,
+//                    string last,
+//                    string prefix = null,
+//                    string suffix = null,
+//                    string email = null) {
 
-        //var personName = new PersonName() {
-        //    First = first,
-        //    Last = last,
-        //    Prefix = prefix,
-        //    Suffix = suffix
-        //    };
-        //personName.SetFullName();
-        //CommonNames = new List<PersonName> { personName };
+//        //var personName = new PersonName() {
+//        //    First = first,
+//        //    Last = last,
+//        //    Prefix = prefix,
+//        //    Suffix = suffix
+//        //    };
+//        //personName.SetFullName();
+//        //CommonNames = new List<PersonName> { personName };
 
-        //if (email is not null) {
-        //    var networkAddress = new NetworkAddress {
-        //        Address = email,
-        //        Protocol = "SMTP"
-        //        //"SMTP"new NetworkProtocol() {
-        //        //    Protocol = "SMTP"
-        //        //    }
-        //        };
-        //    NetworkAddresses = new List<NetworkAddress> { networkAddress };
-        //    }
-        }
-    }
+//        //if (email is not null) {
+//        //    var networkAddress = new NetworkAddress {
+//        //        Address = email,
+//        //        Protocol = "SMTP"
+//        //        //"SMTP"new NetworkProtocol() {
+//        //        //    Protocol = "SMTP"
+//        //        //    }
+//        //        };
+//        //    NetworkAddresses = new List<NetworkAddress> { networkAddress };
+//        //    }
+//        }
+//    }
 
 public partial class NetworkProfile {
 

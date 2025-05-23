@@ -809,7 +809,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <returns>The default contact.</returns>
     public virtual JsContact CreateContact(
             List<CryptographicCapability> capabilities = null,
-            ContactPerson? contact = null, string dnsHandle = null) {
+            string dnsHandle = null) {
 
         //var anchorAccount = new Anchor() {
         //    Udf = Profile.UdfString,

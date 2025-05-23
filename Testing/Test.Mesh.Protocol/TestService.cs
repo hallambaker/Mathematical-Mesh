@@ -45,7 +45,10 @@ public partial class TestService {
     // Encrypt: Encrypt connection request
     // Encrypt: Encrypt confirmation request
 
-    static TestService() => Goedel.Cryptography.Core.Initialization.Initialized.TestTrue();
+    static TestService() {
+        Goedel.Cryptography.Core.Initialization.Initialized.TestTrue();
+        Goedel.Contacts.Contacts._Initialized.TestTrue();
+        }
 
 
 

@@ -73,8 +73,8 @@ partial class Program {
 
         //GoedelProtocol.Test().TestEncodeDecode3();
 
-        StoreTests.Test().TestCatalog();
-        StoreTests.Test().TestSpoolSingle();
+        //StoreTests.Test().TestCatalog();
+        //StoreTests.Test().TestSpoolSingle();
 
         TestService.Test().TestCredentialFromHandle();
         TestService.Test().MeshDeviceConnectPIN();

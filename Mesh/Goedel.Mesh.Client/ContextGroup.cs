@@ -232,7 +232,7 @@ public partial class ContextGroup : ContextAccount {
     /// </summary>
     /// <returns>The default contact.</returns>
     public override JsContact CreateContact(
-                List<CryptographicCapability> capabilities = null, ContactPerson contact = null, string dnsHandle = null) {
+                List<CryptographicCapability> capabilities = null, string dnsHandle = null) {
 
 
         //var anchorAccount = new Anchor() {

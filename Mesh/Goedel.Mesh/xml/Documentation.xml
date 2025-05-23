@@ -3419,19 +3419,6 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ContactPerson.#ctor">
-            <summary>Base constructor</summary>
-        </member>
-        <member name="M:Goedel.Mesh.ContactPerson.#ctor(System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            Convenience constructor filling in basic fields
-            </summary>
-            <param name="first">The first name</param>
-            <param name="last">The last name</param>
-            <param name="prefix">Optional prefix</param>
-            <param name="suffix">Optional suffix</param>
-            <param name="email">Optional SMTP email address</param>
-        </member>
         <member name="M:Goedel.Mesh.NetworkProfile.#ctor">
             <summary>Serialization constructor</summary>
         </member>

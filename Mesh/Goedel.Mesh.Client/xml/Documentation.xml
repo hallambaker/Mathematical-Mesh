@@ -673,7 +673,7 @@
             <param name="maxEnvelopes">The maximum number of envelopes to return.</param>
             <returns>If true, the synchronization has completed.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.CreateContact(System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability},Goedel.Mesh.ContactPerson,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.CreateContact(System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability},System.String)">
             <summary>
             Get the default (i.e. minimum contact info). This has a single network 
             address entry for this mesh and mesh account. 
@@ -971,7 +971,7 @@
             <param name="text">Constrained text to be included in the invitation.</param>
             <returns>The member catalog entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.CreateContact(System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability},Goedel.Mesh.ContactPerson,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextGroup.CreateContact(System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability},System.String)">
             <summary>
             Get the default (i.e. minimum contact info). This has a single network 
             address entry for this mesh and mesh account. 

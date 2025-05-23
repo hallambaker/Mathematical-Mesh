@@ -304,6 +304,8 @@ public class ParsedHandle {
         var locator = Udf.EarlLocator(earl);
         var serviceUri = $"https://{host}/.well-known/{wellKnown}/{locator}.{extension}";
         var ciphertext = await UriClient.DownloadByteArrayAsync(serviceUri);
+
+        // If this fails, it is likely due to the service not being up!
         ciphertext.AssertNotNull(NYI.Throw);
 
         // decrypt the cipher text

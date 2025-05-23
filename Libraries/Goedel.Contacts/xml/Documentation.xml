@@ -1978,7 +1978,7 @@
             Returns a new instance.
             </summary>
         </member>
-        <member name="M:Goedel.Contacts.JsContact.Create(System.String)">
+        <member name="M:Goedel.Contacts.JsContact.Create(System.String,System.String,System.String)">
             <summary>
             Create a  contact of the specified kind with the Version, Created and Updated
             fields filled.

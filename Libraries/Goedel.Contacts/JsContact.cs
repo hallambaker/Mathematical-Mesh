@@ -77,7 +77,27 @@ public partial class JsContact {
     /// <param name="kind"></param>
     /// <returns>The created contact.</returns>
     public static JsContact Create(
-                string kind = null) {
+                string kind = "individual",
+                string first = null,
+                string last = null) {
+        Name name = null;
+        if (first != null | last != null) {
+            name = new() {
+                Components = new()
+                };
+            }
+        if (first != null) {
+            name.Components.Add(new () {
+                Kind = "given",
+                Value = first
+                });
+            }
+        if (last != null) {
+            name.Components.Add(new() {
+                Kind = "surname",
+                Value = last
+                });
+            }
 
         return new JsContact() {
             Version = "1.0",
@@ -87,7 +107,10 @@ public partial class JsContact {
 
             Uid = Udf.Nonce(),
             Language = "en",
+            Name = name
             };
+
+
         }
 
     /// <summary>

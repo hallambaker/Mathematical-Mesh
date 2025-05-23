@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Contacts;
 using Goedel.Mesh;
 
 namespace Goedel.XUnit;
@@ -152,12 +153,16 @@ public partial class StoreTests {
             Sender = id,
             MessageId = id
             };
-        return message.Envelope(signingKey);
+        var result = message.Envelope(signingKey);
+        result.Header.EnvelopeId = Message.GetEnvelopeId(id);
+
+        return result;
         }
 
     static MessageComplete SetStatus(Spool spool, string id, StateSpoolMessage messageStatus, KeyPair signingKey) {
 
         var message = new MessageComplete() {
+            MessageId = Udf.Nonce(),
 
             References = new List<Reference> {
                     new Reference () {
@@ -167,6 +172,9 @@ public partial class StoreTests {
                     }
             };
         var envelope = message.Envelope(signingKey);
+        envelope.Header.EnvelopeId = Message.GetEnvelopeId(message.MessageId);
+        envelope.Header.ContentMeta = new();
+        envelope.Header.ContentMeta.MessageType = MessageComplete.__Tag;
         spool.AppendDirect(envelope);
 
         return message;
@@ -214,17 +222,20 @@ public partial class StoreTests {
         var catalog = new CatalogContact(directory, file, keyCollection: KeyCollection);
 
 
-        throw new NYI();
+
 
         // Alice
-        //var contactAlice = new ContactPerson("Alice", "Example");
-        //var catalogedAlice = new CatalogedContact(contactAlice, false);
+        var contactAlice = JsContact.Create("Alice", "Example");
+            
+            
+            //new ContactPerson("Alice", "Example");
+        var catalogedAlice = new CatalogedContact(contactAlice, false);
 
-        //catalog.New(catalogedAlice);
+        catalog.New(catalogedAlice);
 
         //// Bob
-        //var contactBob = new ContactPerson("Alice", "Example");
-        //var catalogedBob = new CatalogedContact(contactBob, false);
+        var contactBob = JsContact.Create("Bob", "Demonstration");
+        var catalogedBob = new CatalogedContact(contactBob, false);
 
         //catalog.New(catalogedBob);
 

@@ -45,6 +45,8 @@ public partial class TestService {
     #endregion
 
     #region // Constructors
+
+
     #endregion
 
     #region // Implement Interface: Ixxx
@@ -164,8 +166,7 @@ public partial class TestService {
         }
 
     private static JsContact GetContact(byte[] bytes) {
-        var reader = new JsonReader(bytes);
-        return JsContact.FromJson(reader, false);
+        return JsonObject.Parse<JsContact>(bytes);
         }
 
     [Fact]
