@@ -3341,13 +3341,6 @@
             <param name="data">Source</param>
             <returns>Constructed object</returns>
         </member>
-        <member name="M:Goedel.Protocol.JsonObject.From(System.String)">
-            <summary>
-            Factory method to construct object from string data.
-            </summary>
-            <param name="input">Source</param>
-            <returns>Constructed object</returns>
-        </member>
         <member name="M:Goedel.Protocol.JsonObject.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream.
@@ -3390,6 +3383,59 @@
             <param name="Base">Base dictionary to merge into</param>
             <param name="Dictionary">Second dictionary to merge</param>
         </member>
+        <member name="M:Goedel.Protocol.JsonObject.StreamParse``1(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Perform a one pass streaming parse on data read from the file <paramref name="filename"/> 
+            returning an object of type <paramref name="type"/>. This
+            parser does not (currently) support schemas in which a variant object type is
+            specified by the object property.
+            </summary>
+            <param name="type">The type of the object to return.</param>
+            <param name="filename">The data to parse</param>
+            <param name="tagged">If true, the data object has a typed wrapper.</param>
+            <param name="collectUparsed">If true, collect unparseable items during the
+            parse.</param>
+            <returns>The typed, parsed object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.StreamParse``1(Goedel.Protocol.JsonReader,System.Boolean,System.Boolean)">
+            <summary>
+            Perform a one pass streaming parse on the data <paramref name="jsonReader"/>. This
+            parser does not (currently) support schemas in which a variant object type is
+            specified by the object property.
+            </summary>
+            <typeparam name="T">The type of the object to be returned.</typeparam>
+            <param name="jsonReader">The data to parse</param>
+            <param name="tagged">If true, the data object has a typed wrapper.</param>
+            <param name="collectUparsed">If true, collect unparseable items during the
+            parse.</param>
+            <returns>The typed, parsed object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.StreamParse``1(System.IO.Stream,System.Boolean,System.Boolean)">
+            <summary>
+            Perform a one pass streaming parse on the data <paramref name="stream"/>. This
+            parser does not (currently) support schemas in which a variant object type is
+            specified by the object property.
+            </summary>
+            <typeparam name="T">The type of the object to be returned.</typeparam>
+            <param name="stream">The data to parse</param>
+            <param name="tagged">If true, the data object has a typed wrapper.</param>
+            <param name="collectUparsed">If true, collect unparseable items during the
+            parse.</param>
+            <returns>The typed, parsed object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.StreamParse``1(System.Byte[],System.Boolean,System.Boolean)">
+            <summary>
+            Perform a one pass streaming parse on the data <paramref name="data"/>. This
+            parser does not (currently) support schemas in which a variant object type is
+            specified by the object property.
+            </summary>
+            <typeparam name="T">The type of the object to be returned.</typeparam>
+            <param name="data">The data to parse</param>
+            <param name="tagged">If true, the data object has a typed wrapper.</param>
+            <param name="collectUparsed">If true, collect unparseable items during the
+            parse.</param>
+            <returns>The typed, parsed object.</returns>
+        </member>
         <member name="M:Goedel.Protocol.JsonObject.Parse``1(System.Byte[],System.Boolean)">
             <summary>
             Parse the JSON document <paramref name="document"/> returning an
@@ -3422,6 +3468,20 @@
             <param name="collectUparsed">If true, collect up unknown elements in the 
             returned instance.</param>
             <returns>The parsed object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.StreamParseCore(System.Type,Goedel.Protocol.JsonReader,System.Boolean,System.Boolean)">
+            <summary>
+            Perform a one pass streaming parse on the stream read using <paramref name="jsonReader"/> 
+            returning an object of type <paramref name="type"/>. This
+            parser does not (currently) support schemas in which a variant object type is
+            specified by the object property.
+            </summary>
+            <param name="type">The type of the object to return.</param>
+            <param name="jsonReader">A reader for the data.</param>
+            <param name="tagged">If true, the data object has a typed wrapper.</param>
+            <param name="collectUparsed">If true, collect unparseable items during the
+            parse.</param>
+            <returns>The typed, parsed object.</returns>
         </member>
         <member name="M:Goedel.Protocol.JsonObject.Parse(System.Text.Json.JsonElement,Goedel.Protocol.Binding,System.Boolean)">
             <summary>
@@ -4021,13 +4081,6 @@
         </member>
         <member name="P:Goedel.Protocol.BaseMessage._Initialized">
             <summary>Variable used to force static initialization</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.BaseMessage.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
-            <summary>
-            Construct an instance from the specified tagged JsonReader stream.
-            </summary>
-            <param name="jsonReader">Input stream</param>
-            <param name="result">The created object</param>
         </member>
         <member name="T:Goedel.Protocol.Version">
              <summary>

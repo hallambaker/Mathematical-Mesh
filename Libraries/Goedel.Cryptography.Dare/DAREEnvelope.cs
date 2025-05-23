@@ -426,7 +426,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
             }
 
         if (jsonReader.NextArray()) {
-            message.Trailer = DareTrailer.FromJson(jsonReader, false);
+            message.Trailer = StreamParse<DareTrailer>(jsonReader, false);
             }
 
         // Verify that the specified payload digest matches that calculated.
@@ -447,7 +447,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
     /// <returns>The DareEnvelope instance.</returns>
     public static DareEnvelope DecodeHeader(JsonBcdReader jsonReader) {
         Assert.AssertTrue(jsonReader.StartArray(), EnvelopeDataCorrupt.Throw);
-        var header = DareHeader.FromJson(jsonReader, false);
+        var header = StreamParse<DareHeader>(jsonReader, false);
         Assert.AssertNotNull(
             header,
             EnvelopeDataCorrupt.Throw);
@@ -643,7 +643,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         if (verify) {
             // read in the trailer
             if (jsonBcdReader.NextArray()) {
-                message.Trailer = DareTrailer.FromJson(jsonBcdReader, false);
+                message.Trailer = StreamParse<DareTrailer>(jsonBcdReader, false);
                 }
 
             var payloadDigest = message.Trailer?.PayloadDigest ??
@@ -723,7 +723,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         // check the witness value here.
 
         if (jsonBcdReader.NextArray()) {
-            message.Trailer = DareTrailer.FromJson(jsonBcdReader, false);
+            message.Trailer = StreamParse<DareTrailer>(jsonBcdReader, false);
 
             message.Trailer.PayloadDigest.AssertEqual(message.PayloadDigestComputed,
                     EnvelopeDigestCorrupt.Throw);

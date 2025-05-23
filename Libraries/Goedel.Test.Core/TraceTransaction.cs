@@ -57,7 +57,7 @@ public class TraceTransaction {
         requestObject.Deserialize(jsonReader);
 
         RequestObject = requestObject as Request;
-        ResponseObject = Goedel.Protocol.Response.FromJson(Response.JsonReader(), true);
+        ResponseObject = JsonObject.StreamParse<Response>(Response, true);
         }
 
 

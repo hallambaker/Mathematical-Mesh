@@ -31,13 +31,6 @@
         <member name="P:Goedel.Contacts.Calandars._Initialized">
             <summary>Variable used to force static initialization</summary> 
         </member>
-        <member name="M:Goedel.Contacts.Calandars.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
-            <summary>
-            Construct an instance from the specified tagged JsonReader stream.
-            </summary>
-            <param name="jsonReader">Input stream</param>
-            <param name="result">The created object</param>
-        </member>
         <member name="T:Goedel.Contacts.JsCalendarEntry">
             <summary>
             </summary>
@@ -338,14 +331,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.JsCalendarEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.JsEvent">
              <summary>
             
@@ -410,14 +395,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.JsEvent.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.JsTask">
              <summary>
@@ -499,14 +476,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.JsTask.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.JsGroup">
             <summary>
             </summary>
@@ -559,14 +528,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.JsGroup.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.Location">
             <summary>
@@ -661,14 +622,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Location.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Link">
             <summary>
             </summary>
@@ -756,14 +709,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Link.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.VirtualLocation">
             <summary>
             </summary>
@@ -831,14 +776,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.VirtualLocation.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.Participant">
              <summary>
@@ -1040,14 +977,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Participant.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.RecurrenceRule">
             <summary>
             </summary>
@@ -1224,14 +1153,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.RecurrenceRule.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.NDay">
             <summary>
             </summary>
@@ -1283,14 +1204,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.NDay.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.Alert">
              <summary>
@@ -1369,14 +1282,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Alert.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Trigger">
             <summary>
             </summary>
@@ -1441,14 +1346,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.Trigger.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.TimeZone">
              <summary>
@@ -1540,14 +1437,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.TimeZone.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.TimeZoneRule">
              <summary>
@@ -1642,14 +1531,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.TimeZoneRule.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.EmptyPatchObject">
              <summary>
             
@@ -1693,14 +1574,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.EmptyPatchObject.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.ContactConstant">
             <summary>
             Constants used to define contact formats
@@ -1732,13 +1605,6 @@
         </member>
         <member name="P:Goedel.Contacts.Contacts._Initialized">
             <summary>Variable used to force static initialization</summary> 
-        </member>
-        <member name="M:Goedel.Contacts.Contacts.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
-            <summary>
-            Construct an instance from the specified tagged JsonReader stream.
-            </summary>
-            <param name="jsonReader">Input stream</param>
-            <param name="result">The created object</param>
         </member>
         <member name="T:Goedel.Contacts.JsContact">
              <summary>
@@ -1957,14 +1823,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.JsContact.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="P:Goedel.Contacts.JsContact.GroupClaim">
             <summary>Used during analysis to track services claiming to be part 
             of a service group.</summary> 
@@ -2084,14 +1942,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Resource.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Name">
              <summary>
             
@@ -2190,14 +2040,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Name.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.NameComponent">
              <summary>
             
@@ -2266,14 +2108,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.NameComponent.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.NickName">
             <summary>
             </summary>
@@ -2333,14 +2167,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.NickName.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.Organization">
             <summary>
@@ -2413,14 +2239,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Organization.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.OrgUnit">
             <summary>
             </summary>
@@ -2476,14 +2294,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.OrgUnit.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.SpeakToAs">
             <summary>
@@ -2542,14 +2352,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.SpeakToAs.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.Pronouns">
             <summary>
@@ -2613,14 +2415,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Pronouns.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Title">
             <summary>
             </summary>
@@ -2682,14 +2476,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.Title.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.EmailAddress">
             <summary>
@@ -2762,14 +2548,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.EmailAddress.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="P:Goedel.Contacts.EmailAddress.Key">
             <summary>The dictionary key (filled by calling Analyze)</summary> 
@@ -2859,14 +2637,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.OnlineService.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="P:Goedel.Contacts.OnlineService.Key">
             <summary>The dictionary key (filled by calling Analyze)</summary> 
@@ -2960,14 +2730,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Phone.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.LanguagePref">
             <summary>
             </summary>
@@ -3028,14 +2790,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.LanguagePref.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Calendar">
              <summary>
             
@@ -3079,14 +2833,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.Calendar.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.SchedulingAddress">
              <summary>
@@ -3155,14 +2901,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.SchedulingAddress.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.Address">
              <summary>
@@ -3277,14 +3015,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Address.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.AddressComponent">
              <summary>
             
@@ -3349,14 +3079,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.AddressComponent.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.CryptoKey">
              <summary>
             
@@ -3400,14 +3122,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.CryptoKey.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.ContactDirectory">
              <summary>
@@ -3461,14 +3175,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.ContactDirectory.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.ResourceLink">
              <summary>
             
@@ -3511,14 +3217,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.ResourceLink.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.Media">
              <summary>
@@ -3563,14 +3261,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.Media.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.Anniversary">
              <summary>
@@ -3636,14 +3326,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.Anniversary.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.TimeStamp">
              <summary>
@@ -3725,14 +3407,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.TimeStamp.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Note">
              <summary>
             
@@ -3795,14 +3469,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Note.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Author">
              <summary>
             
@@ -3860,14 +3526,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.Author.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.PersonalInfo">
              <summary>
@@ -3945,14 +3603,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.PersonalInfo.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Update">
             <summary>
             </summary>
@@ -4005,14 +3655,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Update.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.JsonWebKeySet">
             <summary>
             </summary>
@@ -4064,14 +3706,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.JsonWebKeySet.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.ServiceGroup">
             <summary>
             </summary>
@@ -4119,14 +3753,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.ServiceGroup.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Devices">
             <summary>
             </summary>
@@ -4153,13 +3779,6 @@
         </member>
         <member name="P:Goedel.Contacts.Devices._Initialized">
             <summary>Variable used to force static initialization</summary> 
-        </member>
-        <member name="M:Goedel.Contacts.Devices.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
-            <summary>
-            Construct an instance from the specified tagged JsonReader stream.
-            </summary>
-            <param name="jsonReader">Input stream</param>
-            <param name="result">The created object</param>
         </member>
         <member name="T:Goedel.Contacts.JsDevice">
              <summary>
@@ -4312,14 +3931,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.JsDevice.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Network">
             <summary>
             </summary>
@@ -4397,14 +4008,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Network.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Maintenance">
              <summary>
             
@@ -4465,14 +4068,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Maintenance.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Supplier">
              <summary>
             
@@ -4515,14 +4110,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.Supplier.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.RelatedItem">
              <summary>
@@ -4579,14 +4166,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.RelatedItem.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Component">
              <summary>
             
@@ -4636,14 +4215,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.Component.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.Dimensions">
              <summary>
@@ -4725,14 +4296,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.Dimensions.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.EventExtensions">
             <summary>
             Extensions class defining logging events and convenience methods.
@@ -4787,13 +4350,6 @@
         </member>
         <member name="P:Goedel.Contacts.JmapBaseSchema._Initialized">
             <summary>Variable used to force static initialization</summary> 
-        </member>
-        <member name="M:Goedel.Contacts.JmapBaseSchema.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
-            <summary>
-            Construct an instance from the specified tagged JsonReader stream.
-            </summary>
-            <param name="jsonReader">Input stream</param>
-            <param name="result">The created object</param>
         </member>
         <member name="T:Goedel.Contacts.JmapBase">
             <summary>
@@ -4866,14 +4422,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Contacts.JmapBase.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Contacts.Relation">
             <summary>
             </summary>
@@ -4919,14 +4467,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Contacts.Relation.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Contacts.AnalysizedContact">
             <summary>

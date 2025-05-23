@@ -1079,7 +1079,7 @@ public partial class JbcdStream  {
         var position = PositionRead;
         var length = ReadFrame(out var HeaderData);
 
-        var header = DareHeader.FromJson(HeaderData.JsonReader(), false);
+        var header = JsonObject.StreamParse<DareHeader>(HeaderData, false);
 
         return header;
         }
@@ -1104,7 +1104,7 @@ public partial class JbcdStream  {
         var length = ReadFrameReverse(out var HeaderData);
         End();
 
-        var header = DareHeader.FromJson(HeaderData.JsonReader(), false);
+        var header = JsonObject.StreamParse<DareHeader>(HeaderData, false);
         //header.FrameStart = position - length;
         //header.FrameLength = length;
 
@@ -1124,12 +1124,12 @@ public partial class JbcdStream  {
             }
         var message = new DareEnvelope() { Body = FrameData };
         if (headerData != null) {
-            message.Header = DareHeader.FromJson(headerData.JsonReader(), false);
+            message.Header = JsonObject.StreamParse<DareHeader>(headerData, false);
             }
         if (trailerData != null) {
             //JSONReader.Trace = true;
             //Console.WriteLine(trailerData.ToUTF8());
-            message.Trailer = DareTrailer.FromJson(trailerData.JsonReader(), false);
+            message.Trailer = JsonObject.StreamParse<DareTrailer>(trailerData, false);
             }
         return message;
         }

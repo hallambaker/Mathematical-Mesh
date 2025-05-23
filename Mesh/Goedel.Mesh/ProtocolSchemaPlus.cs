@@ -114,7 +114,7 @@ public partial class MeshResponse {
         var Text = ToString();
 
         // Convert text back to an object:
-        var Result = MeshResponse.FromJson(Text.JsonReader());
+        var Result = StreamParse<MeshResponse>(Text);
 
         return Result;
         }
@@ -140,7 +140,7 @@ public partial class MeshRequest {
         var Text = ToString();
 
         // Convert text back to an object:
-        var Result = MeshRequest.FromJson(Text.JsonReader());
+        var Result = StreamParse<MeshRequest>(Text);
 
         return Result;
         }

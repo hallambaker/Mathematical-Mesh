@@ -128,14 +128,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Thing.CatalogedThing.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Thing.ContextThing">
             <summary>
             Context for managing the callsign Carnet account.
@@ -285,13 +277,6 @@
         <member name="P:Goedel.Thing.ThingDevice._Initialized">
             <summary>Variable used to force static initialization</summary> 
         </member>
-        <member name="M:Goedel.Thing.ThingDevice.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
-            <summary>
-            Construct an instance from the specified tagged JsonReader stream.
-            </summary>
-            <param name="jsonReader">Input stream</param>
-            <param name="result">The created object</param>
-        </member>
         <member name="T:Goedel.Thing.JsDevice">
              <summary>
             
@@ -405,14 +390,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Thing.JsDevice.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Thing.Resource">
             <summary>
             </summary>
@@ -469,14 +446,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Thing.Resource.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Thing.DeviceCredential">
             <summary>
             </summary>
@@ -517,14 +486,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Thing.DeviceCredential.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Thing.DeviceImage">
             <summary>
@@ -573,14 +534,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Thing.DeviceImage.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Thing.Service">
             <summary>
@@ -653,14 +606,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Thing.Service.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Thing.Physical">
             <summary>
             </summary>
@@ -717,14 +662,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Thing.Physical.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Thing.Storage">
             <summary>
@@ -786,14 +723,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Thing.Storage.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Thing.NamespaceDoc">
             <summary>
@@ -888,14 +817,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Thing.ProfileThing.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Thing.ThingProtocol">
              <summary>
             
@@ -924,13 +845,6 @@
         </member>
         <member name="P:Goedel.Thing.ThingProtocol._Initialized">
             <summary>Variable used to force static initialization</summary> 
-        </member>
-        <member name="M:Goedel.Thing.ThingProtocol.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
-            <summary>
-            Construct an instance from the specified tagged JsonReader stream.
-            </summary>
-            <param name="jsonReader">Input stream</param>
-            <param name="result">The created object</param>
         </member>
         <member name="T:Goedel.Thing.ThingService">
             <summary>
@@ -1045,14 +959,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Thing.ThingRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Thing.ThingResponse">
              <summary>
             
@@ -1096,14 +1002,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Thing.ThingResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
     </members>
 </doc>

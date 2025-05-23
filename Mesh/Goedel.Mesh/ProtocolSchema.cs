@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 1:46:35 PM
+//  This file was automatically generated at 5/23/2025 5:07:49 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -201,7 +201,7 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
 		AddDictionary(ref _bindingDictionary);
 		}
 
-
+	/*
 	/// <summary>
     /// Construct an instance from the specified tagged JsonReader stream.
     /// </summary>
@@ -209,6 +209,7 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
     /// <param name="result">The created object</param>
     public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
 		result = jsonReader.ReadTaggedObject(_TagDictionary);
+	*/
 
 	}
 
@@ -909,18 +910,29 @@ public partial class MeshRequest : Goedel.Protocol.Request {
 	public static new JsonObject _Factory () => new MeshRequest();
 
 
-
-	/// <summary>
-	/// Deserialize a tagged stream
-	/// </summary>
-	/// <param name="jsonReader">The input stream</param>
+    /* 
+    /// <summary>
+    /// Deserialize a tagged stream
+    /// </summary>
+    /// <param name="jsonReader">The input stream</param>
 	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-	/// <returns>The created object.</returns>		
-	public static new MeshRequest FromJson(JsonReader jsonReader, bool tagged = true) =>
-				StreamParse(typeof(T), jsonReader, tagged);
+    /// <returns>The created object.</returns>		
+    public static new MeshRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+		if (jsonReader == null) {
+			return null;
+			}
+		if (tagged) {
+			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+			return Out as MeshRequest;
+			}
+		var Result = new MeshRequest ();
+		Result.Deserialize (jsonReader);
+		Result.PostDecode();
+		return Result;
+		}
+	*/
 
-
-    }
+	}
 
 
 	/// <summary>
@@ -1026,14 +1038,14 @@ public partial class MeshRequestUser : MeshRequest {
 		}
 	*/
 
-    }
+	}
 
 
-/// <summary>
-///
-/// Base class for all response messages. Contains only the
-/// status code and status description fields.
-/// </summary>
+	/// <summary>
+	///
+	/// Base class for all response messages. Contains only the
+	/// status code and status description fields.
+	/// </summary>
 public partial class MeshResponse : Goedel.Protocol.Response {
 
 

@@ -86,13 +86,6 @@
         <member name="P:Goedel.Presence.PresenceProtocol._Initialized">
             <summary>Variable used to force static initialization</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceProtocol.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
-            <summary>
-            Construct an instance from the specified tagged JsonReader stream.
-            </summary>
-            <param name="jsonReader">Input stream</param>
-            <param name="result">The created object</param>
-        </member>
         <member name="T:Goedel.Presence.PresenceService">
             <summary>
             The new base class for the client and service side APIs.
@@ -216,14 +209,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Presence.PresenceFromClient.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="P:Goedel.Presence.PresenceFromClient.SourceEndPoint">
             <summary>The source endpoint address.</summary> 
         </member>
@@ -283,14 +268,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Presence.PresenceConnectRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Presence.PresenceHeartbeat">
             <summary>
             </summary>
@@ -331,14 +308,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Presence.PresenceHeartbeat.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Presence.PresenceEndpointRequest">
             <summary>
@@ -381,14 +350,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Presence.PresenceEndpointRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Presence.PresenceAcknowledge">
             <summary>
             </summary>
@@ -429,14 +390,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Presence.PresenceAcknowledge.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Presence.PresenceResolveRequest">
             <summary>
@@ -482,14 +435,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Presence.PresenceResolveRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Presence.PresenceFromService">
              <summary>
@@ -546,14 +491,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Presence.PresenceFromService.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="P:Goedel.Presence.PresenceFromService.Destination">
             <summary>The UDP endpoing to which the message is to be sent.</summary> 
@@ -622,14 +559,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Presence.PresenceConnectResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Presence.PresenceErrorInvalidSerial">
             <summary>
             </summary>
@@ -675,14 +604,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Presence.PresenceErrorInvalidSerial.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Presence.PresenceStatus">
             <summary>
             </summary>
@@ -724,14 +645,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Presence.PresenceStatus.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Presence.PresenceEndpointResponse">
             <summary>
             </summary>
@@ -772,14 +685,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Presence.PresenceEndpointResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Presence.PresenceNotify">
             <summary>
@@ -830,14 +735,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Presence.PresenceNotify.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Presence.PresenceResolveResponse">
             <summary>
             </summary>
@@ -882,14 +779,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Presence.PresenceResolveResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Presence.SessionRequest">
             <summary>
@@ -948,14 +837,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Presence.SessionRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Presence.SessionResponse">
             <summary>
             </summary>
@@ -1012,14 +893,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Presence.SessionResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Presence.SessionEndpoint">
             <summary>
@@ -1078,14 +951,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Presence.SessionEndpoint.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Presence.UdpEndpoint">
             <summary>
             </summary>
@@ -1134,14 +999,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Presence.UdpEndpoint.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Presence.UdpEndpoint.#ctor">
             <summary>

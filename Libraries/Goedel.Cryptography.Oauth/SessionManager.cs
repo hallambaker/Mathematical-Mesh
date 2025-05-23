@@ -181,8 +181,7 @@ public class SessionManager : Disposable {
         Screen.WriteLine($"Resolve DID {uri}");
         var result = await UriClient.DownloadStringAsync(uri);
 
-        using var jsonReader = new JsonReader(result);
-        var didDocument = DidDocument.FromJson(jsonReader, false);
+        var didDocument = Protocol.JsonObject.StreamParse<DidDocument>(result, false);
 
         return didDocument;
         }
@@ -218,7 +217,7 @@ public class SessionManager : Disposable {
 
         var result = await UriClient.DownloadStringAsync(uri);
         using var jsonReader = new JsonReader(result);
-        var resourceMeta = ResourceServerMetadata.FromJson(jsonReader, false);
+        var resourceMeta = Protocol.JsonObject.StreamParse<ResourceServerMetadata>(result, false);
 
         return resourceMeta;
         }
@@ -237,8 +236,7 @@ public class SessionManager : Disposable {
         var uri = key.AddPath(".well-known/oauth-authorization-server");
 
         var result = await UriClient.DownloadStringAsync(uri);
-        using var jsonReader = new JsonReader(result);
-        var authMeta = AuthorizationServerMetadata.FromJson(jsonReader, false);
+        var authMeta = Protocol.JsonObject.StreamParse < AuthorizationServerMetadata>(result, false);
 
         return authMeta;
         }

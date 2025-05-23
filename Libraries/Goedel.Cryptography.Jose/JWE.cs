@@ -467,7 +467,7 @@ public partial class JoseWebEncryption {
         var AlgorithmJose = Recipient?.Header.Alg;
         var ExchangeID = AlgorithmJose.FromJoseID();
 
-        var ProtectedHeader = Header.FromJson(Protected.JsonReader(), false);
+        var ProtectedHeader = StreamParse<Header>(Protected, false);
         var BulkID = ProtectedHeader.Enc.FromJoseID();
 
         var agreementData = Recipient.Header.GetAgreementData();

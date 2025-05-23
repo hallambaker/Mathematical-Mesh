@@ -64,14 +64,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Repository.ActivationApplicationRepository.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Repository.ApplicationEntryRepository">
             <summary>
             </summary>
@@ -128,14 +120,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Repository.ApplicationEntryRepository.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Repository.CatalogedRepository">
             <summary>
@@ -234,14 +218,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Repository.CatalogedRepository.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Repository.ContextRepository">
             <summary>
@@ -397,13 +373,6 @@
         <member name="P:Goedel.Repository.RepositoryProtocol._Initialized">
             <summary>Variable used to force static initialization</summary> 
         </member>
-        <member name="M:Goedel.Repository.RepositoryProtocol.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
-            <summary>
-            Construct an instance from the specified tagged JsonReader stream.
-            </summary>
-            <param name="jsonReader">Input stream</param>
-            <param name="result">The created object</param>
-        </member>
         <member name="T:Goedel.Repository.RepositoryService">
             <summary>
             The new base class for the client and service side APIs.
@@ -546,14 +515,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Repository.ProfileRepository.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="M:Goedel.Repository.ProfileRepository.#ctor">
             <summary>
             Create and return an empty instance.
@@ -622,14 +583,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Repository.PersistanceRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Repository.PersistanceResponse">
              <summary>
             
@@ -674,14 +627,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Repository.PersistanceResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Repository.QueryRequest">
              <summary>
             
@@ -725,14 +670,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Repository.QueryRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Repository.QueryResponse">
              <summary>
             
@@ -775,14 +712,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Repository.QueryResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
     </members>
 </doc>

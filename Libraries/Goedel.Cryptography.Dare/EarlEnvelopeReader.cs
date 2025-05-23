@@ -86,13 +86,13 @@ public partial class EarlEnvelopeReader {
 
     /// <summary>
     /// ReadMetadata from the stream.
-    /// </summary>
+    /// </summary>  
     /// <returns></returns>
     public ContentMeta ReadMetadata() {
         if (Version == 1) {
             var unprotectedHeader = ReadBlock(Stream);
             if (unprotectedHeader.Length > 0) {
-                UnprotectedHeader = Unprotected.FromJson(new JsonReader(unprotectedHeader), false);
+                UnprotectedHeader = JsonObject.StreamParse<Unprotected>(unprotectedHeader, false);
                 if (UnprotectedHeader.DigestAlgorithm is not null) {
                     DigestId = UnprotectedHeader.DigestAlgorithm.ToCryptoAlgorithmID();
                     Digest = DigestId.CreateDigest();
@@ -101,7 +101,7 @@ public partial class EarlEnvelopeReader {
             }
         var contentMeta = ReadBlock(Stream);
         if (contentMeta.Length > 0) {
-            ContentMeta = ContentMeta.FromJson(new JsonReader(contentMeta), false);
+            ContentMeta = JsonObject.StreamParse<ContentMeta>(contentMeta, false);
             }
         if (Digest is not null) {
             var metaDigest = DigestId.CreateDigest();
@@ -144,7 +144,7 @@ public partial class EarlEnvelopeReader {
 
         var trailer = ReadBlock(Stream);
         if (trailer.Length > 0) {
-            Trailer = Unprotected.FromJson(new JsonReader(trailer), false);
+            Trailer = JsonObject.StreamParse<Unprotected>(trailer, false);
             }
 
         var signatures = UnprotectedHeader?.Signatures ?? Trailer?.Signatures;

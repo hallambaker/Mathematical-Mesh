@@ -33,7 +33,7 @@ public static class Extension {
         var jsonReader = new JsonBcdReader(inputStream);
 
         (jsonReader.StartArray()).TestTrue();
-        var Header = DareHeader.FromJson(jsonReader, false);
+        var Header = JsonObject.StreamParse<DareHeader>(jsonReader, false);
         Header.TestNotNull();
         (jsonReader.NextArray()).TestTrue();
 

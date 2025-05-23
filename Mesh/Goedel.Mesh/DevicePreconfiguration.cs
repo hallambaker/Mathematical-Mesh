@@ -61,19 +61,4 @@ public partial class DevicePreconfigurationPrivate {
         }
 
 
-
-    /// <summary>
-    /// Read device preconfiguration data from a file.
-    /// </summary>
-    /// <param name="filename">The file to read.</param>
-    /// <returns>The DevicePreconfiguration instance created from the file data.</returns>
-    public static DevicePreconfigurationPrivate FromFile(string filename) {
-        using var inputStream = filename.OpenFileRead();
-        using var reader = new JsonReader(inputStream);
-
-        return FromJson(reader, tagged: true);
-
-        }
-
-
     }

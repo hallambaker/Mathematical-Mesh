@@ -73,14 +73,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Callsign.Registry.ActivationApplicationRegistry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Callsign.Registry.ApplicationEntryRegistry">
             <summary>
             </summary>
@@ -146,14 +138,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Callsign.Registry.ApplicationEntryRegistry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
         </member>
         <member name="T:Goedel.Callsign.Registry.CatalogedRegistry">
             <summary>
@@ -269,14 +253,6 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Callsign.Registry.CatalogedRegistry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="T:Goedel.Callsign.Registry.CallsignRegistry">
              <summary>
             
@@ -305,13 +281,6 @@
         </member>
         <member name="P:Goedel.Callsign.Registry.CallsignRegistry._Initialized">
             <summary>Variable used to force static initialization</summary> 
-        </member>
-        <member name="M:Goedel.Callsign.Registry.CallsignRegistry.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
-            <summary>
-            Construct an instance from the specified tagged JsonReader stream.
-            </summary>
-            <param name="jsonReader">Input stream</param>
-            <param name="result">The created object</param>
         </member>
         <member name="T:Goedel.Callsign.Registry.CallsignRegistryConfiguration">
             <summary>

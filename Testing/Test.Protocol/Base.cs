@@ -157,7 +157,7 @@ public partial class GoedelProtocol {
         var asString = FirstJSON.ToUTF8();
         Console.WriteLine(asString);
 
-        var Second = MultiInstance.FromJson(ReaderFactory(FirstJSON));
+        var Second = JsonObject.StreamParse < MultiInstance>(ReaderFactory(FirstJSON));
         CheckEqual(First, Second);
         }
 

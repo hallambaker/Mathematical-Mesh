@@ -666,7 +666,7 @@ public class MeshHost : Disposable {
         algorithmAuthenticate.Future();
 
         // read the device file
-        var devicePreconfiguration = DevicePreconfigurationPrivate.FromFile(filename);
+        var devicePreconfiguration = JsonObject.StreamParse<DevicePreconfigurationPrivate>(filename);
 
         // create a ContextMeshPending for it.
         var context = ContextMeshPreconfigured.Install(this, devicePreconfiguration);

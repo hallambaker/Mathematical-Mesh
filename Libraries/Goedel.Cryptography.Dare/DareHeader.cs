@@ -96,7 +96,7 @@ public partial class DareHeader {
 
     ///<summary>Routine called after serialization.</summary>
     public override void PostDecode() =>
-        ContentMeta = ContentMeta.GetContentInfo(ContentMetaData);
+        ContentMeta = StreamParse<ContentMeta>(ContentMetaData);
 
     /// <summary>
     /// Create a message header.
@@ -370,12 +370,5 @@ public partial class ContentMeta {
     /// <returns>The serialized content metadata.</returns>
     public byte[] GetContentMetaData() => GetBytes(TagData);
 
-    /// <summary>
-    /// Decode the content metadata bytes
-    /// </summary>
-    /// <param name="data">The data to decode.</param>
-    /// <returns>The decoded data.</returns>
-    public static ContentMeta GetContentInfo(byte[] data) =>
-        data == null ? null : FromJson(data.JsonReader(), TagData);
 
     }

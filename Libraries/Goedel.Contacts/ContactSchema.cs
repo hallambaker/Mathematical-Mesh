@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/23/2025 1:46:34 PM
+//  This file was automatically generated at 5/23/2025 5:07:45 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -160,7 +160,7 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
 		AddDictionary(ref _bindingDictionary);
 		}
 
-
+	/*
 	/// <summary>
     /// Construct an instance from the specified tagged JsonReader stream.
     /// </summary>
@@ -168,6 +168,7 @@ public abstract partial class Contacts : global::Goedel.Protocol.JsonObject {
     /// <param name="result">The created object</param>
     public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
 		result = jsonReader.ReadTaggedObject(_TagDictionary);
+	*/
 
 	}
 

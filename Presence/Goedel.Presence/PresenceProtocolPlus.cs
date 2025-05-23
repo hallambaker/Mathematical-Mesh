@@ -82,9 +82,8 @@ public partial class PresenceFromClient : Request {
     /// <returns>The parsed message.</returns>
     public static PresenceFromClient FromBytes(byte[] data, int offset) {
         var stream = new MemoryStream(data, offset, data.Length - offset);
-        var reader = new JsonBcdReader(stream);
 
-        var result = PresenceFromClient.FromJson(reader, true);
+        var result = StreamParse < PresenceFromClient>(stream, true);
         return result;
         }
 
@@ -152,9 +151,9 @@ public partial class PresenceFromService : Response {
 
 
         var stream = new MemoryStream(data, offset, data.Length - offset);
-        var reader = new JsonBcdReader(stream);
 
-        var result = PresenceFromService.FromJson(reader, true);
+
+        var result = StreamParse<PresenceFromService>(stream, true);
         return result;
         }
 

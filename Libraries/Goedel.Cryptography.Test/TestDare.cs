@@ -78,7 +78,8 @@ public class TestDare {
         if (jsonBcdReader.NextArray()) {
             TrailerStart = inputStream.Position;
 
-            Message.Trailer = DareTrailer.FromJson(jsonBcdReader, false);
+
+            Message.Trailer = JsonObject.StreamParse<DareTrailer>(jsonBcdReader, false);
             }
 
         //var payloadDigest = 

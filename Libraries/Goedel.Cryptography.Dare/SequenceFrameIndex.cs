@@ -294,7 +294,7 @@ public partial class SequenceIndexEntry : DareEnvelope {
 
         var frameLength = jbcdStream.FramerOpen(position, previous);
         var headerBytes = jbcdStream.FramerGetData();
-        var header = DareHeader.FromJson(headerBytes.JsonReader(), false);
+        var header = StreamParse<DareHeader>(headerBytes, false);
 
         jbcdStream.FramerGetFrameIndex(out var dataPosition, out var dataLength);
 
@@ -302,7 +302,7 @@ public partial class SequenceIndexEntry : DareEnvelope {
         DareTrailer trailer = null;
         if (TrailerBytes != null && TrailerBytes.Length > 0) {
             var TrailerText = TrailerBytes.ToUTF8();
-            trailer = DareTrailer.FromJson(TrailerText.JsonReader(), false);
+            trailer = StreamParse<DareTrailer>(TrailerText, false);
             }
 
         return sequence.SequenceIndexEntryFactoryDelegate(

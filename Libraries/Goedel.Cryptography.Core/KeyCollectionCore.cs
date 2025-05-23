@@ -169,9 +169,7 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
         var fileName = Path.Combine(DirectoryKeys, udf);
 
         try {
-
-            fileName.OpenReadToEnd(out var data);
-            return Key.FromJson(data.JsonReader(), true);
+            return JsonObject.StreamParse<Key>(fileName, true);
             }
         catch {
             throw new PrivateKeyNotFound();
@@ -187,9 +185,7 @@ public class KeyCollectionCore : KeyCollection, IKeyCollection {
         var fileName = Path.Combine(DirectoryKeys, udf);
 
         try {
-
-            fileName.OpenReadToEnd(out var data);
-            var key = Key.FromJson(data.JsonReader(), true);
+            var key = JsonObject.StreamParse<Key>(fileName, true);
             cryptoKey = key.GetKeyPair(key.Exportable == true ? KeySecurity.Exportable : KeySecurity.Bound, this);
             return true;
             }

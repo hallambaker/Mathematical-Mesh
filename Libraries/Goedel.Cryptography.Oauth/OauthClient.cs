@@ -154,7 +154,7 @@ public class OauthClient {
 
         // read back the response
         using var jsonReader = new JsonReader(result);
-        var response = PushedAuthorizationResponse.FromJson(jsonReader, false);
+        var response = JsonObject.StreamParse<PushedAuthorizationResponse>(jsonReader, false);
 
         Screen.WriteLine("Pre Authorization Response");
         Screen.WriteLine(response.ToString());

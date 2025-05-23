@@ -94,9 +94,7 @@ public partial class Page {
         var resourceName = $"{name}.{file}";
 
         using var stream = assembly.GetManifestResourceStream(resourceName);
-        using var reader = new JsonBcdReader(stream);
-
-        var result = Page.FromJson(reader);
+        var result = StreamParse<Page>(stream);
 
         return result;
         }
