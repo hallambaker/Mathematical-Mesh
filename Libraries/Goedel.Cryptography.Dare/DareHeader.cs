@@ -95,9 +95,11 @@ public partial class DareHeader {
 
 
     ///<summary>Routine called after serialization.</summary>
-    public override void PostDecode() =>
-        ContentMeta = StreamParse<ContentMeta>(ContentMetaData);
-
+    public override void PostDecode() {
+        if (ContentMetaData is not null) {
+            ContentMeta = StreamParse<ContentMeta>(ContentMetaData, false);
+            }
+        }
     /// <summary>
     /// Create a message header.
     /// </summary>

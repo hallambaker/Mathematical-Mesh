@@ -140,7 +140,7 @@ public class PublicMeshService : MeshService {
         MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate, Logger, PresenceService);
 
         if (!meshServiceConfiguration.ProfileRegistryCallsign.IsBlank()) {
-            var envelope = JsonReader.ReadFile<DareEnvelope>(meshServiceConfiguration.ProfileRegistryCallsign);
+            var envelope = JsonObject.StreamParse<DareEnvelope>(meshServiceConfiguration.ProfileRegistryCallsign);
             var jsonObject = envelope.DecodeJsonObject();
             //using var file = meshServiceConfiguration.ProfileRegistryCallsign.OpenFileRead() ;
             //using var jsonReader = new JsonBcdReader(file);
@@ -396,20 +396,6 @@ public class PublicMeshService : MeshService {
 
         return HelloResponse;
         }
-
-
-
-    bool VerifyBinding(ProfileAccount profileAccount, CallsignBinding callsignBinding) {
-        profileAccount.Future();
-        //CatalogCallsign.Get(callsignBinding.Canonical).AssertNull(NYI.Throw);
-        throw new NYI();
-
-
-
-        //return true;
-        }
-
-    bool ServiceBinding(CallsignBinding callsignBinding) => true;
 
     /// <summary>
     /// Server method implementing the transaction CreateAccount.

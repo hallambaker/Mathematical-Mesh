@@ -69,21 +69,16 @@ partial class Program {
 
         Goedel.Protocol.JsonReader.Trace = true;
 
-        GoedelProtocol.Test().TestArray();
-        GoedelProtocol.Test().TestArrayB();
-        GoedelProtocol.Test().TestInstanceB();
-        GoedelProtocol.Test().TestJSONB();
-        GoedelProtocol.Test().TestStructB();
 
-
-
-
-        TestDareArchive.Test().ArchiveTest();
-        //TestDareArchive.Test().ArchiveRelativeDirectory();
         //TestPersist.Test().TestPersistenceStoreAll();
 
 
-        //TestOauth.Test().TestDidResolve();
+        //TestDare.Test().EnvelopeDigestAtomic();
+        //TestDareArchive.Test().ArchiveRelativeDirectory();
+
+
+
+        TestService.Test().ProtocolHello();
         //TestOauth.Test().TestPAR();
 
         //StoreTests.Test().TestCatalog();

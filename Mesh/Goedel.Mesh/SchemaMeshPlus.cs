@@ -26,24 +26,6 @@ using Goedel.Cryptography.Jose;
 namespace Goedel.Mesh;
 
 
-//public partial class MeshItem {
-
-
-//    public bool Initialized => true;
-
-//    static MeshItem() {
-//        _Initialize();
-//        }
-
-
-//    }
-
-
-
-
-
-
-
 public partial class AccountHostAssignment {
     ///<summary>Typed enveloped data</summary> 
     public Enveloped<AccountHostAssignment> GetEnvelopedAccountHostAssignment() => new(DareEnvelope);
@@ -73,93 +55,6 @@ public partial class MeshItem {
     ///<summary>The envelope Identifier.</summary> 
     public virtual string EnvelopeId => _PrimaryKey;
 
-    ///// <summary>
-    ///// Sign the profile under <paramref name="signingKey"/>.
-    ///// </summary>
-    ///// <param name="signingKey">Optional signature key.</param>
-    ///// <param name="encryptionKey">Optional encryption key.</param>
-    ///// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
-    ///// <returns>Envelope containing the signed profile. Also updates the property
-    ///// <see cref="DareEnvelope"/></returns>
-    //public virtual DareEnvelope Envelope(
-    //            CryptographicKey signingKey = null,
-    //            CryptographicKey encryptionKey = null,
-    //            ObjectEncoding objectEncoding = ObjectEncoding.JSON
-    //            ) {
-
-    //    var contentMeta = new ContentMeta() {
-    //        //UniqueId = base._PrimaryKey,
-    //        UniqueId = _PrimaryKey,
-    //        Created = System.DateTime.Now,
-    //        ContentType = MeshConstants.IanaTypeMeshObject,
-    //        MessageType = _Tag
-    //        };
-
-    //    Enveloped = new Enveloped<MeshItem>(this,
-    //                signingKey: signingKey, encryptionKey: encryptionKey, contentMeta: contentMeta,
-    //                objectEncoding: objectEncoding);
-    //    DareEnvelope.Header.EnvelopeId = EnvelopeId;
-
-    //    return DareEnvelope;
-    //    }
-
-    ///// <summary>
-    ///// Sign the profile under <paramref name="signingKeys"/>.
-    ///// </summary>
-    ///// <param name="signingKeys">Optional list of signature keys.</param>
-    ///// <param name="encryptionKeys">Optional list of encryption keys.</param>
-    ///// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
-    ///// <param name="includeSignatureKey">If true include the public key parameters in the
-    ///// signature.</param>
-    ///// <returns>Envelope containing the signed profile. Also updates the property
-    ///// <see cref="DareEnvelope"/></returns>
-    //public virtual DareEnvelope Envelope(
-    //            List<CryptographicKey> signingKeys,
-    //            List<CryptographicKey> encryptionKeys = null,
-    //            ObjectEncoding objectEncoding = ObjectEncoding.JSON,
-    //            bool includeSignatureKey = false
-    //            ) {
-
-    //    var contentMeta = new ContentMeta() {
-    //        //UniqueId = base._PrimaryKey,
-    //        UniqueId = _PrimaryKey,
-    //        Created = System.DateTime.Now,
-    //        ContentType = MeshConstants.IanaTypeMeshObject,
-    //        MessageType = _Tag
-    //    };
-
-    //    var cryptoParameters = new CryptoParameters(encryptionKeys, signingKeys) {
-    //        IncludeSignatureKey = includeSignatureKey
-    //        };
-
-    //    Enveloped = new Enveloped<MeshItem>(this, cryptoParameters, contentMeta: contentMeta,
-    //                objectEncoding: objectEncoding);
-    //    DareEnvelope.Header.EnvelopeId = EnvelopeId;
-
-    //    return DareEnvelope;
-    //    }
-
-
-
-
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="JSONReader">The input stream</param>
-    /// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new MeshItem FromJson(JsonReader JSONReader, bool Tagged = true) {
-        if (JSONReader == null) {
-            return null;
-            }
-        if (Tagged) {
-            var Out = JSONReader.ReadTaggedObject(_TagDictionary);
-            return Out as MeshItem;
-            }
-        throw new CannotCreateAbstract();
-        }
-
-
     /// <summary>
     /// Decode and parse the data 
     /// </summary>
@@ -167,18 +62,13 @@ public partial class MeshItem {
     /// <param name="keyCollection">The key collaecion to use to find the decryption key.</param>
     /// <returns>The decoded data item</returns>
     public static MeshItem Decode(DareEnvelope envelope, IKeyCollection keyCollection = null) {
-
         if (envelope == null) {
             return null;
             }
-
+        
         var plaintext = envelope.GetPlaintext(keyCollection);
 
-        //Console.WriteLine(plaintext.ToUTF8());
-
-        var reader = new JsonBcdReader(plaintext);
-
-        var result = FromJson(reader, true);
+        var result = StreamParse<MeshItem>(plaintext, true);
         result.Enveloped = envelope;
         result.KeyCollection = keyCollection;
         return result;

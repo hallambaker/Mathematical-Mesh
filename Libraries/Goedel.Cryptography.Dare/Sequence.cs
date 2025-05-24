@@ -373,6 +373,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
             sequence.IndexedFromEnd = sequence.SequenceIndexEntryLast;
             sequence.DarePolicy = policy;
             return sequence;
+
             }
         catch (Exception exception) {
             jbcdStream?.Dispose();

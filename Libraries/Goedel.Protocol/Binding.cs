@@ -134,6 +134,7 @@ public abstract record Binding(
                 }
             }
 
+        template.PostDecode();
         return template;
         }
 

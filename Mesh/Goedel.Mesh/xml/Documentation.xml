@@ -13507,14 +13507,6 @@
         <member name="P:Goedel.Mesh.MeshItem.EnvelopeId">
             <summary>The envelope Identifier.</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MeshItem.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
         <member name="M:Goedel.Mesh.MeshItem.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Decode and parse the data 

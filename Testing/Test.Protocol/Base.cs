@@ -105,7 +105,7 @@ public partial class GoedelProtocol {
         var FirstJSON = First.GetBytes(DataEncoding.JSON, true);
         Console.WriteLine($"Input: {FirstJSON.ToUTF8()}");
 
-        var Second = JsonObject.Parse(FirstJSON) as MultiStruct;
+        var Second = JsonObject.ParseTagged(FirstJSON) as MultiStruct;
         CheckEqual(First, Second);
         }
 

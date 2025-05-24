@@ -3867,15 +3867,6 @@
             <param name="TagDictionary">Dictionary mapping tags to factory methods</param>
             <returns>The deserialized object.</returns>
         </member>
-        <member name="M:Goedel.Protocol.JsonReader.ReadFile``1(System.String,System.Boolean)">
-            <summary>
-            Convenience method, reads a file in the 
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="file"></param>
-            <param name="tagged"></param>
-            <returns></returns>
-        </member>
         <member name="T:Goedel.Protocol.JSONWriterFactoryDelegate">
             <summary>
             Factory delegate returning a JSONWriter

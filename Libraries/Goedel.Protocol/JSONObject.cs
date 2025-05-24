@@ -421,15 +421,7 @@ public abstract partial class JsonObject : IBinding {
         return FromJson(reader, true);
         }
 
-    ///// <summary>
-    ///// Factory method to construct object from string data.
-    ///// </summary>
-    ///// <param name="input">Source</param>
-    ///// <returns>Constructed object</returns>
-    //public static JsonObject From(string input) {
-    //    using var reader = input.JsonReader();
-    //    return FromJson(reader, true);
-    //    }
+
 
     /// <summary>
     /// Deserialize a tagged stream.
@@ -939,11 +931,11 @@ public abstract partial class JsonObject : IBinding {
         }
 
 
-    public static JsonObject Parse(
+    public static JsonObject ParseTagged(
             byte[] data,
-            bool collectUparsed = false) => Parse(new JsonBcdReader(data), collectUparsed);
+            bool collectUparsed = false) => ParseTagged(new JsonBcdReader(data), collectUparsed);
 
-    public static JsonObject Parse(
+    public static JsonObject ParseTagged(
                 JsonReader reader,
                 bool collectUparsed = false) {
 

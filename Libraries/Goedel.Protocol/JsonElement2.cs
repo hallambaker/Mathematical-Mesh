@@ -315,9 +315,10 @@ public record JsonElementArray() : JsonElement2 {
                     break;
                     }
                 }
-            jsonReader.GetToken();
-            going = jsonReader.TokenType == Token.Comma;
-
+            if (going) {
+                jsonReader.GetToken();
+                going = jsonReader.TokenType == Token.Comma;
+                }
             }
         }
     }

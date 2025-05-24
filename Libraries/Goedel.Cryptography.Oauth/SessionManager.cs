@@ -216,7 +216,7 @@ public class SessionManager : Disposable {
         var uri = key.AddPath(".well-known/oauth-protected-resource");
 
         var result = await UriClient.DownloadByteArrayAsync(uri);
-        using var jsonReader = new JsonReader(result);
+        var asText = result.ToUTF8();
         var resourceMeta = Protocol.JsonObject.StreamParse<ResourceServerMetadata>(result, false);
 
         return resourceMeta;

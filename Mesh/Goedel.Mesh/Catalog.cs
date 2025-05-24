@@ -355,7 +355,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
             case CatalogedEntryFormat.Unknown:
             case CatalogedEntryFormat.Default: {
                 using var reader = new JsonBcdReader(stream);
-                var result = CatalogedEntry.FromJson(reader, true);
+                var result = JsonObject.StreamParse<CatalogedEntry>(reader, true);
                 return result as T;
                 }
             }

@@ -41,7 +41,8 @@ public class TestOauth {
 
         //var oauth = new OAuth(document);
 
-        var oauth1 = SessionManager.TryResolveHandle(PHB1).Sync();
+        var oauth1 = SessionManager.TryResolveHandle(PHB1);
+        oauth1.Sync();
         var oauth2 = SessionManager.TryResolveHandle(PHB2).Sync();
 
         }

@@ -767,37 +767,37 @@ public partial class JsonReader : Reader {
         }
 
 
-    /// <summary>
-    /// Convenience method, reads a file in the 
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="file"></param>
-    /// <param name="tagged"></param>
-    /// <returns></returns>
-    public static T ReadFile<T>(string file, bool tagged = false) where T : JsonObject, new() {
-        var result = new T();
-        using var stream = file.OpenFileReadShared();
-        var countedStream = new CountedUtf8StreamReader(stream);
-        using var reader = new JsonReader(countedStream);
+    ///// <summary>
+    ///// Convenience method, reads a file in the 
+    ///// </summary>
+    ///// <typeparam name="T"></typeparam>
+    ///// <param name="file"></param>
+    ///// <param name="tagged"></param>
+    ///// <returns></returns>
+    //public static T ReadFile<T>(string file, bool tagged = false) where T : JsonObject, new() {
+    //    var result = new T();
+    //    using var stream = file.OpenFileReadShared();
+    //    var countedStream = new CountedUtf8StreamReader(stream);
+    //    using var reader = new JsonReader(countedStream);
 
-        reader.PeekToken();
-        if (reader.TokenType == Token.BOM) {
-            reader.Lookahead = false; // skip BOM at start of file.
-            }
+    //    reader.PeekToken();
+    //    if (reader.TokenType == Token.BOM) {
+    //        reader.Lookahead = false; // skip BOM at start of file.
+    //        }
 
-        // Have only implemented untagged files so far.
-        tagged.AssertFalse(NYI.Throw);
+    //    // Have only implemented untagged files so far.
+    //    tagged.AssertFalse(NYI.Throw);
 
-        try {
-            result.Deserialize(reader);
-            }
-        catch (Exception e) {
-            throw new ParseError(null, e, file, countedStream.Line, countedStream.Column);
-            }
+    //    try {
+    //        result.Deserialize(reader);
+    //        }
+    //    catch (Exception e) {
+    //        throw new ParseError(null, e, file, countedStream.Line, countedStream.Column);
+    //        }
 
 
-        return result;
-        }
+    //    return result;
+    //    }
 
 
     }

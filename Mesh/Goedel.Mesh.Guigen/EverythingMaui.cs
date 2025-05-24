@@ -139,8 +139,10 @@ public partial class EverythingMaui {
                 //var token2 = jsonReader.ReadToken();
                 //(jsonReader.TokenType == Token.Colon).AssertTrue(NYI.Throw);
 
-                var entry = new ShellDispatch();
-                entry.Deserialize(jsonReader);
+                var entry = JsonObject.StreamParse<ShellDispatch>(jsonReader);
+                    
+                //    new ShellDispatch();
+                //entry.Deserialize(jsonReader);
 
                 DispatchDictionary.Add(token, entry);
 
