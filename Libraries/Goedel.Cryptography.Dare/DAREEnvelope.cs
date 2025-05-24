@@ -318,7 +318,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         //Header.Deserialize(jsonReader);
 
 
-        Header = StreamParse<DareHeader>(jsonReader);
+        Header = StreamParse<DareHeader>(jsonReader, false);
         if (!jsonReader.NextArray()) {
             return;
             }
@@ -329,7 +329,7 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         //Trailer = new DareTrailer();
         //Trailer.Deserialize(jsonReader);
 
-        Trailer = StreamParse<DareTrailer>(jsonReader);
+        Trailer = StreamParse<DareTrailer>(jsonReader, false);
         jsonReader.EndArray();
         }
 
