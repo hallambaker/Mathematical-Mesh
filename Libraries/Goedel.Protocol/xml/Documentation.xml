@@ -2911,6 +2911,42 @@
         <member name="M:Goedel.Protocol.JbcdValueStringLazy.Unload">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Protocol.JsonElementInt64.GetInt32">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementInt64.GetInt64">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementInt64.GetReal32">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementInt64.GetReal64">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementReal32.GetInt32">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementReal32.GetInt64">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementReal32.GetReal32">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementReal32.GetReal64">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementReal64.GetInt32">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementReal64.GetInt64">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementReal64.GetReal32">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementReal64.GetReal64">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Protocol.Request">
             <summary>
             The base class for transaction requests

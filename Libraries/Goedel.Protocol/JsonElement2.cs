@@ -101,18 +101,76 @@ public record JsonElementBinary(
     }
 
 public record JsonElementNumber(
-            string Value) : JsonElement2 {
+            string? Value) : JsonElement2 {
 
-    public int GetInt32() => Int32.Parse(Value);
+    public virtual int GetInt32() => Int32.Parse(Value);
 
-    public long GetInt64() => Int64.Parse(Value);
-
-
-    public Single GetReal32() => Single.Parse(Value);
+    public virtual long GetInt64() => Int64.Parse(Value);
 
 
-    public Double GetReal64() => Double.Parse(Value);
+    public virtual Single GetReal32() => Single.Parse(Value);
+
+
+    public virtual Double GetReal64() => Double.Parse(Value);
     }
+
+
+public record JsonElementInt64(
+            long intValue) : JsonElementNumber("") {
+
+    /// <inheritdoc/>
+    public override int GetInt32() => (int)intValue;
+
+    /// <inheritdoc/>
+    public override long GetInt64() => intValue;
+
+    /// <inheritdoc/>
+    public override Single GetReal32() => intValue;
+
+    /// <inheritdoc/>
+    public override Double GetReal64() => intValue;
+
+    }
+
+
+public record JsonElementReal32(
+            float floatValue) : JsonElementNumber("") {
+
+    /// <inheritdoc/>
+    public override int GetInt32() => (int)floatValue;
+
+    /// <inheritdoc/>
+    public override long GetInt64() => (long)floatValue;
+
+    /// <inheritdoc/>
+    public override Single GetReal32() => floatValue;
+
+    /// <inheritdoc/>
+    public override Double GetReal64() => floatValue;
+
+    }
+
+
+public record JsonElementReal64(
+            double doubleValue) : JsonElementNumber("") {
+
+    /// <inheritdoc/>
+    public override int GetInt32() => (int)doubleValue;
+
+    /// <inheritdoc/>
+    public override long GetInt64() => (long)doubleValue;
+
+    /// <inheritdoc/>
+    public override Single GetReal32() => (float)doubleValue;
+
+    /// <inheritdoc/>
+    public override Double GetReal64() => doubleValue;
+
+    }
+
+
+
+
 
 
 public record JsonElementObject() : JsonElement2 {
@@ -180,6 +238,21 @@ public record JsonElementObject() : JsonElement2 {
                         Properties.Add(tag, new JsonElementArray(jsonReader));
                         break;
                         }
+
+                    case Token.Integer: {
+                        Properties.Add(tag, new JsonElementInt64(jsonReader.ResultInt64));
+                        break;
+                        }
+                    case Token.Real32: {
+                        Properties.Add(tag, new JsonElementReal32(jsonReader.ResultFloat));
+                        break;
+                        }
+                    case Token.Real64: {
+                        Properties.Add(tag, new JsonElementReal64(jsonReader.ResultDouble));
+                        break;
+                        }
+
+
                     default: {
                         break;
                         }

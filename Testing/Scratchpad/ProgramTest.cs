@@ -68,10 +68,23 @@ partial class Program {
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
         Goedel.Protocol.JsonReader.Trace = true;
-        TestDareLog.Test().TestLog0();
+
+        GoedelProtocol.Test().TestArray();
+        GoedelProtocol.Test().TestArrayB();
+        GoedelProtocol.Test().TestInstanceB();
+        GoedelProtocol.Test().TestJSONB();
+        GoedelProtocol.Test().TestStructB();
 
 
-        //GoedelProtocol.Test().TestEncodeDecode3();
+
+
+        TestDareArchive.Test().ArchiveTest();
+        //TestDareArchive.Test().ArchiveRelativeDirectory();
+        //TestPersist.Test().TestPersistenceStoreAll();
+
+
+        //TestOauth.Test().TestDidResolve();
+        //TestOauth.Test().TestPAR();
 
         //StoreTests.Test().TestCatalog();
         //StoreTests.Test().TestSpoolSingle();

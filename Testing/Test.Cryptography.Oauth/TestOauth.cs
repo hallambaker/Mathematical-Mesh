@@ -44,11 +44,6 @@ public class TestOauth {
         var oauth1 = SessionManager.TryResolveHandle(PHB1).Sync();
         var oauth2 = SessionManager.TryResolveHandle(PHB2).Sync();
 
-
-
-
-
-
         }
     [Fact]
     public void TestPAR() {
