@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:12:52 AM
+//  This file was automatically generated at 5/25/2025 12:57:24 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -157,11 +157,11 @@ public abstract partial class ServiceManagementService : Goedel.Protocol.JpcInte
 	public override string GetDiscovery => Discovery;
 
 	///<inheritdoc/>
-	public override Dictionary<string, JsonFactoryDelegate>  GetTagDictionary() => _TagDictionary;
+	public override Dictionary<string, Type>  GetTagDictionary => _TagDictionary;
 		
-	static Dictionary<string, JsonFactoryDelegate> _TagDictionary = new () {
-				{"ServiceConfig", ServiceConfigRequest._Factory},
-				{"ServiceStatus", ServiceStatusRequest._Factory}
+	static Dictionary<string, Type> _TagDictionary = new () {
+				{"ServiceConfig", typeof(ServiceConfigRequest)},
+				{"ServiceStatus", typeof(ServiceStatusRequest)}
 		};
 
     ///<inheritdoc/>

@@ -9740,7 +9740,7 @@
         <member name="P:Goedel.Mesh.MeshService.GetDiscovery">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.MeshService.GetTagDictionary">
+        <member name="P:Goedel.Mesh.MeshService.GetTagDictionary">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.MeshService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">

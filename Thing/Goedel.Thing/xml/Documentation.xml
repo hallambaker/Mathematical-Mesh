@@ -867,7 +867,7 @@
         <member name="P:Goedel.Thing.ThingService.GetDiscovery">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Thing.ThingService.GetTagDictionary">
+        <member name="P:Goedel.Thing.ThingService.GetTagDictionary">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Thing.ThingService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">

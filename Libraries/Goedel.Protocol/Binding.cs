@@ -569,6 +569,11 @@ public abstract record Binding(
                         subProperty.Set(target, item);
                         }
                     }
+                else if (element is JsonElementArray jsonArray) {
+                    if (!JsonObject.BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
+                        return false;
+                        }
+                    }
                 return false;
                 }
             case PropertyListStruct subProperty: {

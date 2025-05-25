@@ -112,18 +112,26 @@ public abstract class JpcInterface : Disposable {
     public (string, JsonObject) GetRequest(
             JsonReader jsonReader) {
 
-        var request = JsonObject.ParseTagged(jsonReader);
-        //jsonReader.StartObject();
-        //string token = jsonReader.ReadToken();
 
-        //if (!GetTagDictionary().TryGetValue(token, out var factory)) {
-        //    throw new UnknownOperation();
-        //    }
+        jsonReader.StartObject();
+        string token = jsonReader.ReadToken();
+        //var request = JsonObject.ParseTagged(jsonReader);
+
+
+        if (!GetTagDictionary.TryGetValue(token, out var type)) {
+            throw new UnknownOperation();
+            }
+
+
+        var request = JsonObject.StreamParseCore(type, jsonReader, false);
 
         //var request = factory();
         //request.Deserialize(jsonReader);
 
-        return (request._Tag, request);
+        jsonReader.EndObject();
+
+
+        return (token, request);
         }
 
 
@@ -160,7 +168,7 @@ public abstract class JpcInterface : Disposable {
     //public abstract IJpcSession GetSession();
 
     ///<summary>Tag dictionary mapping operation tags to requests.</summary> 
-    public abstract Dictionary<string, JsonFactoryDelegate> GetTagDictionary();
+    public abstract Dictionary<string, Type> GetTagDictionary { get; }
 
 
 

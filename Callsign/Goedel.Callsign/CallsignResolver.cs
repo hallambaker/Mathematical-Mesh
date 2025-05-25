@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:12:40 AM
+//  This file was automatically generated at 5/25/2025 12:57:12 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -157,11 +157,11 @@ public abstract partial class ResolverService : Goedel.Protocol.JpcInterface {
 	public override string GetDiscovery => Discovery;
 
 	///<inheritdoc/>
-	public override Dictionary<string, JsonFactoryDelegate>  GetTagDictionary() => _TagDictionary;
+	public override Dictionary<string, Type>  GetTagDictionary => _TagDictionary;
 		
-	static Dictionary<string, JsonFactoryDelegate> _TagDictionary = new () {
-				{"Query", QueryRequest._Factory},
-				{"Sync", SyncRequest._Factory}
+	static Dictionary<string, Type> _TagDictionary = new () {
+				{"Query", typeof(QueryRequest)},
+				{"Sync", typeof(SyncRequest)}
 		};
 
     ///<inheritdoc/>

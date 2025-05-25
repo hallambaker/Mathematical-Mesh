@@ -67,14 +67,15 @@ partial class Program {
         Goedel.Protocol.JsonReader.Trace = true;
 
 
-        TestCryptographyJose.Test().Test_Jose_Encrypt_Symmetric();
-        TestCryptographyJose.Test().Test_Jose_Sign();
-        TestCryptographyJose.Test().Test_Jose_Sign_Encrypt();
+        //TestCryptographyJose.Test().Test_Jose_Encrypt_Symmetric();
+        //TestCryptographyJose.Test().Test_Jose_Sign();
+        //TestCryptographyJose.Test().Test_Jose_Sign_Encrypt();
 
         //TestDare.Test().EnvelopeDigestAtomic();
         //TestDareArchive.Test().ArchiveRelativeDirectory();
 
-
+        //Jmap.Test().TestContactAlice();
+        //Jmap.Test().TestDeviceFridge();
 
         //TestService.Test().ProtocolHello();
         //TestOauth.Test().TestPAR();
@@ -93,8 +94,7 @@ partial class Program {
 
         //TestDareArchive.Test().ArchiveRelativeDirectory();
         //TestService.Test().TestCredentialAccount();
-        //Jmap.Test().TestContactAlice();
-        //Jmap.Test().TestDeviceFridge();
+
 
 
         //var examples = new CreateExamples();

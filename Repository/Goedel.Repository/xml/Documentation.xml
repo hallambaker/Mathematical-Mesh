@@ -394,7 +394,7 @@
         <member name="P:Goedel.Repository.RepositoryService.GetDiscovery">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Repository.RepositoryService.GetTagDictionary">
+        <member name="P:Goedel.Repository.RepositoryService.GetTagDictionary">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Repository.RepositoryService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">

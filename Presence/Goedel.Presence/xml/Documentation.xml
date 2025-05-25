@@ -107,7 +107,7 @@
         <member name="P:Goedel.Presence.PresenceService.GetDiscovery">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Presence.PresenceService.GetTagDictionary">
+        <member name="P:Goedel.Presence.PresenceService.GetTagDictionary">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Presence.PresenceService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">

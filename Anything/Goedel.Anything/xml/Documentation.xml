@@ -54,7 +54,7 @@
         <member name="P:Goedel.Anything.CarnetService.GetDiscovery">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Anything.CarnetService.GetTagDictionary">
+        <member name="P:Goedel.Anything.CarnetService.GetTagDictionary">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Anything.CarnetService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">

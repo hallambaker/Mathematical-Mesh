@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:12:34 AM
+//  This file was automatically generated at 5/25/2025 12:57:05 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -240,24 +240,24 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
 	public override string GetDiscovery => Discovery;
 
 	///<inheritdoc/>
-	public override Dictionary<string, JsonFactoryDelegate>  GetTagDictionary() => _TagDictionary;
+	public override Dictionary<string, Type>  GetTagDictionary => _TagDictionary;
 		
-	static Dictionary<string, JsonFactoryDelegate> _TagDictionary = new () {
-				{"Hello", HelloRequest._Factory},
-				{"BindAccount", BindRequest._Factory},
-				{"UnbindAccount", UnbindRequest._Factory},
-				{"Connect", ConnectRequest._Factory},
-				{"Complete", CompleteRequest._Factory},
-				{"Status", StatusRequest._Factory},
-				{"Download", DownloadRequest._Factory},
-				{"Upload", UploadRequest._Factory},
-				{"GetData", GetDataRequest._Factory},
-				{"Transact", TransactRequest._Factory},
-				{"PublicRead", PublicRequest._Factory},
-				{"Post", PostRequest._Factory},
-				{"Claim", ClaimRequest._Factory},
-				{"PollClaim", PollClaimRequest._Factory},
-				{"Operate", OperateRequest._Factory}
+	static Dictionary<string, Type> _TagDictionary = new () {
+				{"Hello", typeof(HelloRequest)},
+				{"BindAccount", typeof(BindRequest)},
+				{"UnbindAccount", typeof(UnbindRequest)},
+				{"Connect", typeof(ConnectRequest)},
+				{"Complete", typeof(CompleteRequest)},
+				{"Status", typeof(StatusRequest)},
+				{"Download", typeof(DownloadRequest)},
+				{"Upload", typeof(UploadRequest)},
+				{"GetData", typeof(GetDataRequest)},
+				{"Transact", typeof(TransactRequest)},
+				{"PublicRead", typeof(PublicRequest)},
+				{"Post", typeof(PostRequest)},
+				{"Claim", typeof(ClaimRequest)},
+				{"PollClaim", typeof(PollClaimRequest)},
+				{"Operate", typeof(OperateRequest)}
 		};
 
     ///<inheritdoc/>

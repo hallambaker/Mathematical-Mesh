@@ -220,6 +220,10 @@
 		Struct PolicyAccount PolicyAccount
 			Description
 				|Specifies the account creation policy
+		//PStruct Enveloped ProfileService ProfileService
+		// generates Enveloped<ProfileService> EnvelopedProfileService and ProfileService ProfileService
+		// calls Enveloped<T> StreamParse (params) to parse
+		// calls Enveloped<T> Serialize to serialize
 		Struct Enveloped<ProfileService> EnvelopedProfileService
 			Description
 				|The enveloped master profile of the service.

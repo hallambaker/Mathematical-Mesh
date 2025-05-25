@@ -1824,7 +1824,7 @@
             <param name="jpcSession">Session to which requests are to be bound.</param>
             <returns>The direct client instance.</returns>
         </member>
-        <member name="M:Goedel.Protocol.JpcInterface.GetTagDictionary">
+        <member name="P:Goedel.Protocol.JpcInterface.GetTagDictionary">
             <summary>Tag dictionary mapping operation tags to requests.</summary> 
         </member>
         <member name="M:Goedel.Protocol.JpcInterface.Initialize(System.Collections.Generic.IEnumerable{Goedel.Protocol.IConfguredService})">

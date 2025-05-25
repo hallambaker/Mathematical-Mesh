@@ -1398,7 +1398,7 @@
         <member name="P:Goedel.Callsign.ResolverService.GetDiscovery">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Callsign.ResolverService.GetTagDictionary">
+        <member name="P:Goedel.Callsign.ResolverService.GetTagDictionary">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Callsign.ResolverService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">

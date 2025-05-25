@@ -67,7 +67,7 @@
         <member name="P:Goedel.Mesh.Management.ServiceManagementService.GetDiscovery">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Management.ServiceManagementService.GetTagDictionary">
+        <member name="P:Goedel.Mesh.Management.ServiceManagementService.GetTagDictionary">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Management.ServiceManagementService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">

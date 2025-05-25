@@ -117,15 +117,15 @@ public partial class GoedelProtocol {
 
         var First = TestDataStruct;
 
-        var FirstJSON = First.GetBytes(DataEncoding.JSON, false);
+        var FirstJSON = First.GetBytes(DataEncoding.JSON);
         Console.WriteLine($"Input: {FirstJSON.ToUTF8()}");
 
         //var stream = new MemoryStream(FirstJSON);
 
         //var dom = JsonDocument.Parse(FirstJSON);
-        var Second = JsonObject.StreamParse<MultiStruct>(FirstJSON);
+        var Second = JsonObject.StreamParse<MultiStruct>(FirstJSON, false);
 
-        var SecondJSON = Second.GetBytes(DataEncoding.JSON, false);
+        var SecondJSON = Second.GetBytes(DataEncoding.JSON);
         Console.WriteLine($"Output: {SecondJSON.ToUTF8()}");
 
 
