@@ -495,7 +495,7 @@ public partial class JoseWebEncryption {
     /// <param name="Info">Recipient information</param>
     /// <returns>The decrypted data</returns>
     public byte[] Decrypt(byte[] Secret, string Info = null) {
-        var Header = StreamParse<Header>(Protected);
+        var Header = StreamParse<Header>(Protected, false);
         var BulkID = Header.Enc.FromJoseID();
         var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
 

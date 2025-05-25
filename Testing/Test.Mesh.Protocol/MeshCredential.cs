@@ -166,7 +166,7 @@ public partial class TestService {
         }
 
     private static JsContact GetContact(byte[] bytes) {
-        return JsonObject.Parse<JsContact>(bytes);
+        return JsonObject.StreamParse<JsContact>(bytes);
         }
 
     [Fact]

@@ -187,7 +187,7 @@ public partial class Jmap {
 
         Console.WriteLine(asBytes.ToUTF8());
 
-        var parsed = JsonObject.Parse<JsDevice>(asBytes);
+        var parsed = JsonObject.StreamParse<JsDevice>(asBytes);
 
 
         var parsedAsString = parsed.GetJson(false).ToUTF8();
@@ -206,7 +206,7 @@ public partial class Jmap {
 
         //var parsed = JsContact.FromJson(new JsonReader (asString), false);
 
-        var parsed = JsonObject.Parse<JsContact>(asBytes);
+        var parsed = JsonObject.StreamParse<JsContact>(asBytes);
 
         var parsedAsString = parsed.GetJson(false).ToUTF8();
 
