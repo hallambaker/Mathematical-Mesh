@@ -190,9 +190,11 @@ public partial class JoseWebSignature {
     public bool Verify(KeyPair publicKey) {
         var signature = MatchSigner(publicKey);
 
-        var protectedText = signature.Protected.ToUTF8();
-        var header = new Header();
-        header.Deserialize(protectedText);
+        var header = StreamParse<Header>(signature.Protected);
+
+        //var protectedText = signature.Protected.ToUTF8();
+        //new Header();
+        //header.Deserialize(signature.Protected);
 
         var algorithm = header.Alg.FromJoseID();
         //var bulkID = algorithm.Bulk();

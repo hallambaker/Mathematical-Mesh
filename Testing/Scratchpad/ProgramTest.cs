@@ -53,9 +53,6 @@ namespace Scratchpad;
 // ToDo: Server status info
 // ToDo: Test write validator, read in all catalogs and check encryption etc. status
 
-// ToDo: RUD Documentation - Grab examples from connection formation
-// ToDo: RUD Documentation - Describe stream lifecycle
-// ToDo: RUD Documentation - Describe account binding
 
 partial class Program {
 
@@ -70,7 +67,7 @@ partial class Program {
         Goedel.Protocol.JsonReader.Trace = true;
 
 
-        //TestPersist.Test().TestPersistenceStoreAll();
+        //TestCryptographyJose.Test().Test_Jose_Encrypt();
 
 
         //TestDare.Test().EnvelopeDigestAtomic();
@@ -78,7 +75,7 @@ partial class Program {
 
 
 
-        TestService.Test().ProtocolHello();
+        //TestService.Test().ProtocolHello();
         //TestOauth.Test().TestPAR();
 
         //StoreTests.Test().TestCatalog();

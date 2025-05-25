@@ -437,9 +437,11 @@ public partial class JoseWebEncryption {
         //var AlgorithmJose = Recipient?.Header.Alg;
         //var ExchangeID = AlgorithmJose.FromJoseID();
 
-        var ProtectedText = Protected.ToUTF8();
-        var Header = new Header();
-        Header.Deserialize(ProtectedText);
+        var Header = StreamParse<Header>(Protected, false);
+
+        //var ProtectedText = Protected.ToUTF8();
+        //new Header();
+        //Header.Deserialize(ProtectedText);
         var BulkID = Header.Enc.FromJoseID();
 
         var Exchange = DecryptionKey.Decrypt(Recipient.EncryptedKey,
@@ -493,9 +495,7 @@ public partial class JoseWebEncryption {
     /// <param name="Info">Recipient information</param>
     /// <returns>The decrypted data</returns>
     public byte[] Decrypt(byte[] Secret, string Info = null) {
-        var ProtectedText = Protected.ToUTF8();
-        var Header = new Header();
-        Header.Deserialize(ProtectedText);
+        var Header = StreamParse<Header>(Protected);
         var BulkID = Header.Enc.FromJoseID();
         var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
 

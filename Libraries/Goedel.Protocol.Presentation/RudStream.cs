@@ -242,7 +242,7 @@ public class RudStream {
     public static JsonObject PostPost(Packet packet) {
         JsonObject response = null;
         if (packet?.Payload.Length > 0) {
-            response = JsonObject.From(packet.Payload);
+            response = JsonObject.ParseTagged(packet.Payload);
             }
         return response;
 

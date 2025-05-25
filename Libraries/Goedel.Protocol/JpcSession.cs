@@ -227,7 +227,7 @@ public partial class JpcSessionSerialized : JpcRemoteSession {
         var responseBuffer = Post(buffer, request);
 
         var reader = new JsonReader(responseBuffer);
-        var result = JsonObject.FromJson(reader, true);
+        var result = JsonObject.ParseTagged(reader);
 
         return result;
         }

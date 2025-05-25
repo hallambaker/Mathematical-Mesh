@@ -303,35 +303,35 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
         }
 
 
-    /// <summary>
-    /// Deserialize the input string to populate this object
-    /// </summary>
-    /// <param name="jsonReader">Input data</param>
-    public override void Deserialize(JsonReader jsonReader) {
-        // NB: This was not filled in during testing. This implementation has not been regression 
-        // tested and may cause other things to fail.
+    ///// <summary>
+    ///// Deserialize the input string to populate this object
+    ///// </summary>
+    ///// <param name="jsonReader">Input data</param>
+    //public override void Deserialize(JsonReader jsonReader) {
+    //    // NB: This was not filled in during testing. This implementation has not been regression 
+    //    // tested and may cause other things to fail.
 
-        if (!jsonReader.StartArray()) {
-            return;
-            }
-        //Header = new DareHeader();
-        //Header.Deserialize(jsonReader);
+    //    if (!jsonReader.StartArray()) {
+    //        return;
+    //        }
+    //    //Header = new DareHeader();
+    //    //Header.Deserialize(jsonReader);
 
 
-        Header = StreamParse<DareHeader>(jsonReader, false);
-        if (!jsonReader.NextArray()) {
-            return;
-            }
-        Body = jsonReader.ReadBinary();
-        if (!jsonReader.NextArray()) {
-            return;
-            }
-        //Trailer = new DareTrailer();
-        //Trailer.Deserialize(jsonReader);
+    //    Header = StreamParse<DareHeader>(jsonReader, false);
+    //    if (!jsonReader.NextArray()) {
+    //        return;
+    //        }
+    //    Body = jsonReader.ReadBinary();
+    //    if (!jsonReader.NextArray()) {
+    //        return;
+    //        }
+    //    //Trailer = new DareTrailer();
+    //    //Trailer.Deserialize(jsonReader);
 
-        Trailer = StreamParse<DareTrailer>(jsonReader, false);
-        jsonReader.EndArray();
-        }
+    //    Trailer = StreamParse<DareTrailer>(jsonReader, false);
+    //    jsonReader.EndArray();
+    //    }
 
     #endregion
     #region // Payload decoding routines 
@@ -494,12 +494,17 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
             }
         //Console.WriteLine(plaintext.ToUTF8());
 
-        var reader = new JsonBcdReader(plaintext);
 
-        var result = reader.ReadTaggedObject(TagDictionary);
-        if (result != null) {
-            result.Enveloped = this;
-            }
+        var result = ParseTagged(plaintext);
+
+
+
+        //var reader = new JsonBcdReader(plaintext);
+
+        //var result = reader.ReadTaggedObject(TagDictionary);
+        //if (result != null) {
+        //    result.Enveloped = this;
+        //    }
         return result;
         }
 

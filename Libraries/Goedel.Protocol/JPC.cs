@@ -112,17 +112,18 @@ public abstract class JpcInterface : Disposable {
     public (string, JsonObject) GetRequest(
             JsonReader jsonReader) {
 
-        jsonReader.StartObject();
-        string token = jsonReader.ReadToken();
+        var request = JsonObject.ParseTagged(jsonReader);
+        //jsonReader.StartObject();
+        //string token = jsonReader.ReadToken();
 
-        if (!GetTagDictionary().TryGetValue(token, out var factory)) {
-            throw new UnknownOperation();
-            }
+        //if (!GetTagDictionary().TryGetValue(token, out var factory)) {
+        //    throw new UnknownOperation();
+        //    }
 
-        var request = factory();
-        request.Deserialize(jsonReader);
+        //var request = factory();
+        //request.Deserialize(jsonReader);
 
-        return (token, request);
+        return (request._Tag, request);
         }
 
 

@@ -49,14 +49,17 @@ public class TraceTransaction {
 
         //JsonReader.Trace = true;
 
-        var jsonReader = Request.JsonReader();
-        jsonReader.StartObject();
-        string token = jsonReader.ReadToken();
-        service.GetTagDictionary().TryGetValue(token, out var factory);
-        var requestObject = factory();
-        requestObject.Deserialize(jsonReader);
+        //var jsonReader = Request.JsonReader();
+        //jsonReader.StartObject();
+        //string token = jsonReader.ReadToken();
 
-        RequestObject = requestObject as Request;
+
+
+        //service.GetTagDictionary().TryGetValue(token, out var factory);
+        //var requestObject = factory();
+        //requestObject.Deserialize(jsonReader);
+
+        RequestObject = JsonObject.StreamParse<Request>(Request, true);
         ResponseObject = JsonObject.StreamParse<Response>(Response, true);
         }
 

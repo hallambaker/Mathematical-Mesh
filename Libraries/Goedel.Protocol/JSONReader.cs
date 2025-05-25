@@ -736,35 +736,35 @@ public partial class JsonReader : Reader {
             }
         }
 
-    /// <summary>
-    /// Read a tagged object from this stream.
-    /// </summary>
-    /// <param name="TagDictionary">Dictionary mapping tags to factory methods</param>
-    /// <returns>The deserialized object.</returns>
-    public JsonObject ReadTaggedObject(
-                Dictionary<string, JsonFactoryDelegate> TagDictionary) {
+    ///// <summary>
+    ///// Read a tagged object from this stream.
+    ///// </summary>
+    ///// <param name="TagDictionary">Dictionary mapping tags to factory methods</param>
+    ///// <returns>The deserialized object.</returns>
+    //public JsonObject ReadTaggedObject(
+    //            Dictionary<string, JsonFactoryDelegate> TagDictionary) {
 
-        Assert.AssertNotNull(TagDictionary, DictionaryInitialization.Throw);
+    //    Assert.AssertNotNull(TagDictionary, DictionaryInitialization.Throw);
 
-        JsonObject Out = null;
-        StartObject();
-        if (EOF) {
-            return null;
-            }
+    //    JsonObject Out = null;
+    //    StartObject();
+    //    if (EOF) {
+    //        return null;
+    //        }
 
-        var Token = ReadToken();
+    //    var Token = ReadToken();
 
 
-        if (!TagDictionary.TryGetValue(Token, out var _)) {
-            }
-        //var x = new ApplicationEntryRegistry();
+    //    if (!TagDictionary.TryGetValue(Token, out var _)) {
+    //        }
+    //    //var x = new ApplicationEntryRegistry();
 
-        Assert.AssertTrue(TagDictionary.TryGetValue(Token, out var Delegate), UnknownTag.Throw);
-        Out = Delegate();
-        Out.Deserialize(this);
-        EndObject();
-        return Out;
-        }
+    //    Assert.AssertTrue(TagDictionary.TryGetValue(Token, out var Delegate), UnknownTag.Throw);
+    //    Out = Delegate();
+    //    Out.Deserialize(this);
+    //    EndObject();
+    //    return Out;
+    //    }
 
 
     ///// <summary>

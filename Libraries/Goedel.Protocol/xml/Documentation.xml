@@ -3370,40 +3370,6 @@
             <remarks>There is a potential for conflict between PostDecode and PreEncode, particularly
             when debugging. </remarks>
         </member>
-        <member name="M:Goedel.Protocol.JsonObject.From(System.Byte[])">
-            <summary>
-            Factory method to construct object from byte data.
-            </summary>
-            <param name="data">Source</param>
-            <returns>Constructed object</returns>
-        </member>
-        <member name="M:Goedel.Protocol.JsonObject.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream.
-            </summary>
-            <param name="input">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Protocol.JsonObject.Deserialize(System.String)">
-            <summary>
-            Deserialize the input string to populate this object
-            </summary>
-            <param name="input">Input string</param>
-        </member>
-        <member name="M:Goedel.Protocol.JsonObject.Deserialize(Goedel.Protocol.JsonReader)">
-            <summary>
-            Deserialize the input string to populate this object
-            </summary>
-            <param name="jsonReader">Input data</param>
-        </member>
-        <member name="M:Goedel.Protocol.JsonObject.DeserializeToken3(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Deserialize the input stream to populate this object having recieved the specified tag.
-            </summary>
-            <param name="jsonReader">Input data</param>
-            <param name="tag">Input tag</param>
-        </member>
         <member name="M:Goedel.Protocol.JsonObject.ToFile(System.String,Goedel.Protocol.DataEncoding,System.Boolean)">
             <summary>
             Write the object out to a file.
@@ -3859,13 +3825,6 @@
             <summary>
             Attempt to read an object end from input.
             </summary>
-        </member>
-        <member name="M:Goedel.Protocol.JsonReader.ReadTaggedObject(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate})">
-            <summary>
-            Read a tagged object from this stream.
-            </summary>
-            <param name="TagDictionary">Dictionary mapping tags to factory methods</param>
-            <returns>The deserialized object.</returns>
         </member>
         <member name="T:Goedel.Protocol.JSONWriterFactoryDelegate">
             <summary>

@@ -1443,12 +1443,6 @@
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Serialize(Goedel.Protocol.Writer,System.Boolean)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Deserialize(Goedel.Protocol.JsonReader)">
-            <summary>
-            Deserialize the input string to populate this object
-            </summary>
-            <param name="jsonReader">Input data</param>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
             <summary>
             Decode a streamed message
