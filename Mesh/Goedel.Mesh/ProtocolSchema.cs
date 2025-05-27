@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:57:05 AM
+//  This file was automatically generated at 5/27/2025 3:12:45 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -72,6 +72,7 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
     /// </summary>
 	public new const string __Tag = "MeshProtocol";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -128,7 +129,7 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
 	    {"OperateRequest", OperateRequest._Factory},
 	    {"OperateResponse", OperateResponse._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -197,7 +198,7 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -864,6 +865,12 @@ public partial class MeshServiceDirect: MeshServiceClient {
 	/// </summary>
 public partial class MeshRequest : Goedel.Protocol.Request {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -873,7 +880,7 @@ public partial class MeshRequest : Goedel.Protocol.Request {
 			new() {
 
         }, __Tag,() => new MeshRequest(), () => new List<MeshRequest>(), () => new Dictionary<string,MeshRequest>(),Goedel.Protocol.Request._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -891,7 +898,7 @@ public partial class MeshRequest : Goedel.Protocol.Request {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -909,29 +916,6 @@ public partial class MeshRequest : Goedel.Protocol.Request {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new MeshRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new MeshRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as MeshRequest;
-			}
-		var Result = new MeshRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -940,29 +924,45 @@ public partial class MeshRequest : Goedel.Protocol.Request {
 	/// Base class for all request messages made by a user.
 	/// </summary>
 public partial class MeshRequestUser : MeshRequest {
-        /// <summary>
-        ///The fully qualified account name (including DNS address) to which the
-        ///request is directed.
-        /// </summary>
+    /// <summary>
+    ///The fully qualified account name (including DNS address) to which the
+    ///request is directed.
+    /// </summary>
 
 	[JsonPropertyName("Account")]
-	public virtual string?					Account  {get; set;}
+	public virtual string?					Account  {get; set;} //
 
-        /// <summary>
-        ///The identifier of the capability under which access is claimed.
-        /// </summary>
+    /// <summary>
+    ///The identifier of the capability under which access is claimed.
+    /// </summary>
 
 	[JsonPropertyName("Capability")]
-	public virtual string?					Capability  {get; set;}
+	public virtual string?					Capability  {get; set;} //
 
-        /// <summary>
-        ///Device profile of the device making the request.
-        /// </summary>
+    /// <summary>
+    ///Device profile of the device making the request.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedProfileDevice")]
-	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;}
+	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Account", 
+					(IBinding data, string? value) => {(data as MeshRequestUser).Account = value;}, 
+					(IBinding data) => (data as MeshRequestUser).Account ),
+		new PropertyString ("Capability", 
+					(IBinding data, string? value) => {(data as MeshRequestUser).Capability = value;}, 
+					(IBinding data) => (data as MeshRequestUser).Capability ),
+		new PropertyStruct ("EnvelopedProfileDevice", typeof (Enveloped<ProfileDevice>),
+					(IBinding data, object? value) => {(data as MeshRequestUser).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, 
+					(IBinding data) => (data as MeshRequestUser).EnvelopedProfileDevice,
+					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -971,15 +971,11 @@ public partial class MeshRequestUser : MeshRequest {
 	public static readonly new Binding<MeshRequestUser> _binding = new (
 			new() {
 
-			{ "Account", new PropertyString ("Account", 
-					(IBinding data, string? value) => {(data as MeshRequestUser).Account = value;}, (IBinding data) => (data as MeshRequestUser).Account )},
-			{ "Capability", new PropertyString ("Capability", 
-					(IBinding data, string? value) => {(data as MeshRequestUser).Capability = value;}, (IBinding data) => (data as MeshRequestUser).Capability )},
-			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", typeof (Enveloped<ProfileDevice>),
-					(IBinding data, object? value) => {(data as MeshRequestUser).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as MeshRequestUser).EnvelopedProfileDevice,
-					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())}
+			{ "Account", _properties [0]},
+			{ "Capability", _properties [1]},
+			{ "EnvelopedProfileDevice", _properties [2]}
         }, __Tag,() => new MeshRequestUser(), () => new List<MeshRequestUser>(), () => new Dictionary<string,MeshRequestUser>(),MeshRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -997,7 +993,7 @@ public partial class MeshRequestUser : MeshRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1015,29 +1011,6 @@ public partial class MeshRequestUser : MeshRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new MeshRequestUser();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new MeshRequestUser FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as MeshRequestUser;
-			}
-		var Result = new MeshRequestUser ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -1048,6 +1021,12 @@ public partial class MeshRequestUser : MeshRequest {
 	/// </summary>
 public partial class MeshResponse : Goedel.Protocol.Response {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1057,7 +1036,7 @@ public partial class MeshResponse : Goedel.Protocol.Response {
 			new() {
 
         }, __Tag,() => new MeshResponse(), () => new List<MeshResponse>(), () => new Dictionary<string,MeshResponse>(),Goedel.Protocol.Response._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1075,7 +1054,7 @@ public partial class MeshResponse : Goedel.Protocol.Response {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1093,29 +1072,6 @@ public partial class MeshResponse : Goedel.Protocol.Response {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new MeshResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new MeshResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as MeshResponse;
-			}
-		var Result = new MeshResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -1125,21 +1081,33 @@ public partial class MeshResponse : Goedel.Protocol.Response {
 	/// for records matching one or more selection criteria.
 	/// </summary>
 public partial class KeyValue : MeshProtocol {
-        /// <summary>
-        ///The data retrieval key.
-        /// </summary>
+    /// <summary>
+    ///The data retrieval key.
+    /// </summary>
 
 	[JsonPropertyName("Key")]
-	public virtual string?					Key  {get; set;}
+	public virtual string?					Key  {get; set;} //
 
-        /// <summary>
-        ///The data value to match.
-        /// </summary>
+    /// <summary>
+    ///The data value to match.
+    /// </summary>
 
 	[JsonPropertyName("Value")]
-	public virtual string?					Value  {get; set;}
+	public virtual string?					Value  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Key", 
+					(IBinding data, string? value) => {(data as KeyValue).Key = value;}, 
+					(IBinding data) => (data as KeyValue).Key ),
+		new PropertyString ("Value", 
+					(IBinding data, string? value) => {(data as KeyValue).Value = value;}, 
+					(IBinding data) => (data as KeyValue).Value )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1148,12 +1116,10 @@ public partial class KeyValue : MeshProtocol {
 	public static readonly new Binding<KeyValue> _binding = new (
 			new() {
 
-			{ "Key", new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as KeyValue).Key = value;}, (IBinding data) => (data as KeyValue).Key )},
-			{ "Value", new PropertyString ("Value", 
-					(IBinding data, string? value) => {(data as KeyValue).Value = value;}, (IBinding data) => (data as KeyValue).Value )}
+			{ "Key", _properties [0]},
+			{ "Value", _properties [1]}
         }, __Tag,() => new KeyValue(), () => new List<KeyValue>(), () => new Dictionary<string,KeyValue>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1170,7 +1136,7 @@ public partial class KeyValue : MeshProtocol {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1188,29 +1154,6 @@ public partial class KeyValue : MeshProtocol {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new KeyValue();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new KeyValue FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as KeyValue;
-			}
-		var Result = new KeyValue ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -1221,57 +1164,81 @@ public partial class KeyValue : MeshProtocol {
 	/// of data returned, the earliest and latest data returned, etc.
 	/// </summary>
 public partial class ConstraintsSelect : MeshProtocol {
-        /// <summary>
-        ///The container to be searched.
-        /// </summary>
+    /// <summary>
+    ///The container to be searched.
+    /// </summary>
 
 	[JsonPropertyName("Store")]
-	public virtual string?					Store  {get; set;}
+	public virtual string?					Store  {get; set;} //
 
-        /// <summary>
-        ///Only return objects with an index value that is equal to or
-        ///higher than the value specified.
-        /// </summary>
+    /// <summary>
+    ///Only return objects with an index value that is equal to or
+    ///higher than the value specified.
+    /// </summary>
 
 	[JsonPropertyName("IndexMin")]
-	public virtual long?					IndexMin  {get; set;}
+	public virtual long?					IndexMin  {get; set;} //
 
-        /// <summary>
-        ///Only return objects with an index value that is equal to or
-        ///lower than the value specified.
-        /// </summary>
+    /// <summary>
+    ///Only return objects with an index value that is equal to or
+    ///lower than the value specified.
+    /// </summary>
 
 	[JsonPropertyName("IndexMax")]
-	public virtual long?					IndexMax  {get; set;}
+	public virtual long?					IndexMax  {get; set;} //
 
-        /// <summary>
-        ///Only data published on or after the specified time instant 
-        ///is requested.
-        /// </summary>
+    /// <summary>
+    ///Only data published on or after the specified time instant 
+    ///is requested.
+    /// </summary>
 
 	[JsonPropertyName("NotBefore")]
-	public virtual DateTime?					NotBefore  {get; set;}
+	public virtual DateTime?					NotBefore  {get; set;} //
 
-        /// <summary>
-        ///Only data published before the specified time instant is
-        ///requested. This excludes data published at the specified time instant.
-        /// </summary>
+    /// <summary>
+    ///Only data published before the specified time instant is
+    ///requested. This excludes data published at the specified time instant.
+    /// </summary>
 
 	[JsonPropertyName("Before")]
-	public virtual DateTime?					Before  {get; set;}
+	public virtual DateTime?					Before  {get; set;} //
 
-        /// <summary>
-        ///Specifies a page key returned in a previous search operation
-        ///in which the number of responses exceeded the specified bounds.
-        ///When a page key is specified, all the other search parameters
-        ///except for MaxEntries and MaxBytes are ignored and the service
-        ///returns the next set of data responding to the earlier query.
-        /// </summary>
+    /// <summary>
+    ///Specifies a page key returned in a previous search operation
+    ///in which the number of responses exceeded the specified bounds.
+    ///When a page key is specified, all the other search parameters
+    ///except for MaxEntries and MaxBytes are ignored and the service
+    ///returns the next set of data responding to the earlier query.
+    /// </summary>
 
 	[JsonPropertyName("PageKey")]
-	public virtual string?					PageKey  {get; set;}
+	public virtual string?					PageKey  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Store", 
+					(IBinding data, string? value) => {(data as ConstraintsSelect).Store = value;}, 
+					(IBinding data) => (data as ConstraintsSelect).Store ),
+		new PropertyInteger64 ("IndexMin", 
+					(IBinding data, long? value) => {(data as ConstraintsSelect).IndexMin = value;}, 
+					(IBinding data) => (data as ConstraintsSelect).IndexMin ),
+		new PropertyInteger64 ("IndexMax", 
+					(IBinding data, long? value) => {(data as ConstraintsSelect).IndexMax = value;}, 
+					(IBinding data) => (data as ConstraintsSelect).IndexMax ),
+		new PropertyDateTime ("NotBefore", 
+					(IBinding data, DateTime? value) => {(data as ConstraintsSelect).NotBefore = value;}, 
+					(IBinding data) => (data as ConstraintsSelect).NotBefore ),
+		new PropertyDateTime ("Before", 
+					(IBinding data, DateTime? value) => {(data as ConstraintsSelect).Before = value;}, 
+					(IBinding data) => (data as ConstraintsSelect).Before ),
+		new PropertyString ("PageKey", 
+					(IBinding data, string? value) => {(data as ConstraintsSelect).PageKey = value;}, 
+					(IBinding data) => (data as ConstraintsSelect).PageKey )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1280,20 +1247,14 @@ public partial class ConstraintsSelect : MeshProtocol {
 	public static readonly new Binding<ConstraintsSelect> _binding = new (
 			new() {
 
-			{ "Store", new PropertyString ("Store", 
-					(IBinding data, string? value) => {(data as ConstraintsSelect).Store = value;}, (IBinding data) => (data as ConstraintsSelect).Store )},
-			{ "IndexMin", new PropertyInteger64 ("IndexMin", 
-					(IBinding data, long? value) => {(data as ConstraintsSelect).IndexMin = value;}, (IBinding data) => (data as ConstraintsSelect).IndexMin )},
-			{ "IndexMax", new PropertyInteger64 ("IndexMax", 
-					(IBinding data, long? value) => {(data as ConstraintsSelect).IndexMax = value;}, (IBinding data) => (data as ConstraintsSelect).IndexMax )},
-			{ "NotBefore", new PropertyDateTime ("NotBefore", 
-					(IBinding data, DateTime? value) => {(data as ConstraintsSelect).NotBefore = value;}, (IBinding data) => (data as ConstraintsSelect).NotBefore )},
-			{ "Before", new PropertyDateTime ("Before", 
-					(IBinding data, DateTime? value) => {(data as ConstraintsSelect).Before = value;}, (IBinding data) => (data as ConstraintsSelect).Before )},
-			{ "PageKey", new PropertyString ("PageKey", 
-					(IBinding data, string? value) => {(data as ConstraintsSelect).PageKey = value;}, (IBinding data) => (data as ConstraintsSelect).PageKey )}
+			{ "Store", _properties [0]},
+			{ "IndexMin", _properties [1]},
+			{ "IndexMax", _properties [2]},
+			{ "NotBefore", _properties [3]},
+			{ "Before", _properties [4]},
+			{ "PageKey", _properties [5]}
         }, __Tag,() => new ConstraintsSelect(), () => new List<ConstraintsSelect>(), () => new Dictionary<string,ConstraintsSelect>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1310,7 +1271,7 @@ public partial class ConstraintsSelect : MeshProtocol {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1328,29 +1289,6 @@ public partial class ConstraintsSelect : MeshProtocol {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ConstraintsSelect();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ConstraintsSelect FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ConstraintsSelect;
-			}
-		var Result = new ConstraintsSelect ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -1359,50 +1297,74 @@ public partial class ConstraintsSelect : MeshProtocol {
 	/// Specifies constraints on the data to be sent.
 	/// </summary>
 public partial class ConstraintsData : MeshProtocol {
-        /// <summary>
-        ///Maximum number of entries to send.
-        /// </summary>
+    /// <summary>
+    ///Maximum number of entries to send.
+    /// </summary>
 
 	[JsonPropertyName("MaxEntries")]
-	public virtual long?					MaxEntries  {get; set;}
+	public virtual long?					MaxEntries  {get; set;} //
 
-        /// <summary>
-        ///Specifies an offset to be applied to the payload data before it is sent. 
-        ///This allows large payloads to be transferred incrementally.
-        /// </summary>
+    /// <summary>
+    ///Specifies an offset to be applied to the payload data before it is sent. 
+    ///This allows large payloads to be transferred incrementally.
+    /// </summary>
 
 	[JsonPropertyName("BytesOffset")]
-	public virtual long?					BytesOffset  {get; set;}
+	public virtual long?					BytesOffset  {get; set;} //
 
-        /// <summary>
-        ///Maximum number of payload bytes to send.
-        /// </summary>
+    /// <summary>
+    ///Maximum number of payload bytes to send.
+    /// </summary>
 
 	[JsonPropertyName("BytesMax")]
-	public virtual long?					BytesMax  {get; set;}
+	public virtual long?					BytesMax  {get; set;} //
 
-        /// <summary>
-        ///Return the entry header
-        /// </summary>
+    /// <summary>
+    ///Return the entry header
+    /// </summary>
 
 	[JsonPropertyName("Header")]
-	public virtual bool?					Header  {get; set;}
+	public virtual bool?					Header  {get; set;} //
 
-        /// <summary>
-        ///Return the entry payload
-        /// </summary>
+    /// <summary>
+    ///Return the entry payload
+    /// </summary>
 
 	[JsonPropertyName("Payload")]
-	public virtual bool?					Payload  {get; set;}
+	public virtual bool?					Payload  {get; set;} //
 
-        /// <summary>
-        ///Return the entry trailer
-        /// </summary>
+    /// <summary>
+    ///Return the entry trailer
+    /// </summary>
 
 	[JsonPropertyName("Trailer")]
-	public virtual bool?					Trailer  {get; set;}
+	public virtual bool?					Trailer  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyInteger64 ("MaxEntries", 
+					(IBinding data, long? value) => {(data as ConstraintsData).MaxEntries = value;}, 
+					(IBinding data) => (data as ConstraintsData).MaxEntries ),
+		new PropertyInteger64 ("BytesOffset", 
+					(IBinding data, long? value) => {(data as ConstraintsData).BytesOffset = value;}, 
+					(IBinding data) => (data as ConstraintsData).BytesOffset ),
+		new PropertyInteger64 ("BytesMax", 
+					(IBinding data, long? value) => {(data as ConstraintsData).BytesMax = value;}, 
+					(IBinding data) => (data as ConstraintsData).BytesMax ),
+		new PropertyBoolean ("Header", 
+					(IBinding data, bool? value) => {(data as ConstraintsData).Header = value;}, 
+					(IBinding data) => (data as ConstraintsData).Header ),
+		new PropertyBoolean ("Payload", 
+					(IBinding data, bool? value) => {(data as ConstraintsData).Payload = value;}, 
+					(IBinding data) => (data as ConstraintsData).Payload ),
+		new PropertyBoolean ("Trailer", 
+					(IBinding data, bool? value) => {(data as ConstraintsData).Trailer = value;}, 
+					(IBinding data) => (data as ConstraintsData).Trailer )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1411,20 +1373,14 @@ public partial class ConstraintsData : MeshProtocol {
 	public static readonly new Binding<ConstraintsData> _binding = new (
 			new() {
 
-			{ "MaxEntries", new PropertyInteger64 ("MaxEntries", 
-					(IBinding data, long? value) => {(data as ConstraintsData).MaxEntries = value;}, (IBinding data) => (data as ConstraintsData).MaxEntries )},
-			{ "BytesOffset", new PropertyInteger64 ("BytesOffset", 
-					(IBinding data, long? value) => {(data as ConstraintsData).BytesOffset = value;}, (IBinding data) => (data as ConstraintsData).BytesOffset )},
-			{ "BytesMax", new PropertyInteger64 ("BytesMax", 
-					(IBinding data, long? value) => {(data as ConstraintsData).BytesMax = value;}, (IBinding data) => (data as ConstraintsData).BytesMax )},
-			{ "Header", new PropertyBoolean ("Header", 
-					(IBinding data, bool? value) => {(data as ConstraintsData).Header = value;}, (IBinding data) => (data as ConstraintsData).Header )},
-			{ "Payload", new PropertyBoolean ("Payload", 
-					(IBinding data, bool? value) => {(data as ConstraintsData).Payload = value;}, (IBinding data) => (data as ConstraintsData).Payload )},
-			{ "Trailer", new PropertyBoolean ("Trailer", 
-					(IBinding data, bool? value) => {(data as ConstraintsData).Trailer = value;}, (IBinding data) => (data as ConstraintsData).Trailer )}
+			{ "MaxEntries", _properties [0]},
+			{ "BytesOffset", _properties [1]},
+			{ "BytesMax", _properties [2]},
+			{ "Header", _properties [3]},
+			{ "Payload", _properties [4]},
+			{ "Trailer", _properties [5]}
         }, __Tag,() => new ConstraintsData(), () => new List<ConstraintsData>(), () => new Dictionary<string,ConstraintsData>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1441,7 +1397,7 @@ public partial class ConstraintsData : MeshProtocol {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1459,29 +1415,6 @@ public partial class ConstraintsData : MeshProtocol {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ConstraintsData();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ConstraintsData FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ConstraintsData;
-			}
-		var Result = new ConstraintsData ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -1491,31 +1424,46 @@ public partial class ConstraintsData : MeshProtocol {
 	/// account names, whether there is an open account creation policy, etc.
 	/// </summary>
 public partial class PolicyAccount : MeshProtocol {
-        /// <summary>
-        ///Specifies the minimum length of an account name.
-        /// </summary>
+    /// <summary>
+    ///Specifies the minimum length of an account name.
+    /// </summary>
 
 	[JsonPropertyName("Minimum")]
-	public virtual int?					Minimum  {get; set;}
+	public virtual int?					Minimum  {get; set;} //
 
-        /// <summary>
-        ///Specifies the maximum length of an account name.
-        /// </summary>
+    /// <summary>
+    ///Specifies the maximum length of an account name.
+    /// </summary>
 
 	[JsonPropertyName("Maximum")]
-	public virtual int?					Maximum  {get; set;}
+	public virtual int?					Maximum  {get; set;} //
 
-        /// <summary>
-        ///A list of characters that the service 
-        ///does not accept in account names. The list of characters 
-        ///MAY not be exhaustive but SHOULD include any illegal characters
-        ///in the proposed account name.
-        /// </summary>
+    /// <summary>
+    ///A list of characters that the service 
+    ///does not accept in account names. The list of characters 
+    ///MAY not be exhaustive but SHOULD include any illegal characters
+    ///in the proposed account name.
+    /// </summary>
 
 	[JsonPropertyName("InvalidCharacters")]
-	public virtual string?					InvalidCharacters  {get; set;}
+	public virtual string?					InvalidCharacters  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyInteger32 ("Minimum", 
+					(IBinding data, int? value) => {(data as PolicyAccount).Minimum = value;}, 
+					(IBinding data) => (data as PolicyAccount).Minimum ),
+		new PropertyInteger32 ("Maximum", 
+					(IBinding data, int? value) => {(data as PolicyAccount).Maximum = value;}, 
+					(IBinding data) => (data as PolicyAccount).Maximum ),
+		new PropertyString ("InvalidCharacters", 
+					(IBinding data, string? value) => {(data as PolicyAccount).InvalidCharacters = value;}, 
+					(IBinding data) => (data as PolicyAccount).InvalidCharacters )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1524,14 +1472,11 @@ public partial class PolicyAccount : MeshProtocol {
 	public static readonly new Binding<PolicyAccount> _binding = new (
 			new() {
 
-			{ "Minimum", new PropertyInteger32 ("Minimum", 
-					(IBinding data, int? value) => {(data as PolicyAccount).Minimum = value;}, (IBinding data) => (data as PolicyAccount).Minimum )},
-			{ "Maximum", new PropertyInteger32 ("Maximum", 
-					(IBinding data, int? value) => {(data as PolicyAccount).Maximum = value;}, (IBinding data) => (data as PolicyAccount).Maximum )},
-			{ "InvalidCharacters", new PropertyString ("InvalidCharacters", 
-					(IBinding data, string? value) => {(data as PolicyAccount).InvalidCharacters = value;}, (IBinding data) => (data as PolicyAccount).InvalidCharacters )}
+			{ "Minimum", _properties [0]},
+			{ "Maximum", _properties [1]},
+			{ "InvalidCharacters", _properties [2]}
         }, __Tag,() => new PolicyAccount(), () => new List<PolicyAccount>(), () => new Dictionary<string,PolicyAccount>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1548,7 +1493,7 @@ public partial class PolicyAccount : MeshProtocol {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1566,56 +1511,48 @@ public partial class PolicyAccount : MeshProtocol {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PolicyAccount();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PolicyAccount FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PolicyAccount;
-			}
-		var Result = new PolicyAccount ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class StoreStatus : MeshProtocol {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Store")]
-	public virtual string?					Store  {get; set;}
+	public virtual string?					Store  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Index")]
-	public virtual long?					Index  {get; set;}
+	public virtual long?					Index  {get; set;} //
 
-        /// <summary>
-        ///In a status response, the apex digest value of the store 
-        ///whose status is reported.
-        /// </summary>
+    /// <summary>
+    ///In a status response, the apex digest value of the store 
+    ///whose status is reported.
+    /// </summary>
 
 	[JsonPropertyName("Digest")]
-	public virtual byte[]?					Digest  {get; set;}
+	public virtual byte[]?					Digest  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Store", 
+					(IBinding data, string? value) => {(data as StoreStatus).Store = value;}, 
+					(IBinding data) => (data as StoreStatus).Store ),
+		new PropertyInteger64 ("Index", 
+					(IBinding data, long? value) => {(data as StoreStatus).Index = value;}, 
+					(IBinding data) => (data as StoreStatus).Index ),
+		new PropertyBinary ("Digest", 
+					(IBinding data, byte[]? value) => {(data as StoreStatus).Digest = value;}, 
+					(IBinding data) => (data as StoreStatus).Digest )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1624,14 +1561,11 @@ public partial class StoreStatus : MeshProtocol {
 	public static readonly new Binding<StoreStatus> _binding = new (
 			new() {
 
-			{ "Store", new PropertyString ("Store", 
-					(IBinding data, string? value) => {(data as StoreStatus).Store = value;}, (IBinding data) => (data as StoreStatus).Store )},
-			{ "Index", new PropertyInteger64 ("Index", 
-					(IBinding data, long? value) => {(data as StoreStatus).Index = value;}, (IBinding data) => (data as StoreStatus).Index )},
-			{ "Digest", new PropertyBinary ("Digest", 
-					(IBinding data, byte[]? value) => {(data as StoreStatus).Digest = value;}, (IBinding data) => (data as StoreStatus).Digest )}
+			{ "Store", _properties [0]},
+			{ "Index", _properties [1]},
+			{ "Digest", _properties [2]}
         }, __Tag,() => new StoreStatus(), () => new List<StoreStatus>(), () => new Dictionary<string,StoreStatus>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1648,7 +1582,7 @@ public partial class StoreStatus : MeshProtocol {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1666,58 +1600,51 @@ public partial class StoreStatus : MeshProtocol {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new StoreStatus();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new StoreStatus FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as StoreStatus;
-			}
-		var Result = new StoreStatus ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class StoreUpdate : StoreStatus {
-        /// <summary>
-        ///The entries to be uploaded. 
-        /// </summary>
+    /// <summary>
+    ///The entries to be uploaded. 
+    /// </summary>
 
 	[JsonPropertyName("Envelopes")]
 	public virtual List<DareEnvelope>?					Envelopes  {get; set;}
-        /// <summary>
-        ///If false, the store update does not contain the last index entry
-        ///in the store.
-        /// </summary>
+    /// <summary>
+    ///If false, the store update does not contain the last index entry
+    ///in the store.
+    /// </summary>
 
 	[JsonPropertyName("Partial")]
-	public virtual bool?					Partial  {get; set;}
+	public virtual bool?					Partial  {get; set;} //
 
-        /// <summary>
-        ///If the value Partial is true, this value MUST specify the index
-        ///value of the last entry in the store.
-        /// </summary>
+    /// <summary>
+    ///If the value Partial is true, this value MUST specify the index
+    ///value of the last entry in the store.
+    /// </summary>
 
 	[JsonPropertyName("FinalIndex")]
-	public virtual long?					FinalIndex  {get; set;}
+	public virtual long?					FinalIndex  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyListStruct ("Envelopes", typeof (DareEnvelope),
+					(IBinding data, object? value) => {(data as StoreUpdate).Envelopes = value as List<DareEnvelope>;}, 
+					(IBinding data) => (data as StoreUpdate).Envelopes,
+					false, ()=>new  List<DareEnvelope>(), ()=>new DareEnvelope()),
+		new PropertyBoolean ("Partial", 
+					(IBinding data, bool? value) => {(data as StoreUpdate).Partial = value;}, 
+					(IBinding data) => (data as StoreUpdate).Partial ),
+		new PropertyInteger64 ("FinalIndex", 
+					(IBinding data, long? value) => {(data as StoreUpdate).FinalIndex = value;}, 
+					(IBinding data) => (data as StoreUpdate).FinalIndex )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1726,15 +1653,11 @@ public partial class StoreUpdate : StoreStatus {
 	public static readonly new Binding<StoreUpdate> _binding = new (
 			new() {
 
-			{ "Envelopes", new PropertyListStruct ("Envelopes", typeof (DareEnvelope),
-					(IBinding data, object? value) => {(data as StoreUpdate).Envelopes = value as List<DareEnvelope>;}, (IBinding data) => (data as StoreUpdate).Envelopes,
-					false, ()=>new  List<DareEnvelope>(), ()=>new DareEnvelope())},
-			{ "Partial", new PropertyBoolean ("Partial", 
-					(IBinding data, bool? value) => {(data as StoreUpdate).Partial = value;}, (IBinding data) => (data as StoreUpdate).Partial )},
-			{ "FinalIndex", new PropertyInteger64 ("FinalIndex", 
-					(IBinding data, long? value) => {(data as StoreUpdate).FinalIndex = value;}, (IBinding data) => (data as StoreUpdate).FinalIndex )}
+			{ "Envelopes", _properties [0]},
+			{ "Partial", _properties [1]},
+			{ "FinalIndex", _properties [2]}
         }, __Tag,() => new StoreUpdate(), () => new List<StoreUpdate>(), () => new Dictionary<string,StoreUpdate>(),StoreStatus._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1752,7 +1675,7 @@ public partial class StoreUpdate : StoreStatus {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1770,43 +1693,30 @@ public partial class StoreUpdate : StoreStatus {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new StoreUpdate();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new StoreUpdate FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as StoreUpdate;
-			}
-		var Result = new StoreUpdate ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
-        /// <summary>
-        ///Contains a proposed callsign binding to the account.
-        /// </summary>
+    /// <summary>
+    ///Contains a proposed callsign binding to the account.
+    /// </summary>
 
 	[JsonPropertyName("CallsignBinding")]
-	public virtual CallsignBinding?					CallsignBinding  {get; set;}
+	public virtual CallsignBinding?					CallsignBinding  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("CallsignBinding", typeof (CallsignBinding),
+					(IBinding data, object? value) => {(data as MeshHelloRequest).CallsignBinding = value as CallsignBinding;}, 
+					(IBinding data) => (data as MeshHelloRequest).CallsignBinding,
+					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1815,11 +1725,9 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
 	public static readonly new Binding<MeshHelloRequest> _binding = new (
 			new() {
 
-			{ "CallsignBinding", new PropertyStruct ("CallsignBinding", typeof (CallsignBinding),
-					(IBinding data, object? value) => {(data as MeshHelloRequest).CallsignBinding = value as CallsignBinding;}, (IBinding data) => (data as MeshHelloRequest).CallsignBinding,
-					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())}
+			{ "CallsignBinding", _properties [0]}
         }, __Tag,() => new MeshHelloRequest(), () => new List<MeshHelloRequest>(), () => new Dictionary<string,MeshHelloRequest>(),Goedel.Protocol.HelloRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1837,7 +1745,7 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1855,72 +1763,77 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new MeshHelloRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new MeshHelloRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as MeshHelloRequest;
-			}
-		var Result = new MeshHelloRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
-        /// <summary>
-        ///Specifies the default data constraints for updates.
-        /// </summary>
+    /// <summary>
+    ///Specifies the default data constraints for updates.
+    /// </summary>
 
 	[JsonPropertyName("ConstraintsUpdate")]
-	public virtual ConstraintsData?					ConstraintsUpdate  {get; set;}
+	public virtual ConstraintsData?					ConstraintsUpdate  {get; set;} //
 
-        /// <summary>
-        ///Specifies the default data constraints for message senders.
-        /// </summary>
+    /// <summary>
+    ///Specifies the default data constraints for message senders.
+    /// </summary>
 
 	[JsonPropertyName("ConstraintsPost")]
-	public virtual ConstraintsData?					ConstraintsPost  {get; set;}
+	public virtual ConstraintsData?					ConstraintsPost  {get; set;} //
 
-        /// <summary>
-        ///Specifies the account creation policy
-        /// </summary>
+    /// <summary>
+    ///Specifies the account creation policy
+    /// </summary>
 
 	[JsonPropertyName("PolicyAccount")]
-	public virtual PolicyAccount?					PolicyAccount  {get; set;}
+	public virtual PolicyAccount?					PolicyAccount  {get; set;} //
 
-        /// <summary>
-        ///The enveloped master profile of the service.
-        /// </summary>
+	[JsonPropertyName("ProfileService")]
+	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;} 
 
-	[JsonPropertyName("EnvelopedProfileService")]
-	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;}
-
-        /// <summary>
-        ///If the request specifies a callsign binding, returns a proposed binding for
-        ///the requested callsign.
-        /// </summary>
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
+	public virtual ProfileService?				ProfileService  {get; set;} 
+    /// <summary>
+    ///If the request specifies a callsign binding, returns a proposed binding for
+    ///the requested callsign.
+    /// </summary>
 
 	[JsonPropertyName("CallsignBinding")]
-	public virtual CallsignBinding?					CallsignBinding  {get; set;}
+	public virtual CallsignBinding?					CallsignBinding  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("ConstraintsUpdate", typeof (ConstraintsData),
+					(IBinding data, object? value) => {(data as MeshHelloResponse).ConstraintsUpdate = value as ConstraintsData;}, 
+					(IBinding data) => (data as MeshHelloResponse).ConstraintsUpdate,
+					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData()),
+		new PropertyStruct ("ConstraintsPost", typeof (ConstraintsData),
+					(IBinding data, object? value) => {(data as MeshHelloResponse).ConstraintsPost = value as ConstraintsData;}, 
+					(IBinding data) => (data as MeshHelloResponse).ConstraintsPost,
+					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData()),
+		new PropertyStruct ("PolicyAccount", typeof (PolicyAccount),
+					(IBinding data, object? value) => {(data as MeshHelloResponse).PolicyAccount = value as PolicyAccount;}, 
+					(IBinding data) => (data as MeshHelloResponse).PolicyAccount,
+					false, ()=>new  PolicyAccount(), ()=>new PolicyAccount()),
+		new PropertyGStruct ("ProfileService", /*typeof (ProfileService<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as MeshHelloResponse).EnvelopedProfileService = value as Enveloped<ProfileService>;},
+					(IBinding data) => (data as MeshHelloResponse).EnvelopedProfileService,
+					/*(IBinding data, object? value) => {(data as MeshHelloResponse).ProfileService = value as ProfileService;},
+					(IBinding data) => (data as MeshHelloResponse).ProfileService,*/
+					()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>()),
+		new PropertyStruct ("CallsignBinding", typeof (CallsignBinding),
+					(IBinding data, object? value) => {(data as MeshHelloResponse).CallsignBinding = value as CallsignBinding;}, 
+					(IBinding data) => (data as MeshHelloResponse).CallsignBinding,
+					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1929,23 +1842,13 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 	public static readonly new Binding<MeshHelloResponse> _binding = new (
 			new() {
 
-			{ "ConstraintsUpdate", new PropertyStruct ("ConstraintsUpdate", typeof (ConstraintsData),
-					(IBinding data, object? value) => {(data as MeshHelloResponse).ConstraintsUpdate = value as ConstraintsData;}, (IBinding data) => (data as MeshHelloResponse).ConstraintsUpdate,
-					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())},
-			{ "ConstraintsPost", new PropertyStruct ("ConstraintsPost", typeof (ConstraintsData),
-					(IBinding data, object? value) => {(data as MeshHelloResponse).ConstraintsPost = value as ConstraintsData;}, (IBinding data) => (data as MeshHelloResponse).ConstraintsPost,
-					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())},
-			{ "PolicyAccount", new PropertyStruct ("PolicyAccount", typeof (PolicyAccount),
-					(IBinding data, object? value) => {(data as MeshHelloResponse).PolicyAccount = value as PolicyAccount;}, (IBinding data) => (data as MeshHelloResponse).PolicyAccount,
-					false, ()=>new  PolicyAccount(), ()=>new PolicyAccount())},
-			{ "EnvelopedProfileService", new PropertyStruct ("EnvelopedProfileService", typeof (Enveloped<ProfileService>),
-					(IBinding data, object? value) => {(data as MeshHelloResponse).EnvelopedProfileService = value as Enveloped<ProfileService>;}, (IBinding data) => (data as MeshHelloResponse).EnvelopedProfileService,
-					false, ()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())},
-			{ "CallsignBinding", new PropertyStruct ("CallsignBinding", typeof (CallsignBinding),
-					(IBinding data, object? value) => {(data as MeshHelloResponse).CallsignBinding = value as CallsignBinding;}, (IBinding data) => (data as MeshHelloResponse).CallsignBinding,
-					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())}
+			{ "ConstraintsUpdate", _properties [0]},
+			{ "ConstraintsPost", _properties [1]},
+			{ "PolicyAccount", _properties [2]},
+			{ "ProfileService", _properties [3]},
+			{ "CallsignBinding", _properties [4]}
         }, __Tag,() => new MeshHelloResponse(), () => new List<MeshHelloResponse>(), () => new Dictionary<string,MeshHelloResponse>(),Goedel.Protocol.HelloResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1963,7 +1866,7 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1981,29 +1884,6 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new MeshHelloResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new MeshHelloResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as MeshHelloResponse;
-			}
-		var Result = new MeshHelloResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -2012,27 +1892,44 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 	/// Request binding of an account to a service address.
 	/// </summary>
 public partial class BindRequest : MeshRequest {
-        /// <summary>
-        ///The service account to bind to.
-        /// </summary>
+    /// <summary>
+    ///The service account to bind to.
+    /// </summary>
 
 	[JsonPropertyName("AccountAddress")]
-	public virtual string?					AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;} //
 
-        /// <summary>
-        ///The signed assertion describing the account.
-        /// </summary>
+    /// <summary>
+    ///The signed assertion describing the account.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedProfileAccount")]
-	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;} //
 
-        /// <summary>
-        ///Contains one or more bindings of a callsign to the account.
-        /// </summary>
+    /// <summary>
+    ///Contains one or more bindings of a callsign to the account.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedCallsignBinding")]
 	public virtual List<Enveloped<CallsignBinding>>?					EnvelopedCallsignBinding  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("AccountAddress", 
+					(IBinding data, string? value) => {(data as BindRequest).AccountAddress = value;}, 
+					(IBinding data) => (data as BindRequest).AccountAddress ),
+		new PropertyStruct ("EnvelopedProfileAccount", typeof (Enveloped<ProfileAccount>),
+					(IBinding data, object? value) => {(data as BindRequest).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, 
+					(IBinding data) => (data as BindRequest).EnvelopedProfileAccount,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
+		new PropertyListStruct ("EnvelopedCallsignBinding", typeof (Enveloped<CallsignBinding>),
+					(IBinding data, object? value) => {(data as BindRequest).EnvelopedCallsignBinding = value as List<Enveloped<CallsignBinding>>;}, 
+					(IBinding data) => (data as BindRequest).EnvelopedCallsignBinding,
+					false, ()=>new  List<Enveloped<CallsignBinding>>(), ()=>new Enveloped<CallsignBinding>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2041,16 +1938,11 @@ public partial class BindRequest : MeshRequest {
 	public static readonly new Binding<BindRequest> _binding = new (
 			new() {
 
-			{ "AccountAddress", new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as BindRequest).AccountAddress = value;}, (IBinding data) => (data as BindRequest).AccountAddress )},
-			{ "EnvelopedProfileAccount", new PropertyStruct ("EnvelopedProfileAccount", typeof (Enveloped<ProfileAccount>),
-					(IBinding data, object? value) => {(data as BindRequest).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as BindRequest).EnvelopedProfileAccount,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
-			{ "EnvelopedCallsignBinding", new PropertyListStruct ("EnvelopedCallsignBinding", typeof (Enveloped<CallsignBinding>),
-					(IBinding data, object? value) => {(data as BindRequest).EnvelopedCallsignBinding = value as List<Enveloped<CallsignBinding>>;}, (IBinding data) => (data as BindRequest).EnvelopedCallsignBinding,
-					false, ()=>new  List<Enveloped<CallsignBinding>>(), ()=>new Enveloped<CallsignBinding>())}
+			{ "AccountAddress", _properties [0]},
+			{ "EnvelopedProfileAccount", _properties [1]},
+			{ "EnvelopedCallsignBinding", _properties [2]}
         }, __Tag,() => new BindRequest(), () => new List<BindRequest>(), () => new Dictionary<string,BindRequest>(),MeshRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2068,7 +1960,7 @@ public partial class BindRequest : MeshRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2086,29 +1978,6 @@ public partial class BindRequest : MeshRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new BindRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new BindRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as BindRequest;
-			}
-		var Result = new BindRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -2117,30 +1986,46 @@ public partial class BindRequest : MeshRequest {
 	/// Reports the success or failure of a Create transaction.
 	/// </summary>
 public partial class BindResponse : MeshResponse {
-        /// <summary>
-        ///Text explaining the status of the creation request.
-        /// </summary>
+    /// <summary>
+    ///Text explaining the status of the creation request.
+    /// </summary>
 
 	[JsonPropertyName("Reason")]
-	public virtual string?					Reason  {get; set;}
+	public virtual string?					Reason  {get; set;} //
 
-        /// <summary>
-        ///A URL to which the user is directed to complete the account creation 
-        ///request.
-        /// </summary>
+    /// <summary>
+    ///A URL to which the user is directed to complete the account creation 
+    ///request.
+    /// </summary>
 
 	[JsonPropertyName("URL")]
-	public virtual string?					URL  {get; set;}
+	public virtual string?					URL  {get; set;} //
 
-        /// <summary>
-        ///The enveloped assignment describing how the client should
-        ///discover the host and encrypt data to it.
-        /// </summary>
+    /// <summary>
+    ///The enveloped assignment describing how the client should
+    ///discover the host and encrypt data to it.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedAccountHostAssignment")]
-	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;}
+	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Reason", 
+					(IBinding data, string? value) => {(data as BindResponse).Reason = value;}, 
+					(IBinding data) => (data as BindResponse).Reason ),
+		new PropertyString ("URL", 
+					(IBinding data, string? value) => {(data as BindResponse).URL = value;}, 
+					(IBinding data) => (data as BindResponse).URL ),
+		new PropertyStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped<AccountHostAssignment>),
+					(IBinding data, object? value) => {(data as BindResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, 
+					(IBinding data) => (data as BindResponse).EnvelopedAccountHostAssignment,
+					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2149,15 +2034,11 @@ public partial class BindResponse : MeshResponse {
 	public static readonly new Binding<BindResponse> _binding = new (
 			new() {
 
-			{ "Reason", new PropertyString ("Reason", 
-					(IBinding data, string? value) => {(data as BindResponse).Reason = value;}, (IBinding data) => (data as BindResponse).Reason )},
-			{ "URL", new PropertyString ("URL", 
-					(IBinding data, string? value) => {(data as BindResponse).URL = value;}, (IBinding data) => (data as BindResponse).URL )},
-			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped<AccountHostAssignment>),
-					(IBinding data, object? value) => {(data as BindResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as BindResponse).EnvelopedAccountHostAssignment,
-					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())}
+			{ "Reason", _properties [0]},
+			{ "URL", _properties [1]},
+			{ "EnvelopedAccountHostAssignment", _properties [2]}
         }, __Tag,() => new BindResponse(), () => new List<BindResponse>(), () => new Dictionary<string,BindResponse>(),MeshResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2175,7 +2056,7 @@ public partial class BindResponse : MeshResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2193,29 +2074,6 @@ public partial class BindResponse : MeshResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new BindResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new BindResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as BindResponse;
-			}
-		var Result = new BindResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -2227,6 +2085,12 @@ public partial class BindResponse : MeshResponse {
 	/// </summary>
 public partial class UnbindRequest : MeshRequestUser {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2236,7 +2100,7 @@ public partial class UnbindRequest : MeshRequestUser {
 			new() {
 
         }, __Tag,() => new UnbindRequest(), () => new List<UnbindRequest>(), () => new Dictionary<string,UnbindRequest>(),MeshRequestUser._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2254,7 +2118,7 @@ public partial class UnbindRequest : MeshRequestUser {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2272,29 +2136,6 @@ public partial class UnbindRequest : MeshRequestUser {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new UnbindRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new UnbindRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as UnbindRequest;
-			}
-		var Result = new UnbindRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -2304,6 +2145,12 @@ public partial class UnbindRequest : MeshRequestUser {
 	/// </summary>
 public partial class UnbindResponse : MeshResponse {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2313,7 +2160,7 @@ public partial class UnbindResponse : MeshResponse {
 			new() {
 
         }, __Tag,() => new UnbindResponse(), () => new List<UnbindResponse>(), () => new Dictionary<string,UnbindResponse>(),MeshResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2331,7 +2178,7 @@ public partial class UnbindResponse : MeshResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2349,49 +2196,39 @@ public partial class UnbindResponse : MeshResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new UnbindResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new UnbindResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as UnbindResponse;
-			}
-		var Result = new UnbindResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ConnectRequest : MeshRequest {
-        /// <summary>
-        ///The connection request generated by the client 
-        /// </summary>
+    /// <summary>
+    ///The connection request generated by the client 
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedRequestConnection")]
-	public virtual Enveloped<RequestConnection>?					EnvelopedRequestConnection  {get; set;}
+	public virtual Enveloped<RequestConnection>?					EnvelopedRequestConnection  {get; set;} //
 
-        /// <summary>
-        ///List of named access rights.
-        /// </summary>
+    /// <summary>
+    ///List of named access rights.
+    /// </summary>
 
 	[JsonPropertyName("Rights")]
 	public virtual List<string>?					Rights  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("EnvelopedRequestConnection", typeof (Enveloped<RequestConnection>),
+					(IBinding data, object? value) => {(data as ConnectRequest).EnvelopedRequestConnection = value as Enveloped<RequestConnection>;}, 
+					(IBinding data) => (data as ConnectRequest).EnvelopedRequestConnection,
+					false, ()=>new  Enveloped<RequestConnection>(), ()=>new Enveloped<RequestConnection>()),
+		new PropertyListString ("Rights", 
+					(IBinding data, List<string>? value) => {(data as ConnectRequest).Rights = value;}, 
+					(IBinding data) => (data as ConnectRequest).Rights )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2400,13 +2237,10 @@ public partial class ConnectRequest : MeshRequest {
 	public static readonly new Binding<ConnectRequest> _binding = new (
 			new() {
 
-			{ "EnvelopedRequestConnection", new PropertyStruct ("EnvelopedRequestConnection", typeof (Enveloped<RequestConnection>),
-					(IBinding data, object? value) => {(data as ConnectRequest).EnvelopedRequestConnection = value as Enveloped<RequestConnection>;}, (IBinding data) => (data as ConnectRequest).EnvelopedRequestConnection,
-					false, ()=>new  Enveloped<RequestConnection>(), ()=>new Enveloped<RequestConnection>())},
-			{ "Rights", new PropertyListString ("Rights", 
-					(IBinding data, List<string>? value) => {(data as ConnectRequest).Rights = value;}, (IBinding data) => (data as ConnectRequest).Rights )}
+			{ "EnvelopedRequestConnection", _properties [0]},
+			{ "Rights", _properties [1]}
         }, __Tag,() => new ConnectRequest(), () => new List<ConnectRequest>(), () => new Dictionary<string,ConnectRequest>(),MeshRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2424,7 +2258,7 @@ public partial class ConnectRequest : MeshRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2442,50 +2276,41 @@ public partial class ConnectRequest : MeshRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ConnectRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ConnectRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ConnectRequest;
-			}
-		var Result = new ConnectRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ConnectResponse : MeshResponse {
-        /// <summary>
-        ///The connection request generated by the client
-        /// </summary>
+    /// <summary>
+    ///The connection request generated by the client
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedAcknowledgeConnection")]
-	public virtual Enveloped<AcknowledgeConnection>?					EnvelopedAcknowledgeConnection  {get; set;}
+	public virtual Enveloped<AcknowledgeConnection>?					EnvelopedAcknowledgeConnection  {get; set;} //
 
-        /// <summary>
-        ///The user profile that provides the root of trust for this Mesh
-        /// </summary>
+    /// <summary>
+    ///The user profile that provides the root of trust for this Mesh
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedProfileAccount")]
-	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("EnvelopedAcknowledgeConnection", typeof (Enveloped<AcknowledgeConnection>),
+					(IBinding data, object? value) => {(data as ConnectResponse).EnvelopedAcknowledgeConnection = value as Enveloped<AcknowledgeConnection>;}, 
+					(IBinding data) => (data as ConnectResponse).EnvelopedAcknowledgeConnection,
+					false, ()=>new  Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>()),
+		new PropertyStruct ("EnvelopedProfileAccount", typeof (Enveloped<ProfileAccount>),
+					(IBinding data, object? value) => {(data as ConnectResponse).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, 
+					(IBinding data) => (data as ConnectResponse).EnvelopedProfileAccount,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2494,14 +2319,10 @@ public partial class ConnectResponse : MeshResponse {
 	public static readonly new Binding<ConnectResponse> _binding = new (
 			new() {
 
-			{ "EnvelopedAcknowledgeConnection", new PropertyStruct ("EnvelopedAcknowledgeConnection", typeof (Enveloped<AcknowledgeConnection>),
-					(IBinding data, object? value) => {(data as ConnectResponse).EnvelopedAcknowledgeConnection = value as Enveloped<AcknowledgeConnection>;}, (IBinding data) => (data as ConnectResponse).EnvelopedAcknowledgeConnection,
-					false, ()=>new  Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>())},
-			{ "EnvelopedProfileAccount", new PropertyStruct ("EnvelopedProfileAccount", typeof (Enveloped<ProfileAccount>),
-					(IBinding data, object? value) => {(data as ConnectResponse).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as ConnectResponse).EnvelopedProfileAccount,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())}
+			{ "EnvelopedAcknowledgeConnection", _properties [0]},
+			{ "EnvelopedProfileAccount", _properties [1]}
         }, __Tag,() => new ConnectResponse(), () => new List<ConnectResponse>(), () => new Dictionary<string,ConnectResponse>(),MeshResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2519,7 +2340,7 @@ public partial class ConnectResponse : MeshResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2537,48 +2358,37 @@ public partial class ConnectResponse : MeshResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ConnectResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ConnectResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ConnectResponse;
-			}
-		var Result = new ConnectResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class CompleteRequest : StatusRequest {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("AccountAddress")]
-	public virtual string?					AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("ResponseID")]
-	public virtual string?					ResponseID  {get; set;}
+	public virtual string?					ResponseID  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("AccountAddress", 
+					(IBinding data, string? value) => {(data as CompleteRequest).AccountAddress = value;}, 
+					(IBinding data) => (data as CompleteRequest).AccountAddress ),
+		new PropertyString ("ResponseID", 
+					(IBinding data, string? value) => {(data as CompleteRequest).ResponseID = value;}, 
+					(IBinding data) => (data as CompleteRequest).ResponseID )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2587,12 +2397,10 @@ public partial class CompleteRequest : StatusRequest {
 	public static readonly new Binding<CompleteRequest> _binding = new (
 			new() {
 
-			{ "AccountAddress", new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as CompleteRequest).AccountAddress = value;}, (IBinding data) => (data as CompleteRequest).AccountAddress )},
-			{ "ResponseID", new PropertyString ("ResponseID", 
-					(IBinding data, string? value) => {(data as CompleteRequest).ResponseID = value;}, (IBinding data) => (data as CompleteRequest).ResponseID )}
+			{ "AccountAddress", _properties [0]},
+			{ "ResponseID", _properties [1]}
         }, __Tag,() => new CompleteRequest(), () => new List<CompleteRequest>(), () => new Dictionary<string,CompleteRequest>(),StatusRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2610,7 +2418,7 @@ public partial class CompleteRequest : StatusRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2628,51 +2436,42 @@ public partial class CompleteRequest : StatusRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CompleteRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CompleteRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CompleteRequest;
-			}
-		var Result = new CompleteRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class CompleteResponse : MeshResponse {
-        /// <summary>
-        ///The signed assertion describing the result of the connect request
-        /// </summary>
+    /// <summary>
+    ///The signed assertion describing the result of the connect request
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedRespondConnection")]
-	public virtual Enveloped<RespondConnection>?					EnvelopedRespondConnection  {get; set;}
+	public virtual Enveloped<RespondConnection>?					EnvelopedRespondConnection  {get; set;} //
 
-        /// <summary>
-        ///The enveloped assignment describing how the client should
-        ///discover the host and encrypt data to it.
-        /// </summary>
+    /// <summary>
+    ///The enveloped assignment describing how the client should
+    ///discover the host and encrypt data to it.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedAccountHostAssignment")]
-	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;}
+	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("EnvelopedRespondConnection", typeof (Enveloped<RespondConnection>),
+					(IBinding data, object? value) => {(data as CompleteResponse).EnvelopedRespondConnection = value as Enveloped<RespondConnection>;}, 
+					(IBinding data) => (data as CompleteResponse).EnvelopedRespondConnection,
+					false, ()=>new  Enveloped<RespondConnection>(), ()=>new Enveloped<RespondConnection>()),
+		new PropertyStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped<AccountHostAssignment>),
+					(IBinding data, object? value) => {(data as CompleteResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, 
+					(IBinding data) => (data as CompleteResponse).EnvelopedAccountHostAssignment,
+					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2681,14 +2480,10 @@ public partial class CompleteResponse : MeshResponse {
 	public static readonly new Binding<CompleteResponse> _binding = new (
 			new() {
 
-			{ "EnvelopedRespondConnection", new PropertyStruct ("EnvelopedRespondConnection", typeof (Enveloped<RespondConnection>),
-					(IBinding data, object? value) => {(data as CompleteResponse).EnvelopedRespondConnection = value as Enveloped<RespondConnection>;}, (IBinding data) => (data as CompleteResponse).EnvelopedRespondConnection,
-					false, ()=>new  Enveloped<RespondConnection>(), ()=>new Enveloped<RespondConnection>())},
-			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped<AccountHostAssignment>),
-					(IBinding data, object? value) => {(data as CompleteResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as CompleteResponse).EnvelopedAccountHostAssignment,
-					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())}
+			{ "EnvelopedRespondConnection", _properties [0]},
+			{ "EnvelopedAccountHostAssignment", _properties [1]}
         }, __Tag,() => new CompleteResponse(), () => new List<CompleteResponse>(), () => new Dictionary<string,CompleteResponse>(),MeshResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2706,7 +2501,7 @@ public partial class CompleteResponse : MeshResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2724,69 +2519,70 @@ public partial class CompleteResponse : MeshResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CompleteResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CompleteResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CompleteResponse;
-			}
-		var Result = new CompleteResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class StatusRequest : MeshRequestUser {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("DeviceUDF")]
-	public virtual string?					DeviceUDF  {get; set;}
+	public virtual string?					DeviceUDF  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("CatalogedDeviceDigest")]
-	public virtual string?					CatalogedDeviceDigest  {get; set;}
+	public virtual string?					CatalogedDeviceDigest  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Catalogs")]
 	public virtual List<string>?					Catalogs  {get; set;}
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Spools")]
 	public virtual List<string>?					Spools  {get; set;}
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Services")]
 	public virtual List<string>?					Services  {get; set;}
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("DeviceStatus")]
-	public virtual bool?					DeviceStatus  {get; set;}
+	public virtual bool?					DeviceStatus  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("DeviceUDF", 
+					(IBinding data, string? value) => {(data as StatusRequest).DeviceUDF = value;}, 
+					(IBinding data) => (data as StatusRequest).DeviceUDF ),
+		new PropertyString ("CatalogedDeviceDigest", 
+					(IBinding data, string? value) => {(data as StatusRequest).CatalogedDeviceDigest = value;}, 
+					(IBinding data) => (data as StatusRequest).CatalogedDeviceDigest ),
+		new PropertyListString ("Catalogs", 
+					(IBinding data, List<string>? value) => {(data as StatusRequest).Catalogs = value;}, 
+					(IBinding data) => (data as StatusRequest).Catalogs ),
+		new PropertyListString ("Spools", 
+					(IBinding data, List<string>? value) => {(data as StatusRequest).Spools = value;}, 
+					(IBinding data) => (data as StatusRequest).Spools ),
+		new PropertyListString ("Services", 
+					(IBinding data, List<string>? value) => {(data as StatusRequest).Services = value;}, 
+					(IBinding data) => (data as StatusRequest).Services ),
+		new PropertyBoolean ("DeviceStatus", 
+					(IBinding data, bool? value) => {(data as StatusRequest).DeviceStatus = value;}, 
+					(IBinding data) => (data as StatusRequest).DeviceStatus )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2795,20 +2591,14 @@ public partial class StatusRequest : MeshRequestUser {
 	public static readonly new Binding<StatusRequest> _binding = new (
 			new() {
 
-			{ "DeviceUDF", new PropertyString ("DeviceUDF", 
-					(IBinding data, string? value) => {(data as StatusRequest).DeviceUDF = value;}, (IBinding data) => (data as StatusRequest).DeviceUDF )},
-			{ "CatalogedDeviceDigest", new PropertyString ("CatalogedDeviceDigest", 
-					(IBinding data, string? value) => {(data as StatusRequest).CatalogedDeviceDigest = value;}, (IBinding data) => (data as StatusRequest).CatalogedDeviceDigest )},
-			{ "Catalogs", new PropertyListString ("Catalogs", 
-					(IBinding data, List<string>? value) => {(data as StatusRequest).Catalogs = value;}, (IBinding data) => (data as StatusRequest).Catalogs )},
-			{ "Spools", new PropertyListString ("Spools", 
-					(IBinding data, List<string>? value) => {(data as StatusRequest).Spools = value;}, (IBinding data) => (data as StatusRequest).Spools )},
-			{ "Services", new PropertyListString ("Services", 
-					(IBinding data, List<string>? value) => {(data as StatusRequest).Services = value;}, (IBinding data) => (data as StatusRequest).Services )},
-			{ "DeviceStatus", new PropertyBoolean ("DeviceStatus", 
-					(IBinding data, bool? value) => {(data as StatusRequest).DeviceStatus = value;}, (IBinding data) => (data as StatusRequest).DeviceStatus )}
+			{ "DeviceUDF", _properties [0]},
+			{ "CatalogedDeviceDigest", _properties [1]},
+			{ "Catalogs", _properties [2]},
+			{ "Spools", _properties [3]},
+			{ "Services", _properties [4]},
+			{ "DeviceStatus", _properties [5]}
         }, __Tag,() => new StatusRequest(), () => new List<StatusRequest>(), () => new Dictionary<string,StatusRequest>(),MeshRequestUser._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2826,7 +2616,7 @@ public partial class StatusRequest : MeshRequestUser {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2844,86 +2634,99 @@ public partial class StatusRequest : MeshRequestUser {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new StatusRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new StatusRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as StatusRequest;
-			}
-		var Result = new StatusRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class StatusResponse : MeshResponse {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Bitmask")]
-	public virtual byte[]?					Bitmask  {get; set;}
+	public virtual byte[]?					Bitmask  {get; set;} //
 
-        /// <summary>
-        ///The account profile providing the root of trust for this account.
-        /// </summary>
+    /// <summary>
+    ///The account profile providing the root of trust for this account.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedProfileAccount")]
-	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;} //
 
-        /// <summary>
-        ///The catalog device entry
-        /// </summary>
+    /// <summary>
+    ///The catalog device entry
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedCatalogedDevice")]
-	public virtual Enveloped<CatalogedDevice>?					EnvelopedCatalogedDevice  {get; set;}
+	public virtual Enveloped<CatalogedDevice>?					EnvelopedCatalogedDevice  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("CatalogedDeviceDigest")]
-	public virtual string?					CatalogedDeviceDigest  {get; set;}
+	public virtual string?					CatalogedDeviceDigest  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("StoreStatus")]
 	public virtual List<StoreStatus>?					StoreStatus  {get; set;}
-        /// <summary>
-        ///The enveloped assignment describing how the client should
-        ///discover the host and encrypt data to it.
-        /// </summary>
+    /// <summary>
+    ///The enveloped assignment describing how the client should
+    ///discover the host and encrypt data to it.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedAccountHostAssignment")]
-	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;}
+	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} //
 
-        /// <summary>
-        ///A series of access tokens for the requested services.
-        /// </summary>
+    /// <summary>
+    ///A series of access tokens for the requested services.
+    /// </summary>
 
 	[JsonPropertyName("Services")]
 	public virtual List<ServiceAccessToken>?					Services  {get; set;}
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("DeviceStatuses")]
 	public virtual List<DeviceStatus>?					DeviceStatuses  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyBinary ("Bitmask", 
+					(IBinding data, byte[]? value) => {(data as StatusResponse).Bitmask = value;}, 
+					(IBinding data) => (data as StatusResponse).Bitmask ),
+		new PropertyStruct ("EnvelopedProfileAccount", typeof (Enveloped<ProfileAccount>),
+					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, 
+					(IBinding data) => (data as StatusResponse).EnvelopedProfileAccount,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
+		new PropertyStruct ("EnvelopedCatalogedDevice", typeof (Enveloped<CatalogedDevice>),
+					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;}, 
+					(IBinding data) => (data as StatusResponse).EnvelopedCatalogedDevice,
+					false, ()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>()),
+		new PropertyString ("CatalogedDeviceDigest", 
+					(IBinding data, string? value) => {(data as StatusResponse).CatalogedDeviceDigest = value;}, 
+					(IBinding data) => (data as StatusResponse).CatalogedDeviceDigest ),
+		new PropertyListStruct ("StoreStatus", typeof (StoreStatus),
+					(IBinding data, object? value) => {(data as StatusResponse).StoreStatus = value as List<StoreStatus>;}, 
+					(IBinding data) => (data as StatusResponse).StoreStatus,
+					false, ()=>new  List<StoreStatus>(), ()=>new StoreStatus()),
+		new PropertyStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped<AccountHostAssignment>),
+					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, 
+					(IBinding data) => (data as StatusResponse).EnvelopedAccountHostAssignment,
+					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>()),
+		new PropertyListStruct ("Services", typeof (ServiceAccessToken),
+					(IBinding data, object? value) => {(data as StatusResponse).Services = value as List<ServiceAccessToken>;}, 
+					(IBinding data) => (data as StatusResponse).Services,
+					false, ()=>new  List<ServiceAccessToken>(), ()=>new ServiceAccessToken()),
+		new PropertyListStruct ("DeviceStatuses", typeof (DeviceStatus),
+					(IBinding data, object? value) => {(data as StatusResponse).DeviceStatuses = value as List<DeviceStatus>;}, 
+					(IBinding data) => (data as StatusResponse).DeviceStatuses,
+					false, ()=>new  List<DeviceStatus>(), ()=>new DeviceStatus())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2932,30 +2735,16 @@ public partial class StatusResponse : MeshResponse {
 	public static readonly new Binding<StatusResponse> _binding = new (
 			new() {
 
-			{ "Bitmask", new PropertyBinary ("Bitmask", 
-					(IBinding data, byte[]? value) => {(data as StatusResponse).Bitmask = value;}, (IBinding data) => (data as StatusResponse).Bitmask )},
-			{ "EnvelopedProfileAccount", new PropertyStruct ("EnvelopedProfileAccount", typeof (Enveloped<ProfileAccount>),
-					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as StatusResponse).EnvelopedProfileAccount,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
-			{ "EnvelopedCatalogedDevice", new PropertyStruct ("EnvelopedCatalogedDevice", typeof (Enveloped<CatalogedDevice>),
-					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;}, (IBinding data) => (data as StatusResponse).EnvelopedCatalogedDevice,
-					false, ()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>())},
-			{ "CatalogedDeviceDigest", new PropertyString ("CatalogedDeviceDigest", 
-					(IBinding data, string? value) => {(data as StatusResponse).CatalogedDeviceDigest = value;}, (IBinding data) => (data as StatusResponse).CatalogedDeviceDigest )},
-			{ "StoreStatus", new PropertyListStruct ("StoreStatus", typeof (StoreStatus),
-					(IBinding data, object? value) => {(data as StatusResponse).StoreStatus = value as List<StoreStatus>;}, (IBinding data) => (data as StatusResponse).StoreStatus,
-					false, ()=>new  List<StoreStatus>(), ()=>new StoreStatus())},
-			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped<AccountHostAssignment>),
-					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as StatusResponse).EnvelopedAccountHostAssignment,
-					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())},
-			{ "Services", new PropertyListStruct ("Services", typeof (ServiceAccessToken),
-					(IBinding data, object? value) => {(data as StatusResponse).Services = value as List<ServiceAccessToken>;}, (IBinding data) => (data as StatusResponse).Services,
-					false, ()=>new  List<ServiceAccessToken>(), ()=>new ServiceAccessToken())},
-			{ "DeviceStatuses", new PropertyListStruct ("DeviceStatuses", typeof (DeviceStatus),
-					(IBinding data, object? value) => {(data as StatusResponse).DeviceStatuses = value as List<DeviceStatus>;}, (IBinding data) => (data as StatusResponse).DeviceStatuses,
-					false, ()=>new  List<DeviceStatus>(), ()=>new DeviceStatus())}
+			{ "Bitmask", _properties [0]},
+			{ "EnvelopedProfileAccount", _properties [1]},
+			{ "EnvelopedCatalogedDevice", _properties [2]},
+			{ "CatalogedDeviceDigest", _properties [3]},
+			{ "StoreStatus", _properties [4]},
+			{ "EnvelopedAccountHostAssignment", _properties [5]},
+			{ "Services", _properties [6]},
+			{ "DeviceStatuses", _properties [7]}
         }, __Tag,() => new StatusResponse(), () => new List<StatusResponse>(), () => new Dictionary<string,StatusResponse>(),MeshResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2973,7 +2762,7 @@ public partial class StatusResponse : MeshResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2991,60 +2780,55 @@ public partial class StatusResponse : MeshResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new StatusResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new StatusResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as StatusResponse;
-			}
-		var Result = new StatusResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class DeviceStatus : MeshProtocol {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Id")]
-	public virtual string?					Id  {get; set;}
+	public virtual string?					Id  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Status")]
-	public virtual string?					Status  {get; set;}
+	public virtual string?					Status  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Comment")]
-	public virtual string?					Comment  {get; set;}
+	public virtual string?					Comment  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("LastConnected")]
-	public virtual DateTime?					LastConnected  {get; set;}
+	public virtual DateTime?					LastConnected  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Id", 
+					(IBinding data, string? value) => {(data as DeviceStatus).Id = value;}, 
+					(IBinding data) => (data as DeviceStatus).Id ),
+		new PropertyString ("Status", 
+					(IBinding data, string? value) => {(data as DeviceStatus).Status = value;}, 
+					(IBinding data) => (data as DeviceStatus).Status ),
+		new PropertyString ("Comment", 
+					(IBinding data, string? value) => {(data as DeviceStatus).Comment = value;}, 
+					(IBinding data) => (data as DeviceStatus).Comment ),
+		new PropertyDateTime ("LastConnected", 
+					(IBinding data, DateTime? value) => {(data as DeviceStatus).LastConnected = value;}, 
+					(IBinding data) => (data as DeviceStatus).LastConnected )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3053,16 +2837,12 @@ public partial class DeviceStatus : MeshProtocol {
 	public static readonly new Binding<DeviceStatus> _binding = new (
 			new() {
 
-			{ "Id", new PropertyString ("Id", 
-					(IBinding data, string? value) => {(data as DeviceStatus).Id = value;}, (IBinding data) => (data as DeviceStatus).Id )},
-			{ "Status", new PropertyString ("Status", 
-					(IBinding data, string? value) => {(data as DeviceStatus).Status = value;}, (IBinding data) => (data as DeviceStatus).Status )},
-			{ "Comment", new PropertyString ("Comment", 
-					(IBinding data, string? value) => {(data as DeviceStatus).Comment = value;}, (IBinding data) => (data as DeviceStatus).Comment )},
-			{ "LastConnected", new PropertyDateTime ("LastConnected", 
-					(IBinding data, DateTime? value) => {(data as DeviceStatus).LastConnected = value;}, (IBinding data) => (data as DeviceStatus).LastConnected )}
+			{ "Id", _properties [0]},
+			{ "Status", _properties [1]},
+			{ "Comment", _properties [2]},
+			{ "LastConnected", _properties [3]}
         }, __Tag,() => new DeviceStatus(), () => new List<DeviceStatus>(), () => new Dictionary<string,DeviceStatus>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3079,7 +2859,7 @@ public partial class DeviceStatus : MeshProtocol {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3097,29 +2877,6 @@ public partial class DeviceStatus : MeshProtocol {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new DeviceStatus();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new DeviceStatus FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as DeviceStatus;
-			}
-		var Result = new DeviceStatus ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -3131,41 +2888,64 @@ public partial class DeviceStatus : MeshProtocol {
 	/// payload be returned.
 	/// </summary>
 public partial class DownloadRequest : MeshRequestUser {
-        /// <summary>
-        ///The maximum number of results to be returned.
-        /// </summary>
+    /// <summary>
+    ///The maximum number of results to be returned.
+    /// </summary>
 
 	[JsonPropertyName("MaxResults")]
-	public virtual int?					MaxResults  {get; set;}
+	public virtual int?					MaxResults  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("DeviceUDF")]
-	public virtual string?					DeviceUDF  {get; set;}
+	public virtual string?					DeviceUDF  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("CatalogedDeviceDigest")]
-	public virtual string?					CatalogedDeviceDigest  {get; set;}
+	public virtual string?					CatalogedDeviceDigest  {get; set;} //
 
-        /// <summary>
-        ///Specifies constraints to be applied to a search result. These 
-        ///allow a client to limit the number of records returned, the quantity
-        ///of data returned, the earliest and latest data returned, etc.
-        /// </summary>
+    /// <summary>
+    ///Specifies constraints to be applied to a search result. These 
+    ///allow a client to limit the number of records returned, the quantity
+    ///of data returned, the earliest and latest data returned, etc.
+    /// </summary>
 
 	[JsonPropertyName("Select")]
 	public virtual List<ConstraintsSelect>?					Select  {get; set;}
-        /// <summary>
-        ///Specifies the data constraints to be applied to the responses.
-        /// </summary>
+    /// <summary>
+    ///Specifies the data constraints to be applied to the responses.
+    /// </summary>
 
 	[JsonPropertyName("ConstraintsPost")]
-	public virtual ConstraintsData?					ConstraintsPost  {get; set;}
+	public virtual ConstraintsData?					ConstraintsPost  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyInteger32 ("MaxResults", 
+					(IBinding data, int? value) => {(data as DownloadRequest).MaxResults = value;}, 
+					(IBinding data) => (data as DownloadRequest).MaxResults ),
+		new PropertyString ("DeviceUDF", 
+					(IBinding data, string? value) => {(data as DownloadRequest).DeviceUDF = value;}, 
+					(IBinding data) => (data as DownloadRequest).DeviceUDF ),
+		new PropertyString ("CatalogedDeviceDigest", 
+					(IBinding data, string? value) => {(data as DownloadRequest).CatalogedDeviceDigest = value;}, 
+					(IBinding data) => (data as DownloadRequest).CatalogedDeviceDigest ),
+		new PropertyListStruct ("Select", typeof (ConstraintsSelect),
+					(IBinding data, object? value) => {(data as DownloadRequest).Select = value as List<ConstraintsSelect>;}, 
+					(IBinding data) => (data as DownloadRequest).Select,
+					false, ()=>new  List<ConstraintsSelect>(), ()=>new ConstraintsSelect()),
+		new PropertyStruct ("ConstraintsPost", typeof (ConstraintsData),
+					(IBinding data, object? value) => {(data as DownloadRequest).ConstraintsPost = value as ConstraintsData;}, 
+					(IBinding data) => (data as DownloadRequest).ConstraintsPost,
+					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3174,20 +2954,13 @@ public partial class DownloadRequest : MeshRequestUser {
 	public static readonly new Binding<DownloadRequest> _binding = new (
 			new() {
 
-			{ "MaxResults", new PropertyInteger32 ("MaxResults", 
-					(IBinding data, int? value) => {(data as DownloadRequest).MaxResults = value;}, (IBinding data) => (data as DownloadRequest).MaxResults )},
-			{ "DeviceUDF", new PropertyString ("DeviceUDF", 
-					(IBinding data, string? value) => {(data as DownloadRequest).DeviceUDF = value;}, (IBinding data) => (data as DownloadRequest).DeviceUDF )},
-			{ "CatalogedDeviceDigest", new PropertyString ("CatalogedDeviceDigest", 
-					(IBinding data, string? value) => {(data as DownloadRequest).CatalogedDeviceDigest = value;}, (IBinding data) => (data as DownloadRequest).CatalogedDeviceDigest )},
-			{ "Select", new PropertyListStruct ("Select", typeof (ConstraintsSelect),
-					(IBinding data, object? value) => {(data as DownloadRequest).Select = value as List<ConstraintsSelect>;}, (IBinding data) => (data as DownloadRequest).Select,
-					false, ()=>new  List<ConstraintsSelect>(), ()=>new ConstraintsSelect())},
-			{ "ConstraintsPost", new PropertyStruct ("ConstraintsPost", typeof (ConstraintsData),
-					(IBinding data, object? value) => {(data as DownloadRequest).ConstraintsPost = value as ConstraintsData;}, (IBinding data) => (data as DownloadRequest).ConstraintsPost,
-					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())}
+			{ "MaxResults", _properties [0]},
+			{ "DeviceUDF", _properties [1]},
+			{ "CatalogedDeviceDigest", _properties [2]},
+			{ "Select", _properties [3]},
+			{ "ConstraintsPost", _properties [4]}
         }, __Tag,() => new DownloadRequest(), () => new List<DownloadRequest>(), () => new Dictionary<string,DownloadRequest>(),MeshRequestUser._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3205,7 +2978,7 @@ public partial class DownloadRequest : MeshRequestUser {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3223,29 +2996,6 @@ public partial class DownloadRequest : MeshRequestUser {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new DownloadRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new DownloadRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as DownloadRequest;
-			}
-		var Result = new DownloadRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -3258,26 +3008,43 @@ public partial class DownloadRequest : MeshRequestUser {
 	/// objects returned. A service MAY limit the scope of each response. 
 	/// </summary>
 public partial class DownloadResponse : MeshResponse {
-        /// <summary>
-        ///The updated data
-        /// </summary>
+    /// <summary>
+    ///The updated data
+    /// </summary>
 
 	[JsonPropertyName("Updates")]
 	public virtual List<StoreUpdate>?					Updates  {get; set;}
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("CatalogedDeviceDigest")]
-	public virtual string?					CatalogedDeviceDigest  {get; set;}
+	public virtual string?					CatalogedDeviceDigest  {get; set;} //
 
-        /// <summary>
-        ///The catalog device entry. This is only returned if the 
-        /// </summary>
+    /// <summary>
+    ///The catalog device entry. This is only returned if the 
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedCatalogedDevice")]
-	public virtual Enveloped<CatalogedDevice>?					EnvelopedCatalogedDevice  {get; set;}
+	public virtual Enveloped<CatalogedDevice>?					EnvelopedCatalogedDevice  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyListStruct ("Updates", typeof (StoreUpdate),
+					(IBinding data, object? value) => {(data as DownloadResponse).Updates = value as List<StoreUpdate>;}, 
+					(IBinding data) => (data as DownloadResponse).Updates,
+					false, ()=>new  List<StoreUpdate>(), ()=>new StoreUpdate()),
+		new PropertyString ("CatalogedDeviceDigest", 
+					(IBinding data, string? value) => {(data as DownloadResponse).CatalogedDeviceDigest = value;}, 
+					(IBinding data) => (data as DownloadResponse).CatalogedDeviceDigest ),
+		new PropertyStruct ("EnvelopedCatalogedDevice", typeof (Enveloped<CatalogedDevice>),
+					(IBinding data, object? value) => {(data as DownloadResponse).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;}, 
+					(IBinding data) => (data as DownloadResponse).EnvelopedCatalogedDevice,
+					false, ()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3286,16 +3053,11 @@ public partial class DownloadResponse : MeshResponse {
 	public static readonly new Binding<DownloadResponse> _binding = new (
 			new() {
 
-			{ "Updates", new PropertyListStruct ("Updates", typeof (StoreUpdate),
-					(IBinding data, object? value) => {(data as DownloadResponse).Updates = value as List<StoreUpdate>;}, (IBinding data) => (data as DownloadResponse).Updates,
-					false, ()=>new  List<StoreUpdate>(), ()=>new StoreUpdate())},
-			{ "CatalogedDeviceDigest", new PropertyString ("CatalogedDeviceDigest", 
-					(IBinding data, string? value) => {(data as DownloadResponse).CatalogedDeviceDigest = value;}, (IBinding data) => (data as DownloadResponse).CatalogedDeviceDigest )},
-			{ "EnvelopedCatalogedDevice", new PropertyStruct ("EnvelopedCatalogedDevice", typeof (Enveloped<CatalogedDevice>),
-					(IBinding data, object? value) => {(data as DownloadResponse).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;}, (IBinding data) => (data as DownloadResponse).EnvelopedCatalogedDevice,
-					false, ()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>())}
+			{ "Updates", _properties [0]},
+			{ "CatalogedDeviceDigest", _properties [1]},
+			{ "EnvelopedCatalogedDevice", _properties [2]}
         }, __Tag,() => new DownloadResponse(), () => new List<DownloadResponse>(), () => new Dictionary<string,DownloadResponse>(),MeshResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3313,7 +3075,7 @@ public partial class DownloadResponse : MeshResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3331,29 +3093,6 @@ public partial class DownloadResponse : MeshResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new DownloadResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new DownloadResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as DownloadResponse;
-			}
-		var Result = new DownloadResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -3362,21 +3101,33 @@ public partial class DownloadResponse : MeshResponse {
 	/// Uploads a data object to be retrievable from the specified account
 	/// </summary>
 public partial class UploadRequest : MeshRequestUser {
-        /// <summary>
-        ///The document identifier	
-        /// </summary>
+    /// <summary>
+    ///The document identifier	
+    /// </summary>
 
 	[JsonPropertyName("DocumentId")]
-	public virtual string?					DocumentId  {get; set;}
+	public virtual string?					DocumentId  {get; set;} //
 
-        /// <summary>
-        ///The data to be uploaded
-        /// </summary>
+    /// <summary>
+    ///The data to be uploaded
+    /// </summary>
 
 	[JsonPropertyName("Data")]
-	public virtual byte[]?					Data  {get; set;}
+	public virtual byte[]?					Data  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("DocumentId", 
+					(IBinding data, string? value) => {(data as UploadRequest).DocumentId = value;}, 
+					(IBinding data) => (data as UploadRequest).DocumentId ),
+		new PropertyBinary ("Data", 
+					(IBinding data, byte[]? value) => {(data as UploadRequest).Data = value;}, 
+					(IBinding data) => (data as UploadRequest).Data )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3385,12 +3136,10 @@ public partial class UploadRequest : MeshRequestUser {
 	public static readonly new Binding<UploadRequest> _binding = new (
 			new() {
 
-			{ "DocumentId", new PropertyString ("DocumentId", 
-					(IBinding data, string? value) => {(data as UploadRequest).DocumentId = value;}, (IBinding data) => (data as UploadRequest).DocumentId )},
-			{ "Data", new PropertyBinary ("Data", 
-					(IBinding data, byte[]? value) => {(data as UploadRequest).Data = value;}, (IBinding data) => (data as UploadRequest).Data )}
+			{ "DocumentId", _properties [0]},
+			{ "Data", _properties [1]}
         }, __Tag,() => new UploadRequest(), () => new List<UploadRequest>(), () => new Dictionary<string,UploadRequest>(),MeshRequestUser._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3408,7 +3157,7 @@ public partial class UploadRequest : MeshRequestUser {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3426,29 +3175,6 @@ public partial class UploadRequest : MeshRequestUser {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new UploadRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new UploadRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as UploadRequest;
-			}
-		var Result = new UploadRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -3458,6 +3184,12 @@ public partial class UploadRequest : MeshRequestUser {
 	/// </summary>
 public partial class UploadResponse : MeshResponse {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3467,7 +3199,7 @@ public partial class UploadResponse : MeshResponse {
 			new() {
 
         }, __Tag,() => new UploadResponse(), () => new List<UploadResponse>(), () => new Dictionary<string,UploadResponse>(),MeshResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3485,7 +3217,7 @@ public partial class UploadResponse : MeshResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3503,29 +3235,6 @@ public partial class UploadResponse : MeshResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new UploadResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new UploadResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as UploadResponse;
-			}
-		var Result = new UploadResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -3534,14 +3243,23 @@ public partial class UploadResponse : MeshResponse {
 	/// Request object with specified identifier
 	/// </summary>
 public partial class GetDataRequest : MeshRequest {
-        /// <summary>
-        ///The document identifier	
-        /// </summary>
+    /// <summary>
+    ///The document identifier	
+    /// </summary>
 
 	[JsonPropertyName("DocumentId")]
-	public virtual string?					DocumentId  {get; set;}
+	public virtual string?					DocumentId  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("DocumentId", 
+					(IBinding data, string? value) => {(data as GetDataRequest).DocumentId = value;}, 
+					(IBinding data) => (data as GetDataRequest).DocumentId )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3550,10 +3268,9 @@ public partial class GetDataRequest : MeshRequest {
 	public static readonly new Binding<GetDataRequest> _binding = new (
 			new() {
 
-			{ "DocumentId", new PropertyString ("DocumentId", 
-					(IBinding data, string? value) => {(data as GetDataRequest).DocumentId = value;}, (IBinding data) => (data as GetDataRequest).DocumentId )}
+			{ "DocumentId", _properties [0]}
         }, __Tag,() => new GetDataRequest(), () => new List<GetDataRequest>(), () => new Dictionary<string,GetDataRequest>(),MeshRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3571,7 +3288,7 @@ public partial class GetDataRequest : MeshRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3589,29 +3306,6 @@ public partial class GetDataRequest : MeshRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new GetDataRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new GetDataRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as GetDataRequest;
-			}
-		var Result = new GetDataRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -3620,14 +3314,23 @@ public partial class GetDataRequest : MeshRequest {
 	/// Returns a data object uploaded to the specified account.
 	/// </summary>
 public partial class GetDataResponse : MeshResponse {
-        /// <summary>
-        ///The data retrieved
-        /// </summary>
+    /// <summary>
+    ///The data retrieved
+    /// </summary>
 
 	[JsonPropertyName("Data")]
-	public virtual byte[]?					Data  {get; set;}
+	public virtual byte[]?					Data  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyBinary ("Data", 
+					(IBinding data, byte[]? value) => {(data as GetDataResponse).Data = value;}, 
+					(IBinding data) => (data as GetDataResponse).Data )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3636,10 +3339,9 @@ public partial class GetDataResponse : MeshResponse {
 	public static readonly new Binding<GetDataResponse> _binding = new (
 			new() {
 
-			{ "Data", new PropertyBinary ("Data", 
-					(IBinding data, byte[]? value) => {(data as GetDataResponse).Data = value;}, (IBinding data) => (data as GetDataResponse).Data )}
+			{ "Data", _properties [0]}
         }, __Tag,() => new GetDataResponse(), () => new List<GetDataResponse>(), () => new Dictionary<string,GetDataResponse>(),MeshResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3657,7 +3359,7 @@ public partial class GetDataResponse : MeshResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3675,29 +3377,6 @@ public partial class GetDataResponse : MeshResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new GetDataResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new GetDataResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as GetDataResponse;
-			}
-		var Result = new GetDataResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -3707,40 +3386,65 @@ public partial class GetDataResponse : MeshResponse {
 	/// by the owner of the account
 	/// </summary>
 public partial class TransactRequest : MeshRequestUser {
-        /// <summary>
-        ///The data to be updated
-        /// </summary>
+    /// <summary>
+    ///The data to be updated
+    /// </summary>
 
 	[JsonPropertyName("Updates")]
 	public virtual List<StoreUpdate>?					Updates  {get; set;}
-        /// <summary>
-        ///The account(s) to which the request is directed.
-        /// </summary>
+    /// <summary>
+    ///The account(s) to which the request is directed.
+    /// </summary>
 
 	[JsonPropertyName("Accounts")]
 	public virtual List<string>?					Accounts  {get; set;}
-        /// <summary>
-        ///The messages to be sent to other accounts  
-        /// </summary>
+    /// <summary>
+    ///The messages to be sent to other accounts  
+    /// </summary>
 
 	[JsonPropertyName("Outbound")]
 	public virtual List<Enveloped<Message>>?					Outbound  {get; set;}
-        /// <summary>
-        ///Messages to be appended to the user's inbound spool. this is
-        ///typically used to post notifications to the user to mark messages as having been
-        ///read or responded to.
-        /// </summary>
+    /// <summary>
+    ///Messages to be appended to the user's inbound spool. this is
+    ///typically used to post notifications to the user to mark messages as having been
+    ///read or responded to.
+    /// </summary>
 
 	[JsonPropertyName("Inbound")]
 	public virtual List<Enveloped<Message>>?					Inbound  {get; set;}
-        /// <summary>
-        ///Messages to be appended to the user's local spool. This is used to allow connecting
-        ///devices to collect activation messages before they have connected to the mesh.
-        /// </summary>
+    /// <summary>
+    ///Messages to be appended to the user's local spool. This is used to allow connecting
+    ///devices to collect activation messages before they have connected to the mesh.
+    /// </summary>
 
 	[JsonPropertyName("Local")]
 	public virtual List<Enveloped<Message>>?					Local  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyListStruct ("Updates", typeof (StoreUpdate),
+					(IBinding data, object? value) => {(data as TransactRequest).Updates = value as List<StoreUpdate>;}, 
+					(IBinding data) => (data as TransactRequest).Updates,
+					false, ()=>new  List<StoreUpdate>(), ()=>new StoreUpdate()),
+		new PropertyListString ("Accounts", 
+					(IBinding data, List<string>? value) => {(data as TransactRequest).Accounts = value;}, 
+					(IBinding data) => (data as TransactRequest).Accounts ),
+		new PropertyListStruct ("Outbound", typeof (Enveloped<Message>),
+					(IBinding data, object? value) => {(data as TransactRequest).Outbound = value as List<Enveloped<Message>>;}, 
+					(IBinding data) => (data as TransactRequest).Outbound,
+					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>()),
+		new PropertyListStruct ("Inbound", typeof (Enveloped<Message>),
+					(IBinding data, object? value) => {(data as TransactRequest).Inbound = value as List<Enveloped<Message>>;}, 
+					(IBinding data) => (data as TransactRequest).Inbound,
+					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>()),
+		new PropertyListStruct ("Local", typeof (Enveloped<Message>),
+					(IBinding data, object? value) => {(data as TransactRequest).Local = value as List<Enveloped<Message>>;}, 
+					(IBinding data) => (data as TransactRequest).Local,
+					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3749,22 +3453,13 @@ public partial class TransactRequest : MeshRequestUser {
 	public static readonly new Binding<TransactRequest> _binding = new (
 			new() {
 
-			{ "Updates", new PropertyListStruct ("Updates", typeof (StoreUpdate),
-					(IBinding data, object? value) => {(data as TransactRequest).Updates = value as List<StoreUpdate>;}, (IBinding data) => (data as TransactRequest).Updates,
-					false, ()=>new  List<StoreUpdate>(), ()=>new StoreUpdate())},
-			{ "Accounts", new PropertyListString ("Accounts", 
-					(IBinding data, List<string>? value) => {(data as TransactRequest).Accounts = value;}, (IBinding data) => (data as TransactRequest).Accounts )},
-			{ "Outbound", new PropertyListStruct ("Outbound", typeof (Enveloped<Message>),
-					(IBinding data, object? value) => {(data as TransactRequest).Outbound = value as List<Enveloped<Message>>;}, (IBinding data) => (data as TransactRequest).Outbound,
-					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())},
-			{ "Inbound", new PropertyListStruct ("Inbound", typeof (Enveloped<Message>),
-					(IBinding data, object? value) => {(data as TransactRequest).Inbound = value as List<Enveloped<Message>>;}, (IBinding data) => (data as TransactRequest).Inbound,
-					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())},
-			{ "Local", new PropertyListStruct ("Local", typeof (Enveloped<Message>),
-					(IBinding data, object? value) => {(data as TransactRequest).Local = value as List<Enveloped<Message>>;}, (IBinding data) => (data as TransactRequest).Local,
-					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())}
+			{ "Updates", _properties [0]},
+			{ "Accounts", _properties [1]},
+			{ "Outbound", _properties [2]},
+			{ "Inbound", _properties [3]},
+			{ "Local", _properties [4]}
         }, __Tag,() => new TransactRequest(), () => new List<TransactRequest>(), () => new Dictionary<string,TransactRequest>(),MeshRequestUser._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3782,7 +3477,7 @@ public partial class TransactRequest : MeshRequestUser {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3800,29 +3495,6 @@ public partial class TransactRequest : MeshRequestUser {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new TransactRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new TransactRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as TransactRequest;
-			}
-		var Result = new TransactRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -3831,28 +3503,45 @@ public partial class TransactRequest : MeshRequestUser {
 	/// Response to an upload request. 
 	/// </summary>
 public partial class TransactResponse : MeshResponse {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Bitmask")]
-	public virtual byte[]?					Bitmask  {get; set;}
+	public virtual byte[]?					Bitmask  {get; set;} //
 
-        /// <summary>
-        ///The responses to the entries.
-        /// </summary>
+    /// <summary>
+    ///The responses to the entries.
+    /// </summary>
 
 	[JsonPropertyName("Entries")]
 	public virtual List<EntryResponse>?					Entries  {get; set;}
-        /// <summary>
-        ///If the upload request contains redacted entries, specifies constraints 
-        ///that apply to the redacted entries as a group. Thus the total payloads
-        ///of all the messages must not exceed the specified value.
-        /// </summary>
+    /// <summary>
+    ///If the upload request contains redacted entries, specifies constraints 
+    ///that apply to the redacted entries as a group. Thus the total payloads
+    ///of all the messages must not exceed the specified value.
+    /// </summary>
 
 	[JsonPropertyName("ConstraintsData")]
-	public virtual ConstraintsData?					ConstraintsData  {get; set;}
+	public virtual ConstraintsData?					ConstraintsData  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyBinary ("Bitmask", 
+					(IBinding data, byte[]? value) => {(data as TransactResponse).Bitmask = value;}, 
+					(IBinding data) => (data as TransactResponse).Bitmask ),
+		new PropertyListStruct ("Entries", typeof (EntryResponse),
+					(IBinding data, object? value) => {(data as TransactResponse).Entries = value as List<EntryResponse>;}, 
+					(IBinding data) => (data as TransactResponse).Entries,
+					false, ()=>new  List<EntryResponse>(), ()=>new EntryResponse()),
+		new PropertyStruct ("ConstraintsData", typeof (ConstraintsData),
+					(IBinding data, object? value) => {(data as TransactResponse).ConstraintsData = value as ConstraintsData;}, 
+					(IBinding data) => (data as TransactResponse).ConstraintsData,
+					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3861,16 +3550,11 @@ public partial class TransactResponse : MeshResponse {
 	public static readonly new Binding<TransactResponse> _binding = new (
 			new() {
 
-			{ "Bitmask", new PropertyBinary ("Bitmask", 
-					(IBinding data, byte[]? value) => {(data as TransactResponse).Bitmask = value;}, (IBinding data) => (data as TransactResponse).Bitmask )},
-			{ "Entries", new PropertyListStruct ("Entries", typeof (EntryResponse),
-					(IBinding data, object? value) => {(data as TransactResponse).Entries = value as List<EntryResponse>;}, (IBinding data) => (data as TransactResponse).Entries,
-					false, ()=>new  List<EntryResponse>(), ()=>new EntryResponse())},
-			{ "ConstraintsData", new PropertyStruct ("ConstraintsData", typeof (ConstraintsData),
-					(IBinding data, object? value) => {(data as TransactResponse).ConstraintsData = value as ConstraintsData;}, (IBinding data) => (data as TransactResponse).ConstraintsData,
-					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())}
+			{ "Bitmask", _properties [0]},
+			{ "Entries", _properties [1]},
+			{ "ConstraintsData", _properties [2]}
         }, __Tag,() => new TransactResponse(), () => new List<TransactResponse>(), () => new Dictionary<string,TransactResponse>(),MeshResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3888,7 +3572,7 @@ public partial class TransactResponse : MeshResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3906,68 +3590,64 @@ public partial class TransactResponse : MeshResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new TransactResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new TransactResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as TransactResponse;
-			}
-		var Result = new TransactResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class EntryResponse : MeshProtocol {
-        /// <summary>
-        ///The index value of the entry in the request.
-        /// </summary>
+    /// <summary>
+    ///The index value of the entry in the request.
+    /// </summary>
 
 	[JsonPropertyName("IndexRequest")]
-	public virtual long?					IndexRequest  {get; set;}
+	public virtual long?					IndexRequest  {get; set;} //
 
-        /// <summary>
-        ///The index value assigned to the entry in the container.
-        /// </summary>
+    /// <summary>
+    ///The index value assigned to the entry in the container.
+    /// </summary>
 
 	[JsonPropertyName("IndexContainer")]
-	public virtual long?					IndexContainer  {get; set;}
+	public virtual long?					IndexContainer  {get; set;} //
 
-        /// <summary>
-        ///Specifies the result of attempting to add the entry to a catalog
-        ///or spool. Valid values for a message are 'Accept', 'Reject'. Valid 
-        ///values for an entry are 'Accept', 'Reject' and 'Conflict'.
-        /// </summary>
+    /// <summary>
+    ///Specifies the result of attempting to add the entry to a catalog
+    ///or spool. Valid values for a message are 'Accept', 'Reject'. Valid 
+    ///values for an entry are 'Accept', 'Reject' and 'Conflict'.
+    /// </summary>
 
 	[JsonPropertyName("Result")]
-	public virtual string?					Result  {get; set;}
+	public virtual string?					Result  {get; set;} //
 
-        /// <summary>
-        ///If the entry was redacted, specifies constraints 
-        ///that apply to the redacted entries as a group. Thus the total payloads
-        ///of all the messages must not exceed the specified value.	
-        /// </summary>
+    /// <summary>
+    ///If the entry was redacted, specifies constraints 
+    ///that apply to the redacted entries as a group. Thus the total payloads
+    ///of all the messages must not exceed the specified value.	
+    /// </summary>
 
 	[JsonPropertyName("ConstraintsData")]
-	public virtual ConstraintsData?					ConstraintsData  {get; set;}
+	public virtual ConstraintsData?					ConstraintsData  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyInteger64 ("IndexRequest", 
+					(IBinding data, long? value) => {(data as EntryResponse).IndexRequest = value;}, 
+					(IBinding data) => (data as EntryResponse).IndexRequest ),
+		new PropertyInteger64 ("IndexContainer", 
+					(IBinding data, long? value) => {(data as EntryResponse).IndexContainer = value;}, 
+					(IBinding data) => (data as EntryResponse).IndexContainer ),
+		new PropertyString ("Result", 
+					(IBinding data, string? value) => {(data as EntryResponse).Result = value;}, 
+					(IBinding data) => (data as EntryResponse).Result ),
+		new PropertyStruct ("ConstraintsData", typeof (ConstraintsData),
+					(IBinding data, object? value) => {(data as EntryResponse).ConstraintsData = value as ConstraintsData;}, 
+					(IBinding data) => (data as EntryResponse).ConstraintsData,
+					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3976,17 +3656,12 @@ public partial class EntryResponse : MeshProtocol {
 	public static readonly new Binding<EntryResponse> _binding = new (
 			new() {
 
-			{ "IndexRequest", new PropertyInteger64 ("IndexRequest", 
-					(IBinding data, long? value) => {(data as EntryResponse).IndexRequest = value;}, (IBinding data) => (data as EntryResponse).IndexRequest )},
-			{ "IndexContainer", new PropertyInteger64 ("IndexContainer", 
-					(IBinding data, long? value) => {(data as EntryResponse).IndexContainer = value;}, (IBinding data) => (data as EntryResponse).IndexContainer )},
-			{ "Result", new PropertyString ("Result", 
-					(IBinding data, string? value) => {(data as EntryResponse).Result = value;}, (IBinding data) => (data as EntryResponse).Result )},
-			{ "ConstraintsData", new PropertyStruct ("ConstraintsData", typeof (ConstraintsData),
-					(IBinding data, object? value) => {(data as EntryResponse).ConstraintsData = value as ConstraintsData;}, (IBinding data) => (data as EntryResponse).ConstraintsData,
-					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())}
+			{ "IndexRequest", _properties [0]},
+			{ "IndexContainer", _properties [1]},
+			{ "Result", _properties [2]},
+			{ "ConstraintsData", _properties [3]}
         }, __Tag,() => new EntryResponse(), () => new List<EntryResponse>(), () => new Dictionary<string,EntryResponse>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4003,7 +3678,7 @@ public partial class EntryResponse : MeshProtocol {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4021,29 +3696,6 @@ public partial class EntryResponse : MeshProtocol {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new EntryResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new EntryResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as EntryResponse;
-			}
-		var Result = new EntryResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -4053,6 +3705,12 @@ public partial class EntryResponse : MeshProtocol {
 	/// </summary>
 public partial class PublicRequest : DownloadRequest {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4062,7 +3720,7 @@ public partial class PublicRequest : DownloadRequest {
 			new() {
 
         }, __Tag,() => new PublicRequest(), () => new List<PublicRequest>(), () => new Dictionary<string,PublicRequest>(),DownloadRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4080,7 +3738,7 @@ public partial class PublicRequest : DownloadRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4098,29 +3756,6 @@ public partial class PublicRequest : DownloadRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PublicRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PublicRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PublicRequest;
-			}
-		var Result = new PublicRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -4129,19 +3764,32 @@ public partial class PublicRequest : DownloadRequest {
 	/// 
 	/// </summary>
 public partial class PostRequest : MeshRequest {
-        /// <summary>
-        ///The account(s) to which the request is directed.
-        /// </summary>
+    /// <summary>
+    ///The account(s) to which the request is directed.
+    /// </summary>
 
 	[JsonPropertyName("Accounts")]
 	public virtual List<string>?					Accounts  {get; set;}
-        /// <summary>
-        ///The messages to be sent to the addresses specified in Accounts. 
-        /// </summary>
+    /// <summary>
+    ///The messages to be sent to the addresses specified in Accounts. 
+    /// </summary>
 
 	[JsonPropertyName("Messages")]
 	public virtual List<Enveloped<Message>>?					Messages  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyListString ("Accounts", 
+					(IBinding data, List<string>? value) => {(data as PostRequest).Accounts = value;}, 
+					(IBinding data) => (data as PostRequest).Accounts ),
+		new PropertyListStruct ("Messages", typeof (Enveloped<Message>),
+					(IBinding data, object? value) => {(data as PostRequest).Messages = value as List<Enveloped<Message>>;}, 
+					(IBinding data) => (data as PostRequest).Messages,
+					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4150,13 +3798,10 @@ public partial class PostRequest : MeshRequest {
 	public static readonly new Binding<PostRequest> _binding = new (
 			new() {
 
-			{ "Accounts", new PropertyListString ("Accounts", 
-					(IBinding data, List<string>? value) => {(data as PostRequest).Accounts = value;}, (IBinding data) => (data as PostRequest).Accounts )},
-			{ "Messages", new PropertyListStruct ("Messages", typeof (Enveloped<Message>),
-					(IBinding data, object? value) => {(data as PostRequest).Messages = value as List<Enveloped<Message>>;}, (IBinding data) => (data as PostRequest).Messages,
-					false, ()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())}
+			{ "Accounts", _properties [0]},
+			{ "Messages", _properties [1]}
         }, __Tag,() => new PostRequest(), () => new List<PostRequest>(), () => new Dictionary<string,PostRequest>(),MeshRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4174,7 +3819,7 @@ public partial class PostRequest : MeshRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4192,29 +3837,6 @@ public partial class PostRequest : MeshRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PostRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PostRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PostRequest;
-			}
-		var Result = new PostRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -4224,6 +3846,12 @@ public partial class PostRequest : MeshRequest {
 	/// </summary>
 public partial class PostResponse : TransactResponse {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4233,7 +3861,7 @@ public partial class PostResponse : TransactResponse {
 			new() {
 
         }, __Tag,() => new PostResponse(), () => new List<PostResponse>(), () => new Dictionary<string,PostResponse>(),TransactResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4251,7 +3879,7 @@ public partial class PostResponse : TransactResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4269,43 +3897,30 @@ public partial class PostResponse : TransactResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PostResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PostResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PostResponse;
-			}
-		var Result = new PostResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ClaimRequest : MeshRequest {
-        /// <summary>
-        ///The claim message
-        /// </summary>
+    /// <summary>
+    ///The claim message
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedMessageClaim")]
-	public virtual Enveloped<MessageClaim>?					EnvelopedMessageClaim  {get; set;}
+	public virtual Enveloped<MessageClaim>?					EnvelopedMessageClaim  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("EnvelopedMessageClaim", typeof (Enveloped<MessageClaim>),
+					(IBinding data, object? value) => {(data as ClaimRequest).EnvelopedMessageClaim = value as Enveloped<MessageClaim>;}, 
+					(IBinding data) => (data as ClaimRequest).EnvelopedMessageClaim,
+					false, ()=>new  Enveloped<MessageClaim>(), ()=>new Enveloped<MessageClaim>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4314,11 +3929,9 @@ public partial class ClaimRequest : MeshRequest {
 	public static readonly new Binding<ClaimRequest> _binding = new (
 			new() {
 
-			{ "EnvelopedMessageClaim", new PropertyStruct ("EnvelopedMessageClaim", typeof (Enveloped<MessageClaim>),
-					(IBinding data, object? value) => {(data as ClaimRequest).EnvelopedMessageClaim = value as Enveloped<MessageClaim>;}, (IBinding data) => (data as ClaimRequest).EnvelopedMessageClaim,
-					false, ()=>new  Enveloped<MessageClaim>(), ()=>new Enveloped<MessageClaim>())}
+			{ "EnvelopedMessageClaim", _properties [0]}
         }, __Tag,() => new ClaimRequest(), () => new List<ClaimRequest>(), () => new Dictionary<string,ClaimRequest>(),MeshRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4336,7 +3949,7 @@ public partial class ClaimRequest : MeshRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4354,43 +3967,30 @@ public partial class ClaimRequest : MeshRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ClaimRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ClaimRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ClaimRequest;
-			}
-		var Result = new ClaimRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ClaimResponse : MeshResponse {
-        /// <summary>
-        ///The encrypted device profile
-        /// </summary>
+    /// <summary>
+    ///The encrypted device profile
+    /// </summary>
 
 	[JsonPropertyName("CatalogedPublication")]
-	public virtual CatalogedPublication?					CatalogedPublication  {get; set;}
+	public virtual CatalogedPublication?					CatalogedPublication  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("CatalogedPublication", typeof (CatalogedPublication),
+					(IBinding data, object? value) => {(data as ClaimResponse).CatalogedPublication = value as CatalogedPublication;}, 
+					(IBinding data) => (data as ClaimResponse).CatalogedPublication,
+					false, ()=>new  CatalogedPublication(), ()=>new CatalogedPublication())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4399,11 +3999,9 @@ public partial class ClaimResponse : MeshResponse {
 	public static readonly new Binding<ClaimResponse> _binding = new (
 			new() {
 
-			{ "CatalogedPublication", new PropertyStruct ("CatalogedPublication", typeof (CatalogedPublication),
-					(IBinding data, object? value) => {(data as ClaimResponse).CatalogedPublication = value as CatalogedPublication;}, (IBinding data) => (data as ClaimResponse).CatalogedPublication,
-					false, ()=>new  CatalogedPublication(), ()=>new CatalogedPublication())}
+			{ "CatalogedPublication", _properties [0]}
         }, __Tag,() => new ClaimResponse(), () => new List<ClaimResponse>(), () => new Dictionary<string,ClaimResponse>(),MeshResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4421,7 +4019,7 @@ public partial class ClaimResponse : MeshResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4439,50 +4037,39 @@ public partial class ClaimResponse : MeshResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ClaimResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ClaimResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ClaimResponse;
-			}
-		var Result = new ClaimResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class PollClaimRequest : MeshRequest {
-        /// <summary>
-        ///The envelope identifier formed from the PublicationId.
-        /// </summary>
+    /// <summary>
+    ///The envelope identifier formed from the PublicationId.
+    /// </summary>
 
 	[JsonPropertyName("PublicationId")]
-	public virtual string?					PublicationId  {get; set;}
+	public virtual string?					PublicationId  {get; set;} //
 
-        /// <summary>
-        ///Account to which the claim is directed
-        /// </summary>
+    /// <summary>
+    ///Account to which the claim is directed
+    /// </summary>
 
 	[JsonPropertyName("TargetAccountAddress")]
-	public virtual string?					TargetAccountAddress  {get; set;}
+	public virtual string?					TargetAccountAddress  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("PublicationId", 
+					(IBinding data, string? value) => {(data as PollClaimRequest).PublicationId = value;}, 
+					(IBinding data) => (data as PollClaimRequest).PublicationId ),
+		new PropertyString ("TargetAccountAddress", 
+					(IBinding data, string? value) => {(data as PollClaimRequest).TargetAccountAddress = value;}, 
+					(IBinding data) => (data as PollClaimRequest).TargetAccountAddress )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4491,12 +4078,10 @@ public partial class PollClaimRequest : MeshRequest {
 	public static readonly new Binding<PollClaimRequest> _binding = new (
 			new() {
 
-			{ "PublicationId", new PropertyString ("PublicationId", 
-					(IBinding data, string? value) => {(data as PollClaimRequest).PublicationId = value;}, (IBinding data) => (data as PollClaimRequest).PublicationId )},
-			{ "TargetAccountAddress", new PropertyString ("TargetAccountAddress", 
-					(IBinding data, string? value) => {(data as PollClaimRequest).TargetAccountAddress = value;}, (IBinding data) => (data as PollClaimRequest).TargetAccountAddress )}
+			{ "PublicationId", _properties [0]},
+			{ "TargetAccountAddress", _properties [1]}
         }, __Tag,() => new PollClaimRequest(), () => new List<PollClaimRequest>(), () => new Dictionary<string,PollClaimRequest>(),MeshRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4514,7 +4099,7 @@ public partial class PollClaimRequest : MeshRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4532,43 +4117,30 @@ public partial class PollClaimRequest : MeshRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PollClaimRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PollClaimRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PollClaimRequest;
-			}
-		var Result = new PollClaimRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class PollClaimResponse : MeshResponse {
-        /// <summary>
-        ///The claim message
-        /// </summary>
+    /// <summary>
+    ///The claim message
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedMessage")]
-	public virtual Enveloped<Message>?					EnvelopedMessage  {get; set;}
+	public virtual Enveloped<Message>?					EnvelopedMessage  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("EnvelopedMessage", typeof (Enveloped<Message>),
+					(IBinding data, object? value) => {(data as PollClaimResponse).EnvelopedMessage = value as Enveloped<Message>;}, 
+					(IBinding data) => (data as PollClaimResponse).EnvelopedMessage,
+					false, ()=>new  Enveloped<Message>(), ()=>new Enveloped<Message>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4577,11 +4149,9 @@ public partial class PollClaimResponse : MeshResponse {
 	public static readonly new Binding<PollClaimResponse> _binding = new (
 			new() {
 
-			{ "EnvelopedMessage", new PropertyStruct ("EnvelopedMessage", typeof (Enveloped<Message>),
-					(IBinding data, object? value) => {(data as PollClaimResponse).EnvelopedMessage = value as Enveloped<Message>;}, (IBinding data) => (data as PollClaimResponse).EnvelopedMessage,
-					false, ()=>new  Enveloped<Message>(), ()=>new Enveloped<Message>())}
+			{ "EnvelopedMessage", _properties [0]}
         }, __Tag,() => new PollClaimResponse(), () => new List<PollClaimResponse>(), () => new Dictionary<string,PollClaimResponse>(),MeshResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4599,7 +4169,7 @@ public partial class PollClaimResponse : MeshResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4617,50 +4187,39 @@ public partial class PollClaimResponse : MeshResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PollClaimResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PollClaimResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PollClaimResponse;
-			}
-		var Result = new PollClaimResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 abstract public partial class CryptographicOperation : MeshProtocol {
-        /// <summary>
-        ///The key identifier			
-        /// </summary>
+    /// <summary>
+    ///The key identifier			
+    /// </summary>
 
 	[JsonPropertyName("KeyId")]
-	public virtual string?					KeyId  {get; set;}
+	public virtual string?					KeyId  {get; set;} //
 
-        /// <summary>
-        ///Lagrange coefficient multiplier to be applied to the private key
-        /// </summary>
+    /// <summary>
+    ///Lagrange coefficient multiplier to be applied to the private key
+    /// </summary>
 
 	[JsonPropertyName("KeyCoefficient")]
-	public virtual byte[]?					KeyCoefficient  {get; set;}
+	public virtual byte[]?					KeyCoefficient  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("KeyId", 
+					(IBinding data, string? value) => {(data as CryptographicOperation).KeyId = value;}, 
+					(IBinding data) => (data as CryptographicOperation).KeyId ),
+		new PropertyBinary ("KeyCoefficient", 
+					(IBinding data, byte[]? value) => {(data as CryptographicOperation).KeyCoefficient = value;}, 
+					(IBinding data) => (data as CryptographicOperation).KeyCoefficient )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4669,12 +4228,10 @@ abstract public partial class CryptographicOperation : MeshProtocol {
 	public static readonly new Binding<CryptographicOperation> _binding = new (
 			new() {
 
-			{ "KeyId", new PropertyString ("KeyId", 
-					(IBinding data, string? value) => {(data as CryptographicOperation).KeyId = value;}, (IBinding data) => (data as CryptographicOperation).KeyId )},
-			{ "KeyCoefficient", new PropertyBinary ("KeyCoefficient", 
-					(IBinding data, byte[]? value) => {(data as CryptographicOperation).KeyCoefficient = value;}, (IBinding data) => (data as CryptographicOperation).KeyCoefficient )}
+			{ "KeyId", _properties [0]},
+			{ "KeyCoefficient", _properties [1]}
         }, __Tag,null, null, null,null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4691,7 +4248,7 @@ abstract public partial class CryptographicOperation : MeshProtocol {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4709,47 +4266,39 @@ abstract public partial class CryptographicOperation : MeshProtocol {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CryptographicOperation FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CryptographicOperation;
-			}
-		throw new CannotCreateAbstract();
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class CryptographicOperationSign : CryptographicOperation {
-        /// <summary>
-        ///The data to sign
-        /// </summary>
+    /// <summary>
+    ///The data to sign
+    /// </summary>
 
 	[JsonPropertyName("Data")]
-	public virtual byte[]?					Data  {get; set;}
+	public virtual byte[]?					Data  {get; set;} //
 
-        /// <summary>
-        ///Contribution to the R offset.
-        /// </summary>
+    /// <summary>
+    ///Contribution to the R offset.
+    /// </summary>
 
 	[JsonPropertyName("PartialR")]
-	public virtual byte[]?					PartialR  {get; set;}
+	public virtual byte[]?					PartialR  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyBinary ("Data", 
+					(IBinding data, byte[]? value) => {(data as CryptographicOperationSign).Data = value;}, 
+					(IBinding data) => (data as CryptographicOperationSign).Data ),
+		new PropertyBinary ("PartialR", 
+					(IBinding data, byte[]? value) => {(data as CryptographicOperationSign).PartialR = value;}, 
+					(IBinding data) => (data as CryptographicOperationSign).PartialR )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4758,12 +4307,10 @@ public partial class CryptographicOperationSign : CryptographicOperation {
 	public static readonly new Binding<CryptographicOperationSign> _binding = new (
 			new() {
 
-			{ "Data", new PropertyBinary ("Data", 
-					(IBinding data, byte[]? value) => {(data as CryptographicOperationSign).Data = value;}, (IBinding data) => (data as CryptographicOperationSign).Data )},
-			{ "PartialR", new PropertyBinary ("PartialR", 
-					(IBinding data, byte[]? value) => {(data as CryptographicOperationSign).PartialR = value;}, (IBinding data) => (data as CryptographicOperationSign).PartialR )}
+			{ "Data", _properties [0]},
+			{ "PartialR", _properties [1]}
         }, __Tag,() => new CryptographicOperationSign(), () => new List<CryptographicOperationSign>(), () => new Dictionary<string,CryptographicOperationSign>(),CryptographicOperation._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4781,7 +4328,7 @@ public partial class CryptographicOperationSign : CryptographicOperation {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4799,43 +4346,30 @@ public partial class CryptographicOperationSign : CryptographicOperation {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CryptographicOperationSign();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CryptographicOperationSign FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CryptographicOperationSign;
-			}
-		var Result = new CryptographicOperationSign ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class CryptographicOperationKeyAgreement : CryptographicOperation {
-        /// <summary>
-        ///The public key value to perform the agreement on.
-        /// </summary>
+    /// <summary>
+    ///The public key value to perform the agreement on.
+    /// </summary>
 
 	[JsonPropertyName("PublicKey")]
-	public virtual Key?					PublicKey  {get; set;}
+	public virtual Key?					PublicKey  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("PublicKey", typeof (Key), 
+					(IBinding data, object? value) => {(data as CryptographicOperationKeyAgreement).PublicKey = value as Key;}, 
+					(IBinding data) => (data as CryptographicOperationKeyAgreement).PublicKey,
+					true) 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4844,11 +4378,9 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
 	public static readonly new Binding<CryptographicOperationKeyAgreement> _binding = new (
 			new() {
 
-			{ "PublicKey", new PropertyStruct ("PublicKey", typeof (Key), 
-					(IBinding data, object? value) => {(data as CryptographicOperationKeyAgreement).PublicKey = value as Key;}, (IBinding data) => (data as CryptographicOperationKeyAgreement).PublicKey,
-					true)} 
+			{ "PublicKey", _properties [0]}
         }, __Tag,() => new CryptographicOperationKeyAgreement(), () => new List<CryptographicOperationKeyAgreement>(), () => new Dictionary<string,CryptographicOperationKeyAgreement>(),CryptographicOperation._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4866,7 +4398,7 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4884,29 +4416,6 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CryptographicOperationKeyAgreement();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CryptographicOperationKeyAgreement FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CryptographicOperationKeyAgreement;
-			}
-		var Result = new CryptographicOperationKeyAgreement ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -4914,6 +4423,12 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
 	/// </summary>
 public partial class CryptographicOperationGenerate : CryptographicOperation {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4923,7 +4438,7 @@ public partial class CryptographicOperationGenerate : CryptographicOperation {
 			new() {
 
         }, __Tag,() => new CryptographicOperationGenerate(), () => new List<CryptographicOperationGenerate>(), () => new Dictionary<string,CryptographicOperationGenerate>(),CryptographicOperation._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4941,7 +4456,7 @@ public partial class CryptographicOperationGenerate : CryptographicOperation {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4959,48 +4474,37 @@ public partial class CryptographicOperationGenerate : CryptographicOperation {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CryptographicOperationGenerate();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CryptographicOperationGenerate FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CryptographicOperationGenerate;
-			}
-		var Result = new CryptographicOperationGenerate ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class CryptographicOperationShare : CryptographicOperation {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Threshold")]
-	public virtual int?					Threshold  {get; set;}
+	public virtual int?					Threshold  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Shares")]
-	public virtual int?					Shares  {get; set;}
+	public virtual int?					Shares  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyInteger32 ("Threshold", 
+					(IBinding data, int? value) => {(data as CryptographicOperationShare).Threshold = value;}, 
+					(IBinding data) => (data as CryptographicOperationShare).Threshold ),
+		new PropertyInteger32 ("Shares", 
+					(IBinding data, int? value) => {(data as CryptographicOperationShare).Shares = value;}, 
+					(IBinding data) => (data as CryptographicOperationShare).Shares )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -5009,12 +4513,10 @@ public partial class CryptographicOperationShare : CryptographicOperation {
 	public static readonly new Binding<CryptographicOperationShare> _binding = new (
 			new() {
 
-			{ "Threshold", new PropertyInteger32 ("Threshold", 
-					(IBinding data, int? value) => {(data as CryptographicOperationShare).Threshold = value;}, (IBinding data) => (data as CryptographicOperationShare).Threshold )},
-			{ "Shares", new PropertyInteger32 ("Shares", 
-					(IBinding data, int? value) => {(data as CryptographicOperationShare).Shares = value;}, (IBinding data) => (data as CryptographicOperationShare).Shares )}
+			{ "Threshold", _properties [0]},
+			{ "Shares", _properties [1]}
         }, __Tag,() => new CryptographicOperationShare(), () => new List<CryptographicOperationShare>(), () => new Dictionary<string,CryptographicOperationShare>(),CryptographicOperation._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -5032,7 +4534,7 @@ public partial class CryptographicOperationShare : CryptographicOperation {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -5050,42 +4552,28 @@ public partial class CryptographicOperationShare : CryptographicOperation {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CryptographicOperationShare();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CryptographicOperationShare FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CryptographicOperationShare;
-			}
-		var Result = new CryptographicOperationShare ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class CryptographicResult : MeshProtocol {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Error")]
-	public virtual string?					Error  {get; set;}
+	public virtual string?					Error  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Error", 
+					(IBinding data, string? value) => {(data as CryptographicResult).Error = value;}, 
+					(IBinding data) => (data as CryptographicResult).Error )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -5094,10 +4582,9 @@ public partial class CryptographicResult : MeshProtocol {
 	public static readonly new Binding<CryptographicResult> _binding = new (
 			new() {
 
-			{ "Error", new PropertyString ("Error", 
-					(IBinding data, string? value) => {(data as CryptographicResult).Error = value;}, (IBinding data) => (data as CryptographicResult).Error )}
+			{ "Error", _properties [0]}
         }, __Tag,() => new CryptographicResult(), () => new List<CryptographicResult>(), () => new Dictionary<string,CryptographicResult>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -5114,7 +4601,7 @@ public partial class CryptographicResult : MeshProtocol {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -5132,42 +4619,29 @@ public partial class CryptographicResult : MeshProtocol {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CryptographicResult();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CryptographicResult FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CryptographicResult;
-			}
-		var Result = new CryptographicResult ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class CryptographicResultKeyAgreement : CryptographicResult {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("KeyAgreement")]
-	public virtual KeyAgreement?					KeyAgreement  {get; set;}
+	public virtual KeyAgreement?					KeyAgreement  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("KeyAgreement", typeof (KeyAgreement), 
+					(IBinding data, object? value) => {(data as CryptographicResultKeyAgreement).KeyAgreement = value as KeyAgreement;}, 
+					(IBinding data) => (data as CryptographicResultKeyAgreement).KeyAgreement,
+					true) 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -5176,11 +4650,9 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
 	public static readonly new Binding<CryptographicResultKeyAgreement> _binding = new (
 			new() {
 
-			{ "KeyAgreement", new PropertyStruct ("KeyAgreement", typeof (KeyAgreement), 
-					(IBinding data, object? value) => {(data as CryptographicResultKeyAgreement).KeyAgreement = value as KeyAgreement;}, (IBinding data) => (data as CryptographicResultKeyAgreement).KeyAgreement,
-					true)} 
+			{ "KeyAgreement", _properties [0]}
         }, __Tag,() => new CryptographicResultKeyAgreement(), () => new List<CryptographicResultKeyAgreement>(), () => new Dictionary<string,CryptographicResultKeyAgreement>(),CryptographicResult._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -5198,7 +4670,7 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -5216,29 +4688,6 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CryptographicResultKeyAgreement();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CryptographicResultKeyAgreement FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CryptographicResultKeyAgreement;
-			}
-		var Result = new CryptographicResultKeyAgreement ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -5246,6 +4695,12 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
 	/// </summary>
 public partial class CryptographicResultShare : CryptographicResult {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -5255,7 +4710,7 @@ public partial class CryptographicResultShare : CryptographicResult {
 			new() {
 
         }, __Tag,() => new CryptographicResultShare(), () => new List<CryptographicResultShare>(), () => new Dictionary<string,CryptographicResultShare>(),CryptographicResult._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -5273,7 +4728,7 @@ public partial class CryptographicResultShare : CryptographicResult {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -5291,48 +4746,39 @@ public partial class CryptographicResultShare : CryptographicResult {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CryptographicResultShare();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CryptographicResultShare FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CryptographicResultShare;
-			}
-		var Result = new CryptographicResultShare ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class OperateRequest : MeshRequest {
-        /// <summary>
-        ///The service account the capability is bound to
-        /// </summary>
+    /// <summary>
+    ///The service account the capability is bound to
+    /// </summary>
 
 	[JsonPropertyName("AccountAddress")]
-	public virtual string?					AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Operations")]
 	public virtual List<CryptographicOperation>?					Operations  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("AccountAddress", 
+					(IBinding data, string? value) => {(data as OperateRequest).AccountAddress = value;}, 
+					(IBinding data) => (data as OperateRequest).AccountAddress ),
+		new PropertyListStruct ("Operations", typeof (CryptographicOperation), 
+					(IBinding data, object? value) => {(data as OperateRequest).Operations = value as List<CryptographicOperation>;}, 
+					(IBinding data) => (data as OperateRequest).Operations,
+					true, ()=>new List<CryptographicOperation>()
+) 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -5341,14 +4787,10 @@ public partial class OperateRequest : MeshRequest {
 	public static readonly new Binding<OperateRequest> _binding = new (
 			new() {
 
-			{ "AccountAddress", new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as OperateRequest).AccountAddress = value;}, (IBinding data) => (data as OperateRequest).AccountAddress )},
-			{ "Operations", new PropertyListStruct ("Operations", typeof (CryptographicOperation), 
-					(IBinding data, object? value) => {(data as OperateRequest).Operations = value as List<CryptographicOperation>;}, (IBinding data) => (data as OperateRequest).Operations,
-					true, ()=>new List<CryptographicOperation>()
-)} 
+			{ "AccountAddress", _properties [0]},
+			{ "Operations", _properties [1]}
         }, __Tag,() => new OperateRequest(), () => new List<OperateRequest>(), () => new Dictionary<string,OperateRequest>(),MeshRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -5366,7 +4808,7 @@ public partial class OperateRequest : MeshRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -5384,41 +4826,29 @@ public partial class OperateRequest : MeshRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new OperateRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new OperateRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as OperateRequest;
-			}
-		var Result = new OperateRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class OperateResponse : MeshResponse {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Results")]
 	public virtual List<CryptographicResult>?					Results  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyListStruct ("Results", typeof (CryptographicResult), 
+					(IBinding data, object? value) => {(data as OperateResponse).Results = value as List<CryptographicResult>;}, 
+					(IBinding data) => (data as OperateResponse).Results,
+					true, ()=>new List<CryptographicResult>()
+) 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -5427,12 +4857,9 @@ public partial class OperateResponse : MeshResponse {
 	public static readonly new Binding<OperateResponse> _binding = new (
 			new() {
 
-			{ "Results", new PropertyListStruct ("Results", typeof (CryptographicResult), 
-					(IBinding data, object? value) => {(data as OperateResponse).Results = value as List<CryptographicResult>;}, (IBinding data) => (data as OperateResponse).Results,
-					true, ()=>new List<CryptographicResult>()
-)} 
+			{ "Results", _properties [0]}
         }, __Tag,() => new OperateResponse(), () => new List<OperateResponse>(), () => new Dictionary<string,OperateResponse>(),MeshResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -5450,7 +4877,7 @@ public partial class OperateResponse : MeshResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -5467,29 +4894,6 @@ public partial class OperateResponse : MeshResponse {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new OperateResponse();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new OperateResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as OperateResponse;
-			}
-		var Result = new OperateResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

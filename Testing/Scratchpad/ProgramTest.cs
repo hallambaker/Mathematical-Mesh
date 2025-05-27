@@ -65,6 +65,7 @@ partial class Program {
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
         Goedel.Protocol.JsonReader.Trace = true;
+        GoedelProtocol.Test().TestEncodeDecode4();
 
 
         //TestCryptographyJose.Test().Test_Jose_Encrypt_Symmetric();

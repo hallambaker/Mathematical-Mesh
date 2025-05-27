@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:57:01 AM
+//  This file was automatically generated at 5/27/2025 3:12:40 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -70,6 +70,7 @@ public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject 
     /// </summary>
 	public new const string __Tag = "SequenceData";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -83,7 +84,7 @@ public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject 
 	    {"KeyValue", KeyValue._Factory},
 	    {"ProofChain", ProofChain._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -109,7 +110,7 @@ public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject 
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -139,72 +140,102 @@ public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject 
 	/// enclosing sequence.
 	/// </summary>
 public partial class SequenceInfo : SequenceData {
-        /// <summary>
-        ///Specifies the data encoding for the header section of for the following frames.
-        ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
-        /// </summary>
+    /// <summary>
+    ///Specifies the data encoding for the header section of for the following frames.
+    ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
+    /// </summary>
 
 	[JsonPropertyName("DataEncoding")]
-	public virtual string?					DataEncoding  {get; set;}
+	public virtual string?					DataEncoding  {get; set;} //
 
-        /// <summary>
-        ///Specifies the container type for the following records.
-        ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
-        /// </summary>
+    /// <summary>
+    ///Specifies the container type for the following records.
+    ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
+    /// </summary>
 
 	[JsonPropertyName("ContainerType")]
-	public virtual string?					ContainerType  {get; set;}
+	public virtual string?					ContainerType  {get; set;} //
 
-        /// <summary>
-        ///The record index within the file. This MUST be unique and 
-        ///satisfy any additional requirements determined by the ContainerType.
-        /// </summary>
+    /// <summary>
+    ///The record index within the file. This MUST be unique and 
+    ///satisfy any additional requirements determined by the ContainerType.
+    /// </summary>
 
 	[JsonPropertyName("Index")]
-	public virtual long?					Index  {get; set;}
+	public virtual long?					Index  {get; set;} //
 
-        /// <summary>
-        ///If true, the current frame is a meta frame and does not contain a payload.
-        ///Note: Meta frames MAY be present in any container. Applications MUST
-        ///accept containers that contain meta frames at any position in the file.
-        ///Applications MUST NOT interpret a meta frame as a data frame with an enpty payload.
-        /// </summary>
+    /// <summary>
+    ///If true, the current frame is a meta frame and does not contain a payload.
+    ///Note: Meta frames MAY be present in any container. Applications MUST
+    ///accept containers that contain meta frames at any position in the file.
+    ///Applications MUST NOT interpret a meta frame as a data frame with an enpty payload.
+    /// </summary>
 
 	[JsonPropertyName("IsMeta")]
-	public virtual bool?					IsMeta  {get; set;}
+	public virtual bool?					IsMeta  {get; set;} //
 
-        /// <summary>
-        ///If set true in a persistent container, specifies that this record contains
-        ///the default object for the container.
-        /// </summary>
+    /// <summary>
+    ///If set true in a persistent container, specifies that this record contains
+    ///the default object for the container.
+    /// </summary>
 
 	[JsonPropertyName("Default")]
-	public virtual bool?					Default  {get; set;}
+	public virtual bool?					Default  {get; set;} //
 
-        /// <summary>
-        ///Position of the frame containing the apex of the preceding sub-tree.
-        /// </summary>
+    /// <summary>
+    ///Position of the frame containing the apex of the preceding sub-tree.
+    /// </summary>
 
 	[JsonPropertyName("TreePosition")]
-	public virtual long?					TreePosition  {get; set;}
+	public virtual long?					TreePosition  {get; set;} //
 
-        /// <summary>
-        ///Specifies the position in the file at which the last index entry is
-        ///to be found
-        /// </summary>
+    /// <summary>
+    ///Specifies the position in the file at which the last index entry is
+    ///to be found
+    /// </summary>
 
 	[JsonPropertyName("IndexPosition")]
-	public virtual long?					IndexPosition  {get; set;}
+	public virtual long?					IndexPosition  {get; set;} //
 
-        /// <summary>
-        ///Specifies the position in the file at which the key exchange data is
-        ///to be found
-        /// </summary>
+    /// <summary>
+    ///Specifies the position in the file at which the key exchange data is
+    ///to be found
+    /// </summary>
 
 	[JsonPropertyName("ExchangePosition")]
-	public virtual long?					ExchangePosition  {get; set;}
+	public virtual long?					ExchangePosition  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("DataEncoding", 
+					(IBinding data, string? value) => {(data as SequenceInfo).DataEncoding = value;}, 
+					(IBinding data) => (data as SequenceInfo).DataEncoding ),
+		new PropertyString ("ContainerType", 
+					(IBinding data, string? value) => {(data as SequenceInfo).ContainerType = value;}, 
+					(IBinding data) => (data as SequenceInfo).ContainerType ),
+		new PropertyInteger64 ("Index", 
+					(IBinding data, long? value) => {(data as SequenceInfo).Index = value;}, 
+					(IBinding data) => (data as SequenceInfo).Index ),
+		new PropertyBoolean ("IsMeta", 
+					(IBinding data, bool? value) => {(data as SequenceInfo).IsMeta = value;}, 
+					(IBinding data) => (data as SequenceInfo).IsMeta ),
+		new PropertyBoolean ("Default", 
+					(IBinding data, bool? value) => {(data as SequenceInfo).Default = value;}, 
+					(IBinding data) => (data as SequenceInfo).Default ),
+		new PropertyInteger64 ("TreePosition", 
+					(IBinding data, long? value) => {(data as SequenceInfo).TreePosition = value;}, 
+					(IBinding data) => (data as SequenceInfo).TreePosition ),
+		new PropertyInteger64 ("IndexPosition", 
+					(IBinding data, long? value) => {(data as SequenceInfo).IndexPosition = value;}, 
+					(IBinding data) => (data as SequenceInfo).IndexPosition ),
+		new PropertyInteger64 ("ExchangePosition", 
+					(IBinding data, long? value) => {(data as SequenceInfo).ExchangePosition = value;}, 
+					(IBinding data) => (data as SequenceInfo).ExchangePosition )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -213,24 +244,16 @@ public partial class SequenceInfo : SequenceData {
 	public static readonly new Binding<SequenceInfo> _binding = new (
 			new() {
 
-			{ "DataEncoding", new PropertyString ("DataEncoding", 
-					(IBinding data, string? value) => {(data as SequenceInfo).DataEncoding = value;}, (IBinding data) => (data as SequenceInfo).DataEncoding )},
-			{ "ContainerType", new PropertyString ("ContainerType", 
-					(IBinding data, string? value) => {(data as SequenceInfo).ContainerType = value;}, (IBinding data) => (data as SequenceInfo).ContainerType )},
-			{ "Index", new PropertyInteger64 ("Index", 
-					(IBinding data, long? value) => {(data as SequenceInfo).Index = value;}, (IBinding data) => (data as SequenceInfo).Index )},
-			{ "IsMeta", new PropertyBoolean ("IsMeta", 
-					(IBinding data, bool? value) => {(data as SequenceInfo).IsMeta = value;}, (IBinding data) => (data as SequenceInfo).IsMeta )},
-			{ "Default", new PropertyBoolean ("Default", 
-					(IBinding data, bool? value) => {(data as SequenceInfo).Default = value;}, (IBinding data) => (data as SequenceInfo).Default )},
-			{ "TreePosition", new PropertyInteger64 ("TreePosition", 
-					(IBinding data, long? value) => {(data as SequenceInfo).TreePosition = value;}, (IBinding data) => (data as SequenceInfo).TreePosition )},
-			{ "IndexPosition", new PropertyInteger64 ("IndexPosition", 
-					(IBinding data, long? value) => {(data as SequenceInfo).IndexPosition = value;}, (IBinding data) => (data as SequenceInfo).IndexPosition )},
-			{ "ExchangePosition", new PropertyInteger64 ("ExchangePosition", 
-					(IBinding data, long? value) => {(data as SequenceInfo).ExchangePosition = value;}, (IBinding data) => (data as SequenceInfo).ExchangePosition )}
+			{ "DataEncoding", _properties [0]},
+			{ "ContainerType", _properties [1]},
+			{ "Index", _properties [2]},
+			{ "IsMeta", _properties [3]},
+			{ "Default", _properties [4]},
+			{ "TreePosition", _properties [5]},
+			{ "IndexPosition", _properties [6]},
+			{ "ExchangePosition", _properties [7]}
         }, __Tag,() => new SequenceInfo(), () => new List<SequenceInfo>(), () => new Dictionary<string,SequenceInfo>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -247,7 +270,7 @@ public partial class SequenceInfo : SequenceData {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -265,29 +288,6 @@ public partial class SequenceInfo : SequenceData {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new SequenceInfo();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new SequenceInfo FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as SequenceInfo;
-			}
-		var Result = new SequenceInfo ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -296,23 +296,36 @@ public partial class SequenceInfo : SequenceData {
 	/// A record providing an index to the sequence.
 	/// </summary>
 public partial class SequenceIndex : SequenceData {
-        /// <summary>
-        ///If true, the index is complete and contains position entries for all the 
-        ///frames in the file. If absent or false, the index is incremental and only
-        ///contains position entries for records added since the last 
-        ///frame containing a ContainerIndex.
-        /// </summary>
+    /// <summary>
+    ///If true, the index is complete and contains position entries for all the 
+    ///frames in the file. If absent or false, the index is incremental and only
+    ///contains position entries for records added since the last 
+    ///frame containing a ContainerIndex.
+    /// </summary>
 
 	[JsonPropertyName("Full")]
-	public virtual bool?					Full  {get; set;}
+	public virtual bool?					Full  {get; set;} //
 
-        /// <summary>
-        ///List of container position entries
-        /// </summary>
+    /// <summary>
+    ///List of container position entries
+    /// </summary>
 
 	[JsonPropertyName("Positions")]
 	public virtual List<IndexPosition>?					Positions  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyBoolean ("Full", 
+					(IBinding data, bool? value) => {(data as SequenceIndex).Full = value;}, 
+					(IBinding data) => (data as SequenceIndex).Full ),
+		new PropertyListStruct ("Positions", typeof (IndexPosition),
+					(IBinding data, object? value) => {(data as SequenceIndex).Positions = value as List<IndexPosition>;}, 
+					(IBinding data) => (data as SequenceIndex).Positions,
+					false, ()=>new  List<IndexPosition>(), ()=>new IndexPosition())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -321,13 +334,10 @@ public partial class SequenceIndex : SequenceData {
 	public static readonly new Binding<SequenceIndex> _binding = new (
 			new() {
 
-			{ "Full", new PropertyBoolean ("Full", 
-					(IBinding data, bool? value) => {(data as SequenceIndex).Full = value;}, (IBinding data) => (data as SequenceIndex).Full )},
-			{ "Positions", new PropertyListStruct ("Positions", typeof (IndexPosition),
-					(IBinding data, object? value) => {(data as SequenceIndex).Positions = value as List<IndexPosition>;}, (IBinding data) => (data as SequenceIndex).Positions,
-					false, ()=>new  List<IndexPosition>(), ()=>new IndexPosition())}
+			{ "Full", _properties [0]},
+			{ "Positions", _properties [1]}
         }, __Tag,() => new SequenceIndex(), () => new List<SequenceIndex>(), () => new Dictionary<string,SequenceIndex>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -344,7 +354,7 @@ public partial class SequenceIndex : SequenceData {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -362,29 +372,6 @@ public partial class SequenceIndex : SequenceData {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new SequenceIndex();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new SequenceIndex FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as SequenceIndex;
-			}
-		var Result = new SequenceIndex ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -393,28 +380,43 @@ public partial class SequenceIndex : SequenceData {
 	/// Specifies the position in a file at which a specified record index is found
 	/// </summary>
 public partial class IndexPosition : SequenceData {
-        /// <summary>
-        ///The record index within the file.
-        /// </summary>
+    /// <summary>
+    ///The record index within the file.
+    /// </summary>
 
 	[JsonPropertyName("Index")]
-	public virtual long?					Index  {get; set;}
+	public virtual long?					Index  {get; set;} //
 
-        /// <summary>
-        ///The record position within the file relative to the index base.
-        /// </summary>
+    /// <summary>
+    ///The record position within the file relative to the index base.
+    /// </summary>
 
 	[JsonPropertyName("Position")]
-	public virtual long?					Position  {get; set;}
+	public virtual long?					Position  {get; set;} //
 
-        /// <summary>
-        ///Unique object identifier
-        /// </summary>
+    /// <summary>
+    ///Unique object identifier
+    /// </summary>
 
 	[JsonPropertyName("UniqueId")]
-	public virtual string?					UniqueId  {get; set;}
+	public virtual string?					UniqueId  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyInteger64 ("Index", 
+					(IBinding data, long? value) => {(data as IndexPosition).Index = value;}, 
+					(IBinding data) => (data as IndexPosition).Index ),
+		new PropertyInteger64 ("Position", 
+					(IBinding data, long? value) => {(data as IndexPosition).Position = value;}, 
+					(IBinding data) => (data as IndexPosition).Position ),
+		new PropertyString ("UniqueId", 
+					(IBinding data, string? value) => {(data as IndexPosition).UniqueId = value;}, 
+					(IBinding data) => (data as IndexPosition).UniqueId )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -423,14 +425,11 @@ public partial class IndexPosition : SequenceData {
 	public static readonly new Binding<IndexPosition> _binding = new (
 			new() {
 
-			{ "Index", new PropertyInteger64 ("Index", 
-					(IBinding data, long? value) => {(data as IndexPosition).Index = value;}, (IBinding data) => (data as IndexPosition).Index )},
-			{ "Position", new PropertyInteger64 ("Position", 
-					(IBinding data, long? value) => {(data as IndexPosition).Position = value;}, (IBinding data) => (data as IndexPosition).Position )},
-			{ "UniqueId", new PropertyString ("UniqueId", 
-					(IBinding data, string? value) => {(data as IndexPosition).UniqueId = value;}, (IBinding data) => (data as IndexPosition).UniqueId )}
+			{ "Index", _properties [0]},
+			{ "Position", _properties [1]},
+			{ "UniqueId", _properties [2]}
         }, __Tag,() => new IndexPosition(), () => new List<IndexPosition>(), () => new Dictionary<string,IndexPosition>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -447,7 +446,7 @@ public partial class IndexPosition : SequenceData {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -465,29 +464,6 @@ public partial class IndexPosition : SequenceData {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new IndexPosition();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new IndexPosition FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as IndexPosition;
-			}
-		var Result = new IndexPosition ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -496,21 +472,33 @@ public partial class IndexPosition : SequenceData {
 	/// Specifies a key/value entry
 	/// </summary>
 public partial class KeyValue : SequenceData {
-        /// <summary>
-        ///The key
-        /// </summary>
+    /// <summary>
+    ///The key
+    /// </summary>
 
 	[JsonPropertyName("Key")]
-	public virtual string?					Key  {get; set;}
+	public virtual string?					Key  {get; set;} //
 
-        /// <summary>
-        ///The value corresponding to the key
-        /// </summary>
+    /// <summary>
+    ///The value corresponding to the key
+    /// </summary>
 
 	[JsonPropertyName("Value")]
-	public virtual string?					Value  {get; set;}
+	public virtual string?					Value  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Key", 
+					(IBinding data, string? value) => {(data as KeyValue).Key = value;}, 
+					(IBinding data) => (data as KeyValue).Key ),
+		new PropertyString ("Value", 
+					(IBinding data, string? value) => {(data as KeyValue).Value = value;}, 
+					(IBinding data) => (data as KeyValue).Value )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -519,12 +507,10 @@ public partial class KeyValue : SequenceData {
 	public static readonly new Binding<KeyValue> _binding = new (
 			new() {
 
-			{ "Key", new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as KeyValue).Key = value;}, (IBinding data) => (data as KeyValue).Key )},
-			{ "Value", new PropertyString ("Value", 
-					(IBinding data, string? value) => {(data as KeyValue).Value = value;}, (IBinding data) => (data as KeyValue).Value )}
+			{ "Key", _properties [0]},
+			{ "Value", _properties [1]}
         }, __Tag,() => new KeyValue(), () => new List<KeyValue>(), () => new Dictionary<string,KeyValue>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -541,7 +527,7 @@ public partial class KeyValue : SequenceData {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -559,29 +545,6 @@ public partial class KeyValue : SequenceData {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new KeyValue();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new KeyValue FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as KeyValue;
-			}
-		var Result = new KeyValue ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -591,6 +554,12 @@ public partial class KeyValue : SequenceData {
 	/// </summary>
 public partial class ProofChain : SequenceData {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -600,7 +569,7 @@ public partial class ProofChain : SequenceData {
 			new() {
 
         }, __Tag,() => new ProofChain(), () => new List<ProofChain>(), () => new Dictionary<string,ProofChain>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -617,7 +586,7 @@ public partial class ProofChain : SequenceData {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -634,29 +603,6 @@ public partial class ProofChain : SequenceData {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ProofChain();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ProofChain FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ProofChain;
-			}
-		var Result = new ProofChain ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:57:24 AM
+//  This file was automatically generated at 5/27/2025 3:13:03 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -73,6 +73,7 @@ public abstract partial class ServiceManagement : global::Goedel.Protocol.JsonOb
     /// </summary>
 	public new const string __Tag = "ServiceManagement";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -87,7 +88,7 @@ public abstract partial class ServiceManagement : global::Goedel.Protocol.JsonOb
 	    {"ServiceStatusRequest", ServiceStatusRequest._Factory},
 	    {"ServiceStatusResponse", ServiceStatusResponse._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -114,7 +115,7 @@ public abstract partial class ServiceManagement : global::Goedel.Protocol.JsonOb
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -313,6 +314,12 @@ public partial class ServiceManagementServiceDirect: ServiceManagementServiceCli
 	/// </summary>
 public partial class WsmpRequest : Goedel.Protocol.Request {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -322,7 +329,7 @@ public partial class WsmpRequest : Goedel.Protocol.Request {
 			new() {
 
         }, __Tag,() => new WsmpRequest(), () => new List<WsmpRequest>(), () => new Dictionary<string,WsmpRequest>(),Goedel.Protocol.Request._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -340,7 +347,7 @@ public partial class WsmpRequest : Goedel.Protocol.Request {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -358,29 +365,6 @@ public partial class WsmpRequest : Goedel.Protocol.Request {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new WsmpRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new WsmpRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as WsmpRequest;
-			}
-		var Result = new WsmpRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -391,6 +375,12 @@ public partial class WsmpRequest : Goedel.Protocol.Request {
 	/// </summary>
 public partial class WsmpResponse : Goedel.Protocol.Response {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -400,7 +390,7 @@ public partial class WsmpResponse : Goedel.Protocol.Response {
 			new() {
 
         }, __Tag,() => new WsmpResponse(), () => new List<WsmpResponse>(), () => new Dictionary<string,WsmpResponse>(),Goedel.Protocol.Response._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -418,7 +408,7 @@ public partial class WsmpResponse : Goedel.Protocol.Response {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -436,29 +426,6 @@ public partial class WsmpResponse : Goedel.Protocol.Response {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new WsmpResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new WsmpResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as WsmpResponse;
-			}
-		var Result = new WsmpResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -466,6 +433,12 @@ public partial class WsmpResponse : Goedel.Protocol.Response {
 	/// </summary>
 public partial class ServiceConfigRequest : WsmpRequest {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -475,7 +448,7 @@ public partial class ServiceConfigRequest : WsmpRequest {
 			new() {
 
         }, __Tag,() => new ServiceConfigRequest(), () => new List<ServiceConfigRequest>(), () => new Dictionary<string,ServiceConfigRequest>(),WsmpRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -493,7 +466,7 @@ public partial class ServiceConfigRequest : WsmpRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -511,29 +484,6 @@ public partial class ServiceConfigRequest : WsmpRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ServiceConfigRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ServiceConfigRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ServiceConfigRequest;
-			}
-		var Result = new ServiceConfigRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -541,6 +491,12 @@ public partial class ServiceConfigRequest : WsmpRequest {
 	/// </summary>
 public partial class ServiceConfigResponse : WsmpResponse {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -550,7 +506,7 @@ public partial class ServiceConfigResponse : WsmpResponse {
 			new() {
 
         }, __Tag,() => new ServiceConfigResponse(), () => new List<ServiceConfigResponse>(), () => new Dictionary<string,ServiceConfigResponse>(),WsmpResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -568,7 +524,7 @@ public partial class ServiceConfigResponse : WsmpResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -586,29 +542,6 @@ public partial class ServiceConfigResponse : WsmpResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ServiceConfigResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ServiceConfigResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ServiceConfigResponse;
-			}
-		var Result = new ServiceConfigResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -616,6 +549,12 @@ public partial class ServiceConfigResponse : WsmpResponse {
 	/// </summary>
 public partial class ServiceStatusRequest : WsmpRequest {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -625,7 +564,7 @@ public partial class ServiceStatusRequest : WsmpRequest {
 			new() {
 
         }, __Tag,() => new ServiceStatusRequest(), () => new List<ServiceStatusRequest>(), () => new Dictionary<string,ServiceStatusRequest>(),WsmpRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -643,7 +582,7 @@ public partial class ServiceStatusRequest : WsmpRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -661,66 +600,64 @@ public partial class ServiceStatusRequest : WsmpRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ServiceStatusRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ServiceStatusRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ServiceStatusRequest;
-			}
-		var Result = new ServiceStatusRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ServiceStatusResponse : WsmpResponse {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Start")]
-	public virtual DateTime?					Start  {get; set;}
+	public virtual DateTime?					Start  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("End")]
-	public virtual DateTime?					End  {get; set;}
+	public virtual DateTime?					End  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Started")]
-	public virtual int?					Started  {get; set;}
+	public virtual int?					Started  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Completed")]
-	public virtual int?					Completed  {get; set;}
+	public virtual int?					Completed  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Pending")]
-	public virtual int?					Pending  {get; set;}
+	public virtual int?					Pending  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyDateTime ("Start", 
+					(IBinding data, DateTime? value) => {(data as ServiceStatusResponse).Start = value;}, 
+					(IBinding data) => (data as ServiceStatusResponse).Start ),
+		new PropertyDateTime ("End", 
+					(IBinding data, DateTime? value) => {(data as ServiceStatusResponse).End = value;}, 
+					(IBinding data) => (data as ServiceStatusResponse).End ),
+		new PropertyInteger32 ("Started", 
+					(IBinding data, int? value) => {(data as ServiceStatusResponse).Started = value;}, 
+					(IBinding data) => (data as ServiceStatusResponse).Started ),
+		new PropertyInteger32 ("Completed", 
+					(IBinding data, int? value) => {(data as ServiceStatusResponse).Completed = value;}, 
+					(IBinding data) => (data as ServiceStatusResponse).Completed ),
+		new PropertyInteger32 ("Pending", 
+					(IBinding data, int? value) => {(data as ServiceStatusResponse).Pending = value;}, 
+					(IBinding data) => (data as ServiceStatusResponse).Pending )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -729,18 +666,13 @@ public partial class ServiceStatusResponse : WsmpResponse {
 	public static readonly new Binding<ServiceStatusResponse> _binding = new (
 			new() {
 
-			{ "Start", new PropertyDateTime ("Start", 
-					(IBinding data, DateTime? value) => {(data as ServiceStatusResponse).Start = value;}, (IBinding data) => (data as ServiceStatusResponse).Start )},
-			{ "End", new PropertyDateTime ("End", 
-					(IBinding data, DateTime? value) => {(data as ServiceStatusResponse).End = value;}, (IBinding data) => (data as ServiceStatusResponse).End )},
-			{ "Started", new PropertyInteger32 ("Started", 
-					(IBinding data, int? value) => {(data as ServiceStatusResponse).Started = value;}, (IBinding data) => (data as ServiceStatusResponse).Started )},
-			{ "Completed", new PropertyInteger32 ("Completed", 
-					(IBinding data, int? value) => {(data as ServiceStatusResponse).Completed = value;}, (IBinding data) => (data as ServiceStatusResponse).Completed )},
-			{ "Pending", new PropertyInteger32 ("Pending", 
-					(IBinding data, int? value) => {(data as ServiceStatusResponse).Pending = value;}, (IBinding data) => (data as ServiceStatusResponse).Pending )}
+			{ "Start", _properties [0]},
+			{ "End", _properties [1]},
+			{ "Started", _properties [2]},
+			{ "Completed", _properties [3]},
+			{ "Pending", _properties [4]}
         }, __Tag,() => new ServiceStatusResponse(), () => new List<ServiceStatusResponse>(), () => new Dictionary<string,ServiceStatusResponse>(),WsmpResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -758,7 +690,7 @@ public partial class ServiceStatusResponse : WsmpResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -775,29 +707,6 @@ public partial class ServiceStatusResponse : WsmpResponse {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ServiceStatusResponse();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ServiceStatusResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ServiceStatusResponse;
-			}
-		var Result = new ServiceStatusResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

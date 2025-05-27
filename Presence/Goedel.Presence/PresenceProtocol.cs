@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:57:12 AM
+//  This file was automatically generated at 5/27/2025 3:12:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -73,6 +73,7 @@ public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObj
     /// </summary>
 	public new const string __Tag = "PresenceProtocol";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -98,7 +99,7 @@ public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObj
 	    {"SessionEndpoint", SessionEndpoint._Factory},
 	    {"UdpEndpoint", UdpEndpoint._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -136,7 +137,7 @@ public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObj
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -262,21 +263,33 @@ public partial class PresenceServiceDirect: PresenceServiceClient {
 	/// Base class for all requests made to a registrar
 	/// </summary>
 public partial class PresenceFromClient : Goedel.Protocol.Request {
-        /// <summary>
-        ///Monotonically increasing counter used to prevent replay
-        ///attacks on client request.
-        /// </summary>
+    /// <summary>
+    ///Monotonically increasing counter used to prevent replay
+    ///attacks on client request.
+    /// </summary>
 
 	[JsonPropertyName("Serial")]
-	public virtual int?					Serial  {get; set;}
+	public virtual int?					Serial  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Acknowledge")]
-	public virtual int?					Acknowledge  {get; set;}
+	public virtual int?					Acknowledge  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyInteger32 ("Serial", 
+					(IBinding data, int? value) => {(data as PresenceFromClient).Serial = value;}, 
+					(IBinding data) => (data as PresenceFromClient).Serial ),
+		new PropertyInteger32 ("Acknowledge", 
+					(IBinding data, int? value) => {(data as PresenceFromClient).Acknowledge = value;}, 
+					(IBinding data) => (data as PresenceFromClient).Acknowledge )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -285,12 +298,10 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
 	public static readonly new Binding<PresenceFromClient> _binding = new (
 			new() {
 
-			{ "Serial", new PropertyInteger32 ("Serial", 
-					(IBinding data, int? value) => {(data as PresenceFromClient).Serial = value;}, (IBinding data) => (data as PresenceFromClient).Serial )},
-			{ "Acknowledge", new PropertyInteger32 ("Acknowledge", 
-					(IBinding data, int? value) => {(data as PresenceFromClient).Acknowledge = value;}, (IBinding data) => (data as PresenceFromClient).Acknowledge )}
+			{ "Serial", _properties [0]},
+			{ "Acknowledge", _properties [1]}
         }, __Tag,() => new PresenceFromClient(), () => new List<PresenceFromClient>(), () => new Dictionary<string,PresenceFromClient>(),Goedel.Protocol.Request._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -308,7 +319,7 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -326,29 +337,6 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceFromClient();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PresenceFromClient FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PresenceFromClient;
-			}
-		var Result = new PresenceFromClient ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -358,6 +346,12 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
 	/// </summary>
 public partial class PresenceConnectRequest : PresenceFromClient {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -367,7 +361,7 @@ public partial class PresenceConnectRequest : PresenceFromClient {
 			new() {
 
         }, __Tag,() => new PresenceConnectRequest(), () => new List<PresenceConnectRequest>(), () => new Dictionary<string,PresenceConnectRequest>(),PresenceFromClient._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -385,7 +379,7 @@ public partial class PresenceConnectRequest : PresenceFromClient {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -403,29 +397,6 @@ public partial class PresenceConnectRequest : PresenceFromClient {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceConnectRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PresenceConnectRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PresenceConnectRequest;
-			}
-		var Result = new PresenceConnectRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -433,6 +404,12 @@ public partial class PresenceConnectRequest : PresenceFromClient {
 	/// </summary>
 public partial class PresenceHeartbeat : PresenceFromClient {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -442,7 +419,7 @@ public partial class PresenceHeartbeat : PresenceFromClient {
 			new() {
 
         }, __Tag,() => new PresenceHeartbeat(), () => new List<PresenceHeartbeat>(), () => new Dictionary<string,PresenceHeartbeat>(),PresenceFromClient._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -460,7 +437,7 @@ public partial class PresenceHeartbeat : PresenceFromClient {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -478,29 +455,6 @@ public partial class PresenceHeartbeat : PresenceFromClient {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceHeartbeat();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PresenceHeartbeat FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PresenceHeartbeat;
-			}
-		var Result = new PresenceHeartbeat ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -508,6 +462,12 @@ public partial class PresenceHeartbeat : PresenceFromClient {
 	/// </summary>
 public partial class PresenceEndpointRequest : PresenceFromClient {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -517,7 +477,7 @@ public partial class PresenceEndpointRequest : PresenceFromClient {
 			new() {
 
         }, __Tag,() => new PresenceEndpointRequest(), () => new List<PresenceEndpointRequest>(), () => new Dictionary<string,PresenceEndpointRequest>(),PresenceFromClient._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -535,7 +495,7 @@ public partial class PresenceEndpointRequest : PresenceFromClient {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -553,29 +513,6 @@ public partial class PresenceEndpointRequest : PresenceFromClient {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceEndpointRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PresenceEndpointRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PresenceEndpointRequest;
-			}
-		var Result = new PresenceEndpointRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -583,6 +520,12 @@ public partial class PresenceEndpointRequest : PresenceFromClient {
 	/// </summary>
 public partial class PresenceAcknowledge : PresenceFromClient {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -592,7 +535,7 @@ public partial class PresenceAcknowledge : PresenceFromClient {
 			new() {
 
         }, __Tag,() => new PresenceAcknowledge(), () => new List<PresenceAcknowledge>(), () => new Dictionary<string,PresenceAcknowledge>(),PresenceFromClient._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -610,7 +553,7 @@ public partial class PresenceAcknowledge : PresenceFromClient {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -628,42 +571,28 @@ public partial class PresenceAcknowledge : PresenceFromClient {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceAcknowledge();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PresenceAcknowledge FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PresenceAcknowledge;
-			}
-		var Result = new PresenceAcknowledge ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class PresenceResolveRequest : PresenceFromClient {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("DnsRequest")]
-	public virtual byte[]?					DnsRequest  {get; set;}
+	public virtual byte[]?					DnsRequest  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyBinary ("DnsRequest", 
+					(IBinding data, byte[]? value) => {(data as PresenceResolveRequest).DnsRequest = value;}, 
+					(IBinding data) => (data as PresenceResolveRequest).DnsRequest )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -672,10 +601,9 @@ public partial class PresenceResolveRequest : PresenceFromClient {
 	public static readonly new Binding<PresenceResolveRequest> _binding = new (
 			new() {
 
-			{ "DnsRequest", new PropertyBinary ("DnsRequest", 
-					(IBinding data, byte[]? value) => {(data as PresenceResolveRequest).DnsRequest = value;}, (IBinding data) => (data as PresenceResolveRequest).DnsRequest )}
+			{ "DnsRequest", _properties [0]}
         }, __Tag,() => new PresenceResolveRequest(), () => new List<PresenceResolveRequest>(), () => new Dictionary<string,PresenceResolveRequest>(),PresenceFromClient._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -693,7 +621,7 @@ public partial class PresenceResolveRequest : PresenceFromClient {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -711,29 +639,6 @@ public partial class PresenceResolveRequest : PresenceFromClient {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceResolveRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PresenceResolveRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PresenceResolveRequest;
-			}
-		var Result = new PresenceResolveRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -743,25 +648,41 @@ public partial class PresenceResolveRequest : PresenceFromClient {
 	/// status code and status description fields.
 	/// </summary>
 public partial class PresenceFromService : Goedel.Protocol.Response {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("EndPoint")]
-	public virtual UdpEndpoint?					EndPoint  {get; set;}
+	public virtual UdpEndpoint?					EndPoint  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Now")]
-	public virtual DateTime?					Now  {get; set;}
+	public virtual DateTime?					Now  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Acknowledge")]
-	public virtual int?					Acknowledge  {get; set;}
+	public virtual int?					Acknowledge  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("EndPoint", typeof (UdpEndpoint),
+					(IBinding data, object? value) => {(data as PresenceFromService).EndPoint = value as UdpEndpoint;}, 
+					(IBinding data) => (data as PresenceFromService).EndPoint,
+					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint()),
+		new PropertyDateTime ("Now", 
+					(IBinding data, DateTime? value) => {(data as PresenceFromService).Now = value;}, 
+					(IBinding data) => (data as PresenceFromService).Now ),
+		new PropertyInteger32 ("Acknowledge", 
+					(IBinding data, int? value) => {(data as PresenceFromService).Acknowledge = value;}, 
+					(IBinding data) => (data as PresenceFromService).Acknowledge )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -770,15 +691,11 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
 	public static readonly new Binding<PresenceFromService> _binding = new (
 			new() {
 
-			{ "EndPoint", new PropertyStruct ("EndPoint", typeof (UdpEndpoint),
-					(IBinding data, object? value) => {(data as PresenceFromService).EndPoint = value as UdpEndpoint;}, (IBinding data) => (data as PresenceFromService).EndPoint,
-					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())},
-			{ "Now", new PropertyDateTime ("Now", 
-					(IBinding data, DateTime? value) => {(data as PresenceFromService).Now = value;}, (IBinding data) => (data as PresenceFromService).Now )},
-			{ "Acknowledge", new PropertyInteger32 ("Acknowledge", 
-					(IBinding data, int? value) => {(data as PresenceFromService).Acknowledge = value;}, (IBinding data) => (data as PresenceFromService).Acknowledge )}
+			{ "EndPoint", _properties [0]},
+			{ "Now", _properties [1]},
+			{ "Acknowledge", _properties [2]}
         }, __Tag,() => new PresenceFromService(), () => new List<PresenceFromService>(), () => new Dictionary<string,PresenceFromService>(),Goedel.Protocol.Response._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -796,7 +713,7 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -814,29 +731,6 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceFromService();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PresenceFromService FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PresenceFromService;
-			}
-		var Result = new PresenceFromService ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -845,15 +739,24 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
 	/// Return the result of a connection request
 	/// </summary>
 public partial class PresenceConnectResponse : PresenceFromService {
-        /// <summary>
-        ///The time after which the presence service will start to 
-        ///assume the device has disconnected in milliseconds.
-        /// </summary>
+    /// <summary>
+    ///The time after which the presence service will start to 
+    ///assume the device has disconnected in milliseconds.
+    /// </summary>
 
 	[JsonPropertyName("ConnectionTimeout")]
-	public virtual int?					ConnectionTimeout  {get; set;}
+	public virtual int?					ConnectionTimeout  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyInteger32 ("ConnectionTimeout", 
+					(IBinding data, int? value) => {(data as PresenceConnectResponse).ConnectionTimeout = value;}, 
+					(IBinding data) => (data as PresenceConnectResponse).ConnectionTimeout )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -862,10 +765,9 @@ public partial class PresenceConnectResponse : PresenceFromService {
 	public static readonly new Binding<PresenceConnectResponse> _binding = new (
 			new() {
 
-			{ "ConnectionTimeout", new PropertyInteger32 ("ConnectionTimeout", 
-					(IBinding data, int? value) => {(data as PresenceConnectResponse).ConnectionTimeout = value;}, (IBinding data) => (data as PresenceConnectResponse).ConnectionTimeout )}
+			{ "ConnectionTimeout", _properties [0]}
         }, __Tag,() => new PresenceConnectResponse(), () => new List<PresenceConnectResponse>(), () => new Dictionary<string,PresenceConnectResponse>(),PresenceFromService._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -883,7 +785,7 @@ public partial class PresenceConnectResponse : PresenceFromService {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -901,42 +803,28 @@ public partial class PresenceConnectResponse : PresenceFromService {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceConnectResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PresenceConnectResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PresenceConnectResponse;
-			}
-		var Result = new PresenceConnectResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class PresenceErrorInvalidSerial : PresenceFromService {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Serial")]
-	public virtual int?					Serial  {get; set;}
+	public virtual int?					Serial  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyInteger32 ("Serial", 
+					(IBinding data, int? value) => {(data as PresenceErrorInvalidSerial).Serial = value;}, 
+					(IBinding data) => (data as PresenceErrorInvalidSerial).Serial )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -945,10 +833,9 @@ public partial class PresenceErrorInvalidSerial : PresenceFromService {
 	public static readonly new Binding<PresenceErrorInvalidSerial> _binding = new (
 			new() {
 
-			{ "Serial", new PropertyInteger32 ("Serial", 
-					(IBinding data, int? value) => {(data as PresenceErrorInvalidSerial).Serial = value;}, (IBinding data) => (data as PresenceErrorInvalidSerial).Serial )}
+			{ "Serial", _properties [0]}
         }, __Tag,() => new PresenceErrorInvalidSerial(), () => new List<PresenceErrorInvalidSerial>(), () => new Dictionary<string,PresenceErrorInvalidSerial>(),PresenceFromService._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -966,7 +853,7 @@ public partial class PresenceErrorInvalidSerial : PresenceFromService {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -984,29 +871,6 @@ public partial class PresenceErrorInvalidSerial : PresenceFromService {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceErrorInvalidSerial();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PresenceErrorInvalidSerial FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PresenceErrorInvalidSerial;
-			}
-		var Result = new PresenceErrorInvalidSerial ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -1014,6 +878,12 @@ public partial class PresenceErrorInvalidSerial : PresenceFromService {
 	/// </summary>
 public partial class PresenceStatus : PresenceFromService {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1023,7 +893,7 @@ public partial class PresenceStatus : PresenceFromService {
 			new() {
 
         }, __Tag,() => new PresenceStatus(), () => new List<PresenceStatus>(), () => new Dictionary<string,PresenceStatus>(),PresenceFromService._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1041,7 +911,7 @@ public partial class PresenceStatus : PresenceFromService {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1059,29 +929,6 @@ public partial class PresenceStatus : PresenceFromService {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceStatus();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PresenceStatus FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PresenceStatus;
-			}
-		var Result = new PresenceStatus ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -1089,6 +936,12 @@ public partial class PresenceStatus : PresenceFromService {
 	/// </summary>
 public partial class PresenceEndpointResponse : PresenceFromService {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1098,7 +951,7 @@ public partial class PresenceEndpointResponse : PresenceFromService {
 			new() {
 
         }, __Tag,() => new PresenceEndpointResponse(), () => new List<PresenceEndpointResponse>(), () => new Dictionary<string,PresenceEndpointResponse>(),PresenceFromService._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1116,7 +969,7 @@ public partial class PresenceEndpointResponse : PresenceFromService {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1134,48 +987,37 @@ public partial class PresenceEndpointResponse : PresenceFromService {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceEndpointResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PresenceEndpointResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PresenceEndpointResponse;
-			}
-		var Result = new PresenceEndpointResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class PresenceNotify : PresenceFromService {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Bitmask")]
-	public virtual byte[]?					Bitmask  {get; set;}
+	public virtual byte[]?					Bitmask  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Serial")]
-	public virtual int?					Serial  {get; set;}
+	public virtual int?					Serial  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyBinary ("Bitmask", 
+					(IBinding data, byte[]? value) => {(data as PresenceNotify).Bitmask = value;}, 
+					(IBinding data) => (data as PresenceNotify).Bitmask ),
+		new PropertyInteger32 ("Serial", 
+					(IBinding data, int? value) => {(data as PresenceNotify).Serial = value;}, 
+					(IBinding data) => (data as PresenceNotify).Serial )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1184,12 +1026,10 @@ public partial class PresenceNotify : PresenceFromService {
 	public static readonly new Binding<PresenceNotify> _binding = new (
 			new() {
 
-			{ "Bitmask", new PropertyBinary ("Bitmask", 
-					(IBinding data, byte[]? value) => {(data as PresenceNotify).Bitmask = value;}, (IBinding data) => (data as PresenceNotify).Bitmask )},
-			{ "Serial", new PropertyInteger32 ("Serial", 
-					(IBinding data, int? value) => {(data as PresenceNotify).Serial = value;}, (IBinding data) => (data as PresenceNotify).Serial )}
+			{ "Bitmask", _properties [0]},
+			{ "Serial", _properties [1]}
         }, __Tag,() => new PresenceNotify(), () => new List<PresenceNotify>(), () => new Dictionary<string,PresenceNotify>(),PresenceFromService._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1207,7 +1047,7 @@ public partial class PresenceNotify : PresenceFromService {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1225,42 +1065,28 @@ public partial class PresenceNotify : PresenceFromService {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceNotify();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PresenceNotify FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PresenceNotify;
-			}
-		var Result = new PresenceNotify ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class PresenceResolveResponse : PresenceFromService {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("DnsResponse")]
-	public virtual byte[]?					DnsResponse  {get; set;}
+	public virtual byte[]?					DnsResponse  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyBinary ("DnsResponse", 
+					(IBinding data, byte[]? value) => {(data as PresenceResolveResponse).DnsResponse = value;}, 
+					(IBinding data) => (data as PresenceResolveResponse).DnsResponse )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1269,10 +1095,9 @@ public partial class PresenceResolveResponse : PresenceFromService {
 	public static readonly new Binding<PresenceResolveResponse> _binding = new (
 			new() {
 
-			{ "DnsResponse", new PropertyBinary ("DnsResponse", 
-					(IBinding data, byte[]? value) => {(data as PresenceResolveResponse).DnsResponse = value;}, (IBinding data) => (data as PresenceResolveResponse).DnsResponse )}
+			{ "DnsResponse", _properties [0]}
         }, __Tag,() => new PresenceResolveResponse(), () => new List<PresenceResolveResponse>(), () => new Dictionary<string,PresenceResolveResponse>(),PresenceFromService._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1290,7 +1115,7 @@ public partial class PresenceResolveResponse : PresenceFromService {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1308,59 +1133,55 @@ public partial class PresenceResolveResponse : PresenceFromService {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PresenceResolveResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PresenceResolveResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PresenceResolveResponse;
-			}
-		var Result = new PresenceResolveResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class SessionRequest : Message {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Protocol")]
-	public virtual string?					Protocol  {get; set;}
+	public virtual string?					Protocol  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Options")]
 	public virtual List<string>?					Options  {get; set;}
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Inbound")]
-	public virtual UdpEndpoint?					Inbound  {get; set;}
+	public virtual UdpEndpoint?					Inbound  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Expires")]
-	public virtual DateTime?					Expires  {get; set;}
+	public virtual DateTime?					Expires  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Protocol", 
+					(IBinding data, string? value) => {(data as SessionRequest).Protocol = value;}, 
+					(IBinding data) => (data as SessionRequest).Protocol ),
+		new PropertyListString ("Options", 
+					(IBinding data, List<string>? value) => {(data as SessionRequest).Options = value;}, 
+					(IBinding data) => (data as SessionRequest).Options ),
+		new PropertyStruct ("Inbound", typeof (UdpEndpoint),
+					(IBinding data, object? value) => {(data as SessionRequest).Inbound = value as UdpEndpoint;}, 
+					(IBinding data) => (data as SessionRequest).Inbound,
+					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint()),
+		new PropertyDateTime ("Expires", 
+					(IBinding data, DateTime? value) => {(data as SessionRequest).Expires = value;}, 
+					(IBinding data) => (data as SessionRequest).Expires )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1369,17 +1190,12 @@ public partial class SessionRequest : Message {
 	public static readonly new Binding<SessionRequest> _binding = new (
 			new() {
 
-			{ "Protocol", new PropertyString ("Protocol", 
-					(IBinding data, string? value) => {(data as SessionRequest).Protocol = value;}, (IBinding data) => (data as SessionRequest).Protocol )},
-			{ "Options", new PropertyListString ("Options", 
-					(IBinding data, List<string>? value) => {(data as SessionRequest).Options = value;}, (IBinding data) => (data as SessionRequest).Options )},
-			{ "Inbound", new PropertyStruct ("Inbound", typeof (UdpEndpoint),
-					(IBinding data, object? value) => {(data as SessionRequest).Inbound = value as UdpEndpoint;}, (IBinding data) => (data as SessionRequest).Inbound,
-					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())},
-			{ "Expires", new PropertyDateTime ("Expires", 
-					(IBinding data, DateTime? value) => {(data as SessionRequest).Expires = value;}, (IBinding data) => (data as SessionRequest).Expires )}
+			{ "Protocol", _properties [0]},
+			{ "Options", _properties [1]},
+			{ "Inbound", _properties [2]},
+			{ "Expires", _properties [3]}
         }, __Tag,() => new SessionRequest(), () => new List<SessionRequest>(), () => new Dictionary<string,SessionRequest>(),Message._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1397,7 +1213,7 @@ public partial class SessionRequest : Message {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1415,59 +1231,55 @@ public partial class SessionRequest : Message {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new SessionRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new SessionRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as SessionRequest;
-			}
-		var Result = new SessionRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class SessionResponse : Message {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Accept")]
-	public virtual bool?					Accept  {get; set;}
+	public virtual bool?					Accept  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Protocol")]
-	public virtual string?					Protocol  {get; set;}
+	public virtual string?					Protocol  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Options")]
 	public virtual List<string>?					Options  {get; set;}
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Inbound")]
-	public virtual UdpEndpoint?					Inbound  {get; set;}
+	public virtual UdpEndpoint?					Inbound  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyBoolean ("Accept", 
+					(IBinding data, bool? value) => {(data as SessionResponse).Accept = value;}, 
+					(IBinding data) => (data as SessionResponse).Accept ),
+		new PropertyString ("Protocol", 
+					(IBinding data, string? value) => {(data as SessionResponse).Protocol = value;}, 
+					(IBinding data) => (data as SessionResponse).Protocol ),
+		new PropertyListString ("Options", 
+					(IBinding data, List<string>? value) => {(data as SessionResponse).Options = value;}, 
+					(IBinding data) => (data as SessionResponse).Options ),
+		new PropertyStruct ("Inbound", typeof (UdpEndpoint),
+					(IBinding data, object? value) => {(data as SessionResponse).Inbound = value as UdpEndpoint;}, 
+					(IBinding data) => (data as SessionResponse).Inbound,
+					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1476,17 +1288,12 @@ public partial class SessionResponse : Message {
 	public static readonly new Binding<SessionResponse> _binding = new (
 			new() {
 
-			{ "Accept", new PropertyBoolean ("Accept", 
-					(IBinding data, bool? value) => {(data as SessionResponse).Accept = value;}, (IBinding data) => (data as SessionResponse).Accept )},
-			{ "Protocol", new PropertyString ("Protocol", 
-					(IBinding data, string? value) => {(data as SessionResponse).Protocol = value;}, (IBinding data) => (data as SessionResponse).Protocol )},
-			{ "Options", new PropertyListString ("Options", 
-					(IBinding data, List<string>? value) => {(data as SessionResponse).Options = value;}, (IBinding data) => (data as SessionResponse).Options )},
-			{ "Inbound", new PropertyStruct ("Inbound", typeof (UdpEndpoint),
-					(IBinding data, object? value) => {(data as SessionResponse).Inbound = value as UdpEndpoint;}, (IBinding data) => (data as SessionResponse).Inbound,
-					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())}
+			{ "Accept", _properties [0]},
+			{ "Protocol", _properties [1]},
+			{ "Options", _properties [2]},
+			{ "Inbound", _properties [3]}
         }, __Tag,() => new SessionResponse(), () => new List<SessionResponse>(), () => new Dictionary<string,SessionResponse>(),Message._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1504,7 +1311,7 @@ public partial class SessionResponse : Message {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1522,59 +1329,54 @@ public partial class SessionResponse : Message {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new SessionResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new SessionResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as SessionResponse;
-			}
-		var Result = new SessionResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class SessionEndpoint : PresenceProtocol {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("IpAddress")]
-	public virtual byte[]?					IpAddress  {get; set;}
+	public virtual byte[]?					IpAddress  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Port")]
-	public virtual int?					Port  {get; set;}
+	public virtual int?					Port  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Protocol")]
-	public virtual string?					Protocol  {get; set;}
+	public virtual string?					Protocol  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Options")]
 	public virtual List<string>?					Options  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyBinary ("IpAddress", 
+					(IBinding data, byte[]? value) => {(data as SessionEndpoint).IpAddress = value;}, 
+					(IBinding data) => (data as SessionEndpoint).IpAddress ),
+		new PropertyInteger32 ("Port", 
+					(IBinding data, int? value) => {(data as SessionEndpoint).Port = value;}, 
+					(IBinding data) => (data as SessionEndpoint).Port ),
+		new PropertyString ("Protocol", 
+					(IBinding data, string? value) => {(data as SessionEndpoint).Protocol = value;}, 
+					(IBinding data) => (data as SessionEndpoint).Protocol ),
+		new PropertyListString ("Options", 
+					(IBinding data, List<string>? value) => {(data as SessionEndpoint).Options = value;}, 
+					(IBinding data) => (data as SessionEndpoint).Options )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1583,16 +1385,12 @@ public partial class SessionEndpoint : PresenceProtocol {
 	public static readonly new Binding<SessionEndpoint> _binding = new (
 			new() {
 
-			{ "IpAddress", new PropertyBinary ("IpAddress", 
-					(IBinding data, byte[]? value) => {(data as SessionEndpoint).IpAddress = value;}, (IBinding data) => (data as SessionEndpoint).IpAddress )},
-			{ "Port", new PropertyInteger32 ("Port", 
-					(IBinding data, int? value) => {(data as SessionEndpoint).Port = value;}, (IBinding data) => (data as SessionEndpoint).Port )},
-			{ "Protocol", new PropertyString ("Protocol", 
-					(IBinding data, string? value) => {(data as SessionEndpoint).Protocol = value;}, (IBinding data) => (data as SessionEndpoint).Protocol )},
-			{ "Options", new PropertyListString ("Options", 
-					(IBinding data, List<string>? value) => {(data as SessionEndpoint).Options = value;}, (IBinding data) => (data as SessionEndpoint).Options )}
+			{ "IpAddress", _properties [0]},
+			{ "Port", _properties [1]},
+			{ "Protocol", _properties [2]},
+			{ "Options", _properties [3]}
         }, __Tag,() => new SessionEndpoint(), () => new List<SessionEndpoint>(), () => new Dictionary<string,SessionEndpoint>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1609,7 +1407,7 @@ public partial class SessionEndpoint : PresenceProtocol {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1627,48 +1425,37 @@ public partial class SessionEndpoint : PresenceProtocol {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new SessionEndpoint();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new SessionEndpoint FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as SessionEndpoint;
-			}
-		var Result = new SessionEndpoint ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class UdpEndpoint : PresenceProtocol {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("IpAddress")]
-	public virtual byte[]?					IpAddress  {get; set;}
+	public virtual byte[]?					IpAddress  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Port")]
-	public virtual int?					Port  {get; set;}
+	public virtual int?					Port  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyBinary ("IpAddress", 
+					(IBinding data, byte[]? value) => {(data as UdpEndpoint).IpAddress = value;}, 
+					(IBinding data) => (data as UdpEndpoint).IpAddress ),
+		new PropertyInteger32 ("Port", 
+					(IBinding data, int? value) => {(data as UdpEndpoint).Port = value;}, 
+					(IBinding data) => (data as UdpEndpoint).Port )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1677,12 +1464,10 @@ public partial class UdpEndpoint : PresenceProtocol {
 	public static readonly new Binding<UdpEndpoint> _binding = new (
 			new() {
 
-			{ "IpAddress", new PropertyBinary ("IpAddress", 
-					(IBinding data, byte[]? value) => {(data as UdpEndpoint).IpAddress = value;}, (IBinding data) => (data as UdpEndpoint).IpAddress )},
-			{ "Port", new PropertyInteger32 ("Port", 
-					(IBinding data, int? value) => {(data as UdpEndpoint).Port = value;}, (IBinding data) => (data as UdpEndpoint).Port )}
+			{ "IpAddress", _properties [0]},
+			{ "Port", _properties [1]}
         }, __Tag,() => new UdpEndpoint(), () => new List<UdpEndpoint>(), () => new Dictionary<string,UdpEndpoint>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1699,7 +1484,7 @@ public partial class UdpEndpoint : PresenceProtocol {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1716,29 +1501,6 @@ public partial class UdpEndpoint : PresenceProtocol {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new UdpEndpoint();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new UdpEndpoint FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as UdpEndpoint;
-			}
-		var Result = new UdpEndpoint ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

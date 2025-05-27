@@ -124,26 +124,17 @@
             The public key
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyDH._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PublicKeyDH._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PublicKeyDH._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PublicKeyDH._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PublicKeyDH._Tag">
             <summary>
@@ -205,26 +196,17 @@
             The private key.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyDH._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PrivateKeyDH._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PrivateKeyDH._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PrivateKeyDH._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyDH._Tag">
             <summary>
@@ -297,26 +279,17 @@
             The public key
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyECDH._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PublicKeyECDH._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PublicKeyECDH._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PublicKeyECDH._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PublicKeyECDH._Tag">
             <summary>
@@ -382,26 +355,17 @@
             The private key
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyECDH._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PrivateKeyECDH._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PrivateKeyECDH._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PrivateKeyECDH._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyECDH._Tag">
             <summary>
@@ -538,26 +502,17 @@
             The digest value
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.Header._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Header._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.Header._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.Header._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.Header._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.Header._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Header._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Header._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Header._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.Header._Tag">
             <summary>
@@ -629,11 +584,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.Jose._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Cryptography.Jose.Jose._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -664,26 +614,17 @@
             The signature value
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseWebSignature._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.JoseWebSignature._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.JoseWebSignature._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.JoseWebSignature._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.JoseWebSignature._Tag">
             <summary>
@@ -842,26 +783,17 @@
             Authentication tag
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JoseWebEncryption._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.JoseWebEncryption._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.JoseWebEncryption._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.JoseWebEncryption._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.JoseWebEncryption._Tag">
             <summary>
@@ -1068,26 +1000,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.JWKS._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JWKS._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.JWKS._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.JWKS._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.JWKS._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.JWKS._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JWKS._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JWKS._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JWKS._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.JWKS._Tag">
             <summary>
@@ -1168,26 +1091,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.JWK._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JWK._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.JWK._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.JWK._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.JWK._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.JWK._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JWK._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JWK._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JWK._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.JWK._Tag">
             <summary>
@@ -1260,26 +1174,17 @@
             JSON Web Key	
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.JwtHeader._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwtHeader._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.JwtHeader._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.JwtHeader._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.JwtHeader._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.JwtHeader._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JwtHeader._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JwtHeader._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JwtHeader._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.JwtHeader._Tag">
             <summary>
@@ -1318,26 +1223,17 @@
             The signature data
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.Signed._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Signed._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.Signed._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.Signed._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.Signed._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.Signed._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Signed._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Signed._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Signed._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.Signed._Tag">
             <summary>
@@ -1381,26 +1277,17 @@
             The signature data
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.Encrypted._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Encrypted._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.Encrypted._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.Encrypted._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.Encrypted._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.Encrypted._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Encrypted._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Encrypted._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Encrypted._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.Encrypted._Tag">
             <summary>
@@ -1426,26 +1313,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.JsonWebKeys._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JsonWebKeys._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.JsonWebKeys._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.JsonWebKeys._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.JsonWebKeys._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.JsonWebKeys._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JsonWebKeys._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JsonWebKeys._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JsonWebKeys._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.JsonWebKeys._Tag">
             <summary>
@@ -1513,26 +1391,17 @@
             SHA-2-256 fingerprint of X.509 certificate
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyCore._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyCore._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.KeyCore._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.KeyCore._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.KeyCore._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.KeyCore._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyCore._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyCore._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyCore._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.KeyCore._Tag">
             <summary>
@@ -1576,26 +1445,17 @@
             The signature value
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.Signature._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Signature._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.Signature._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.Signature._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.Signature._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.Signature._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Signature._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Signature._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Signature._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.Signature._Tag">
             <summary>
@@ -1629,26 +1489,17 @@
             The key data.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyContainer._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyContainer._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.KeyContainer._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.KeyContainer._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.KeyContainer._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.KeyContainer._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyContainer._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyContainer._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyContainer._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.KeyContainer._Tag">
             <summary>
@@ -1718,26 +1569,17 @@
             Symmetric key value.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.Key._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Key._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.Key._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.Key._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.Key._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.Key._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Key._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Key._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Key._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.Key._Tag">
             <summary>
@@ -1824,26 +1666,17 @@
             The decryption data for use by this recipient.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.Recipient._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.Recipient._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.Recipient._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.Recipient._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.Recipient._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.Recipient._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Recipient._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Recipient._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.Recipient._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.Recipient._Tag">
             <summary>
@@ -1908,26 +1741,17 @@
             The public exponent
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyRSA._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PublicKeyRSA._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PublicKeyRSA._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PublicKeyRSA._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PublicKeyRSA._Tag">
             <summary>
@@ -2015,26 +1839,17 @@
             The parameter QInverse
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyRSA._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PrivateKeyRSA._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PrivateKeyRSA._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PrivateKeyRSA._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyRSA._Tag">
             <summary>
@@ -2119,26 +1934,17 @@
             The algorithm used to derrive the authentication key
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyUDF._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PrivateKeyUDF._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PrivateKeyUDF._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PrivateKeyUDF._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyUDF._Tag">
             <summary>
@@ -2214,26 +2020,17 @@
              </summary>
             <summary>Base class for JOSE key agreement result.</summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreement._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyAgreement._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.KeyAgreement._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.KeyAgreement._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.KeyAgreement._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.KeyAgreement._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreement._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreement._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreement._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.KeyAgreement._Tag">
             <summary>
@@ -2277,26 +2074,17 @@
             The result
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyAgreementDH._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.KeyAgreementDH._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.KeyAgreementDH._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.KeyAgreementDH._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.KeyAgreementDH._Tag">
             <summary>
@@ -2349,26 +2137,17 @@
             The result
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.KeyAgreementECDH._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.KeyAgreementECDH._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.KeyAgreementECDH._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.KeyAgreementECDH._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.KeyAgreementECDH._Tag">
             <summary>
@@ -2414,26 +2193,17 @@
             The public key value
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.PublicKeyBinary._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PublicKeyBinary._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.PublicKeyBinary._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PublicKeyBinary._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PublicKeyBinary._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PublicKeyBinary._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyBinary._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyBinary._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PublicKeyBinary._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PublicKeyBinary._Tag">
             <summary>
@@ -2474,26 +2244,17 @@
             The private key value
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Jose.PrivateKeyBinary._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.PrivateKeyBinary._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyBinary._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Jose.PrivateKeyBinary._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PrivateKeyBinary._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Jose.PrivateKeyBinary._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyBinary._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyBinary._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.PrivateKeyBinary._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Jose.PrivateKeyBinary._Tag">
             <summary>

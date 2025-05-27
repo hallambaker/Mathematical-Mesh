@@ -73,11 +73,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Presence.PresenceProtocol._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Presence.PresenceProtocol._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -172,26 +167,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.PresenceFromClient._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceFromClient._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.PresenceFromClient._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceFromClient._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceFromClient._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceFromClient._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.PresenceFromClient._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceFromClient._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceFromClient._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.PresenceFromClient._Tag">
             <summary>
@@ -231,26 +217,17 @@
              Register connection request. 
              </summary>
         </member>
+        <member name="P:Goedel.Presence.PresenceConnectRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceConnectRequest._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.PresenceConnectRequest._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceConnectRequest._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceConnectRequest._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceConnectRequest._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.PresenceConnectRequest._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceConnectRequest._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceConnectRequest._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.PresenceConnectRequest._Tag">
             <summary>
@@ -272,26 +249,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.PresenceHeartbeat._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceHeartbeat._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.PresenceHeartbeat._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceHeartbeat._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceHeartbeat._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceHeartbeat._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.PresenceHeartbeat._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceHeartbeat._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceHeartbeat._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.PresenceHeartbeat._Tag">
             <summary>
@@ -313,26 +281,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.PresenceEndpointRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceEndpointRequest._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.PresenceEndpointRequest._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceEndpointRequest._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceEndpointRequest._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceEndpointRequest._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.PresenceEndpointRequest._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceEndpointRequest._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceEndpointRequest._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.PresenceEndpointRequest._Tag">
             <summary>
@@ -354,26 +313,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.PresenceAcknowledge._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceAcknowledge._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.PresenceAcknowledge._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceAcknowledge._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceAcknowledge._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceAcknowledge._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.PresenceAcknowledge._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceAcknowledge._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceAcknowledge._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.PresenceAcknowledge._Tag">
             <summary>
@@ -399,26 +349,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.PresenceResolveRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceResolveRequest._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.PresenceResolveRequest._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceResolveRequest._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceResolveRequest._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceResolveRequest._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.PresenceResolveRequest._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceResolveRequest._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceResolveRequest._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.PresenceResolveRequest._Tag">
             <summary>
@@ -455,26 +396,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.PresenceFromService._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceFromService._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.PresenceFromService._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceFromService._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceFromService._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceFromService._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.PresenceFromService._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceFromService._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceFromService._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.PresenceFromService._Tag">
             <summary>
@@ -522,26 +454,17 @@
             assume the device has disconnected in milliseconds.
              </summary>
         </member>
+        <member name="P:Goedel.Presence.PresenceConnectResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceConnectResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.PresenceConnectResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceConnectResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceConnectResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceConnectResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.PresenceConnectResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceConnectResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceConnectResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.PresenceConnectResponse._Tag">
             <summary>
@@ -567,26 +490,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.PresenceErrorInvalidSerial._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceErrorInvalidSerial._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.PresenceErrorInvalidSerial._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceErrorInvalidSerial._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceErrorInvalidSerial._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceErrorInvalidSerial._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.PresenceErrorInvalidSerial._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceErrorInvalidSerial._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceErrorInvalidSerial._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.PresenceErrorInvalidSerial._Tag">
             <summary>
@@ -608,26 +522,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.PresenceStatus._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceStatus._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.PresenceStatus._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceStatus._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceStatus._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceStatus._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.PresenceStatus._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceStatus._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceStatus._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.PresenceStatus._Tag">
             <summary>
@@ -649,26 +554,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.PresenceEndpointResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceEndpointResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.PresenceEndpointResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceEndpointResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceEndpointResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceEndpointResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.PresenceEndpointResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceEndpointResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceEndpointResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.PresenceEndpointResponse._Tag">
             <summary>
@@ -698,26 +594,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.PresenceNotify._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceNotify._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.PresenceNotify._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceNotify._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceNotify._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceNotify._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.PresenceNotify._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceNotify._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceNotify._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.PresenceNotify._Tag">
             <summary>
@@ -743,26 +630,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.PresenceResolveResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.PresenceResolveResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.PresenceResolveResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.PresenceResolveResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceResolveResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.PresenceResolveResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.PresenceResolveResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceResolveResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.PresenceResolveResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.PresenceResolveResponse._Tag">
             <summary>
@@ -800,26 +678,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.SessionRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.SessionRequest._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.SessionRequest._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.SessionRequest._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.SessionRequest._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.SessionRequest._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.SessionRequest._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.SessionRequest._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.SessionRequest._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.SessionRequest._Tag">
             <summary>
@@ -857,26 +726,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.SessionResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.SessionResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.SessionResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.SessionResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.SessionResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.SessionResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.SessionResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.SessionResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.SessionResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.SessionResponse._Tag">
             <summary>
@@ -914,26 +774,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.SessionEndpoint._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.SessionEndpoint._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.SessionEndpoint._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.SessionEndpoint._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.SessionEndpoint._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.SessionEndpoint._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.SessionEndpoint._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.SessionEndpoint._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.SessionEndpoint._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.SessionEndpoint._Tag">
             <summary>
@@ -963,26 +814,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Presence.UdpEndpoint._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Presence.UdpEndpoint._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Presence.UdpEndpoint._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Presence.UdpEndpoint._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Presence.UdpEndpoint._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Presence.UdpEndpoint._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Presence.UdpEndpoint._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.UdpEndpoint._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Presence.UdpEndpoint._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Presence.UdpEndpoint._Tag">
             <summary>

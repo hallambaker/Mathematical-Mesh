@@ -3,8 +3,16 @@
 	Description
 		|Classes to be used to test serialization an deserialization.
 
+	Structure Envelope
+		Description
+			|Base for generic envelope
+		String		Header
+		String		Body
+		String		Trailer
+
 
 	Structure MultiInstance
+		GStruct Envelope MultiInstance Generic
 		Description
 			|Contains one instance of each type of field.
 		String		Type
@@ -16,6 +24,8 @@
 		String		FieldString
 		Binary		FieldBinary
 	
+
+
 	Structure MultiArray
 		Inherits MultiInstance
 		Boolean		ArrayBoolean

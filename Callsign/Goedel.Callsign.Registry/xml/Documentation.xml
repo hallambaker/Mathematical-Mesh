@@ -36,26 +36,17 @@
             Key or capability used to sign the registry log
              </summary>
         </member>
+        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.Registry.ActivationApplicationRegistry._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Callsign.Registry.ActivationApplicationRegistry._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Callsign.Registry.ActivationApplicationRegistry._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Callsign.Registry.ActivationApplicationRegistry._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Registry.ActivationApplicationRegistry._Tag">
             <summary>
@@ -102,26 +93,17 @@
             access the account.
              </summary>
         </member>
+        <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.Registry.ApplicationEntryRegistry._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Callsign.Registry.ApplicationEntryRegistry._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Callsign.Registry.ApplicationEntryRegistry._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Callsign.Registry.ApplicationEntryRegistry._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Registry.ApplicationEntryRegistry._Tag">
             <summary>
@@ -216,26 +198,17 @@
             The activation data for the registry.
              </summary>
         </member>
+        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Callsign.Registry.CatalogedRegistry._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Callsign.Registry.CatalogedRegistry._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Callsign.Registry.CatalogedRegistry._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Callsign.Registry.CatalogedRegistry._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Callsign.Registry.CatalogedRegistry._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Callsign.Registry.CatalogedRegistry._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Callsign.Registry.CatalogedRegistry._Tag">
             <summary>
@@ -267,11 +240,6 @@
         <member name="F:Goedel.Callsign.Registry.CallsignRegistry.__Tag">
             <summary>
             Tag identifying this class
-            </summary>
-        </member>
-        <member name="P:Goedel.Callsign.Registry.CallsignRegistry._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
             </summary>
         </member>
         <member name="P:Goedel.Callsign.Registry.CallsignRegistry._BindingDictionary">

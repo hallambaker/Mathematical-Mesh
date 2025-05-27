@@ -125,7 +125,7 @@ public abstract record Binding(
 
         foreach (var property in element.Properties) {
             var collect = collectUparsed;
-            if (template._AllProperties.TryGetValue(property.Key, out var propertyValue)) {
+            if (template._Binding.AllProperties.TryGetValue(property.Key, out var propertyValue)) {
                 collect &= MapProperty(template, property.Value, propertyValue);
                 }
             if (collect) {
@@ -137,6 +137,25 @@ public abstract record Binding(
         template.PostDecode();
         return template;
         }
+
+    public static JsonObject Parse(
+                JsonElementArray element,
+                Binding binding,
+                JsonObject template,
+                bool collectUparsed = false) {
+        //var template = (JsonObject)binding.Factory();
+
+        for (var i = 0; i < element.Items.Count & i < binding.AllProperties.Count; i++) {
+            var propertyData = element.Items[i];
+            var propertyDescription = template._Properties[i];
+
+            MapProperty(template, propertyData, propertyDescription);
+            }
+
+        template.PostDecode();
+        return template;
+        }
+
 
 
 
@@ -555,6 +574,30 @@ public abstract record Binding(
                 }
             #endregion
             #region // Struct
+            case PropertyGStruct subProperty: {
+                if (element is JsonElementObject jsonElement) {
+                    if (!JsonObject.BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
+                        return false;
+                        }
+                    if (subProperty.Tagged) {
+                        var item = ParseTagged(jsonElement, binding);
+                        subProperty.Set(target, item);
+                        }
+                    else {
+                        var item = Parse(jsonElement, binding);
+                        subProperty.Set(target, item);
+                        }
+                    }
+                else if (element is JsonElementArray jsonArray) {
+                    if (!JsonObject.BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
+                        return false;
+                        }
+                    var template = subProperty.Factory() as JsonObject;
+                    var item = Parse(jsonArray, binding, template);
+                    subProperty.Set(target, item);
+                    }
+                return false;
+                }
             case PropertyStruct subProperty: {
                 if (element is JsonElementObject jsonElement) {
                     if (!JsonObject.BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {

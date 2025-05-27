@@ -133,11 +133,12 @@ public abstract partial class JsonObject : IBinding {
     /// </summary>
     public static JSONWriterFactoryDelegate JSONWriterFactory { get; set; } = JsonWriter.JSONWriterFactory;
 
+    /*
     ///<summary>The tag dictionary for decoding entries.</summary>
     public static Dictionary<string, JsonFactoryDelegate> TagDictionary => tagDictionary ??
         new Dictionary<string, JsonFactoryDelegate>().CacheValue(out tagDictionary);
     static Dictionary<string, JsonFactoryDelegate> tagDictionary;
-
+    */
 
     ///<summary>Dictionary mapping types to binding definitions.</summary> 
     public static Dictionary<Type, Binding> BindingDictionary = [];
@@ -146,13 +147,14 @@ public abstract partial class JsonObject : IBinding {
     public static Dictionary<string, Binding> BindingNameDictionary = [];
 
 
-
+    /*
     /// <summary>
     /// Add a dictionary to the persistence store decoder.
     /// </summary>
     /// <param name="dictionary">The dictionary to add</param>
     public static void AddDictionary(
                 Dictionary<string, JsonFactoryDelegate> dictionary) => Append(TagDictionary, dictionary);
+    */
 
     /// <summary>
     /// Append the values from the tag dictionary of this type to <paramref name="dictionary"/>.
@@ -160,10 +162,13 @@ public abstract partial class JsonObject : IBinding {
     /// <param name="dictionary">The dictionary to append the values to.</param>
     public static void AddDictionary(
                     ref Dictionary<string, JsonFactoryDelegate> dictionary) {
+        /*
         if (dictionary != TagDictionary) {
             Append(TagDictionary, dictionary);
             dictionary = TagDictionary;
             }
+
+        */
         }
 
 
@@ -207,7 +212,8 @@ public abstract partial class JsonObject : IBinding {
 
 
 
-
+    ///<summary>The binding of the object.</summary> 
+    public virtual Property[] _Properties { get; } = null;
     ///<inheritdoc/>
     public virtual Binding _Binding => _binding;
 
@@ -268,14 +274,14 @@ public abstract partial class JsonObject : IBinding {
         }
 
 
-    /// <summary>The properties of the JsonObject instance.</summary>
-    public virtual Dictionary<string, Property> _AllProperties => _StaticAllProperties;
+    ///// <summary>The properties of the JsonObject instance.</summary>
+    //public virtual Dictionary<string, Property> _AllProperties => _StaticAllProperties;
 
-    /// <summary>The properties of the JsonObject instance.</summary>
-    public virtual Dictionary<string, Property> _Properties => _StaticProperties;
+    ///// <summary>The properties of the JsonObject instance.</summary>
+    //public virtual Dictionary<string, Property> _Properties => _StaticProperties;
 
-    /// <summary>The properties of the parent JsonObject instance.</summary>
-    public virtual Dictionary<string, Property> _ParentProperties => null;
+    ///// <summary>The properties of the parent JsonObject instance.</summary>
+    //public virtual Dictionary<string, Property> _ParentProperties => null;
 
     /// <summary>
     /// Base constructor.
@@ -298,15 +304,15 @@ public abstract partial class JsonObject : IBinding {
     /// copied.</returns>
     public virtual JsonObject DeepCopy() => null;
 
-    /// <summary>
-    /// Convert object to string in JSON form
-    /// </summary>
-    /// <returns>Data as string.</returns>
-    public override string ToString() {
-        var _JSONWriter = JSONWriterFactory();
-        Serialize(_JSONWriter, false);
-        return _JSONWriter.GetUTF8;
-        }
+    ///// <summary>
+    ///// Convert object to string in JSON form
+    ///// </summary>
+    ///// <returns>Data as string.</returns>
+    //public override string ToString() {
+    //    //var _JSONWriter = JSONWriterFactory();
+    //    //Serialize(_JSONWriter, false);
+    //    //return _JSONWriter.GetUTF8;
+    //    }
 
     /// <summary>
     /// Convert object to string in JSON form and return as a byte array.
@@ -378,7 +384,7 @@ public abstract partial class JsonObject : IBinding {
             writer.WriteToken(_Tag, 0);
             }
         writer.WriteObjectStart();
-        foreach (var entry in _AllProperties) {
+        foreach (var entry in _Binding.AllProperties) {
             var tag = entry.Key;
             var property = entry.Value;
 

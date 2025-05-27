@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:57:12 AM
+//  This file was automatically generated at 5/27/2025 3:12:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -73,6 +73,7 @@ public abstract partial class CallsignResolver : global::Goedel.Protocol.JsonObj
     /// </summary>
 	public new const string __Tag = "CallsignResolver";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -87,7 +88,7 @@ public abstract partial class CallsignResolver : global::Goedel.Protocol.JsonObj
 	    {"SyncRequest", SyncRequest._Factory},
 	    {"SyncResponse", SyncResponse._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -114,7 +115,7 @@ public abstract partial class CallsignResolver : global::Goedel.Protocol.JsonObj
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -313,6 +314,12 @@ public partial class ResolverServiceDirect: ResolverServiceClient {
 	/// </summary>
 public partial class ResolverRequest : Goedel.Protocol.Request {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -322,7 +329,7 @@ public partial class ResolverRequest : Goedel.Protocol.Request {
 			new() {
 
         }, __Tag,() => new ResolverRequest(), () => new List<ResolverRequest>(), () => new Dictionary<string,ResolverRequest>(),Goedel.Protocol.Request._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -340,7 +347,7 @@ public partial class ResolverRequest : Goedel.Protocol.Request {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -358,29 +365,6 @@ public partial class ResolverRequest : Goedel.Protocol.Request {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResolverRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResolverRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResolverRequest;
-			}
-		var Result = new ResolverRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -391,6 +375,12 @@ public partial class ResolverRequest : Goedel.Protocol.Request {
 	/// </summary>
 public partial class ResolverResponse : Goedel.Protocol.Response {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -400,7 +390,7 @@ public partial class ResolverResponse : Goedel.Protocol.Response {
 			new() {
 
         }, __Tag,() => new ResolverResponse(), () => new List<ResolverResponse>(), () => new Dictionary<string,ResolverResponse>(),Goedel.Protocol.Response._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -418,7 +408,7 @@ public partial class ResolverResponse : Goedel.Protocol.Response {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -436,29 +426,6 @@ public partial class ResolverResponse : Goedel.Protocol.Response {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResolverResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResolverResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResolverResponse;
-			}
-		var Result = new ResolverResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -467,29 +434,44 @@ public partial class ResolverResponse : Goedel.Protocol.Response {
 	/// Request resolution of a profile bound to a callsign or registration identifier. 
 	/// </summary>
 public partial class QueryRequest : ResolverRequest {
-        /// <summary>
-        ///The callsign being requested in canonical form.
-        /// </summary>
+    /// <summary>
+    ///The callsign being requested in canonical form.
+    /// </summary>
 
 	[JsonPropertyName("CallSign")]
-	public virtual string?					CallSign  {get; set;}
+	public virtual string?					CallSign  {get; set;} //
 
-        /// <summary>
-        ///The registration identifier of a registration in the log.
-        /// </summary>
+    /// <summary>
+    ///The registration identifier of a registration in the log.
+    /// </summary>
 
 	[JsonPropertyName("RegistrationId")]
-	public virtual string?					RegistrationId  {get; set;}
+	public virtual string?					RegistrationId  {get; set;} //
 
-        /// <summary>
-        ///The unique identifier of an append only log whose signed Notarization
-        ///entry is requested.
-        /// </summary>
+    /// <summary>
+    ///The unique identifier of an append only log whose signed Notarization
+    ///entry is requested.
+    /// </summary>
 
 	[JsonPropertyName("LogId")]
-	public virtual string?					LogId  {get; set;}
+	public virtual string?					LogId  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("CallSign", 
+					(IBinding data, string? value) => {(data as QueryRequest).CallSign = value;}, 
+					(IBinding data) => (data as QueryRequest).CallSign ),
+		new PropertyString ("RegistrationId", 
+					(IBinding data, string? value) => {(data as QueryRequest).RegistrationId = value;}, 
+					(IBinding data) => (data as QueryRequest).RegistrationId ),
+		new PropertyString ("LogId", 
+					(IBinding data, string? value) => {(data as QueryRequest).LogId = value;}, 
+					(IBinding data) => (data as QueryRequest).LogId )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -498,14 +480,11 @@ public partial class QueryRequest : ResolverRequest {
 	public static readonly new Binding<QueryRequest> _binding = new (
 			new() {
 
-			{ "CallSign", new PropertyString ("CallSign", 
-					(IBinding data, string? value) => {(data as QueryRequest).CallSign = value;}, (IBinding data) => (data as QueryRequest).CallSign )},
-			{ "RegistrationId", new PropertyString ("RegistrationId", 
-					(IBinding data, string? value) => {(data as QueryRequest).RegistrationId = value;}, (IBinding data) => (data as QueryRequest).RegistrationId )},
-			{ "LogId", new PropertyString ("LogId", 
-					(IBinding data, string? value) => {(data as QueryRequest).LogId = value;}, (IBinding data) => (data as QueryRequest).LogId )}
+			{ "CallSign", _properties [0]},
+			{ "RegistrationId", _properties [1]},
+			{ "LogId", _properties [2]}
         }, __Tag,() => new QueryRequest(), () => new List<QueryRequest>(), () => new Dictionary<string,QueryRequest>(),ResolverRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -523,7 +502,7 @@ public partial class QueryRequest : ResolverRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -541,29 +520,6 @@ public partial class QueryRequest : ResolverRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new QueryRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new QueryRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as QueryRequest;
-			}
-		var Result = new QueryRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -572,21 +528,35 @@ public partial class QueryRequest : ResolverRequest {
 	/// Return the result of a QueryRequest
 	/// </summary>
 public partial class QueryResponse : ResolverResponse {
-        /// <summary>
-        ///The registration specified in the result (if found).	
-        /// </summary>
+    /// <summary>
+    ///The registration specified in the result (if found).	
+    /// </summary>
 
 	[JsonPropertyName("Result")]
-	public virtual Enveloped<Registration>?					Result  {get; set;}
+	public virtual Enveloped<Registration>?					Result  {get; set;} //
 
-        /// <summary>
-        ///The latest notarization entry corresponding to the specified log.
-        /// </summary>
+    /// <summary>
+    ///The latest notarization entry corresponding to the specified log.
+    /// </summary>
 
 	[JsonPropertyName("Notarization")]
-	public virtual Enveloped<Notarization>?					Notarization  {get; set;}
+	public virtual Enveloped<Notarization>?					Notarization  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("Result", typeof (Enveloped<Registration>),
+					(IBinding data, object? value) => {(data as QueryResponse).Result = value as Enveloped<Registration>;}, 
+					(IBinding data) => (data as QueryResponse).Result,
+					false, ()=>new  Enveloped<Registration>(), ()=>new Enveloped<Registration>()),
+		new PropertyStruct ("Notarization", typeof (Enveloped<Notarization>),
+					(IBinding data, object? value) => {(data as QueryResponse).Notarization = value as Enveloped<Notarization>;}, 
+					(IBinding data) => (data as QueryResponse).Notarization,
+					false, ()=>new  Enveloped<Notarization>(), ()=>new Enveloped<Notarization>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -595,14 +565,10 @@ public partial class QueryResponse : ResolverResponse {
 	public static readonly new Binding<QueryResponse> _binding = new (
 			new() {
 
-			{ "Result", new PropertyStruct ("Result", typeof (Enveloped<Registration>),
-					(IBinding data, object? value) => {(data as QueryResponse).Result = value as Enveloped<Registration>;}, (IBinding data) => (data as QueryResponse).Result,
-					false, ()=>new  Enveloped<Registration>(), ()=>new Enveloped<Registration>())},
-			{ "Notarization", new PropertyStruct ("Notarization", typeof (Enveloped<Notarization>),
-					(IBinding data, object? value) => {(data as QueryResponse).Notarization = value as Enveloped<Notarization>;}, (IBinding data) => (data as QueryResponse).Notarization,
-					false, ()=>new  Enveloped<Notarization>(), ()=>new Enveloped<Notarization>())}
+			{ "Result", _properties [0]},
+			{ "Notarization", _properties [1]}
         }, __Tag,() => new QueryResponse(), () => new List<QueryResponse>(), () => new Dictionary<string,QueryResponse>(),ResolverResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -620,7 +586,7 @@ public partial class QueryResponse : ResolverResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -638,29 +604,6 @@ public partial class QueryResponse : ResolverResponse {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new QueryResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new QueryResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as QueryResponse;
-			}
-		var Result = new QueryResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -670,6 +613,12 @@ public partial class QueryResponse : ResolverResponse {
 	/// </summary>
 public partial class SyncRequest : ResolverRequest {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -679,7 +628,7 @@ public partial class SyncRequest : ResolverRequest {
 			new() {
 
         }, __Tag,() => new SyncRequest(), () => new List<SyncRequest>(), () => new Dictionary<string,SyncRequest>(),ResolverRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -697,7 +646,7 @@ public partial class SyncRequest : ResolverRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -715,29 +664,6 @@ public partial class SyncRequest : ResolverRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new SyncRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new SyncRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as SyncRequest;
-			}
-		var Result = new SyncRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -747,6 +673,12 @@ public partial class SyncRequest : ResolverRequest {
 	/// </summary>
 public partial class SyncResponse : ResolverResponse {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -756,7 +688,7 @@ public partial class SyncResponse : ResolverResponse {
 			new() {
 
         }, __Tag,() => new SyncResponse(), () => new List<SyncResponse>(), () => new Dictionary<string,SyncResponse>(),ResolverResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -774,7 +706,7 @@ public partial class SyncResponse : ResolverResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -791,29 +723,6 @@ public partial class SyncResponse : ResolverResponse {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new SyncResponse();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new SyncResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as SyncResponse;
-			}
-		var Result = new SyncResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

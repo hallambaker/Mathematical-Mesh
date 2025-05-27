@@ -1391,6 +1391,9 @@
             Interface of a bindable object.
             </summary>
         </member>
+        <member name="P:Goedel.Protocol.IBinding._Properties">
+            <summary>The binding of the object.</summary> 
+        </member>
         <member name="P:Goedel.Protocol.IBinding._Binding">
             <summary>The binding of the object.</summary> 
         </member>
@@ -2967,26 +2970,17 @@
             duplicates.
              </summary>
         </member>
+        <member name="P:Goedel.Protocol.Request._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Request._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Protocol.Request._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Protocol.Request._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Request._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Request._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Request._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Request._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Request._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.Request._Tag">
             <summary>
@@ -3062,26 +3056,17 @@
             The request to which the response corresponds.
              </summary>
         </member>
+        <member name="P:Goedel.Protocol.Response._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Response._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Protocol.Response._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Protocol.Response._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Response._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Response._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Response._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Response._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Response._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.Response._Tag">
             <summary>
@@ -3227,20 +3212,11 @@
             Factory method used as default for ToString methods.
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.JsonObject.TagDictionary">
-            <summary>The tag dictionary for decoding entries.</summary>
-        </member>
         <member name="F:Goedel.Protocol.JsonObject.BindingDictionary">
             <summary>Dictionary mapping types to binding definitions.</summary> 
         </member>
         <member name="F:Goedel.Protocol.JsonObject.BindingNameDictionary">
             <summary>Dictionary mapping types to binding definitions.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.JsonObject.AddDictionary(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate})">
-            <summary>
-            Add a dictionary to the persistence store decoder.
-            </summary>
-            <param name="dictionary">The dictionary to add</param>
         </member>
         <member name="M:Goedel.Protocol.JsonObject.AddDictionary(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate}@)">
             <summary>
@@ -3253,6 +3229,9 @@
             Append the values from the tag dictionary of this type to <paramref name="dictionary"/>.
             </summary>
             <param name="dictionary">The dictionary to append the values to.</param>
+        </member>
+        <member name="P:Goedel.Protocol.JsonObject._Properties">
+            <summary>The binding of the object.</summary> 
         </member>
         <member name="P:Goedel.Protocol.JsonObject._Binding">
             <inheritdoc/>
@@ -3287,15 +3266,6 @@
             <param name="second">The second dictionary to add.</param>
             <returns>The combined dictionary.</returns>
         </member>
-        <member name="P:Goedel.Protocol.JsonObject._AllProperties">
-            <summary>The properties of the JsonObject instance.</summary>
-        </member>
-        <member name="P:Goedel.Protocol.JsonObject._Properties">
-            <summary>The properties of the JsonObject instance.</summary>
-        </member>
-        <member name="P:Goedel.Protocol.JsonObject._ParentProperties">
-            <summary>The properties of the parent JsonObject instance.</summary>
-        </member>
         <member name="M:Goedel.Protocol.JsonObject.#ctor">
             <summary>
             Base constructor.
@@ -3312,12 +3282,6 @@
             </summary>
             <returns>Deep copy of the object with all referenced objects
             copied.</returns>
-        </member>
-        <member name="M:Goedel.Protocol.JsonObject.ToString">
-            <summary>
-            Convert object to string in JSON form
-            </summary>
-            <returns>Data as string.</returns>
         </member>
         <member name="M:Goedel.Protocol.JsonObject.ToBytes">
             <summary>
@@ -4001,11 +3965,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Protocol.BaseMessage._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Protocol.BaseMessage._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -4043,26 +4002,17 @@
             a redirect in the case that a service moves.
              </summary>
         </member>
+        <member name="P:Goedel.Protocol.Version._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Version._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Protocol.Version._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Protocol.Version._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Version._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Version._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Version._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Version._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Version._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.Version._Tag">
             <summary>
@@ -4098,26 +4048,17 @@
             encoding scheme. 
              </summary>
         </member>
+        <member name="P:Goedel.Protocol.Encoding._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.Encoding._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Protocol.Encoding._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Protocol.Encoding._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Encoding._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.Encoding._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.Encoding._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Encoding._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.Encoding._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.Encoding._Tag">
             <summary>
@@ -4141,26 +4082,17 @@
              Request service description.
              </summary>
         </member>
+        <member name="P:Goedel.Protocol.HelloRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.HelloRequest._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Protocol.HelloRequest._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Protocol.HelloRequest._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.HelloRequest._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.HelloRequest._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.HelloRequest._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.HelloRequest._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.HelloRequest._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.HelloRequest._Tag">
             <summary>
@@ -4194,26 +4126,17 @@
             Enumerates alternate protocol version(s) supported
              </summary>
         </member>
+        <member name="P:Goedel.Protocol.HelloResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Protocol.HelloResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Protocol.HelloResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Protocol.HelloResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.HelloResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Protocol.HelloResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Protocol.HelloResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.HelloResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Protocol.HelloResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Protocol.HelloResponse._Tag">
             <summary>
@@ -5497,6 +5420,54 @@
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.PropertyDictionaryReal64.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyGStruct">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Type">The type of the struct object.</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+            <param name="Factory">Factory returning an instance of the object.</param>
+            <param name="IFactory">For a collection object, factory returning an instance of an
+            object in the collection.</param>
+            <param name="Tagged">If true, the property should be tagged.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyGStruct.#ctor(System.String,System.Type,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Func{System.Object},System.Func{System.Object})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Type">The type of the struct object.</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+            <param name="Factory">Factory returning an instance of the object.</param>
+            <param name="IFactory">For a collection object, factory returning an instance of an
+            object in the collection.</param>
+            <param name="Tagged">If true, the property should be tagged.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyGStruct.Type">
+            <summary>The type of the struct object.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyGStruct.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyGStruct.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyGStruct.Factory">
+            <summary>Factory returning an instance of the object.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyGStruct.IFactory">
+            <summary>For a collection object, factory returning an instance of an
+            object in the collection.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyGStruct.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyGStruct.IsNull(Goedel.Protocol.IBinding)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Protocol.PropertyStruct">

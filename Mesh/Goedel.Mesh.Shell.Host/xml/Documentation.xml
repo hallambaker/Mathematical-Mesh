@@ -180,11 +180,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.Host.MeshhostShellResult._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell.Host.MeshhostShellResult._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -199,26 +194,17 @@
              Placeholder class to allow insertion of application specific properties.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.Host.Result._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.Result._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Shell.Host.Result._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.Host.Result._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Host.Result._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Host.Result._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Host.Result._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Host.Result._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Host.Result._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.Host.Result._Tag">
             <summary>
@@ -272,26 +258,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.ResultAbout._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Shell.Host.ResultAbout._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.Host.ResultAbout._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Host.ResultAbout._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Host.ResultAbout._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Host.ResultAbout._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.Host.ResultAbout._Tag">
             <summary>
@@ -316,26 +293,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.Host.ResultStartService._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Shell.Host.ResultStartService._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Shell.Host.ResultStartService._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Shell.Host.ResultStartService._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Host.ResultStartService._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Shell.Host.ResultStartService._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Host.ResultStartService._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Host.ResultStartService._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.Host.ResultStartService._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Shell.Host.ResultStartService._Tag">
             <summary>

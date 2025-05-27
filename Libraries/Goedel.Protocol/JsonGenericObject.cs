@@ -21,17 +21,25 @@
 #endregion
 
 
+
+#pragma warning disable IDE1006
+
 namespace Goedel.Protocol;
 
-/// <summary>
-/// Interface of a bindable object.
-/// </summary>
-public interface IBinding {
 
-    ///<summary>The binding of the object.</summary> 
-    Property[] _Properties { get; }
+public interface IGenericObject : IBinding {
+    void Wrap();
 
-    ///<summary>The binding of the object.</summary> 
-    Binding _Binding { get; }
+    void Unwrap();
+    }
+
+
+public abstract class JsonGenericObject : JsonObject, IGenericObject {
+
+
+    public abstract void Wrap();
+
+    public abstract void Unwrap();
+
 
     }

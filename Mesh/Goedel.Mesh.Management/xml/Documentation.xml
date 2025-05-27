@@ -33,11 +33,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Management.ServiceManagement._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Mesh.Management.ServiceManagement._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -180,26 +175,17 @@
              Base class for all request messages.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Management.WsmpRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Management.WsmpRequest._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Management.WsmpRequest._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Management.WsmpRequest._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Management.WsmpRequest._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Management.WsmpRequest._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Management.WsmpRequest._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Management.WsmpRequest._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Management.WsmpRequest._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Management.WsmpRequest._Tag">
             <summary>
@@ -224,26 +210,17 @@
              status code and status description fields.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Management.WsmpResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Management.WsmpResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Management.WsmpResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Management.WsmpResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Management.WsmpResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Management.WsmpResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Management.WsmpResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Management.WsmpResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Management.WsmpResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Management.WsmpResponse._Tag">
             <summary>
@@ -265,26 +242,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Management.ServiceConfigRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Management.ServiceConfigRequest._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Management.ServiceConfigRequest._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Management.ServiceConfigRequest._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Management.ServiceConfigRequest._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Management.ServiceConfigRequest._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceConfigRequest._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceConfigRequest._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceConfigRequest._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Management.ServiceConfigRequest._Tag">
             <summary>
@@ -306,26 +274,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Management.ServiceConfigResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Management.ServiceConfigResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Management.ServiceConfigResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Management.ServiceConfigResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Management.ServiceConfigResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Management.ServiceConfigResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceConfigResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceConfigResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceConfigResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Management.ServiceConfigResponse._Tag">
             <summary>
@@ -347,26 +306,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Management.ServiceStatusRequest._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Management.ServiceStatusRequest._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Management.ServiceStatusRequest._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Management.ServiceStatusRequest._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Management.ServiceStatusRequest._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceStatusRequest._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceStatusRequest._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceStatusRequest._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Management.ServiceStatusRequest._Tag">
             <summary>
@@ -408,26 +358,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Management.ServiceStatusResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Management.ServiceStatusResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Management.ServiceStatusResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Management.ServiceStatusResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Management.ServiceStatusResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Management.ServiceStatusResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceStatusResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceStatusResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Management.ServiceStatusResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Management.ServiceStatusResponse._Tag">
             <summary>

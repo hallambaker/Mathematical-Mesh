@@ -20,11 +20,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Anything.AnythingProtocol._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Anything.AnythingProtocol._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -109,26 +104,17 @@
              Describes a anything service provider
              </summary>
         </member>
+        <member name="P:Goedel.Anything.ProfileAnything._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.ProfileAnything._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Anything.ProfileAnything._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Anything.ProfileAnything._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Anything.ProfileAnything._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Anything.ProfileAnything._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Anything.ProfileAnything._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.ProfileAnything._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.ProfileAnything._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Anything.ProfileAnything._Tag">
             <summary>
@@ -203,26 +189,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Anything.CatalogedIdentity._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CatalogedIdentity._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Anything.CatalogedIdentity._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Anything.CatalogedIdentity._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Anything.CatalogedIdentity._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Anything.CatalogedIdentity._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Anything.CatalogedIdentity._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.CatalogedIdentity._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.CatalogedIdentity._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Anything.CatalogedIdentity._Tag">
             <summary>
@@ -270,26 +247,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Anything.Identity._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.Identity._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Anything.Identity._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Anything.Identity._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Anything.Identity._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Anything.Identity._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Anything.Identity._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.Identity._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.Identity._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Anything.Identity._Tag">
             <summary>
@@ -329,26 +297,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Anything.DnsIdentity._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.DnsIdentity._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Anything.DnsIdentity._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Anything.DnsIdentity._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Anything.DnsIdentity._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Anything.DnsIdentity._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Anything.DnsIdentity._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.DnsIdentity._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.DnsIdentity._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Anything.DnsIdentity._Tag">
             <summary>
@@ -373,26 +332,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Anything.LocalIdentity._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.LocalIdentity._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Anything.LocalIdentity._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Anything.LocalIdentity._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Anything.LocalIdentity._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Anything.LocalIdentity._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Anything.LocalIdentity._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.LocalIdentity._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.LocalIdentity._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Anything.LocalIdentity._Tag">
             <summary>
@@ -417,26 +367,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Anything.CallsignIdentity._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CallsignIdentity._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Anything.CallsignIdentity._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Anything.CallsignIdentity._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Anything.CallsignIdentity._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Anything.CallsignIdentity._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Anything.CallsignIdentity._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.CallsignIdentity._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.CallsignIdentity._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Anything.CallsignIdentity._Tag">
             <summary>
@@ -473,26 +414,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Anything.CatalogedThing._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CatalogedThing._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Anything.CatalogedThing._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Anything.CatalogedThing._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Anything.CatalogedThing._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Anything.CatalogedThing._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Anything.CatalogedThing._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.CatalogedThing._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.CatalogedThing._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Anything.CatalogedThing._Tag">
             <summary>
@@ -540,26 +472,17 @@
             The activation data for the registry.
              </summary>
         </member>
+        <member name="P:Goedel.Anything.CatalogedAnything._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.CatalogedAnything._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Anything.CatalogedAnything._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Anything.CatalogedAnything._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Anything.CatalogedAnything._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Anything.CatalogedAnything._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Anything.CatalogedAnything._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.CatalogedAnything._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.CatalogedAnything._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Anything.CatalogedAnything._Tag">
             <summary>
@@ -602,26 +525,17 @@
              Base class for all requests made to a registrar
              </summary>
         </member>
+        <member name="P:Goedel.Anything.AnythingRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.AnythingRequest._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Anything.AnythingRequest._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Anything.AnythingRequest._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Anything.AnythingRequest._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Anything.AnythingRequest._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Anything.AnythingRequest._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.AnythingRequest._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.AnythingRequest._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Anything.AnythingRequest._Tag">
             <summary>
@@ -646,26 +560,17 @@
              status code and status description fields.
              </summary>
         </member>
+        <member name="P:Goedel.Anything.AnythingResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Anything.AnythingResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Anything.AnythingResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Anything.AnythingResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Anything.AnythingResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Anything.AnythingResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Anything.AnythingResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.AnythingResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Anything.AnythingResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Anything.AnythingResponse._Tag">
             <summary>

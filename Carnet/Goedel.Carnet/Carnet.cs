@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:57:12 AM
+//  This file was automatically generated at 5/27/2025 3:12:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -71,6 +71,7 @@ public abstract partial class CarnetProtocol : global::Goedel.Protocol.JsonObjec
     /// </summary>
 	public new const string __Tag = "CarnetProtocol";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -83,7 +84,7 @@ public abstract partial class CarnetProtocol : global::Goedel.Protocol.JsonObjec
 	    {"CarnetRequest", CarnetRequest._Factory},
 	    {"CarnetResponse", CarnetResponse._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -108,7 +109,7 @@ public abstract partial class CarnetProtocol : global::Goedel.Protocol.JsonObjec
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -235,6 +236,12 @@ public partial class CarnetServiceDirect: CarnetServiceClient {
 	/// </summary>
 public partial class ProfileCarnet : ProfileService {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -244,7 +251,7 @@ public partial class ProfileCarnet : ProfileService {
 			new() {
 
         }, __Tag,() => new ProfileCarnet(), () => new List<ProfileCarnet>(), () => new Dictionary<string,ProfileCarnet>(),ProfileService._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -262,7 +269,7 @@ public partial class ProfileCarnet : ProfileService {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -280,63 +287,61 @@ public partial class ProfileCarnet : ProfileService {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ProfileCarnet();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ProfileCarnet FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ProfileCarnet;
-			}
-		var Result = new ProfileCarnet ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class CatalogedCarnet : CatalogedEntry {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Key")]
-	public virtual string?					Key  {get; set;}
+	public virtual string?					Key  {get; set;} //
 
-        /// <summary>
-        ///The connection allowing control of the registry.
-        /// </summary>
+    /// <summary>
+    ///The connection allowing control of the registry.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedConnectionAddress")]
-	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;}
+	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;} //
 
-        /// <summary>
-        ///The Mesh profile
-        /// </summary>
+    /// <summary>
+    ///The Mesh profile
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedProfileCarnet")]
-	public virtual Enveloped<ProfileCarnet>?					EnvelopedProfileCarnet  {get; set;}
+	public virtual Enveloped<ProfileCarnet>?					EnvelopedProfileCarnet  {get; set;} //
 
-        /// <summary>
-        ///The activation data for the registry.
-        /// </summary>
+    /// <summary>
+    ///The activation data for the registry.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedActivationCommon")]
-	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Key", 
+					(IBinding data, string? value) => {(data as CatalogedCarnet).Key = value;}, 
+					(IBinding data) => (data as CatalogedCarnet).Key ),
+		new PropertyStruct ("EnvelopedConnectionAddress", typeof (Enveloped<ConnectionStripped>),
+					(IBinding data, object? value) => {(data as CatalogedCarnet).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, 
+					(IBinding data) => (data as CatalogedCarnet).EnvelopedConnectionAddress,
+					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>()),
+		new PropertyStruct ("EnvelopedProfileCarnet", typeof (Enveloped<ProfileCarnet>),
+					(IBinding data, object? value) => {(data as CatalogedCarnet).EnvelopedProfileCarnet = value as Enveloped<ProfileCarnet>;}, 
+					(IBinding data) => (data as CatalogedCarnet).EnvelopedProfileCarnet,
+					false, ()=>new  Enveloped<ProfileCarnet>(), ()=>new Enveloped<ProfileCarnet>()),
+		new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
+					(IBinding data, object? value) => {(data as CatalogedCarnet).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, 
+					(IBinding data) => (data as CatalogedCarnet).EnvelopedActivationCommon,
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -345,19 +350,12 @@ public partial class CatalogedCarnet : CatalogedEntry {
 	public static readonly new Binding<CatalogedCarnet> _binding = new (
 			new() {
 
-			{ "Key", new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as CatalogedCarnet).Key = value;}, (IBinding data) => (data as CatalogedCarnet).Key )},
-			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", typeof (Enveloped<ConnectionStripped>),
-					(IBinding data, object? value) => {(data as CatalogedCarnet).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedCarnet).EnvelopedConnectionAddress,
-					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())},
-			{ "EnvelopedProfileCarnet", new PropertyStruct ("EnvelopedProfileCarnet", typeof (Enveloped<ProfileCarnet>),
-					(IBinding data, object? value) => {(data as CatalogedCarnet).EnvelopedProfileCarnet = value as Enveloped<ProfileCarnet>;}, (IBinding data) => (data as CatalogedCarnet).EnvelopedProfileCarnet,
-					false, ()=>new  Enveloped<ProfileCarnet>(), ()=>new Enveloped<ProfileCarnet>())},
-			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
-					(IBinding data, object? value) => {(data as CatalogedCarnet).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedCarnet).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())}
+			{ "Key", _properties [0]},
+			{ "EnvelopedConnectionAddress", _properties [1]},
+			{ "EnvelopedProfileCarnet", _properties [2]},
+			{ "EnvelopedActivationCommon", _properties [3]}
         }, __Tag,() => new CatalogedCarnet(), () => new List<CatalogedCarnet>(), () => new Dictionary<string,CatalogedCarnet>(),CatalogedEntry._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -375,7 +373,7 @@ public partial class CatalogedCarnet : CatalogedEntry {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -393,29 +391,6 @@ public partial class CatalogedCarnet : CatalogedEntry {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedCarnet();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CatalogedCarnet FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedCarnet;
-			}
-		var Result = new CatalogedCarnet ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -425,6 +400,12 @@ public partial class CatalogedCarnet : CatalogedEntry {
 	/// </summary>
 public partial class CarnetRequest : Goedel.Protocol.Request {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -434,7 +415,7 @@ public partial class CarnetRequest : Goedel.Protocol.Request {
 			new() {
 
         }, __Tag,() => new CarnetRequest(), () => new List<CarnetRequest>(), () => new Dictionary<string,CarnetRequest>(),Goedel.Protocol.Request._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -452,7 +433,7 @@ public partial class CarnetRequest : Goedel.Protocol.Request {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -470,29 +451,6 @@ public partial class CarnetRequest : Goedel.Protocol.Request {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CarnetRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CarnetRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CarnetRequest;
-			}
-		var Result = new CarnetRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -503,6 +461,12 @@ public partial class CarnetRequest : Goedel.Protocol.Request {
 	/// </summary>
 public partial class CarnetResponse : Goedel.Protocol.Response {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -512,7 +476,7 @@ public partial class CarnetResponse : Goedel.Protocol.Response {
 			new() {
 
         }, __Tag,() => new CarnetResponse(), () => new List<CarnetResponse>(), () => new Dictionary<string,CarnetResponse>(),Goedel.Protocol.Response._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -530,7 +494,7 @@ public partial class CarnetResponse : Goedel.Protocol.Response {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -547,29 +511,6 @@ public partial class CarnetResponse : Goedel.Protocol.Response {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CarnetResponse();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CarnetResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CarnetResponse;
-			}
-		var Result = new CarnetResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

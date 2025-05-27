@@ -756,6 +756,59 @@ public record PropertyDictionaryReal64(
     public override bool IsNull(IBinding data) => Get(data) == null;
     }
 
+
+
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Type">The type of the struct object.</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
+/// <param name="Factory">Factory returning an instance of the object.</param>
+/// <param name="IFactory">For a collection object, factory returning an instance of an
+/// object in the collection.</param>
+/// <param name="Tagged">If true, the property should be tagged.</param>
+public record PropertyGStruct(
+            string Tag,
+            //Type GType,
+            Type Type,
+            Action<IBinding, object?> Set,
+            Func<IBinding, object?> Get,
+            //Action<IBinding, object?> SetSub,
+            //Func<IBinding, object?> GetSub,
+            Func<object> Factory = null,
+            Func<object> IFactory = null) : Property(Tag, false ){
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+
+        var value = Get(data) as JsonObject;
+
+        bool first = true;
+        writer.WriteArrayStart();
+        foreach (var entry in value._Binding.AllProperties) {
+            var tag = entry.Key;
+            var property = entry.Value;
+
+            if (!property.IsNull(value)) {
+                writer.WriteArraySeparator(ref first);
+                //writer.WriteToken(tag, 1);
+                property.Serialize(value, writer);
+                }
+            }
+        writer.WriteArrayEnd();
+
+        //    JsonObject value = Get(data) as JsonObject;
+        //value?.Serialize(writer, Tagged);
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
+    }
+
+
+
+
 /// <summary>
 /// Metadata record representing a property.
 /// </summary>
@@ -777,7 +830,7 @@ public record PropertyStruct(
             Func<object> IFactory = null) : Property(Tag, false, Tagged) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
-        JsonObject value = Get(data) as JsonObject;
+        var value = Get(data) as JsonObject;
         value?.Serialize(writer, Tagged);
         }
 

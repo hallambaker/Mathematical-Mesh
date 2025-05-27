@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:57:19 AM
+//  This file was automatically generated at 5/27/2025 3:12:57 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -71,6 +71,7 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
     /// </summary>
 	public new const string __Tag = "CatalogItem";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -81,7 +82,7 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 	    {"AccountEntry", AccountEntry._Factory},
 	    {"AccountUser", AccountUser._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -104,7 +105,7 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -133,42 +134,63 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 	/// Represents a Mesh Account.
 	/// </summary>
 abstract public partial class AccountEntry : CatalogedEntry {
-        /// <summary>
-        ///Subdirectory containing the catalogs and spools for the account.
-        /// </summary>
+    /// <summary>
+    ///Subdirectory containing the catalogs and spools for the account.
+    /// </summary>
 
 	[JsonPropertyName("Directory")]
-	public virtual string?					Directory  {get; set;}
+	public virtual string?					Directory  {get; set;} //
 
-        /// <summary>
-        ///The fingerprint of the profile
-        /// </summary>
+    /// <summary>
+    ///The fingerprint of the profile
+    /// </summary>
 
 	[JsonPropertyName("ProfileUdf")]
-	public virtual string?					ProfileUdf  {get; set;}
+	public virtual string?					ProfileUdf  {get; set;} //
 
-        /// <summary>
-        ///The quota assigned to this user in KB
-        /// </summary>
+    /// <summary>
+    ///The quota assigned to this user in KB
+    /// </summary>
 
 	[JsonPropertyName("Quota")]
-	public virtual int?					Quota  {get; set;}
+	public virtual int?					Quota  {get; set;} //
 
-        /// <summary>
-        ///The profile status. Valid values are "Pending", "Connected", "Blocked"
-        /// </summary>
+    /// <summary>
+    ///The profile status. Valid values are "Pending", "Connected", "Blocked"
+    /// </summary>
 
 	[JsonPropertyName("Status")]
-	public virtual string?					Status  {get; set;}
+	public virtual string?					Status  {get; set;} //
 
-        /// <summary>
-        ///Account address in user@domain format
-        /// </summary>
+    /// <summary>
+    ///Account address in user@domain format
+    /// </summary>
 
 	[JsonPropertyName("LocalAddress")]
-	public virtual string?					LocalAddress  {get; set;}
+	public virtual string?					LocalAddress  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Directory", 
+					(IBinding data, string? value) => {(data as AccountEntry).Directory = value;}, 
+					(IBinding data) => (data as AccountEntry).Directory ),
+		new PropertyString ("ProfileUdf", 
+					(IBinding data, string? value) => {(data as AccountEntry).ProfileUdf = value;}, 
+					(IBinding data) => (data as AccountEntry).ProfileUdf ),
+		new PropertyInteger32 ("Quota", 
+					(IBinding data, int? value) => {(data as AccountEntry).Quota = value;}, 
+					(IBinding data) => (data as AccountEntry).Quota ),
+		new PropertyString ("Status", 
+					(IBinding data, string? value) => {(data as AccountEntry).Status = value;}, 
+					(IBinding data) => (data as AccountEntry).Status ),
+		new PropertyString ("LocalAddress", 
+					(IBinding data, string? value) => {(data as AccountEntry).LocalAddress = value;}, 
+					(IBinding data) => (data as AccountEntry).LocalAddress )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -177,18 +199,13 @@ abstract public partial class AccountEntry : CatalogedEntry {
 	public static readonly new Binding<AccountEntry> _binding = new (
 			new() {
 
-			{ "Directory", new PropertyString ("Directory", 
-					(IBinding data, string? value) => {(data as AccountEntry).Directory = value;}, (IBinding data) => (data as AccountEntry).Directory )},
-			{ "ProfileUdf", new PropertyString ("ProfileUdf", 
-					(IBinding data, string? value) => {(data as AccountEntry).ProfileUdf = value;}, (IBinding data) => (data as AccountEntry).ProfileUdf )},
-			{ "Quota", new PropertyInteger32 ("Quota", 
-					(IBinding data, int? value) => {(data as AccountEntry).Quota = value;}, (IBinding data) => (data as AccountEntry).Quota )},
-			{ "Status", new PropertyString ("Status", 
-					(IBinding data, string? value) => {(data as AccountEntry).Status = value;}, (IBinding data) => (data as AccountEntry).Status )},
-			{ "LocalAddress", new PropertyString ("LocalAddress", 
-					(IBinding data, string? value) => {(data as AccountEntry).LocalAddress = value;}, (IBinding data) => (data as AccountEntry).LocalAddress )}
+			{ "Directory", _properties [0]},
+			{ "ProfileUdf", _properties [1]},
+			{ "Quota", _properties [2]},
+			{ "Status", _properties [3]},
+			{ "LocalAddress", _properties [4]}
         }, __Tag,null, null, null,CatalogedEntry._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -206,7 +223,7 @@ abstract public partial class AccountEntry : CatalogedEntry {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -224,26 +241,6 @@ abstract public partial class AccountEntry : CatalogedEntry {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new AccountEntry FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as AccountEntry;
-			}
-		throw new CannotCreateAbstract();
-		}
-	*/
-
 	}
 
 
@@ -252,22 +249,36 @@ abstract public partial class AccountEntry : CatalogedEntry {
 	/// Represents a Mesh Account
 	/// </summary>
 public partial class AccountUser : AccountEntry {
-        /// <summary>
-        ///The signed assertion describing the account.
-        /// </summary>
+    /// <summary>
+    ///The signed assertion describing the account.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedProfileUser")]
-	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileUser  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileUser  {get; set;} //
 
-        /// <summary>
-        ///The enveloped assignment describing how the client should
-        ///discover the host and encrypt data to it.
-        /// </summary>
+    /// <summary>
+    ///The enveloped assignment describing how the client should
+    ///discover the host and encrypt data to it.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedAccountHostAssignment")]
-	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;}
+	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("EnvelopedProfileUser", typeof (Enveloped<ProfileAccount>),
+					(IBinding data, object? value) => {(data as AccountUser).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;}, 
+					(IBinding data) => (data as AccountUser).EnvelopedProfileUser,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
+		new PropertyStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped<AccountHostAssignment>),
+					(IBinding data, object? value) => {(data as AccountUser).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, 
+					(IBinding data) => (data as AccountUser).EnvelopedAccountHostAssignment,
+					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -276,14 +287,10 @@ public partial class AccountUser : AccountEntry {
 	public static readonly new Binding<AccountUser> _binding = new (
 			new() {
 
-			{ "EnvelopedProfileUser", new PropertyStruct ("EnvelopedProfileUser", typeof (Enveloped<ProfileAccount>),
-					(IBinding data, object? value) => {(data as AccountUser).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as AccountUser).EnvelopedProfileUser,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
-			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped<AccountHostAssignment>),
-					(IBinding data, object? value) => {(data as AccountUser).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as AccountUser).EnvelopedAccountHostAssignment,
-					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())}
+			{ "EnvelopedProfileUser", _properties [0]},
+			{ "EnvelopedAccountHostAssignment", _properties [1]}
         }, __Tag,() => new AccountUser(), () => new List<AccountUser>(), () => new Dictionary<string,AccountUser>(),AccountEntry._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -301,7 +308,7 @@ public partial class AccountUser : AccountEntry {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -318,29 +325,6 @@ public partial class AccountUser : AccountEntry {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new AccountUser();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new AccountUser FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as AccountUser;
-			}
-		var Result = new AccountUser ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

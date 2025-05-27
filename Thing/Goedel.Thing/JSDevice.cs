@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:57:12 AM
+//  This file was automatically generated at 5/27/2025 3:12:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -67,6 +67,7 @@ public abstract partial class ThingDevice : global::Goedel.Protocol.JsonObject {
     /// </summary>
 	public new const string __Tag = "ThingDevice";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -82,7 +83,7 @@ public abstract partial class ThingDevice : global::Goedel.Protocol.JsonObject {
 	    {"Physical", Physical._Factory},
 	    {"Storage", Storage._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -110,7 +111,7 @@ public abstract partial class ThingDevice : global::Goedel.Protocol.JsonObject {
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -139,98 +140,148 @@ public abstract partial class ThingDevice : global::Goedel.Protocol.JsonObject {
 	/// Describes a device
 	/// </summary>
 public partial class JsDevice : ThingDevice {
-        /// <summary>
-        ///The name of the device
-        /// </summary>
+    /// <summary>
+    ///The name of the device
+    /// </summary>
 
 	[JsonPropertyName("ModelName")]
-	public virtual string?					ModelName  {get; set;}
+	public virtual string?					ModelName  {get; set;} //
 
-        /// <summary>
-        ///Short string giving the type of device for naming purposes, e.g. 
-        ///'camera'
-        /// </summary>
+    /// <summary>
+    ///Short string giving the type of device for naming purposes, e.g. 
+    ///'camera'
+    /// </summary>
 
 	[JsonPropertyName("NameHint")]
-	public virtual string?					NameHint  {get; set;}
+	public virtual string?					NameHint  {get; set;} //
 
-        /// <summary>
-        ///The model serial identifier
-        /// </summary>
+    /// <summary>
+    ///The model serial identifier
+    /// </summary>
 
 	[JsonPropertyName("ModelSerial")]
-	public virtual string?					ModelSerial  {get; set;}
+	public virtual string?					ModelSerial  {get; set;} //
 
-        /// <summary>
-        ///The device serial identifier. 
-        /// </summary>
+    /// <summary>
+    ///The device serial identifier. 
+    /// </summary>
 
 	[JsonPropertyName("DeviceSerial")]
-	public virtual string?					DeviceSerial  {get; set;}
+	public virtual string?					DeviceSerial  {get; set;} //
 
-        /// <summary>
-        ///Globally unique device identifier
-        /// </summary>
+    /// <summary>
+    ///Globally unique device identifier
+    /// </summary>
 
 	[JsonPropertyName("DeviceIdentifier")]
-	public virtual string?					DeviceIdentifier  {get; set;}
+	public virtual string?					DeviceIdentifier  {get; set;} //
 
-        /// <summary>
-        ///Name of the manufacturer
-        /// </summary>
+    /// <summary>
+    ///Name of the manufacturer
+    /// </summary>
 
 	[JsonPropertyName("Manufacturer")]
-	public virtual string?					Manufacturer  {get; set;}
+	public virtual string?					Manufacturer  {get; set;} //
 
-        /// <summary>
-        ///Country of Origin as ISO 2 letter country code.
-        /// </summary>
+    /// <summary>
+    ///Country of Origin as ISO 2 letter country code.
+    /// </summary>
 
 	[JsonPropertyName("CountryOfOrigin")]
-	public virtual string?					CountryOfOrigin  {get; set;}
+	public virtual string?					CountryOfOrigin  {get; set;} //
 
-        /// <summary>
-        ///Datge of manufacture in UTC.
-        /// </summary>
+    /// <summary>
+    ///Datge of manufacture in UTC.
+    /// </summary>
 
 	[JsonPropertyName("Manufactured")]
-	public virtual DateTime?					Manufactured  {get; set;}
+	public virtual DateTime?					Manufactured  {get; set;} //
 
-        /// <summary>
-        ///The set of services the device offers, e.g. SSH access, 
-        ///http/https access, etc.
-        /// </summary>
+    /// <summary>
+    ///The set of services the device offers, e.g. SSH access, 
+    ///http/https access, etc.
+    /// </summary>
 
 	[JsonPropertyName("OfferedServices")]
 	public virtual List<Service>?					OfferedServices  {get; set;}
-        /// <summary>
-        ///The set of services the device consumes, e.g. file storage,
-        ///DNS, WebPKI administration
-        /// </summary>
+    /// <summary>
+    ///The set of services the device consumes, e.g. file storage,
+    ///DNS, WebPKI administration
+    /// </summary>
 
 	[JsonPropertyName("UsedServices")]
 	public virtual List<Service>?					UsedServices  {get; set;}
-        /// <summary>
-        ///A list of images showing the device in order of relevance. The images need 
-        ///not be picttures of the specific device shown but SHOULD be representative.
-        /// </summary>
+    /// <summary>
+    ///A list of images showing the device in order of relevance. The images need 
+    ///not be picttures of the specific device shown but SHOULD be representative.
+    /// </summary>
 
 	[JsonPropertyName("Images")]
 	public virtual List<DeviceImage>?					Images  {get; set;}
-        /// <summary>
-        ///List of physical network media supported by the device, e.g.
-        ///Ethernet, WiFi, USB-C, etc.
-        /// </summary>
+    /// <summary>
+    ///List of physical network media supported by the device, e.g.
+    ///Ethernet, WiFi, USB-C, etc.
+    /// </summary>
 
 	[JsonPropertyName("Physical")]
 	public virtual List<Physical>?					Physical  {get; set;}
-        /// <summary>
-        ///Describes off-device storage requirements
-        /// </summary>
+    /// <summary>
+    ///Describes off-device storage requirements
+    /// </summary>
 
 	[JsonPropertyName("Storage")]
 	public virtual List<Storage>?					Storage  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("ModelName", 
+					(IBinding data, string? value) => {(data as JsDevice).ModelName = value;}, 
+					(IBinding data) => (data as JsDevice).ModelName ),
+		new PropertyString ("NameHint", 
+					(IBinding data, string? value) => {(data as JsDevice).NameHint = value;}, 
+					(IBinding data) => (data as JsDevice).NameHint ),
+		new PropertyString ("ModelSerial", 
+					(IBinding data, string? value) => {(data as JsDevice).ModelSerial = value;}, 
+					(IBinding data) => (data as JsDevice).ModelSerial ),
+		new PropertyString ("DeviceSerial", 
+					(IBinding data, string? value) => {(data as JsDevice).DeviceSerial = value;}, 
+					(IBinding data) => (data as JsDevice).DeviceSerial ),
+		new PropertyString ("DeviceIdentifier", 
+					(IBinding data, string? value) => {(data as JsDevice).DeviceIdentifier = value;}, 
+					(IBinding data) => (data as JsDevice).DeviceIdentifier ),
+		new PropertyString ("Manufacturer", 
+					(IBinding data, string? value) => {(data as JsDevice).Manufacturer = value;}, 
+					(IBinding data) => (data as JsDevice).Manufacturer ),
+		new PropertyString ("CountryOfOrigin", 
+					(IBinding data, string? value) => {(data as JsDevice).CountryOfOrigin = value;}, 
+					(IBinding data) => (data as JsDevice).CountryOfOrigin ),
+		new PropertyDateTime ("Manufactured", 
+					(IBinding data, DateTime? value) => {(data as JsDevice).Manufactured = value;}, 
+					(IBinding data) => (data as JsDevice).Manufactured ),
+		new PropertyListStruct ("OfferedServices", typeof (Service),
+					(IBinding data, object? value) => {(data as JsDevice).OfferedServices = value as List<Service>;}, 
+					(IBinding data) => (data as JsDevice).OfferedServices,
+					false, ()=>new  List<Service>(), ()=>new Service()),
+		new PropertyListStruct ("UsedServices", typeof (Service),
+					(IBinding data, object? value) => {(data as JsDevice).UsedServices = value as List<Service>;}, 
+					(IBinding data) => (data as JsDevice).UsedServices,
+					false, ()=>new  List<Service>(), ()=>new Service()),
+		new PropertyListStruct ("Images", typeof (DeviceImage),
+					(IBinding data, object? value) => {(data as JsDevice).Images = value as List<DeviceImage>;}, 
+					(IBinding data) => (data as JsDevice).Images,
+					false, ()=>new  List<DeviceImage>(), ()=>new DeviceImage()),
+		new PropertyListStruct ("Physical", typeof (Physical),
+					(IBinding data, object? value) => {(data as JsDevice).Physical = value as List<Physical>;}, 
+					(IBinding data) => (data as JsDevice).Physical,
+					false, ()=>new  List<Physical>(), ()=>new Physical()),
+		new PropertyListStruct ("Storage", typeof (Storage),
+					(IBinding data, object? value) => {(data as JsDevice).Storage = value as List<Storage>;}, 
+					(IBinding data) => (data as JsDevice).Storage,
+					false, ()=>new  List<Storage>(), ()=>new Storage())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -239,39 +290,21 @@ public partial class JsDevice : ThingDevice {
 	public static readonly new Binding<JsDevice> _binding = new (
 			new() {
 
-			{ "ModelName", new PropertyString ("ModelName", 
-					(IBinding data, string? value) => {(data as JsDevice).ModelName = value;}, (IBinding data) => (data as JsDevice).ModelName )},
-			{ "NameHint", new PropertyString ("NameHint", 
-					(IBinding data, string? value) => {(data as JsDevice).NameHint = value;}, (IBinding data) => (data as JsDevice).NameHint )},
-			{ "ModelSerial", new PropertyString ("ModelSerial", 
-					(IBinding data, string? value) => {(data as JsDevice).ModelSerial = value;}, (IBinding data) => (data as JsDevice).ModelSerial )},
-			{ "DeviceSerial", new PropertyString ("DeviceSerial", 
-					(IBinding data, string? value) => {(data as JsDevice).DeviceSerial = value;}, (IBinding data) => (data as JsDevice).DeviceSerial )},
-			{ "DeviceIdentifier", new PropertyString ("DeviceIdentifier", 
-					(IBinding data, string? value) => {(data as JsDevice).DeviceIdentifier = value;}, (IBinding data) => (data as JsDevice).DeviceIdentifier )},
-			{ "Manufacturer", new PropertyString ("Manufacturer", 
-					(IBinding data, string? value) => {(data as JsDevice).Manufacturer = value;}, (IBinding data) => (data as JsDevice).Manufacturer )},
-			{ "CountryOfOrigin", new PropertyString ("CountryOfOrigin", 
-					(IBinding data, string? value) => {(data as JsDevice).CountryOfOrigin = value;}, (IBinding data) => (data as JsDevice).CountryOfOrigin )},
-			{ "Manufactured", new PropertyDateTime ("Manufactured", 
-					(IBinding data, DateTime? value) => {(data as JsDevice).Manufactured = value;}, (IBinding data) => (data as JsDevice).Manufactured )},
-			{ "OfferedServices", new PropertyListStruct ("OfferedServices", typeof (Service),
-					(IBinding data, object? value) => {(data as JsDevice).OfferedServices = value as List<Service>;}, (IBinding data) => (data as JsDevice).OfferedServices,
-					false, ()=>new  List<Service>(), ()=>new Service())},
-			{ "UsedServices", new PropertyListStruct ("UsedServices", typeof (Service),
-					(IBinding data, object? value) => {(data as JsDevice).UsedServices = value as List<Service>;}, (IBinding data) => (data as JsDevice).UsedServices,
-					false, ()=>new  List<Service>(), ()=>new Service())},
-			{ "Images", new PropertyListStruct ("Images", typeof (DeviceImage),
-					(IBinding data, object? value) => {(data as JsDevice).Images = value as List<DeviceImage>;}, (IBinding data) => (data as JsDevice).Images,
-					false, ()=>new  List<DeviceImage>(), ()=>new DeviceImage())},
-			{ "Physical", new PropertyListStruct ("Physical", typeof (Physical),
-					(IBinding data, object? value) => {(data as JsDevice).Physical = value as List<Physical>;}, (IBinding data) => (data as JsDevice).Physical,
-					false, ()=>new  List<Physical>(), ()=>new Physical())},
-			{ "Storage", new PropertyListStruct ("Storage", typeof (Storage),
-					(IBinding data, object? value) => {(data as JsDevice).Storage = value as List<Storage>;}, (IBinding data) => (data as JsDevice).Storage,
-					false, ()=>new  List<Storage>(), ()=>new Storage())}
+			{ "ModelName", _properties [0]},
+			{ "NameHint", _properties [1]},
+			{ "ModelSerial", _properties [2]},
+			{ "DeviceSerial", _properties [3]},
+			{ "DeviceIdentifier", _properties [4]},
+			{ "Manufacturer", _properties [5]},
+			{ "CountryOfOrigin", _properties [6]},
+			{ "Manufactured", _properties [7]},
+			{ "OfferedServices", _properties [8]},
+			{ "UsedServices", _properties [9]},
+			{ "Images", _properties [10]},
+			{ "Physical", _properties [11]},
+			{ "Storage", _properties [12]}
         }, __Tag,() => new JsDevice(), () => new List<JsDevice>(), () => new Dictionary<string,JsDevice>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -288,7 +321,7 @@ public partial class JsDevice : ThingDevice {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -306,57 +339,49 @@ public partial class JsDevice : ThingDevice {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new JsDevice();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new JsDevice FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as JsDevice;
-			}
-		var Result = new JsDevice ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class Resource : ThingDevice {
-        /// <summary>
-        ///IANA media type for the resource.
-        /// </summary>
+    /// <summary>
+    ///IANA media type for the resource.
+    /// </summary>
 
 	[JsonPropertyName("MediaType")]
-	public virtual string?					MediaType  {get; set;}
+	public virtual string?					MediaType  {get; set;} //
 
-        /// <summary>
-        ///Uri from which the resource can be fetched
-        /// </summary>
+    /// <summary>
+    ///Uri from which the resource can be fetched
+    /// </summary>
 
 	[JsonPropertyName("Uri")]
-	public virtual string?					Uri  {get; set;}
+	public virtual string?					Uri  {get; set;} //
 
-        /// <summary>
-        ///The resource as Base64 encoded binary data.
-        /// </summary>
+    /// <summary>
+    ///The resource as Base64 encoded binary data.
+    /// </summary>
 
 	[JsonPropertyName("Data")]
-	public virtual byte[]?					Data  {get; set;}
+	public virtual byte[]?					Data  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("MediaType", 
+					(IBinding data, string? value) => {(data as Resource).MediaType = value;}, 
+					(IBinding data) => (data as Resource).MediaType ),
+		new PropertyString ("Uri", 
+					(IBinding data, string? value) => {(data as Resource).Uri = value;}, 
+					(IBinding data) => (data as Resource).Uri ),
+		new PropertyBinary ("Data", 
+					(IBinding data, byte[]? value) => {(data as Resource).Data = value;}, 
+					(IBinding data) => (data as Resource).Data )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -365,14 +390,11 @@ public partial class Resource : ThingDevice {
 	public static readonly new Binding<Resource> _binding = new (
 			new() {
 
-			{ "MediaType", new PropertyString ("MediaType", 
-					(IBinding data, string? value) => {(data as Resource).MediaType = value;}, (IBinding data) => (data as Resource).MediaType )},
-			{ "Uri", new PropertyString ("Uri", 
-					(IBinding data, string? value) => {(data as Resource).Uri = value;}, (IBinding data) => (data as Resource).Uri )},
-			{ "Data", new PropertyBinary ("Data", 
-					(IBinding data, byte[]? value) => {(data as Resource).Data = value;}, (IBinding data) => (data as Resource).Data )}
+			{ "MediaType", _properties [0]},
+			{ "Uri", _properties [1]},
+			{ "Data", _properties [2]}
         }, __Tag,() => new Resource(), () => new List<Resource>(), () => new Dictionary<string,Resource>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -389,7 +411,7 @@ public partial class Resource : ThingDevice {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -407,29 +429,6 @@ public partial class Resource : ThingDevice {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Resource();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new Resource FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Resource;
-			}
-		var Result = new Resource ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -437,6 +436,12 @@ public partial class Resource : ThingDevice {
 	/// </summary>
 public partial class DeviceCredential : Resource {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -446,7 +451,7 @@ public partial class DeviceCredential : Resource {
 			new() {
 
         }, __Tag,() => new DeviceCredential(), () => new List<DeviceCredential>(), () => new Dictionary<string,DeviceCredential>(),Resource._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -464,7 +469,7 @@ public partial class DeviceCredential : Resource {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -482,45 +487,31 @@ public partial class DeviceCredential : Resource {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new DeviceCredential();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new DeviceCredential FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as DeviceCredential;
-			}
-		var Result = new DeviceCredential ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class DeviceImage : Resource {
-        /// <summary>
-        ///Indication of the side being shown, e.g. 'front', 'left', 'right', 
-        ///'rear', 'top', 'bottom'. Sides MAY be combined to indicate isometric views
-        ///e.g. 'front-right-top'
-        /// </summary>
+    /// <summary>
+    ///Indication of the side being shown, e.g. 'front', 'left', 'right', 
+    ///'rear', 'top', 'bottom'. Sides MAY be combined to indicate isometric views
+    ///e.g. 'front-right-top'
+    /// </summary>
 
 	[JsonPropertyName("View")]
-	public virtual string?					View  {get; set;}
+	public virtual string?					View  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("View", 
+					(IBinding data, string? value) => {(data as DeviceImage).View = value;}, 
+					(IBinding data) => (data as DeviceImage).View )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -529,10 +520,9 @@ public partial class DeviceImage : Resource {
 	public static readonly new Binding<DeviceImage> _binding = new (
 			new() {
 
-			{ "View", new PropertyString ("View", 
-					(IBinding data, string? value) => {(data as DeviceImage).View = value;}, (IBinding data) => (data as DeviceImage).View )}
+			{ "View", _properties [0]}
         }, __Tag,() => new DeviceImage(), () => new List<DeviceImage>(), () => new Dictionary<string,DeviceImage>(),Resource._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -550,7 +540,7 @@ public partial class DeviceImage : Resource {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -568,72 +558,71 @@ public partial class DeviceImage : Resource {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new DeviceImage();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new DeviceImage FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as DeviceImage;
-			}
-		var Result = new DeviceImage ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class Service : ThingDevice {
-        /// <summary>
-        ///IANA protocol name
-        /// </summary>
+    /// <summary>
+    ///IANA protocol name
+    /// </summary>
 
 	[JsonPropertyName("Name")]
-	public virtual string?					Name  {get; set;}
+	public virtual string?					Name  {get; set;} //
 
-        /// <summary>
-        ///The service provision of this service requires to provide
-        /// </summary>
+    /// <summary>
+    ///The service provision of this service requires to provide
+    /// </summary>
 
 	[JsonPropertyName("Requires")]
 	public virtual List<string>?					Requires  {get; set;}
-        /// <summary>
-        ///Service profiles supported, these MAY be protocol versions or a string
-        ///registered to represent a specific set of capabilities.
-        /// </summary>
+    /// <summary>
+    ///Service profiles supported, these MAY be protocol versions or a string
+    ///registered to represent a specific set of capabilities.
+    /// </summary>
 
 	[JsonPropertyName("Profiles")]
 	public virtual List<string>?					Profiles  {get; set;}
-        /// <summary>
-        ///The service transports supported, e.g TCP, TLS, UDP, QUIC, HTTP, HTTPS,
-        ///COAP.
-        /// </summary>
+    /// <summary>
+    ///The service transports supported, e.g TCP, TLS, UDP, QUIC, HTTP, HTTPS,
+    ///COAP.
+    /// </summary>
 
 	[JsonPropertyName("Transports")]
 	public virtual List<string>?					Transports  {get; set;}
-        /// <summary>
-        ///List of credentials to be used in conjunction with the service.
-        ///Note that credentials supplied by the device manufacturer SHOULD NOT
-        ///be used for any purpose other than establishing secure credentials
-        ///for production use.
-        /// </summary>
+    /// <summary>
+    ///List of credentials to be used in conjunction with the service.
+    ///Note that credentials supplied by the device manufacturer SHOULD NOT
+    ///be used for any purpose other than establishing secure credentials
+    ///for production use.
+    /// </summary>
 
 	[JsonPropertyName("Credentials")]
 	public virtual List<DeviceCredential>?					Credentials  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Name", 
+					(IBinding data, string? value) => {(data as Service).Name = value;}, 
+					(IBinding data) => (data as Service).Name ),
+		new PropertyListString ("Requires", 
+					(IBinding data, List<string>? value) => {(data as Service).Requires = value;}, 
+					(IBinding data) => (data as Service).Requires ),
+		new PropertyListString ("Profiles", 
+					(IBinding data, List<string>? value) => {(data as Service).Profiles = value;}, 
+					(IBinding data) => (data as Service).Profiles ),
+		new PropertyListString ("Transports", 
+					(IBinding data, List<string>? value) => {(data as Service).Transports = value;}, 
+					(IBinding data) => (data as Service).Transports ),
+		new PropertyListStruct ("Credentials", typeof (DeviceCredential),
+					(IBinding data, object? value) => {(data as Service).Credentials = value as List<DeviceCredential>;}, 
+					(IBinding data) => (data as Service).Credentials,
+					false, ()=>new  List<DeviceCredential>(), ()=>new DeviceCredential())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -642,19 +631,13 @@ public partial class Service : ThingDevice {
 	public static readonly new Binding<Service> _binding = new (
 			new() {
 
-			{ "Name", new PropertyString ("Name", 
-					(IBinding data, string? value) => {(data as Service).Name = value;}, (IBinding data) => (data as Service).Name )},
-			{ "Requires", new PropertyListString ("Requires", 
-					(IBinding data, List<string>? value) => {(data as Service).Requires = value;}, (IBinding data) => (data as Service).Requires )},
-			{ "Profiles", new PropertyListString ("Profiles", 
-					(IBinding data, List<string>? value) => {(data as Service).Profiles = value;}, (IBinding data) => (data as Service).Profiles )},
-			{ "Transports", new PropertyListString ("Transports", 
-					(IBinding data, List<string>? value) => {(data as Service).Transports = value;}, (IBinding data) => (data as Service).Transports )},
-			{ "Credentials", new PropertyListStruct ("Credentials", typeof (DeviceCredential),
-					(IBinding data, object? value) => {(data as Service).Credentials = value as List<DeviceCredential>;}, (IBinding data) => (data as Service).Credentials,
-					false, ()=>new  List<DeviceCredential>(), ()=>new DeviceCredential())}
+			{ "Name", _properties [0]},
+			{ "Requires", _properties [1]},
+			{ "Profiles", _properties [2]},
+			{ "Transports", _properties [3]},
+			{ "Credentials", _properties [4]}
         }, __Tag,() => new Service(), () => new List<Service>(), () => new Dictionary<string,Service>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -671,7 +654,7 @@ public partial class Service : ThingDevice {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -689,57 +672,49 @@ public partial class Service : ThingDevice {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Service();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new Service FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Service;
-			}
-		var Result = new Service ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class Physical : ThingDevice {
-        /// <summary>
-        ///The media type name
-        /// </summary>
+    /// <summary>
+    ///The media type name
+    /// </summary>
 
 	[JsonPropertyName("Name")]
-	public virtual string?					Name  {get; set;}
+	public virtual string?					Name  {get; set;} //
 
-        /// <summary>
-        ///Identifier used by the device under that protocol, e.g. an EUI-48
-        ///or EUI-64 media access control address.
-        /// </summary>
+    /// <summary>
+    ///Identifier used by the device under that protocol, e.g. an EUI-48
+    ///or EUI-64 media access control address.
+    /// </summary>
 
 	[JsonPropertyName("Identifier")]
-	public virtual string?					Identifier  {get; set;}
+	public virtual string?					Identifier  {get; set;} //
 
-        /// <summary>
-        ///Media profiles supported as specified by the media type.
-        /// </summary>
+    /// <summary>
+    ///Media profiles supported as specified by the media type.
+    /// </summary>
 
 	[JsonPropertyName("Profiles")]
 	public virtual List<string>?					Profiles  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Name", 
+					(IBinding data, string? value) => {(data as Physical).Name = value;}, 
+					(IBinding data) => (data as Physical).Name ),
+		new PropertyString ("Identifier", 
+					(IBinding data, string? value) => {(data as Physical).Identifier = value;}, 
+					(IBinding data) => (data as Physical).Identifier ),
+		new PropertyListString ("Profiles", 
+					(IBinding data, List<string>? value) => {(data as Physical).Profiles = value;}, 
+					(IBinding data) => (data as Physical).Profiles )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -748,14 +723,11 @@ public partial class Physical : ThingDevice {
 	public static readonly new Binding<Physical> _binding = new (
 			new() {
 
-			{ "Name", new PropertyString ("Name", 
-					(IBinding data, string? value) => {(data as Physical).Name = value;}, (IBinding data) => (data as Physical).Name )},
-			{ "Identifier", new PropertyString ("Identifier", 
-					(IBinding data, string? value) => {(data as Physical).Identifier = value;}, (IBinding data) => (data as Physical).Identifier )},
-			{ "Profiles", new PropertyListString ("Profiles", 
-					(IBinding data, List<string>? value) => {(data as Physical).Profiles = value;}, (IBinding data) => (data as Physical).Profiles )}
+			{ "Name", _properties [0]},
+			{ "Identifier", _properties [1]},
+			{ "Profiles", _properties [2]}
         }, __Tag,() => new Physical(), () => new List<Physical>(), () => new Dictionary<string,Physical>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -772,7 +744,7 @@ public partial class Physical : ThingDevice {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -790,63 +762,59 @@ public partial class Physical : ThingDevice {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Physical();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new Physical FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Physical;
-			}
-		var Result = new Physical ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class Storage : ThingDevice {
-        /// <summary>
-        ///The purpose of this storage type
-        /// </summary>
+    /// <summary>
+    ///The purpose of this storage type
+    /// </summary>
 
 	[JsonPropertyName("Purpose")]
-	public virtual string?					Purpose  {get; set;}
+	public virtual string?					Purpose  {get; set;} //
 
-        /// <summary>
-        ///Typical storage requirement in kilobytes
-        /// </summary>
+    /// <summary>
+    ///Typical storage requirement in kilobytes
+    /// </summary>
 
 	[JsonPropertyName("TypicalUse")]
-	public virtual int?					TypicalUse  {get; set;}
+	public virtual int?					TypicalUse  {get; set;} //
 
-        /// <summary>
-        ///Typical storage requirement in kilobytes
-        /// </summary>
+    /// <summary>
+    ///Typical storage requirement in kilobytes
+    /// </summary>
 
 	[JsonPropertyName("TypicalAnnual")]
-	public virtual int?					TypicalAnnual  {get; set;}
+	public virtual int?					TypicalAnnual  {get; set;} //
 
-        /// <summary>
-        ///The set of data storage protocols the device can use
-        /// </summary>
+    /// <summary>
+    ///The set of data storage protocols the device can use
+    /// </summary>
 
 	[JsonPropertyName("Services")]
 	public virtual List<Service>?					Services  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Purpose", 
+					(IBinding data, string? value) => {(data as Storage).Purpose = value;}, 
+					(IBinding data) => (data as Storage).Purpose ),
+		new PropertyInteger32 ("TypicalUse", 
+					(IBinding data, int? value) => {(data as Storage).TypicalUse = value;}, 
+					(IBinding data) => (data as Storage).TypicalUse ),
+		new PropertyInteger32 ("TypicalAnnual", 
+					(IBinding data, int? value) => {(data as Storage).TypicalAnnual = value;}, 
+					(IBinding data) => (data as Storage).TypicalAnnual ),
+		new PropertyListStruct ("Services", typeof (Service),
+					(IBinding data, object? value) => {(data as Storage).Services = value as List<Service>;}, 
+					(IBinding data) => (data as Storage).Services,
+					false, ()=>new  List<Service>(), ()=>new Service())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -855,17 +823,12 @@ public partial class Storage : ThingDevice {
 	public static readonly new Binding<Storage> _binding = new (
 			new() {
 
-			{ "Purpose", new PropertyString ("Purpose", 
-					(IBinding data, string? value) => {(data as Storage).Purpose = value;}, (IBinding data) => (data as Storage).Purpose )},
-			{ "TypicalUse", new PropertyInteger32 ("TypicalUse", 
-					(IBinding data, int? value) => {(data as Storage).TypicalUse = value;}, (IBinding data) => (data as Storage).TypicalUse )},
-			{ "TypicalAnnual", new PropertyInteger32 ("TypicalAnnual", 
-					(IBinding data, int? value) => {(data as Storage).TypicalAnnual = value;}, (IBinding data) => (data as Storage).TypicalAnnual )},
-			{ "Services", new PropertyListStruct ("Services", typeof (Service),
-					(IBinding data, object? value) => {(data as Storage).Services = value as List<Service>;}, (IBinding data) => (data as Storage).Services,
-					false, ()=>new  List<Service>(), ()=>new Service())}
+			{ "Purpose", _properties [0]},
+			{ "TypicalUse", _properties [1]},
+			{ "TypicalAnnual", _properties [2]},
+			{ "Services", _properties [3]}
         }, __Tag,() => new Storage(), () => new List<Storage>(), () => new Dictionary<string,Storage>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -882,7 +845,7 @@ public partial class Storage : ThingDevice {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -899,29 +862,6 @@ public partial class Storage : ThingDevice {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Storage();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new Storage FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Storage;
-			}
-		var Result = new Storage ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

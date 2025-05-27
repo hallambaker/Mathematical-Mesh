@@ -87,26 +87,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ClientMetadata._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.ClientMetadata._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.ClientMetadata._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.ClientMetadata._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.ClientMetadata._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.ClientMetadata._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.ClientMetadata._Tag">
             <summary>
@@ -148,26 +139,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidDocument._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidDocument._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.DidDocument._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.DidDocument._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.DidDocument._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.DidDocument._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DidDocument._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DidDocument._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DidDocument._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.DidDocument._Tag">
             <summary>
@@ -201,26 +183,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidService._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidService._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.DidService._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.DidService._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.DidService._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.DidService._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DidService._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DidService._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DidService._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.DidService._Tag">
             <summary>
@@ -735,11 +708,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Oauth.Oauth._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Cryptography.Oauth.Oauth._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -772,26 +740,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ResourceServerMetadata._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.ResourceServerMetadata._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.ResourceServerMetadata._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.ResourceServerMetadata._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.ResourceServerMetadata._Tag">
             <summary>
@@ -923,26 +882,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.AuthorizationServerMetadata._Tag">
             <summary>
@@ -1017,26 +967,17 @@
             Account identifier to be used for login
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest._Tag">
             <summary>
@@ -1068,26 +1009,17 @@
             The RequestUri returned by the server
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest2._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest2._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest2._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest2._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest2._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.AuthorizationRequest2._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest2._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest2._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest2._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.AuthorizationRequest2._Tag">
             <summary>
@@ -1127,26 +1059,17 @@
             the authorization request data available to other parties via this URI.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.PushedAuthorizationResponse._Tag">
             <summary>
@@ -1191,26 +1114,17 @@
             mix-up attacks, if the client interacts with more than one authorization server.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.AuthorizationResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.AuthorizationResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.AuthorizationResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.AuthorizationResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.AuthorizationResponse._Tag">
             <summary>
@@ -1280,26 +1194,17 @@
             mix-up attacks, if the client interacts with more than one authorization server.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.ErrorResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ErrorResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.ErrorResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.ErrorResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.ErrorResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.ErrorResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.ErrorResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.ErrorResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.ErrorResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.ErrorResponse._Tag">
             <summary>
@@ -1343,26 +1248,17 @@
             Identifies the client software
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.AuthorizationCodeGrant._Tag">
             <summary>
@@ -1389,26 +1285,17 @@
             REQUIRED. "client_credentials"
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.ClientCredentialsGrant._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.ClientCredentialsGrant._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.ClientCredentialsGrant._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.ClientCredentialsGrant._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.ClientCredentialsGrant._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.ClientCredentialsGrant._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.ClientCredentialsGrant._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.ClientCredentialsGrant._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.ClientCredentialsGrant._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.ClientCredentialsGrant._Tag">
             <summary>
@@ -1445,26 +1332,17 @@
             Must be a subset of the scopes declared in client metadata. Must include atproto
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.RefreshTokenGrant._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.RefreshTokenGrant._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.RefreshTokenGrant._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.RefreshTokenGrant._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.RefreshTokenGrant._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.RefreshTokenGrant._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.RefreshTokenGrant._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.RefreshTokenGrant._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.RefreshTokenGrant._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.RefreshTokenGrant._Tag">
             <summary>
@@ -1502,26 +1380,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DidVerificationMethod._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.DidVerificationMethod._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.DidVerificationMethod._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.DidVerificationMethod._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.DidVerificationMethod._Tag">
             <summary>
@@ -1555,26 +1424,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.AuthenticationResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.AuthenticationResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.AuthenticationResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.AuthenticationResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.AuthenticationResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.AuthenticationResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthenticationResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthenticationResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.AuthenticationResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.AuthenticationResponse._Tag">
             <summary>
@@ -1642,26 +1502,17 @@
             Confirmation
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopPayload._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DpopPayload._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.DpopPayload._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.DpopPayload._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.DpopPayload._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.DpopPayload._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DpopPayload._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DpopPayload._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DpopPayload._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.DpopPayload._Tag">
             <summary>
@@ -1691,26 +1542,17 @@
             to which the access token is bound.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.DpopConfirmation._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.DpopConfirmation._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.DpopConfirmation._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.DpopConfirmation._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.DpopConfirmation._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.DpopConfirmation._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DpopConfirmation._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DpopConfirmation._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.DpopConfirmation._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.DpopConfirmation._Tag">
             <summary>
@@ -1744,26 +1586,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.JwtDpop._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Oauth.JwtDpop._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.JwtDpop._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Oauth.JwtDpop._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.JwtDpop._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Oauth.JwtDpop._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JwtDpop._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JwtDpop._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Oauth.JwtDpop._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Oauth.JwtDpop._Tag">
             <summary>

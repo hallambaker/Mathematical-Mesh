@@ -20,11 +20,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.HostCatalogItem._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Mesh.Client.HostCatalogItem._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -81,26 +76,17 @@
             discover the host and encrypt data to it.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedMachine._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedMachine._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedMachine._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.CatalogedMachine._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.CatalogedMachine._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.CatalogedMachine._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedMachine._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedMachine._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedMachine._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedMachine._Tag">
             <summary>
@@ -127,26 +113,17 @@
         <member name="P:Goedel.Mesh.Client.CatalogedStandard.ProfileDevice">
             <summary>The device profile (from <see cref="T:Goedel.Mesh.CatalogedDevice"/>)</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedStandard._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedStandard._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedStandard._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.CatalogedStandard._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.CatalogedStandard._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.CatalogedStandard._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedStandard._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedStandard._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedStandard._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedStandard._Tag">
             <summary>
@@ -202,26 +179,17 @@
             The account at which the request is pending.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPending._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedPending._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPending._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.CatalogedPending._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.CatalogedPending._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.CatalogedPending._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedPending._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedPending._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedPending._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPending._Tag">
             <summary>
@@ -287,26 +255,17 @@
             Authenticator key used to authenticate claim to the device.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedPreconfigured._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.CatalogedPreconfigured._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.CatalogedPreconfigured._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.CatalogedPreconfigured._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._Tag">
             <summary>
@@ -3004,26 +2963,17 @@
             Specifies the type of service 
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedService._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedService._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedService._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.CatalogedService._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.CatalogedService._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.CatalogedService._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedService._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedService._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedService._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedService._Tag">
             <summary>
@@ -3060,26 +3010,17 @@
             The supported by the protocol
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ShellDispatch._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.ShellDispatch._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.ShellDispatch._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.ShellDispatch._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.ShellDispatch._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.ShellDispatch._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Client.ShellDispatch._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ShellDispatch._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ShellDispatch._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.ShellDispatch._Tag">
             <summary>
@@ -3121,26 +3062,17 @@
             The Action to perform
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ShellAction._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Client.ShellAction._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Client.ShellAction._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Client.ShellAction._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.ShellAction._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Client.ShellAction._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Client.ShellAction._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ShellAction._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ShellAction._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.ShellAction._Tag">
             <summary>

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:57:19 AM
+//  This file was automatically generated at 5/27/2025 3:12:59 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -72,6 +72,7 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
     /// </summary>
 	public new const string __Tag = "MeshmanShellResult";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -130,7 +131,7 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 	    {"ResultCallsignResolution", ResultCallsignResolution._Factory},
 	    {"ResultCallsignList", ResultCallsignList._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -201,7 +202,7 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -231,6 +232,12 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 	/// </summary>
 public partial class Result : ShellResult {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -240,7 +247,7 @@ public partial class Result : ShellResult {
 			new() {
 
         }, __Tag,() => new Result(), () => new List<Result>(), () => new Dictionary<string,Result>(),ShellResult._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -258,7 +265,7 @@ public partial class Result : ShellResult {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -276,84 +283,91 @@ public partial class Result : ShellResult {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Result();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new Result FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Result;
-			}
-		var Result = new Result ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultAbout : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("DirectoryKeys")]
-	public virtual string?					DirectoryKeys  {get; set;}
+	public virtual string?					DirectoryKeys  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("DirectoryMesh")]
-	public virtual string?					DirectoryMesh  {get; set;}
+	public virtual string?					DirectoryMesh  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("AssemblyTitle")]
-	public virtual string?					AssemblyTitle  {get; set;}
+	public virtual string?					AssemblyTitle  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("AssemblyDescription")]
-	public virtual string?					AssemblyDescription  {get; set;}
+	public virtual string?					AssemblyDescription  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("AssemblyCopyright")]
-	public virtual string?					AssemblyCopyright  {get; set;}
+	public virtual string?					AssemblyCopyright  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("AssemblyCompany")]
-	public virtual string?					AssemblyCompany  {get; set;}
+	public virtual string?					AssemblyCompany  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("AssemblyVersion")]
-	public virtual string?					AssemblyVersion  {get; set;}
+	public virtual string?					AssemblyVersion  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Build")]
-	public virtual string?					Build  {get; set;}
+	public virtual string?					Build  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("DirectoryKeys", 
+					(IBinding data, string? value) => {(data as ResultAbout).DirectoryKeys = value;}, 
+					(IBinding data) => (data as ResultAbout).DirectoryKeys ),
+		new PropertyString ("DirectoryMesh", 
+					(IBinding data, string? value) => {(data as ResultAbout).DirectoryMesh = value;}, 
+					(IBinding data) => (data as ResultAbout).DirectoryMesh ),
+		new PropertyString ("AssemblyTitle", 
+					(IBinding data, string? value) => {(data as ResultAbout).AssemblyTitle = value;}, 
+					(IBinding data) => (data as ResultAbout).AssemblyTitle ),
+		new PropertyString ("AssemblyDescription", 
+					(IBinding data, string? value) => {(data as ResultAbout).AssemblyDescription = value;}, 
+					(IBinding data) => (data as ResultAbout).AssemblyDescription ),
+		new PropertyString ("AssemblyCopyright", 
+					(IBinding data, string? value) => {(data as ResultAbout).AssemblyCopyright = value;}, 
+					(IBinding data) => (data as ResultAbout).AssemblyCopyright ),
+		new PropertyString ("AssemblyCompany", 
+					(IBinding data, string? value) => {(data as ResultAbout).AssemblyCompany = value;}, 
+					(IBinding data) => (data as ResultAbout).AssemblyCompany ),
+		new PropertyString ("AssemblyVersion", 
+					(IBinding data, string? value) => {(data as ResultAbout).AssemblyVersion = value;}, 
+					(IBinding data) => (data as ResultAbout).AssemblyVersion ),
+		new PropertyString ("Build", 
+					(IBinding data, string? value) => {(data as ResultAbout).Build = value;}, 
+					(IBinding data) => (data as ResultAbout).Build )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -362,24 +376,16 @@ public partial class ResultAbout : Result {
 	public static readonly new Binding<ResultAbout> _binding = new (
 			new() {
 
-			{ "DirectoryKeys", new PropertyString ("DirectoryKeys", 
-					(IBinding data, string? value) => {(data as ResultAbout).DirectoryKeys = value;}, (IBinding data) => (data as ResultAbout).DirectoryKeys )},
-			{ "DirectoryMesh", new PropertyString ("DirectoryMesh", 
-					(IBinding data, string? value) => {(data as ResultAbout).DirectoryMesh = value;}, (IBinding data) => (data as ResultAbout).DirectoryMesh )},
-			{ "AssemblyTitle", new PropertyString ("AssemblyTitle", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyTitle = value;}, (IBinding data) => (data as ResultAbout).AssemblyTitle )},
-			{ "AssemblyDescription", new PropertyString ("AssemblyDescription", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyDescription = value;}, (IBinding data) => (data as ResultAbout).AssemblyDescription )},
-			{ "AssemblyCopyright", new PropertyString ("AssemblyCopyright", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyCopyright = value;}, (IBinding data) => (data as ResultAbout).AssemblyCopyright )},
-			{ "AssemblyCompany", new PropertyString ("AssemblyCompany", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyCompany = value;}, (IBinding data) => (data as ResultAbout).AssemblyCompany )},
-			{ "AssemblyVersion", new PropertyString ("AssemblyVersion", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyVersion = value;}, (IBinding data) => (data as ResultAbout).AssemblyVersion )},
-			{ "Build", new PropertyString ("Build", 
-					(IBinding data, string? value) => {(data as ResultAbout).Build = value;}, (IBinding data) => (data as ResultAbout).Build )}
+			{ "DirectoryKeys", _properties [0]},
+			{ "DirectoryMesh", _properties [1]},
+			{ "AssemblyTitle", _properties [2]},
+			{ "AssemblyDescription", _properties [3]},
+			{ "AssemblyCopyright", _properties [4]},
+			{ "AssemblyCompany", _properties [5]},
+			{ "AssemblyVersion", _properties [6]},
+			{ "Build", _properties [7]}
         }, __Tag,() => new ResultAbout(), () => new List<ResultAbout>(), () => new Dictionary<string,ResultAbout>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -397,7 +403,7 @@ public partial class ResultAbout : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -415,29 +421,6 @@ public partial class ResultAbout : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultAbout();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultAbout FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultAbout;
-			}
-		var Result = new ResultAbout ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -445,6 +428,12 @@ public partial class ResultAbout : Result {
 	/// </summary>
 public partial class ResultFail : Result {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -454,7 +443,7 @@ public partial class ResultFail : Result {
 			new() {
 
         }, __Tag,() => new ResultFail(), () => new List<ResultFail>(), () => new Dictionary<string,ResultFail>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -472,7 +461,7 @@ public partial class ResultFail : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -490,48 +479,38 @@ public partial class ResultFail : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultFail();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultFail FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultFail;
-			}
-		var Result = new ResultFail ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultHello : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("ServiceAddress")]
-	public virtual string?					ServiceAddress  {get; set;}
+	public virtual string?					ServiceAddress  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Response")]
-	public virtual MeshHelloResponse?					Response  {get; set;}
+	public virtual MeshHelloResponse?					Response  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("ServiceAddress", 
+					(IBinding data, string? value) => {(data as ResultHello).ServiceAddress = value;}, 
+					(IBinding data) => (data as ResultHello).ServiceAddress ),
+		new PropertyStruct ("Response", typeof (MeshHelloResponse),
+					(IBinding data, object? value) => {(data as ResultHello).Response = value as MeshHelloResponse;}, 
+					(IBinding data) => (data as ResultHello).Response,
+					false, ()=>new  MeshHelloResponse(), ()=>new MeshHelloResponse())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -540,13 +519,10 @@ public partial class ResultHello : Result {
 	public static readonly new Binding<ResultHello> _binding = new (
 			new() {
 
-			{ "ServiceAddress", new PropertyString ("ServiceAddress", 
-					(IBinding data, string? value) => {(data as ResultHello).ServiceAddress = value;}, (IBinding data) => (data as ResultHello).ServiceAddress )},
-			{ "Response", new PropertyStruct ("Response", typeof (MeshHelloResponse),
-					(IBinding data, object? value) => {(data as ResultHello).Response = value as MeshHelloResponse;}, (IBinding data) => (data as ResultHello).Response,
-					false, ()=>new  MeshHelloResponse(), ()=>new MeshHelloResponse())}
+			{ "ServiceAddress", _properties [0]},
+			{ "Response", _properties [1]}
         }, __Tag,() => new ResultHello(), () => new List<ResultHello>(), () => new Dictionary<string,ResultHello>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -564,7 +540,7 @@ public partial class ResultHello : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -582,54 +558,47 @@ public partial class ResultHello : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultHello();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultHello FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultHello;
-			}
-		var Result = new ResultHello ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultSelf : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Contact")]
-	public virtual JsContact?					Contact  {get; set;}
+	public virtual JsContact?					Contact  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Locator")]
-	public virtual string?					Locator  {get; set;}
+	public virtual string?					Locator  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Earl")]
-	public virtual string?					Earl  {get; set;}
+	public virtual string?					Earl  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("Contact", typeof (JsContact),
+					(IBinding data, object? value) => {(data as ResultSelf).Contact = value as JsContact;}, 
+					(IBinding data) => (data as ResultSelf).Contact,
+					false, ()=>new  JsContact(), ()=>new JsContact()),
+		new PropertyString ("Locator", 
+					(IBinding data, string? value) => {(data as ResultSelf).Locator = value;}, 
+					(IBinding data) => (data as ResultSelf).Locator ),
+		new PropertyString ("Earl", 
+					(IBinding data, string? value) => {(data as ResultSelf).Earl = value;}, 
+					(IBinding data) => (data as ResultSelf).Earl )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -638,15 +607,11 @@ public partial class ResultSelf : Result {
 	public static readonly new Binding<ResultSelf> _binding = new (
 			new() {
 
-			{ "Contact", new PropertyStruct ("Contact", typeof (JsContact),
-					(IBinding data, object? value) => {(data as ResultSelf).Contact = value as JsContact;}, (IBinding data) => (data as ResultSelf).Contact,
-					false, ()=>new  JsContact(), ()=>new JsContact())},
-			{ "Locator", new PropertyString ("Locator", 
-					(IBinding data, string? value) => {(data as ResultSelf).Locator = value;}, (IBinding data) => (data as ResultSelf).Locator )},
-			{ "Earl", new PropertyString ("Earl", 
-					(IBinding data, string? value) => {(data as ResultSelf).Earl = value;}, (IBinding data) => (data as ResultSelf).Earl )}
+			{ "Contact", _properties [0]},
+			{ "Locator", _properties [1]},
+			{ "Earl", _properties [2]}
         }, __Tag,() => new ResultSelf(), () => new List<ResultSelf>(), () => new Dictionary<string,ResultSelf>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -664,7 +629,7 @@ public partial class ResultSelf : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -682,29 +647,6 @@ public partial class ResultSelf : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultSelf();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultSelf FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultSelf;
-			}
-		var Result = new ResultSelf ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -712,6 +654,12 @@ public partial class ResultSelf : Result {
 	/// </summary>
 public partial class ResultInfo : Result {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -721,7 +669,7 @@ public partial class ResultInfo : Result {
 			new() {
 
         }, __Tag,() => new ResultInfo(), () => new List<ResultInfo>(), () => new Dictionary<string,ResultInfo>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -739,7 +687,7 @@ public partial class ResultInfo : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -757,53 +705,45 @@ public partial class ResultInfo : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultInfo();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultInfo FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultInfo;
-			}
-		var Result = new ResultInfo ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultKey : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Key")]
-	public virtual string?					Key  {get; set;}
+	public virtual string?					Key  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Identifier")]
-	public virtual string?					Identifier  {get; set;}
+	public virtual string?					Identifier  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Shares")]
 	public virtual List<string>?					Shares  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Key", 
+					(IBinding data, string? value) => {(data as ResultKey).Key = value;}, 
+					(IBinding data) => (data as ResultKey).Key ),
+		new PropertyString ("Identifier", 
+					(IBinding data, string? value) => {(data as ResultKey).Identifier = value;}, 
+					(IBinding data) => (data as ResultKey).Identifier ),
+		new PropertyListString ("Shares", 
+					(IBinding data, List<string>? value) => {(data as ResultKey).Shares = value;}, 
+					(IBinding data) => (data as ResultKey).Shares )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -812,14 +752,11 @@ public partial class ResultKey : Result {
 	public static readonly new Binding<ResultKey> _binding = new (
 			new() {
 
-			{ "Key", new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as ResultKey).Key = value;}, (IBinding data) => (data as ResultKey).Key )},
-			{ "Identifier", new PropertyString ("Identifier", 
-					(IBinding data, string? value) => {(data as ResultKey).Identifier = value;}, (IBinding data) => (data as ResultKey).Identifier )},
-			{ "Shares", new PropertyListString ("Shares", 
-					(IBinding data, List<string>? value) => {(data as ResultKey).Shares = value;}, (IBinding data) => (data as ResultKey).Shares )}
+			{ "Key", _properties [0]},
+			{ "Identifier", _properties [1]},
+			{ "Shares", _properties [2]}
         }, __Tag,() => new ResultKey(), () => new List<ResultKey>(), () => new Dictionary<string,ResultKey>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -837,7 +774,7 @@ public partial class ResultKey : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -855,54 +792,46 @@ public partial class ResultKey : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultKey();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultKey FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultKey;
-			}
-		var Result = new ResultKey ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultDigest : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Digest")]
-	public virtual string?					Digest  {get; set;}
+	public virtual string?					Digest  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Key")]
-	public virtual string?					Key  {get; set;}
+	public virtual string?					Key  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Verified")]
-	public virtual bool?					Verified  {get; set;}
+	public virtual bool?					Verified  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Digest", 
+					(IBinding data, string? value) => {(data as ResultDigest).Digest = value;}, 
+					(IBinding data) => (data as ResultDigest).Digest ),
+		new PropertyString ("Key", 
+					(IBinding data, string? value) => {(data as ResultDigest).Key = value;}, 
+					(IBinding data) => (data as ResultDigest).Key ),
+		new PropertyBoolean ("Verified", 
+					(IBinding data, bool? value) => {(data as ResultDigest).Verified = value;}, 
+					(IBinding data) => (data as ResultDigest).Verified )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -911,14 +840,11 @@ public partial class ResultDigest : Result {
 	public static readonly new Binding<ResultDigest> _binding = new (
 			new() {
 
-			{ "Digest", new PropertyString ("Digest", 
-					(IBinding data, string? value) => {(data as ResultDigest).Digest = value;}, (IBinding data) => (data as ResultDigest).Digest )},
-			{ "Key", new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as ResultDigest).Key = value;}, (IBinding data) => (data as ResultDigest).Key )},
-			{ "Verified", new PropertyBoolean ("Verified", 
-					(IBinding data, bool? value) => {(data as ResultDigest).Verified = value;}, (IBinding data) => (data as ResultDigest).Verified )}
+			{ "Digest", _properties [0]},
+			{ "Key", _properties [1]},
+			{ "Verified", _properties [2]}
         }, __Tag,() => new ResultDigest(), () => new List<ResultDigest>(), () => new Dictionary<string,ResultDigest>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -936,7 +862,7 @@ public partial class ResultDigest : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -954,54 +880,46 @@ public partial class ResultDigest : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultDigest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultDigest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultDigest;
-			}
-		var Result = new ResultDigest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultFile : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Filename")]
-	public virtual string?					Filename  {get; set;}
+	public virtual string?					Filename  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("TotalBytes")]
-	public virtual int?					TotalBytes  {get; set;}
+	public virtual int?					TotalBytes  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Verified")]
-	public virtual bool?					Verified  {get; set;}
+	public virtual bool?					Verified  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Filename", 
+					(IBinding data, string? value) => {(data as ResultFile).Filename = value;}, 
+					(IBinding data) => (data as ResultFile).Filename ),
+		new PropertyInteger32 ("TotalBytes", 
+					(IBinding data, int? value) => {(data as ResultFile).TotalBytes = value;}, 
+					(IBinding data) => (data as ResultFile).TotalBytes ),
+		new PropertyBoolean ("Verified", 
+					(IBinding data, bool? value) => {(data as ResultFile).Verified = value;}, 
+					(IBinding data) => (data as ResultFile).Verified )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1010,14 +928,11 @@ public partial class ResultFile : Result {
 	public static readonly new Binding<ResultFile> _binding = new (
 			new() {
 
-			{ "Filename", new PropertyString ("Filename", 
-					(IBinding data, string? value) => {(data as ResultFile).Filename = value;}, (IBinding data) => (data as ResultFile).Filename )},
-			{ "TotalBytes", new PropertyInteger32 ("TotalBytes", 
-					(IBinding data, int? value) => {(data as ResultFile).TotalBytes = value;}, (IBinding data) => (data as ResultFile).TotalBytes )},
-			{ "Verified", new PropertyBoolean ("Verified", 
-					(IBinding data, bool? value) => {(data as ResultFile).Verified = value;}, (IBinding data) => (data as ResultFile).Verified )}
+			{ "Filename", _properties [0]},
+			{ "TotalBytes", _properties [1]},
+			{ "Verified", _properties [2]}
         }, __Tag,() => new ResultFile(), () => new List<ResultFile>(), () => new Dictionary<string,ResultFile>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1035,7 +950,7 @@ public partial class ResultFile : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1053,60 +968,55 @@ public partial class ResultFile : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultFile();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultFile FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultFile;
-			}
-		var Result = new ResultFile ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultKeyFile : ResultFile {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Udf")]
-	public virtual string?					Udf  {get; set;}
+	public virtual string?					Udf  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Private")]
-	public virtual bool?					Private  {get; set;}
+	public virtual bool?					Private  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Algorithm")]
-	public virtual string?					Algorithm  {get; set;}
+	public virtual string?					Algorithm  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Format")]
-	public virtual string?					Format  {get; set;}
+	public virtual string?					Format  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Udf", 
+					(IBinding data, string? value) => {(data as ResultKeyFile).Udf = value;}, 
+					(IBinding data) => (data as ResultKeyFile).Udf ),
+		new PropertyBoolean ("Private", 
+					(IBinding data, bool? value) => {(data as ResultKeyFile).Private = value;}, 
+					(IBinding data) => (data as ResultKeyFile).Private ),
+		new PropertyString ("Algorithm", 
+					(IBinding data, string? value) => {(data as ResultKeyFile).Algorithm = value;}, 
+					(IBinding data) => (data as ResultKeyFile).Algorithm ),
+		new PropertyString ("Format", 
+					(IBinding data, string? value) => {(data as ResultKeyFile).Format = value;}, 
+					(IBinding data) => (data as ResultKeyFile).Format )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1115,16 +1025,12 @@ public partial class ResultKeyFile : ResultFile {
 	public static readonly new Binding<ResultKeyFile> _binding = new (
 			new() {
 
-			{ "Udf", new PropertyString ("Udf", 
-					(IBinding data, string? value) => {(data as ResultKeyFile).Udf = value;}, (IBinding data) => (data as ResultKeyFile).Udf )},
-			{ "Private", new PropertyBoolean ("Private", 
-					(IBinding data, bool? value) => {(data as ResultKeyFile).Private = value;}, (IBinding data) => (data as ResultKeyFile).Private )},
-			{ "Algorithm", new PropertyString ("Algorithm", 
-					(IBinding data, string? value) => {(data as ResultKeyFile).Algorithm = value;}, (IBinding data) => (data as ResultKeyFile).Algorithm )},
-			{ "Format", new PropertyString ("Format", 
-					(IBinding data, string? value) => {(data as ResultKeyFile).Format = value;}, (IBinding data) => (data as ResultKeyFile).Format )}
+			{ "Udf", _properties [0]},
+			{ "Private", _properties [1]},
+			{ "Algorithm", _properties [2]},
+			{ "Format", _properties [3]}
         }, __Tag,() => new ResultKeyFile(), () => new List<ResultKeyFile>(), () => new Dictionary<string,ResultKeyFile>(),ResultFile._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1142,7 +1048,7 @@ public partial class ResultKeyFile : ResultFile {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1160,48 +1066,37 @@ public partial class ResultKeyFile : ResultFile {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultKeyFile();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultKeyFile FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultKeyFile;
-			}
-		var Result = new ResultKeyFile ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultListLog : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Filename")]
-	public virtual string?					Filename  {get; set;}
+	public virtual string?					Filename  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Count")]
-	public virtual int?					Count  {get; set;}
+	public virtual int?					Count  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Filename", 
+					(IBinding data, string? value) => {(data as ResultListLog).Filename = value;}, 
+					(IBinding data) => (data as ResultListLog).Filename ),
+		new PropertyInteger32 ("Count", 
+					(IBinding data, int? value) => {(data as ResultListLog).Count = value;}, 
+					(IBinding data) => (data as ResultListLog).Count )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1210,12 +1105,10 @@ public partial class ResultListLog : Result {
 	public static readonly new Binding<ResultListLog> _binding = new (
 			new() {
 
-			{ "Filename", new PropertyString ("Filename", 
-					(IBinding data, string? value) => {(data as ResultListLog).Filename = value;}, (IBinding data) => (data as ResultListLog).Filename )},
-			{ "Count", new PropertyInteger32 ("Count", 
-					(IBinding data, int? value) => {(data as ResultListLog).Count = value;}, (IBinding data) => (data as ResultListLog).Count )}
+			{ "Filename", _properties [0]},
+			{ "Count", _properties [1]}
         }, __Tag,() => new ResultListLog(), () => new List<ResultListLog>(), () => new Dictionary<string,ResultListLog>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1233,7 +1126,7 @@ public partial class ResultListLog : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1251,42 +1144,28 @@ public partial class ResultListLog : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultListLog();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultListLog FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultListLog;
-			}
-		var Result = new ResultListLog ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultLog : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Count")]
-	public virtual int?					Count  {get; set;}
+	public virtual int?					Count  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyInteger32 ("Count", 
+					(IBinding data, int? value) => {(data as ResultLog).Count = value;}, 
+					(IBinding data) => (data as ResultLog).Count )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1295,10 +1174,9 @@ public partial class ResultLog : Result {
 	public static readonly new Binding<ResultLog> _binding = new (
 			new() {
 
-			{ "Count", new PropertyInteger32 ("Count", 
-					(IBinding data, int? value) => {(data as ResultLog).Count = value;}, (IBinding data) => (data as ResultLog).Count )}
+			{ "Count", _properties [0]}
         }, __Tag,() => new ResultLog(), () => new List<ResultLog>(), () => new Dictionary<string,ResultLog>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1316,7 +1194,7 @@ public partial class ResultLog : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1334,59 +1212,55 @@ public partial class ResultLog : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultLog();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultLog FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultLog;
-			}
-		var Result = new ResultLog ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultArchive : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Entries")]
 	public virtual List<FileEntry>?					Entries  {get; set;}
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Frames")]
-	public virtual int?					Frames  {get; set;}
+	public virtual int?					Frames  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Deleted")]
-	public virtual int?					Deleted  {get; set;}
+	public virtual int?					Deleted  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("IndexFrame")]
-	public virtual int?					IndexFrame  {get; set;}
+	public virtual int?					IndexFrame  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyListStruct ("Entries", typeof (FileEntry),
+					(IBinding data, object? value) => {(data as ResultArchive).Entries = value as List<FileEntry>;}, 
+					(IBinding data) => (data as ResultArchive).Entries,
+					false, ()=>new  List<FileEntry>(), ()=>new FileEntry()),
+		new PropertyInteger32 ("Frames", 
+					(IBinding data, int? value) => {(data as ResultArchive).Frames = value;}, 
+					(IBinding data) => (data as ResultArchive).Frames ),
+		new PropertyInteger32 ("Deleted", 
+					(IBinding data, int? value) => {(data as ResultArchive).Deleted = value;}, 
+					(IBinding data) => (data as ResultArchive).Deleted ),
+		new PropertyInteger32 ("IndexFrame", 
+					(IBinding data, int? value) => {(data as ResultArchive).IndexFrame = value;}, 
+					(IBinding data) => (data as ResultArchive).IndexFrame )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1395,17 +1269,12 @@ public partial class ResultArchive : Result {
 	public static readonly new Binding<ResultArchive> _binding = new (
 			new() {
 
-			{ "Entries", new PropertyListStruct ("Entries", typeof (FileEntry),
-					(IBinding data, object? value) => {(data as ResultArchive).Entries = value as List<FileEntry>;}, (IBinding data) => (data as ResultArchive).Entries,
-					false, ()=>new  List<FileEntry>(), ()=>new FileEntry())},
-			{ "Frames", new PropertyInteger32 ("Frames", 
-					(IBinding data, int? value) => {(data as ResultArchive).Frames = value;}, (IBinding data) => (data as ResultArchive).Frames )},
-			{ "Deleted", new PropertyInteger32 ("Deleted", 
-					(IBinding data, int? value) => {(data as ResultArchive).Deleted = value;}, (IBinding data) => (data as ResultArchive).Deleted )},
-			{ "IndexFrame", new PropertyInteger32 ("IndexFrame", 
-					(IBinding data, int? value) => {(data as ResultArchive).IndexFrame = value;}, (IBinding data) => (data as ResultArchive).IndexFrame )}
+			{ "Entries", _properties [0]},
+			{ "Frames", _properties [1]},
+			{ "Deleted", _properties [2]},
+			{ "IndexFrame", _properties [3]}
         }, __Tag,() => new ResultArchive(), () => new List<ResultArchive>(), () => new Dictionary<string,ResultArchive>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1423,7 +1292,7 @@ public partial class ResultArchive : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1441,42 +1310,29 @@ public partial class ResultArchive : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultArchive();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultArchive FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultArchive;
-			}
-		var Result = new ResultArchive ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultFileDare : ResultFile {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Envelope")]
-	public virtual DareEnvelope?					Envelope  {get; set;}
+	public virtual DareEnvelope?					Envelope  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("Envelope", typeof (DareEnvelope),
+					(IBinding data, object? value) => {(data as ResultFileDare).Envelope = value as DareEnvelope;}, 
+					(IBinding data) => (data as ResultFileDare).Envelope,
+					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1485,11 +1341,9 @@ public partial class ResultFileDare : ResultFile {
 	public static readonly new Binding<ResultFileDare> _binding = new (
 			new() {
 
-			{ "Envelope", new PropertyStruct ("Envelope", typeof (DareEnvelope),
-					(IBinding data, object? value) => {(data as ResultFileDare).Envelope = value as DareEnvelope;}, (IBinding data) => (data as ResultFileDare).Envelope,
-					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())}
+			{ "Envelope", _properties [0]}
         }, __Tag,() => new ResultFileDare(), () => new List<ResultFileDare>(), () => new Dictionary<string,ResultFileDare>(),ResultFile._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1507,7 +1361,7 @@ public partial class ResultFileDare : ResultFile {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1525,54 +1379,46 @@ public partial class ResultFileDare : ResultFile {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultFileDare();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultFileDare FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultFileDare;
-			}
-		var Result = new ResultFileDare ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultFileEARL : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Source")]
-	public virtual string?					Source  {get; set;}
+	public virtual string?					Source  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Created")]
-	public virtual string?					Created  {get; set;}
+	public virtual string?					Created  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("URI")]
-	public virtual string?					URI  {get; set;}
+	public virtual string?					URI  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Source", 
+					(IBinding data, string? value) => {(data as ResultFileEARL).Source = value;}, 
+					(IBinding data) => (data as ResultFileEARL).Source ),
+		new PropertyString ("Created", 
+					(IBinding data, string? value) => {(data as ResultFileEARL).Created = value;}, 
+					(IBinding data) => (data as ResultFileEARL).Created ),
+		new PropertyString ("URI", 
+					(IBinding data, string? value) => {(data as ResultFileEARL).URI = value;}, 
+					(IBinding data) => (data as ResultFileEARL).URI )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1581,14 +1427,11 @@ public partial class ResultFileEARL : Result {
 	public static readonly new Binding<ResultFileEARL> _binding = new (
 			new() {
 
-			{ "Source", new PropertyString ("Source", 
-					(IBinding data, string? value) => {(data as ResultFileEARL).Source = value;}, (IBinding data) => (data as ResultFileEARL).Source )},
-			{ "Created", new PropertyString ("Created", 
-					(IBinding data, string? value) => {(data as ResultFileEARL).Created = value;}, (IBinding data) => (data as ResultFileEARL).Created )},
-			{ "URI", new PropertyString ("URI", 
-					(IBinding data, string? value) => {(data as ResultFileEARL).URI = value;}, (IBinding data) => (data as ResultFileEARL).URI )}
+			{ "Source", _properties [0]},
+			{ "Created", _properties [1]},
+			{ "URI", _properties [2]}
         }, __Tag,() => new ResultFileEARL(), () => new List<ResultFileEARL>(), () => new Dictionary<string,ResultFileEARL>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1606,7 +1449,7 @@ public partial class ResultFileEARL : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1624,41 +1467,29 @@ public partial class ResultFileEARL : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultFileEARL();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultFileEARL FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultFileEARL;
-			}
-		var Result = new ResultFileEARL ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultDump : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("CatalogedEntries")]
 	public virtual List<CatalogedEntry>?					CatalogedEntries  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyListStruct ("CatalogedEntries", typeof (CatalogedEntry), 
+					(IBinding data, object? value) => {(data as ResultDump).CatalogedEntries = value as List<CatalogedEntry>;}, 
+					(IBinding data) => (data as ResultDump).CatalogedEntries,
+					true, ()=>new List<CatalogedEntry>()
+) 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1667,12 +1498,9 @@ public partial class ResultDump : Result {
 	public static readonly new Binding<ResultDump> _binding = new (
 			new() {
 
-			{ "CatalogedEntries", new PropertyListStruct ("CatalogedEntries", typeof (CatalogedEntry), 
-					(IBinding data, object? value) => {(data as ResultDump).CatalogedEntries = value as List<CatalogedEntry>;}, (IBinding data) => (data as ResultDump).CatalogedEntries,
-					true, ()=>new List<CatalogedEntry>()
-)} 
+			{ "CatalogedEntries", _properties [0]}
         }, __Tag,() => new ResultDump(), () => new List<ResultDump>(), () => new Dictionary<string,ResultDump>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1690,7 +1518,7 @@ public partial class ResultDump : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1708,46 +1536,38 @@ public partial class ResultDump : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultDump();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultDump FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultDump;
-			}
-		var Result = new ResultDump ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultList : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("CatalogedDevices")]
 	public virtual List<CatalogedDevice>?					CatalogedDevices  {get; set;}
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Profiles")]
 	public virtual List<Assertion>?					Profiles  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyListStruct ("CatalogedDevices", typeof (CatalogedDevice),
+					(IBinding data, object? value) => {(data as ResultList).CatalogedDevices = value as List<CatalogedDevice>;}, 
+					(IBinding data) => (data as ResultList).CatalogedDevices,
+					false, ()=>new  List<CatalogedDevice>(), ()=>new CatalogedDevice()),
+		new PropertyListStruct ("Profiles", typeof (Assertion), 
+					(IBinding data, object? value) => {(data as ResultList).Profiles = value as List<Assertion>;}, 
+					(IBinding data) => (data as ResultList).Profiles,
+					true, ()=>new List<Assertion>()
+) 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1756,15 +1576,10 @@ public partial class ResultList : Result {
 	public static readonly new Binding<ResultList> _binding = new (
 			new() {
 
-			{ "CatalogedDevices", new PropertyListStruct ("CatalogedDevices", typeof (CatalogedDevice),
-					(IBinding data, object? value) => {(data as ResultList).CatalogedDevices = value as List<CatalogedDevice>;}, (IBinding data) => (data as ResultList).CatalogedDevices,
-					false, ()=>new  List<CatalogedDevice>(), ()=>new CatalogedDevice())},
-			{ "Profiles", new PropertyListStruct ("Profiles", typeof (Assertion), 
-					(IBinding data, object? value) => {(data as ResultList).Profiles = value as List<Assertion>;}, (IBinding data) => (data as ResultList).Profiles,
-					true, ()=>new List<Assertion>()
-)} 
+			{ "CatalogedDevices", _properties [0]},
+			{ "Profiles", _properties [1]}
         }, __Tag,() => new ResultList(), () => new List<ResultList>(), () => new Dictionary<string,ResultList>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1782,7 +1597,7 @@ public partial class ResultList : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1800,42 +1615,29 @@ public partial class ResultList : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultList();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultList FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultList;
-			}
-		var Result = new ResultList ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultAccountConnect : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("ProfileDevice")]
-	public virtual ProfileDevice?					ProfileDevice  {get; set;}
+	public virtual ProfileDevice?					ProfileDevice  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("ProfileDevice", typeof (ProfileDevice),
+					(IBinding data, object? value) => {(data as ResultAccountConnect).ProfileDevice = value as ProfileDevice;}, 
+					(IBinding data) => (data as ResultAccountConnect).ProfileDevice,
+					false, ()=>new  ProfileDevice(), ()=>new ProfileDevice())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1844,11 +1646,9 @@ public partial class ResultAccountConnect : Result {
 	public static readonly new Binding<ResultAccountConnect> _binding = new (
 			new() {
 
-			{ "ProfileDevice", new PropertyStruct ("ProfileDevice", typeof (ProfileDevice),
-					(IBinding data, object? value) => {(data as ResultAccountConnect).ProfileDevice = value as ProfileDevice;}, (IBinding data) => (data as ResultAccountConnect).ProfileDevice,
-					false, ()=>new  ProfileDevice(), ()=>new ProfileDevice())}
+			{ "ProfileDevice", _properties [0]}
         }, __Tag,() => new ResultAccountConnect(), () => new List<ResultAccountConnect>(), () => new Dictionary<string,ResultAccountConnect>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1866,7 +1666,7 @@ public partial class ResultAccountConnect : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1884,42 +1684,28 @@ public partial class ResultAccountConnect : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultAccountConnect();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultAccountConnect FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultAccountConnect;
-			}
-		var Result = new ResultAccountConnect ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultPublish : ResultCreateDevice {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Uri")]
-	public virtual string?					Uri  {get; set;}
+	public virtual string?					Uri  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Uri", 
+					(IBinding data, string? value) => {(data as ResultPublish).Uri = value;}, 
+					(IBinding data) => (data as ResultPublish).Uri )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1928,10 +1714,9 @@ public partial class ResultPublish : ResultCreateDevice {
 	public static readonly new Binding<ResultPublish> _binding = new (
 			new() {
 
-			{ "Uri", new PropertyString ("Uri", 
-					(IBinding data, string? value) => {(data as ResultPublish).Uri = value;}, (IBinding data) => (data as ResultPublish).Uri )}
+			{ "Uri", _properties [0]}
         }, __Tag,() => new ResultPublish(), () => new List<ResultPublish>(), () => new Dictionary<string,ResultPublish>(),ResultCreateDevice._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -1949,7 +1734,7 @@ public partial class ResultPublish : ResultCreateDevice {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1967,60 +1752,57 @@ public partial class ResultPublish : ResultCreateDevice {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultPublish();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultPublish FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultPublish;
-			}
-		var Result = new ResultPublish ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultPublishDevice : ResultCreateDevice {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Uri")]
-	public virtual string?					Uri  {get; set;}
+	public virtual string?					Uri  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("FileName")]
-	public virtual string?					FileName  {get; set;}
+	public virtual string?					FileName  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("DevicePreconfigurationPublic")]
-	public virtual DevicePreconfigurationPublic?					DevicePreconfigurationPublic  {get; set;}
+	public virtual DevicePreconfigurationPublic?					DevicePreconfigurationPublic  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("DevicePreconfigurationPrivate")]
-	public virtual DevicePreconfigurationPrivate?					DevicePreconfigurationPrivate  {get; set;}
+	public virtual DevicePreconfigurationPrivate?					DevicePreconfigurationPrivate  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Uri", 
+					(IBinding data, string? value) => {(data as ResultPublishDevice).Uri = value;}, 
+					(IBinding data) => (data as ResultPublishDevice).Uri ),
+		new PropertyString ("FileName", 
+					(IBinding data, string? value) => {(data as ResultPublishDevice).FileName = value;}, 
+					(IBinding data) => (data as ResultPublishDevice).FileName ),
+		new PropertyStruct ("DevicePreconfigurationPublic", typeof (DevicePreconfigurationPublic),
+					(IBinding data, object? value) => {(data as ResultPublishDevice).DevicePreconfigurationPublic = value as DevicePreconfigurationPublic;}, 
+					(IBinding data) => (data as ResultPublishDevice).DevicePreconfigurationPublic,
+					false, ()=>new  DevicePreconfigurationPublic(), ()=>new DevicePreconfigurationPublic()),
+		new PropertyStruct ("DevicePreconfigurationPrivate", typeof (DevicePreconfigurationPrivate),
+					(IBinding data, object? value) => {(data as ResultPublishDevice).DevicePreconfigurationPrivate = value as DevicePreconfigurationPrivate;}, 
+					(IBinding data) => (data as ResultPublishDevice).DevicePreconfigurationPrivate,
+					false, ()=>new  DevicePreconfigurationPrivate(), ()=>new DevicePreconfigurationPrivate())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2029,18 +1811,12 @@ public partial class ResultPublishDevice : ResultCreateDevice {
 	public static readonly new Binding<ResultPublishDevice> _binding = new (
 			new() {
 
-			{ "Uri", new PropertyString ("Uri", 
-					(IBinding data, string? value) => {(data as ResultPublishDevice).Uri = value;}, (IBinding data) => (data as ResultPublishDevice).Uri )},
-			{ "FileName", new PropertyString ("FileName", 
-					(IBinding data, string? value) => {(data as ResultPublishDevice).FileName = value;}, (IBinding data) => (data as ResultPublishDevice).FileName )},
-			{ "DevicePreconfigurationPublic", new PropertyStruct ("DevicePreconfigurationPublic", typeof (DevicePreconfigurationPublic),
-					(IBinding data, object? value) => {(data as ResultPublishDevice).DevicePreconfigurationPublic = value as DevicePreconfigurationPublic;}, (IBinding data) => (data as ResultPublishDevice).DevicePreconfigurationPublic,
-					false, ()=>new  DevicePreconfigurationPublic(), ()=>new DevicePreconfigurationPublic())},
-			{ "DevicePreconfigurationPrivate", new PropertyStruct ("DevicePreconfigurationPrivate", typeof (DevicePreconfigurationPrivate),
-					(IBinding data, object? value) => {(data as ResultPublishDevice).DevicePreconfigurationPrivate = value as DevicePreconfigurationPrivate;}, (IBinding data) => (data as ResultPublishDevice).DevicePreconfigurationPrivate,
-					false, ()=>new  DevicePreconfigurationPrivate(), ()=>new DevicePreconfigurationPrivate())}
+			{ "Uri", _properties [0]},
+			{ "FileName", _properties [1]},
+			{ "DevicePreconfigurationPublic", _properties [2]},
+			{ "DevicePreconfigurationPrivate", _properties [3]}
         }, __Tag,() => new ResultPublishDevice(), () => new List<ResultPublishDevice>(), () => new Dictionary<string,ResultPublishDevice>(),ResultCreateDevice._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2058,7 +1834,7 @@ public partial class ResultPublishDevice : ResultCreateDevice {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2076,54 +1852,47 @@ public partial class ResultPublishDevice : ResultCreateDevice {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultPublishDevice();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultPublishDevice FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultPublishDevice;
-			}
-		var Result = new ResultPublishDevice ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultCreateDevice : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Default")]
-	public virtual bool?					Default  {get; set;}
+	public virtual bool?					Default  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("DeviceUDF")]
-	public virtual string?					DeviceUDF  {get; set;}
+	public virtual string?					DeviceUDF  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("CatalogedDevice")]
-	public virtual CatalogedDevice?					CatalogedDevice  {get; set;}
+	public virtual CatalogedDevice?					CatalogedDevice  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyBoolean ("Default", 
+					(IBinding data, bool? value) => {(data as ResultCreateDevice).Default = value;}, 
+					(IBinding data) => (data as ResultCreateDevice).Default ),
+		new PropertyString ("DeviceUDF", 
+					(IBinding data, string? value) => {(data as ResultCreateDevice).DeviceUDF = value;}, 
+					(IBinding data) => (data as ResultCreateDevice).DeviceUDF ),
+		new PropertyStruct ("CatalogedDevice", typeof (CatalogedDevice),
+					(IBinding data, object? value) => {(data as ResultCreateDevice).CatalogedDevice = value as CatalogedDevice;}, 
+					(IBinding data) => (data as ResultCreateDevice).CatalogedDevice,
+					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2132,15 +1901,11 @@ public partial class ResultCreateDevice : Result {
 	public static readonly new Binding<ResultCreateDevice> _binding = new (
 			new() {
 
-			{ "Default", new PropertyBoolean ("Default", 
-					(IBinding data, bool? value) => {(data as ResultCreateDevice).Default = value;}, (IBinding data) => (data as ResultCreateDevice).Default )},
-			{ "DeviceUDF", new PropertyString ("DeviceUDF", 
-					(IBinding data, string? value) => {(data as ResultCreateDevice).DeviceUDF = value;}, (IBinding data) => (data as ResultCreateDevice).DeviceUDF )},
-			{ "CatalogedDevice", new PropertyStruct ("CatalogedDevice", typeof (CatalogedDevice),
-					(IBinding data, object? value) => {(data as ResultCreateDevice).CatalogedDevice = value as CatalogedDevice;}, (IBinding data) => (data as ResultCreateDevice).CatalogedDevice,
-					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())}
+			{ "Default", _properties [0]},
+			{ "DeviceUDF", _properties [1]},
+			{ "CatalogedDevice", _properties [2]}
         }, __Tag,() => new ResultCreateDevice(), () => new List<ResultCreateDevice>(), () => new Dictionary<string,ResultCreateDevice>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2158,7 +1923,7 @@ public partial class ResultCreateDevice : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2176,42 +1941,28 @@ public partial class ResultCreateDevice : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultCreateDevice();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultCreateDevice FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultCreateDevice;
-			}
-		var Result = new ResultCreateDevice ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultCreatePersonal : ResultCreateAccount {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("MeshUDF")]
-	public virtual string?					MeshUDF  {get; set;}
+	public virtual string?					MeshUDF  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("MeshUDF", 
+					(IBinding data, string? value) => {(data as ResultCreatePersonal).MeshUDF = value;}, 
+					(IBinding data) => (data as ResultCreatePersonal).MeshUDF )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2220,10 +1971,9 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
 	public static readonly new Binding<ResultCreatePersonal> _binding = new (
 			new() {
 
-			{ "MeshUDF", new PropertyString ("MeshUDF", 
-					(IBinding data, string? value) => {(data as ResultCreatePersonal).MeshUDF = value;}, (IBinding data) => (data as ResultCreatePersonal).MeshUDF )}
+			{ "MeshUDF", _properties [0]}
         }, __Tag,() => new ResultCreatePersonal(), () => new List<ResultCreatePersonal>(), () => new Dictionary<string,ResultCreatePersonal>(),ResultCreateAccount._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2241,7 +1991,7 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2259,48 +2009,39 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultCreatePersonal();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultCreatePersonal FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultCreatePersonal;
-			}
-		var Result = new ResultCreatePersonal ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultCreateAccount : ResultCreateDevice {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("ProfileAccount")]
-	public virtual ProfileAccount?					ProfileAccount  {get; set;}
+	public virtual ProfileAccount?					ProfileAccount  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("ActivationAccount")]
-	public virtual ActivationAccount?					ActivationAccount  {get; set;}
+	public virtual ActivationAccount?					ActivationAccount  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("ProfileAccount", typeof (ProfileAccount),
+					(IBinding data, object? value) => {(data as ResultCreateAccount).ProfileAccount = value as ProfileAccount;}, 
+					(IBinding data) => (data as ResultCreateAccount).ProfileAccount,
+					false, ()=>new  ProfileAccount(), ()=>new ProfileAccount()),
+		new PropertyStruct ("ActivationAccount", typeof (ActivationAccount),
+					(IBinding data, object? value) => {(data as ResultCreateAccount).ActivationAccount = value as ActivationAccount;}, 
+					(IBinding data) => (data as ResultCreateAccount).ActivationAccount,
+					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2309,14 +2050,10 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 	public static readonly new Binding<ResultCreateAccount> _binding = new (
 			new() {
 
-			{ "ProfileAccount", new PropertyStruct ("ProfileAccount", typeof (ProfileAccount),
-					(IBinding data, object? value) => {(data as ResultCreateAccount).ProfileAccount = value as ProfileAccount;}, (IBinding data) => (data as ResultCreateAccount).ProfileAccount,
-					false, ()=>new  ProfileAccount(), ()=>new ProfileAccount())},
-			{ "ActivationAccount", new PropertyStruct ("ActivationAccount", typeof (ActivationAccount),
-					(IBinding data, object? value) => {(data as ResultCreateAccount).ActivationAccount = value as ActivationAccount;}, (IBinding data) => (data as ResultCreateAccount).ActivationAccount,
-					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount())}
+			{ "ProfileAccount", _properties [0]},
+			{ "ActivationAccount", _properties [1]}
         }, __Tag,() => new ResultCreateAccount(), () => new List<ResultCreateAccount>(), () => new Dictionary<string,ResultCreateAccount>(),ResultCreateDevice._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2334,7 +2071,7 @@ public partial class ResultCreateAccount : ResultCreateDevice {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2352,42 +2089,28 @@ public partial class ResultCreateAccount : ResultCreateDevice {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultCreateAccount();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultCreateAccount FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultCreateAccount;
-			}
-		var Result = new ResultCreateAccount ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultDeleteAccount : ResultCreateDevice {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("UDF")]
-	public virtual string?					UDF  {get; set;}
+	public virtual string?					UDF  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("UDF", 
+					(IBinding data, string? value) => {(data as ResultDeleteAccount).UDF = value;}, 
+					(IBinding data) => (data as ResultDeleteAccount).UDF )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2396,10 +2119,9 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
 	public static readonly new Binding<ResultDeleteAccount> _binding = new (
 			new() {
 
-			{ "UDF", new PropertyString ("UDF", 
-					(IBinding data, string? value) => {(data as ResultDeleteAccount).UDF = value;}, (IBinding data) => (data as ResultDeleteAccount).UDF )}
+			{ "UDF", _properties [0]}
         }, __Tag,() => new ResultDeleteAccount(), () => new List<ResultDeleteAccount>(), () => new Dictionary<string,ResultDeleteAccount>(),ResultCreateDevice._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2417,7 +2139,7 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2435,42 +2157,28 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultDeleteAccount();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultDeleteAccount FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultDeleteAccount;
-			}
-		var Result = new ResultDeleteAccount ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultRegisterService : ResultCreateAccount {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("AccountAddress")]
-	public virtual string?					AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("AccountAddress", 
+					(IBinding data, string? value) => {(data as ResultRegisterService).AccountAddress = value;}, 
+					(IBinding data) => (data as ResultRegisterService).AccountAddress )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2479,10 +2187,9 @@ public partial class ResultRegisterService : ResultCreateAccount {
 	public static readonly new Binding<ResultRegisterService> _binding = new (
 			new() {
 
-			{ "AccountAddress", new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as ResultRegisterService).AccountAddress = value;}, (IBinding data) => (data as ResultRegisterService).AccountAddress )}
+			{ "AccountAddress", _properties [0]}
         }, __Tag,() => new ResultRegisterService(), () => new List<ResultRegisterService>(), () => new Dictionary<string,ResultRegisterService>(),ResultCreateAccount._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2500,7 +2207,7 @@ public partial class ResultRegisterService : ResultCreateAccount {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2518,29 +2225,6 @@ public partial class ResultRegisterService : ResultCreateAccount {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultRegisterService();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultRegisterService FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultRegisterService;
-			}
-		var Result = new ResultRegisterService ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -2548,6 +2232,12 @@ public partial class ResultRegisterService : ResultCreateAccount {
 	/// </summary>
 public partial class ResultRecover : ResultCreatePersonal {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2557,7 +2247,7 @@ public partial class ResultRecover : ResultCreatePersonal {
 			new() {
 
         }, __Tag,() => new ResultRecover(), () => new List<ResultRecover>(), () => new Dictionary<string,ResultRecover>(),ResultCreatePersonal._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2575,7 +2265,7 @@ public partial class ResultRecover : ResultCreatePersonal {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2593,42 +2283,29 @@ public partial class ResultRecover : ResultCreatePersonal {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultRecover();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultRecover FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultRecover;
-			}
-		var Result = new ResultRecover ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultStatus : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("StatusResponse")]
-	public virtual StatusResponse?					StatusResponse  {get; set;}
+	public virtual StatusResponse?					StatusResponse  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("StatusResponse", typeof (StatusResponse),
+					(IBinding data, object? value) => {(data as ResultStatus).StatusResponse = value as StatusResponse;}, 
+					(IBinding data) => (data as ResultStatus).StatusResponse,
+					false, ()=>new  StatusResponse(), ()=>new StatusResponse())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2637,11 +2314,9 @@ public partial class ResultStatus : Result {
 	public static readonly new Binding<ResultStatus> _binding = new (
 			new() {
 
-			{ "StatusResponse", new PropertyStruct ("StatusResponse", typeof (StatusResponse),
-					(IBinding data, object? value) => {(data as ResultStatus).StatusResponse = value as StatusResponse;}, (IBinding data) => (data as ResultStatus).StatusResponse,
-					false, ()=>new  StatusResponse(), ()=>new StatusResponse())}
+			{ "StatusResponse", _properties [0]}
         }, __Tag,() => new ResultStatus(), () => new List<ResultStatus>(), () => new Dictionary<string,ResultStatus>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2659,7 +2334,7 @@ public partial class ResultStatus : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2677,53 +2352,47 @@ public partial class ResultStatus : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultStatus();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultStatus FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultStatus;
-			}
-		var Result = new ResultStatus ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultSync : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Fetched")]
-	public virtual long?					Fetched  {get; set;}
+	public virtual long?					Fetched  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("ProcessedResults")]
-	public virtual int?					ProcessedResults  {get; set;}
+	public virtual int?					ProcessedResults  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("ProcessResults")]
 	public virtual List<ProcessResult>?					ProcessResults  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyInteger64 ("Fetched", 
+					(IBinding data, long? value) => {(data as ResultSync).Fetched = value;}, 
+					(IBinding data) => (data as ResultSync).Fetched ),
+		new PropertyInteger32 ("ProcessedResults", 
+					(IBinding data, int? value) => {(data as ResultSync).ProcessedResults = value;}, 
+					(IBinding data) => (data as ResultSync).ProcessedResults ),
+		new PropertyListStruct ("ProcessResults", typeof (ProcessResult), 
+					(IBinding data, object? value) => {(data as ResultSync).ProcessResults = value as List<ProcessResult>;}, 
+					(IBinding data) => (data as ResultSync).ProcessResults,
+					true, ()=>new List<ProcessResult>()
+) 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2732,16 +2401,11 @@ public partial class ResultSync : Result {
 	public static readonly new Binding<ResultSync> _binding = new (
 			new() {
 
-			{ "Fetched", new PropertyInteger64 ("Fetched", 
-					(IBinding data, long? value) => {(data as ResultSync).Fetched = value;}, (IBinding data) => (data as ResultSync).Fetched )},
-			{ "ProcessedResults", new PropertyInteger32 ("ProcessedResults", 
-					(IBinding data, int? value) => {(data as ResultSync).ProcessedResults = value;}, (IBinding data) => (data as ResultSync).ProcessedResults )},
-			{ "ProcessResults", new PropertyListStruct ("ProcessResults", typeof (ProcessResult), 
-					(IBinding data, object? value) => {(data as ResultSync).ProcessResults = value as List<ProcessResult>;}, (IBinding data) => (data as ResultSync).ProcessResults,
-					true, ()=>new List<ProcessResult>()
-)} 
+			{ "Fetched", _properties [0]},
+			{ "ProcessedResults", _properties [1]},
+			{ "ProcessResults", _properties [2]}
         }, __Tag,() => new ResultSync(), () => new List<ResultSync>(), () => new Dictionary<string,ResultSync>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2759,7 +2423,7 @@ public partial class ResultSync : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2777,47 +2441,36 @@ public partial class ResultSync : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultSync();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultSync FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultSync;
-			}
-		var Result = new ResultSync ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultEscrow : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Service")]
-	public virtual string?					Service  {get; set;}
+	public virtual string?					Service  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Shares")]
 	public virtual List<string>?					Shares  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Service", 
+					(IBinding data, string? value) => {(data as ResultEscrow).Service = value;}, 
+					(IBinding data) => (data as ResultEscrow).Service ),
+		new PropertyListString ("Shares", 
+					(IBinding data, List<string>? value) => {(data as ResultEscrow).Shares = value;}, 
+					(IBinding data) => (data as ResultEscrow).Shares )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2826,12 +2479,10 @@ public partial class ResultEscrow : Result {
 	public static readonly new Binding<ResultEscrow> _binding = new (
 			new() {
 
-			{ "Service", new PropertyString ("Service", 
-					(IBinding data, string? value) => {(data as ResultEscrow).Service = value;}, (IBinding data) => (data as ResultEscrow).Service )},
-			{ "Shares", new PropertyListString ("Shares", 
-					(IBinding data, List<string>? value) => {(data as ResultEscrow).Shares = value;}, (IBinding data) => (data as ResultEscrow).Shares )}
+			{ "Service", _properties [0]},
+			{ "Shares", _properties [1]}
         }, __Tag,() => new ResultEscrow(), () => new List<ResultEscrow>(), () => new Dictionary<string,ResultEscrow>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2849,7 +2500,7 @@ public partial class ResultEscrow : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2867,41 +2518,28 @@ public partial class ResultEscrow : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultEscrow();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultEscrow FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultEscrow;
-			}
-		var Result = new ResultEscrow ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultMachine : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("CatalogedMachines")]
 	public virtual List<CatalogedMachine>?					CatalogedMachines  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyListStruct ("CatalogedMachines", typeof (CatalogedMachine),
+					(IBinding data, object? value) => {(data as ResultMachine).CatalogedMachines = value as List<CatalogedMachine>;}, 
+					(IBinding data) => (data as ResultMachine).CatalogedMachines,
+					false, ()=>new  List<CatalogedMachine>(), ()=>new CatalogedMachine())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2910,11 +2548,9 @@ public partial class ResultMachine : Result {
 	public static readonly new Binding<ResultMachine> _binding = new (
 			new() {
 
-			{ "CatalogedMachines", new PropertyListStruct ("CatalogedMachines", typeof (CatalogedMachine),
-					(IBinding data, object? value) => {(data as ResultMachine).CatalogedMachines = value as List<CatalogedMachine>;}, (IBinding data) => (data as ResultMachine).CatalogedMachines,
-					false, ()=>new  List<CatalogedMachine>(), ()=>new CatalogedMachine())}
+			{ "CatalogedMachines", _properties [0]}
         }, __Tag,() => new ResultMachine(), () => new List<ResultMachine>(), () => new Dictionary<string,ResultMachine>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -2932,7 +2568,7 @@ public partial class ResultMachine : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2950,48 +2586,38 @@ public partial class ResultMachine : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultMachine();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultMachine FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultMachine;
-			}
-		var Result = new ResultMachine ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultPIN : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("MessagePIN")]
-	public virtual MessagePin?					MessagePIN  {get; set;}
+	public virtual MessagePin?					MessagePIN  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Uri")]
-	public virtual string?					Uri  {get; set;}
+	public virtual string?					Uri  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("MessagePIN", typeof (MessagePin),
+					(IBinding data, object? value) => {(data as ResultPIN).MessagePIN = value as MessagePin;}, 
+					(IBinding data) => (data as ResultPIN).MessagePIN,
+					false, ()=>new  MessagePin(), ()=>new MessagePin()),
+		new PropertyString ("Uri", 
+					(IBinding data, string? value) => {(data as ResultPIN).Uri = value;}, 
+					(IBinding data) => (data as ResultPIN).Uri )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3000,13 +2626,10 @@ public partial class ResultPIN : Result {
 	public static readonly new Binding<ResultPIN> _binding = new (
 			new() {
 
-			{ "MessagePIN", new PropertyStruct ("MessagePIN", typeof (MessagePin),
-					(IBinding data, object? value) => {(data as ResultPIN).MessagePIN = value as MessagePin;}, (IBinding data) => (data as ResultPIN).MessagePIN,
-					false, ()=>new  MessagePin(), ()=>new MessagePin())},
-			{ "Uri", new PropertyString ("Uri", 
-					(IBinding data, string? value) => {(data as ResultPIN).Uri = value;}, (IBinding data) => (data as ResultPIN).Uri )}
+			{ "MessagePIN", _properties [0]},
+			{ "Uri", _properties [1]}
         }, __Tag,() => new ResultPIN(), () => new List<ResultPIN>(), () => new Dictionary<string,ResultPIN>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3024,7 +2647,7 @@ public partial class ResultPIN : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3042,42 +2665,29 @@ public partial class ResultPIN : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultPIN();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultPIN FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultPIN;
-			}
-		var Result = new ResultPIN ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultSequence : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Entries")]
-	public virtual LogEntry?					Entries  {get; set;}
+	public virtual LogEntry?					Entries  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("Entries", typeof (LogEntry),
+					(IBinding data, object? value) => {(data as ResultSequence).Entries = value as LogEntry;}, 
+					(IBinding data) => (data as ResultSequence).Entries,
+					false, ()=>new  LogEntry(), ()=>new LogEntry())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3086,11 +2696,9 @@ public partial class ResultSequence : Result {
 	public static readonly new Binding<ResultSequence> _binding = new (
 			new() {
 
-			{ "Entries", new PropertyStruct ("Entries", typeof (LogEntry),
-					(IBinding data, object? value) => {(data as ResultSequence).Entries = value as LogEntry;}, (IBinding data) => (data as ResultSequence).Entries,
-					false, ()=>new  LogEntry(), ()=>new LogEntry())}
+			{ "Entries", _properties [0]}
         }, __Tag,() => new ResultSequence(), () => new List<ResultSequence>(), () => new Dictionary<string,ResultSequence>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3108,7 +2716,7 @@ public partial class ResultSequence : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3126,78 +2734,82 @@ public partial class ResultSequence : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultSequence();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultSequence FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultSequence;
-			}
-		var Result = new ResultSequence ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class LogEntry : MeshmanShellResult {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Key")]
-	public virtual string?					Key  {get; set;}
+	public virtual string?					Key  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Length")]
-	public virtual int?					Length  {get; set;}
+	public virtual int?					Length  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Digest")]
-	public virtual byte[]?					Digest  {get; set;}
+	public virtual byte[]?					Digest  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Recorded")]
-	public virtual DateTime?					Recorded  {get; set;}
+	public virtual DateTime?					Recorded  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Encrypted")]
-	public virtual bool?					Encrypted  {get; set;}
+	public virtual bool?					Encrypted  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Signed")]
-	public virtual bool?					Signed  {get; set;}
+	public virtual bool?					Signed  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("KeyExchange")]
-	public virtual bool?					KeyExchange  {get; set;}
+	public virtual bool?					KeyExchange  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Key", 
+					(IBinding data, string? value) => {(data as LogEntry).Key = value;}, 
+					(IBinding data) => (data as LogEntry).Key ),
+		new PropertyInteger32 ("Length", 
+					(IBinding data, int? value) => {(data as LogEntry).Length = value;}, 
+					(IBinding data) => (data as LogEntry).Length ),
+		new PropertyBinary ("Digest", 
+					(IBinding data, byte[]? value) => {(data as LogEntry).Digest = value;}, 
+					(IBinding data) => (data as LogEntry).Digest ),
+		new PropertyDateTime ("Recorded", 
+					(IBinding data, DateTime? value) => {(data as LogEntry).Recorded = value;}, 
+					(IBinding data) => (data as LogEntry).Recorded ),
+		new PropertyBoolean ("Encrypted", 
+					(IBinding data, bool? value) => {(data as LogEntry).Encrypted = value;}, 
+					(IBinding data) => (data as LogEntry).Encrypted ),
+		new PropertyBoolean ("Signed", 
+					(IBinding data, bool? value) => {(data as LogEntry).Signed = value;}, 
+					(IBinding data) => (data as LogEntry).Signed ),
+		new PropertyBoolean ("KeyExchange", 
+					(IBinding data, bool? value) => {(data as LogEntry).KeyExchange = value;}, 
+					(IBinding data) => (data as LogEntry).KeyExchange )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3206,22 +2818,15 @@ public partial class LogEntry : MeshmanShellResult {
 	public static readonly new Binding<LogEntry> _binding = new (
 			new() {
 
-			{ "Key", new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as LogEntry).Key = value;}, (IBinding data) => (data as LogEntry).Key )},
-			{ "Length", new PropertyInteger32 ("Length", 
-					(IBinding data, int? value) => {(data as LogEntry).Length = value;}, (IBinding data) => (data as LogEntry).Length )},
-			{ "Digest", new PropertyBinary ("Digest", 
-					(IBinding data, byte[]? value) => {(data as LogEntry).Digest = value;}, (IBinding data) => (data as LogEntry).Digest )},
-			{ "Recorded", new PropertyDateTime ("Recorded", 
-					(IBinding data, DateTime? value) => {(data as LogEntry).Recorded = value;}, (IBinding data) => (data as LogEntry).Recorded )},
-			{ "Encrypted", new PropertyBoolean ("Encrypted", 
-					(IBinding data, bool? value) => {(data as LogEntry).Encrypted = value;}, (IBinding data) => (data as LogEntry).Encrypted )},
-			{ "Signed", new PropertyBoolean ("Signed", 
-					(IBinding data, bool? value) => {(data as LogEntry).Signed = value;}, (IBinding data) => (data as LogEntry).Signed )},
-			{ "KeyExchange", new PropertyBoolean ("KeyExchange", 
-					(IBinding data, bool? value) => {(data as LogEntry).KeyExchange = value;}, (IBinding data) => (data as LogEntry).KeyExchange )}
+			{ "Key", _properties [0]},
+			{ "Length", _properties [1]},
+			{ "Digest", _properties [2]},
+			{ "Recorded", _properties [3]},
+			{ "Encrypted", _properties [4]},
+			{ "Signed", _properties [5]},
+			{ "KeyExchange", _properties [6]}
         }, __Tag,() => new LogEntry(), () => new List<LogEntry>(), () => new Dictionary<string,LogEntry>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3238,7 +2843,7 @@ public partial class LogEntry : MeshmanShellResult {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3256,42 +2861,29 @@ public partial class LogEntry : MeshmanShellResult {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new LogEntry();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new LogEntry FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as LogEntry;
-			}
-		var Result = new LogEntry ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultEntry : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("CatalogEntry")]
-	public virtual CatalogedEntry?					CatalogEntry  {get; set;}
+	public virtual CatalogedEntry?					CatalogEntry  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("CatalogEntry", typeof (CatalogedEntry), 
+					(IBinding data, object? value) => {(data as ResultEntry).CatalogEntry = value as CatalogedEntry;}, 
+					(IBinding data) => (data as ResultEntry).CatalogEntry,
+					true) 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3300,11 +2892,9 @@ public partial class ResultEntry : Result {
 	public static readonly new Binding<ResultEntry> _binding = new (
 			new() {
 
-			{ "CatalogEntry", new PropertyStruct ("CatalogEntry", typeof (CatalogedEntry), 
-					(IBinding data, object? value) => {(data as ResultEntry).CatalogEntry = value as CatalogedEntry;}, (IBinding data) => (data as ResultEntry).CatalogEntry,
-					true)} 
+			{ "CatalogEntry", _properties [0]}
         }, __Tag,() => new ResultEntry(), () => new List<ResultEntry>(), () => new Dictionary<string,ResultEntry>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3322,7 +2912,7 @@ public partial class ResultEntry : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3340,48 +2930,39 @@ public partial class ResultEntry : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultEntry();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultEntry FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultEntry;
-			}
-		var Result = new ResultEntry ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultEntrySent : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("CatalogEntry")]
-	public virtual CatalogedEntry?					CatalogEntry  {get; set;}
+	public virtual CatalogedEntry?					CatalogEntry  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Message")]
-	public virtual Message?					Message  {get; set;}
+	public virtual Message?					Message  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("CatalogEntry", typeof (CatalogedEntry), 
+					(IBinding data, object? value) => {(data as ResultEntrySent).CatalogEntry = value as CatalogedEntry;}, 
+					(IBinding data) => (data as ResultEntrySent).CatalogEntry,
+					true) ,
+		new PropertyStruct ("Message", typeof (Message),
+					(IBinding data, object? value) => {(data as ResultEntrySent).Message = value as Message;}, 
+					(IBinding data) => (data as ResultEntrySent).Message,
+					false, ()=>new  Message(), ()=>new Message())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3390,14 +2971,10 @@ public partial class ResultEntrySent : Result {
 	public static readonly new Binding<ResultEntrySent> _binding = new (
 			new() {
 
-			{ "CatalogEntry", new PropertyStruct ("CatalogEntry", typeof (CatalogedEntry), 
-					(IBinding data, object? value) => {(data as ResultEntrySent).CatalogEntry = value as CatalogedEntry;}, (IBinding data) => (data as ResultEntrySent).CatalogEntry,
-					true)} ,
-			{ "Message", new PropertyStruct ("Message", typeof (Message),
-					(IBinding data, object? value) => {(data as ResultEntrySent).Message = value as Message;}, (IBinding data) => (data as ResultEntrySent).Message,
-					false, ()=>new  Message(), ()=>new Message())}
+			{ "CatalogEntry", _properties [0]},
+			{ "Message", _properties [1]}
         }, __Tag,() => new ResultEntrySent(), () => new List<ResultEntrySent>(), () => new Dictionary<string,ResultEntrySent>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3415,7 +2992,7 @@ public partial class ResultEntrySent : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3433,29 +3010,6 @@ public partial class ResultEntrySent : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultEntrySent();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultEntrySent FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultEntrySent;
-			}
-		var Result = new ResultEntrySent ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -3463,6 +3017,12 @@ public partial class ResultEntrySent : Result {
 	/// </summary>
 public partial class ResultMail : ResultEntry {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3472,7 +3032,7 @@ public partial class ResultMail : ResultEntry {
 			new() {
 
         }, __Tag,() => new ResultMail(), () => new List<ResultMail>(), () => new Dictionary<string,ResultMail>(),ResultEntry._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3490,7 +3050,7 @@ public partial class ResultMail : ResultEntry {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3508,29 +3068,6 @@ public partial class ResultMail : ResultEntry {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultMail();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultMail FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultMail;
-			}
-		var Result = new ResultMail ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -3538,6 +3075,12 @@ public partial class ResultMail : ResultEntry {
 	/// </summary>
 public partial class ResultSSH : ResultEntry {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3547,7 +3090,7 @@ public partial class ResultSSH : ResultEntry {
 			new() {
 
         }, __Tag,() => new ResultSSH(), () => new List<ResultSSH>(), () => new Dictionary<string,ResultSSH>(),ResultEntry._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3565,7 +3108,7 @@ public partial class ResultSSH : ResultEntry {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3583,29 +3126,6 @@ public partial class ResultSSH : ResultEntry {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultSSH();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultSSH FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultSSH;
-			}
-		var Result = new ResultSSH ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -3613,6 +3133,12 @@ public partial class ResultSSH : ResultEntry {
 	/// </summary>
 public partial class ResultGroupCreate : ResultEntry {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3622,7 +3148,7 @@ public partial class ResultGroupCreate : ResultEntry {
 			new() {
 
         }, __Tag,() => new ResultGroupCreate(), () => new List<ResultGroupCreate>(), () => new Dictionary<string,ResultGroupCreate>(),ResultEntry._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3640,7 +3166,7 @@ public partial class ResultGroupCreate : ResultEntry {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3658,48 +3184,38 @@ public partial class ResultGroupCreate : ResultEntry {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultGroupCreate();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultGroupCreate FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultGroupCreate;
-			}
-		var Result = new ResultGroupCreate ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultSent : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Message")]
-	public virtual Message?					Message  {get; set;}
+	public virtual Message?					Message  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Status")]
-	public virtual string?					Status  {get; set;}
+	public virtual string?					Status  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("Message", typeof (Message),
+					(IBinding data, object? value) => {(data as ResultSent).Message = value as Message;}, 
+					(IBinding data) => (data as ResultSent).Message,
+					false, ()=>new  Message(), ()=>new Message()),
+		new PropertyString ("Status", 
+					(IBinding data, string? value) => {(data as ResultSent).Status = value;}, 
+					(IBinding data) => (data as ResultSent).Status )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3708,13 +3224,10 @@ public partial class ResultSent : Result {
 	public static readonly new Binding<ResultSent> _binding = new (
 			new() {
 
-			{ "Message", new PropertyStruct ("Message", typeof (Message),
-					(IBinding data, object? value) => {(data as ResultSent).Message = value as Message;}, (IBinding data) => (data as ResultSent).Message,
-					false, ()=>new  Message(), ()=>new Message())},
-			{ "Status", new PropertyString ("Status", 
-					(IBinding data, string? value) => {(data as ResultSent).Status = value;}, (IBinding data) => (data as ResultSent).Status )}
+			{ "Message", _properties [0]},
+			{ "Status", _properties [1]}
         }, __Tag,() => new ResultSent(), () => new List<ResultSent>(), () => new Dictionary<string,ResultSent>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3732,7 +3245,7 @@ public partial class ResultSent : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3750,41 +3263,28 @@ public partial class ResultSent : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultSent();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultSent FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultSent;
-			}
-		var Result = new ResultSent ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultPending : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Messages")]
 	public virtual List<Message>?					Messages  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyListStruct ("Messages", typeof (Message),
+					(IBinding data, object? value) => {(data as ResultPending).Messages = value as List<Message>;}, 
+					(IBinding data) => (data as ResultPending).Messages,
+					false, ()=>new  List<Message>(), ()=>new Message())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3793,11 +3293,9 @@ public partial class ResultPending : Result {
 	public static readonly new Binding<ResultPending> _binding = new (
 			new() {
 
-			{ "Messages", new PropertyListStruct ("Messages", typeof (Message),
-					(IBinding data, object? value) => {(data as ResultPending).Messages = value as List<Message>;}, (IBinding data) => (data as ResultPending).Messages,
-					false, ()=>new  List<Message>(), ()=>new Message())}
+			{ "Messages", _properties [0]}
         }, __Tag,() => new ResultPending(), () => new List<ResultPending>(), () => new Dictionary<string,ResultPending>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3815,7 +3313,7 @@ public partial class ResultPending : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3833,41 +3331,29 @@ public partial class ResultPending : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultPending();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultPending FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultPending;
-			}
-		var Result = new ResultPending ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultAuthorize : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Messages")]
 	public virtual List<ProcessResult>?					Messages  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyListStruct ("Messages", typeof (ProcessResult), 
+					(IBinding data, object? value) => {(data as ResultAuthorize).Messages = value as List<ProcessResult>;}, 
+					(IBinding data) => (data as ResultAuthorize).Messages,
+					true, ()=>new List<ProcessResult>()
+) 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3876,12 +3362,9 @@ public partial class ResultAuthorize : Result {
 	public static readonly new Binding<ResultAuthorize> _binding = new (
 			new() {
 
-			{ "Messages", new PropertyListStruct ("Messages", typeof (ProcessResult), 
-					(IBinding data, object? value) => {(data as ResultAuthorize).Messages = value as List<ProcessResult>;}, (IBinding data) => (data as ResultAuthorize).Messages,
-					true, ()=>new List<ProcessResult>()
-)} 
+			{ "Messages", _properties [0]}
         }, __Tag,() => new ResultAuthorize(), () => new List<ResultAuthorize>(), () => new Dictionary<string,ResultAuthorize>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3899,7 +3382,7 @@ public partial class ResultAuthorize : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3917,42 +3400,29 @@ public partial class ResultAuthorize : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultAuthorize();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultAuthorize FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultAuthorize;
-			}
-		var Result = new ResultAuthorize ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultProcess : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("ProcessResult")]
-	public virtual Message?					ProcessResult  {get; set;}
+	public virtual Message?					ProcessResult  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("ProcessResult", typeof (Message),
+					(IBinding data, object? value) => {(data as ResultProcess).ProcessResult = value as Message;}, 
+					(IBinding data) => (data as ResultProcess).ProcessResult,
+					false, ()=>new  Message(), ()=>new Message())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3961,11 +3431,9 @@ public partial class ResultProcess : Result {
 	public static readonly new Binding<ResultProcess> _binding = new (
 			new() {
 
-			{ "ProcessResult", new PropertyStruct ("ProcessResult", typeof (Message),
-					(IBinding data, object? value) => {(data as ResultProcess).ProcessResult = value as Message;}, (IBinding data) => (data as ResultProcess).ProcessResult,
-					false, ()=>new  Message(), ()=>new Message())}
+			{ "ProcessResult", _properties [0]}
         }, __Tag,() => new ResultProcess(), () => new List<ResultProcess>(), () => new Dictionary<string,ResultProcess>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -3983,7 +3451,7 @@ public partial class ResultProcess : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4001,78 +3469,89 @@ public partial class ResultProcess : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultProcess();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultProcess FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultProcess;
-			}
-		var Result = new ResultProcess ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultConnect : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Profile")]
-	public virtual Profile?					Profile  {get; set;}
+	public virtual Profile?					Profile  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("CatalogedMachine")]
-	public virtual CatalogedMachine?					CatalogedMachine  {get; set;}
+	public virtual CatalogedMachine?					CatalogedMachine  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("ActivationAccount")]
-	public virtual ActivationAccount?					ActivationAccount  {get; set;}
+	public virtual ActivationAccount?					ActivationAccount  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("ActivationCommon")]
-	public virtual ActivationCommon?					ActivationCommon  {get; set;}
+	public virtual ActivationCommon?					ActivationCommon  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("RequestConnection")]
-	public virtual RequestConnection?					RequestConnection  {get; set;}
+	public virtual RequestConnection?					RequestConnection  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("AcknowledgeConnection")]
-	public virtual AcknowledgeConnection?					AcknowledgeConnection  {get; set;}
+	public virtual AcknowledgeConnection?					AcknowledgeConnection  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("RespondConnection")]
-	public virtual RespondConnection?					RespondConnection  {get; set;}
+	public virtual RespondConnection?					RespondConnection  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("Profile", typeof (Profile), 
+					(IBinding data, object? value) => {(data as ResultConnect).Profile = value as Profile;}, 
+					(IBinding data) => (data as ResultConnect).Profile,
+					true) ,
+		new PropertyStruct ("CatalogedMachine", typeof (CatalogedMachine),
+					(IBinding data, object? value) => {(data as ResultConnect).CatalogedMachine = value as CatalogedMachine;}, 
+					(IBinding data) => (data as ResultConnect).CatalogedMachine,
+					false, ()=>new  CatalogedMachine(), ()=>new CatalogedMachine()),
+		new PropertyStruct ("ActivationAccount", typeof (ActivationAccount),
+					(IBinding data, object? value) => {(data as ResultConnect).ActivationAccount = value as ActivationAccount;}, 
+					(IBinding data) => (data as ResultConnect).ActivationAccount,
+					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount()),
+		new PropertyStruct ("ActivationCommon", typeof (ActivationCommon),
+					(IBinding data, object? value) => {(data as ResultConnect).ActivationCommon = value as ActivationCommon;}, 
+					(IBinding data) => (data as ResultConnect).ActivationCommon,
+					false, ()=>new  ActivationCommon(), ()=>new ActivationCommon()),
+		new PropertyStruct ("RequestConnection", typeof (RequestConnection),
+					(IBinding data, object? value) => {(data as ResultConnect).RequestConnection = value as RequestConnection;}, 
+					(IBinding data) => (data as ResultConnect).RequestConnection,
+					false, ()=>new  RequestConnection(), ()=>new RequestConnection()),
+		new PropertyStruct ("AcknowledgeConnection", typeof (AcknowledgeConnection),
+					(IBinding data, object? value) => {(data as ResultConnect).AcknowledgeConnection = value as AcknowledgeConnection;}, 
+					(IBinding data) => (data as ResultConnect).AcknowledgeConnection,
+					false, ()=>new  AcknowledgeConnection(), ()=>new AcknowledgeConnection()),
+		new PropertyStruct ("RespondConnection", typeof (RespondConnection),
+					(IBinding data, object? value) => {(data as ResultConnect).RespondConnection = value as RespondConnection;}, 
+					(IBinding data) => (data as ResultConnect).RespondConnection,
+					false, ()=>new  RespondConnection(), ()=>new RespondConnection())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4081,29 +3560,15 @@ public partial class ResultConnect : Result {
 	public static readonly new Binding<ResultConnect> _binding = new (
 			new() {
 
-			{ "Profile", new PropertyStruct ("Profile", typeof (Profile), 
-					(IBinding data, object? value) => {(data as ResultConnect).Profile = value as Profile;}, (IBinding data) => (data as ResultConnect).Profile,
-					true)} ,
-			{ "CatalogedMachine", new PropertyStruct ("CatalogedMachine", typeof (CatalogedMachine),
-					(IBinding data, object? value) => {(data as ResultConnect).CatalogedMachine = value as CatalogedMachine;}, (IBinding data) => (data as ResultConnect).CatalogedMachine,
-					false, ()=>new  CatalogedMachine(), ()=>new CatalogedMachine())},
-			{ "ActivationAccount", new PropertyStruct ("ActivationAccount", typeof (ActivationAccount),
-					(IBinding data, object? value) => {(data as ResultConnect).ActivationAccount = value as ActivationAccount;}, (IBinding data) => (data as ResultConnect).ActivationAccount,
-					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount())},
-			{ "ActivationCommon", new PropertyStruct ("ActivationCommon", typeof (ActivationCommon),
-					(IBinding data, object? value) => {(data as ResultConnect).ActivationCommon = value as ActivationCommon;}, (IBinding data) => (data as ResultConnect).ActivationCommon,
-					false, ()=>new  ActivationCommon(), ()=>new ActivationCommon())},
-			{ "RequestConnection", new PropertyStruct ("RequestConnection", typeof (RequestConnection),
-					(IBinding data, object? value) => {(data as ResultConnect).RequestConnection = value as RequestConnection;}, (IBinding data) => (data as ResultConnect).RequestConnection,
-					false, ()=>new  RequestConnection(), ()=>new RequestConnection())},
-			{ "AcknowledgeConnection", new PropertyStruct ("AcknowledgeConnection", typeof (AcknowledgeConnection),
-					(IBinding data, object? value) => {(data as ResultConnect).AcknowledgeConnection = value as AcknowledgeConnection;}, (IBinding data) => (data as ResultConnect).AcknowledgeConnection,
-					false, ()=>new  AcknowledgeConnection(), ()=>new AcknowledgeConnection())},
-			{ "RespondConnection", new PropertyStruct ("RespondConnection", typeof (RespondConnection),
-					(IBinding data, object? value) => {(data as ResultConnect).RespondConnection = value as RespondConnection;}, (IBinding data) => (data as ResultConnect).RespondConnection,
-					false, ()=>new  RespondConnection(), ()=>new RespondConnection())}
+			{ "Profile", _properties [0]},
+			{ "CatalogedMachine", _properties [1]},
+			{ "ActivationAccount", _properties [2]},
+			{ "ActivationCommon", _properties [3]},
+			{ "RequestConnection", _properties [4]},
+			{ "AcknowledgeConnection", _properties [5]},
+			{ "RespondConnection", _properties [6]}
         }, __Tag,() => new ResultConnect(), () => new List<ResultConnect>(), () => new Dictionary<string,ResultConnect>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4121,7 +3586,7 @@ public partial class ResultConnect : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4139,42 +3604,28 @@ public partial class ResultConnect : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultConnect();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultConnect FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultConnect;
-			}
-		var Result = new ResultConnect ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultTransactionRequest : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Identifier")]
-	public virtual string?					Identifier  {get; set;}
+	public virtual string?					Identifier  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Identifier", 
+					(IBinding data, string? value) => {(data as ResultTransactionRequest).Identifier = value;}, 
+					(IBinding data) => (data as ResultTransactionRequest).Identifier )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4183,10 +3634,9 @@ public partial class ResultTransactionRequest : Result {
 	public static readonly new Binding<ResultTransactionRequest> _binding = new (
 			new() {
 
-			{ "Identifier", new PropertyString ("Identifier", 
-					(IBinding data, string? value) => {(data as ResultTransactionRequest).Identifier = value;}, (IBinding data) => (data as ResultTransactionRequest).Identifier )}
+			{ "Identifier", _properties [0]}
         }, __Tag,() => new ResultTransactionRequest(), () => new List<ResultTransactionRequest>(), () => new Dictionary<string,ResultTransactionRequest>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4204,7 +3654,7 @@ public partial class ResultTransactionRequest : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4222,48 +3672,38 @@ public partial class ResultTransactionRequest : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultTransactionRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultTransactionRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultTransactionRequest;
-			}
-		var Result = new ResultTransactionRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultReceived : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Status")]
-	public virtual string?					Status  {get; set;}
+	public virtual string?					Status  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Message")]
-	public virtual Message?					Message  {get; set;}
+	public virtual Message?					Message  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Status", 
+					(IBinding data, string? value) => {(data as ResultReceived).Status = value;}, 
+					(IBinding data) => (data as ResultReceived).Status ),
+		new PropertyStruct ("Message", typeof (Message),
+					(IBinding data, object? value) => {(data as ResultReceived).Message = value as Message;}, 
+					(IBinding data) => (data as ResultReceived).Message,
+					false, ()=>new  Message(), ()=>new Message())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4272,13 +3712,10 @@ public partial class ResultReceived : Result {
 	public static readonly new Binding<ResultReceived> _binding = new (
 			new() {
 
-			{ "Status", new PropertyString ("Status", 
-					(IBinding data, string? value) => {(data as ResultReceived).Status = value;}, (IBinding data) => (data as ResultReceived).Status )},
-			{ "Message", new PropertyStruct ("Message", typeof (Message),
-					(IBinding data, object? value) => {(data as ResultReceived).Message = value as Message;}, (IBinding data) => (data as ResultReceived).Message,
-					false, ()=>new  Message(), ()=>new Message())}
+			{ "Status", _properties [0]},
+			{ "Message", _properties [1]}
         }, __Tag,() => new ResultReceived(), () => new List<ResultReceived>(), () => new Dictionary<string,ResultReceived>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4296,7 +3733,7 @@ public partial class ResultReceived : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4314,42 +3751,29 @@ public partial class ResultReceived : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultReceived();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultReceived FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultReceived;
-			}
-		var Result = new ResultReceived ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultApplication : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Application")]
-	public virtual CatalogedApplication?					Application  {get; set;}
+	public virtual CatalogedApplication?					Application  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("Application", typeof (CatalogedApplication), 
+					(IBinding data, object? value) => {(data as ResultApplication).Application = value as CatalogedApplication;}, 
+					(IBinding data) => (data as ResultApplication).Application,
+					true) 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4358,11 +3782,9 @@ public partial class ResultApplication : Result {
 	public static readonly new Binding<ResultApplication> _binding = new (
 			new() {
 
-			{ "Application", new PropertyStruct ("Application", typeof (CatalogedApplication), 
-					(IBinding data, object? value) => {(data as ResultApplication).Application = value as CatalogedApplication;}, (IBinding data) => (data as ResultApplication).Application,
-					true)} 
+			{ "Application", _properties [0]}
         }, __Tag,() => new ResultApplication(), () => new List<ResultApplication>(), () => new Dictionary<string,ResultApplication>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4380,7 +3802,7 @@ public partial class ResultApplication : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4398,41 +3820,29 @@ public partial class ResultApplication : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultApplication();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultApplication FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultApplication;
-			}
-		var Result = new ResultApplication ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultApplicationList : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Applications")]
 	public virtual List<CatalogedApplication>?					Applications  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyListStruct ("Applications", typeof (CatalogedApplication), 
+					(IBinding data, object? value) => {(data as ResultApplicationList).Applications = value as List<CatalogedApplication>;}, 
+					(IBinding data) => (data as ResultApplicationList).Applications,
+					true, ()=>new List<CatalogedApplication>()
+) 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4441,12 +3851,9 @@ public partial class ResultApplicationList : Result {
 	public static readonly new Binding<ResultApplicationList> _binding = new (
 			new() {
 
-			{ "Applications", new PropertyListStruct ("Applications", typeof (CatalogedApplication), 
-					(IBinding data, object? value) => {(data as ResultApplicationList).Applications = value as List<CatalogedApplication>;}, (IBinding data) => (data as ResultApplicationList).Applications,
-					true, ()=>new List<CatalogedApplication>()
-)} 
+			{ "Applications", _properties [0]}
         }, __Tag,() => new ResultApplicationList(), () => new List<ResultApplicationList>(), () => new Dictionary<string,ResultApplicationList>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4464,7 +3871,7 @@ public partial class ResultApplicationList : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4482,48 +3889,39 @@ public partial class ResultApplicationList : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultApplicationList();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultApplicationList FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultApplicationList;
-			}
-		var Result = new ResultApplicationList ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultCallsign : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("CallsignApplication")]
-	public virtual CatalogedApplicationCallsign?					CallsignApplication  {get; set;}
+	public virtual CatalogedApplicationCallsign?					CallsignApplication  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Message")]
-	public virtual Message?					Message  {get; set;}
+	public virtual Message?					Message  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("CallsignApplication", typeof (CatalogedApplicationCallsign),
+					(IBinding data, object? value) => {(data as ResultCallsign).CallsignApplication = value as CatalogedApplicationCallsign;}, 
+					(IBinding data) => (data as ResultCallsign).CallsignApplication,
+					false, ()=>new  CatalogedApplicationCallsign(), ()=>new CatalogedApplicationCallsign()),
+		new PropertyStruct ("Message", typeof (Message),
+					(IBinding data, object? value) => {(data as ResultCallsign).Message = value as Message;}, 
+					(IBinding data) => (data as ResultCallsign).Message,
+					false, ()=>new  Message(), ()=>new Message())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4532,14 +3930,10 @@ public partial class ResultCallsign : Result {
 	public static readonly new Binding<ResultCallsign> _binding = new (
 			new() {
 
-			{ "CallsignApplication", new PropertyStruct ("CallsignApplication", typeof (CatalogedApplicationCallsign),
-					(IBinding data, object? value) => {(data as ResultCallsign).CallsignApplication = value as CatalogedApplicationCallsign;}, (IBinding data) => (data as ResultCallsign).CallsignApplication,
-					false, ()=>new  CatalogedApplicationCallsign(), ()=>new CatalogedApplicationCallsign())},
-			{ "Message", new PropertyStruct ("Message", typeof (Message),
-					(IBinding data, object? value) => {(data as ResultCallsign).Message = value as Message;}, (IBinding data) => (data as ResultCallsign).Message,
-					false, ()=>new  Message(), ()=>new Message())}
+			{ "CallsignApplication", _properties [0]},
+			{ "Message", _properties [1]}
         }, __Tag,() => new ResultCallsign(), () => new List<ResultCallsign>(), () => new Dictionary<string,ResultCallsign>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4557,7 +3951,7 @@ public partial class ResultCallsign : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4575,48 +3969,39 @@ public partial class ResultCallsign : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultCallsign();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultCallsign FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultCallsign;
-			}
-		var Result = new ResultCallsign ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultCallsignResolution : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("CallsignRegistration")]
-	public virtual Registration?					CallsignRegistration  {get; set;}
+	public virtual Registration?					CallsignRegistration  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Message")]
-	public virtual Message?					Message  {get; set;}
+	public virtual Message?					Message  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("CallsignRegistration", typeof (Registration),
+					(IBinding data, object? value) => {(data as ResultCallsignResolution).CallsignRegistration = value as Registration;}, 
+					(IBinding data) => (data as ResultCallsignResolution).CallsignRegistration,
+					false, ()=>new  Registration(), ()=>new Registration()),
+		new PropertyStruct ("Message", typeof (Message),
+					(IBinding data, object? value) => {(data as ResultCallsignResolution).Message = value as Message;}, 
+					(IBinding data) => (data as ResultCallsignResolution).Message,
+					false, ()=>new  Message(), ()=>new Message())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4625,14 +4010,10 @@ public partial class ResultCallsignResolution : Result {
 	public static readonly new Binding<ResultCallsignResolution> _binding = new (
 			new() {
 
-			{ "CallsignRegistration", new PropertyStruct ("CallsignRegistration", typeof (Registration),
-					(IBinding data, object? value) => {(data as ResultCallsignResolution).CallsignRegistration = value as Registration;}, (IBinding data) => (data as ResultCallsignResolution).CallsignRegistration,
-					false, ()=>new  Registration(), ()=>new Registration())},
-			{ "Message", new PropertyStruct ("Message", typeof (Message),
-					(IBinding data, object? value) => {(data as ResultCallsignResolution).Message = value as Message;}, (IBinding data) => (data as ResultCallsignResolution).Message,
-					false, ()=>new  Message(), ()=>new Message())}
+			{ "CallsignRegistration", _properties [0]},
+			{ "Message", _properties [1]}
         }, __Tag,() => new ResultCallsignResolution(), () => new List<ResultCallsignResolution>(), () => new Dictionary<string,ResultCallsignResolution>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4650,7 +4031,7 @@ public partial class ResultCallsignResolution : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4668,41 +4049,28 @@ public partial class ResultCallsignResolution : Result {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultCallsignResolution();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultCallsignResolution FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultCallsignResolution;
-			}
-		var Result = new ResultCallsignResolution ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ResultCallsignList : Result {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("CallsignApplication")]
-	public virtual IEnumerable<CatalogedApplicationCallsign>				CallsignApplication  {get; set;}
+	public virtual IEnumerable<CatalogedApplicationCallsign>				CallsignApplication  {get; set;} 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyListStruct ("CallsignApplication", typeof (CatalogedApplicationCallsign),
+					(IBinding data, object? value) => {(data as ResultCallsignList).CallsignApplication = value as List<CatalogedApplicationCallsign>;}, 
+					(IBinding data) => (data as ResultCallsignList).CallsignApplication,
+					false, ()=>new  List<CatalogedApplicationCallsign>(), ()=>new CatalogedApplicationCallsign())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4711,11 +4079,9 @@ public partial class ResultCallsignList : Result {
 	public static readonly new Binding<ResultCallsignList> _binding = new (
 			new() {
 
-			{ "CallsignApplication", new PropertyListStruct ("CallsignApplication", typeof (CatalogedApplicationCallsign),
-					(IBinding data, object? value) => {(data as ResultCallsignList).CallsignApplication = value as List<CatalogedApplicationCallsign>;}, (IBinding data) => (data as ResultCallsignList).CallsignApplication,
-					false, ()=>new  List<CatalogedApplicationCallsign>(), ()=>new CatalogedApplicationCallsign())}
+			{ "CallsignApplication", _properties [0]}
         }, __Tag,() => new ResultCallsignList(), () => new List<ResultCallsignList>(), () => new Dictionary<string,ResultCallsignList>(),Result._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -4733,7 +4099,7 @@ public partial class ResultCallsignList : Result {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4750,29 +4116,6 @@ public partial class ResultCallsignList : Result {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ResultCallsignList();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ResultCallsignList FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ResultCallsignList;
-			}
-		var Result = new ResultCallsignList ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

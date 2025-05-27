@@ -1254,26 +1254,17 @@
             The wrapped base seed. The base seed is encrypted under the result of the key exchange.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DareRecipient._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareRecipient._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DareRecipient._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.DareRecipient._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareRecipient._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareRecipient._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareRecipient._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareRecipient._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareRecipient._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareRecipient._Tag">
             <summary>
@@ -2039,26 +2030,17 @@
             Field reserved for use in debugging.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DareHeader._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareHeader._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DareHeader._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.DareHeader._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareHeader._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareHeader._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareHeader._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareHeader._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareHeader._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareHeader._Tag">
             <summary>
@@ -2289,26 +2271,17 @@
             The sequence signature is calculated over SignedData + SequenceSignedData
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DareTrailer._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareTrailer._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DareTrailer._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.DareTrailer._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareTrailer._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareTrailer._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareTrailer._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareTrailer._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareTrailer._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareTrailer._Tag">
             <summary>
@@ -2416,26 +2389,17 @@
             Information describing the file entry on disk.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.ContentMeta._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.ContentMeta._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.ContentMeta._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.ContentMeta._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.ContentMeta._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.ContentMeta._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ContentMeta._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ContentMeta._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ContentMeta._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.ContentMeta._Tag">
             <summary>
@@ -2671,26 +2635,17 @@
             If true the policy is immutable and cannot be changed by a subsequent policy override.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DarePolicy._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DarePolicy._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DarePolicy._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.DarePolicy._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DarePolicy._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DarePolicy._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DarePolicy._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DarePolicy._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DarePolicy._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DarePolicy._Tag">
             <summary>
@@ -2722,11 +2677,6 @@
         <member name="F:Goedel.Cryptography.Dare.Dare.__Tag">
             <summary>
             Tag identifying this class
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Dare._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Dare._BindingDictionary">
@@ -2765,26 +2715,17 @@
             The envelope trailer. If present, this contains the signature.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareEnvelopeSequence._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.DareEnvelopeSequence._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareEnvelopeSequence._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareEnvelopeSequence._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._Tag">
             <summary>
@@ -2839,26 +2780,17 @@
             construct a signature over the envelope payload.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DareSignatureHeader._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareSignatureHeader._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DareSignatureHeader._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.DareSignatureHeader._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareSignatureHeader._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareSignatureHeader._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareSignatureHeader._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareSignatureHeader._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareSignatureHeader._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareSignatureHeader._Tag">
             <summary>
@@ -2923,26 +2855,17 @@
             The signature value as an Enhanced Data Sequence under the envelope base seed.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.DareSignature._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareSignature._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.DareSignature._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.DareSignature._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareSignature._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareSignature._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareSignature._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareSignature._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareSignature._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareSignature._Tag">
             <summary>
@@ -3002,26 +2925,17 @@
             The signed envelopes in order, lowest index first.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.IntervalSignature._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.IntervalSignature._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.IntervalSignature._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.IntervalSignature._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.IntervalSignature._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.IntervalSignature._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.IntervalSignature._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.IntervalSignature._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.IntervalSignature._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.IntervalSignature._Tag">
             <summary>
@@ -3070,26 +2984,17 @@
             The digests required to complete the verification of the signature.		
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.SignedEnvelope._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.SignedEnvelope._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.SignedEnvelope._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.SignedEnvelope._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.SignedEnvelope._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.SignedEnvelope._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SignedEnvelope._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SignedEnvelope._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SignedEnvelope._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.SignedEnvelope._Tag">
             <summary>
@@ -3121,26 +3026,17 @@
             An X.509 public key certificate
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.X509Certificate._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.X509Certificate._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.X509Certificate._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.X509Certificate._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.X509Certificate._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.X509Certificate._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.X509Certificate._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.X509Certificate._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.X509Certificate._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.X509Certificate._Tag">
             <summary>
@@ -3190,26 +3086,17 @@
             The file attribues as a bitmapped integer.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.FileEntry._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.FileEntry._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.FileEntry._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.FileEntry._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.FileEntry._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.FileEntry._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.FileEntry._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.FileEntry._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.FileEntry._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.FileEntry._Tag">
             <summary>
@@ -3278,26 +3165,17 @@
             Specifies the index number assigned to the entry in the log.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Witness._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Witness._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.Witness._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.Witness._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.Witness._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.Witness._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Witness._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Witness._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Witness._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Witness._Tag">
             <summary>
@@ -3342,26 +3220,17 @@
             The list of entries from which the proof path is computed.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Proof._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Proof._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.Proof._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.Proof._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.Proof._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.Proof._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Proof._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Proof._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Proof._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Proof._Tag">
             <summary>
@@ -3396,26 +3265,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Unprotected._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Unprotected._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.Unprotected._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.Unprotected._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.Unprotected._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.Unprotected._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Unprotected._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Unprotected._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Unprotected._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Unprotected._Tag">
             <summary>
@@ -3454,26 +3314,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSignature._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EarlSignature._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.EarlSignature._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.EarlSignature._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.EarlSignature._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.EarlSignature._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EarlSignature._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EarlSignature._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.EarlSignature._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.EarlSignature._Tag">
             <summary>
@@ -3826,17 +3677,17 @@
             public key parameters and that there is a valid chain of trust under a 
             specified root of trust.</summary> 
         </member>
-        <member name="T:Goedel.Cryptography.Dare.EnvelopedJson">
+        <member name="T:Goedel.Cryptography.Dare.Enveloped">
             <summary>
             Typed DareEnvelope.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EnvelopedJson.#ctor">
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.#ctor">
             <summary>
             Default constructor, used in deserialization.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EnvelopedJson.#ctor(Goedel.Protocol.JsonObject,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.#ctor(Goedel.Protocol.JsonObject,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
             <summary>
             Constructor returining an envelope containing the object <paramref name="data"/>
             optionally encrypted under <paramref name="encryptionKey"/> and signed under
@@ -6384,11 +6235,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceData._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceData._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -6453,26 +6299,17 @@
             to be found
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceInfo._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.SequenceInfo._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceInfo._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.SequenceInfo._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.SequenceInfo._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.SequenceInfo._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceInfo._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceInfo._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceInfo._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceInfo._Tag">
             <summary>
@@ -6515,26 +6352,17 @@
             List of container position entries
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.SequenceIndex._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.SequenceIndex._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndex._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.SequenceIndex._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.SequenceIndex._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.SequenceIndex._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceIndex._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceIndex._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.SequenceIndex._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndex._Tag">
             <summary>
@@ -6578,26 +6406,17 @@
             Unique object identifier
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.IndexPosition._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.IndexPosition._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.IndexPosition._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.IndexPosition._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.IndexPosition._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.IndexPosition._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.IndexPosition._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.IndexPosition._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.IndexPosition._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.IndexPosition._Tag">
             <summary>
@@ -6631,26 +6450,17 @@
             The value corresponding to the key
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.KeyValue._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.KeyValue._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.KeyValue._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.KeyValue._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.KeyValue._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.KeyValue._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.KeyValue._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.KeyValue._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.KeyValue._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.KeyValue._Tag">
             <summary>
@@ -6674,26 +6484,17 @@
              Specifies a signature 
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.ProofChain._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.ProofChain._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Cryptography.Dare.ProofChain._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Cryptography.Dare.ProofChain._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.ProofChain._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.ProofChain._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ProofChain._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ProofChain._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.ProofChain._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.ProofChain._Tag">
             <summary>

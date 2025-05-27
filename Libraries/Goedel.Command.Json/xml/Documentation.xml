@@ -25,11 +25,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Command.Json.JsonShellResult._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Command.Json.JsonShellResult._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -50,26 +45,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Command.Json.ShellResult._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Command.Json.ShellResult._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Command.Json.ShellResult._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Command.Json.ShellResult._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Command.Json.ShellResult._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Command.Json.ShellResult._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Command.Json.ShellResult._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Command.Json.ShellResult._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Command.Json.ShellResult._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Command.Json.ShellResult._Tag">
             <summary>

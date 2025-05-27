@@ -109,26 +109,17 @@
             Account address in user@domain format
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountEntry._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Server.AccountEntry._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Server.AccountEntry._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Server.AccountEntry._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Server.AccountEntry._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountEntry._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountEntry._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountEntry._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Server.AccountEntry._Tag">
             <summary>
@@ -189,26 +180,17 @@
             discover the host and encrypt data to it.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountUser._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.Server.AccountUser._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Mesh.Server.AccountUser._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Mesh.Server.AccountUser._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Server.AccountUser._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Mesh.Server.AccountUser._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountUser._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountUser._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountUser._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Server.AccountUser._Tag">
             <summary>
@@ -1268,11 +1250,6 @@
         <member name="F:Goedel.Mesh.Server.CatalogItem.__Tag">
             <summary>
             Tag identifying this class
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.CatalogItem._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Server.CatalogItem._BindingDictionary">

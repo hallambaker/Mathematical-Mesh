@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:56:57 AM
+//  This file was automatically generated at 5/27/2025 3:12:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -69,6 +69,7 @@ public abstract partial class BaseMessage : global::Goedel.Protocol.JsonObject {
     /// </summary>
 	public new const string __Tag = "BaseMessage";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -83,7 +84,7 @@ public abstract partial class BaseMessage : global::Goedel.Protocol.JsonObject {
 	    {"HelloRequest", HelloRequest._Factory},
 	    {"HelloResponse", HelloResponse._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -110,7 +111,7 @@ public abstract partial class BaseMessage : global::Goedel.Protocol.JsonObject {
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -139,22 +140,34 @@ public abstract partial class BaseMessage : global::Goedel.Protocol.JsonObject {
 	/// Base class for all request messages.
 	/// </summary>
 abstract public partial class Request : BaseMessage {
-        /// <summary>
-        ///Name of the Service to which the request is directed.
-        /// </summary>
+    /// <summary>
+    ///Name of the Service to which the request is directed.
+    /// </summary>
 
 	[JsonPropertyName("Service")]
-	public virtual string?					Service  {get; set;}
+	public virtual string?					Service  {get; set;} //
 
-        /// <summary>
-        ///Optional unique transaction request used to detect replay attacks and 
-        ///duplicates.
-        /// </summary>
+    /// <summary>
+    ///Optional unique transaction request used to detect replay attacks and 
+    ///duplicates.
+    /// </summary>
 
 	[JsonPropertyName("ID")]
-	public virtual byte[]?					ID  {get; set;}
+	public virtual byte[]?					ID  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Service", 
+					(IBinding data, string? value) => {(data as Request).Service = value;}, 
+					(IBinding data) => (data as Request).Service ),
+		new PropertyBinary ("ID", 
+					(IBinding data, byte[]? value) => {(data as Request).ID = value;}, 
+					(IBinding data) => (data as Request).ID )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -163,12 +176,10 @@ abstract public partial class Request : BaseMessage {
 	public static readonly new Binding<Request> _binding = new (
 			new() {
 
-			{ "Service", new PropertyString ("Service", 
-					(IBinding data, string? value) => {(data as Request).Service = value;}, (IBinding data) => (data as Request).Service )},
-			{ "ID", new PropertyBinary ("ID", 
-					(IBinding data, byte[]? value) => {(data as Request).ID = value;}, (IBinding data) => (data as Request).ID )}
+			{ "Service", _properties [0]},
+			{ "ID", _properties [1]}
         }, __Tag,null, null, null,null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -185,7 +196,7 @@ abstract public partial class Request : BaseMessage {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -203,26 +214,6 @@ abstract public partial class Request : BaseMessage {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new Request FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Request;
-			}
-		throw new CannotCreateAbstract();
-		}
-	*/
-
 	}
 
 
@@ -236,37 +227,55 @@ abstract public partial class Request : BaseMessage {
 	/// to any request.
 	/// </summary>
 abstract public partial class Response : BaseMessage {
-        /// <summary>
-        ///Major status return code. The SMTP/HTTP scheme of 2xx = Success,
-        ///3xx = incomplete, 4xx = failure is followed.
-        /// </summary>
+    /// <summary>
+    ///Major status return code. The SMTP/HTTP scheme of 2xx = Success,
+    ///3xx = incomplete, 4xx = failure is followed.
+    /// </summary>
 
 	[JsonPropertyName("Status")]
-	public virtual int?					Status  {get; set;}
+	public virtual int?					Status  {get; set;} //
 
-        /// <summary>
-        ///Application level status report giving additional information.
-        /// </summary>
+    /// <summary>
+    ///Application level status report giving additional information.
+    /// </summary>
 
 	[JsonPropertyName("StatusExtended")]
-	public virtual int?					StatusExtended  {get; set;}
+	public virtual int?					StatusExtended  {get; set;} //
 
-        /// <summary>
-        ///Text description of the status return code for debugging 
-        ///and log file use.
-        /// </summary>
+    /// <summary>
+    ///Text description of the status return code for debugging 
+    ///and log file use.
+    /// </summary>
 
 	[JsonPropertyName("StatusDescription")]
-	public virtual string?					StatusDescription  {get; set;}
+	public virtual string?					StatusDescription  {get; set;} //
 
-        /// <summary>
-        ///The request to which the response corresponds.
-        /// </summary>
+    /// <summary>
+    ///The request to which the response corresponds.
+    /// </summary>
 
 	[JsonPropertyName("ID")]
-	public virtual byte[]?					ID  {get; set;}
+	public virtual byte[]?					ID  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyInteger32 ("Status", 
+					(IBinding data, int? value) => {(data as Response).Status = value;}, 
+					(IBinding data) => (data as Response).Status ),
+		new PropertyInteger32 ("StatusExtended", 
+					(IBinding data, int? value) => {(data as Response).StatusExtended = value;}, 
+					(IBinding data) => (data as Response).StatusExtended ),
+		new PropertyString ("StatusDescription", 
+					(IBinding data, string? value) => {(data as Response).StatusDescription = value;}, 
+					(IBinding data) => (data as Response).StatusDescription ),
+		new PropertyBinary ("ID", 
+					(IBinding data, byte[]? value) => {(data as Response).ID = value;}, 
+					(IBinding data) => (data as Response).ID )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -275,16 +284,12 @@ abstract public partial class Response : BaseMessage {
 	public static readonly new Binding<Response> _binding = new (
 			new() {
 
-			{ "Status", new PropertyInteger32 ("Status", 
-					(IBinding data, int? value) => {(data as Response).Status = value;}, (IBinding data) => (data as Response).Status )},
-			{ "StatusExtended", new PropertyInteger32 ("StatusExtended", 
-					(IBinding data, int? value) => {(data as Response).StatusExtended = value;}, (IBinding data) => (data as Response).StatusExtended )},
-			{ "StatusDescription", new PropertyString ("StatusDescription", 
-					(IBinding data, string? value) => {(data as Response).StatusDescription = value;}, (IBinding data) => (data as Response).StatusDescription )},
-			{ "ID", new PropertyBinary ("ID", 
-					(IBinding data, byte[]? value) => {(data as Response).ID = value;}, (IBinding data) => (data as Response).ID )}
+			{ "Status", _properties [0]},
+			{ "StatusExtended", _properties [1]},
+			{ "StatusDescription", _properties [2]},
+			{ "ID", _properties [3]}
         }, __Tag,null, null, null,null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -301,7 +306,7 @@ abstract public partial class Response : BaseMessage {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -319,26 +324,6 @@ abstract public partial class Response : BaseMessage {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new Response FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Response;
-			}
-		throw new CannotCreateAbstract();
-		}
-	*/
-
 	}
 
 
@@ -347,36 +332,55 @@ abstract public partial class Response : BaseMessage {
 	/// Describes a protocol version.
 	/// </summary>
 public partial class Version : BaseMessage {
-        /// <summary>
-        ///Major version number of the service protocol. A higher
-        /// </summary>
+    /// <summary>
+    ///Major version number of the service protocol. A higher
+    /// </summary>
 
 	[JsonPropertyName("Major")]
-	public virtual int?					Major  {get; set;}
+	public virtual int?					Major  {get; set;} //
 
-        /// <summary>
-        ///Minor version number of the service protocol.
-        /// </summary>
+    /// <summary>
+    ///Minor version number of the service protocol.
+    /// </summary>
 
 	[JsonPropertyName("Minor")]
-	public virtual int?					Minor  {get; set;}
+	public virtual int?					Minor  {get; set;} //
 
-        /// <summary>
-        ///Enumerates alternative encodings (e.g. ASN.1, XML, JSON-B)
-        ///supported by the service. If no encodings are specified, the
-        ///JSON encoding is assumed.
-        /// </summary>
+    /// <summary>
+    ///Enumerates alternative encodings (e.g. ASN.1, XML, JSON-B)
+    ///supported by the service. If no encodings are specified, the
+    ///JSON encoding is assumed.
+    /// </summary>
 
 	[JsonPropertyName("Encodings")]
 	public virtual List<Encoding>?					Encodings  {get; set;}
-        /// <summary>
-        ///The preferred URI for this service. This MAY be used to effect
-        ///a redirect in the case that a service moves.
-        /// </summary>
+    /// <summary>
+    ///The preferred URI for this service. This MAY be used to effect
+    ///a redirect in the case that a service moves.
+    /// </summary>
 
 	[JsonPropertyName("URI")]
 	public virtual List<string>?					URI  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyInteger32 ("Major", 
+					(IBinding data, int? value) => {(data as Version).Major = value;}, 
+					(IBinding data) => (data as Version).Major ),
+		new PropertyInteger32 ("Minor", 
+					(IBinding data, int? value) => {(data as Version).Minor = value;}, 
+					(IBinding data) => (data as Version).Minor ),
+		new PropertyListStruct ("Encodings", typeof (Encoding),
+					(IBinding data, object? value) => {(data as Version).Encodings = value as List<Encoding>;}, 
+					(IBinding data) => (data as Version).Encodings,
+					false, ()=>new  List<Encoding>(), ()=>new Encoding()),
+		new PropertyListString ("URI", 
+					(IBinding data, List<string>? value) => {(data as Version).URI = value;}, 
+					(IBinding data) => (data as Version).URI )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -385,17 +389,12 @@ public partial class Version : BaseMessage {
 	public static readonly new Binding<Version> _binding = new (
 			new() {
 
-			{ "Major", new PropertyInteger32 ("Major", 
-					(IBinding data, int? value) => {(data as Version).Major = value;}, (IBinding data) => (data as Version).Major )},
-			{ "Minor", new PropertyInteger32 ("Minor", 
-					(IBinding data, int? value) => {(data as Version).Minor = value;}, (IBinding data) => (data as Version).Minor )},
-			{ "Encodings", new PropertyListStruct ("Encodings", typeof (Encoding),
-					(IBinding data, object? value) => {(data as Version).Encodings = value as List<Encoding>;}, (IBinding data) => (data as Version).Encodings,
-					false, ()=>new  List<Encoding>(), ()=>new Encoding())},
-			{ "URI", new PropertyListString ("URI", 
-					(IBinding data, List<string>? value) => {(data as Version).URI = value;}, (IBinding data) => (data as Version).URI )}
+			{ "Major", _properties [0]},
+			{ "Minor", _properties [1]},
+			{ "Encodings", _properties [2]},
+			{ "URI", _properties [3]}
         }, __Tag,() => new Version(), () => new List<Version>(), () => new Dictionary<string,Version>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -412,7 +411,7 @@ public partial class Version : BaseMessage {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -430,29 +429,6 @@ public partial class Version : BaseMessage {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Version();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new Version FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Version;
-			}
-		var Result = new Version ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -461,21 +437,33 @@ public partial class Version : BaseMessage {
 	/// Describes a message content encoding.
 	/// </summary>
 public partial class Encoding : BaseMessage {
-        /// <summary>
-        ///The IANA encoding name
-        /// </summary>
+    /// <summary>
+    ///The IANA encoding name
+    /// </summary>
 
 	[JsonPropertyName("ID")]
 	public virtual List<string>?					ID  {get; set;}
-        /// <summary>
-        ///For encodings that employ a named dictionary for tag or data
-        ///compression, the name of the dictionary as defined by that 
-        ///encoding scheme. 
-        /// </summary>
+    /// <summary>
+    ///For encodings that employ a named dictionary for tag or data
+    ///compression, the name of the dictionary as defined by that 
+    ///encoding scheme. 
+    /// </summary>
 
 	[JsonPropertyName("Dictionary")]
 	public virtual List<string>?					Dictionary  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyListString ("ID", 
+					(IBinding data, List<string>? value) => {(data as Encoding).ID = value;}, 
+					(IBinding data) => (data as Encoding).ID ),
+		new PropertyListString ("Dictionary", 
+					(IBinding data, List<string>? value) => {(data as Encoding).Dictionary = value;}, 
+					(IBinding data) => (data as Encoding).Dictionary )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -484,12 +472,10 @@ public partial class Encoding : BaseMessage {
 	public static readonly new Binding<Encoding> _binding = new (
 			new() {
 
-			{ "ID", new PropertyListString ("ID", 
-					(IBinding data, List<string>? value) => {(data as Encoding).ID = value;}, (IBinding data) => (data as Encoding).ID )},
-			{ "Dictionary", new PropertyListString ("Dictionary", 
-					(IBinding data, List<string>? value) => {(data as Encoding).Dictionary = value;}, (IBinding data) => (data as Encoding).Dictionary )}
+			{ "ID", _properties [0]},
+			{ "Dictionary", _properties [1]}
         }, __Tag,() => new Encoding(), () => new List<Encoding>(), () => new Dictionary<string,Encoding>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -506,7 +492,7 @@ public partial class Encoding : BaseMessage {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -524,29 +510,6 @@ public partial class Encoding : BaseMessage {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Encoding();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new Encoding FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Encoding;
-			}
-		var Result = new Encoding ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -556,6 +519,12 @@ public partial class Encoding : BaseMessage {
 	/// </summary>
 public partial class HelloRequest : Request {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -565,7 +534,7 @@ public partial class HelloRequest : Request {
 			new() {
 
         }, __Tag,() => new HelloRequest(), () => new List<HelloRequest>(), () => new Dictionary<string,HelloRequest>(),Request._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -583,7 +552,7 @@ public partial class HelloRequest : Request {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -601,29 +570,6 @@ public partial class HelloRequest : Request {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new HelloRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new HelloRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as HelloRequest;
-			}
-		var Result = new HelloRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -632,20 +578,34 @@ public partial class HelloRequest : Request {
 	/// Always reports success. Describes the configuration of the service.
 	/// </summary>
 public partial class HelloResponse : Response {
-        /// <summary>
-        ///Enumerates the protocol versions supported
-        /// </summary>
+    /// <summary>
+    ///Enumerates the protocol versions supported
+    /// </summary>
 
 	[JsonPropertyName("Version")]
-	public virtual Version?					Version  {get; set;}
+	public virtual Version?					Version  {get; set;} //
 
-        /// <summary>
-        ///Enumerates alternate protocol version(s) supported
-        /// </summary>
+    /// <summary>
+    ///Enumerates alternate protocol version(s) supported
+    /// </summary>
 
 	[JsonPropertyName("Alternates")]
 	public virtual List<Version>?					Alternates  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("Version", typeof (Version),
+					(IBinding data, object? value) => {(data as HelloResponse).Version = value as Version;}, 
+					(IBinding data) => (data as HelloResponse).Version,
+					false, ()=>new  Version(), ()=>new Version()),
+		new PropertyListStruct ("Alternates", typeof (Version),
+					(IBinding data, object? value) => {(data as HelloResponse).Alternates = value as List<Version>;}, 
+					(IBinding data) => (data as HelloResponse).Alternates,
+					false, ()=>new  List<Version>(), ()=>new Version())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -654,14 +614,10 @@ public partial class HelloResponse : Response {
 	public static readonly new Binding<HelloResponse> _binding = new (
 			new() {
 
-			{ "Version", new PropertyStruct ("Version", typeof (Version),
-					(IBinding data, object? value) => {(data as HelloResponse).Version = value as Version;}, (IBinding data) => (data as HelloResponse).Version,
-					false, ()=>new  Version(), ()=>new Version())},
-			{ "Alternates", new PropertyListStruct ("Alternates", typeof (Version),
-					(IBinding data, object? value) => {(data as HelloResponse).Alternates = value as List<Version>;}, (IBinding data) => (data as HelloResponse).Alternates,
-					false, ()=>new  List<Version>(), ()=>new Version())}
+			{ "Version", _properties [0]},
+			{ "Alternates", _properties [1]}
         }, __Tag,() => new HelloResponse(), () => new List<HelloResponse>(), () => new Dictionary<string,HelloResponse>(),Response._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -679,7 +635,7 @@ public partial class HelloResponse : Response {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -696,29 +652,6 @@ public partial class HelloResponse : Response {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new HelloResponse();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new HelloResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as HelloResponse;
-			}
-		var Result = new HelloResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

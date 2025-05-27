@@ -46,12 +46,12 @@ public enum EnvelopeValidation {
 /// <summary>
 /// Typed DareEnvelope.
 /// </summary>
-public partial class EnvelopedJson : DareEnvelope {
+public partial class Enveloped : DareEnvelope {
 
     /// <summary>
     /// Default constructor, used in deserialization.
     /// </summary>
-    public EnvelopedJson() {
+    public Enveloped() {
         }
 
     /// <summary>
@@ -64,7 +64,7 @@ public partial class EnvelopedJson : DareEnvelope {
     /// <param name="encryptionKey">The encryption key.</param>
     /// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
     /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
-    public EnvelopedJson(
+    public Enveloped(
                 JsonObject data,
                 CryptographicKey signingKey = null,
                 CryptographicKey encryptionKey = null,
@@ -82,7 +82,7 @@ public partial class EnvelopedJson : DareEnvelope {
 /// Typed DareEnvelope.
 /// </summary>
 /// <typeparam name="T">The type of the wrapped data item.</typeparam>
-public partial class Enveloped<T> : EnvelopedJson where T : JsonObject {
+public partial class Enveloped<T> : Enveloped where T : JsonObject {
 
     DareEnvelope Untyped;
 

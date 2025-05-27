@@ -20,11 +20,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Carnet.CarnetProtocol._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Carnet.CarnetProtocol._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -109,26 +104,17 @@
              Describes a carnet issuer.
              </summary>
         </member>
+        <member name="P:Goedel.Carnet.ProfileCarnet._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Carnet.ProfileCarnet._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Carnet.ProfileCarnet._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Carnet.ProfileCarnet._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Carnet.ProfileCarnet._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Carnet.ProfileCarnet._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Carnet.ProfileCarnet._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.ProfileCarnet._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.ProfileCarnet._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Carnet.ProfileCarnet._Tag">
             <summary>
@@ -214,26 +200,17 @@
             The activation data for the registry.
              </summary>
         </member>
+        <member name="P:Goedel.Carnet.CatalogedCarnet._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Carnet.CatalogedCarnet._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Carnet.CatalogedCarnet._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Carnet.CatalogedCarnet._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Carnet.CatalogedCarnet._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Carnet.CatalogedCarnet._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Carnet.CatalogedCarnet._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.CatalogedCarnet._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.CatalogedCarnet._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Carnet.CatalogedCarnet._Tag">
             <summary>
@@ -276,26 +253,17 @@
              Base class for all requests made to a registrar
              </summary>
         </member>
+        <member name="P:Goedel.Carnet.CarnetRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Carnet.CarnetRequest._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Carnet.CarnetRequest._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Carnet.CarnetRequest._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Carnet.CarnetRequest._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Carnet.CarnetRequest._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Carnet.CarnetRequest._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.CarnetRequest._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.CarnetRequest._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Carnet.CarnetRequest._Tag">
             <summary>
@@ -320,26 +288,17 @@
              status code and status description fields.
              </summary>
         </member>
+        <member name="P:Goedel.Carnet.CarnetResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Carnet.CarnetResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Carnet.CarnetResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Carnet.CarnetResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Carnet.CarnetResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Carnet.CarnetResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Carnet.CarnetResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.CarnetResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Carnet.CarnetResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Carnet.CarnetResponse._Tag">
             <summary>

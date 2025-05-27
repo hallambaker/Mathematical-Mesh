@@ -30,6 +30,8 @@ using System.Text.Json;
 
 namespace Goedel.XUnit;
 
+
+
 public partial class GoedelProtocol {
 
     public static GoedelProtocol Test() => new();
@@ -95,6 +97,18 @@ public partial class GoedelProtocol {
         TestInstanceB2();
         TestArrayB2();
         TestStructB2();
+        }
+
+    [Fact]
+
+    public void TestEncodeDecode4() {
+        var First = TestDataBasic;
+
+        var FirstJSON = First.GetBytes(DataEncoding.JSON, true);
+        Console.WriteLine($"Input: {FirstJSON.ToUTF8()}");
+
+        var Second = JsonObject.ParseTagged(FirstJSON) as MultiInstance;
+        CheckEqual(First, Second);
         }
 
     [Fact]
@@ -183,6 +197,11 @@ public partial class GoedelProtocol {
 
     #region // Test Data
     static readonly MultiInstance TestDataBasic = new() {
+        EnvelopeGeneric = new () {
+            Header = "head",
+            Body = "bod",
+            Trailer = "trailer"
+            },
         FieldBoolean = true,
         FieldInteger = 1,
         FieldDateTime = System.DateTime.UtcNow,

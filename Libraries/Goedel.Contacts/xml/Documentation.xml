@@ -18,11 +18,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Calandars._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Contacts.Calandars._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -294,26 +289,17 @@
             the map:
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.JsCalendarEntry._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.JsCalendarEntry._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.JsCalendarEntry._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.JsCalendarEntry._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JsCalendarEntry._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JsCalendarEntry._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.JsCalendarEntry._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JsCalendarEntry._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JsCalendarEntry._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.JsCalendarEntry._Tag">
             <summary>
@@ -359,26 +345,17 @@
             or a vendor-specific value (see Section 3.3):
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.JsEvent._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.JsEvent._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.JsEvent._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.JsEvent._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JsEvent._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JsEvent._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.JsEvent._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JsEvent._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JsEvent._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.JsEvent._Tag">
             <summary>
@@ -439,26 +416,17 @@
             (Section 4.4.6) was last updated.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.JsTask._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.JsTask._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.JsTask._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.JsTask._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JsTask._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JsTask._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.JsTask._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JsTask._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JsTask._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.JsTask._Tag">
             <summary>
@@ -492,26 +460,17 @@
             may be retrieved. The value MUST be a URI.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.JsGroup._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.JsGroup._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.JsGroup._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.JsGroup._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JsGroup._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JsGroup._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.JsGroup._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JsGroup._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JsGroup._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.JsGroup._Tag">
             <summary>
@@ -585,26 +544,17 @@
             no links, this MUST be omitted (rather than specified as an empty set).
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Location._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Location._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Location._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Location._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Location._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Location._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Location._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Location._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Location._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Location._Tag">
             <summary>
@@ -672,26 +622,17 @@
             This is a human-readable, plain-text description of the resource.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Link._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Link._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Link._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Link._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Link._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Link._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Link._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Link._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Link._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Link._Tag">
             <summary>
@@ -740,26 +681,17 @@
             MUST be true.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.VirtualLocation._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.VirtualLocation._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.VirtualLocation._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.VirtualLocation._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.VirtualLocation._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.VirtualLocation._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.VirtualLocation._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.VirtualLocation._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.VirtualLocation._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.VirtualLocation._Tag">
             <summary>
@@ -940,26 +872,17 @@
             This represents the percent completion of the participant for this task. The property value MUST be a positive integer between 0 and 100.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Participant._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Participant._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Participant._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Participant._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Participant._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Participant._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Participant._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Participant._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Participant._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Participant._Tag">
             <summary>
@@ -1116,26 +1039,17 @@
             time zone specified in the JSCalendar object's timeZone property.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.RecurrenceRule._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.RecurrenceRule._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.RecurrenceRule._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.RecurrenceRule._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.RecurrenceRule._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.RecurrenceRule._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.RecurrenceRule._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.RecurrenceRule._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.RecurrenceRule._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.RecurrenceRule._Tag">
             <summary>
@@ -1168,26 +1082,17 @@
             as for the firstDayOfWeek recurrenceRule property.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.NDay._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NDay._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.NDay._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.NDay._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.NDay._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.NDay._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.NDay._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.NDay._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.NDay._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.NDay._Tag">
             <summary>
@@ -1245,26 +1150,17 @@
             This describes how to alert the user.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Alert._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Alert._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Alert._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Alert._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Alert._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Alert._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Alert._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Alert._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Alert._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Alert._Tag">
             <summary>
@@ -1310,26 +1206,17 @@
             This defines a specific UTC date-time when the alert is triggered.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Trigger._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Trigger._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Trigger._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Trigger._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Trigger._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Trigger._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Trigger._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Trigger._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Trigger._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Trigger._Tag">
             <summary>
@@ -1401,26 +1288,17 @@
             MUST be preserved during conversion.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.TimeZone._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.TimeZone._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.TimeZone._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.TimeZone._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.TimeZone._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.TimeZone._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.TimeZone._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.TimeZone._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.TimeZone._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.TimeZone._Tag">
             <summary>
@@ -1494,26 +1372,17 @@
             MUST be preserved during conversion.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.TimeZoneRule._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.TimeZoneRule._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.TimeZoneRule._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.TimeZoneRule._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.TimeZoneRule._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.TimeZoneRule._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.TimeZoneRule._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.TimeZoneRule._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.TimeZoneRule._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.TimeZoneRule._Tag">
             <summary>
@@ -1537,26 +1406,17 @@
               Empty object used in recurrenceOverrides
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.EmptyPatchObject._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.EmptyPatchObject._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.EmptyPatchObject._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.EmptyPatchObject._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.EmptyPatchObject._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.EmptyPatchObject._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.EmptyPatchObject._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.EmptyPatchObject._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.EmptyPatchObject._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.EmptyPatchObject._Tag">
             <summary>
@@ -1591,11 +1451,6 @@
         <member name="F:Goedel.Contacts.Contacts.__Tag">
             <summary>
             Tag identifying this class
-            </summary>
-        </member>
-        <member name="P:Goedel.Contacts.Contacts._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
             </summary>
         </member>
         <member name="P:Goedel.Contacts.Contacts._BindingDictionary">
@@ -1786,26 +1641,17 @@
             Specifies groups of related email addresses and online services.
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.JsContact._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.JsContact._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.JsContact._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.JsContact._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JsContact._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JsContact._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.JsContact._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JsContact._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JsContact._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.JsContact._Tag">
             <summary>
@@ -1905,26 +1751,17 @@
             A custom label for the value. 
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Resource._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Resource._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Resource._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Resource._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Resource._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Resource._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Resource._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Resource._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Resource._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Resource._Tag">
             <summary>
@@ -2003,26 +1840,17 @@
             The phonetic system used in the NameComponent phonetic property.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Name._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Name._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Name._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Name._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Name._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Name._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Name._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Name._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Name._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Name._Tag">
             <summary>
@@ -2071,26 +1899,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.NameComponent._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NameComponent._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.NameComponent._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.NameComponent._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.NameComponent._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.NameComponent._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.NameComponent._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.NameComponent._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.NameComponent._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.NameComponent._Tag">
             <summary>
@@ -2131,26 +1950,17 @@
             The preference of the nickname in relation to other nicknames. 
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.NickName._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NickName._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.NickName._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.NickName._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.NickName._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.NickName._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.NickName._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.NickName._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.NickName._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.NickName._Tag">
             <summary>
@@ -2202,26 +2012,17 @@
             example, membership in a choir may only apply in a private context.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Organization._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Organization._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Organization._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Organization._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Organization._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Organization._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Organization._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Organization._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Organization._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Organization._Tag">
             <summary>
@@ -2258,26 +2059,17 @@
             property, the name property value MAY be used for comparison.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.OrgUnit._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.OrgUnit._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.OrgUnit._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.OrgUnit._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.OrgUnit._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.OrgUnit._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.OrgUnit._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.OrgUnit._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.OrgUnit._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.OrgUnit._Tag">
             <summary>
@@ -2316,26 +2108,17 @@
             The pronouns that the contact chooses to use for themselves.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.SpeakToAs._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.SpeakToAs._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.SpeakToAs._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.SpeakToAs._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.SpeakToAs._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.SpeakToAs._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.SpeakToAs._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.SpeakToAs._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.SpeakToAs._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.SpeakToAs._Tag">
             <summary>
@@ -2378,26 +2161,17 @@
             The preference of the pronouns in relation to other pronouns in the same context.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Pronouns._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Pronouns._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Pronouns._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Pronouns._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Pronouns._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Pronouns._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Pronouns._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Pronouns._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Pronouns._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Pronouns._Tag">
             <summary>
@@ -2440,26 +2214,17 @@
             
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Title._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Title._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Title._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Title._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Title._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Title._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Title._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Title._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Title._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Title._Tag">
             <summary>
@@ -2512,26 +2277,17 @@
             authenticate the updated contact information and their use.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.EmailAddress._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.EmailAddress._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.EmailAddress._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.EmailAddress._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.EmailAddress._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.EmailAddress._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.EmailAddress._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.EmailAddress._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.EmailAddress._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.EmailAddress._Tag">
             <summary>
@@ -2601,26 +2357,17 @@
             authenticate the updated contact information and their use.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.OnlineService._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.OnlineService._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.OnlineService._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.OnlineService._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.OnlineService._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.OnlineService._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.OnlineService._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.OnlineService._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.OnlineService._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.OnlineService._Tag">
             <summary>
@@ -2693,26 +2440,17 @@
             A custom label for the value.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Phone._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Phone._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Phone._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Phone._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Phone._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Phone._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Phone._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Phone._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Phone._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Phone._Tag">
             <summary>
@@ -2753,26 +2491,17 @@
             The preference of the language in relation to other languages of the same contexts. 
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.LanguagePref._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.LanguagePref._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.LanguagePref._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.LanguagePref._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.LanguagePref._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.LanguagePref._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.LanguagePref._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.LanguagePref._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.LanguagePref._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.LanguagePref._Tag">
             <summary>
@@ -2797,26 +2526,17 @@
               to look up free-busy information.
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.Calendar._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Calendar._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Calendar._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Calendar._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Calendar._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Calendar._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Calendar._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Calendar._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Calendar._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Calendar._Tag">
             <summary>
@@ -2865,26 +2585,17 @@
             A custom label for the scheduling address. 
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.SchedulingAddress._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.SchedulingAddress._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.SchedulingAddress._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.SchedulingAddress._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.SchedulingAddress._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.SchedulingAddress._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.SchedulingAddress._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.SchedulingAddress._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.SchedulingAddress._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.SchedulingAddress._Tag">
             <summary>
@@ -2978,26 +2689,17 @@
             The phonetic system used in the AddressComponent phonetic property.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Address._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Address._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Address._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Address._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Address._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Address._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Address._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Address._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Address._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Address._Tag">
             <summary>
@@ -3042,26 +2744,17 @@
             properties MUST be set. 
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.AddressComponent._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.AddressComponent._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.AddressComponent._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.AddressComponent._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.AddressComponent._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.AddressComponent._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.AddressComponent._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.AddressComponent._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.AddressComponent._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.AddressComponent._Tag">
             <summary>
@@ -3086,26 +2779,17 @@
               with the entity represented by the Card.
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.CryptoKey._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.CryptoKey._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.CryptoKey._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.CryptoKey._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.CryptoKey._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.CryptoKey._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.CryptoKey._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.CryptoKey._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.CryptoKey._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.CryptoKey._Tag">
             <summary>
@@ -3138,26 +2822,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.ContactDirectory._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.ContactDirectory._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.ContactDirectory._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.ContactDirectory._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.ContactDirectory._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.ContactDirectory._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.ContactDirectory._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.ContactDirectory._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.ContactDirectory._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.ContactDirectory._Tag">
             <summary>
@@ -3181,26 +2856,17 @@
               The links to resources that do not fit any of the other use-case-specific resource properties.
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.ResourceLink._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.ResourceLink._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.ResourceLink._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.ResourceLink._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.ResourceLink._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.ResourceLink._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.ResourceLink._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.ResourceLink._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.ResourceLink._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.ResourceLink._Tag">
             <summary>
@@ -3225,26 +2891,17 @@
               with the entity represented by the Card.
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.Media._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Media._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Media._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Media._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Media._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Media._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Media._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Media._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Media._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Media._Tag">
             <summary>
@@ -3290,26 +2947,17 @@
             An address associated with this anniversary, e.g., the place of birth or death.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Anniversary._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Anniversary._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Anniversary._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Anniversary._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Anniversary._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Anniversary._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Anniversary._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Anniversary._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Anniversary._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Anniversary._Tag">
             <summary>
@@ -3370,26 +3018,17 @@
             The point in time in UTC time.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.TimeStamp._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.TimeStamp._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.TimeStamp._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.TimeStamp._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.TimeStamp._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.TimeStamp._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.TimeStamp._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.TimeStamp._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.TimeStamp._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.TimeStamp._Tag">
             <summary>
@@ -3432,26 +3071,17 @@
             The author of this note.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Note._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Note._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Note._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Note._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Note._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Note._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Note._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Note._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Note._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Note._Tag">
             <summary>
@@ -3490,26 +3120,17 @@
             The URI value that identifies the author.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Author._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Author._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Author._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Author._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Author._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Author._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Author._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Author._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Author._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Author._Tag">
             <summary>
@@ -3566,26 +3187,17 @@
             A custom label. 
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.PersonalInfo._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.PersonalInfo._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.PersonalInfo._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.PersonalInfo._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.PersonalInfo._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.PersonalInfo._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.PersonalInfo._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.PersonalInfo._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.PersonalInfo._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.PersonalInfo._Tag">
             <summary>
@@ -3618,26 +3230,17 @@
             authenticate the updated contact information and their use.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Update._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Update._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Update._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Update._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Update._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Update._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Update._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Update._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Update._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Update._Tag">
             <summary>
@@ -3669,26 +3272,17 @@
             A Json Web Key Set.
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.JsonWebKeySet._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.JsonWebKeySet._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.JsonWebKeySet._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.JsonWebKeySet._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JsonWebKeySet._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JsonWebKeySet._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.JsonWebKeySet._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JsonWebKeySet._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JsonWebKeySet._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.JsonWebKeySet._Tag">
             <summary>
@@ -3716,26 +3310,17 @@
             to each MUST be true.
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.ServiceGroup._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.ServiceGroup._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.ServiceGroup._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.ServiceGroup._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.ServiceGroup._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.ServiceGroup._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.ServiceGroup._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.ServiceGroup._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.ServiceGroup._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.ServiceGroup._Tag">
             <summary>
@@ -3765,11 +3350,6 @@
         <member name="F:Goedel.Contacts.Devices.__Tag">
             <summary>
             Tag identifying this class
-            </summary>
-        </member>
-        <member name="P:Goedel.Contacts.Devices._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
             </summary>
         </member>
         <member name="P:Goedel.Contacts.Devices._BindingDictionary">
@@ -3894,26 +3474,17 @@
             The CryptoKey object is defined in JSContact and JSContact Cryptographic Extensions.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.JsDevice._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.JsDevice._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.JsDevice._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.JsDevice._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JsDevice._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JsDevice._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JsDevice._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.JsDevice._Tag">
             <summary>
@@ -3971,26 +3542,17 @@
             device.
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.Network._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Network._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Network._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Network._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Network._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Network._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Network._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Network._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Network._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Network._Tag">
             <summary>
@@ -4031,26 +3593,17 @@
             Interval months. If specified, the days property is ignored.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Maintenance._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Maintenance._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Maintenance._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Maintenance._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Maintenance._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Maintenance._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Maintenance._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Maintenance._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Maintenance._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Maintenance._Tag">
             <summary>
@@ -4074,26 +3627,17 @@
               Suppliers for devices and accessories related to the device.
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.Supplier._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Supplier._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Supplier._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Supplier._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Supplier._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Supplier._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Supplier._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Supplier._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Supplier._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Supplier._Tag">
             <summary>
@@ -4129,26 +3673,17 @@
             A list of URIs linking to suppliers for the consumable.
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.RelatedItem._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.RelatedItem._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.RelatedItem._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.RelatedItem._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.RelatedItem._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.RelatedItem._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.RelatedItem._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.RelatedItem._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.RelatedItem._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.RelatedItem._Tag">
             <summary>
@@ -4179,26 +3714,17 @@
             The dimension specifications
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.Component._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Component._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Component._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Component._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Component._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Component._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Component._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Component._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Component._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Component._Tag">
             <summary>
@@ -4259,26 +3785,17 @@
             The maximum temperature for the device
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.Dimensions._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Dimensions._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Dimensions._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Dimensions._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Dimensions._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Dimensions._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Dimensions._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Dimensions._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Dimensions._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Dimensions._Tag">
             <summary>
@@ -4338,11 +3855,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.JmapBaseSchema._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Contacts.JmapBaseSchema._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -4385,26 +3897,17 @@
             The date and time this object was last modified.
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.JmapBase._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.JmapBase._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.JmapBase._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.JmapBase._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JmapBase._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.JmapBase._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.JmapBase._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JmapBase._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.JmapBase._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.JmapBase._Tag">
             <summary>
@@ -4431,26 +3934,17 @@
             The relationships, each one MUST have the value true.
             </summary>
         </member>
+        <member name="P:Goedel.Contacts.Relation._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.Relation._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Contacts.Relation._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Contacts.Relation._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Relation._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Contacts.Relation._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.Relation._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Relation._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Contacts.Relation._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Contacts.Relation._Tag">
             <summary>

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:57:00 AM
+//  This file was automatically generated at 5/27/2025 3:12:36 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -69,6 +69,7 @@ public abstract partial class JsonShellResult : global::Goedel.Protocol.JsonObje
     /// </summary>
 	public new const string __Tag = "JsonShellResult";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -78,7 +79,7 @@ public abstract partial class JsonShellResult : global::Goedel.Protocol.JsonObje
 
 	    {"ShellResult", ShellResult._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -100,7 +101,7 @@ public abstract partial class JsonShellResult : global::Goedel.Protocol.JsonObje
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -127,19 +128,31 @@ public abstract partial class JsonShellResult : global::Goedel.Protocol.JsonObje
 	/// <summary>
 	/// </summary>
 public partial class ShellResult : JsonShellResult {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Success")]
-	public virtual bool?					Success  {get; set;}
+	public virtual bool?					Success  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("Reason")]
-	public virtual string?					Reason  {get; set;}
+	public virtual string?					Reason  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyBoolean ("Success", 
+					(IBinding data, bool? value) => {(data as ShellResult).Success = value;}, 
+					(IBinding data) => (data as ShellResult).Success ),
+		new PropertyString ("Reason", 
+					(IBinding data, string? value) => {(data as ShellResult).Reason = value;}, 
+					(IBinding data) => (data as ShellResult).Reason )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -148,12 +161,10 @@ public partial class ShellResult : JsonShellResult {
 	public static readonly new Binding<ShellResult> _binding = new (
 			new() {
 
-			{ "Success", new PropertyBoolean ("Success", 
-					(IBinding data, bool? value) => {(data as ShellResult).Success = value;}, (IBinding data) => (data as ShellResult).Success )},
-			{ "Reason", new PropertyString ("Reason", 
-					(IBinding data, string? value) => {(data as ShellResult).Reason = value;}, (IBinding data) => (data as ShellResult).Reason )}
+			{ "Success", _properties [0]},
+			{ "Reason", _properties [1]}
         }, __Tag,() => new ShellResult(), () => new List<ShellResult>(), () => new Dictionary<string,ShellResult>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -170,7 +181,7 @@ public partial class ShellResult : JsonShellResult {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -187,29 +198,6 @@ public partial class ShellResult : JsonShellResult {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ShellResult();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ShellResult FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ShellResult;
-			}
-		var Result = new ShellResult ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:57:15 AM
+//  This file was automatically generated at 5/27/2025 3:12:55 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -73,6 +73,7 @@ public abstract partial class CallsignRegistry : global::Goedel.Protocol.JsonObj
     /// </summary>
 	public new const string __Tag = "CallsignRegistry";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -84,7 +85,7 @@ public abstract partial class CallsignRegistry : global::Goedel.Protocol.JsonObj
 	    {"ActivationApplicationRegistry", ActivationApplicationRegistry._Factory},
 	    {"ApplicationEntryRegistry", ApplicationEntryRegistry._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -108,7 +109,7 @@ public abstract partial class CallsignRegistry : global::Goedel.Protocol.JsonObj
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -135,40 +136,64 @@ public abstract partial class CallsignRegistry : global::Goedel.Protocol.JsonObj
 	/// <summary>
 	/// </summary>
 public partial class CatalogedRegistry : CatalogedApplication {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("MaximumRequestLength")]
-	public virtual int?					MaximumRequestLength  {get; set;}
+	public virtual int?					MaximumRequestLength  {get; set;} //
 
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("MaximumCallsignLength")]
-	public virtual int?					MaximumCallsignLength  {get; set;}
+	public virtual int?					MaximumCallsignLength  {get; set;} //
 
-        /// <summary>
-        ///The connection allowing control of the registry.
-        /// </summary>
+    /// <summary>
+    ///The connection allowing control of the registry.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedConnectionAddress")]
-	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;}
+	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;} //
 
-        /// <summary>
-        ///The Mesh profile
-        /// </summary>
+    /// <summary>
+    ///The Mesh profile
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedProfileRegistry")]
-	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileRegistry  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileRegistry  {get; set;} //
 
-        /// <summary>
-        ///The activation data for the registry.
-        /// </summary>
+    /// <summary>
+    ///The activation data for the registry.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedActivationCommon")]
-	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyInteger32 ("MaximumRequestLength", 
+					(IBinding data, int? value) => {(data as CatalogedRegistry).MaximumRequestLength = value;}, 
+					(IBinding data) => (data as CatalogedRegistry).MaximumRequestLength ),
+		new PropertyInteger32 ("MaximumCallsignLength", 
+					(IBinding data, int? value) => {(data as CatalogedRegistry).MaximumCallsignLength = value;}, 
+					(IBinding data) => (data as CatalogedRegistry).MaximumCallsignLength ),
+		new PropertyStruct ("EnvelopedConnectionAddress", typeof (Enveloped<ConnectionStripped>),
+					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, 
+					(IBinding data) => (data as CatalogedRegistry).EnvelopedConnectionAddress,
+					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>()),
+		new PropertyStruct ("EnvelopedProfileRegistry", typeof (Enveloped<ProfileAccount>),
+					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedProfileRegistry = value as Enveloped<ProfileAccount>;}, 
+					(IBinding data) => (data as CatalogedRegistry).EnvelopedProfileRegistry,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
+		new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
+					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, 
+					(IBinding data) => (data as CatalogedRegistry).EnvelopedActivationCommon,
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -177,21 +202,13 @@ public partial class CatalogedRegistry : CatalogedApplication {
 	public static readonly new Binding<CatalogedRegistry> _binding = new (
 			new() {
 
-			{ "MaximumRequestLength", new PropertyInteger32 ("MaximumRequestLength", 
-					(IBinding data, int? value) => {(data as CatalogedRegistry).MaximumRequestLength = value;}, (IBinding data) => (data as CatalogedRegistry).MaximumRequestLength )},
-			{ "MaximumCallsignLength", new PropertyInteger32 ("MaximumCallsignLength", 
-					(IBinding data, int? value) => {(data as CatalogedRegistry).MaximumCallsignLength = value;}, (IBinding data) => (data as CatalogedRegistry).MaximumCallsignLength )},
-			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", typeof (Enveloped<ConnectionStripped>),
-					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedRegistry).EnvelopedConnectionAddress,
-					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())},
-			{ "EnvelopedProfileRegistry", new PropertyStruct ("EnvelopedProfileRegistry", typeof (Enveloped<ProfileAccount>),
-					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedProfileRegistry = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedRegistry).EnvelopedProfileRegistry,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
-			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
-					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedRegistry).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())}
+			{ "MaximumRequestLength", _properties [0]},
+			{ "MaximumCallsignLength", _properties [1]},
+			{ "EnvelopedConnectionAddress", _properties [2]},
+			{ "EnvelopedProfileRegistry", _properties [3]},
+			{ "EnvelopedActivationCommon", _properties [4]}
         }, __Tag,() => new CatalogedRegistry(), () => new List<CatalogedRegistry>(), () => new Dictionary<string,CatalogedRegistry>(),CatalogedApplication._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -209,7 +226,7 @@ public partial class CatalogedRegistry : CatalogedApplication {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -227,50 +244,41 @@ public partial class CatalogedRegistry : CatalogedApplication {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedRegistry();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CatalogedRegistry FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedRegistry;
-			}
-		var Result = new CatalogedRegistry ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ActivationApplicationRegistry : ActivationApplication {
-        /// <summary>
-        ///Key used to decrypt registry messages.
-        /// </summary>
+    /// <summary>
+    ///Key used to decrypt registry messages.
+    /// </summary>
 
 	[JsonPropertyName("AccountEncryption")]
-	public virtual KeyData?					AccountEncryption  {get; set;}
+	public virtual KeyData?					AccountEncryption  {get; set;} //
 
-        /// <summary>
-        ///Key or capability used to sign the registry log
-        /// </summary>
+    /// <summary>
+    ///Key or capability used to sign the registry log
+    /// </summary>
 
 	[JsonPropertyName("AdministratorSignature")]
-	public virtual KeyData?					AdministratorSignature  {get; set;}
+	public virtual KeyData?					AdministratorSignature  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("AccountEncryption", typeof (KeyData),
+					(IBinding data, object? value) => {(data as ActivationApplicationRegistry).AccountEncryption = value as KeyData;}, 
+					(IBinding data) => (data as ActivationApplicationRegistry).AccountEncryption,
+					false, ()=>new  KeyData(), ()=>new KeyData()),
+		new PropertyStruct ("AdministratorSignature", typeof (KeyData),
+					(IBinding data, object? value) => {(data as ActivationApplicationRegistry).AdministratorSignature = value as KeyData;}, 
+					(IBinding data) => (data as ActivationApplicationRegistry).AdministratorSignature,
+					false, ()=>new  KeyData(), ()=>new KeyData())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -279,14 +287,10 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
 	public static readonly new Binding<ActivationApplicationRegistry> _binding = new (
 			new() {
 
-			{ "AccountEncryption", new PropertyStruct ("AccountEncryption", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationRegistry).AccountEncryption = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRegistry).AccountEncryption,
-					false, ()=>new  KeyData(), ()=>new KeyData())},
-			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationRegistry).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRegistry).AdministratorSignature,
-					false, ()=>new  KeyData(), ()=>new KeyData())}
+			{ "AccountEncryption", _properties [0]},
+			{ "AdministratorSignature", _properties [1]}
         }, __Tag,() => new ActivationApplicationRegistry(), () => new List<ActivationApplicationRegistry>(), () => new Dictionary<string,ActivationApplicationRegistry>(),ActivationApplication._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -304,7 +308,7 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -322,50 +326,41 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ActivationApplicationRegistry();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ActivationApplicationRegistry FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ActivationApplicationRegistry;
-			}
-		var Result = new ActivationApplicationRegistry ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntryRegistry : ApplicationEntry {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedActivation")]
-	public virtual Enveloped<ActivationApplicationRegistry>?					EnvelopedActivation  {get; set;}
+	public virtual Enveloped<ActivationApplicationRegistry>?					EnvelopedActivation  {get; set;} //
 
-        /// <summary>
-        ///Signed connection service delegation allowing the device to
-        ///access the account.
-        /// </summary>
+    /// <summary>
+    ///Signed connection service delegation allowing the device to
+    ///access the account.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedConnectionService")]
-	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("EnvelopedActivation", typeof (Enveloped<ActivationApplicationRegistry>),
+					(IBinding data, object? value) => {(data as ApplicationEntryRegistry).EnvelopedActivation = value as Enveloped<ActivationApplicationRegistry>;}, 
+					(IBinding data) => (data as ApplicationEntryRegistry).EnvelopedActivation,
+					false, ()=>new  Enveloped<ActivationApplicationRegistry>(), ()=>new Enveloped<ActivationApplicationRegistry>()),
+		new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
+					(IBinding data, object? value) => {(data as ApplicationEntryRegistry).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, 
+					(IBinding data) => (data as ApplicationEntryRegistry).EnvelopedConnectionService,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -374,14 +369,10 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
 	public static readonly new Binding<ApplicationEntryRegistry> _binding = new (
 			new() {
 
-			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", typeof (Enveloped<ActivationApplicationRegistry>),
-					(IBinding data, object? value) => {(data as ApplicationEntryRegistry).EnvelopedActivation = value as Enveloped<ActivationApplicationRegistry>;}, (IBinding data) => (data as ApplicationEntryRegistry).EnvelopedActivation,
-					false, ()=>new  Enveloped<ActivationApplicationRegistry>(), ()=>new Enveloped<ActivationApplicationRegistry>())},
-			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
-					(IBinding data, object? value) => {(data as ApplicationEntryRegistry).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as ApplicationEntryRegistry).EnvelopedConnectionService,
-					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())}
+			{ "EnvelopedActivation", _properties [0]},
+			{ "EnvelopedConnectionService", _properties [1]}
         }, __Tag,() => new ApplicationEntryRegistry(), () => new List<ApplicationEntryRegistry>(), () => new Dictionary<string,ApplicationEntryRegistry>(),ApplicationEntry._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -399,7 +390,7 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -416,29 +407,6 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ApplicationEntryRegistry();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ApplicationEntryRegistry FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ApplicationEntryRegistry;
-			}
-		var Result = new ApplicationEntryRegistry ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

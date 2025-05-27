@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:57:12 AM
+//  This file was automatically generated at 5/27/2025 3:12:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -72,6 +72,7 @@ public abstract partial class RepositoryProtocol : global::Goedel.Protocol.JsonO
     /// </summary>
 	public new const string __Tag = "RepositoryProtocol";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -88,7 +89,7 @@ public abstract partial class RepositoryProtocol : global::Goedel.Protocol.JsonO
 	    {"QueryRequest", QueryRequest._Factory},
 	    {"QueryResponse", QueryResponse._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -117,7 +118,7 @@ public abstract partial class RepositoryProtocol : global::Goedel.Protocol.JsonO
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -280,6 +281,12 @@ public partial class RepositoryServiceDirect: RepositoryServiceClient {
 	/// </summary>
 public partial class ProfileRepository : ProfileAccount {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -289,7 +296,7 @@ public partial class ProfileRepository : ProfileAccount {
 			new() {
 
         }, __Tag,() => new ProfileRepository(), () => new List<ProfileRepository>(), () => new Dictionary<string,ProfileRepository>(),ProfileAccount._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -307,7 +314,7 @@ public partial class ProfileRepository : ProfileAccount {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -325,57 +332,52 @@ public partial class ProfileRepository : ProfileAccount {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ProfileRepository();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ProfileRepository FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ProfileRepository;
-			}
-		var Result = new ProfileRepository ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class CatalogedRepository : CatalogedApplication {
-        /// <summary>
-        ///The connection allowing control of the registry.
-        /// </summary>
+    /// <summary>
+    ///The connection allowing control of the registry.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedConnectionAddress")]
-	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;}
+	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;} //
 
-        /// <summary>
-        ///The Mesh profile
-        /// </summary>
+    /// <summary>
+    ///The Mesh profile
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedProfileRepository")]
-	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileRepository  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileRepository  {get; set;} //
 
-        /// <summary>
-        ///The activation data for the registry.
-        /// </summary>
+    /// <summary>
+    ///The activation data for the registry.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedActivationCommon")]
-	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("EnvelopedConnectionAddress", typeof (Enveloped<ConnectionStripped>),
+					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, 
+					(IBinding data) => (data as CatalogedRepository).EnvelopedConnectionAddress,
+					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>()),
+		new PropertyStruct ("EnvelopedProfileRepository", typeof (Enveloped<ProfileAccount>),
+					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedProfileRepository = value as Enveloped<ProfileAccount>;}, 
+					(IBinding data) => (data as CatalogedRepository).EnvelopedProfileRepository,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
+		new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
+					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, 
+					(IBinding data) => (data as CatalogedRepository).EnvelopedActivationCommon,
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -384,17 +386,11 @@ public partial class CatalogedRepository : CatalogedApplication {
 	public static readonly new Binding<CatalogedRepository> _binding = new (
 			new() {
 
-			{ "EnvelopedConnectionAddress", new PropertyStruct ("EnvelopedConnectionAddress", typeof (Enveloped<ConnectionStripped>),
-					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, (IBinding data) => (data as CatalogedRepository).EnvelopedConnectionAddress,
-					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>())},
-			{ "EnvelopedProfileRepository", new PropertyStruct ("EnvelopedProfileRepository", typeof (Enveloped<ProfileAccount>),
-					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedProfileRepository = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedRepository).EnvelopedProfileRepository,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
-			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
-					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedRepository).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())}
+			{ "EnvelopedConnectionAddress", _properties [0]},
+			{ "EnvelopedProfileRepository", _properties [1]},
+			{ "EnvelopedActivationCommon", _properties [2]}
         }, __Tag,() => new CatalogedRepository(), () => new List<CatalogedRepository>(), () => new Dictionary<string,CatalogedRepository>(),CatalogedApplication._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -412,7 +408,7 @@ public partial class CatalogedRepository : CatalogedApplication {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -430,58 +426,53 @@ public partial class CatalogedRepository : CatalogedApplication {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedRepository();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CatalogedRepository FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedRepository;
-			}
-		var Result = new CatalogedRepository ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ActivationApplicationRepository : ActivationApplication {
-        /// <summary>
-        ///Key used to decrypt registry messages.
-        /// </summary>
+    /// <summary>
+    ///Key used to decrypt registry messages.
+    /// </summary>
 
 	[JsonPropertyName("AccountEncryption")]
-	public virtual KeyData?					AccountEncryption  {get; set;}
+	public virtual KeyData?					AccountEncryption  {get; set;} //
 
-        /// <summary>
-        ///Key or capability used to sign the registry log
-        /// </summary>
+    /// <summary>
+    ///Key or capability used to sign the registry log
+    /// </summary>
 
 	[JsonPropertyName("AdministratorSignature")]
-	public virtual KeyData?					AdministratorSignature  {get; set;}
+	public virtual KeyData?					AdministratorSignature  {get; set;} //
 
-        /// <summary>
-        ///Signed connection service delegation allowing the device to
-        ///access the account.
-        /// </summary>
+    /// <summary>
+    ///Signed connection service delegation allowing the device to
+    ///access the account.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedConnectionService")]
-	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("AccountEncryption", typeof (KeyData),
+					(IBinding data, object? value) => {(data as ActivationApplicationRepository).AccountEncryption = value as KeyData;}, 
+					(IBinding data) => (data as ActivationApplicationRepository).AccountEncryption,
+					false, ()=>new  KeyData(), ()=>new KeyData()),
+		new PropertyStruct ("AdministratorSignature", typeof (KeyData),
+					(IBinding data, object? value) => {(data as ActivationApplicationRepository).AdministratorSignature = value as KeyData;}, 
+					(IBinding data) => (data as ActivationApplicationRepository).AdministratorSignature,
+					false, ()=>new  KeyData(), ()=>new KeyData()),
+		new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
+					(IBinding data, object? value) => {(data as ActivationApplicationRepository).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, 
+					(IBinding data) => (data as ActivationApplicationRepository).EnvelopedConnectionService,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -490,17 +481,11 @@ public partial class ActivationApplicationRepository : ActivationApplication {
 	public static readonly new Binding<ActivationApplicationRepository> _binding = new (
 			new() {
 
-			{ "AccountEncryption", new PropertyStruct ("AccountEncryption", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationRepository).AccountEncryption = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRepository).AccountEncryption,
-					false, ()=>new  KeyData(), ()=>new KeyData())},
-			{ "AdministratorSignature", new PropertyStruct ("AdministratorSignature", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationRepository).AdministratorSignature = value as KeyData;}, (IBinding data) => (data as ActivationApplicationRepository).AdministratorSignature,
-					false, ()=>new  KeyData(), ()=>new KeyData())},
-			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
-					(IBinding data, object? value) => {(data as ActivationApplicationRepository).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as ActivationApplicationRepository).EnvelopedConnectionService,
-					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())}
+			{ "AccountEncryption", _properties [0]},
+			{ "AdministratorSignature", _properties [1]},
+			{ "EnvelopedConnectionService", _properties [2]}
         }, __Tag,() => new ActivationApplicationRepository(), () => new List<ActivationApplicationRepository>(), () => new Dictionary<string,ActivationApplicationRepository>(),ActivationApplication._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -518,7 +503,7 @@ public partial class ActivationApplicationRepository : ActivationApplication {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -536,42 +521,29 @@ public partial class ActivationApplicationRepository : ActivationApplication {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ActivationApplicationRepository();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ActivationApplicationRepository FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ActivationApplicationRepository;
-			}
-		var Result = new ActivationApplicationRepository ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntryRepository : ApplicationEntry {
-        /// <summary>
-        /// </summary>
+    /// <summary>
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedActivation")]
-	public virtual Enveloped<ActivationApplicationRepository>?					EnvelopedActivation  {get; set;}
+	public virtual Enveloped<ActivationApplicationRepository>?					EnvelopedActivation  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("EnvelopedActivation", typeof (Enveloped<ActivationApplicationRepository>),
+					(IBinding data, object? value) => {(data as ApplicationEntryRepository).EnvelopedActivation = value as Enveloped<ActivationApplicationRepository>;}, 
+					(IBinding data) => (data as ApplicationEntryRepository).EnvelopedActivation,
+					false, ()=>new  Enveloped<ActivationApplicationRepository>(), ()=>new Enveloped<ActivationApplicationRepository>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -580,11 +552,9 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
 	public static readonly new Binding<ApplicationEntryRepository> _binding = new (
 			new() {
 
-			{ "EnvelopedActivation", new PropertyStruct ("EnvelopedActivation", typeof (Enveloped<ActivationApplicationRepository>),
-					(IBinding data, object? value) => {(data as ApplicationEntryRepository).EnvelopedActivation = value as Enveloped<ActivationApplicationRepository>;}, (IBinding data) => (data as ApplicationEntryRepository).EnvelopedActivation,
-					false, ()=>new  Enveloped<ActivationApplicationRepository>(), ()=>new Enveloped<ActivationApplicationRepository>())}
+			{ "EnvelopedActivation", _properties [0]}
         }, __Tag,() => new ApplicationEntryRepository(), () => new List<ApplicationEntryRepository>(), () => new Dictionary<string,ApplicationEntryRepository>(),ApplicationEntry._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -602,7 +572,7 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -620,29 +590,6 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ApplicationEntryRepository();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ApplicationEntryRepository FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ApplicationEntryRepository;
-			}
-		var Result = new ApplicationEntryRepository ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -652,6 +599,12 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
 	/// </summary>
 public partial class PersistanceRequest : Goedel.Protocol.Request {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -661,7 +614,7 @@ public partial class PersistanceRequest : Goedel.Protocol.Request {
 			new() {
 
         }, __Tag,() => new PersistanceRequest(), () => new List<PersistanceRequest>(), () => new Dictionary<string,PersistanceRequest>(),Goedel.Protocol.Request._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -679,7 +632,7 @@ public partial class PersistanceRequest : Goedel.Protocol.Request {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -697,29 +650,6 @@ public partial class PersistanceRequest : Goedel.Protocol.Request {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PersistanceRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PersistanceRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PersistanceRequest;
-			}
-		var Result = new PersistanceRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -730,6 +660,12 @@ public partial class PersistanceRequest : Goedel.Protocol.Request {
 	/// </summary>
 public partial class PersistanceResponse : Goedel.Protocol.Response {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -739,7 +675,7 @@ public partial class PersistanceResponse : Goedel.Protocol.Response {
 			new() {
 
         }, __Tag,() => new PersistanceResponse(), () => new List<PersistanceResponse>(), () => new Dictionary<string,PersistanceResponse>(),Goedel.Protocol.Response._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -757,7 +693,7 @@ public partial class PersistanceResponse : Goedel.Protocol.Response {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -775,29 +711,6 @@ public partial class PersistanceResponse : Goedel.Protocol.Response {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new PersistanceResponse();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new PersistanceResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as PersistanceResponse;
-			}
-		var Result = new PersistanceResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -807,6 +720,12 @@ public partial class PersistanceResponse : Goedel.Protocol.Response {
 	/// </summary>
 public partial class QueryRequest : PersistanceRequest {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -816,7 +735,7 @@ public partial class QueryRequest : PersistanceRequest {
 			new() {
 
         }, __Tag,() => new QueryRequest(), () => new List<QueryRequest>(), () => new Dictionary<string,QueryRequest>(),PersistanceRequest._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -834,7 +753,7 @@ public partial class QueryRequest : PersistanceRequest {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -852,29 +771,6 @@ public partial class QueryRequest : PersistanceRequest {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new QueryRequest();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new QueryRequest FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as QueryRequest;
-			}
-		var Result = new QueryRequest ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -884,6 +780,12 @@ public partial class QueryRequest : PersistanceRequest {
 	/// </summary>
 public partial class QueryResponse : PersistanceResponse {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -893,7 +795,7 @@ public partial class QueryResponse : PersistanceResponse {
 			new() {
 
         }, __Tag,() => new QueryResponse(), () => new List<QueryResponse>(), () => new Dictionary<string,QueryResponse>(),PersistanceResponse._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -911,7 +813,7 @@ public partial class QueryResponse : PersistanceResponse {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -928,29 +830,6 @@ public partial class QueryResponse : PersistanceResponse {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new QueryResponse();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new QueryResponse FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as QueryResponse;
-			}
-		var Result = new QueryResponse ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

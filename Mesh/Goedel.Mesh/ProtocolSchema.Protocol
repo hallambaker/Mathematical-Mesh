@@ -224,7 +224,7 @@
 		// generates Enveloped<ProfileService> EnvelopedProfileService and ProfileService ProfileService
 		// calls Enveloped<T> StreamParse (params) to parse
 		// calls Enveloped<T> Serialize to serialize
-		Struct Enveloped<ProfileService> EnvelopedProfileService
+		GStruct Enveloped ProfileService ProfileService
 			Description
 				|The enveloped master profile of the service.
 		Struct CallsignBinding CallsignBinding

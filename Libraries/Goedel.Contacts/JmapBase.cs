@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:57:01 AM
+//  This file was automatically generated at 5/27/2025 3:12:40 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -67,6 +67,7 @@ public abstract partial class JmapBaseSchema : global::Goedel.Protocol.JsonObjec
     /// </summary>
 	public new const string __Tag = "JmapBaseSchema";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -77,7 +78,7 @@ public abstract partial class JmapBaseSchema : global::Goedel.Protocol.JsonObjec
 	    {"JmapBase", JmapBase._Factory},
 	    {"Relation", Relation._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -100,7 +101,7 @@ public abstract partial class JmapBaseSchema : global::Goedel.Protocol.JsonObjec
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -127,47 +128,68 @@ public abstract partial class JmapBaseSchema : global::Goedel.Protocol.JsonObjec
 	/// <summary>
 	/// </summary>
 public partial class JmapBase : JmapBaseSchema {
-        /// <summary>
-        /// This specifies the type that this object represents. The allowed value 
-        /// differs by object type and is defined in Sections 2.1, 2.2, and 2.3.
-        /// </summary>
+    /// <summary>
+    /// This specifies the type that this object represents. The allowed value 
+    /// differs by object type and is defined in Sections 2.1, 2.2, and 2.3.
+    /// </summary>
 
 	[JsonPropertyName("@type")]
-	public virtual string?					Type  {get; set;}
+	public virtual string?					Type  {get; set;} //
 
-        /// <summary>
-        ///This is a globally unique identifier used to associate objects representing
-        ///the same item. Updates to the document describing the same item MUST have the 
-        ///same UID.
-        /// </summary>
+    /// <summary>
+    ///This is a globally unique identifier used to associate objects representing
+    ///the same item. Updates to the document describing the same item MUST have the 
+    ///same UID.
+    /// </summary>
 
 	[JsonPropertyName("uid")]
-	public virtual string?					Uid  {get; set;}
+	public virtual string?					Uid  {get; set;} //
 
-        /// <summary>
-        ///An identifier for the product that last updated the JSCalendar 
-        ///object. This should be set whenever the data in the object is modified 
-        ///(i.e., whenever the updated property is set).
-        /// </summary>
+    /// <summary>
+    ///An identifier for the product that last updated the JSCalendar 
+    ///object. This should be set whenever the data in the object is modified 
+    ///(i.e., whenever the updated property is set).
+    /// </summary>
 
 	[JsonPropertyName("prodId")]
-	public virtual string?					ProdId  {get; set;}
+	public virtual string?					ProdId  {get; set;} //
 
-        /// <summary>
-        ///The date and time this object was initially created.
-        /// </summary>
+    /// <summary>
+    ///The date and time this object was initially created.
+    /// </summary>
 
 	[JsonPropertyName("created")]
-	public virtual DateTime?					Created  {get; set;}
+	public virtual DateTime?					Created  {get; set;} //
 
-        /// <summary>
-        ///The date and time this object was last modified.
-        /// </summary>
+    /// <summary>
+    ///The date and time this object was last modified.
+    /// </summary>
 
 	[JsonPropertyName("updated")]
-	public virtual DateTime?					Updated  {get; set;}
+	public virtual DateTime?					Updated  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStringTag ("@type", 
+					(IBinding data, string? value) => {(data as JmapBase).Type = value;}, 
+					(IBinding data) => (data as JmapBase).Type ),
+		new PropertyString ("uid", 
+					(IBinding data, string? value) => {(data as JmapBase).Uid = value;}, 
+					(IBinding data) => (data as JmapBase).Uid ),
+		new PropertyString ("prodId", 
+					(IBinding data, string? value) => {(data as JmapBase).ProdId = value;}, 
+					(IBinding data) => (data as JmapBase).ProdId ),
+		new PropertyDateTime ("created", 
+					(IBinding data, DateTime? value) => {(data as JmapBase).Created = value;}, 
+					(IBinding data) => (data as JmapBase).Created ),
+		new PropertyDateTime ("updated", 
+					(IBinding data, DateTime? value) => {(data as JmapBase).Updated = value;}, 
+					(IBinding data) => (data as JmapBase).Updated )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -176,18 +198,13 @@ public partial class JmapBase : JmapBaseSchema {
 	public static readonly new Binding<JmapBase> _binding = new (
 			new() {
 
-			{ "@type", new PropertyStringTag ("@type", 
-					(IBinding data, string? value) => {(data as JmapBase).Type = value;}, (IBinding data) => (data as JmapBase).Type )},
-			{ "uid", new PropertyString ("uid", 
-					(IBinding data, string? value) => {(data as JmapBase).Uid = value;}, (IBinding data) => (data as JmapBase).Uid )},
-			{ "prodId", new PropertyString ("prodId", 
-					(IBinding data, string? value) => {(data as JmapBase).ProdId = value;}, (IBinding data) => (data as JmapBase).ProdId )},
-			{ "created", new PropertyDateTime ("created", 
-					(IBinding data, DateTime? value) => {(data as JmapBase).Created = value;}, (IBinding data) => (data as JmapBase).Created )},
-			{ "updated", new PropertyDateTime ("updated", 
-					(IBinding data, DateTime? value) => {(data as JmapBase).Updated = value;}, (IBinding data) => (data as JmapBase).Updated )}
+			{ "@type", _properties [0]},
+			{ "uid", _properties [1]},
+			{ "prodId", _properties [2]},
+			{ "created", _properties [3]},
+			{ "updated", _properties [4]}
         }, __Tag,() => new JmapBase(), () => new List<JmapBase>(), () => new Dictionary<string,JmapBase>(),null, TypeTag:"@type" );
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -204,7 +221,7 @@ public partial class JmapBase : JmapBaseSchema {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -222,43 +239,29 @@ public partial class JmapBase : JmapBaseSchema {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new JmapBase();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new JmapBase FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as JmapBase;
-			}
-		var Result = new JmapBase ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class Relation : JmapBaseSchema {
-        /// <summary>
-        /// The relationships, each one MUST have the value true.
-        /// </summary>
+    /// <summary>
+    /// The relationships, each one MUST have the value true.
+    /// </summary>
 
 	[JsonPropertyName("relationships")]
-	public virtual Dictionary<string,bool>?					Relationships  {get; set;}
+	public virtual Dictionary<string,bool>?					Relationships  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyDictionaryBoolean ("relationships", 
+					(IBinding data, Dictionary<string,bool>? value) => {(data as Relation).Relationships = value;}, 
+					(IBinding data) => (data as Relation).Relationships )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -267,10 +270,9 @@ public partial class Relation : JmapBaseSchema {
 	public static readonly new Binding<Relation> _binding = new (
 			new() {
 
-			{ "relationships", new PropertyDictionaryBoolean ("relationships", 
-					(IBinding data, Dictionary<string,bool>? value) => {(data as Relation).Relationships = value;}, (IBinding data) => (data as Relation).Relationships )}
+			{ "relationships", _properties [0]}
         }, __Tag,() => new Relation(), () => new List<Relation>(), () => new Dictionary<string,Relation>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -287,7 +289,7 @@ public partial class Relation : JmapBaseSchema {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -304,29 +306,6 @@ public partial class Relation : JmapBaseSchema {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Relation();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new Relation FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as Relation;
-			}
-		var Result = new Relation ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

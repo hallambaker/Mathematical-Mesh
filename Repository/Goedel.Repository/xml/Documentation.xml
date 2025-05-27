@@ -27,26 +27,17 @@
             access the account.
              </summary>
         </member>
+        <member name="P:Goedel.Repository.ActivationApplicationRepository._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Repository.ActivationApplicationRepository._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Repository.ActivationApplicationRepository._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Repository.ActivationApplicationRepository._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Repository.ActivationApplicationRepository._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Repository.ActivationApplicationRepository._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Repository.ActivationApplicationRepository._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.ActivationApplicationRepository._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.ActivationApplicationRepository._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.ActivationApplicationRepository._Tag">
             <summary>
@@ -84,26 +75,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Repository.ApplicationEntryRepository._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Repository.ApplicationEntryRepository._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Repository.ApplicationEntryRepository._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Repository.ApplicationEntryRepository._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Repository.ApplicationEntryRepository._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Repository.ApplicationEntryRepository._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Repository.ApplicationEntryRepository._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.ApplicationEntryRepository._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.ApplicationEntryRepository._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.ApplicationEntryRepository._Tag">
             <summary>
@@ -182,26 +164,17 @@
             The activation data for the registry.
              </summary>
         </member>
+        <member name="P:Goedel.Repository.CatalogedRepository._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Repository.CatalogedRepository._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Repository.CatalogedRepository._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Repository.CatalogedRepository._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Repository.CatalogedRepository._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Repository.CatalogedRepository._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Repository.CatalogedRepository._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.CatalogedRepository._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.CatalogedRepository._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.CatalogedRepository._Tag">
             <summary>
@@ -360,11 +333,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Repository.RepositoryProtocol._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Repository.RepositoryProtocol._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -478,26 +446,17 @@
              Describes a Repository issuer.
              </summary>
         </member>
+        <member name="P:Goedel.Repository.ProfileRepository._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Repository.ProfileRepository._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Repository.ProfileRepository._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Repository.ProfileRepository._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Repository.ProfileRepository._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Repository.ProfileRepository._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Repository.ProfileRepository._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.ProfileRepository._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.ProfileRepository._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.ProfileRepository._Tag">
             <summary>
@@ -546,26 +505,17 @@
              Base class for all requests made to a registrar
              </summary>
         </member>
+        <member name="P:Goedel.Repository.PersistanceRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Repository.PersistanceRequest._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Repository.PersistanceRequest._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Repository.PersistanceRequest._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Repository.PersistanceRequest._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Repository.PersistanceRequest._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Repository.PersistanceRequest._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.PersistanceRequest._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.PersistanceRequest._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.PersistanceRequest._Tag">
             <summary>
@@ -590,26 +540,17 @@
              status code and status description fields.
              </summary>
         </member>
+        <member name="P:Goedel.Repository.PersistanceResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Repository.PersistanceResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Repository.PersistanceResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Repository.PersistanceResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Repository.PersistanceResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Repository.PersistanceResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Repository.PersistanceResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.PersistanceResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.PersistanceResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.PersistanceResponse._Tag">
             <summary>
@@ -633,26 +574,17 @@
              Register connection request. 
              </summary>
         </member>
+        <member name="P:Goedel.Repository.QueryRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Repository.QueryRequest._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Repository.QueryRequest._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Repository.QueryRequest._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Repository.QueryRequest._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Repository.QueryRequest._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Repository.QueryRequest._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.QueryRequest._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.QueryRequest._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.QueryRequest._Tag">
             <summary>
@@ -676,26 +608,17 @@
              Return the result of a connection request
              </summary>
         </member>
+        <member name="P:Goedel.Repository.QueryResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Repository.QueryResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Repository.QueryResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Repository.QueryResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Repository.QueryResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Repository.QueryResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Repository.QueryResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.QueryResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Repository.QueryResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Repository.QueryResponse._Tag">
             <summary>

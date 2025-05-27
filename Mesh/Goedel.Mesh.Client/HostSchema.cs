@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/25/2025 12:57:10 AM
+//  This file was automatically generated at 5/27/2025 3:12:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -71,6 +71,7 @@ public abstract partial class HostCatalogItem : global::Goedel.Protocol.JsonObje
     /// </summary>
 	public new const string __Tag = "HostCatalogItem";
 
+	/*
 	/// <summary>
     /// Dictionary mapping tags to factory methods
     /// </summary>
@@ -86,7 +87,7 @@ public abstract partial class HostCatalogItem : global::Goedel.Protocol.JsonObje
 	    {"ShellDispatch", ShellDispatch._Factory},
 	    {"ShellAction", ShellAction._Factory}
 		};
-
+	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -114,7 +115,7 @@ public abstract partial class HostCatalogItem : global::Goedel.Protocol.JsonObje
 		}
 
     internal static void _Initialize() {
-		AddDictionary(ref _tagDictionary);
+		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
 
@@ -143,57 +144,87 @@ public abstract partial class HostCatalogItem : global::Goedel.Protocol.JsonObje
 	/// Describes a current or pending connection to a Mesh
 	/// </summary>
 public partial class CatalogedMachine : HostCatalogItem {
-        /// <summary>
-        ///Unique object instance identifier.
-        /// </summary>
+    /// <summary>
+    ///Unique object instance identifier.
+    /// </summary>
 
 	[JsonPropertyName("Id")]
-	public virtual string?					Id  {get; set;}
+	public virtual string?					Id  {get; set;} //
 
-        /// <summary>
-        ///Local short name for the profile
-        /// </summary>
+    /// <summary>
+    ///Local short name for the profile
+    /// </summary>
 
 	[JsonPropertyName("Local")]
-	public virtual string?					Local  {get; set;}
+	public virtual string?					Local  {get; set;} //
 
-        /// <summary>
-        ///If true, this is the default for the profile type (master, account)
-        /// </summary>
+    /// <summary>
+    ///If true, this is the default for the profile type (master, account)
+    /// </summary>
 
 	[JsonPropertyName("Default")]
-	public virtual bool?					Default  {get; set;}
+	public virtual bool?					Default  {get; set;} //
 
-        /// <summary>
-        ///The master profile that provides the root of trust for this Mesh
-        /// </summary>
+    /// <summary>
+    ///The master profile that provides the root of trust for this Mesh
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedProfileAccount")]
-	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;}
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;} //
 
-        /// <summary>
-        ///The cataloged device profile
-        /// </summary>
+    /// <summary>
+    ///The cataloged device profile
+    /// </summary>
 
 	[JsonPropertyName("CatalogedDevice")]
-	public virtual CatalogedDevice?					CatalogedDevice  {get; set;}
+	public virtual CatalogedDevice?					CatalogedDevice  {get; set;} //
 
-        /// <summary>
-        ///The digest of the cataloged device.
-        /// </summary>
+    /// <summary>
+    ///The digest of the cataloged device.
+    /// </summary>
 
 	[JsonPropertyName("CatalogedDeviceDigest")]
-	public virtual string?					CatalogedDeviceDigest  {get; set;}
+	public virtual string?					CatalogedDeviceDigest  {get; set;} //
 
-        /// <summary>
-        ///The enveloped assignment describing how the client should
-        ///discover the host and encrypt data to it.
-        /// </summary>
+    /// <summary>
+    ///The enveloped assignment describing how the client should
+    ///discover the host and encrypt data to it.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedAccountHostAssignment")]
-	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;}
+	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Id", 
+					(IBinding data, string? value) => {(data as CatalogedMachine).Id = value;}, 
+					(IBinding data) => (data as CatalogedMachine).Id ),
+		new PropertyString ("Local", 
+					(IBinding data, string? value) => {(data as CatalogedMachine).Local = value;}, 
+					(IBinding data) => (data as CatalogedMachine).Local ),
+		new PropertyBoolean ("Default", 
+					(IBinding data, bool? value) => {(data as CatalogedMachine).Default = value;}, 
+					(IBinding data) => (data as CatalogedMachine).Default ),
+		new PropertyStruct ("EnvelopedProfileAccount", typeof (Enveloped<ProfileAccount>),
+					(IBinding data, object? value) => {(data as CatalogedMachine).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, 
+					(IBinding data) => (data as CatalogedMachine).EnvelopedProfileAccount,
+					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
+		new PropertyStruct ("CatalogedDevice", typeof (CatalogedDevice),
+					(IBinding data, object? value) => {(data as CatalogedMachine).CatalogedDevice = value as CatalogedDevice;}, 
+					(IBinding data) => (data as CatalogedMachine).CatalogedDevice,
+					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice()),
+		new PropertyString ("CatalogedDeviceDigest", 
+					(IBinding data, string? value) => {(data as CatalogedMachine).CatalogedDeviceDigest = value;}, 
+					(IBinding data) => (data as CatalogedMachine).CatalogedDeviceDigest ),
+		new PropertyStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped<AccountHostAssignment>),
+					(IBinding data, object? value) => {(data as CatalogedMachine).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, 
+					(IBinding data) => (data as CatalogedMachine).EnvelopedAccountHostAssignment,
+					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -202,25 +233,15 @@ public partial class CatalogedMachine : HostCatalogItem {
 	public static readonly new Binding<CatalogedMachine> _binding = new (
 			new() {
 
-			{ "Id", new PropertyString ("Id", 
-					(IBinding data, string? value) => {(data as CatalogedMachine).Id = value;}, (IBinding data) => (data as CatalogedMachine).Id )},
-			{ "Local", new PropertyString ("Local", 
-					(IBinding data, string? value) => {(data as CatalogedMachine).Local = value;}, (IBinding data) => (data as CatalogedMachine).Local )},
-			{ "Default", new PropertyBoolean ("Default", 
-					(IBinding data, bool? value) => {(data as CatalogedMachine).Default = value;}, (IBinding data) => (data as CatalogedMachine).Default )},
-			{ "EnvelopedProfileAccount", new PropertyStruct ("EnvelopedProfileAccount", typeof (Enveloped<ProfileAccount>),
-					(IBinding data, object? value) => {(data as CatalogedMachine).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;}, (IBinding data) => (data as CatalogedMachine).EnvelopedProfileAccount,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())},
-			{ "CatalogedDevice", new PropertyStruct ("CatalogedDevice", typeof (CatalogedDevice),
-					(IBinding data, object? value) => {(data as CatalogedMachine).CatalogedDevice = value as CatalogedDevice;}, (IBinding data) => (data as CatalogedMachine).CatalogedDevice,
-					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())},
-			{ "CatalogedDeviceDigest", new PropertyString ("CatalogedDeviceDigest", 
-					(IBinding data, string? value) => {(data as CatalogedMachine).CatalogedDeviceDigest = value;}, (IBinding data) => (data as CatalogedMachine).CatalogedDeviceDigest )},
-			{ "EnvelopedAccountHostAssignment", new PropertyStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped<AccountHostAssignment>),
-					(IBinding data, object? value) => {(data as CatalogedMachine).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, (IBinding data) => (data as CatalogedMachine).EnvelopedAccountHostAssignment,
-					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())}
+			{ "Id", _properties [0]},
+			{ "Local", _properties [1]},
+			{ "Default", _properties [2]},
+			{ "EnvelopedProfileAccount", _properties [3]},
+			{ "CatalogedDevice", _properties [4]},
+			{ "CatalogedDeviceDigest", _properties [5]},
+			{ "EnvelopedAccountHostAssignment", _properties [6]}
         }, __Tag,() => new CatalogedMachine(), () => new List<CatalogedMachine>(), () => new Dictionary<string,CatalogedMachine>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -237,7 +258,7 @@ public partial class CatalogedMachine : HostCatalogItem {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -255,29 +276,6 @@ public partial class CatalogedMachine : HostCatalogItem {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedMachine();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CatalogedMachine FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedMachine;
-			}
-		var Result = new CatalogedMachine ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -286,49 +284,78 @@ public partial class CatalogedMachine : HostCatalogItem {
 	/// Describes an ordinary device connected to a Mesh
 	/// </summary>
 public partial class CatalogedService : CatalogedMachine {
-        /// <summary>
-        ///The service profile
-        /// </summary>
+    /// <summary>
+    ///The service profile
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedProfileService")]
-	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;}
+	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;} //
 
-        /// <summary>
-        ///The host profile
-        /// </summary>
+    /// <summary>
+    ///The host profile
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedProfileHost")]
-	public virtual Enveloped<ProfileHost>?					EnvelopedProfileHost  {get; set;}
+	public virtual Enveloped<ProfileHost>?					EnvelopedProfileHost  {get; set;} //
 
-        /// <summary>
-        ///The activation record for the service client (if used)
-        /// </summary>
+    /// <summary>
+    ///The activation record for the service client (if used)
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedActivationCommon")]
-	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;}
+	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} //
 
-        /// <summary>
-        ///The activation record for this host
-        /// </summary>
+    /// <summary>
+    ///The activation record for this host
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedActivationHost")]
-	public virtual Enveloped<ActivationHost>?					EnvelopedActivationHost  {get; set;}
+	public virtual Enveloped<ActivationHost>?					EnvelopedActivationHost  {get; set;} //
 
-        /// <summary>
-        ///The connection of the host to the service
-        /// </summary>
+    /// <summary>
+    ///The connection of the host to the service
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedConnectionService")]
-	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} //
 
-        /// <summary>
-        ///Specifies the type of service 
-        /// </summary>
+    /// <summary>
+    ///Specifies the type of service 
+    /// </summary>
 
 	[JsonPropertyName("ServiceIdentifier")]
-	public virtual string?					ServiceIdentifier  {get; set;}
+	public virtual string?					ServiceIdentifier  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("EnvelopedProfileService", typeof (Enveloped<ProfileService>),
+					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedProfileService = value as Enveloped<ProfileService>;}, 
+					(IBinding data) => (data as CatalogedService).EnvelopedProfileService,
+					false, ()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>()),
+		new PropertyStruct ("EnvelopedProfileHost", typeof (Enveloped<ProfileHost>),
+					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedProfileHost = value as Enveloped<ProfileHost>;}, 
+					(IBinding data) => (data as CatalogedService).EnvelopedProfileHost,
+					false, ()=>new  Enveloped<ProfileHost>(), ()=>new Enveloped<ProfileHost>()),
+		new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
+					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, 
+					(IBinding data) => (data as CatalogedService).EnvelopedActivationCommon,
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>()),
+		new PropertyStruct ("EnvelopedActivationHost", typeof (Enveloped<ActivationHost>),
+					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedActivationHost = value as Enveloped<ActivationHost>;}, 
+					(IBinding data) => (data as CatalogedService).EnvelopedActivationHost,
+					false, ()=>new  Enveloped<ActivationHost>(), ()=>new Enveloped<ActivationHost>()),
+		new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
+					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, 
+					(IBinding data) => (data as CatalogedService).EnvelopedConnectionService,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>()),
+		new PropertyString ("ServiceIdentifier", 
+					(IBinding data, string? value) => {(data as CatalogedService).ServiceIdentifier = value;}, 
+					(IBinding data) => (data as CatalogedService).ServiceIdentifier )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -337,25 +364,14 @@ public partial class CatalogedService : CatalogedMachine {
 	public static readonly new Binding<CatalogedService> _binding = new (
 			new() {
 
-			{ "EnvelopedProfileService", new PropertyStruct ("EnvelopedProfileService", typeof (Enveloped<ProfileService>),
-					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedProfileService = value as Enveloped<ProfileService>;}, (IBinding data) => (data as CatalogedService).EnvelopedProfileService,
-					false, ()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())},
-			{ "EnvelopedProfileHost", new PropertyStruct ("EnvelopedProfileHost", typeof (Enveloped<ProfileHost>),
-					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedProfileHost = value as Enveloped<ProfileHost>;}, (IBinding data) => (data as CatalogedService).EnvelopedProfileHost,
-					false, ()=>new  Enveloped<ProfileHost>(), ()=>new Enveloped<ProfileHost>())},
-			{ "EnvelopedActivationCommon", new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
-					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, (IBinding data) => (data as CatalogedService).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())},
-			{ "EnvelopedActivationHost", new PropertyStruct ("EnvelopedActivationHost", typeof (Enveloped<ActivationHost>),
-					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedActivationHost = value as Enveloped<ActivationHost>;}, (IBinding data) => (data as CatalogedService).EnvelopedActivationHost,
-					false, ()=>new  Enveloped<ActivationHost>(), ()=>new Enveloped<ActivationHost>())},
-			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
-					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as CatalogedService).EnvelopedConnectionService,
-					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())},
-			{ "ServiceIdentifier", new PropertyString ("ServiceIdentifier", 
-					(IBinding data, string? value) => {(data as CatalogedService).ServiceIdentifier = value;}, (IBinding data) => (data as CatalogedService).ServiceIdentifier )}
+			{ "EnvelopedProfileService", _properties [0]},
+			{ "EnvelopedProfileHost", _properties [1]},
+			{ "EnvelopedActivationCommon", _properties [2]},
+			{ "EnvelopedActivationHost", _properties [3]},
+			{ "EnvelopedConnectionService", _properties [4]},
+			{ "ServiceIdentifier", _properties [5]}
         }, __Tag,() => new CatalogedService(), () => new List<CatalogedService>(), () => new Dictionary<string,CatalogedService>(),CatalogedMachine._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -373,7 +389,7 @@ public partial class CatalogedService : CatalogedMachine {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -391,29 +407,6 @@ public partial class CatalogedService : CatalogedMachine {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedService();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CatalogedService FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedService;
-			}
-		var Result = new CatalogedService ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -423,6 +416,12 @@ public partial class CatalogedService : CatalogedMachine {
 	/// </summary>
 public partial class CatalogedStandard : CatalogedMachine {
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -432,7 +431,7 @@ public partial class CatalogedStandard : CatalogedMachine {
 			new() {
 
         }, __Tag,() => new CatalogedStandard(), () => new List<CatalogedStandard>(), () => new Dictionary<string,CatalogedStandard>(),CatalogedMachine._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -450,7 +449,7 @@ public partial class CatalogedStandard : CatalogedMachine {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -468,29 +467,6 @@ public partial class CatalogedStandard : CatalogedMachine {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedStandard();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CatalogedStandard FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedStandard;
-			}
-		var Result = new CatalogedStandard ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -500,35 +476,55 @@ public partial class CatalogedStandard : CatalogedMachine {
 	/// created and posted to a service.
 	/// </summary>
 public partial class CatalogedPending : CatalogedMachine {
-        /// <summary>
-        ///UDF of the connected device
-        /// </summary>
+    /// <summary>
+    ///UDF of the connected device
+    /// </summary>
 
 	[JsonPropertyName("DeviceUDF")]
-	public virtual string?					DeviceUDF  {get; set;}
+	public virtual string?					DeviceUDF  {get; set;} //
 
-        /// <summary>
-        ///The device profile presented to the service.
-        /// </summary>
+    /// <summary>
+    ///The device profile presented to the service.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedProfileDevice")]
-	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;}
+	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;} //
 
-        /// <summary>
-        ///The response returned by the service when the registration was requested.
-        /// </summary>
+    /// <summary>
+    ///The response returned by the service when the registration was requested.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedAcknowledgeConnection")]
-	public virtual Enveloped<AcknowledgeConnection>?					EnvelopedAcknowledgeConnection  {get; set;}
+	public virtual Enveloped<AcknowledgeConnection>?					EnvelopedAcknowledgeConnection  {get; set;} //
 
-        /// <summary>
-        ///The account at which the request is pending.
-        /// </summary>
+    /// <summary>
+    ///The account at which the request is pending.
+    /// </summary>
 
 	[JsonPropertyName("AccountAddress")]
-	public virtual string?					AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("DeviceUDF", 
+					(IBinding data, string? value) => {(data as CatalogedPending).DeviceUDF = value;}, 
+					(IBinding data) => (data as CatalogedPending).DeviceUDF ),
+		new PropertyStruct ("EnvelopedProfileDevice", typeof (Enveloped<ProfileDevice>),
+					(IBinding data, object? value) => {(data as CatalogedPending).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, 
+					(IBinding data) => (data as CatalogedPending).EnvelopedProfileDevice,
+					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>()),
+		new PropertyStruct ("EnvelopedAcknowledgeConnection", typeof (Enveloped<AcknowledgeConnection>),
+					(IBinding data, object? value) => {(data as CatalogedPending).EnvelopedAcknowledgeConnection = value as Enveloped<AcknowledgeConnection>;}, 
+					(IBinding data) => (data as CatalogedPending).EnvelopedAcknowledgeConnection,
+					false, ()=>new  Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>()),
+		new PropertyString ("AccountAddress", 
+					(IBinding data, string? value) => {(data as CatalogedPending).AccountAddress = value;}, 
+					(IBinding data) => (data as CatalogedPending).AccountAddress )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -537,18 +533,12 @@ public partial class CatalogedPending : CatalogedMachine {
 	public static readonly new Binding<CatalogedPending> _binding = new (
 			new() {
 
-			{ "DeviceUDF", new PropertyString ("DeviceUDF", 
-					(IBinding data, string? value) => {(data as CatalogedPending).DeviceUDF = value;}, (IBinding data) => (data as CatalogedPending).DeviceUDF )},
-			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", typeof (Enveloped<ProfileDevice>),
-					(IBinding data, object? value) => {(data as CatalogedPending).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as CatalogedPending).EnvelopedProfileDevice,
-					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())},
-			{ "EnvelopedAcknowledgeConnection", new PropertyStruct ("EnvelopedAcknowledgeConnection", typeof (Enveloped<AcknowledgeConnection>),
-					(IBinding data, object? value) => {(data as CatalogedPending).EnvelopedAcknowledgeConnection = value as Enveloped<AcknowledgeConnection>;}, (IBinding data) => (data as CatalogedPending).EnvelopedAcknowledgeConnection,
-					false, ()=>new  Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>())},
-			{ "AccountAddress", new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as CatalogedPending).AccountAddress = value;}, (IBinding data) => (data as CatalogedPending).AccountAddress )}
+			{ "DeviceUDF", _properties [0]},
+			{ "EnvelopedProfileDevice", _properties [1]},
+			{ "EnvelopedAcknowledgeConnection", _properties [2]},
+			{ "AccountAddress", _properties [3]}
         }, __Tag,() => new CatalogedPending(), () => new List<CatalogedPending>(), () => new Dictionary<string,CatalogedPending>(),CatalogedMachine._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -566,7 +556,7 @@ public partial class CatalogedPending : CatalogedMachine {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -584,29 +574,6 @@ public partial class CatalogedPending : CatalogedMachine {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedPending();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CatalogedPending FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedPending;
-			}
-		var Result = new CatalogedPending ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
@@ -616,56 +583,86 @@ public partial class CatalogedPending : CatalogedMachine {
 	/// manufacturer profile.
 	/// </summary>
 public partial class CatalogedPreconfigured : CatalogedMachine {
-        /// <summary>
-        ///The device profile presented to the service.
-        /// </summary>
+    /// <summary>
+    ///The device profile presented to the service.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedProfileDevice")]
-	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;}
+	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;} //
 
-        /// <summary>
-        ///The device connection used to authenticate to the service.
-        /// </summary>
+    /// <summary>
+    ///The device connection used to authenticate to the service.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedConnectionService")]
-	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;}
+	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} //
 
-        /// <summary>
-        ///The device connection used to authenticate to the service.
-        /// </summary>
+    /// <summary>
+    ///The device connection used to authenticate to the service.
+    /// </summary>
 
 	[JsonPropertyName("EnvelopedConnectionDevice")]
-	public virtual Enveloped<ConnectionDevice>?					EnvelopedConnectionDevice  {get; set;}
+	public virtual Enveloped<ConnectionDevice>?					EnvelopedConnectionDevice  {get; set;} //
 
-        /// <summary>
-        ///The account to which claims will be posted
-        /// </summary>
+    /// <summary>
+    ///The account to which claims will be posted
+    /// </summary>
 
 	[JsonPropertyName("AccountAddress")]
-	public virtual string?					AccountAddress  {get; set;}
+	public virtual string?					AccountAddress  {get; set;} //
 
-        /// <summary>
-        ///The publication identifier
-        /// </summary>
+    /// <summary>
+    ///The publication identifier
+    /// </summary>
 
 	[JsonPropertyName("PublicationId")]
-	public virtual string?					PublicationId  {get; set;}
+	public virtual string?					PublicationId  {get; set;} //
 
-        /// <summary>
-        ///Authenticator key used to authenticate claim to the service.
-        /// </summary>
+    /// <summary>
+    ///Authenticator key used to authenticate claim to the service.
+    /// </summary>
 
 	[JsonPropertyName("ServiceAuthenticator")]
-	public virtual string?					ServiceAuthenticator  {get; set;}
+	public virtual string?					ServiceAuthenticator  {get; set;} //
 
-        /// <summary>
-        ///Authenticator key used to authenticate claim to the device.
-        /// </summary>
+    /// <summary>
+    ///Authenticator key used to authenticate claim to the device.
+    /// </summary>
 
 	[JsonPropertyName("DeviceAuthenticator")]
-	public virtual string?					DeviceAuthenticator  {get; set;}
+	public virtual string?					DeviceAuthenticator  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyStruct ("EnvelopedProfileDevice", typeof (Enveloped<ProfileDevice>),
+					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, 
+					(IBinding data) => (data as CatalogedPreconfigured).EnvelopedProfileDevice,
+					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>()),
+		new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
+					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, 
+					(IBinding data) => (data as CatalogedPreconfigured).EnvelopedConnectionService,
+					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>()),
+		new PropertyStruct ("EnvelopedConnectionDevice", typeof (Enveloped<ConnectionDevice>),
+					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;}, 
+					(IBinding data) => (data as CatalogedPreconfigured).EnvelopedConnectionDevice,
+					false, ()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>()),
+		new PropertyString ("AccountAddress", 
+					(IBinding data, string? value) => {(data as CatalogedPreconfigured).AccountAddress = value;}, 
+					(IBinding data) => (data as CatalogedPreconfigured).AccountAddress ),
+		new PropertyString ("PublicationId", 
+					(IBinding data, string? value) => {(data as CatalogedPreconfigured).PublicationId = value;}, 
+					(IBinding data) => (data as CatalogedPreconfigured).PublicationId ),
+		new PropertyString ("ServiceAuthenticator", 
+					(IBinding data, string? value) => {(data as CatalogedPreconfigured).ServiceAuthenticator = value;}, 
+					(IBinding data) => (data as CatalogedPreconfigured).ServiceAuthenticator ),
+		new PropertyString ("DeviceAuthenticator", 
+					(IBinding data, string? value) => {(data as CatalogedPreconfigured).DeviceAuthenticator = value;}, 
+					(IBinding data) => (data as CatalogedPreconfigured).DeviceAuthenticator )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -674,25 +671,15 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 	public static readonly new Binding<CatalogedPreconfigured> _binding = new (
 			new() {
 
-			{ "EnvelopedProfileDevice", new PropertyStruct ("EnvelopedProfileDevice", typeof (Enveloped<ProfileDevice>),
-					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, (IBinding data) => (data as CatalogedPreconfigured).EnvelopedProfileDevice,
-					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())},
-			{ "EnvelopedConnectionService", new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
-					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, (IBinding data) => (data as CatalogedPreconfigured).EnvelopedConnectionService,
-					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())},
-			{ "EnvelopedConnectionDevice", new PropertyStruct ("EnvelopedConnectionDevice", typeof (Enveloped<ConnectionDevice>),
-					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;}, (IBinding data) => (data as CatalogedPreconfigured).EnvelopedConnectionDevice,
-					false, ()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>())},
-			{ "AccountAddress", new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as CatalogedPreconfigured).AccountAddress = value;}, (IBinding data) => (data as CatalogedPreconfigured).AccountAddress )},
-			{ "PublicationId", new PropertyString ("PublicationId", 
-					(IBinding data, string? value) => {(data as CatalogedPreconfigured).PublicationId = value;}, (IBinding data) => (data as CatalogedPreconfigured).PublicationId )},
-			{ "ServiceAuthenticator", new PropertyString ("ServiceAuthenticator", 
-					(IBinding data, string? value) => {(data as CatalogedPreconfigured).ServiceAuthenticator = value;}, (IBinding data) => (data as CatalogedPreconfigured).ServiceAuthenticator )},
-			{ "DeviceAuthenticator", new PropertyString ("DeviceAuthenticator", 
-					(IBinding data, string? value) => {(data as CatalogedPreconfigured).DeviceAuthenticator = value;}, (IBinding data) => (data as CatalogedPreconfigured).DeviceAuthenticator )}
+			{ "EnvelopedProfileDevice", _properties [0]},
+			{ "EnvelopedConnectionService", _properties [1]},
+			{ "EnvelopedConnectionDevice", _properties [2]},
+			{ "AccountAddress", _properties [3]},
+			{ "PublicationId", _properties [4]},
+			{ "ServiceAuthenticator", _properties [5]},
+			{ "DeviceAuthenticator", _properties [6]}
         }, __Tag,() => new CatalogedPreconfigured(), () => new List<CatalogedPreconfigured>(), () => new Dictionary<string,CatalogedPreconfigured>(),CatalogedMachine._binding);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -710,7 +697,7 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -728,56 +715,49 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedPreconfigured();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new CatalogedPreconfigured FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as CatalogedPreconfigured;
-			}
-		var Result = new CatalogedPreconfigured ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ShellDispatch : HostCatalogItem {
-        /// <summary>
-        ///The protocol to dispatch
-        /// </summary>
+    /// <summary>
+    ///The protocol to dispatch
+    /// </summary>
 
 	[JsonPropertyName("Protocol")]
-	public virtual string?					Protocol  {get; set;}
+	public virtual string?					Protocol  {get; set;} //
 
-        /// <summary>
-        ///The Icon to display
-        /// </summary>
+    /// <summary>
+    ///The Icon to display
+    /// </summary>
 
 	[JsonPropertyName("Icon")]
-	public virtual string?					Icon  {get; set;}
+	public virtual string?					Icon  {get; set;} //
 
-        /// <summary>
-        ///The supported by the protocol
-        /// </summary>
+    /// <summary>
+    ///The supported by the protocol
+    /// </summary>
 
 	[JsonPropertyName("Actions")]
 	public virtual List<ShellAction>?					Actions  {get; set;}
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Protocol", 
+					(IBinding data, string? value) => {(data as ShellDispatch).Protocol = value;}, 
+					(IBinding data) => (data as ShellDispatch).Protocol ),
+		new PropertyString ("Icon", 
+					(IBinding data, string? value) => {(data as ShellDispatch).Icon = value;}, 
+					(IBinding data) => (data as ShellDispatch).Icon ),
+		new PropertyListStruct ("Actions", typeof (ShellAction),
+					(IBinding data, object? value) => {(data as ShellDispatch).Actions = value as List<ShellAction>;}, 
+					(IBinding data) => (data as ShellDispatch).Actions,
+					false, ()=>new  List<ShellAction>(), ()=>new ShellAction())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -786,15 +766,11 @@ public partial class ShellDispatch : HostCatalogItem {
 	public static readonly new Binding<ShellDispatch> _binding = new (
 			new() {
 
-			{ "Protocol", new PropertyString ("Protocol", 
-					(IBinding data, string? value) => {(data as ShellDispatch).Protocol = value;}, (IBinding data) => (data as ShellDispatch).Protocol )},
-			{ "Icon", new PropertyString ("Icon", 
-					(IBinding data, string? value) => {(data as ShellDispatch).Icon = value;}, (IBinding data) => (data as ShellDispatch).Icon )},
-			{ "Actions", new PropertyListStruct ("Actions", typeof (ShellAction),
-					(IBinding data, object? value) => {(data as ShellDispatch).Actions = value as List<ShellAction>;}, (IBinding data) => (data as ShellDispatch).Actions,
-					false, ()=>new  List<ShellAction>(), ()=>new ShellAction())}
+			{ "Protocol", _properties [0]},
+			{ "Icon", _properties [1]},
+			{ "Actions", _properties [2]}
         }, __Tag,() => new ShellDispatch(), () => new List<ShellDispatch>(), () => new Dictionary<string,ShellDispatch>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -811,7 +787,7 @@ public partial class ShellDispatch : HostCatalogItem {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -829,64 +805,59 @@ public partial class ShellDispatch : HostCatalogItem {
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ShellDispatch();
 
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ShellDispatch FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ShellDispatch;
-			}
-		var Result = new ShellDispatch ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
-
 	}
 
 
 	/// <summary>
 	/// </summary>
 public partial class ShellAction : HostCatalogItem {
-        /// <summary>
-        ///The protocol to dispatch
-        /// </summary>
+    /// <summary>
+    ///The protocol to dispatch
+    /// </summary>
 
 	[JsonPropertyName("Id")]
-	public virtual string?					Id  {get; set;}
+	public virtual string?					Id  {get; set;} //
 
-        /// <summary>
-        ///The Icon to display
-        /// </summary>
+    /// <summary>
+    ///The Icon to display
+    /// </summary>
 
 	[JsonPropertyName("Icon")]
-	public virtual string?					Icon  {get; set;}
+	public virtual string?					Icon  {get; set;} //
 
-        /// <summary>
-        ///The Action to perform
-        /// </summary>
+    /// <summary>
+    ///The Action to perform
+    /// </summary>
 
 	[JsonPropertyName("Mode")]
-	public virtual string?					Mode  {get; set;}
+	public virtual string?					Mode  {get; set;} //
 
-        /// <summary>
-        ///The Action to perform
-        /// </summary>
+    /// <summary>
+    ///The Action to perform
+    /// </summary>
 
 	[JsonPropertyName("Parameter")]
-	public virtual string?					Parameter  {get; set;}
+	public virtual string?					Parameter  {get; set;} //
 
 
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+
+		new PropertyString ("Id", 
+					(IBinding data, string? value) => {(data as ShellAction).Id = value;}, 
+					(IBinding data) => (data as ShellAction).Id ),
+		new PropertyString ("Icon", 
+					(IBinding data, string? value) => {(data as ShellAction).Icon = value;}, 
+					(IBinding data) => (data as ShellAction).Icon ),
+		new PropertyString ("Mode", 
+					(IBinding data, string? value) => {(data as ShellAction).Mode = value;}, 
+					(IBinding data) => (data as ShellAction).Mode ),
+		new PropertyString ("Parameter", 
+					(IBinding data, string? value) => {(data as ShellAction).Parameter = value;}, 
+					(IBinding data) => (data as ShellAction).Parameter )		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -895,16 +866,12 @@ public partial class ShellAction : HostCatalogItem {
 	public static readonly new Binding<ShellAction> _binding = new (
 			new() {
 
-			{ "Id", new PropertyString ("Id", 
-					(IBinding data, string? value) => {(data as ShellAction).Id = value;}, (IBinding data) => (data as ShellAction).Id )},
-			{ "Icon", new PropertyString ("Icon", 
-					(IBinding data, string? value) => {(data as ShellAction).Icon = value;}, (IBinding data) => (data as ShellAction).Icon )},
-			{ "Mode", new PropertyString ("Mode", 
-					(IBinding data, string? value) => {(data as ShellAction).Mode = value;}, (IBinding data) => (data as ShellAction).Mode )},
-			{ "Parameter", new PropertyString ("Parameter", 
-					(IBinding data, string? value) => {(data as ShellAction).Parameter = value;}, (IBinding data) => (data as ShellAction).Parameter )}
+			{ "Id", _properties [0]},
+			{ "Icon", _properties [1]},
+			{ "Mode", _properties [2]},
+			{ "Parameter", _properties [3]}
         }, __Tag,() => new ShellAction(), () => new List<ShellAction>(), () => new Dictionary<string,ShellAction>(),null);
-
+	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
     public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
 
@@ -921,7 +888,7 @@ public partial class ShellAction : HostCatalogItem {
     ///<inheritdoc/>
     public override Dictionary<string, Property> _ParentProperties => base._Properties;
 
-
+	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -938,29 +905,6 @@ public partial class ShellAction : HostCatalogItem {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ShellAction();
-
-
-    /* 
-    /// <summary>
-    /// Deserialize a tagged stream
-    /// </summary>
-    /// <param name="jsonReader">The input stream</param>
-	/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-    /// <returns>The created object.</returns>		
-    public static new ShellAction FromJson (JsonReader jsonReader, bool tagged=true) {
-		if (jsonReader == null) {
-			return null;
-			}
-		if (tagged) {
-			var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-			return Out as ShellAction;
-			}
-		var Result = new ShellAction ();
-		Result.Deserialize (jsonReader);
-		Result.PostDecode();
-		return Result;
-		}
-	*/
 
 	}
 

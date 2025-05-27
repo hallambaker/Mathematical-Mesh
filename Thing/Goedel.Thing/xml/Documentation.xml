@@ -91,26 +91,17 @@
             The activation data for the registry.
              </summary>
         </member>
+        <member name="P:Goedel.Thing.CatalogedThing._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.CatalogedThing._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Thing.CatalogedThing._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Thing.CatalogedThing._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Thing.CatalogedThing._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Thing.CatalogedThing._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Thing.CatalogedThing._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.CatalogedThing._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.CatalogedThing._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Thing.CatalogedThing._Tag">
             <summary>
@@ -264,11 +255,6 @@
             Tag identifying this class
             </summary>
         </member>
-        <member name="P:Goedel.Thing.ThingDevice._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
         <member name="P:Goedel.Thing.ThingDevice._BindingDictionary">
             <summary>
             Dictionary mapping types to bindings
@@ -353,26 +339,17 @@
             Describes off-device storage requirements
              </summary>
         </member>
+        <member name="P:Goedel.Thing.JsDevice._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.JsDevice._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Thing.JsDevice._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Thing.JsDevice._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Thing.JsDevice._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Thing.JsDevice._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Thing.JsDevice._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.JsDevice._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.JsDevice._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Thing.JsDevice._Tag">
             <summary>
@@ -409,26 +386,17 @@
             The resource as Base64 encoded binary data.
              </summary>
         </member>
+        <member name="P:Goedel.Thing.Resource._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Resource._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Thing.Resource._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Thing.Resource._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Thing.Resource._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Thing.Resource._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Thing.Resource._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.Resource._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.Resource._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Thing.Resource._Tag">
             <summary>
@@ -450,26 +418,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Thing.DeviceCredential._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.DeviceCredential._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Thing.DeviceCredential._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Thing.DeviceCredential._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Thing.DeviceCredential._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Thing.DeviceCredential._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Thing.DeviceCredential._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.DeviceCredential._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.DeviceCredential._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Thing.DeviceCredential._Tag">
             <summary>
@@ -498,26 +457,17 @@
             e.g. 'front-right-top'
              </summary>
         </member>
+        <member name="P:Goedel.Thing.DeviceImage._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.DeviceImage._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Thing.DeviceImage._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Thing.DeviceImage._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Thing.DeviceImage._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Thing.DeviceImage._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Thing.DeviceImage._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.DeviceImage._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.DeviceImage._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Thing.DeviceImage._Tag">
             <summary>
@@ -569,26 +519,17 @@
             for production use.
              </summary>
         </member>
+        <member name="P:Goedel.Thing.Service._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Service._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Thing.Service._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Thing.Service._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Thing.Service._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Thing.Service._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Thing.Service._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.Service._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.Service._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Thing.Service._Tag">
             <summary>
@@ -626,26 +567,17 @@
             Media profiles supported as specified by the media type.
              </summary>
         </member>
+        <member name="P:Goedel.Thing.Physical._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Physical._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Thing.Physical._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Thing.Physical._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Thing.Physical._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Thing.Physical._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Thing.Physical._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.Physical._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.Physical._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Thing.Physical._Tag">
             <summary>
@@ -687,26 +619,17 @@
             The set of data storage protocols the device can use
              </summary>
         </member>
+        <member name="P:Goedel.Thing.Storage._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Storage._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Thing.Storage._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Thing.Storage._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Thing.Storage._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Thing.Storage._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Thing.Storage._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.Storage._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.Storage._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Thing.Storage._Tag">
             <summary>
@@ -780,26 +703,17 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="P:Goedel.Thing.ProfileThing._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.ProfileThing._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Thing.ProfileThing._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Thing.ProfileThing._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Thing.ProfileThing._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Thing.ProfileThing._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Thing.ProfileThing._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.ProfileThing._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.ProfileThing._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Thing.ProfileThing._Tag">
             <summary>
@@ -831,11 +745,6 @@
         <member name="F:Goedel.Thing.ThingProtocol.__Tag">
             <summary>
             Tag identifying this class
-            </summary>
-        </member>
-        <member name="P:Goedel.Thing.ThingProtocol._TagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
             </summary>
         </member>
         <member name="P:Goedel.Thing.ThingProtocol._BindingDictionary">
@@ -922,26 +831,17 @@
              Base class for all requests made to a registrar
              </summary>
         </member>
+        <member name="P:Goedel.Thing.ThingRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.ThingRequest._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Thing.ThingRequest._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Thing.ThingRequest._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Thing.ThingRequest._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Thing.ThingRequest._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Thing.ThingRequest._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.ThingRequest._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.ThingRequest._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Thing.ThingRequest._Tag">
             <summary>
@@ -966,26 +866,17 @@
              status code and status description fields.
              </summary>
         </member>
+        <member name="P:Goedel.Thing.ThingResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.ThingResponse._properties">
+            <summary>Binding</summary> 
+        </member>
         <member name="P:Goedel.Thing.ThingResponse._Binding">
             <summary>Implement IBinding</summary> 
         </member>
         <member name="F:Goedel.Thing.ThingResponse._binding">
             <summary>Binding</summary> 
-        </member>
-        <member name="F:Goedel.Thing.ThingResponse._StaticProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="F:Goedel.Thing.ThingResponse._StaticAllProperties">
-            <summary>Dictionary describing the serializable properties.</summary> 
-        </member>
-        <member name="P:Goedel.Thing.ThingResponse._AllProperties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.ThingResponse._Properties">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Thing.ThingResponse._ParentProperties">
-            <inheritdoc/>
         </member>
         <member name="P:Goedel.Thing.ThingResponse._Tag">
             <summary>
