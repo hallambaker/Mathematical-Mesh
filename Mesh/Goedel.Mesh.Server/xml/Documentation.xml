@@ -146,12 +146,6 @@
         <member name="P:Goedel.Mesh.Server.AccountUser._PrimaryKey">
             <summary>The primary key</summary>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountUser.GetProfileAccount">
-            <summary>Cached convenience accessor for <see cref="F:Goedel.Mesh.Server.AccountUser.profileAccount"/></summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountUser.ProfileUser">
-            <summary>Cached convenience accessor for <see cref="P:Goedel.Mesh.Server.AccountUser.ProfileUser"/></summary>
-        </member>
         <member name="P:Goedel.Mesh.Server.AccountUser.ProfileGroup">
             <summary>Cached convenience accessor for <see cref="P:Goedel.Mesh.Server.AccountUser.ProfileGroup"/></summary>
         </member>
@@ -169,16 +163,15 @@
         <member name="M:Goedel.Mesh.Server.AccountUser.Verify(Goedel.Mesh.MeshVerifiedAccount)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountUser.EnvelopedProfileUser">
-             <summary>
-            The signed assertion describing the account.
-             </summary>
+        <member name="P:Goedel.Mesh.Server.AccountUser.ProfileUser">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountUser.EnvelopedAccountHostAssignment">
-             <summary>
-            The enveloped assignment describing how the client should
-            discover the host and encrypt data to it.
-             </summary>
+        <member name="P:Goedel.Mesh.Server.AccountUser.AccountHostAssignment">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.Server.AccountUser._Properties">
             <summary>Implement IBinding</summary> 

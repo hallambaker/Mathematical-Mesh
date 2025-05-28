@@ -75,7 +75,8 @@ public partial class Envelope<T> : Envelope {
     //public Enveloped() {
     //    }
 
-    public  void Wrap() {
+    public  T Decode() {
+        throw new NYI();
         }
 
     public  void Unwrap() {

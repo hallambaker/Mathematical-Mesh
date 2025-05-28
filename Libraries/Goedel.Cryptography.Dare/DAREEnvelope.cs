@@ -46,23 +46,6 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
 
 
     /// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-    static Dictionary<string, JsonFactoryDelegate> ThisTagDictionary =
-        new()
-            {
-                { "DareEnvelope", Factory }
-            };
-
-    /// <summary>
-    /// The module initializer. This is called during initialization of the module.
-    /// </summary>
-#pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
-    [ModuleInitializer]
-#pragma warning restore CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
-    internal static void Initialize() => AddDictionary(ref ThisTagDictionary);
-
-    /// <summary>
     /// Tag identifying this class
     /// </summary>
     public override string _Tag { get; } = "DareEnvelope";
@@ -302,36 +285,6 @@ public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
             }
         }
 
-
-    ///// <summary>
-    ///// Deserialize the input string to populate this object
-    ///// </summary>
-    ///// <param name="jsonReader">Input data</param>
-    //public override void Deserialize(JsonReader jsonReader) {
-    //    // NB: This was not filled in during testing. This implementation has not been regression 
-    //    // tested and may cause other things to fail.
-
-    //    if (!jsonReader.StartArray()) {
-    //        return;
-    //        }
-    //    //Header = new DareHeader();
-    //    //Header.Deserialize(jsonReader);
-
-
-    //    Header = StreamParse<DareHeader>(jsonReader, false);
-    //    if (!jsonReader.NextArray()) {
-    //        return;
-    //        }
-    //    Body = jsonReader.ReadBinary();
-    //    if (!jsonReader.NextArray()) {
-    //        return;
-    //        }
-    //    //Trailer = new DareTrailer();
-    //    //Trailer.Deserialize(jsonReader);
-
-    //    Trailer = StreamParse<DareTrailer>(jsonReader, false);
-    //    jsonReader.EndArray();
-    //    }
 
     #endregion
     #region // Payload decoding routines 

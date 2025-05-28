@@ -36,10 +36,12 @@
 		Inherits AccountEntry
 		Description
 			|Represents a Mesh Account
-		Struct Enveloped<ProfileAccount> EnvelopedProfileUser
+		GStruct Enveloped ProfileAccount ProfileUser
+			//Struct Enveloped<ProfileAccount> EnvelopedProfileUser
 			Description
 				|The signed assertion describing the account.
-		Struct Enveloped<AccountHostAssignment> EnvelopedAccountHostAssignment
+		GStruct Enveloped AccountHostAssignment AccountHostAssignment
+			//Struct Enveloped<AccountHostAssignment> EnvelopedAccountHostAssignment
 			Description
 				|The enveloped assignment describing how the client should
 				|discover the host and encrypt data to it.

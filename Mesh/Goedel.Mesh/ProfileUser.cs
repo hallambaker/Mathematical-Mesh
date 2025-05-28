@@ -30,6 +30,10 @@ public partial class ProfileUser {
     //    ProfileSignature.GetKeyPair().CacheValue(out accountSignatureKey);
     //KeyPair accountSignatureKey;
 
+    ///<summary>Typed enveloped data</summary> 
+    public Enveloped<ProfileUser> GetEnvelopedProfileUser() => new(DareEnvelope);
+
+
 
     ///<summary>The account escrow key</summary> 
     public KeyPair EscrowEncryptionKey => escrowEncryptionKey ??

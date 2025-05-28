@@ -369,7 +369,7 @@ public partial class ActivationCommon {
 
         var catalogEntryDevice = new CatalogedDevice() {
             //Udf = activationAccount.ProfileSignature.Udf,
-            EnvelopedProfileUser = profileUser.GetEnvelopedProfileAccount(),
+            EnvelopedProfileUser = profileUser.GetEnvelopedProfileUser(),
             EnvelopedProfileDevice = profileDevice.GetEnvelopedProfileDevice(),
             EnvelopedConnectionService = connectionService?.GetEnvelopedConnectionService(),
             EnvelopedConnectionDevice = connectionDevice?.GetEnvelopedConnectionDevice(),

@@ -80,7 +80,7 @@ public class AccountHandleLocked : Disposable {
     public string LocalAddress => AccountUser.LocalAddress;
 
     ///<summary>The account profile</summary> 
-    public ProfileAccount ProfileAccount => AccountUser.GetProfileAccount();
+    public ProfileAccount ProfileAccount => AccountUser.ProfileUser;
 
     ///<summary>The directory in which all the account data is stored.</summary> 
     string Directory => AccountContext.Directory;

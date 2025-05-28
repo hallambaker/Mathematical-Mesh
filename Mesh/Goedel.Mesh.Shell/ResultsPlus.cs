@@ -251,7 +251,7 @@ public partial class ResultPending {
                     }
                 case ResponseConfirmation responseConfirmation: {
                     ToBuilder(builder, message, $"    Confirmation Reply:");
-                    builder.AppendLine($"        RequestID: {responseConfirmation.Request.Header.EnvelopeId}");
+                    builder.AppendLine($"        RequestID: {responseConfirmation.EnvelopedRequest.Header.EnvelopeId}");
                     builder.AppendLine($"        Accept: {responseConfirmation.Accept}");
                     break;
                     }

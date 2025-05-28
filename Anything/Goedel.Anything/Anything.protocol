@@ -44,13 +44,16 @@
 	Structure CatalogedAnything
 		External CatalogedEntry
 		String Key
-		Struct Enveloped<ConnectionStripped> EnvelopedConnectionAddress
+		GStruct Enveloped ConnectionStripped ConnectionAddress
+			//Struct Enveloped<ConnectionStripped> EnvelopedConnectionAddress
 			Description
 				|The connection allowing control of the registry.
-		Struct Enveloped<ProfileAnything> EnvelopedProfileCarnet
+		GStruct Enveloped ProfileAnything ProfileCarnet
+			//Struct Enveloped<ProfileAnything> EnvelopedProfileCarnet
 			Description
 				|The Mesh profile
-		Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
+		GStruct Enveloped ActivationCommon ActivationCommon
+			//Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
 			Description
 				|The activation data for the registry.
 

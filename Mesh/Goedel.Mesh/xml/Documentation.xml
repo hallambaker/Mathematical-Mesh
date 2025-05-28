@@ -740,11 +740,10 @@
             Key or capability allowing administration of the group.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationApplicationGroup.EnvelopedConnectionService">
-             <summary>
-            Signed connection service delegation allowing the device to
-            access the account.
-             </summary>
+        <member name="P:Goedel.Mesh.ActivationApplicationGroup.ConnectionService">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.ActivationApplicationGroup._Properties">
             <summary>Implement IBinding</summary> 
@@ -790,8 +789,9 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="P:Goedel.Mesh.ApplicationEntryGroup.EnvelopedActivation">
+        <member name="P:Goedel.Mesh.ApplicationEntryGroup.ActivationGroup">
             <summary>
+            Wrapped property
             </summary>
         </member>
         <member name="P:Goedel.Mesh.ApplicationEntryGroup._Properties">
@@ -834,10 +834,6 @@
             The primary key used to catalog the entry.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedGroup.ProfileGroup">
-            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedGroup.EnvelopedProfileGroup"/>
-            to return the <see cref="T:Goedel.Mesh.ProfileUser"/> value.</summary>
-        </member>
         <member name="M:Goedel.Mesh.CatalogedGroup.GetEscrow">
             <summary>
             Return the escrowed keys.
@@ -868,20 +864,20 @@
         <member name="M:Goedel.Mesh.CatalogedGroup.ToBuilder(System.Text.StringBuilder)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedGroup.EnvelopedConnectionAddress">
-             <summary>
-            The connection allowing control of the group.
-             </summary>
+        <member name="P:Goedel.Mesh.CatalogedGroup.ConnectionAddress">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedGroup.EnvelopedProfileGroup">
-             <summary>
-            The Mesh profile
-             </summary>
+        <member name="P:Goedel.Mesh.CatalogedGroup.ProfileGroup">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedGroup.EnvelopedActivationCommon">
-             <summary>
-            The activation of the device within the Mesh account
-             </summary>
+        <member name="P:Goedel.Mesh.CatalogedGroup.ActivationCommon">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedGroup._Properties">
             <summary>Implement IBinding</summary> 
@@ -976,8 +972,9 @@
         <member name="M:Goedel.Mesh.ApplicationEntryMail.Decode(Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.ApplicationEntryMail.EnvelopedActivation">
+        <member name="P:Goedel.Mesh.ApplicationEntryMail.ActivationMail">
             <summary>
+            Wrapped property
             </summary>
         </member>
         <member name="P:Goedel.Mesh.ApplicationEntryMail._Properties">
@@ -1262,8 +1259,9 @@
         <member name="M:Goedel.Mesh.ApplicationEntrySsh.Decode(Goedel.Cryptography.Dare.IKeyCollection)">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.ApplicationEntrySsh.EnvelopedActivation">
+        <member name="P:Goedel.Mesh.ApplicationEntrySsh.ActivationSsh">
             <summary>
+            Wrapped property
             </summary>
         </member>
         <member name="P:Goedel.Mesh.ApplicationEntrySsh._Properties">
@@ -1588,10 +1586,10 @@
             Access rights associated with the key
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.AccessCapability.EnvelopedCatalogedDevice">
-             <summary>
-            
-             </summary>
+        <member name="P:Goedel.Mesh.AccessCapability.CatalogedDevice">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.AccessCapability.CatalogedDeviceDigest">
              <summary>
@@ -1708,10 +1706,10 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CryptographicCapability.EnvelopedKeyShare">
-             <summary>
-            One or more enveloped key shares.
-             </summary>
+        <member name="P:Goedel.Mesh.CryptographicCapability.KeyShare">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.CryptographicCapability._Properties">
             <summary>Implement IBinding</summary> 
@@ -2514,10 +2512,10 @@
             Enveloped keys for use with Application
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedApplication.EnvelopedEscrow">
-             <summary>
-            Escrow entries for the application.
-             </summary>
+        <member name="P:Goedel.Mesh.CatalogedApplication.Escrow">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedApplication._Properties">
             <summary>Implement IBinding</summary> 
@@ -3135,33 +3133,13 @@
         <member name="M:Goedel.Mesh.CatalogedDevice.GetEnvelopedCatalogedDevice">
             <summary>Typed enveloped data</summary> 
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.ProfileUser">
-            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedProfileUser"/>
-            to return the <see cref="P:Goedel.Mesh.CatalogedDevice.ProfileUser"/> value.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.ProfileDevice">
-            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedProfileDevice"/>
-            to return the <see cref="P:Goedel.Mesh.CatalogedDevice.ProfileDevice"/> value.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.ConnectionService">
-            <summary>
-            The slim device connection assertion for authentication only.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.ConnectionDevice">
-            <summary>
-            The device connection assertion. This is set by either a new assertion being generated
-            for a newly added device or by decoding the SignedDeviceConnection entry after 
-            deserialization.
-            </summary>
-        </member>
         <member name="M:Goedel.Mesh.CatalogedDevice.GetActivationAccount(Goedel.Cryptography.Dare.IKeyCollection)">
-            <summary>Cached convenience accessor that unpacks the value of <see cref="T:Goedel.Mesh.ActivationAccount"/>
+            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.ActivationAccount"/>
             to return the <see cref="T:Goedel.Mesh.ActivationAccount"/> value.</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogedDevice.GetActivationCommon(Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedActivationCommon"/>
-            to return the <see cref="T:Goedel.Mesh.ActivationCommon"/> value.</summary>
+            to return the <see cref="P:Goedel.Mesh.CatalogedDevice.ActivationCommon"/> value.</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogedDevice.#ctor">
             <summary>
@@ -3218,41 +3196,40 @@
             UDF of the account online signature key
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedProfileUser">
-             <summary>
-            The Mesh profile. Why is this still here? This is not 
-            specific to the device.
-             </summary>
+        <member name="P:Goedel.Mesh.CatalogedDevice.ProfileUser">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedProfileDevice">
-             <summary>
-            The device profile
-             </summary>
+        <member name="P:Goedel.Mesh.CatalogedDevice.ProfileDevice">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedDevice.DeviceDescription">
              <summary>
             Description of the device
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedConnectionService">
-             <summary>
-            Slim version of ConnectionDevice used by the presentation layer
-             </summary>
+        <member name="P:Goedel.Mesh.CatalogedDevice.ConnectionService">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedConnectionDevice">
-             <summary>
-            The public assertion demonstrating connection of the Device to the Mesh
-             </summary>
+        <member name="P:Goedel.Mesh.CatalogedDevice.ConnectionDevice">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedActivationAccount">
-             <summary>
-            The activation of the device within the Mesh account
-             </summary>
+        <member name="P:Goedel.Mesh.CatalogedDevice.ActivationAccount">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedDevice.EnvelopedActivationCommon">
-             <summary>
-            The activation of the device within the Mesh account
-             </summary>
+        <member name="P:Goedel.Mesh.CatalogedDevice.ActivationCommon">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedDevice.ApplicationEntries">
              <summary>
@@ -4130,8 +4107,9 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedTask.EnvelopedTask">
+        <member name="P:Goedel.Mesh.CatalogedTask.Task">
             <summary>
+            Wrapped property
             </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedTask._Properties">
@@ -5143,15 +5121,15 @@
         <member name="M:Goedel.Mesh.DevicePreconfigurationPrivate.#ctor">
             <summary>Base constructor for deserialization.</summary>
         </member>
-        <member name="P:Goedel.Mesh.DevicePreconfigurationPrivate.EnvelopedConnectionDevice">
-             <summary>
-            The device connection
-             </summary>
+        <member name="P:Goedel.Mesh.DevicePreconfigurationPrivate.ConnectionDevice">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.DevicePreconfigurationPrivate.EnvelopedConnectionService">
-             <summary>
-            The device connection
-             </summary>
+        <member name="P:Goedel.Mesh.DevicePreconfigurationPrivate.ConnectionService">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.DevicePreconfigurationPrivate.PrivateKey">
              <summary>
@@ -7676,10 +7654,10 @@
         <member name="P:Goedel.Mesh.AcknowledgeConnection.MessageConnectionRequest">
             <summary>Convenience accessor for the inner <see cref="T:Goedel.Mesh.AcknowledgeConnection"/></summary>
         </member>
-        <member name="P:Goedel.Mesh.AcknowledgeConnection.EnvelopedRequestConnection">
-             <summary>
-            The client connection request.
-             </summary>
+        <member name="P:Goedel.Mesh.AcknowledgeConnection.RequestConnection">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.AcknowledgeConnection.ServerNonce">
              <summary>
@@ -7923,6 +7901,7 @@
         </member>
         <member name="P:Goedel.Mesh.ResponseConfirmation.Request">
             <summary>
+            Wrapped property
             </summary>
         </member>
         <member name="P:Goedel.Mesh.ResponseConfirmation.Accept">
@@ -8516,9 +8495,6 @@
         <member name="P:Goedel.Mesh.ProfileAccount.MeshActor">
             <summary>The actor type</summary> 
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.GetEnvelopedProfileAccount">
-            <summary>Typed enveloped data</summary> 
-        </member>
         <member name="P:Goedel.Mesh.ProfileAccount.DirectAddress">
             <summary>Profile direct address</summary> 
         </member>
@@ -8751,6 +8727,9 @@
              becomes its first administrator, control of the group may pass to other
              administrators over time.
              </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileGroup.GetEnvelopedProfileGroup">
+            <summary>Typed enveloped data</summary> 
         </member>
         <member name="M:Goedel.Mesh.ProfileGroup.#ctor">
             <summary>
@@ -9006,6 +8985,9 @@
             
              Account assertion. This is signed by the service hosting the account.
              </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileUser.GetEnvelopedProfileUser">
+            <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.ProfileUser.EscrowEncryptionKey">
             <summary>The account escrow key</summary> 
@@ -9665,10 +9647,10 @@
             The identifier of the capability under which access is claimed.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.MeshRequestUser.EnvelopedProfileDevice">
-             <summary>
-            Device profile of the device making the request.
-             </summary>
+        <member name="P:Goedel.Mesh.MeshRequestUser.ProfileDevice">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.MeshRequestUser._Properties">
             <summary>Implement IBinding</summary> 
@@ -10210,15 +10192,15 @@
             The service account to bind to.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.BindRequest.EnvelopedProfileAccount">
-             <summary>
-            The signed assertion describing the account.
-             </summary>
+        <member name="P:Goedel.Mesh.BindRequest.ProfileAccount">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.BindRequest.EnvelopedCallsignBinding">
-             <summary>
-            Contains one or more bindings of a callsign to the account.
-             </summary>
+        <member name="P:Goedel.Mesh.BindRequest.CallsignBinding">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.BindRequest._Properties">
             <summary>Implement IBinding</summary> 
@@ -10268,11 +10250,10 @@
             request.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.BindResponse.EnvelopedAccountHostAssignment">
-             <summary>
-            The enveloped assignment describing how the client should
-            discover the host and encrypt data to it.
-             </summary>
+        <member name="P:Goedel.Mesh.BindResponse.AccountHostAssignment">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.BindResponse._Properties">
             <summary>Implement IBinding</summary> 
@@ -10391,10 +10372,10 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectRequest.EnvelopedRequestConnection">
-             <summary>
-            The connection request generated by the client 
-             </summary>
+        <member name="P:Goedel.Mesh.ConnectRequest.RequestConnection">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.ConnectRequest.Rights">
              <summary>
@@ -10433,15 +10414,15 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectResponse.EnvelopedAcknowledgeConnection">
-             <summary>
-            The connection request generated by the client
-             </summary>
+        <member name="P:Goedel.Mesh.ConnectResponse.AcknowledgeConnection">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.ConnectResponse.EnvelopedProfileAccount">
-             <summary>
-            The user profile that provides the root of trust for this Mesh
-             </summary>
+        <member name="P:Goedel.Mesh.ConnectResponse.ProfileAccount">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.ConnectResponse._Properties">
             <summary>Implement IBinding</summary> 
@@ -10521,16 +10502,15 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CompleteResponse.EnvelopedRespondConnection">
-             <summary>
-            The signed assertion describing the result of the connect request
-             </summary>
+        <member name="P:Goedel.Mesh.CompleteResponse.RespondConnection">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.CompleteResponse.EnvelopedAccountHostAssignment">
-             <summary>
-            The enveloped assignment describing how the client should
-            discover the host and encrypt data to it.
-             </summary>
+        <member name="P:Goedel.Mesh.CompleteResponse.AccountHostAssignment">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.CompleteResponse._Properties">
             <summary>Implement IBinding</summary> 
@@ -10630,15 +10610,15 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.StatusResponse.EnvelopedProfileAccount">
-             <summary>
-            The account profile providing the root of trust for this account.
-             </summary>
+        <member name="P:Goedel.Mesh.StatusResponse.ProfileAccount">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.StatusResponse.EnvelopedCatalogedDevice">
-             <summary>
-            The catalog device entry
-             </summary>
+        <member name="P:Goedel.Mesh.StatusResponse.CatalogedDevice">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.StatusResponse.CatalogedDeviceDigest">
             <summary>
@@ -10648,11 +10628,10 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.StatusResponse.EnvelopedAccountHostAssignment">
-             <summary>
-            The enveloped assignment describing how the client should
-            discover the host and encrypt data to it.
-             </summary>
+        <member name="P:Goedel.Mesh.StatusResponse.AccountHostAssignment">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.StatusResponse.Services">
              <summary>
@@ -10845,10 +10824,10 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.DownloadResponse.EnvelopedCatalogedDevice">
-             <summary>
-            The catalog device entry. This is only returned if the 
-             </summary>
+        <member name="P:Goedel.Mesh.DownloadResponse.CatalogedDevice">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.DownloadResponse._Properties">
             <summary>Implement IBinding</summary> 
@@ -11077,22 +11056,19 @@
              </summary>
         </member>
         <member name="P:Goedel.Mesh.TransactRequest.Outbound">
-             <summary>
-            The messages to be sent to other accounts  
-             </summary>
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.TransactRequest.Inbound">
-             <summary>
-            Messages to be appended to the user's inbound spool. this is
-            typically used to post notifications to the user to mark messages as having been
-            read or responded to.
-             </summary>
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.TransactRequest.Local">
-             <summary>
-            Messages to be appended to the user's local spool. This is used to allow connecting
-            devices to collect activation messages before they have connected to the mesh.
-             </summary>
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.TransactRequest._Properties">
             <summary>Implement IBinding</summary> 
@@ -11280,9 +11256,9 @@
              </summary>
         </member>
         <member name="P:Goedel.Mesh.PostRequest.Messages">
-             <summary>
-            The messages to be sent to the addresses specified in Accounts. 
-             </summary>
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.PostRequest._Properties">
             <summary>Implement IBinding</summary> 
@@ -11356,10 +11332,10 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ClaimRequest.EnvelopedMessageClaim">
-             <summary>
-            The claim message
-             </summary>
+        <member name="P:Goedel.Mesh.ClaimRequest.MessageClaim">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.ClaimRequest._Properties">
             <summary>Implement IBinding</summary> 
@@ -11478,10 +11454,10 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.PollClaimResponse.EnvelopedMessage">
-             <summary>
-            The claim message
-             </summary>
+        <member name="P:Goedel.Mesh.PollClaimResponse.Message">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.PollClaimResponse._Properties">
             <summary>Implement IBinding</summary> 
@@ -12835,10 +12811,10 @@
             Profile of the callsign registry used by the service.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.AccountHostAssignment.EnvelopedProfileService">
-             <summary>
-            Profile of the service.
-             </summary>
+        <member name="P:Goedel.Mesh.AccountHostAssignment.ProfileService">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.AccountHostAssignment._Properties">
             <summary>Implement IBinding</summary> 
@@ -13003,8 +12979,9 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ApplicationEntryDeveloper.EnvelopedActivation">
+        <member name="P:Goedel.Mesh.ApplicationEntryDeveloper.ActivationDeveloper">
             <summary>
+            Wrapped property
             </summary>
         </member>
         <member name="P:Goedel.Mesh.ApplicationEntryDeveloper._Properties">
@@ -13039,8 +13016,9 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ApplicationEntryCredential.EnvelopedActivation">
+        <member name="P:Goedel.Mesh.ApplicationEntryCredential.ActivationCredential">
             <summary>
+            Wrapped property
             </summary>
         </member>
         <member name="P:Goedel.Mesh.ApplicationEntryCredential._Properties">
@@ -13681,10 +13659,10 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.DevicePreconfigurationPublic.EnvelopedProfileDevice">
-             <summary>
-            The device profile
-             </summary>
+        <member name="P:Goedel.Mesh.DevicePreconfigurationPublic.ProfileDevice">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.DevicePreconfigurationPublic.Hailing">
              <summary>

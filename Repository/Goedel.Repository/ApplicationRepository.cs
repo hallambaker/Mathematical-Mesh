@@ -148,7 +148,7 @@ public partial class CatalogedRepository {
 
         return new ApplicationEntryGroup() {
             Identifier = ProfileGroup.AccountAddress,
-            EnvelopedActivation = activation.GetEnvelopedActivationApplicationGroup()
+            EnvelopedActivationGroup = activation.GetEnvelopedActivationApplicationGroup()
             };
 
         }

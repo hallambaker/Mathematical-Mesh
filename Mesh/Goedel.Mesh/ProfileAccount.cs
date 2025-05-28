@@ -25,11 +25,14 @@ namespace Goedel.Mesh;
 
 public partial class ProfileAccount {
 
-    ///<summary>The actor type</summary> 
-    public override MeshActor MeshActor => MeshActor.Account;
 
     ///<summary>Typed enveloped data</summary> 
     public Enveloped<ProfileAccount> GetEnvelopedProfileAccount() => new(DareEnvelope);
+
+    ///<summary>The actor type</summary> 
+    public override MeshActor MeshActor => MeshActor.Account;
+
+
 
     ///<summary>Profile direct address</summary> 
     public string DirectAddress => UdfString.ToLower() + "@@" + AccountAddress.GetServiceRaw();

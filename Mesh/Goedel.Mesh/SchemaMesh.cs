@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 3:12:45 PM
+//  This file was automatically generated at 5/27/2025 4:21:25 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -2508,13 +2508,13 @@ public partial class AccountHostAssignment : Assertion {
 	[JsonPropertyName("CallsignServiceProfile")]
 	public virtual ProfileAccount?					CallsignServiceProfile  {get; set;} //
 
-    /// <summary>
-    ///Profile of the service.
+	[JsonPropertyName("ProfileService")]
+	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedProfileService")]
-	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;} //
-
+	public virtual ProfileService?				ProfileService  {get; set;} 
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -2536,10 +2536,12 @@ public partial class AccountHostAssignment : Assertion {
 					(IBinding data, object? value) => {(data as AccountHostAssignment).CallsignServiceProfile = value as ProfileAccount;}, 
 					(IBinding data) => (data as AccountHostAssignment).CallsignServiceProfile,
 					false, ()=>new  ProfileAccount(), ()=>new ProfileAccount()),
-		new PropertyStruct ("EnvelopedProfileService", typeof (Enveloped<ProfileService>),
-					(IBinding data, object? value) => {(data as AccountHostAssignment).EnvelopedProfileService = value as Enveloped<ProfileService>;}, 
+		new PropertyGStruct ("ProfileService", /*typeof (ProfileService<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as AccountHostAssignment).EnvelopedProfileService = value as Enveloped<ProfileService>;},
 					(IBinding data) => (data as AccountHostAssignment).EnvelopedProfileService,
-					false, ()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())		];
+					/*(IBinding data, object? value) => {(data as AccountHostAssignment).ProfileService = value as ProfileService;},
+					(IBinding data) => (data as AccountHostAssignment).ProfileService,*/
+					()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2552,7 +2554,7 @@ public partial class AccountHostAssignment : Assertion {
 			{ "HostAddresses", _properties [1]},
 			{ "AccessEncrypt", _properties [2]},
 			{ "CallsignServiceProfile", _properties [3]},
-			{ "EnvelopedProfileService", _properties [4]}
+			{ "ProfileService", _properties [4]}
         }, __Tag,() => new AccountHostAssignment(), () => new List<AccountHostAssignment>(), () => new Dictionary<string,AccountHostAssignment>(),Assertion._binding);
 	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3163,14 +3165,13 @@ public partial class ActivationApplicationGroup : ActivationApplication {
 	[JsonPropertyName("AccountAuthentication")]
 	public virtual KeyData?					AccountAuthentication  {get; set;} //
 
-    /// <summary>
-    ///Signed connection service delegation allowing the device to
-    ///access the account.
+	[JsonPropertyName("ConnectionService")]
+	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedConnectionService")]
-	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} //
-
+	public virtual ConnectionService?				ConnectionService  {get; set;} 
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -3190,10 +3191,12 @@ public partial class ActivationApplicationGroup : ActivationApplication {
 					(IBinding data, object? value) => {(data as ActivationApplicationGroup).AccountAuthentication = value as KeyData;}, 
 					(IBinding data) => (data as ActivationApplicationGroup).AccountAuthentication,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
-		new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
-					(IBinding data, object? value) => {(data as ActivationApplicationGroup).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, 
+		new PropertyGStruct ("ConnectionService", /*typeof (ConnectionService<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as ActivationApplicationGroup).EnvelopedConnectionService = value as Enveloped<ConnectionService>;},
 					(IBinding data) => (data as ActivationApplicationGroup).EnvelopedConnectionService,
-					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())		];
+					/*(IBinding data, object? value) => {(data as ActivationApplicationGroup).ConnectionService = value as ConnectionService;},
+					(IBinding data) => (data as ActivationApplicationGroup).ConnectionService,*/
+					()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3205,7 +3208,7 @@ public partial class ActivationApplicationGroup : ActivationApplication {
 			{ "AccountEncryption", _properties [0]},
 			{ "AdministratorSignature", _properties [1]},
 			{ "AccountAuthentication", _properties [2]},
-			{ "EnvelopedConnectionService", _properties [3]}
+			{ "ConnectionService", _properties [3]}
         }, __Tag,() => new ActivationApplicationGroup(), () => new List<ActivationApplicationGroup>(), () => new Dictionary<string,ActivationApplicationGroup>(),ActivationApplication._binding);
 	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3432,12 +3435,13 @@ abstract public partial class ApplicationEntry : MeshItem {
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntrySsh : ApplicationEntry {
-    /// <summary>
+	[JsonPropertyName("ActivationSsh")]
+	public virtual Enveloped<ActivationApplicationSsh>?					EnvelopedActivationSsh  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedActivation")]
-	public virtual Enveloped<ActivationApplicationSsh>?					EnvelopedActivation  {get; set;} //
-
+	public virtual ActivationApplicationSsh?				ActivationSsh  {get; set;} 
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -3445,10 +3449,12 @@ public partial class ApplicationEntrySsh : ApplicationEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 
-		new PropertyStruct ("EnvelopedActivation", typeof (Enveloped<ActivationApplicationSsh>),
-					(IBinding data, object? value) => {(data as ApplicationEntrySsh).EnvelopedActivation = value as Enveloped<ActivationApplicationSsh>;}, 
-					(IBinding data) => (data as ApplicationEntrySsh).EnvelopedActivation,
-					false, ()=>new  Enveloped<ActivationApplicationSsh>(), ()=>new Enveloped<ActivationApplicationSsh>())		];
+		new PropertyGStruct ("ActivationSsh", /*typeof (ActivationApplicationSsh<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as ApplicationEntrySsh).EnvelopedActivationSsh = value as Enveloped<ActivationApplicationSsh>;},
+					(IBinding data) => (data as ApplicationEntrySsh).EnvelopedActivationSsh,
+					/*(IBinding data, object? value) => {(data as ApplicationEntrySsh).ActivationSsh = value as ActivationApplicationSsh;},
+					(IBinding data) => (data as ApplicationEntrySsh).ActivationSsh,*/
+					()=>new  Enveloped<ActivationApplicationSsh>(), ()=>new Enveloped<ActivationApplicationSsh>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3457,7 +3463,7 @@ public partial class ApplicationEntrySsh : ApplicationEntry {
 	public static readonly new Binding<ApplicationEntrySsh> _binding = new (
 			new() {
 
-			{ "EnvelopedActivation", _properties [0]}
+			{ "ActivationSsh", _properties [0]}
         }, __Tag,() => new ApplicationEntrySsh(), () => new List<ApplicationEntrySsh>(), () => new Dictionary<string,ApplicationEntrySsh>(),ApplicationEntry._binding);
 	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3501,12 +3507,13 @@ public partial class ApplicationEntrySsh : ApplicationEntry {
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntryGroup : ApplicationEntry {
-    /// <summary>
+	[JsonPropertyName("ActivationGroup")]
+	public virtual Enveloped<ActivationApplicationGroup>?					EnvelopedActivationGroup  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedActivation")]
-	public virtual Enveloped<ActivationApplicationGroup>?					EnvelopedActivation  {get; set;} //
-
+	public virtual ActivationApplicationGroup?				ActivationGroup  {get; set;} 
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -3514,10 +3521,12 @@ public partial class ApplicationEntryGroup : ApplicationEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 
-		new PropertyStruct ("EnvelopedActivation", typeof (Enveloped<ActivationApplicationGroup>),
-					(IBinding data, object? value) => {(data as ApplicationEntryGroup).EnvelopedActivation = value as Enveloped<ActivationApplicationGroup>;}, 
-					(IBinding data) => (data as ApplicationEntryGroup).EnvelopedActivation,
-					false, ()=>new  Enveloped<ActivationApplicationGroup>(), ()=>new Enveloped<ActivationApplicationGroup>())		];
+		new PropertyGStruct ("ActivationGroup", /*typeof (ActivationApplicationGroup<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as ApplicationEntryGroup).EnvelopedActivationGroup = value as Enveloped<ActivationApplicationGroup>;},
+					(IBinding data) => (data as ApplicationEntryGroup).EnvelopedActivationGroup,
+					/*(IBinding data, object? value) => {(data as ApplicationEntryGroup).ActivationGroup = value as ActivationApplicationGroup;},
+					(IBinding data) => (data as ApplicationEntryGroup).ActivationGroup,*/
+					()=>new  Enveloped<ActivationApplicationGroup>(), ()=>new Enveloped<ActivationApplicationGroup>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3526,7 +3535,7 @@ public partial class ApplicationEntryGroup : ApplicationEntry {
 	public static readonly new Binding<ApplicationEntryGroup> _binding = new (
 			new() {
 
-			{ "EnvelopedActivation", _properties [0]}
+			{ "ActivationGroup", _properties [0]}
         }, __Tag,() => new ApplicationEntryGroup(), () => new List<ApplicationEntryGroup>(), () => new Dictionary<string,ApplicationEntryGroup>(),ApplicationEntry._binding);
 	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3570,12 +3579,13 @@ public partial class ApplicationEntryGroup : ApplicationEntry {
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntryMail : ApplicationEntry {
-    /// <summary>
+	[JsonPropertyName("ActivationMail")]
+	public virtual Enveloped<ActivationApplicationMail>?					EnvelopedActivationMail  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedActivation")]
-	public virtual Enveloped<ActivationApplicationMail>?					EnvelopedActivation  {get; set;} //
-
+	public virtual ActivationApplicationMail?				ActivationMail  {get; set;} 
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -3583,10 +3593,12 @@ public partial class ApplicationEntryMail : ApplicationEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 
-		new PropertyStruct ("EnvelopedActivation", typeof (Enveloped<ActivationApplicationMail>),
-					(IBinding data, object? value) => {(data as ApplicationEntryMail).EnvelopedActivation = value as Enveloped<ActivationApplicationMail>;}, 
-					(IBinding data) => (data as ApplicationEntryMail).EnvelopedActivation,
-					false, ()=>new  Enveloped<ActivationApplicationMail>(), ()=>new Enveloped<ActivationApplicationMail>())		];
+		new PropertyGStruct ("ActivationMail", /*typeof (ActivationApplicationMail<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as ApplicationEntryMail).EnvelopedActivationMail = value as Enveloped<ActivationApplicationMail>;},
+					(IBinding data) => (data as ApplicationEntryMail).EnvelopedActivationMail,
+					/*(IBinding data, object? value) => {(data as ApplicationEntryMail).ActivationMail = value as ActivationApplicationMail;},
+					(IBinding data) => (data as ApplicationEntryMail).ActivationMail,*/
+					()=>new  Enveloped<ActivationApplicationMail>(), ()=>new Enveloped<ActivationApplicationMail>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3595,7 +3607,7 @@ public partial class ApplicationEntryMail : ApplicationEntry {
 	public static readonly new Binding<ApplicationEntryMail> _binding = new (
 			new() {
 
-			{ "EnvelopedActivation", _properties [0]}
+			{ "ActivationMail", _properties [0]}
         }, __Tag,() => new ApplicationEntryMail(), () => new List<ApplicationEntryMail>(), () => new Dictionary<string,ApplicationEntryMail>(),ApplicationEntry._binding);
 	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3639,12 +3651,13 @@ public partial class ApplicationEntryMail : ApplicationEntry {
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntryDeveloper : ApplicationEntry {
-    /// <summary>
+	[JsonPropertyName("ActivationDeveloper")]
+	public virtual Enveloped<ActivationApplicationDeveloper>?					EnvelopedActivationDeveloper  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedActivation")]
-	public virtual Enveloped<ActivationApplicationDeveloper>?					EnvelopedActivation  {get; set;} //
-
+	public virtual ActivationApplicationDeveloper?				ActivationDeveloper  {get; set;} 
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -3652,10 +3665,12 @@ public partial class ApplicationEntryDeveloper : ApplicationEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 
-		new PropertyStruct ("EnvelopedActivation", typeof (Enveloped<ActivationApplicationDeveloper>),
-					(IBinding data, object? value) => {(data as ApplicationEntryDeveloper).EnvelopedActivation = value as Enveloped<ActivationApplicationDeveloper>;}, 
-					(IBinding data) => (data as ApplicationEntryDeveloper).EnvelopedActivation,
-					false, ()=>new  Enveloped<ActivationApplicationDeveloper>(), ()=>new Enveloped<ActivationApplicationDeveloper>())		];
+		new PropertyGStruct ("ActivationDeveloper", /*typeof (ActivationApplicationDeveloper<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as ApplicationEntryDeveloper).EnvelopedActivationDeveloper = value as Enveloped<ActivationApplicationDeveloper>;},
+					(IBinding data) => (data as ApplicationEntryDeveloper).EnvelopedActivationDeveloper,
+					/*(IBinding data, object? value) => {(data as ApplicationEntryDeveloper).ActivationDeveloper = value as ActivationApplicationDeveloper;},
+					(IBinding data) => (data as ApplicationEntryDeveloper).ActivationDeveloper,*/
+					()=>new  Enveloped<ActivationApplicationDeveloper>(), ()=>new Enveloped<ActivationApplicationDeveloper>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3664,7 +3679,7 @@ public partial class ApplicationEntryDeveloper : ApplicationEntry {
 	public static readonly new Binding<ApplicationEntryDeveloper> _binding = new (
 			new() {
 
-			{ "EnvelopedActivation", _properties [0]}
+			{ "ActivationDeveloper", _properties [0]}
         }, __Tag,() => new ApplicationEntryDeveloper(), () => new List<ApplicationEntryDeveloper>(), () => new Dictionary<string,ApplicationEntryDeveloper>(),ApplicationEntry._binding);
 	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -3708,12 +3723,13 @@ public partial class ApplicationEntryDeveloper : ApplicationEntry {
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntryCredential : ApplicationEntry {
-    /// <summary>
+	[JsonPropertyName("ActivationCredential")]
+	public virtual Enveloped<ActivationApplicationCredential>?					EnvelopedActivationCredential  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedActivation")]
-	public virtual Enveloped<ActivationApplicationCredential>?					EnvelopedActivation  {get; set;} //
-
+	public virtual ActivationApplicationCredential?				ActivationCredential  {get; set;} 
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -3721,10 +3737,12 @@ public partial class ApplicationEntryCredential : ApplicationEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 
-		new PropertyStruct ("EnvelopedActivation", typeof (Enveloped<ActivationApplicationCredential>),
-					(IBinding data, object? value) => {(data as ApplicationEntryCredential).EnvelopedActivation = value as Enveloped<ActivationApplicationCredential>;}, 
-					(IBinding data) => (data as ApplicationEntryCredential).EnvelopedActivation,
-					false, ()=>new  Enveloped<ActivationApplicationCredential>(), ()=>new Enveloped<ActivationApplicationCredential>())		];
+		new PropertyGStruct ("ActivationCredential", /*typeof (ActivationApplicationCredential<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as ApplicationEntryCredential).EnvelopedActivationCredential = value as Enveloped<ActivationApplicationCredential>;},
+					(IBinding data) => (data as ApplicationEntryCredential).EnvelopedActivationCredential,
+					/*(IBinding data, object? value) => {(data as ApplicationEntryCredential).ActivationCredential = value as ActivationApplicationCredential;},
+					(IBinding data) => (data as ApplicationEntryCredential).ActivationCredential,*/
+					()=>new  Enveloped<ActivationApplicationCredential>(), ()=>new Enveloped<ActivationApplicationCredential>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3733,7 +3751,7 @@ public partial class ApplicationEntryCredential : ApplicationEntry {
 	public static readonly new Binding<ApplicationEntryCredential> _binding = new (
 			new() {
 
-			{ "EnvelopedActivation", _properties [0]}
+			{ "ActivationCredential", _properties [0]}
         }, __Tag,() => new ApplicationEntryCredential(), () => new List<ApplicationEntryCredential>(), () => new Dictionary<string,ApplicationEntryCredential>(),ApplicationEntry._binding);
 	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -4346,21 +4364,20 @@ public partial class CatalogedDevice : CatalogedEntry {
 	[JsonPropertyName("SignatureUdf")]
 	public virtual string?					SignatureUdf  {get; set;} //
 
-    /// <summary>
-    ///The Mesh profile. Why is this still here? This is not 
-    ///specific to the device.
+	[JsonPropertyName("ProfileUser")]
+	public virtual Enveloped<ProfileUser>?					EnvelopedProfileUser  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
+	public virtual ProfileUser?				ProfileUser  {get; set;} 
+	[JsonPropertyName("ProfileDevice")]
+	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;} 
 
-	[JsonPropertyName("EnvelopedProfileUser")]
-	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileUser  {get; set;} //
-
-    /// <summary>
-    ///The device profile
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedProfileDevice")]
-	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;} //
-
+	public virtual ProfileDevice?				ProfileDevice  {get; set;} 
     /// <summary>
     ///Description of the device
     /// </summary>
@@ -4368,34 +4385,34 @@ public partial class CatalogedDevice : CatalogedEntry {
 	[JsonPropertyName("DeviceDescription")]
 	public virtual DeviceDescription?					DeviceDescription  {get; set;} //
 
-    /// <summary>
-    ///Slim version of ConnectionDevice used by the presentation layer
+	[JsonPropertyName("ConnectionService")]
+	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
+	public virtual ConnectionService?				ConnectionService  {get; set;} 
+	[JsonPropertyName("ConnectionDevice")]
+	public virtual Enveloped<ConnectionDevice>?					EnvelopedConnectionDevice  {get; set;} 
 
-	[JsonPropertyName("EnvelopedConnectionService")]
-	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} //
-
-    /// <summary>
-    ///The public assertion demonstrating connection of the Device to the Mesh
+	/// <summary>
+	/// Wrapped property
     /// </summary>
+	public virtual ConnectionDevice?				ConnectionDevice  {get; set;} 
+	[JsonPropertyName("ActivationAccount")]
+	public virtual Enveloped<ActivationAccount>?					EnvelopedActivationAccount  {get; set;} 
 
-	[JsonPropertyName("EnvelopedConnectionDevice")]
-	public virtual Enveloped<ConnectionDevice>?					EnvelopedConnectionDevice  {get; set;} //
-
-    /// <summary>
-    ///The activation of the device within the Mesh account
+	/// <summary>
+	/// Wrapped property
     /// </summary>
+	public virtual ActivationAccount?				ActivationAccount  {get; set;} 
+	[JsonPropertyName("ActivationCommon")]
+	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} 
 
-	[JsonPropertyName("EnvelopedActivationAccount")]
-	public virtual Enveloped<ActivationAccount>?					EnvelopedActivationAccount  {get; set;} //
-
-    /// <summary>
-    ///The activation of the device within the Mesh account
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedActivationCommon")]
-	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} //
-
+	public virtual ActivationCommon?				ActivationCommon  {get; set;} 
     /// <summary>
     ///Application activations granted to the device.
     /// </summary>
@@ -4424,34 +4441,46 @@ public partial class CatalogedDevice : CatalogedEntry {
 		new PropertyString ("SignatureUdf", 
 					(IBinding data, string? value) => {(data as CatalogedDevice).SignatureUdf = value;}, 
 					(IBinding data) => (data as CatalogedDevice).SignatureUdf ),
-		new PropertyStruct ("EnvelopedProfileUser", typeof (Enveloped<ProfileAccount>),
-					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;}, 
+		new PropertyGStruct ("ProfileUser", /*typeof (ProfileUser<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedProfileUser = value as Enveloped<ProfileUser>;},
 					(IBinding data) => (data as CatalogedDevice).EnvelopedProfileUser,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
-		new PropertyStruct ("EnvelopedProfileDevice", typeof (Enveloped<ProfileDevice>),
-					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, 
+					/*(IBinding data, object? value) => {(data as CatalogedDevice).ProfileUser = value as ProfileUser;},
+					(IBinding data) => (data as CatalogedDevice).ProfileUser,*/
+					()=>new  Enveloped<ProfileUser>(), ()=>new Enveloped<ProfileUser>()),
+		new PropertyGStruct ("ProfileDevice", /*typeof (ProfileDevice<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;},
 					(IBinding data) => (data as CatalogedDevice).EnvelopedProfileDevice,
-					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>()),
+					/*(IBinding data, object? value) => {(data as CatalogedDevice).ProfileDevice = value as ProfileDevice;},
+					(IBinding data) => (data as CatalogedDevice).ProfileDevice,*/
+					()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>()),
 		new PropertyStruct ("DeviceDescription", typeof (DeviceDescription),
 					(IBinding data, object? value) => {(data as CatalogedDevice).DeviceDescription = value as DeviceDescription;}, 
 					(IBinding data) => (data as CatalogedDevice).DeviceDescription,
 					false, ()=>new  DeviceDescription(), ()=>new DeviceDescription()),
-		new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
-					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, 
+		new PropertyGStruct ("ConnectionService", /*typeof (ConnectionService<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedConnectionService = value as Enveloped<ConnectionService>;},
 					(IBinding data) => (data as CatalogedDevice).EnvelopedConnectionService,
-					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>()),
-		new PropertyStruct ("EnvelopedConnectionDevice", typeof (Enveloped<ConnectionDevice>),
-					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;}, 
+					/*(IBinding data, object? value) => {(data as CatalogedDevice).ConnectionService = value as ConnectionService;},
+					(IBinding data) => (data as CatalogedDevice).ConnectionService,*/
+					()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>()),
+		new PropertyGStruct ("ConnectionDevice", /*typeof (ConnectionDevice<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;},
 					(IBinding data) => (data as CatalogedDevice).EnvelopedConnectionDevice,
-					false, ()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>()),
-		new PropertyStruct ("EnvelopedActivationAccount", typeof (Enveloped<ActivationAccount>),
-					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedActivationAccount = value as Enveloped<ActivationAccount>;}, 
+					/*(IBinding data, object? value) => {(data as CatalogedDevice).ConnectionDevice = value as ConnectionDevice;},
+					(IBinding data) => (data as CatalogedDevice).ConnectionDevice,*/
+					()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>()),
+		new PropertyGStruct ("ActivationAccount", /*typeof (ActivationAccount<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedActivationAccount = value as Enveloped<ActivationAccount>;},
 					(IBinding data) => (data as CatalogedDevice).EnvelopedActivationAccount,
-					false, ()=>new  Enveloped<ActivationAccount>(), ()=>new Enveloped<ActivationAccount>()),
-		new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
-					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, 
+					/*(IBinding data, object? value) => {(data as CatalogedDevice).ActivationAccount = value as ActivationAccount;},
+					(IBinding data) => (data as CatalogedDevice).ActivationAccount,*/
+					()=>new  Enveloped<ActivationAccount>(), ()=>new Enveloped<ActivationAccount>()),
+		new PropertyGStruct ("ActivationCommon", /*typeof (ActivationCommon<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;},
 					(IBinding data) => (data as CatalogedDevice).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>()),
+					/*(IBinding data, object? value) => {(data as CatalogedDevice).ActivationCommon = value as ActivationCommon;},
+					(IBinding data) => (data as CatalogedDevice).ActivationCommon,*/
+					()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>()),
 		new PropertyListStruct ("ApplicationEntries", typeof (ApplicationEntry), 
 					(IBinding data, object? value) => {(data as CatalogedDevice).ApplicationEntries = value as List<ApplicationEntry>;}, 
 					(IBinding data) => (data as CatalogedDevice).ApplicationEntries,
@@ -4470,13 +4499,13 @@ public partial class CatalogedDevice : CatalogedEntry {
 			{ "Platform", _properties [2]},
 			{ "DeviceUdf", _properties [3]},
 			{ "SignatureUdf", _properties [4]},
-			{ "EnvelopedProfileUser", _properties [5]},
-			{ "EnvelopedProfileDevice", _properties [6]},
+			{ "ProfileUser", _properties [5]},
+			{ "ProfileDevice", _properties [6]},
 			{ "DeviceDescription", _properties [7]},
-			{ "EnvelopedConnectionService", _properties [8]},
-			{ "EnvelopedConnectionDevice", _properties [9]},
-			{ "EnvelopedActivationAccount", _properties [10]},
-			{ "EnvelopedActivationCommon", _properties [11]},
+			{ "ConnectionService", _properties [8]},
+			{ "ConnectionDevice", _properties [9]},
+			{ "ActivationAccount", _properties [10]},
+			{ "ActivationCommon", _properties [11]},
 			{ "ApplicationEntries", _properties [12]}
         }, __Tag,() => new CatalogedDevice(), () => new List<CatalogedDevice>(), () => new Dictionary<string,CatalogedDevice>(),CatalogedEntry._binding);
 	/*
@@ -5557,13 +5586,13 @@ public partial class AccessCapability : Capability {
 
 	[JsonPropertyName("Rights")]
 	public virtual List<string>?					Rights  {get; set;}
-    /// <summary>
-    ///
+	[JsonPropertyName("CatalogedDevice")]
+	public virtual Enveloped<CatalogedDevice>?					EnvelopedCatalogedDevice  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedCatalogedDevice")]
-	public virtual Enveloped<CatalogedDevice>?					EnvelopedCatalogedDevice  {get; set;} //
-
+	public virtual CatalogedDevice?				CatalogedDevice  {get; set;} 
     /// <summary>
     ///Digest value used to signal updates to envelope		
     /// </summary>
@@ -5581,10 +5610,12 @@ public partial class AccessCapability : Capability {
 		new PropertyListString ("Rights", 
 					(IBinding data, List<string>? value) => {(data as AccessCapability).Rights = value;}, 
 					(IBinding data) => (data as AccessCapability).Rights ),
-		new PropertyStruct ("EnvelopedCatalogedDevice", typeof (Enveloped<CatalogedDevice>),
-					(IBinding data, object? value) => {(data as AccessCapability).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;}, 
+		new PropertyGStruct ("CatalogedDevice", /*typeof (CatalogedDevice<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as AccessCapability).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;},
 					(IBinding data) => (data as AccessCapability).EnvelopedCatalogedDevice,
-					false, ()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>()),
+					/*(IBinding data, object? value) => {(data as AccessCapability).CatalogedDevice = value as CatalogedDevice;},
+					(IBinding data) => (data as AccessCapability).CatalogedDevice,*/
+					()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>()),
 		new PropertyString ("CatalogedDeviceDigest", 
 					(IBinding data, string? value) => {(data as AccessCapability).CatalogedDeviceDigest = value;}, 
 					(IBinding data) => (data as AccessCapability).CatalogedDeviceDigest )		];
@@ -5597,7 +5628,7 @@ public partial class AccessCapability : Capability {
 			new() {
 
 			{ "Rights", _properties [0]},
-			{ "EnvelopedCatalogedDevice", _properties [1]},
+			{ "CatalogedDevice", _properties [1]},
 			{ "CatalogedDeviceDigest", _properties [2]}
         }, __Tag,() => new AccessCapability(), () => new List<AccessCapability>(), () => new Dictionary<string,AccessCapability>(),Capability._binding);
 	/*
@@ -5756,13 +5787,13 @@ abstract public partial class CryptographicCapability : Capability {
 	[JsonPropertyName("GranteeUdf")]
 	public virtual string?					GranteeUdf  {get; set;} //
 
-    /// <summary>
-    ///One or more enveloped key shares.
+	[JsonPropertyName("KeyShare")]
+	public virtual Enveloped<KeyData>?					EnvelopedKeyShare  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedKeyShare")]
-	public virtual Enveloped<KeyData>?					EnvelopedKeyShare  {get; set;} //
-
+	public virtual KeyData?				KeyShare  {get; set;} 
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -5780,10 +5811,12 @@ abstract public partial class CryptographicCapability : Capability {
 		new PropertyString ("GranteeUdf", 
 					(IBinding data, string? value) => {(data as CryptographicCapability).GranteeUdf = value;}, 
 					(IBinding data) => (data as CryptographicCapability).GranteeUdf ),
-		new PropertyStruct ("EnvelopedKeyShare", typeof (Enveloped<KeyData>),
-					(IBinding data, object? value) => {(data as CryptographicCapability).EnvelopedKeyShare = value as Enveloped<KeyData>;}, 
+		new PropertyGStruct ("KeyShare", /*typeof (KeyData<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CryptographicCapability).EnvelopedKeyShare = value as Enveloped<KeyData>;},
 					(IBinding data) => (data as CryptographicCapability).EnvelopedKeyShare,
-					false, ()=>new  Enveloped<KeyData>(), ()=>new Enveloped<KeyData>())		];
+					/*(IBinding data, object? value) => {(data as CryptographicCapability).KeyShare = value as KeyData;},
+					(IBinding data) => (data as CryptographicCapability).KeyShare,*/
+					()=>new  Enveloped<KeyData>(), ()=>new Enveloped<KeyData>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -5795,7 +5828,7 @@ abstract public partial class CryptographicCapability : Capability {
 			{ "KeyData", _properties [0]},
 			{ "GranteeAccount", _properties [1]},
 			{ "GranteeUdf", _properties [2]},
-			{ "EnvelopedKeyShare", _properties [3]}
+			{ "KeyShare", _properties [3]}
         }, __Tag,null, null, null,Capability._binding);
 	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -6478,12 +6511,13 @@ public partial class CatalogedTask : CatalogedEntry {
 	[JsonPropertyName("Title")]
 	public virtual string?					Title  {get; set;} //
 
-    /// <summary>
+	[JsonPropertyName("Task")]
+	public virtual Enveloped<Engagement>?					EnvelopedTask  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedTask")]
-	public virtual Enveloped<Engagement>?					EnvelopedTask  {get; set;} //
-
+	public virtual Engagement?				Task  {get; set;} 
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -6494,10 +6528,12 @@ public partial class CatalogedTask : CatalogedEntry {
 		new PropertyString ("Title", 
 					(IBinding data, string? value) => {(data as CatalogedTask).Title = value;}, 
 					(IBinding data) => (data as CatalogedTask).Title ),
-		new PropertyStruct ("EnvelopedTask", typeof (Enveloped<Engagement>),
-					(IBinding data, object? value) => {(data as CatalogedTask).EnvelopedTask = value as Enveloped<Engagement>;}, 
+		new PropertyGStruct ("Task", /*typeof (Engagement<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedTask).EnvelopedTask = value as Enveloped<Engagement>;},
 					(IBinding data) => (data as CatalogedTask).EnvelopedTask,
-					false, ()=>new  Enveloped<Engagement>(), ()=>new Enveloped<Engagement>())		];
+					/*(IBinding data, object? value) => {(data as CatalogedTask).Task = value as Engagement;},
+					(IBinding data) => (data as CatalogedTask).Task,*/
+					()=>new  Enveloped<Engagement>(), ()=>new Enveloped<Engagement>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -6507,7 +6543,7 @@ public partial class CatalogedTask : CatalogedEntry {
 			new() {
 
 			{ "Title", _properties [0]},
-			{ "EnvelopedTask", _properties [1]}
+			{ "Task", _properties [1]}
         }, __Tag,() => new CatalogedTask(), () => new List<CatalogedTask>(), () => new Dictionary<string,CatalogedTask>(),CatalogedEntry._binding);
 	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -6579,12 +6615,13 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
 
 	[JsonPropertyName("EnvelopedCapabilities")]
 	public virtual List<DareEnvelope>?					EnvelopedCapabilities  {get; set;}
-    /// <summary>
-    ///Escrow entries for the application.
-    /// </summary>
+	[JsonPropertyName("Escrow")]
+	public virtual List<Enveloped<KeyData>>?					EnvelopedEscrow  {get; set;} 
 
-	[JsonPropertyName("EnvelopedEscrow")]
-	public virtual List<Enveloped<KeyData>>?					EnvelopedEscrow  {get; set;}
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
+	public virtual List<KeyData>?				Escrow  {get; set;} 
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -6608,10 +6645,12 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
 					(IBinding data, object? value) => {(data as CatalogedApplication).EnvelopedCapabilities = value as List<DareEnvelope>;}, 
 					(IBinding data) => (data as CatalogedApplication).EnvelopedCapabilities,
 					false, ()=>new  List<DareEnvelope>(), ()=>new DareEnvelope()),
-		new PropertyListStruct ("EnvelopedEscrow", typeof (Enveloped<KeyData>),
-					(IBinding data, object? value) => {(data as CatalogedApplication).EnvelopedEscrow = value as List<Enveloped<KeyData>>;}, 
+		new PropertyListGStruct ("Escrow", /*typeof (KeyData<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedApplication).EnvelopedEscrow = value as List<Enveloped<KeyData>>;},
 					(IBinding data) => (data as CatalogedApplication).EnvelopedEscrow,
-					false, ()=>new  List<Enveloped<KeyData>>(), ()=>new Enveloped<KeyData>())		];
+					/*(IBinding data, object? value) => {(data as CatalogedApplication).Escrow = value as List<KeyData>;},
+					(IBinding data) => (data as CatalogedApplication).Escrow,*/
+					()=>new  List<Enveloped<KeyData>>(), ()=>new Enveloped<KeyData>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -6625,7 +6664,7 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
 			{ "Grant", _properties [2]},
 			{ "Deny", _properties [3]},
 			{ "EnvelopedCapabilities", _properties [4]},
-			{ "EnvelopedEscrow", _properties [5]}
+			{ "Escrow", _properties [5]}
         }, __Tag,null, null, null,CatalogedEntry._binding);
 	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -6757,27 +6796,27 @@ public partial class CatalogedMember : CatalogedEntry {
 	/// <summary>
 	/// </summary>
 public partial class CatalogedGroup : CatalogedApplication {
-    /// <summary>
-    ///The connection allowing control of the group.
+	[JsonPropertyName("ConnectionAddress")]
+	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
+	public virtual ConnectionStripped?				ConnectionAddress  {get; set;} 
+	[JsonPropertyName("ProfileGroup")]
+	public virtual Enveloped<ProfileGroup>?					EnvelopedProfileGroup  {get; set;} 
 
-	[JsonPropertyName("EnvelopedConnectionAddress")]
-	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;} //
-
-    /// <summary>
-    ///The Mesh profile
+	/// <summary>
+	/// Wrapped property
     /// </summary>
+	public virtual ProfileGroup?				ProfileGroup  {get; set;} 
+	[JsonPropertyName("ActivationCommon")]
+	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} 
 
-	[JsonPropertyName("EnvelopedProfileGroup")]
-	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileGroup  {get; set;} //
-
-    /// <summary>
-    ///The activation of the device within the Mesh account
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedActivationCommon")]
-	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} //
-
+	public virtual ActivationCommon?				ActivationCommon  {get; set;} 
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -6785,18 +6824,24 @@ public partial class CatalogedGroup : CatalogedApplication {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 
-		new PropertyStruct ("EnvelopedConnectionAddress", typeof (Enveloped<ConnectionStripped>),
-					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, 
+		new PropertyGStruct ("ConnectionAddress", /*typeof (ConnectionStripped<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;},
 					(IBinding data) => (data as CatalogedGroup).EnvelopedConnectionAddress,
-					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>()),
-		new PropertyStruct ("EnvelopedProfileGroup", typeof (Enveloped<ProfileAccount>),
-					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedProfileGroup = value as Enveloped<ProfileAccount>;}, 
+					/*(IBinding data, object? value) => {(data as CatalogedGroup).ConnectionAddress = value as ConnectionStripped;},
+					(IBinding data) => (data as CatalogedGroup).ConnectionAddress,*/
+					()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>()),
+		new PropertyGStruct ("ProfileGroup", /*typeof (ProfileGroup<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedProfileGroup = value as Enveloped<ProfileGroup>;},
 					(IBinding data) => (data as CatalogedGroup).EnvelopedProfileGroup,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
-		new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
-					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, 
+					/*(IBinding data, object? value) => {(data as CatalogedGroup).ProfileGroup = value as ProfileGroup;},
+					(IBinding data) => (data as CatalogedGroup).ProfileGroup,*/
+					()=>new  Enveloped<ProfileGroup>(), ()=>new Enveloped<ProfileGroup>()),
+		new PropertyGStruct ("ActivationCommon", /*typeof (ActivationCommon<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;},
 					(IBinding data) => (data as CatalogedGroup).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())		];
+					/*(IBinding data, object? value) => {(data as CatalogedGroup).ActivationCommon = value as ActivationCommon;},
+					(IBinding data) => (data as CatalogedGroup).ActivationCommon,*/
+					()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -6805,9 +6850,9 @@ public partial class CatalogedGroup : CatalogedApplication {
 	public static readonly new Binding<CatalogedGroup> _binding = new (
 			new() {
 
-			{ "EnvelopedConnectionAddress", _properties [0]},
-			{ "EnvelopedProfileGroup", _properties [1]},
-			{ "EnvelopedActivationCommon", _properties [2]}
+			{ "ConnectionAddress", _properties [0]},
+			{ "ProfileGroup", _properties [1]},
+			{ "ActivationCommon", _properties [2]}
         }, __Tag,() => new CatalogedGroup(), () => new List<CatalogedGroup>(), () => new Dictionary<string,CatalogedGroup>(),CatalogedApplication._binding);
 	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 
@@ -7638,13 +7683,13 @@ public partial class CatalogedTicket : CatalogedEntry {
 	/// <summary>
 	/// </summary>
 public partial class DevicePreconfigurationPublic : MeshItem {
-    /// <summary>
-    ///The device profile
+	[JsonPropertyName("ProfileDevice")]
+	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedProfileDevice")]
-	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;} //
-
+	public virtual ProfileDevice?				ProfileDevice  {get; set;} 
     /// <summary>
     ///A list of URIs specifying hailing transports that may be used to
     ///initiate a connection to the device. This allows a device to 
@@ -7661,10 +7706,12 @@ public partial class DevicePreconfigurationPublic : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 
-		new PropertyStruct ("EnvelopedProfileDevice", typeof (Enveloped<ProfileDevice>),
-					(IBinding data, object? value) => {(data as DevicePreconfigurationPublic).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;}, 
+		new PropertyGStruct ("ProfileDevice", /*typeof (ProfileDevice<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as DevicePreconfigurationPublic).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;},
 					(IBinding data) => (data as DevicePreconfigurationPublic).EnvelopedProfileDevice,
-					false, ()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>()),
+					/*(IBinding data, object? value) => {(data as DevicePreconfigurationPublic).ProfileDevice = value as ProfileDevice;},
+					(IBinding data) => (data as DevicePreconfigurationPublic).ProfileDevice,*/
+					()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>()),
 		new PropertyListString ("Hailing", 
 					(IBinding data, List<string>? value) => {(data as DevicePreconfigurationPublic).Hailing = value;}, 
 					(IBinding data) => (data as DevicePreconfigurationPublic).Hailing )		];
@@ -7676,7 +7723,7 @@ public partial class DevicePreconfigurationPublic : MeshItem {
 	public static readonly new Binding<DevicePreconfigurationPublic> _binding = new (
 			new() {
 
-			{ "EnvelopedProfileDevice", _properties [0]},
+			{ "ProfileDevice", _properties [0]},
 			{ "Hailing", _properties [1]}
         }, __Tag,() => new DevicePreconfigurationPublic(), () => new List<DevicePreconfigurationPublic>(), () => new Dictionary<string,DevicePreconfigurationPublic>(),null);
 	/*
@@ -7722,20 +7769,20 @@ public partial class DevicePreconfigurationPublic : MeshItem {
 	/// A data structure that is passed 
 	/// </summary>
 public partial class DevicePreconfigurationPrivate : DevicePreconfigurationPublic {
-    /// <summary>
-    ///The device connection
+	[JsonPropertyName("ConnectionDevice")]
+	public virtual Enveloped<ConnectionDevice>?					EnvelopedConnectionDevice  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
+	public virtual ConnectionDevice?				ConnectionDevice  {get; set;} 
+	[JsonPropertyName("ConnectionService")]
+	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} 
 
-	[JsonPropertyName("EnvelopedConnectionDevice")]
-	public virtual Enveloped<ConnectionDevice>?					EnvelopedConnectionDevice  {get; set;} //
-
-    /// <summary>
-    ///The device connection
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedConnectionService")]
-	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} //
-
+	public virtual ConnectionService?				ConnectionService  {get; set;} 
     /// <summary>
     ///The device private key
     /// </summary>
@@ -7758,14 +7805,18 @@ public partial class DevicePreconfigurationPrivate : DevicePreconfigurationPubli
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 
-		new PropertyStruct ("EnvelopedConnectionDevice", typeof (Enveloped<ConnectionDevice>),
-					(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;}, 
+		new PropertyGStruct ("ConnectionDevice", /*typeof (ConnectionDevice<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;},
 					(IBinding data) => (data as DevicePreconfigurationPrivate).EnvelopedConnectionDevice,
-					false, ()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>()),
-		new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
-					(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, 
+					/*(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).ConnectionDevice = value as ConnectionDevice;},
+					(IBinding data) => (data as DevicePreconfigurationPrivate).ConnectionDevice,*/
+					()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>()),
+		new PropertyGStruct ("ConnectionService", /*typeof (ConnectionService<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).EnvelopedConnectionService = value as Enveloped<ConnectionService>;},
 					(IBinding data) => (data as DevicePreconfigurationPrivate).EnvelopedConnectionService,
-					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>()),
+					/*(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).ConnectionService = value as ConnectionService;},
+					(IBinding data) => (data as DevicePreconfigurationPrivate).ConnectionService,*/
+					()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>()),
 		new PropertyStruct ("PrivateKey", typeof (Key), 
 					(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).PrivateKey = value as Key;}, 
 					(IBinding data) => (data as DevicePreconfigurationPrivate).PrivateKey,
@@ -7781,8 +7832,8 @@ public partial class DevicePreconfigurationPrivate : DevicePreconfigurationPubli
 	public static readonly new Binding<DevicePreconfigurationPrivate> _binding = new (
 			new() {
 
-			{ "EnvelopedConnectionDevice", _properties [0]},
-			{ "EnvelopedConnectionService", _properties [1]},
+			{ "ConnectionDevice", _properties [0]},
+			{ "ConnectionService", _properties [1]},
 			{ "PrivateKey", _properties [2]},
 			{ "ConnectUri", _properties [3]}
         }, __Tag,() => new DevicePreconfigurationPrivate(), () => new List<DevicePreconfigurationPrivate>(), () => new Dictionary<string,DevicePreconfigurationPrivate>(),DevicePreconfigurationPublic._binding);
@@ -8353,13 +8404,13 @@ public partial class RequestConnection : MessageValidated {
 	/// MessageConnectionRequestClient
 	/// </summary>
 public partial class AcknowledgeConnection : Message {
-    /// <summary>
-    ///The client connection request.
+	[JsonPropertyName("RequestConnection")]
+	public virtual Enveloped<RequestConnection>?					EnvelopedRequestConnection  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedRequestConnection")]
-	public virtual Enveloped<RequestConnection>?					EnvelopedRequestConnection  {get; set;} //
-
+	public virtual RequestConnection?				RequestConnection  {get; set;} 
     /// <summary>
     ///
     /// </summary>
@@ -8381,10 +8432,12 @@ public partial class AcknowledgeConnection : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 
-		new PropertyStruct ("EnvelopedRequestConnection", typeof (Enveloped<RequestConnection>),
-					(IBinding data, object? value) => {(data as AcknowledgeConnection).EnvelopedRequestConnection = value as Enveloped<RequestConnection>;}, 
+		new PropertyGStruct ("RequestConnection", /*typeof (RequestConnection<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as AcknowledgeConnection).EnvelopedRequestConnection = value as Enveloped<RequestConnection>;},
 					(IBinding data) => (data as AcknowledgeConnection).EnvelopedRequestConnection,
-					false, ()=>new  Enveloped<RequestConnection>(), ()=>new Enveloped<RequestConnection>()),
+					/*(IBinding data, object? value) => {(data as AcknowledgeConnection).RequestConnection = value as RequestConnection;},
+					(IBinding data) => (data as AcknowledgeConnection).RequestConnection,*/
+					()=>new  Enveloped<RequestConnection>(), ()=>new Enveloped<RequestConnection>()),
 		new PropertyBinary ("ServerNonce", 
 					(IBinding data, byte[]? value) => {(data as AcknowledgeConnection).ServerNonce = value;}, 
 					(IBinding data) => (data as AcknowledgeConnection).ServerNonce ),
@@ -8399,7 +8452,7 @@ public partial class AcknowledgeConnection : Message {
 	public static readonly new Binding<AcknowledgeConnection> _binding = new (
 			new() {
 
-			{ "EnvelopedRequestConnection", _properties [0]},
+			{ "RequestConnection", _properties [0]},
 			{ "ServerNonce", _properties [1]},
 			{ "Witness", _properties [2]}
         }, __Tag,() => new AcknowledgeConnection(), () => new List<AcknowledgeConnection>(), () => new Dictionary<string,AcknowledgeConnection>(),Message._binding);
@@ -8839,12 +8892,13 @@ public partial class RequestConfirmation : Message {
 	/// <summary>
 	/// </summary>
 public partial class ResponseConfirmation : Message {
-    /// <summary>
-    /// </summary>
-
 	[JsonPropertyName("Request")]
-	public virtual Enveloped<RequestConfirmation>?					Request  {get; set;} //
+	public virtual Enveloped<RequestConfirmation>?					EnvelopedRequest  {get; set;} 
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
+	public virtual RequestConfirmation?				Request  {get; set;} 
     /// <summary>
     /// </summary>
 
@@ -8858,10 +8912,12 @@ public partial class ResponseConfirmation : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 
-		new PropertyStruct ("Request", typeof (Enveloped<RequestConfirmation>),
-					(IBinding data, object? value) => {(data as ResponseConfirmation).Request = value as Enveloped<RequestConfirmation>;}, 
-					(IBinding data) => (data as ResponseConfirmation).Request,
-					false, ()=>new  Enveloped<RequestConfirmation>(), ()=>new Enveloped<RequestConfirmation>()),
+		new PropertyGStruct ("Request", /*typeof (RequestConfirmation<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as ResponseConfirmation).EnvelopedRequest = value as Enveloped<RequestConfirmation>;},
+					(IBinding data) => (data as ResponseConfirmation).EnvelopedRequest,
+					/*(IBinding data, object? value) => {(data as ResponseConfirmation).Request = value as RequestConfirmation;},
+					(IBinding data) => (data as ResponseConfirmation).Request,*/
+					()=>new  Enveloped<RequestConfirmation>(), ()=>new Enveloped<RequestConfirmation>()),
 		new PropertyBoolean ("Accept", 
 					(IBinding data, bool? value) => {(data as ResponseConfirmation).Accept = value;}, 
 					(IBinding data) => (data as ResponseConfirmation).Accept )		];

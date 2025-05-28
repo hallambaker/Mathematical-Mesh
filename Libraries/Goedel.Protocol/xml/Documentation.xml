@@ -5422,54 +5422,6 @@
         <member name="M:Goedel.Protocol.PropertyDictionaryReal64.IsNull(Goedel.Protocol.IBinding)">
             <inheritdoc/>
         </member>
-        <member name="T:Goedel.Protocol.PropertyGStruct">
-            <summary>
-            Metadata record representing a property.
-            </summary>
-            <param name="Tag">Tag identifying this property in JSON serialization</param>
-            <param name="Type">The type of the struct object.</param>
-            <param name="Set">Set the property to the specified value.</param>
-            <param name="Get">Return the value of the property.</param>
-            <param name="Factory">Factory returning an instance of the object.</param>
-            <param name="IFactory">For a collection object, factory returning an instance of an
-            object in the collection.</param>
-            <param name="Tagged">If true, the property should be tagged.</param>
-        </member>
-        <member name="M:Goedel.Protocol.PropertyGStruct.#ctor(System.String,System.Type,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Func{System.Object},System.Func{System.Object})">
-            <summary>
-            Metadata record representing a property.
-            </summary>
-            <param name="Tag">Tag identifying this property in JSON serialization</param>
-            <param name="Type">The type of the struct object.</param>
-            <param name="Set">Set the property to the specified value.</param>
-            <param name="Get">Return the value of the property.</param>
-            <param name="Factory">Factory returning an instance of the object.</param>
-            <param name="IFactory">For a collection object, factory returning an instance of an
-            object in the collection.</param>
-            <param name="Tagged">If true, the property should be tagged.</param>
-        </member>
-        <member name="P:Goedel.Protocol.PropertyGStruct.Type">
-            <summary>The type of the struct object.</summary>
-        </member>
-        <member name="P:Goedel.Protocol.PropertyGStruct.Set">
-            <summary>Set the property to the specified value.</summary>
-        </member>
-        <member name="P:Goedel.Protocol.PropertyGStruct.Get">
-            <summary>Return the value of the property.</summary>
-        </member>
-        <member name="P:Goedel.Protocol.PropertyGStruct.Factory">
-            <summary>Factory returning an instance of the object.</summary>
-        </member>
-        <member name="P:Goedel.Protocol.PropertyGStruct.IFactory">
-            <summary>For a collection object, factory returning an instance of an
-            object in the collection.</summary>
-        </member>
-        <member name="M:Goedel.Protocol.PropertyGStruct.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Protocol.PropertyGStruct.IsNull(Goedel.Protocol.IBinding)">
-            <inheritdoc/>
-        </member>
         <member name="T:Goedel.Protocol.PropertyStruct">
             <summary>
             Metadata record representing a property.
@@ -5622,6 +5574,160 @@
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Protocol.PropertyDictionaryStruct.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyGStruct">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Type">The type of the struct object.</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+            <param name="Factory">Factory returning an instance of the object.</param>
+            <param name="IFactory">For a collection object, factory returning an instance of an
+            object in the collection.</param>
+            <param name="Tagged">If true, the property should be tagged.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyGStruct.#ctor(System.String,System.Type,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Func{System.Object},System.Func{System.Object})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Type">The type of the struct object.</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+            <param name="Factory">Factory returning an instance of the object.</param>
+            <param name="IFactory">For a collection object, factory returning an instance of an
+            object in the collection.</param>
+            <param name="Tagged">If true, the property should be tagged.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyGStruct.Type">
+            <summary>The type of the struct object.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyGStruct.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyGStruct.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyGStruct.Factory">
+            <summary>Factory returning an instance of the object.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyGStruct.IFactory">
+            <summary>For a collection object, factory returning an instance of an
+            object in the collection.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyGStruct.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyGStruct.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyListGStruct">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Type">The base type of the list object.</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+            <param name="Factory">Factory returning an instance of the object.</param>
+            <param name="IFactory">For a collection object, factory returning an instance of an
+            object in the collection.</param>
+            <param name="Tagged">If true, the property should be tagged.</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListGStruct.#ctor(System.String,System.Type,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Func{System.Object},System.Func{System.Object})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Type">The base type of the list object.</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+            <param name="Factory">Factory returning an instance of the object.</param>
+            <param name="IFactory">For a collection object, factory returning an instance of an
+            object in the collection.</param>
+            <param name="Tagged">If true, the property should be tagged.</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListGStruct.Type">
+            <summary>The base type of the list object.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListGStruct.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListGStruct.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListGStruct.Factory">
+            <summary>Factory returning an instance of the object.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListGStruct.IFactory">
+            <summary>For a collection object, factory returning an instance of an
+            object in the collection.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListGStruct.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyListGStruct.IsNull(Goedel.Protocol.IBinding)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.PropertyDictionaryGStruct">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Type">The type of the dictionary object.</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+            <param name="Factory">Factory returning an instance of the object.</param>
+            <param name="IFactory">For a collection object, factory returning an instance of an
+            object in the collection.</param>
+            <param name="Tagged">If true, the property should be tagged.</param>
+            <param name="Add">Add struct to dictionary</param>
+            <param name="Enumerator">Returns an enumerator</param>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyDictionaryGStruct.#ctor(System.String,System.Type,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Func{System.Object},System.Func{System.Object},System.Func{Goedel.Protocol.IBinding,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}}},System.Action{System.Object,System.Object,System.Object})">
+            <summary>
+            Metadata record representing a property.
+            </summary>
+            <param name="Tag">Tag identifying this property in JSON serialization</param>
+            <param name="Type">The type of the dictionary object.</param>
+            <param name="Set">Set the property to the specified value.</param>
+            <param name="Get">Return the value of the property.</param>
+            <param name="Factory">Factory returning an instance of the object.</param>
+            <param name="IFactory">For a collection object, factory returning an instance of an
+            object in the collection.</param>
+            <param name="Tagged">If true, the property should be tagged.</param>
+            <param name="Add">Add struct to dictionary</param>
+            <param name="Enumerator">Returns an enumerator</param>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyDictionaryGStruct.Type">
+            <summary>The type of the dictionary object.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyDictionaryGStruct.Set">
+            <summary>Set the property to the specified value.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyDictionaryGStruct.Get">
+            <summary>Return the value of the property.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyDictionaryGStruct.Factory">
+            <summary>Factory returning an instance of the object.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyDictionaryGStruct.IFactory">
+            <summary>For a collection object, factory returning an instance of an
+            object in the collection.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyDictionaryGStruct.Enumerator">
+            <summary>Returns an enumerator</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyDictionaryGStruct.Add">
+            <summary>Add struct to dictionary</summary>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyDictionaryGStruct.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Protocol.PropertyDictionaryGStruct.IsNull(Goedel.Protocol.IBinding)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Protocol.Token">

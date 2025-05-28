@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 3:12:40 PM
+//  This file was automatically generated at 5/28/2025 12:00:12 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -67,32 +67,6 @@ public abstract partial class Calandars : global::Goedel.Protocol.JsonObject {
     /// </summary>
 	public new const string __Tag = "Calandars";
 
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"JsCalendarEntry", JsCalendarEntry._Factory},
-	    {"JsEvent", JsEvent._Factory},
-	    {"JsTask", JsTask._Factory},
-	    {"JsGroup", JsGroup._Factory},
-	    {"Location", Location._Factory},
-	    {"Link", Link._Factory},
-	    {"VirtualLocation", VirtualLocation._Factory},
-	    {"Participant", Participant._Factory},
-	    {"RecurrenceRule", RecurrenceRule._Factory},
-	    {"NDay", NDay._Factory},
-	    {"Alert", Alert._Factory},
-	    {"Trigger", Trigger._Factory},
-	    {"TimeZone", TimeZone._Factory},
-	    {"TimeZoneRule", TimeZoneRule._Factory},
-	    {"EmptyPatchObject", EmptyPatchObject._Factory}
-		};
-	*/
-
 	/// <summary>
     /// Dictionary mapping types to bindings
     /// </summary>
@@ -117,8 +91,6 @@ public abstract partial class Calandars : global::Goedel.Protocol.JsonObject {
 	    {typeof(EmptyPatchObject), EmptyPatchObject._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -127,19 +99,8 @@ public abstract partial class Calandars : global::Goedel.Protocol.JsonObject {
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -481,7 +442,6 @@ public partial class JsCalendarEntry : JmapBase {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyDictionaryStruct ("relatedTo", typeof (Relation),
 					(IBinding data, object? value) => {(data as JsCalendarEntry).RelatedTo = value as Dictionary<string,Relation>;}, 
 					(IBinding data) => (data as JsCalendarEntry).RelatedTo,
@@ -615,7 +575,8 @@ public partial class JsCalendarEntry : JmapBase {
 					false, ()=>new  Dictionary<string,TimeZone>(), ()=>new TimeZone(),
 					(IBinding data) => (data as JsCalendarEntry).TimeZones.GetEnumerable(),
 					(object dictionary, object key, object value) =>
-						 {(dictionary as Dictionary<string,TimeZone>).Add (key as string,value as TimeZone);})		];
+						 {(dictionary as Dictionary<string,TimeZone>).Add (key as string,value as TimeZone);})
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -623,7 +584,6 @@ public partial class JsCalendarEntry : JmapBase {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<JsCalendarEntry> _binding = new (
 			new() {
-
 			{ "relatedTo", _properties [0]},
 			{ "sequence", _properties [1]},
 			{ "method", _properties [2]},
@@ -655,27 +615,9 @@ public partial class JsCalendarEntry : JmapBase {
 			{ "alerts", _properties [28]},
 			{ "localizations", _properties [29]},
 			{ "timeZone", _properties [30]},
-			{ "timeZones", _properties [31]}
-        }, __Tag,() => new JsCalendarEntry(), () => new List<JsCalendarEntry>(), () => new Dictionary<string,JsCalendarEntry>(),JmapBase._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "timeZones", _properties [31]}}, __Tag,
+		() => new JsCalendarEntry(), () => [], () => [], JmapBase._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(JmapBase._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -735,7 +677,6 @@ public partial class JsEvent : JsCalendarEntry {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("start", 
 					(IBinding data, string? value) => {(data as JsEvent).Start = value;}, 
 					(IBinding data) => (data as JsEvent).Start ),
@@ -744,7 +685,8 @@ public partial class JsEvent : JsCalendarEntry {
 					(IBinding data) => (data as JsEvent).Duration ),
 		new PropertyString ("status", 
 					(IBinding data, string? value) => {(data as JsEvent).Status = value;}, 
-					(IBinding data) => (data as JsEvent).Status )		];
+					(IBinding data) => (data as JsEvent).Status )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -752,30 +694,11 @@ public partial class JsEvent : JsCalendarEntry {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<JsEvent> _binding = new (
 			new() {
-
 			{ "start", _properties [0]},
 			{ "duration", _properties [1]},
-			{ "status", _properties [2]}
-        }, __Tag,() => new JsEvent(), () => new List<JsEvent>(), () => new Dictionary<string,JsEvent>(),JsCalendarEntry._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "status", _properties [2]}}, __Tag,
+		() => new JsEvent(), () => [], () => [], JsCalendarEntry._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(JsCalendarEntry._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -856,7 +779,6 @@ public partial class JsTask : JsCalendarEntry {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("due", 
 					(IBinding data, string? value) => {(data as JsTask).Due = value;}, 
 					(IBinding data) => (data as JsTask).Due ),
@@ -874,7 +796,8 @@ public partial class JsTask : JsCalendarEntry {
 					(IBinding data) => (data as JsTask).Progress ),
 		new PropertyDateTime ("progressUpdated", 
 					(IBinding data, DateTime? value) => {(data as JsTask).ProgressUpdated = value;}, 
-					(IBinding data) => (data as JsTask).ProgressUpdated )		];
+					(IBinding data) => (data as JsTask).ProgressUpdated )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -882,33 +805,14 @@ public partial class JsTask : JsCalendarEntry {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<JsTask> _binding = new (
 			new() {
-
 			{ "due", _properties [0]},
 			{ "start", _properties [1]},
 			{ "estimatedDuration", _properties [2]},
 			{ "percentComplete", _properties [3]},
 			{ "progress", _properties [4]},
-			{ "progressUpdated", _properties [5]}
-        }, __Tag,() => new JsTask(), () => new List<JsTask>(), () => new Dictionary<string,JsTask>(),JsCalendarEntry._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "progressUpdated", _properties [5]}}, __Tag,
+		() => new JsTask(), () => [], () => [], JsCalendarEntry._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(JsCalendarEntry._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -953,14 +857,14 @@ public partial class JsGroup : JsCalendarEntry {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("entries", typeof (JmapBase),
 					(IBinding data, object? value) => {(data as JsGroup).Entries = value as List<JmapBase>;}, 
 					(IBinding data) => (data as JsGroup).Entries,
 					false, ()=>new  List<JmapBase>(), ()=>new JmapBase()),
 		new PropertyString ("source", 
 					(IBinding data, string? value) => {(data as JsGroup).Source = value;}, 
-					(IBinding data) => (data as JsGroup).Source )		];
+					(IBinding data) => (data as JsGroup).Source )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -968,29 +872,10 @@ public partial class JsGroup : JsCalendarEntry {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<JsGroup> _binding = new (
 			new() {
-
 			{ "entries", _properties [0]},
-			{ "source", _properties [1]}
-        }, __Tag,() => new JsGroup(), () => new List<JsGroup>(), () => new Dictionary<string,JsGroup>(),JsCalendarEntry._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "source", _properties [1]}}, __Tag,
+		() => new JsGroup(), () => [], () => [], JsCalendarEntry._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(JsCalendarEntry._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1088,7 +973,6 @@ public partial class Location : Calandars {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as Location).Type = value;}, 
 					(IBinding data) => (data as Location).Type ),
@@ -1116,7 +1000,8 @@ public partial class Location : Calandars {
 					false, ()=>new  Dictionary<string,Link>(), ()=>new Link(),
 					(IBinding data) => (data as Location).Link.GetEnumerable(),
 					(object dictionary, object key, object value) =>
-						 {(dictionary as Dictionary<string,Link>).Add (key as string,value as Link);})		];
+						 {(dictionary as Dictionary<string,Link>).Add (key as string,value as Link);})
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1124,7 +1009,6 @@ public partial class Location : Calandars {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Location> _binding = new (
 			new() {
-
 			{ "@type", _properties [0]},
 			{ "name", _properties [1]},
 			{ "description", _properties [2]},
@@ -1132,26 +1016,9 @@ public partial class Location : Calandars {
 			{ "relativeTo", _properties [4]},
 			{ "timeZone", _properties [5]},
 			{ "coordinates", _properties [6]},
-			{ "link", _properties [7]}
-        }, __Tag,() => new Location(), () => new List<Location>(), () => new Dictionary<string,Location>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "link", _properties [7]}}, __Tag,
+		() => new Location(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1241,7 +1108,6 @@ public partial class Link : Calandars {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as Link).Type = value;}, 
 					(IBinding data) => (data as Link).Type ),
@@ -1262,7 +1128,8 @@ public partial class Link : Calandars {
 					(IBinding data) => (data as Link).Display ),
 		new PropertyString ("title", 
 					(IBinding data, string? value) => {(data as Link).Title = value;}, 
-					(IBinding data) => (data as Link).Title )		];
+					(IBinding data) => (data as Link).Title )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1270,33 +1137,15 @@ public partial class Link : Calandars {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Link> _binding = new (
 			new() {
-
 			{ "@type", _properties [0]},
 			{ "cid", _properties [1]},
 			{ "contentType", _properties [2]},
 			{ "size", _properties [3]},
 			{ "rel", _properties [4]},
 			{ "display", _properties [5]},
-			{ "title", _properties [6]}
-        }, __Tag,() => new Link(), () => new List<Link>(), () => new Dictionary<string,Link>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "title", _properties [6]}}, __Tag,
+		() => new Link(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1363,7 +1212,6 @@ public partial class VirtualLocation : Calandars {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as VirtualLocation).Type = value;}, 
 					(IBinding data) => (data as VirtualLocation).Type ),
@@ -1378,7 +1226,8 @@ public partial class VirtualLocation : Calandars {
 					(IBinding data) => (data as VirtualLocation).Uri ),
 		new PropertyDictionaryBoolean ("features", 
 					(IBinding data, Dictionary<string,bool>? value) => {(data as VirtualLocation).Features = value;}, 
-					(IBinding data) => (data as VirtualLocation).Features )		];
+					(IBinding data) => (data as VirtualLocation).Features )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1386,31 +1235,13 @@ public partial class VirtualLocation : Calandars {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<VirtualLocation> _binding = new (
 			new() {
-
 			{ "@type", _properties [0]},
 			{ "name", _properties [1]},
 			{ "description", _properties [2]},
 			{ "uri", _properties [3]},
-			{ "features", _properties [4]}
-        }, __Tag,() => new VirtualLocation(), () => new List<VirtualLocation>(), () => new Dictionary<string,VirtualLocation>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "features", _properties [4]}}, __Tag,
+		() => new VirtualLocation(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1656,7 +1487,6 @@ public partial class Participant : Calandars {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as Participant).Type = value;}, 
 					(IBinding data) => (data as Participant).Type ),
@@ -1747,7 +1577,8 @@ public partial class Participant : Calandars {
 					(IBinding data) => (data as Participant).progressUpdated ),
 		new PropertyInteger32 ("percentComplete", 
 					(IBinding data, int? value) => {(data as Participant).percentComplete = value;}, 
-					(IBinding data) => (data as Participant).percentComplete )		];
+					(IBinding data) => (data as Participant).percentComplete )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1755,7 +1586,6 @@ public partial class Participant : Calandars {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Participant> _binding = new (
 			new() {
-
 			{ "@type", _properties [0]},
 			{ "name", _properties [1]},
 			{ "email", _properties [2]},
@@ -1784,26 +1614,9 @@ public partial class Participant : Calandars {
 			{ "links", _properties [25]},
 			{ "progress", _properties [26]},
 			{ "progressUpdated", _properties [27]},
-			{ "percentComplete", _properties [28]}
-        }, __Tag,() => new Participant(), () => new List<Participant>(), () => new Dictionary<string,Participant>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "percentComplete", _properties [28]}}, __Tag,
+		() => new Participant(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1995,7 +1808,6 @@ public partial class RecurrenceRule : Calandars {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as RecurrenceRule).Type = value;}, 
 					(IBinding data) => (data as RecurrenceRule).Type ),
@@ -2050,7 +1862,8 @@ public partial class RecurrenceRule : Calandars {
 					(IBinding data) => (data as RecurrenceRule).count ),
 		new PropertyDateTime ("until", 
 					(IBinding data, DateTime? value) => {(data as RecurrenceRule).until = value;}, 
-					(IBinding data) => (data as RecurrenceRule).until )		];
+					(IBinding data) => (data as RecurrenceRule).until )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2058,7 +1871,6 @@ public partial class RecurrenceRule : Calandars {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<RecurrenceRule> _binding = new (
 			new() {
-
 			{ "@type", _properties [0]},
 			{ "frequency", _properties [1]},
 			{ "interval", _properties [2]},
@@ -2076,26 +1888,9 @@ public partial class RecurrenceRule : Calandars {
 			{ "bySecond", _properties [14]},
 			{ "bySetPosition", _properties [15]},
 			{ "count", _properties [16]},
-			{ "until", _properties [17]}
-        }, __Tag,() => new RecurrenceRule(), () => new List<RecurrenceRule>(), () => new Dictionary<string,RecurrenceRule>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "until", _properties [17]}}, __Tag,
+		() => new RecurrenceRule(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2140,13 +1935,13 @@ public partial class NDay : Calandars {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as NDay).Type = value;}, 
 					(IBinding data) => (data as NDay).Type ),
 		new PropertyString ("day", 
 					(IBinding data, string? value) => {(data as NDay).day = value;}, 
-					(IBinding data) => (data as NDay).day )		];
+					(IBinding data) => (data as NDay).day )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2154,28 +1949,10 @@ public partial class NDay : Calandars {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<NDay> _binding = new (
 			new() {
-
 			{ "@type", _properties [0]},
-			{ "day", _properties [1]}
-        }, __Tag,() => new NDay(), () => new List<NDay>(), () => new Dictionary<string,NDay>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "day", _properties [1]}}, __Tag,
+		() => new NDay(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2251,7 +2028,6 @@ public partial class Alert : Calandars {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as Alert).Type = value;}, 
 					(IBinding data) => (data as Alert).Type ),
@@ -2271,7 +2047,8 @@ public partial class Alert : Calandars {
 						 {(dictionary as Dictionary<string,Relation>).Add (key as string,value as Relation);}),
 		new PropertyString ("action", 
 					(IBinding data, string? value) => {(data as Alert).action = value;}, 
-					(IBinding data) => (data as Alert).action )		];
+					(IBinding data) => (data as Alert).action )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2279,31 +2056,13 @@ public partial class Alert : Calandars {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Alert> _binding = new (
 			new() {
-
 			{ "@type", _properties [0]},
 			{ "trigger", _properties [1]},
 			{ "acknowledged", _properties [2]},
 			{ "relatedTo", _properties [3]},
-			{ "action", _properties [4]}
-        }, __Tag,() => new Alert(), () => new List<Alert>(), () => new Dictionary<string,Alert>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "action", _properties [4]}}, __Tag,
+		() => new Alert(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2365,7 +2124,6 @@ public partial class Trigger : Calandars {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as Trigger).Type = value;}, 
 					(IBinding data) => (data as Trigger).Type ),
@@ -2377,7 +2135,8 @@ public partial class Trigger : Calandars {
 					(IBinding data) => (data as Trigger).relativeTo ),
 		new PropertyDateTime ("when", 
 					(IBinding data, DateTime? value) => {(data as Trigger).when = value;}, 
-					(IBinding data) => (data as Trigger).when )		];
+					(IBinding data) => (data as Trigger).when )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2385,30 +2144,12 @@ public partial class Trigger : Calandars {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Trigger> _binding = new (
 			new() {
-
 			{ "@type", _properties [0]},
 			{ "offset", _properties [1]},
 			{ "relativeTo", _properties [2]},
-			{ "when", _properties [3]}
-        }, __Tag,() => new Trigger(), () => new List<Trigger>(), () => new Dictionary<string,Trigger>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "when", _properties [3]}}, __Tag,
+		() => new Trigger(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2502,7 +2243,6 @@ public partial class TimeZone : Calandars {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as TimeZone).Type = value;}, 
 					(IBinding data) => (data as TimeZone).Type ),
@@ -2528,7 +2268,8 @@ public partial class TimeZone : Calandars {
 		new PropertyListStruct ("daylight", typeof (TimeZoneRule),
 					(IBinding data, object? value) => {(data as TimeZone).daylight = value as List<TimeZoneRule>;}, 
 					(IBinding data) => (data as TimeZone).daylight,
-					false, ()=>new  List<TimeZoneRule>(), ()=>new TimeZoneRule())		];
+					false, ()=>new  List<TimeZoneRule>(), ()=>new TimeZoneRule())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2536,7 +2277,6 @@ public partial class TimeZone : Calandars {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<TimeZone> _binding = new (
 			new() {
-
 			{ "@type", _properties [0]},
 			{ "tzId", _properties [1]},
 			{ "updated", _properties [2]},
@@ -2544,26 +2284,9 @@ public partial class TimeZone : Calandars {
 			{ "validUntil", _properties [4]},
 			{ "aliases", _properties [5]},
 			{ "standard", _properties [6]},
-			{ "daylight", _properties [7]}
-        }, __Tag,() => new TimeZone(), () => new List<TimeZone>(), () => new Dictionary<string,TimeZone>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "daylight", _properties [7]}}, __Tag,
+		() => new TimeZone(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2659,7 +2382,6 @@ public partial class TimeZoneRule : Calandars {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("@type", 
 					(IBinding data, string? value) => {(data as TimeZoneRule).Type = value;}, 
 					(IBinding data) => (data as TimeZoneRule).Type ),
@@ -2688,7 +2410,8 @@ public partial class TimeZoneRule : Calandars {
 					(IBinding data) => (data as TimeZoneRule).Names ),
 		new PropertyListString ("comments", 
 					(IBinding data, List<string>? value) => {(data as TimeZoneRule).Comments = value;}, 
-					(IBinding data) => (data as TimeZoneRule).Comments )		];
+					(IBinding data) => (data as TimeZoneRule).Comments )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2696,7 +2419,6 @@ public partial class TimeZoneRule : Calandars {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<TimeZoneRule> _binding = new (
 			new() {
-
 			{ "@type", _properties [0]},
 			{ "start", _properties [1]},
 			{ "offsetFrom", _properties [2]},
@@ -2704,26 +2426,9 @@ public partial class TimeZoneRule : Calandars {
 			{ "recurrenceRules", _properties [4]},
 			{ "recurrenceOverrides", _properties [5]},
 			{ "names", _properties [6]},
-			{ "comments", _properties [7]}
-        }, __Tag,() => new TimeZoneRule(), () => new List<TimeZoneRule>(), () => new Dictionary<string,TimeZoneRule>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "comments", _properties [7]}}, __Tag,
+		() => new TimeZoneRule(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2762,27 +2467,9 @@ public partial class EmptyPatchObject : Calandars {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<EmptyPatchObject> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new EmptyPatchObject(), () => [], () => [], null);
 
-        }, __Tag,() => new EmptyPatchObject(), () => new List<EmptyPatchObject>(), () => new Dictionary<string,EmptyPatchObject>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class

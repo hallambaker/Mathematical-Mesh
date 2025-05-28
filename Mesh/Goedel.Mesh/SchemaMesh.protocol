@@ -435,7 +435,8 @@
 		Struct ProfileAccount CallsignServiceProfile
 			Description
 				|Profile of the callsign registry used by the service.
-		Struct Enveloped<ProfileService> EnvelopedProfileService
+		GStruct Enveloped ProfileService ProfileService
+			//Struct Enveloped<ProfileService> EnvelopedProfileService
 			Description
 				|Profile of the service.
 
@@ -520,7 +521,8 @@
 		Struct KeyData AccountAuthentication
 			Description
 				|Key or capability allowing administration of the group.
-		Struct Enveloped<ConnectionService> EnvelopedConnectionService
+		GStruct Enveloped ConnectionService ConnectionService
+			//Struct Enveloped<ConnectionService> EnvelopedConnectionService
 			Description
 				|Signed connection service delegation allowing the device to
 				|access the account.
@@ -548,23 +550,28 @@
 
 	Structure ApplicationEntrySsh
 		Inherits ApplicationEntry
-		Struct Enveloped<ActivationApplicationSsh> EnvelopedActivation
+		GStruct Enveloped ActivationApplicationSsh ActivationSsh
+			//Struct Enveloped<ActivationApplicationSsh> EnvelopedActivation
 
 	Structure ApplicationEntryGroup
 		Inherits ApplicationEntry
-		Struct Enveloped<ActivationApplicationGroup> EnvelopedActivation
+		GStruct Enveloped ActivationApplicationGroup ActivationGroup
+			//Struct Enveloped<ActivationApplicationGroup> EnvelopedActivation
 
 	Structure ApplicationEntryMail
 		Inherits ApplicationEntry
-		Struct Enveloped<ActivationApplicationMail> EnvelopedActivation
+		GStruct Enveloped ActivationApplicationMail ActivationMail
+			//Struct Enveloped<ActivationApplicationMail> EnvelopedActivation
 
 	Structure ApplicationEntryDeveloper
 		Inherits ApplicationEntry
-		Struct Enveloped<ActivationApplicationDeveloper> EnvelopedActivation
+		GStruct Enveloped ActivationApplicationDeveloper ActivationDeveloper
+			//Struct Enveloped<ActivationApplicationDeveloper> EnvelopedActivation
 
 	Structure ApplicationEntryCredential
 		Inherits ApplicationEntry
-		Struct Enveloped<ActivationApplicationCredential> EnvelopedActivation
+		GStruct Enveloped ActivationApplicationCredential ActivationCredential
+			//Struct Enveloped<ActivationApplicationCredential> EnvelopedActivation
 
 
 	Section 2 "Data Structures"
@@ -655,27 +662,33 @@
 		String SignatureUdf
 			Description
 				|UDF of the account online signature key
-		Struct Enveloped<ProfileAccount> EnvelopedProfileUser
+		GStruct Enveloped ProfileUser ProfileUser
+			//Struct Enveloped<ProfileAccount> EnvelopedProfileUser
 			Description
 				|The Mesh profile. Why is this still here? This is not 
 				|specific to the device.
-		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
+		GStruct Enveloped ProfileDevice ProfileDevice
+			//Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|The device profile
 		Struct DeviceDescription DeviceDescription
 			Description
 				|Description of the device
-		Struct Enveloped<ConnectionService> EnvelopedConnectionService
+		GStruct Enveloped ConnectionService ConnectionService
+			//Struct Enveloped<ConnectionService> EnvelopedConnectionService
 			Description
 				|Slim version of ConnectionDevice used by the presentation layer
-		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
+		GStruct Enveloped ConnectionDevice ConnectionDevice
+			//Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
 			Description
 				|The public assertion demonstrating connection of the Device to the Mesh
 
-		Struct Enveloped<ActivationAccount> EnvelopedActivationAccount
+		GStruct Enveloped ActivationAccount ActivationAccount
+			//Struct Enveloped<ActivationAccount> EnvelopedActivationAccount
 			Description
 				|The activation of the device within the Mesh account
-		Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
+		GStruct Enveloped ActivationCommon ActivationCommon
+			//Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
 			Description
 				|The activation of the device within the Mesh account
 		TStruct ApplicationEntry ApplicationEntries
@@ -833,7 +846,8 @@
 			Multiple
 			Description
 				|Access rights associated with the key
-		Struct Enveloped<CatalogedDevice> EnvelopedCatalogedDevice
+		GStruct Enveloped CatalogedDevice CatalogedDevice
+			//Struct Enveloped<CatalogedDevice> EnvelopedCatalogedDevice
 			Description
 				|
 		String CatalogedDeviceDigest
@@ -867,7 +881,8 @@
 			Description
 		String GranteeUdf
 			Description
-		Struct Enveloped<KeyData> EnvelopedKeyShare
+		GStruct Enveloped KeyData KeyShare
+			//Struct Enveloped<KeyData> EnvelopedKeyShare
 			Description
 				|One or more enveloped key shares.
 
@@ -955,7 +970,8 @@
 	Structure CatalogedTask
 		Inherits CatalogedEntry
 		String Title
-		Struct Enveloped<Engagement> EnvelopedTask
+		GStruct Enveloped Engagement Task
+			//Struct Enveloped<Engagement> EnvelopedTask
 
 
 	Structure CatalogedApplication
@@ -972,7 +988,8 @@
 			Multiple
 			Description
 				|Enveloped keys for use with Application
-		Struct Enveloped<KeyData> EnvelopedEscrow
+		GStruct Enveloped KeyData Escrow
+			//Struct Enveloped<KeyData> EnvelopedEscrow
 			Multiple
 			Description
 				|Escrow entries for the application.
@@ -988,14 +1005,17 @@
 	Structure CatalogedGroup
 		Inherits CatalogedApplication
 
-		Struct Enveloped<ConnectionStripped> EnvelopedConnectionAddress
+		GStruct Enveloped ConnectionStripped ConnectionAddress
+			//Struct Enveloped<ConnectionStripped> EnvelopedConnectionAddress
 			Description
 				|The connection allowing control of the group.
 
-		Struct Enveloped<ProfileAccount> EnvelopedProfileGroup
+		GStruct Enveloped ProfileGroup ProfileGroup
+			//Struct Enveloped<ProfileAccount> EnvelopedProfileGroup
 			Description
 				|The Mesh profile
-		Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
+		GStruct Enveloped ActivationCommon ActivationCommon
+			//Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
 			Description
 				|The activation of the device within the Mesh account
 
@@ -1091,7 +1111,8 @@
 	Section 2 "Publications"
 
 	Structure DevicePreconfigurationPublic
-		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
+		GStruct Enveloped ProfileDevice ProfileDevice
+			//Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|The device profile
 		String Hailing
@@ -1106,10 +1127,12 @@
 		Inherits DevicePreconfigurationPublic
 		Description
 			|A data structure that is passed 
-		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
+		GStruct Enveloped ConnectionDevice ConnectionDevice
+			//Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
 			Description
 				|The device connection
-		Struct Enveloped<ConnectionService> EnvelopedConnectionService
+		GStruct Enveloped ConnectionService ConnectionService
+			//Struct Enveloped<ConnectionService> EnvelopedConnectionService
 			Description
 				|The device connection
 		TStruct Key PrivateKey
@@ -1190,7 +1213,8 @@
 			|Connection request message generated by a service on receipt of a valid
 			|MessageConnectionRequestClient
 		Inherits Message
-		Struct Enveloped<RequestConnection> EnvelopedRequestConnection
+		GStruct Enveloped RequestConnection RequestConnection
+			//Struct Enveloped<RequestConnection> EnvelopedRequestConnection
 			Description
 				|The client connection request.
 		Binary ServerNonce
@@ -1250,7 +1274,8 @@
 
 	Structure ResponseConfirmation
 		Inherits Message
-		Struct Enveloped<RequestConfirmation> Request
+		GStruct Enveloped RequestConfirmation Request
+			//Struct Enveloped<RequestConfirmation> Request
 		Boolean Accept
 
 	Structure RequestTask

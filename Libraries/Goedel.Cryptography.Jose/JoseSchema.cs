@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 3:12:37 PM
+//  This file was automatically generated at 5/28/2025 12:00:09 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -69,43 +69,6 @@ public abstract partial class Jose : global::Goedel.Protocol.JsonObject {
     /// </summary>
 	public new const string __Tag = "Jose";
 
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"JoseWebSignature", JoseWebSignature._Factory},
-	    {"JoseWebEncryption", JoseWebEncryption._Factory},
-	    {"JWKS", JWKS._Factory},
-	    {"JWK", JWK._Factory},
-	    {"JwtHeader", JwtHeader._Factory},
-	    {"Signed", Signed._Factory},
-	    {"Encrypted", Encrypted._Factory},
-	    {"JsonWebKeys", JsonWebKeys._Factory},
-	    {"KeyCore", KeyCore._Factory},
-	    {"Header", Header._Factory},
-	    {"Signature", Signature._Factory},
-	    {"KeyContainer", KeyContainer._Factory},
-	    {"Key", Key._Factory},
-	    {"Recipient", Recipient._Factory},
-	    {"PublicKeyRSA", PublicKeyRSA._Factory},
-	    {"PrivateKeyRSA", PrivateKeyRSA._Factory},
-	    {"PublicKeyDH", PublicKeyDH._Factory},
-	    {"PrivateKeyDH", PrivateKeyDH._Factory},
-	    {"PublicKeyECDH", PublicKeyECDH._Factory},
-	    {"PrivateKeyECDH", PrivateKeyECDH._Factory},
-	    {"PrivateKeyUDF", PrivateKeyUDF._Factory},
-	    {"KeyAgreement", KeyAgreement._Factory},
-	    {"KeyAgreementDH", KeyAgreementDH._Factory},
-	    {"KeyAgreementECDH", KeyAgreementECDH._Factory},
-	    {"PublicKeyBinary", PublicKeyBinary._Factory},
-	    {"PrivateKeyBinary", PrivateKeyBinary._Factory}
-		};
-	*/
-
 	/// <summary>
     /// Dictionary mapping types to bindings
     /// </summary>
@@ -141,8 +104,6 @@ public abstract partial class Jose : global::Goedel.Protocol.JsonObject {
 	    {typeof(PrivateKeyBinary), PrivateKeyBinary._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -151,19 +112,8 @@ public abstract partial class Jose : global::Goedel.Protocol.JsonObject {
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -207,7 +157,6 @@ public partial class JoseWebSignature : Jose {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("unprotected", typeof (Header),
 					(IBinding data, object? value) => {(data as JoseWebSignature).Unprotected = value as Header;}, 
 					(IBinding data) => (data as JoseWebSignature).Unprotected,
@@ -218,7 +167,8 @@ public partial class JoseWebSignature : Jose {
 		new PropertyListStruct ("signatures", typeof (Signature),
 					(IBinding data, object? value) => {(data as JoseWebSignature).Signatures = value as List<Signature>;}, 
 					(IBinding data) => (data as JoseWebSignature).Signatures,
-					false, ()=>new  List<Signature>(), ()=>new Signature())		];
+					false, ()=>new  List<Signature>(), ()=>new Signature())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -226,29 +176,11 @@ public partial class JoseWebSignature : Jose {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<JoseWebSignature> _binding = new (
 			new() {
-
 			{ "unprotected", _properties [0]},
 			{ "payload", _properties [1]},
-			{ "signatures", _properties [2]}
-        }, __Tag,() => new JoseWebSignature(), () => new List<JoseWebSignature>(), () => new Dictionary<string,JoseWebSignature>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "signatures", _properties [2]}}, __Tag,
+		() => new JoseWebSignature(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -328,7 +260,6 @@ public partial class JoseWebEncryption : JoseWebSignature {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("protected", 
 					(IBinding data, byte[]? value) => {(data as JoseWebEncryption).Protected = value;}, 
 					(IBinding data) => (data as JoseWebEncryption).Protected ),
@@ -350,7 +281,8 @@ public partial class JoseWebEncryption : JoseWebSignature {
 					(IBinding data) => (data as JoseWebEncryption).CipherText ),
 		new PropertyBinary ("tag", 
 					(IBinding data, byte[]? value) => {(data as JoseWebEncryption).JTag = value;}, 
-					(IBinding data) => (data as JoseWebEncryption).JTag )		];
+					(IBinding data) => (data as JoseWebEncryption).JTag )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -358,34 +290,15 @@ public partial class JoseWebEncryption : JoseWebSignature {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<JoseWebEncryption> _binding = new (
 			new() {
-
 			{ "protected", _properties [0]},
 			{ "iv", _properties [1]},
 			{ "recipients", _properties [2]},
 			{ "encrypted_key", _properties [3]},
 			{ "aad", _properties [4]},
 			{ "ciphertext", _properties [5]},
-			{ "tag", _properties [6]}
-        }, __Tag,() => new JoseWebEncryption(), () => new List<JoseWebEncryption>(), () => new Dictionary<string,JoseWebEncryption>(),JoseWebSignature._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "tag", _properties [6]}}, __Tag,
+		() => new JoseWebEncryption(), () => [], () => [], JoseWebSignature._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(JoseWebSignature._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -420,11 +333,11 @@ public partial class JWKS : Jose {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("keys", typeof (JWK),
 					(IBinding data, object? value) => {(data as JWKS).Keys = value as List<JWK>;}, 
 					(IBinding data) => (data as JWKS).Keys,
-					false, ()=>new  List<JWK>(), ()=>new JWK())		];
+					false, ()=>new  List<JWK>(), ()=>new JWK())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -432,27 +345,9 @@ public partial class JWKS : Jose {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<JWKS> _binding = new (
 			new() {
+			{ "keys", _properties [0]}}, __Tag,
+		() => new JWKS(), () => [], () => [], null);
 
-			{ "keys", _properties [0]}
-        }, __Tag,() => new JWKS(), () => new List<JWKS>(), () => new Dictionary<string,JWKS>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -566,7 +461,6 @@ public partial class JWK : Jose {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("kty", 
 					(IBinding data, string? value) => {(data as JWK).KeyType = value;}, 
 					(IBinding data) => (data as JWK).KeyType ),
@@ -608,7 +502,8 @@ public partial class JWK : Jose {
 					(IBinding data) => (data as JWK).N ),
 		new PropertyString ("e", 
 					(IBinding data, string? value) => {(data as JWK).E = value;}, 
-					(IBinding data) => (data as JWK).E )		];
+					(IBinding data) => (data as JWK).E )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -616,7 +511,6 @@ public partial class JWK : Jose {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<JWK> _binding = new (
 			new() {
-
 			{ "kty", _properties [0]},
 			{ "use", _properties [1]},
 			{ "key_ops", _properties [2]},
@@ -630,26 +524,9 @@ public partial class JWK : Jose {
 			{ "y", _properties [10]},
 			{ "d", _properties [11]},
 			{ "n", _properties [12]},
-			{ "e", _properties [13]}
-        }, __Tag,() => new JWK(), () => new List<JWK>(), () => new Dictionary<string,JWK>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "e", _properties [13]}}, __Tag,
+		() => new JWK(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -700,7 +577,6 @@ public partial class JwtHeader : Jose {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("typ", 
 					(IBinding data, string? value) => {(data as JwtHeader).Typ = value;}, 
 					(IBinding data) => (data as JwtHeader).Typ ),
@@ -710,7 +586,8 @@ public partial class JwtHeader : Jose {
 		new PropertyStruct ("jwk", typeof (JWK),
 					(IBinding data, object? value) => {(data as JwtHeader).Jwk = value as JWK;}, 
 					(IBinding data) => (data as JwtHeader).Jwk,
-					false, ()=>new  JWK(), ()=>new JWK())		];
+					false, ()=>new  JWK(), ()=>new JWK())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -718,29 +595,11 @@ public partial class JwtHeader : Jose {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<JwtHeader> _binding = new (
 			new() {
-
 			{ "typ", _properties [0]},
 			{ "alg", _properties [1]},
-			{ "jwk", _properties [2]}
-        }, __Tag,() => new JwtHeader(), () => new List<JwtHeader>(), () => new Dictionary<string,JwtHeader>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "jwk", _properties [2]}}, __Tag,
+		() => new JwtHeader(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -793,7 +652,6 @@ public partial class Signed : Jose {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("protected", 
 					(IBinding data, byte[]? value) => {(data as Signed).Protected = value;}, 
 					(IBinding data) => (data as Signed).Protected ),
@@ -802,7 +660,8 @@ public partial class Signed : Jose {
 					(IBinding data) => (data as Signed).Payload ),
 		new PropertyBinary ("signature", 
 					(IBinding data, byte[]? value) => {(data as Signed).Signature = value;}, 
-					(IBinding data) => (data as Signed).Signature )		];
+					(IBinding data) => (data as Signed).Signature )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -810,29 +669,11 @@ public partial class Signed : Jose {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Signed> _binding = new (
 			new() {
-
 			{ "protected", _properties [0]},
 			{ "payload", _properties [1]},
-			{ "signature", _properties [2]}
-        }, __Tag,() => new Signed(), () => new List<Signed>(), () => new Dictionary<string,Signed>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "signature", _properties [2]}}, __Tag,
+		() => new Signed(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -892,7 +733,6 @@ public partial class Encrypted : Jose {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("header", typeof (Header),
 					(IBinding data, object? value) => {(data as Encrypted).Header = value as Header;}, 
 					(IBinding data) => (data as Encrypted).Header,
@@ -905,7 +745,8 @@ public partial class Encrypted : Jose {
 					(IBinding data) => (data as Encrypted).CipherText ),
 		new PropertyBinary ("signature", 
 					(IBinding data, byte[]? value) => {(data as Encrypted).Signature = value;}, 
-					(IBinding data) => (data as Encrypted).Signature )		];
+					(IBinding data) => (data as Encrypted).Signature )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -913,30 +754,12 @@ public partial class Encrypted : Jose {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Encrypted> _binding = new (
 			new() {
-
 			{ "header", _properties [0]},
 			{ "iv", _properties [1]},
 			{ "ciphertext", _properties [2]},
-			{ "signature", _properties [3]}
-        }, __Tag,() => new Encrypted(), () => new List<Encrypted>(), () => new Dictionary<string,Encrypted>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "signature", _properties [3]}}, __Tag,
+		() => new Encrypted(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -971,11 +794,11 @@ public partial class JsonWebKeys : Jose {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("keys", typeof (KeyCore),
 					(IBinding data, object? value) => {(data as JsonWebKeys).Keys = value as List<KeyCore>;}, 
 					(IBinding data) => (data as JsonWebKeys).Keys,
-					false, ()=>new  List<KeyCore>(), ()=>new KeyCore())		];
+					false, ()=>new  List<KeyCore>(), ()=>new KeyCore())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -983,27 +806,9 @@ public partial class JsonWebKeys : Jose {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<JsonWebKeys> _binding = new (
 			new() {
+			{ "keys", _properties [0]}}, __Tag,
+		() => new JsonWebKeys(), () => [], () => [], null);
 
-			{ "keys", _properties [0]}
-        }, __Tag,() => new JsonWebKeys(), () => new List<JsonWebKeys>(), () => new Dictionary<string,JsonWebKeys>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1092,7 +897,6 @@ public partial class KeyCore : Jose {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("enc", 
 					(IBinding data, string? value) => {(data as KeyCore).Enc = value;}, 
 					(IBinding data) => (data as KeyCore).Enc ),
@@ -1116,7 +920,8 @@ public partial class KeyCore : Jose {
 					(IBinding data) => (data as KeyCore).X5t ),
 		new PropertyBinary ("x5t#S256", 
 					(IBinding data, byte[]? value) => {(data as KeyCore).X5tS256 = value;}, 
-					(IBinding data) => (data as KeyCore).X5tS256 )		];
+					(IBinding data) => (data as KeyCore).X5tS256 )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1124,7 +929,6 @@ public partial class KeyCore : Jose {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<KeyCore> _binding = new (
 			new() {
-
 			{ "enc", _properties [0]},
 			{ "dig", _properties [1]},
 			{ "alg", _properties [2]},
@@ -1132,26 +936,9 @@ public partial class KeyCore : Jose {
 			{ "x5u", _properties [4]},
 			{ "x5c", _properties [5]},
 			{ "x5t", _properties [6]},
-			{ "x5t#S256", _properties [7]}
-        }, __Tag,() => new KeyCore(), () => new List<KeyCore>(), () => new Dictionary<string,KeyCore>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "x5t#S256", _properties [7]}}, __Tag,
+		() => new KeyCore(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1239,7 +1026,6 @@ public partial class Header : KeyCore {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("jku", 
 					(IBinding data, string? value) => {(data as Header).Jku = value;}, 
 					(IBinding data) => (data as Header).Jku ),
@@ -1265,7 +1051,8 @@ public partial class Header : KeyCore {
 					(IBinding data) => (data as Header).Crit ),
 		new PropertyBinary ("val", 
 					(IBinding data, byte[]? value) => {(data as Header).Val = value;}, 
-					(IBinding data) => (data as Header).Val )		];
+					(IBinding data) => (data as Header).Val )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1273,7 +1060,6 @@ public partial class Header : KeyCore {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Header> _binding = new (
 			new() {
-
 			{ "jku", _properties [0]},
 			{ "jwk", _properties [1]},
 			{ "epk", _properties [2]},
@@ -1281,27 +1067,9 @@ public partial class Header : KeyCore {
 			{ "typ", _properties [4]},
 			{ "cty", _properties [5]},
 			{ "crit", _properties [6]},
-			{ "val", _properties [7]}
-        }, __Tag,() => new Header(), () => new List<Header>(), () => new Dictionary<string,Header>(),KeyCore._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "val", _properties [7]}}, __Tag,
+		() => new Header(), () => [], () => [], KeyCore._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(KeyCore._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1354,7 +1122,6 @@ public partial class Signature : Jose {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("header", typeof (Header),
 					(IBinding data, object? value) => {(data as Signature).Header = value as Header;}, 
 					(IBinding data) => (data as Signature).Header,
@@ -1364,7 +1131,8 @@ public partial class Signature : Jose {
 					(IBinding data) => (data as Signature).Protected ),
 		new PropertyBinary ("signature", 
 					(IBinding data, byte[]? value) => {(data as Signature).SignatureValue = value;}, 
-					(IBinding data) => (data as Signature).SignatureValue )		];
+					(IBinding data) => (data as Signature).SignatureValue )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1372,29 +1140,11 @@ public partial class Signature : Jose {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Signature> _binding = new (
 			new() {
-
 			{ "header", _properties [0]},
 			{ "protected", _properties [1]},
-			{ "signature", _properties [2]}
-        }, __Tag,() => new Signature(), () => new List<Signature>(), () => new Dictionary<string,Signature>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "signature", _properties [2]}}, __Tag,
+		() => new Signature(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1440,13 +1190,13 @@ public partial class KeyContainer : Jose {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBoolean ("Exportable", 
 					(IBinding data, bool? value) => {(data as KeyContainer).Exportable = value;}, 
 					(IBinding data) => (data as KeyContainer).Exportable ),
 		new PropertyBinary ("KeyCore", 
 					(IBinding data, byte[]? value) => {(data as KeyContainer).KeyCore = value;}, 
-					(IBinding data) => (data as KeyContainer).KeyCore )		];
+					(IBinding data) => (data as KeyContainer).KeyCore )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1454,28 +1204,10 @@ public partial class KeyContainer : Jose {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<KeyContainer> _binding = new (
 			new() {
-
 			{ "Exportable", _properties [0]},
-			{ "KeyCore", _properties [1]}
-        }, __Tag,() => new KeyContainer(), () => new List<KeyContainer>(), () => new Dictionary<string,KeyContainer>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "KeyCore", _properties [1]}}, __Tag,
+		() => new KeyContainer(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1543,7 +1275,6 @@ public partial class Key : KeyCore {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBoolean ("Exportable", 
 					(IBinding data, bool? value) => {(data as Key).Exportable = value;}, 
 					(IBinding data) => (data as Key).Exportable ),
@@ -1558,7 +1289,8 @@ public partial class Key : KeyCore {
 					(IBinding data) => (data as Key).Key_ops ),
 		new PropertyBinary ("k", 
 					(IBinding data, byte[]? value) => {(data as Key).K = value;}, 
-					(IBinding data) => (data as Key).K )		];
+					(IBinding data) => (data as Key).K )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1566,32 +1298,13 @@ public partial class Key : KeyCore {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Key> _binding = new (
 			new() {
-
 			{ "Exportable", _properties [0]},
 			{ "kty", _properties [1]},
 			{ "use", _properties [2]},
 			{ "key_ops", _properties [3]},
-			{ "k", _properties [4]}
-        }, __Tag,() => new Key(), () => new List<Key>(), () => new Dictionary<string,Key>(),KeyCore._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "k", _properties [4]}}, __Tag,
+		() => new Key(), () => [], () => [], KeyCore._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(KeyCore._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1637,14 +1350,14 @@ public partial class Recipient : Jose {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("Header", typeof (Header),
 					(IBinding data, object? value) => {(data as Recipient).Header = value as Header;}, 
 					(IBinding data) => (data as Recipient).Header,
 					false, ()=>new  Header(), ()=>new Header()),
 		new PropertyBinary ("encrypted_key", 
 					(IBinding data, byte[]? value) => {(data as Recipient).EncryptedKey = value;}, 
-					(IBinding data) => (data as Recipient).EncryptedKey )		];
+					(IBinding data) => (data as Recipient).EncryptedKey )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1652,28 +1365,10 @@ public partial class Recipient : Jose {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Recipient> _binding = new (
 			new() {
-
 			{ "Header", _properties [0]},
-			{ "encrypted_key", _properties [1]}
-        }, __Tag,() => new Recipient(), () => new List<Recipient>(), () => new Dictionary<string,Recipient>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "encrypted_key", _properties [1]}}, __Tag,
+		() => new Recipient(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1719,13 +1414,13 @@ public partial class PublicKeyRSA : Key {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("n", 
 					(IBinding data, byte[]? value) => {(data as PublicKeyRSA).N = value;}, 
 					(IBinding data) => (data as PublicKeyRSA).N ),
 		new PropertyBinary ("e", 
 					(IBinding data, byte[]? value) => {(data as PublicKeyRSA).E = value;}, 
-					(IBinding data) => (data as PublicKeyRSA).E )		];
+					(IBinding data) => (data as PublicKeyRSA).E )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1733,29 +1428,10 @@ public partial class PublicKeyRSA : Key {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PublicKeyRSA> _binding = new (
 			new() {
-
 			{ "n", _properties [0]},
-			{ "e", _properties [1]}
-        }, __Tag,() => new PublicKeyRSA(), () => new List<PublicKeyRSA>(), () => new Dictionary<string,PublicKeyRSA>(),Key._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "e", _properties [1]}}, __Tag,
+		() => new PublicKeyRSA(), () => [], () => [], Key._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Key._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1829,7 +1505,6 @@ public partial class PrivateKeyRSA : PublicKeyRSA {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("d", 
 					(IBinding data, byte[]? value) => {(data as PrivateKeyRSA).D = value;}, 
 					(IBinding data) => (data as PrivateKeyRSA).D ),
@@ -1847,7 +1522,8 @@ public partial class PrivateKeyRSA : PublicKeyRSA {
 					(IBinding data) => (data as PrivateKeyRSA).DQ ),
 		new PropertyBinary ("qi", 
 					(IBinding data, byte[]? value) => {(data as PrivateKeyRSA).QI = value;}, 
-					(IBinding data) => (data as PrivateKeyRSA).QI )		];
+					(IBinding data) => (data as PrivateKeyRSA).QI )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1855,33 +1531,14 @@ public partial class PrivateKeyRSA : PublicKeyRSA {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PrivateKeyRSA> _binding = new (
 			new() {
-
 			{ "d", _properties [0]},
 			{ "p", _properties [1]},
 			{ "q", _properties [2]},
 			{ "dp", _properties [3]},
 			{ "dq", _properties [4]},
-			{ "qi", _properties [5]}
-        }, __Tag,() => new PrivateKeyRSA(), () => new List<PrivateKeyRSA>(), () => new Dictionary<string,PrivateKeyRSA>(),PublicKeyRSA._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "qi", _properties [5]}}, __Tag,
+		() => new PrivateKeyRSA(), () => [], () => [], PublicKeyRSA._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(PublicKeyRSA._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1927,13 +1584,13 @@ public partial class PublicKeyDH : Key {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("Domain", 
 					(IBinding data, byte[]? value) => {(data as PublicKeyDH).Domain = value;}, 
 					(IBinding data) => (data as PublicKeyDH).Domain ),
 		new PropertyBinary ("Public", 
 					(IBinding data, byte[]? value) => {(data as PublicKeyDH).Public = value;}, 
-					(IBinding data) => (data as PublicKeyDH).Public )		];
+					(IBinding data) => (data as PublicKeyDH).Public )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1941,29 +1598,10 @@ public partial class PublicKeyDH : Key {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PublicKeyDH> _binding = new (
 			new() {
-
 			{ "Domain", _properties [0]},
-			{ "Public", _properties [1]}
-        }, __Tag,() => new PublicKeyDH(), () => new List<PublicKeyDH>(), () => new Dictionary<string,PublicKeyDH>(),Key._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Public", _properties [1]}}, __Tag,
+		() => new PublicKeyDH(), () => [], () => [], Key._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Key._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2002,10 +1640,10 @@ public partial class PrivateKeyDH : PublicKeyDH {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("Private", 
 					(IBinding data, byte[]? value) => {(data as PrivateKeyDH).Private = value;}, 
-					(IBinding data) => (data as PrivateKeyDH).Private )		];
+					(IBinding data) => (data as PrivateKeyDH).Private )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2013,28 +1651,9 @@ public partial class PrivateKeyDH : PublicKeyDH {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PrivateKeyDH> _binding = new (
 			new() {
+			{ "Private", _properties [0]}}, __Tag,
+		() => new PrivateKeyDH(), () => [], () => [], PublicKeyDH._binding);
 
-			{ "Private", _properties [0]}
-        }, __Tag,() => new PrivateKeyDH(), () => new List<PrivateKeyDH>(), () => new Dictionary<string,PrivateKeyDH>(),PublicKeyDH._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(PublicKeyDH._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2080,13 +1699,13 @@ public partial class PublicKeyECDH : Key {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("crv", 
 					(IBinding data, string? value) => {(data as PublicKeyECDH).Curve = value;}, 
 					(IBinding data) => (data as PublicKeyECDH).Curve ),
 		new PropertyBinary ("Public", 
 					(IBinding data, byte[]? value) => {(data as PublicKeyECDH).Public = value;}, 
-					(IBinding data) => (data as PublicKeyECDH).Public )		];
+					(IBinding data) => (data as PublicKeyECDH).Public )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2094,29 +1713,10 @@ public partial class PublicKeyECDH : Key {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PublicKeyECDH> _binding = new (
 			new() {
-
 			{ "crv", _properties [0]},
-			{ "Public", _properties [1]}
-        }, __Tag,() => new PublicKeyECDH(), () => new List<PublicKeyECDH>(), () => new Dictionary<string,PublicKeyECDH>(),Key._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Public", _properties [1]}}, __Tag,
+		() => new PublicKeyECDH(), () => [], () => [], Key._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Key._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2155,10 +1755,10 @@ public partial class PrivateKeyECDH : PublicKeyECDH {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("Private", 
 					(IBinding data, byte[]? value) => {(data as PrivateKeyECDH).Private = value;}, 
-					(IBinding data) => (data as PrivateKeyECDH).Private )		];
+					(IBinding data) => (data as PrivateKeyECDH).Private )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2166,28 +1766,9 @@ public partial class PrivateKeyECDH : PublicKeyECDH {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PrivateKeyECDH> _binding = new (
 			new() {
+			{ "Private", _properties [0]}}, __Tag,
+		() => new PrivateKeyECDH(), () => [], () => [], PublicKeyECDH._binding);
 
-			{ "Private", _properties [0]}
-        }, __Tag,() => new PrivateKeyECDH(), () => new List<PrivateKeyECDH>(), () => new Dictionary<string,PrivateKeyECDH>(),PublicKeyECDH._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(PublicKeyECDH._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2260,7 +1841,6 @@ public partial class PrivateKeyUDF : Key {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("PrivateValue", 
 					(IBinding data, string? value) => {(data as PrivateKeyUDF).PrivateValue = value;}, 
 					(IBinding data) => (data as PrivateKeyUDF).PrivateValue ),
@@ -2278,7 +1858,8 @@ public partial class PrivateKeyUDF : Key {
 					(IBinding data) => (data as PrivateKeyUDF).AlgorithmSign ),
 		new PropertyString ("AlgorithmAuthenticate", 
 					(IBinding data, string? value) => {(data as PrivateKeyUDF).AlgorithmAuthenticate = value;}, 
-					(IBinding data) => (data as PrivateKeyUDF).AlgorithmAuthenticate )		];
+					(IBinding data) => (data as PrivateKeyUDF).AlgorithmAuthenticate )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2286,33 +1867,14 @@ public partial class PrivateKeyUDF : Key {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PrivateKeyUDF> _binding = new (
 			new() {
-
 			{ "PrivateValue", _properties [0]},
 			{ "KeyType", _properties [1]},
 			{ "RootSignAlgorithms", _properties [2]},
 			{ "AlgorithmEncrypt", _properties [3]},
 			{ "AlgorithmSign", _properties [4]},
-			{ "AlgorithmAuthenticate", _properties [5]}
-        }, __Tag,() => new PrivateKeyUDF(), () => new List<PrivateKeyUDF>(), () => new Dictionary<string,PrivateKeyUDF>(),Key._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "AlgorithmAuthenticate", _properties [5]}}, __Tag,
+		() => new PrivateKeyUDF(), () => [], () => [], Key._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Key._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2351,27 +1913,9 @@ public partial class KeyAgreement : Jose {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<KeyAgreement> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new KeyAgreement(), () => [], () => [], null);
 
-        }, __Tag,() => new KeyAgreement(), () => new List<KeyAgreement>(), () => new Dictionary<string,KeyAgreement>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2410,10 +1954,10 @@ public partial class KeyAgreementDH : KeyAgreement {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("Result", 
 					(IBinding data, byte[]? value) => {(data as KeyAgreementDH).Result = value;}, 
-					(IBinding data) => (data as KeyAgreementDH).Result )		];
+					(IBinding data) => (data as KeyAgreementDH).Result )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2421,28 +1965,9 @@ public partial class KeyAgreementDH : KeyAgreement {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<KeyAgreementDH> _binding = new (
 			new() {
+			{ "Result", _properties [0]}}, __Tag,
+		() => new KeyAgreementDH(), () => [], () => [], KeyAgreement._binding);
 
-			{ "Result", _properties [0]}
-        }, __Tag,() => new KeyAgreementDH(), () => new List<KeyAgreementDH>(), () => new Dictionary<string,KeyAgreementDH>(),KeyAgreement._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(KeyAgreement._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2488,13 +2013,13 @@ public partial class KeyAgreementECDH : KeyAgreement {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Curve", 
 					(IBinding data, string? value) => {(data as KeyAgreementECDH).Curve = value;}, 
 					(IBinding data) => (data as KeyAgreementECDH).Curve ),
 		new PropertyBinary ("Result", 
 					(IBinding data, byte[]? value) => {(data as KeyAgreementECDH).Result = value;}, 
-					(IBinding data) => (data as KeyAgreementECDH).Result )		];
+					(IBinding data) => (data as KeyAgreementECDH).Result )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2502,29 +2027,10 @@ public partial class KeyAgreementECDH : KeyAgreement {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<KeyAgreementECDH> _binding = new (
 			new() {
-
 			{ "Curve", _properties [0]},
-			{ "Result", _properties [1]}
-        }, __Tag,() => new KeyAgreementECDH(), () => new List<KeyAgreementECDH>(), () => new Dictionary<string,KeyAgreementECDH>(),KeyAgreement._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Result", _properties [1]}}, __Tag,
+		() => new KeyAgreementECDH(), () => [], () => [], KeyAgreement._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(KeyAgreement._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2564,10 +2070,10 @@ public partial class PublicKeyBinary : Key {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("Public", 
 					(IBinding data, byte[]? value) => {(data as PublicKeyBinary).Public = value;}, 
-					(IBinding data) => (data as PublicKeyBinary).Public )		];
+					(IBinding data) => (data as PublicKeyBinary).Public )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2575,28 +2081,9 @@ public partial class PublicKeyBinary : Key {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PublicKeyBinary> _binding = new (
 			new() {
+			{ "Public", _properties [0]}}, __Tag,
+		() => new PublicKeyBinary(), () => [], () => [], Key._binding);
 
-			{ "Public", _properties [0]}
-        }, __Tag,() => new PublicKeyBinary(), () => new List<PublicKeyBinary>(), () => new Dictionary<string,PublicKeyBinary>(),Key._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Key._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2636,10 +2123,10 @@ public partial class PrivateKeyBinary : Key {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("Public", 
 					(IBinding data, byte[]? value) => {(data as PrivateKeyBinary).Public = value;}, 
-					(IBinding data) => (data as PrivateKeyBinary).Public )		];
+					(IBinding data) => (data as PrivateKeyBinary).Public )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2647,28 +2134,9 @@ public partial class PrivateKeyBinary : Key {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PrivateKeyBinary> _binding = new (
 			new() {
+			{ "Public", _properties [0]}}, __Tag,
+		() => new PrivateKeyBinary(), () => [], () => [], Key._binding);
 
-			{ "Public", _properties [0]}
-        }, __Tag,() => new PrivateKeyBinary(), () => new List<PrivateKeyBinary>(), () => new Dictionary<string,PrivateKeyBinary>(),Key._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Key._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class

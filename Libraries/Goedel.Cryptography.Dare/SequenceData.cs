@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 3:12:40 PM
+//  This file was automatically generated at 5/28/2025 12:00:12 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -70,22 +70,6 @@ public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject 
     /// </summary>
 	public new const string __Tag = "SequenceData";
 
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"SequenceInfo", SequenceInfo._Factory},
-	    {"SequenceIndex", SequenceIndex._Factory},
-	    {"IndexPosition", IndexPosition._Factory},
-	    {"KeyValue", KeyValue._Factory},
-	    {"ProofChain", ProofChain._Factory}
-		};
-	*/
-
 	/// <summary>
     /// Dictionary mapping types to bindings
     /// </summary>
@@ -100,8 +84,6 @@ public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject 
 	    {typeof(ProofChain), ProofChain._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -110,19 +92,8 @@ public abstract partial class SequenceData : global::Goedel.Protocol.JsonObject 
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -211,7 +182,6 @@ public partial class SequenceInfo : SequenceData {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("DataEncoding", 
 					(IBinding data, string? value) => {(data as SequenceInfo).DataEncoding = value;}, 
 					(IBinding data) => (data as SequenceInfo).DataEncoding ),
@@ -235,7 +205,8 @@ public partial class SequenceInfo : SequenceData {
 					(IBinding data) => (data as SequenceInfo).IndexPosition ),
 		new PropertyInteger64 ("ExchangePosition", 
 					(IBinding data, long? value) => {(data as SequenceInfo).ExchangePosition = value;}, 
-					(IBinding data) => (data as SequenceInfo).ExchangePosition )		];
+					(IBinding data) => (data as SequenceInfo).ExchangePosition )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -243,7 +214,6 @@ public partial class SequenceInfo : SequenceData {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<SequenceInfo> _binding = new (
 			new() {
-
 			{ "DataEncoding", _properties [0]},
 			{ "ContainerType", _properties [1]},
 			{ "Index", _properties [2]},
@@ -251,26 +221,9 @@ public partial class SequenceInfo : SequenceData {
 			{ "Default", _properties [4]},
 			{ "TreePosition", _properties [5]},
 			{ "IndexPosition", _properties [6]},
-			{ "ExchangePosition", _properties [7]}
-        }, __Tag,() => new SequenceInfo(), () => new List<SequenceInfo>(), () => new Dictionary<string,SequenceInfo>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "ExchangePosition", _properties [7]}}, __Tag,
+		() => new SequenceInfo(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -318,14 +271,14 @@ public partial class SequenceIndex : SequenceData {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBoolean ("Full", 
 					(IBinding data, bool? value) => {(data as SequenceIndex).Full = value;}, 
 					(IBinding data) => (data as SequenceIndex).Full ),
 		new PropertyListStruct ("Positions", typeof (IndexPosition),
 					(IBinding data, object? value) => {(data as SequenceIndex).Positions = value as List<IndexPosition>;}, 
 					(IBinding data) => (data as SequenceIndex).Positions,
-					false, ()=>new  List<IndexPosition>(), ()=>new IndexPosition())		];
+					false, ()=>new  List<IndexPosition>(), ()=>new IndexPosition())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -333,28 +286,10 @@ public partial class SequenceIndex : SequenceData {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<SequenceIndex> _binding = new (
 			new() {
-
 			{ "Full", _properties [0]},
-			{ "Positions", _properties [1]}
-        }, __Tag,() => new SequenceIndex(), () => new List<SequenceIndex>(), () => new Dictionary<string,SequenceIndex>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Positions", _properties [1]}}, __Tag,
+		() => new SequenceIndex(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -407,7 +342,6 @@ public partial class IndexPosition : SequenceData {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyInteger64 ("Index", 
 					(IBinding data, long? value) => {(data as IndexPosition).Index = value;}, 
 					(IBinding data) => (data as IndexPosition).Index ),
@@ -416,7 +350,8 @@ public partial class IndexPosition : SequenceData {
 					(IBinding data) => (data as IndexPosition).Position ),
 		new PropertyString ("UniqueId", 
 					(IBinding data, string? value) => {(data as IndexPosition).UniqueId = value;}, 
-					(IBinding data) => (data as IndexPosition).UniqueId )		];
+					(IBinding data) => (data as IndexPosition).UniqueId )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -424,29 +359,11 @@ public partial class IndexPosition : SequenceData {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<IndexPosition> _binding = new (
 			new() {
-
 			{ "Index", _properties [0]},
 			{ "Position", _properties [1]},
-			{ "UniqueId", _properties [2]}
-        }, __Tag,() => new IndexPosition(), () => new List<IndexPosition>(), () => new Dictionary<string,IndexPosition>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "UniqueId", _properties [2]}}, __Tag,
+		() => new IndexPosition(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -492,13 +409,13 @@ public partial class KeyValue : SequenceData {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Key", 
 					(IBinding data, string? value) => {(data as KeyValue).Key = value;}, 
 					(IBinding data) => (data as KeyValue).Key ),
 		new PropertyString ("Value", 
 					(IBinding data, string? value) => {(data as KeyValue).Value = value;}, 
-					(IBinding data) => (data as KeyValue).Value )		];
+					(IBinding data) => (data as KeyValue).Value )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -506,28 +423,10 @@ public partial class KeyValue : SequenceData {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<KeyValue> _binding = new (
 			new() {
-
 			{ "Key", _properties [0]},
-			{ "Value", _properties [1]}
-        }, __Tag,() => new KeyValue(), () => new List<KeyValue>(), () => new Dictionary<string,KeyValue>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Value", _properties [1]}}, __Tag,
+		() => new KeyValue(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -566,27 +465,9 @@ public partial class ProofChain : SequenceData {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ProofChain> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new ProofChain(), () => [], () => [], null);
 
-        }, __Tag,() => new ProofChain(), () => new List<ProofChain>(), () => new Dictionary<string,ProofChain>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class

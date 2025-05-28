@@ -80,7 +80,7 @@ public class AccountContext : Disposable {
         KeyCollection = keyCollection;
 
         Created = Accessed = System.DateTime.UtcNow;
-        ProfileAccount = (AccountEntry as AccountUser)?.GetProfileAccount();
+        ProfileAccount = (AccountEntry as AccountUser)?.ProfileUser;
 
         PermitPublicReadAccess = ProfileAccount switch {
             ProfileRegistry profileRegistry => true,

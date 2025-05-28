@@ -769,57 +769,6 @@ public record PropertyDictionaryReal64(
 /// <param name="IFactory">For a collection object, factory returning an instance of an
 /// object in the collection.</param>
 /// <param name="Tagged">If true, the property should be tagged.</param>
-public record PropertyGStruct(
-            string Tag,
-            //Type GType,
-            Type Type,
-            Action<IBinding, object?> Set,
-            Func<IBinding, object?> Get,
-            //Action<IBinding, object?> SetSub,
-            //Func<IBinding, object?> GetSub,
-            Func<object> Factory = null,
-            Func<object> IFactory = null) : Property(Tag, false ){
-    ///<inheritdoc/>
-    public override void Serialize(IBinding data, Writer writer) {
-
-        var value = Get(data) as JsonObject;
-
-        bool first = true;
-        writer.WriteArrayStart();
-        foreach (var entry in value._Binding.AllProperties) {
-            var tag = entry.Key;
-            var property = entry.Value;
-
-            if (!property.IsNull(value)) {
-                writer.WriteArraySeparator(ref first);
-                //writer.WriteToken(tag, 1);
-                property.Serialize(value, writer);
-                }
-            }
-        writer.WriteArrayEnd();
-
-        //    JsonObject value = Get(data) as JsonObject;
-        //value?.Serialize(writer, Tagged);
-        }
-
-    ///<inheritdoc/>
-    public override bool IsNull(IBinding data) => Get(data) == null;
-    }
-
-
-
-
-/// <summary>
-/// Metadata record representing a property.
-/// </summary>
-/// <param name="Tag">Tag identifying this property in JSON serialization</param>
-/// <param name="Type">The type of the struct object.</param>
-/// <param name="Set">Set the property to the specified value.</param>
-/// <param name="Get">Return the value of the property.</param>
-/// <param name="Factory">Factory returning an instance of the object.</param>
-/// <param name="IFactory">For a collection object, factory returning an instance of an
-/// object in the collection.</param>
-/// <param name="Tagged">If true, the property should be tagged.</param>
 public record PropertyStruct(
             string Tag,
             Type Type,
@@ -934,6 +883,153 @@ public record PropertyDictionaryStruct(
     ///<inheritdoc/>
     public override bool IsNull(IBinding data) => Get(data) == null;
     }
+
+
+
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Type">The type of the struct object.</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
+/// <param name="Factory">Factory returning an instance of the object.</param>
+/// <param name="IFactory">For a collection object, factory returning an instance of an
+/// object in the collection.</param>
+/// <param name="Tagged">If true, the property should be tagged.</param>
+public record PropertyGStruct(
+            string Tag,
+            //Type GType,
+            Type Type,
+            Action<IBinding, object?> Set,
+            Func<IBinding, object?> Get,
+            //Action<IBinding, object?> SetSub,
+            //Func<IBinding, object?> GetSub,
+            Func<object> Factory = null,
+            Func<object> IFactory = null) : Property(Tag, false) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+
+        var value = Get(data) as JsonObject;
+
+        bool first = true;
+        writer.WriteArrayStart();
+        foreach (var entry in value._Binding.AllProperties) {
+            var tag = entry.Key;
+            var property = entry.Value;
+
+            if (!property.IsNull(value)) {
+                writer.WriteArraySeparator(ref first);
+                //writer.WriteToken(tag, 1);
+                property.Serialize(value, writer);
+                }
+            }
+        writer.WriteArrayEnd();
+
+        //    JsonObject value = Get(data) as JsonObject;
+        //value?.Serialize(writer, Tagged);
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
+    }
+
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Type">The base type of the list object.</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
+/// <param name="Factory">Factory returning an instance of the object.</param>
+/// <param name="IFactory">For a collection object, factory returning an instance of an
+/// object in the collection.</param>
+/// <param name="Tagged">If true, the property should be tagged.</param>
+public record PropertyListGStruct(
+            string Tag,
+            Type Type,
+            Action<IBinding, object?> Set,
+            Func<IBinding, object?> Get,
+            Func<object> Factory = null,
+            Func<object> IFactory = null) : Property(Tag, true) {
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        if (Get(data) is IEnumerable value) {
+            var first = true;
+
+            writer.WriteArrayStart();
+            foreach (var entry in value) {
+                var typed = entry as JsonObject;
+                if (typed is null) {
+                    writer.WriteNull();
+                    }
+                else {
+
+                    writer.WriteArraySeparator(ref first);
+                    typed.Serialize(writer, Tagged);
+                    }
+                }
+            writer.WriteArrayEnd();
+            }
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
+    }
+
+
+/// <summary>
+/// Metadata record representing a property.
+/// </summary>
+/// <param name="Tag">Tag identifying this property in JSON serialization</param>
+/// <param name="Type">The type of the dictionary object.</param>
+/// <param name="Set">Set the property to the specified value.</param>
+/// <param name="Get">Return the value of the property.</param>
+/// <param name="Factory">Factory returning an instance of the object.</param>
+/// <param name="IFactory">For a collection object, factory returning an instance of an
+/// object in the collection.</param>
+/// <param name="Tagged">If true, the property should be tagged.</param>
+/// <param name="Add">Add struct to dictionary</param>
+/// <param name="Enumerator">Returns an enumerator</param>
+public record PropertyDictionaryGStruct(
+            string Tag,
+            Type Type,
+            Action<IBinding, object?> Set,
+            Func<IBinding, object?> Get,
+            Func<object> Factory,
+            Func<object> IFactory,
+            Func<IBinding, IEnumerable<KeyValuePair<string, object?>>> Enumerator,
+            Action<object, object, object> Add = null) : Property(Tag, true) {
+
+
+    ///<inheritdoc/>
+    public override void Serialize(IBinding data, Writer writer) {
+        if (Get(data) is IEnumerable value) {
+            var first = true;
+            writer.WriteObjectStart();
+
+            if (Enumerator is not null) {
+                foreach (var entry in Enumerator(data)) {
+                    if (entry.Value is JsonObject typed) {
+                        writer.WriteObjectSeparator(ref first);
+                        writer.WriteToken(entry.Key, 1);
+                        typed.Serialize(writer, Tagged);
+                        }
+                    }
+                }
+
+            writer.WriteObjectEnd();
+            }
+
+        }
+
+    ///<inheritdoc/>
+    public override bool IsNull(IBinding data) => Get(data) == null;
+    }
+
+
+
+
 
 /// <summary>Tokens to return.</summary>
 public enum Token {

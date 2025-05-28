@@ -139,28 +139,28 @@ public partial class CatalogedDevice {
     ///<summary>Typed enveloped data</summary> 
     public Enveloped<CatalogedDevice> GetEnvelopedCatalogedDevice() => new(DareEnvelope);
 
-    ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileUser"/>
-    ///to return the <see cref="ProfileUser"/> value.</summary>
-    public ProfileUser ProfileUser =>
-                EnvelopedProfileUser?.Decode(KeyCollection) as ProfileUser;
+    /////<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileUser"/>
+    /////to return the <see cref="ProfileUser"/> value.</summary>
+    //public ProfileUser ProfileUser =>
+    //            EnvelopedProfileUser?.Decode(KeyCollection) as ProfileUser;
 
-    ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileDevice"/>
-    ///to return the <see cref="ProfileDevice"/> value.</summary>
-    public ProfileDevice ProfileDevice =>
-                EnvelopedProfileDevice?.Decode(KeyCollection);
+    /////<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileDevice"/>
+    /////to return the <see cref="ProfileDevice"/> value.</summary>
+    //public ProfileDevice ProfileDevice =>
+    //            EnvelopedProfileDevice?.Decode(KeyCollection);
 
-    /// <summary>
-    /// The slim device connection assertion for authentication only.
-    /// </summary>
-    public ConnectionService ConnectionService =>
-                EnvelopedConnectionService?.Decode(KeyCollection);
-    /// <summary>
-    /// The device connection assertion. This is set by either a new assertion being generated
-    /// for a newly added device or by decoding the SignedDeviceConnection entry after 
-    /// deserialization.
-    /// </summary>
-    public ConnectionDevice ConnectionDevice =>
-        EnvelopedConnectionDevice?.Decode(KeyCollection);
+    ///// <summary>
+    ///// The slim device connection assertion for authentication only.
+    ///// </summary>
+    //public ConnectionService ConnectionService =>
+    //            EnvelopedConnectionService?.Decode(KeyCollection);
+    ///// <summary>
+    ///// The device connection assertion. This is set by either a new assertion being generated
+    ///// for a newly added device or by decoding the SignedDeviceConnection entry after 
+    ///// deserialization.
+    ///// </summary>
+    //public ConnectionDevice ConnectionDevice =>
+    //    EnvelopedConnectionDevice?.Decode(KeyCollection);
 
 
 

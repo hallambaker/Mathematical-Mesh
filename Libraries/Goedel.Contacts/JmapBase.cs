@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 3:12:40 PM
+//  This file was automatically generated at 5/28/2025 12:00:12 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -67,19 +67,6 @@ public abstract partial class JmapBaseSchema : global::Goedel.Protocol.JsonObjec
     /// </summary>
 	public new const string __Tag = "JmapBaseSchema";
 
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"JmapBase", JmapBase._Factory},
-	    {"Relation", Relation._Factory}
-		};
-	*/
-
 	/// <summary>
     /// Dictionary mapping types to bindings
     /// </summary>
@@ -91,8 +78,6 @@ public abstract partial class JmapBaseSchema : global::Goedel.Protocol.JsonObjec
 	    {typeof(Relation), Relation._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -101,19 +86,8 @@ public abstract partial class JmapBaseSchema : global::Goedel.Protocol.JsonObjec
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -174,7 +148,6 @@ public partial class JmapBase : JmapBaseSchema {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStringTag ("@type", 
 					(IBinding data, string? value) => {(data as JmapBase).Type = value;}, 
 					(IBinding data) => (data as JmapBase).Type ),
@@ -189,7 +162,8 @@ public partial class JmapBase : JmapBaseSchema {
 					(IBinding data) => (data as JmapBase).Created ),
 		new PropertyDateTime ("updated", 
 					(IBinding data, DateTime? value) => {(data as JmapBase).Updated = value;}, 
-					(IBinding data) => (data as JmapBase).Updated )		];
+					(IBinding data) => (data as JmapBase).Updated )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -197,31 +171,14 @@ public partial class JmapBase : JmapBaseSchema {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<JmapBase> _binding = new (
 			new() {
-
 			{ "@type", _properties [0]},
 			{ "uid", _properties [1]},
 			{ "prodId", _properties [2]},
 			{ "created", _properties [3]},
-			{ "updated", _properties [4]}
-        }, __Tag,() => new JmapBase(), () => new List<JmapBase>(), () => new Dictionary<string,JmapBase>(),null, TypeTag:"@type" );
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "updated", _properties [4]}}, __Tag,
+		() => new JmapBase(), () => [], () => [], null, 
+		TypeTag:"@type" );
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -258,10 +215,10 @@ public partial class Relation : JmapBaseSchema {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyDictionaryBoolean ("relationships", 
 					(IBinding data, Dictionary<string,bool>? value) => {(data as Relation).Relationships = value;}, 
-					(IBinding data) => (data as Relation).Relationships )		];
+					(IBinding data) => (data as Relation).Relationships )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -269,27 +226,9 @@ public partial class Relation : JmapBaseSchema {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Relation> _binding = new (
 			new() {
+			{ "relationships", _properties [0]}}, __Tag,
+		() => new Relation(), () => [], () => [], null);
 
-			{ "relationships", _properties [0]}
-        }, __Tag,() => new Relation(), () => new List<Relation>(), () => new Dictionary<string,Relation>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class

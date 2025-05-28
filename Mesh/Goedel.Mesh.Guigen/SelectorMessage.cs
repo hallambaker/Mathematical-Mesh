@@ -196,7 +196,7 @@ public partial class BoundMessageConfirmationResponse {
 
         messageResult = ResponseConfirmation?.Accept == true ? "Accepted" : "Rejected";
 
-        var request = ResponseConfirmation?.Request;
+        var request = ResponseConfirmation?.EnvelopedRequest;
 
         }
 

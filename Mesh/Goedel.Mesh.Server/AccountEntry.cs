@@ -44,20 +44,20 @@ public partial class AccountUser {
     ///<summary>The primary key</summary>
     public override string _PrimaryKey => ProfileUdf;
 
-    ///<summary>Cached convenience accessor for <see cref="profileAccount"/></summary>
-    public ProfileAccount GetProfileAccount() =>
-        profileAccount ?? EnvelopedProfileUser.Decode().CacheValue(out profileAccount);
+    /////<summary>Cached convenience accessor for <see cref="profileAccount"/></summary>
+    //public ProfileAccount GetProfileAccount() =>
+    //    profileAccount ?? EnvelopedProfileUser.Decode().CacheValue(out profileAccount);
 
-    ProfileAccount profileAccount;
+    //ProfileAccount profileAccount;
 
+    ////public ProfileUser ProfileUser => GetProfileAccount() as ProfileUser;
+
+    /////<summary>Cached convenience accessor for <see cref="ProfileUser"/></summary>
     //public ProfileUser ProfileUser => GetProfileAccount() as ProfileUser;
-
-    ///<summary>Cached convenience accessor for <see cref="ProfileUser"/></summary>
-    public ProfileUser ProfileUser => GetProfileAccount() as ProfileUser;
 
 
     ///<summary>Cached convenience accessor for <see cref="ProfileGroup"/></summary>
-    public ProfileGroup ProfileGroup => GetProfileAccount() as ProfileGroup;
+    public ProfileGroup ProfileGroup => ProfileUser as ProfileGroup;
 
 
     /// <summary>
@@ -82,7 +82,7 @@ public partial class AccountUser {
 
     ///<inheritdoc/>
     public override void Verify(MeshVerifiedAccount meshVerifiedAccount) {
-        var profile = GetProfileAccount();
+        var profile = ProfileUser;
 
         switch (profile) {
             case ProfileUser profileUser: {

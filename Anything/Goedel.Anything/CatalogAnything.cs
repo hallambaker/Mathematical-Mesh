@@ -160,12 +160,12 @@ public partial class CatalogedAnything {
     ///<summary>The primary key is protocol:site </summary>
     public override string _PrimaryKey => Key;
 
-    /// <summary>
-    /// the unwrapped carnet profile.
-    /// </summary>
-    public ProfileAnything ProfileCarnet => (profileCarnet ??
-        EnvelopedProfileCarnet.Decode().CacheValue(out profileCarnet));
-    ProfileAnything profileCarnet;
+    ///// <summary>
+    ///// the unwrapped carnet profile.
+    ///// </summary>
+    //public ProfileAnything ProfileCarnet => (profileCarnet ??
+    //    EnvelopedProfileCarnet.Decode().CacheValue(out profileCarnet));
+    //ProfileAnything profileCarnet;
 
 
 

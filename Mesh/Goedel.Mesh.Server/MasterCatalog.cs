@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 3:12:57 PM
+//  This file was automatically generated at 5/27/2025 4:21:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -249,21 +249,20 @@ abstract public partial class AccountEntry : CatalogedEntry {
 	/// Represents a Mesh Account
 	/// </summary>
 public partial class AccountUser : AccountEntry {
-    /// <summary>
-    ///The signed assertion describing the account.
+	[JsonPropertyName("ProfileUser")]
+	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileUser  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
+	public virtual ProfileAccount?				ProfileUser  {get; set;} 
+	[JsonPropertyName("AccountHostAssignment")]
+	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} 
 
-	[JsonPropertyName("EnvelopedProfileUser")]
-	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileUser  {get; set;} //
-
-    /// <summary>
-    ///The enveloped assignment describing how the client should
-    ///discover the host and encrypt data to it.
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedAccountHostAssignment")]
-	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} //
-
+	public virtual AccountHostAssignment?				AccountHostAssignment  {get; set;} 
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -271,14 +270,18 @@ public partial class AccountUser : AccountEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 
-		new PropertyStruct ("EnvelopedProfileUser", typeof (Enveloped<ProfileAccount>),
-					(IBinding data, object? value) => {(data as AccountUser).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;}, 
+		new PropertyGStruct ("ProfileUser", /*typeof (ProfileAccount<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as AccountUser).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;},
 					(IBinding data) => (data as AccountUser).EnvelopedProfileUser,
-					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
-		new PropertyStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped<AccountHostAssignment>),
-					(IBinding data, object? value) => {(data as AccountUser).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;}, 
+					/*(IBinding data, object? value) => {(data as AccountUser).ProfileUser = value as ProfileAccount;},
+					(IBinding data) => (data as AccountUser).ProfileUser,*/
+					()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
+		new PropertyGStruct ("AccountHostAssignment", /*typeof (AccountHostAssignment<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as AccountUser).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
 					(IBinding data) => (data as AccountUser).EnvelopedAccountHostAssignment,
-					false, ()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())		];
+					/*(IBinding data, object? value) => {(data as AccountUser).AccountHostAssignment = value as AccountHostAssignment;},
+					(IBinding data) => (data as AccountUser).AccountHostAssignment,*/
+					()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -287,8 +290,8 @@ public partial class AccountUser : AccountEntry {
 	public static readonly new Binding<AccountUser> _binding = new (
 			new() {
 
-			{ "EnvelopedProfileUser", _properties [0]},
-			{ "EnvelopedAccountHostAssignment", _properties [1]}
+			{ "ProfileUser", _properties [0]},
+			{ "AccountHostAssignment", _properties [1]}
         }, __Tag,() => new AccountUser(), () => new List<AccountUser>(), () => new Dictionary<string,AccountUser>(),AccountEntry._binding);
 	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 

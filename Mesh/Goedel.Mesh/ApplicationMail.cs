@@ -60,7 +60,7 @@ public partial class ApplicationEntryMail {
 
     ///<inheritdoc/>
     public override void Decode(IKeyCollection keyCollection) =>
-        Activation = EnvelopedActivation.Decode(keyCollection);
+        Activation = EnvelopedActivationMail.Decode(keyCollection);
 
     #endregion
 
@@ -177,7 +177,7 @@ public partial class CatalogedApplicationMail {
 
         return new ApplicationEntryMail() {
             Identifier = Key,
-            EnvelopedActivation = activation.GetEnvelopedActivationApplicationMail()
+            EnvelopedActivationMail = activation.GetEnvelopedActivationApplicationMail()
             };
         }
 

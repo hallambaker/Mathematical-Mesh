@@ -1829,7 +1829,7 @@ public partial class ContextUser : ContextAccount {
             MessageId = requestConfirmation.GetResponseId(),
             Recipient = recipientAddress,
             Accept = response,
-            Request = requestConfirmation.GetEnvelopedRequestConfirmation()
+            EnvelopedRequest = requestConfirmation.GetEnvelopedRequestConfirmation()
 
             };
 

@@ -50,7 +50,7 @@ public partial class ApplicationEntrySsh {
     #region // Methods
 
     ///<inheritdoc/>
-    public override void Decode(IKeyCollection keyCollection) => Activation = EnvelopedActivation.Decode(keyCollection);
+    public override void Decode(IKeyCollection keyCollection) => Activation = EnvelopedActivationSsh.Decode(keyCollection);
 
     #endregion
 
@@ -146,7 +146,7 @@ public partial class CatalogedApplicationSsh {
 
         return new ApplicationEntrySsh() {
             Identifier = Key,
-            EnvelopedActivation = activation.GetEnvelopedActivationApplicationSsh()
+            EnvelopedActivationSsh = activation.GetEnvelopedActivationApplicationSsh()
             };
 
         }

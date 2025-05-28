@@ -584,7 +584,7 @@ public class PublicMeshService : MeshService {
         try {
             //var account = VerifyAccount(jpcSession);
             var digest = MeshPersist.AccountTransact(jpcSession,
-                    request.Updates, request.Inbound, request.Outbound, request.Local, request.Accounts); ;
+                    request.Updates, request.EnvelopedInbound, request.EnvelopedOutbound, request.EnvelopedLocal, request.Accounts); ;
             return new TransactResponse() {
                 Bitmask = digest
                 };

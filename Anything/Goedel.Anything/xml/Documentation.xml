@@ -457,20 +457,20 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Anything.CatalogedAnything.EnvelopedConnectionAddress">
-             <summary>
-            The connection allowing control of the registry.
-             </summary>
+        <member name="P:Goedel.Anything.CatalogedAnything.ConnectionAddress">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
-        <member name="P:Goedel.Anything.CatalogedAnything.EnvelopedProfileCarnet">
-             <summary>
-            The Mesh profile
-             </summary>
+        <member name="P:Goedel.Anything.CatalogedAnything.ProfileCarnet">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
-        <member name="P:Goedel.Anything.CatalogedAnything.EnvelopedActivationCommon">
-             <summary>
-            The activation data for the registry.
-             </summary>
+        <member name="P:Goedel.Anything.CatalogedAnything.ActivationCommon">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Anything.CatalogedAnything._Properties">
             <summary>Implement IBinding</summary> 
@@ -502,11 +502,6 @@
         </member>
         <member name="P:Goedel.Anything.CatalogedAnything._PrimaryKey">
             <summary>The primary key is protocol:site </summary>
-        </member>
-        <member name="P:Goedel.Anything.CatalogedAnything.ProfileCarnet">
-            <summary>
-            the unwrapped carnet profile.
-            </summary>
         </member>
         <member name="M:Goedel.Anything.CatalogedAnything.#ctor">
             <summary>

@@ -67,8 +67,8 @@ public partial class CatalogedStandard {
 
 public partial class CatalogedPending {
 
-    ///<summary>The decoded device profile (from <see cref="EnvelopedProfileDevice"/>)</summary>
-    public override ProfileDevice ProfileDevice => EnvelopedProfileDevice.Decode();
+    /////<summary>The decoded device profile (from <see cref="EnvelopedProfileDevice"/>)</summary>
+    //public override ProfileDevice ProfileDevice => EnvelopedProfileDevice.Decode();
 
 
     /// <summary>
@@ -88,12 +88,12 @@ public partial class CatalogedPending {
 
     }
 public partial class CatalogedPreconfigured {
-    ///<summary>The decoded device profile (from <see cref="EnvelopedProfileDevice"/>)</summary>
-    public override ProfileDevice ProfileDevice => EnvelopedProfileDevice.Decode();
+    /////<summary>The decoded device profile (from <see cref="EnvelopedProfileDevice"/>)</summary>
+    //public override ProfileDevice ProfileDevice => EnvelopedProfileDevice.Decode();
 
-    ///<summary>The decoded connection device</summary> 
-    public ConnectionService ConnectionDevice =>
-                EnvelopedConnectionDevice.Decode();
+    /////<summary>The decoded connection device</summary> 
+    //public ConnectionService ConnectionDevice =>
+    //            EnvelopedConnectionDevice.Decode();
 
     //            (var account, var key) = MeshUri.ParseConnectUri(devicePreconfiguration.ConnectUri);
     }

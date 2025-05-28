@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 3:12:52 PM
+//  This file was automatically generated at 5/27/2025 4:21:30 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -716,27 +716,27 @@ public partial class CatalogedAnything : CatalogedEntry {
 	[JsonPropertyName("Key")]
 	public virtual string?					Key  {get; set;} //
 
-    /// <summary>
-    ///The connection allowing control of the registry.
+	[JsonPropertyName("ConnectionAddress")]
+	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
+	public virtual ConnectionStripped?				ConnectionAddress  {get; set;} 
+	[JsonPropertyName("ProfileCarnet")]
+	public virtual Enveloped<ProfileAnything>?					EnvelopedProfileCarnet  {get; set;} 
 
-	[JsonPropertyName("EnvelopedConnectionAddress")]
-	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;} //
-
-    /// <summary>
-    ///The Mesh profile
+	/// <summary>
+	/// Wrapped property
     /// </summary>
+	public virtual ProfileAnything?				ProfileCarnet  {get; set;} 
+	[JsonPropertyName("ActivationCommon")]
+	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} 
 
-	[JsonPropertyName("EnvelopedProfileCarnet")]
-	public virtual Enveloped<ProfileAnything>?					EnvelopedProfileCarnet  {get; set;} //
-
-    /// <summary>
-    ///The activation data for the registry.
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("EnvelopedActivationCommon")]
-	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} //
-
+	public virtual ActivationCommon?				ActivationCommon  {get; set;} 
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -747,18 +747,24 @@ public partial class CatalogedAnything : CatalogedEntry {
 		new PropertyString ("Key", 
 					(IBinding data, string? value) => {(data as CatalogedAnything).Key = value;}, 
 					(IBinding data) => (data as CatalogedAnything).Key ),
-		new PropertyStruct ("EnvelopedConnectionAddress", typeof (Enveloped<ConnectionStripped>),
-					(IBinding data, object? value) => {(data as CatalogedAnything).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, 
+		new PropertyGStruct ("ConnectionAddress", /*typeof (ConnectionStripped<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedAnything).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;},
 					(IBinding data) => (data as CatalogedAnything).EnvelopedConnectionAddress,
-					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>()),
-		new PropertyStruct ("EnvelopedProfileCarnet", typeof (Enveloped<ProfileAnything>),
-					(IBinding data, object? value) => {(data as CatalogedAnything).EnvelopedProfileCarnet = value as Enveloped<ProfileAnything>;}, 
+					/*(IBinding data, object? value) => {(data as CatalogedAnything).ConnectionAddress = value as ConnectionStripped;},
+					(IBinding data) => (data as CatalogedAnything).ConnectionAddress,*/
+					()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>()),
+		new PropertyGStruct ("ProfileCarnet", /*typeof (ProfileAnything<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedAnything).EnvelopedProfileCarnet = value as Enveloped<ProfileAnything>;},
 					(IBinding data) => (data as CatalogedAnything).EnvelopedProfileCarnet,
-					false, ()=>new  Enveloped<ProfileAnything>(), ()=>new Enveloped<ProfileAnything>()),
-		new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
-					(IBinding data, object? value) => {(data as CatalogedAnything).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, 
+					/*(IBinding data, object? value) => {(data as CatalogedAnything).ProfileCarnet = value as ProfileAnything;},
+					(IBinding data) => (data as CatalogedAnything).ProfileCarnet,*/
+					()=>new  Enveloped<ProfileAnything>(), ()=>new Enveloped<ProfileAnything>()),
+		new PropertyGStruct ("ActivationCommon", /*typeof (ActivationCommon<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedAnything).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;},
 					(IBinding data) => (data as CatalogedAnything).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())		];
+					/*(IBinding data, object? value) => {(data as CatalogedAnything).ActivationCommon = value as ActivationCommon;},
+					(IBinding data) => (data as CatalogedAnything).ActivationCommon,*/
+					()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -768,9 +774,9 @@ public partial class CatalogedAnything : CatalogedEntry {
 			new() {
 
 			{ "Key", _properties [0]},
-			{ "EnvelopedConnectionAddress", _properties [1]},
-			{ "EnvelopedProfileCarnet", _properties [2]},
-			{ "EnvelopedActivationCommon", _properties [3]}
+			{ "ConnectionAddress", _properties [1]},
+			{ "ProfileCarnet", _properties [2]},
+			{ "ActivationCommon", _properties [3]}
         }, __Tag,() => new CatalogedAnything(), () => new List<CatalogedAnything>(), () => new Dictionary<string,CatalogedAnything>(),CatalogedEntry._binding);
 	/*
     ///<summary>Dictionary describing the serializable properties.</summary> 

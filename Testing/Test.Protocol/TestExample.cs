@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 3:13:03 PM
+//  This file was automatically generated at 5/27/2025 4:36:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -69,22 +69,6 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
     /// </summary>
 	public new const string __Tag = "TestSchema";
 
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"Envelope", Envelope._Factory},
-	    {"MultiInstance", MultiInstance._Factory},
-	    {"MultiArray", MultiArray._Factory},
-	    {"DictArray", DictArray._Factory},
-	    {"MultiStruct", MultiStruct._Factory}
-		};
-	*/
-
 	/// <summary>
     /// Dictionary mapping types to bindings
     /// </summary>
@@ -99,8 +83,6 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 	    {typeof(MultiStruct), MultiStruct._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -109,19 +91,8 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -162,7 +133,6 @@ public partial class Envelope : TestSchema {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Header", 
 					(IBinding data, string? value) => {(data as Envelope).Header = value;}, 
 					(IBinding data) => (data as Envelope).Header ),
@@ -171,7 +141,8 @@ public partial class Envelope : TestSchema {
 					(IBinding data) => (data as Envelope).Body ),
 		new PropertyString ("Trailer", 
 					(IBinding data, string? value) => {(data as Envelope).Trailer = value;}, 
-					(IBinding data) => (data as Envelope).Trailer )		];
+					(IBinding data) => (data as Envelope).Trailer )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -179,29 +150,11 @@ public partial class Envelope : TestSchema {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Envelope> _binding = new (
 			new() {
-
 			{ "Header", _properties [0]},
 			{ "Body", _properties [1]},
-			{ "Trailer", _properties [2]}
-        }, __Tag,() => new Envelope(), () => new List<Envelope>(), () => new Dictionary<string,Envelope>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Trailer", _properties [2]}}, __Tag,
+		() => new Envelope(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -233,7 +186,7 @@ public partial class MultiInstance : TestSchema {
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual MultiInstance?				Generic  {get; set;} 
+	public virtual MultiInstance?				Generic  => EnvelopeGeneric.Decode();
     /// <summary>
     /// </summary>
 
@@ -282,7 +235,6 @@ public partial class MultiInstance : TestSchema {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyGStruct ("Generic", /*typeof (MultiInstance<>),*/typeof (Envelope),
 					(IBinding data, object? value) => {(data as MultiInstance).EnvelopeGeneric = value as Envelope<MultiInstance>;},
 					(IBinding data) => (data as MultiInstance).EnvelopeGeneric,
@@ -309,7 +261,8 @@ public partial class MultiInstance : TestSchema {
 					(IBinding data) => (data as MultiInstance).FieldString ),
 		new PropertyBinary ("FieldBinary", 
 					(IBinding data, byte[]? value) => {(data as MultiInstance).FieldBinary = value;}, 
-					(IBinding data) => (data as MultiInstance).FieldBinary )		];
+					(IBinding data) => (data as MultiInstance).FieldBinary )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -317,7 +270,6 @@ public partial class MultiInstance : TestSchema {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<MultiInstance> _binding = new (
 			new() {
-
 			{ "Generic", _properties [0]},
 			{ "Type", _properties [1]},
 			{ "FieldBoolean", _properties [2]},
@@ -325,26 +277,10 @@ public partial class MultiInstance : TestSchema {
 			{ "FieldFloat", _properties [4]},
 			{ "FieldDateTime", _properties [5]},
 			{ "FieldString", _properties [6]},
-			{ "FieldBinary", _properties [7]}
-        }, __Tag,() => new MultiInstance(), () => new List<MultiInstance>(), () => new Dictionary<string,MultiInstance>(),null, TypeTag:"Type" );
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "FieldBinary", _properties [7]}}, __Tag,
+		() => new MultiInstance(), () => [], () => [], null, 
+		TypeTag:"Type" );
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -404,7 +340,6 @@ public partial class MultiArray : MultiInstance {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListBoolean ("ArrayBoolean", 
 					(IBinding data, List<bool>? value) => {(data as MultiArray).ArrayBoolean = value;}, 
 					(IBinding data) => (data as MultiArray).ArrayBoolean ),
@@ -422,7 +357,8 @@ public partial class MultiArray : MultiInstance {
 					(IBinding data) => (data as MultiArray).ArrayString ),
 		new PropertyListBinary ("ArrayBinary", 
 					(IBinding data, List<byte[]>? value) => {(data as MultiArray).ArrayBinary = value;}, 
-					(IBinding data) => (data as MultiArray).ArrayBinary )		];
+					(IBinding data) => (data as MultiArray).ArrayBinary )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -430,33 +366,14 @@ public partial class MultiArray : MultiInstance {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<MultiArray> _binding = new (
 			new() {
-
 			{ "ArrayBoolean", _properties [0]},
 			{ "ArrayInteger", _properties [1]},
 			{ "ArrayFloat", _properties [2]},
 			{ "ArrayDateTime", _properties [3]},
 			{ "ArrayString", _properties [4]},
-			{ "ArrayBinary", _properties [5]}
-        }, __Tag,() => new MultiArray(), () => new List<MultiArray>(), () => new Dictionary<string,MultiArray>(),MultiInstance._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "ArrayBinary", _properties [5]}}, __Tag,
+		() => new MultiArray(), () => [], () => [], MultiInstance._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MultiInstance._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -522,7 +439,6 @@ public partial class DictArray : MultiArray {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyDictionaryBoolean ("DictBoolean", 
 					(IBinding data, Dictionary<string,bool>? value) => {(data as DictArray).DictBoolean = value;}, 
 					(IBinding data) => (data as DictArray).DictBoolean ),
@@ -540,7 +456,8 @@ public partial class DictArray : MultiArray {
 					(IBinding data) => (data as DictArray).DictString ),
 		new PropertyDictionaryBinary ("DictBinary", 
 					(IBinding data, Dictionary<string,byte[]>? value) => {(data as DictArray).DictBinary = value;}, 
-					(IBinding data) => (data as DictArray).DictBinary )		];
+					(IBinding data) => (data as DictArray).DictBinary )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -548,33 +465,14 @@ public partial class DictArray : MultiArray {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<DictArray> _binding = new (
 			new() {
-
 			{ "DictBoolean", _properties [0]},
 			{ "DictInteger", _properties [1]},
 			{ "DictFloat", _properties [2]},
 			{ "DictDateTime", _properties [3]},
 			{ "DictString", _properties [4]},
-			{ "DictBinary", _properties [5]}
-        }, __Tag,() => new DictArray(), () => new List<DictArray>(), () => new Dictionary<string,DictArray>(),MultiArray._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "DictBinary", _properties [5]}}, __Tag,
+		() => new DictArray(), () => [], () => [], MultiArray._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MultiArray._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -626,7 +524,6 @@ public partial class MultiStruct : MultiArray {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("FieldMultiInstance", typeof (MultiInstance),
 					(IBinding data, object? value) => {(data as MultiStruct).FieldMultiInstance = value as MultiInstance;}, 
 					(IBinding data) => (data as MultiStruct).FieldMultiInstance,
@@ -643,7 +540,8 @@ public partial class MultiStruct : MultiArray {
 					(IBinding data, object? value) => {(data as MultiStruct).TArrayMultiInstance = value as List<MultiInstance>;}, 
 					(IBinding data) => (data as MultiStruct).TArrayMultiInstance,
 					true, ()=>new List<MultiInstance>()
-) 		];
+) 
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -651,31 +549,12 @@ public partial class MultiStruct : MultiArray {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<MultiStruct> _binding = new (
 			new() {
-
 			{ "FieldMultiInstance", _properties [0]},
 			{ "ArrayMultiInstance", _properties [1]},
 			{ "TFieldMultiInstance", _properties [2]},
-			{ "TArrayMultiInstance", _properties [3]}
-        }, __Tag,() => new MultiStruct(), () => new List<MultiStruct>(), () => new Dictionary<string,MultiStruct>(),MultiArray._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "TArrayMultiInstance", _properties [3]}}, __Tag,
+		() => new MultiStruct(), () => [], () => [], MultiArray._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MultiArray._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class

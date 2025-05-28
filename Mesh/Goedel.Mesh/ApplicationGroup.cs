@@ -49,7 +49,7 @@ public partial class ApplicationEntryGroup {
 
     ///<inheritdoc/>
     public override void Decode(IKeyCollection keyCollection) =>
-        Activation = EnvelopedActivation.Decode(keyCollection);
+        Activation = EnvelopedActivationGroup.Decode(keyCollection);
 
     /// <summary>
     /// Construct an activation record for the group.
@@ -78,11 +78,11 @@ public partial class CatalogedGroup {
     public override string _PrimaryKey => GetGroupID(Key);
 
 
-    ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileGroup"/>
-    ///to return the <see cref="ProfileUser"/> value.</summary>
-    public ProfileGroup? ProfileGroup => profileGroup ??
-                (EnvelopedProfileGroup.Decode(KeyCollection) as ProfileGroup).CacheValue(out profileGroup);
-    ProfileGroup? profileGroup;
+    /////<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileGroup"/>
+    /////to return the <see cref="ProfileUser"/> value.</summary>
+    //public ProfileGroup? ProfileGroup => profileGroup ??
+    //            (EnvelopedProfileGroup.Decode(KeyCollection) as ProfileGroup).CacheValue(out profileGroup);
+    //ProfileGroup? profileGroup;
 
     ActivationCommon ActivationAccount { get; set; }
 
@@ -127,7 +127,7 @@ public partial class CatalogedGroup {
 
         ActivationAccount = activationAccount;
         Key = profileGroup.AccountAddress;
-        EnvelopedProfileGroup = profileGroup.GetEnvelopedProfileAccount();
+        EnvelopedProfileGroup = profileGroup.GetEnvelopedProfileGroup();
         }
 
 
@@ -149,7 +149,7 @@ public partial class CatalogedGroup {
 
         return new ApplicationEntryGroup() {
             Identifier = ProfileGroup.AccountAddress,
-            EnvelopedActivation = activation.GetEnvelopedActivationApplicationGroup()
+            EnvelopedActivationGroup = activation.GetEnvelopedActivationApplicationGroup()
             };
 
         }

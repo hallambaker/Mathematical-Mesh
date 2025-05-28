@@ -164,15 +164,15 @@ public partial class ContextAccount {
                 catalogUpdate.Commit();
                 }
             }
-        if (transactRequest.Inbound != null) {
+        if (transactRequest.EnvelopedInbound != null) {
             var spoolInbound = GetStore(SpoolInbound.Label) as SpoolInbound;
-            foreach (var envelope in transactRequest.Inbound) {
+            foreach (var envelope in transactRequest.EnvelopedInbound) {
                 spoolInbound.AppendDirect(envelope);
                 }
             }
-        if (transactRequest.Local != null) {
+        if (transactRequest.EnvelopedLocal != null) {
             var spoolLocal = GetStore(SpoolLocal.Label) as SpoolLocal;
-            foreach (var envelope in transactRequest.Local) {
+            foreach (var envelope in transactRequest.EnvelopedLocal) {
                 spoolLocal.AppendDirect(envelope);
                 }
             }
@@ -361,7 +361,7 @@ public abstract class Transaction<TAccount> : Disposable
             CryptographicKey recipientEncryptionKey,
             Message message,
             bool admin = true) {
-        TransactRequest.Outbound ??= new List<Enveloped<Message>>();
+        TransactRequest.EnvelopedOutbound ??= new List<Enveloped<Message>>();
         TransactRequest.Accounts ??= new List<string>();
 
         message.Sender ??= ContextAccount.ServiceAddress;
@@ -377,7 +377,7 @@ public abstract class Transaction<TAccount> : Disposable
 #endif
         envelope.JsonObject = message;
 
-        TransactRequest.Outbound.Add(new Enveloped<Message>(envelope));
+        TransactRequest.EnvelopedOutbound.Add(new Enveloped<Message>(envelope));
         if (recipientAddress != null) {
             TransactRequest.Accounts.Add(recipientAddress);
             }
@@ -391,10 +391,10 @@ public abstract class Transaction<TAccount> : Disposable
     /// <param name="message">The message to append to the inbound spool.</param>
     public void InboundMessage(
             Message message) {
-        TransactRequest.Inbound ??= new List<Enveloped<Message>>();
+        TransactRequest.EnvelopedInbound ??= new List<Enveloped<Message>>();
         var envelope = message.Envelope(SignInboundMessage); // Todo: Sign, encrypt
         envelope.JsonObject = message;
-        TransactRequest.Inbound.Add(new Enveloped<Message>(envelope));
+        TransactRequest.EnvelopedInbound.Add(new Enveloped<Message>(envelope));
         }
 
     /// <summary>
@@ -406,13 +406,13 @@ public abstract class Transaction<TAccount> : Disposable
     public void LocalMessage(
             Message message,
             CryptographicKey keyEncrypt) {
-        TransactRequest.Local ??= new List<Enveloped<Message>>();
+        TransactRequest.EnvelopedLocal ??= new List<Enveloped<Message>>();
 
         //"Fix the encryption of local messages".TaskFunctionality(true);
 
         var envelope = message.Envelope(SignLocalMessage, keyEncrypt);
         envelope.JsonObject = message;
-        TransactRequest.Local.Add(new Enveloped<Message>(envelope));
+        TransactRequest.EnvelopedLocal.Add(new Enveloped<Message>(envelope));
         }
 
     /// <summary>

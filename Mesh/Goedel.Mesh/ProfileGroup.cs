@@ -28,6 +28,9 @@ namespace Goedel.Mesh;
 
 
 public partial class ProfileGroup {
+    ///<summary>Typed enveloped data</summary> 
+    public Enveloped<ProfileGroup> GetEnvelopedProfileGroup() => new(DareEnvelope);
+
 
     /// <summary>
     /// Blank constructor for use by deserializers.

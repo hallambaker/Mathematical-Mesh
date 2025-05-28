@@ -1296,16 +1296,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="F:Goedel.Cryptography.Dare.DareEnvelope.ThisTagDictionary">
-            <summary>
-            Dictionary mapping tags to factory methods
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Initialize">
-            <summary>
-            The module initializer. This is called during initialization of the module.
-            </summary>
-        </member>
         <member name="P:Goedel.Cryptography.Dare.DareEnvelope._Tag">
             <summary>
             Tag identifying this class

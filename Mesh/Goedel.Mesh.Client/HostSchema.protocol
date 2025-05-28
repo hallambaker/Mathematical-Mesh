@@ -21,7 +21,8 @@
 		Boolean Default
 			Description
 				|If true, this is the default for the profile type (master, account)
-		Struct Enveloped<ProfileAccount> EnvelopedProfileAccount
+		GStruct Enveloped ProfileAccount ProfileAccount
+			//Struct Enveloped<ProfileAccount> EnvelopedProfileAccount
 			Description
 				|The master profile that provides the root of trust for this Mesh
 		Struct CatalogedDevice CatalogedDevice
@@ -30,7 +31,8 @@
 		String CatalogedDeviceDigest
 			Description
 				|The digest of the cataloged device.
-		Struct Enveloped<AccountHostAssignment> EnvelopedAccountHostAssignment
+		GStruct Enveloped AccountHostAssignment AccountHostAssignment
+			//Struct Enveloped<AccountHostAssignment> EnvelopedAccountHostAssignment
 			Description
 				|The enveloped assignment describing how the client should
 				|discover the host and encrypt data to it.
@@ -39,19 +41,24 @@
 		Inherits CatalogedMachine
 		Description
 			|Describes an ordinary device connected to a Mesh
-		Struct Enveloped<ProfileService> EnvelopedProfileService
+		GStruct Enveloped ProfileService ProfileService
+			//Struct Enveloped<ProfileService> EnvelopedProfileService
 			Description
 				|The service profile
-		Struct Enveloped<ProfileHost> EnvelopedProfileHost
+		GStruct Enveloped ProfileHost ProfileHost
+			//Struct Enveloped<ProfileHost> EnvelopedProfileHost
 			Description
 				|The host profile
-		Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
+		GStruct Enveloped ActivationCommon ActivationCommon
+			//Struct Enveloped<ActivationCommon> EnvelopedActivationCommon
 			Description
 				|The activation record for the service client (if used)
-		Struct Enveloped<ActivationHost> EnvelopedActivationHost
+		GStruct Enveloped ActivationHost ActivationHost
+			//Struct Enveloped<ActivationHost> EnvelopedActivationHost
 			Description
 				|The activation record for this host
-		Struct Enveloped<ConnectionService> EnvelopedConnectionService
+		GStruct Enveloped ConnectionService ConnectionService
+			//Struct Enveloped<ConnectionService> EnvelopedConnectionService
 			Description
 				|The connection of the host to the service
 		String ServiceIdentifier
@@ -77,10 +84,12 @@
 		String DeviceUDF
 			Description
 				|UDF of the connected device
-		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
+		GStruct Enveloped ProfileDevice ProfileDevice
+			//Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|The device profile presented to the service.
-		Struct Enveloped<AcknowledgeConnection> EnvelopedAcknowledgeConnection
+		GStruct Enveloped AcknowledgeConnection AcknowledgeConnection
+			//Struct Enveloped<AcknowledgeConnection> EnvelopedAcknowledgeConnection
 			Description
 				|The response returned by the service when the registration was requested.
 		String AccountAddress
@@ -93,13 +102,16 @@
 		Description
 			|Describes a preconfigured Device Profile bound to a remote 
 			|manufacturer profile.
-		Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
+		GStruct Enveloped ProfileDevice ProfileDevice
+			//Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
 				|The device profile presented to the service.
-		Struct Enveloped<ConnectionService> EnvelopedConnectionService
+		GStruct Enveloped ConnectionService ConnectionService
+			//Struct Enveloped<ConnectionService> EnvelopedConnectionService
 			Description
 				|The device connection used to authenticate to the service.
-		Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
+		GStruct Enveloped ConnectionDevice ConnectionDevice
+			//Struct Enveloped<ConnectionDevice> EnvelopedConnectionDevice
 			Description
 				|The device connection used to authenticate to the service.
 		String AccountAddress

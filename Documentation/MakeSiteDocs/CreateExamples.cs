@@ -906,7 +906,7 @@ public partial class CreateExamples {
 
         // this is a different request made under the user account.
         var addBob = Group.GroupAddBob[0].Traces[1].RequestObject as TransactRequest;
-        Group.GroupInvitation = addBob.Outbound[0].JsonObject as GroupInvitation;
+        Group.GroupInvitation = addBob.EnvelopedOutbound[0].JsonObject as GroupInvitation;
 
         Group.GroupDecryptBobSuccess = Bob1.Example(
             $"account sync  /auto",
@@ -987,7 +987,7 @@ public partial class CreateExamples {
         var syncUpdates = Connect.ConnectPINPending[1].Traces[1].RequestObject as TransactRequest;
 
 
-        var enveloped = syncUpdates.Local[1] as Enveloped<Message>;
+        var enveloped = syncUpdates.EnvelopedLocal[1] as Enveloped<Message>;
         var message = enveloped.Decode();
 
         Connect.ConnectPINCompleteMessage = message as MessageComplete;

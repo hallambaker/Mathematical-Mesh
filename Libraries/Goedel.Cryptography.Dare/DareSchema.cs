@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 3:12:40 PM
+//  This file was automatically generated at 5/28/2025 12:00:12 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -70,33 +70,6 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
     /// </summary>
 	public new const string __Tag = "Dare";
 
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"DareEnvelopeSequence", DareEnvelopeSequence._Factory},
-	    {"DareSignatureHeader", DareSignatureHeader._Factory},
-	    {"DareTrailer", DareTrailer._Factory},
-	    {"DareHeader", DareHeader._Factory},
-	    {"ContentMeta", ContentMeta._Factory},
-	    {"DareSignature", DareSignature._Factory},
-	    {"IntervalSignature", IntervalSignature._Factory},
-	    {"SignedEnvelope", SignedEnvelope._Factory},
-	    {"X509Certificate", X509Certificate._Factory},
-	    {"DareRecipient", DareRecipient._Factory},
-	    {"DarePolicy", DarePolicy._Factory},
-	    {"FileEntry", FileEntry._Factory},
-	    {"Witness", Witness._Factory},
-	    {"Proof", Proof._Factory},
-	    {"Unprotected", Unprotected._Factory},
-	    {"EarlSignature", EarlSignature._Factory}
-		};
-	*/
-
 	/// <summary>
     /// Dictionary mapping types to bindings
     /// </summary>
@@ -122,8 +95,6 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 	    {typeof(EarlSignature), EarlSignature._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -132,19 +103,8 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -195,7 +155,6 @@ public partial class DareEnvelopeSequence : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("Header", typeof (DareHeader),
 					(IBinding data, object? value) => {(data as DareEnvelopeSequence).Header = value as DareHeader;}, 
 					(IBinding data) => (data as DareEnvelopeSequence).Header,
@@ -206,7 +165,8 @@ public partial class DareEnvelopeSequence : Dare {
 		new PropertyStruct ("Trailer", typeof (DareTrailer),
 					(IBinding data, object? value) => {(data as DareEnvelopeSequence).Trailer = value as DareTrailer;}, 
 					(IBinding data) => (data as DareEnvelopeSequence).Trailer,
-					false, ()=>new  DareTrailer(), ()=>new DareTrailer())		];
+					false, ()=>new  DareTrailer(), ()=>new DareTrailer())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -214,29 +174,11 @@ public partial class DareEnvelopeSequence : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<DareEnvelopeSequence> _binding = new (
 			new() {
-
 			{ "Header", _properties [0]},
 			{ "Body", _properties [1]},
-			{ "Trailer", _properties [2]}
-        }, __Tag,() => new DareEnvelopeSequence(), () => new List<DareEnvelopeSequence>(), () => new Dictionary<string,DareEnvelopeSequence>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Trailer", _properties [2]}}, __Tag,
+		() => new DareEnvelopeSequence(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -311,7 +253,6 @@ public partial class DareSignatureHeader : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("WitnessValue", 
 					(IBinding data, byte[]? value) => {(data as DareSignatureHeader).WitnessValue = value;}, 
 					(IBinding data) => (data as DareSignatureHeader).WitnessValue ),
@@ -329,7 +270,8 @@ public partial class DareSignatureHeader : Dare {
 					(IBinding data) => (data as DareSignatureHeader).ApexDigest ),
 		new PropertyString ("dig", 
 					(IBinding data, string? value) => {(data as DareSignatureHeader).DigestAlgorithm = value;}, 
-					(IBinding data) => (data as DareSignatureHeader).DigestAlgorithm )		];
+					(IBinding data) => (data as DareSignatureHeader).DigestAlgorithm )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -337,32 +279,14 @@ public partial class DareSignatureHeader : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<DareSignatureHeader> _binding = new (
 			new() {
-
 			{ "WitnessValue", _properties [0]},
 			{ "PayloadTag", _properties [1]},
 			{ "PayloadDigest", _properties [2]},
 			{ "ChainDigest", _properties [3]},
 			{ "ApexDigest", _properties [4]},
-			{ "dig", _properties [5]}
-        }, __Tag,() => new DareSignatureHeader(), () => new List<DareSignatureHeader>(), () => new Dictionary<string,DareSignatureHeader>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "dig", _properties [5]}}, __Tag,
+		() => new DareSignatureHeader(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -432,7 +356,6 @@ public partial class DareTrailer : DareSignatureHeader {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("signatures", typeof (DareSignature),
 					(IBinding data, object? value) => {(data as DareTrailer).Signatures = value as List<DareSignature>;}, 
 					(IBinding data) => (data as DareTrailer).Signatures,
@@ -449,7 +372,8 @@ public partial class DareTrailer : DareSignatureHeader {
 					(IBinding data) => (data as DareTrailer).SignedData ),
 		new PropertyBinary ("SequenceSignedData", 
 					(IBinding data, byte[]? value) => {(data as DareTrailer).SequenceSignedData = value;}, 
-					(IBinding data) => (data as DareTrailer).SequenceSignedData )		];
+					(IBinding data) => (data as DareTrailer).SequenceSignedData )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -457,32 +381,13 @@ public partial class DareTrailer : DareSignatureHeader {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<DareTrailer> _binding = new (
 			new() {
-
 			{ "signatures", _properties [0]},
 			{ "seqsignatures", _properties [1]},
 			{ "ApplicationContextValue", _properties [2]},
 			{ "SignedData", _properties [3]},
-			{ "SequenceSignedData", _properties [4]}
-        }, __Tag,() => new DareTrailer(), () => new List<DareTrailer>(), () => new Dictionary<string,DareTrailer>(),DareSignatureHeader._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "SequenceSignedData", _properties [4]}}, __Tag,
+		() => new DareTrailer(), () => [], () => [], DareSignatureHeader._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(DareSignatureHeader._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -640,7 +545,6 @@ public partial class DareHeader : DareTrailer {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("EnvelopeId", 
 					(IBinding data, string? value) => {(data as DareHeader).EnvelopeId = value;}, 
 					(IBinding data) => (data as DareHeader).EnvelopeId ),
@@ -692,7 +596,8 @@ public partial class DareHeader : DareTrailer {
 					(IBinding data) => (data as DareHeader).Bitmask ),
 		new PropertyString ("Debug", 
 					(IBinding data, string? value) => {(data as DareHeader).Debug = value;}, 
-					(IBinding data) => (data as DareHeader).Debug )		];
+					(IBinding data) => (data as DareHeader).Debug )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -700,7 +605,6 @@ public partial class DareHeader : DareTrailer {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<DareHeader> _binding = new (
 			new() {
-
 			{ "EnvelopeId", _properties [0]},
 			{ "enc", _properties [1]},
 			{ "kid", _properties [2]},
@@ -716,27 +620,9 @@ public partial class DareHeader : DareTrailer {
 			{ "Received", _properties [12]},
 			{ "Cover", _properties [13]},
 			{ "Bitmask", _properties [14]},
-			{ "Debug", _properties [15]}
-        }, __Tag,() => new DareHeader(), () => new List<DareHeader>(), () => new Dictionary<string,DareHeader>(),DareTrailer._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Debug", _properties [15]}}, __Tag,
+		() => new DareHeader(), () => [], () => [], DareTrailer._binding);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(DareTrailer._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -869,7 +755,6 @@ public partial class ContentMeta : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("UniqueId", 
 					(IBinding data, string? value) => {(data as ContentMeta).UniqueId = value;}, 
 					(IBinding data) => (data as ContentMeta).UniqueId ),
@@ -916,7 +801,8 @@ public partial class ContentMeta : Dare {
 		new PropertyStruct ("FileEntry", typeof (FileEntry),
 					(IBinding data, object? value) => {(data as ContentMeta).FileEntry = value as FileEntry;}, 
 					(IBinding data) => (data as ContentMeta).FileEntry,
-					false, ()=>new  FileEntry(), ()=>new FileEntry())		];
+					false, ()=>new  FileEntry(), ()=>new FileEntry())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -924,7 +810,6 @@ public partial class ContentMeta : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ContentMeta> _binding = new (
 			new() {
-
 			{ "UniqueId", _properties [0]},
 			{ "Nonce", _properties [1]},
 			{ "Labels", _properties [2]},
@@ -939,26 +824,9 @@ public partial class ContentMeta : Dare {
 			{ "Expire", _properties [11]},
 			{ "First", _properties [12]},
 			{ "Previous", _properties [13]},
-			{ "FileEntry", _properties [14]}
-        }, __Tag,() => new ContentMeta(), () => new List<ContentMeta>(), () => new Dictionary<string,ContentMeta>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "FileEntry", _properties [14]}}, __Tag,
+		() => new ContentMeta(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1047,7 +915,6 @@ public partial class DareSignature : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("dig", 
 					(IBinding data, string? value) => {(data as DareSignature).Dig = value;}, 
 					(IBinding data) => (data as DareSignature).Dig ),
@@ -1074,7 +941,8 @@ public partial class DareSignature : Dare {
 					true) ,
 		new PropertyBinary ("signature", 
 					(IBinding data, byte[]? value) => {(data as DareSignature).SignatureValue = value;}, 
-					(IBinding data) => (data as DareSignature).SignatureValue )		];
+					(IBinding data) => (data as DareSignature).SignatureValue )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1082,7 +950,6 @@ public partial class DareSignature : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<DareSignature> _binding = new (
 			new() {
-
 			{ "dig", _properties [0]},
 			{ "alg", _properties [1]},
 			{ "kid", _properties [2]},
@@ -1090,26 +957,9 @@ public partial class DareSignature : Dare {
 			{ "path", _properties [4]},
 			{ "Manifest", _properties [5]},
 			{ "SignatureKey", _properties [6]},
-			{ "signature", _properties [7]}
-        }, __Tag,() => new DareSignature(), () => new List<DareSignature>(), () => new Dictionary<string,DareSignature>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "signature", _properties [7]}}, __Tag,
+		() => new DareSignature(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1155,14 +1005,14 @@ public partial class IntervalSignature : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyInteger64 ("Index", 
 					(IBinding data, long? value) => {(data as IntervalSignature).Index = value;}, 
 					(IBinding data) => (data as IntervalSignature).Index ),
 		new PropertyStruct ("Envelopes", typeof (SignedEnvelope),
 					(IBinding data, object? value) => {(data as IntervalSignature).Envelopes = value as SignedEnvelope;}, 
 					(IBinding data) => (data as IntervalSignature).Envelopes,
-					false, ()=>new  SignedEnvelope(), ()=>new SignedEnvelope())		];
+					false, ()=>new  SignedEnvelope(), ()=>new SignedEnvelope())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1170,28 +1020,10 @@ public partial class IntervalSignature : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<IntervalSignature> _binding = new (
 			new() {
-
 			{ "Index", _properties [0]},
-			{ "Envelopes", _properties [1]}
-        }, __Tag,() => new IntervalSignature(), () => new List<IntervalSignature>(), () => new Dictionary<string,IntervalSignature>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Envelopes", _properties [1]}}, __Tag,
+		() => new IntervalSignature(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1236,13 +1068,13 @@ public partial class SignedEnvelope : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyInteger64 ("Index", 
 					(IBinding data, long? value) => {(data as SignedEnvelope).Index = value;}, 
 					(IBinding data) => (data as SignedEnvelope).Index ),
 		new PropertyListBinary ("Digest", 
 					(IBinding data, List<byte[]>? value) => {(data as SignedEnvelope).Digest = value;}, 
-					(IBinding data) => (data as SignedEnvelope).Digest )		];
+					(IBinding data) => (data as SignedEnvelope).Digest )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1250,28 +1082,10 @@ public partial class SignedEnvelope : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<SignedEnvelope> _binding = new (
 			new() {
-
 			{ "Index", _properties [0]},
-			{ "Digest", _properties [1]}
-        }, __Tag,() => new SignedEnvelope(), () => new List<SignedEnvelope>(), () => new Dictionary<string,SignedEnvelope>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Digest", _properties [1]}}, __Tag,
+		() => new SignedEnvelope(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1315,13 +1129,13 @@ public partial class X509Certificate : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("x5u", 
 					(IBinding data, string? value) => {(data as X509Certificate).X5u = value;}, 
 					(IBinding data) => (data as X509Certificate).X5u ),
 		new PropertyBinary ("x5c", 
 					(IBinding data, byte[]? value) => {(data as X509Certificate).X5 = value;}, 
-					(IBinding data) => (data as X509Certificate).X5 )		];
+					(IBinding data) => (data as X509Certificate).X5 )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1329,28 +1143,10 @@ public partial class X509Certificate : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<X509Certificate> _binding = new (
 			new() {
-
 			{ "x5u", _properties [0]},
-			{ "x5c", _properties [1]}
-        }, __Tag,() => new X509Certificate(), () => new List<X509Certificate>(), () => new Dictionary<string,X509Certificate>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "x5c", _properties [1]}}, __Tag,
+		() => new X509Certificate(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1418,7 +1214,6 @@ public partial class DareRecipient : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("kid", 
 					(IBinding data, string? value) => {(data as DareRecipient).KeyIdentifier = value;}, 
 					(IBinding data) => (data as DareRecipient).KeyIdentifier ),
@@ -1434,7 +1229,8 @@ public partial class DareRecipient : Dare {
 					(IBinding data) => (data as DareRecipient).Ek ),
 		new PropertyBinary ("wmk", 
 					(IBinding data, byte[]? value) => {(data as DareRecipient).WrappedBaseSeed = value;}, 
-					(IBinding data) => (data as DareRecipient).WrappedBaseSeed )		];
+					(IBinding data) => (data as DareRecipient).WrappedBaseSeed )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1442,31 +1238,13 @@ public partial class DareRecipient : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<DareRecipient> _binding = new (
 			new() {
-
 			{ "kid", _properties [0]},
 			{ "kwd", _properties [1]},
 			{ "epk", _properties [2]},
 			{ "ek", _properties [3]},
-			{ "wmk", _properties [4]}
-        }, __Tag,() => new DareRecipient(), () => new List<DareRecipient>(), () => new Dictionary<string,DareRecipient>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "wmk", _properties [4]}}, __Tag,
+		() => new DareRecipient(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1562,7 +1340,6 @@ public partial class DarePolicy : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBoolean ("Public", 
 					(IBinding data, bool? value) => {(data as DarePolicy).Public = value;}, 
 					(IBinding data) => (data as DarePolicy).Public ),
@@ -1590,7 +1367,8 @@ public partial class DarePolicy : Dare {
 ) ,
 		new PropertyBoolean ("Sealed", 
 					(IBinding data, bool? value) => {(data as DarePolicy).Sealed = value;}, 
-					(IBinding data) => (data as DarePolicy).Sealed )		];
+					(IBinding data) => (data as DarePolicy).Sealed )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1598,7 +1376,6 @@ public partial class DarePolicy : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<DarePolicy> _binding = new (
 			new() {
-
 			{ "Public", _properties [0]},
 			{ "enc", _properties [1]},
 			{ "dig", _properties [2]},
@@ -1606,26 +1383,9 @@ public partial class DarePolicy : Dare {
 			{ "Signature", _properties [4]},
 			{ "EncryptKeys", _properties [5]},
 			{ "SignKeys", _properties [6]},
-			{ "Sealed", _properties [7]}
-        }, __Tag,() => new DarePolicy(), () => new List<DarePolicy>(), () => new Dictionary<string,DarePolicy>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Sealed", _properties [7]}}, __Tag,
+		() => new DarePolicy(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1690,7 +1450,6 @@ public partial class FileEntry : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Path", 
 					(IBinding data, string? value) => {(data as FileEntry).Path = value;}, 
 					(IBinding data) => (data as FileEntry).Path ),
@@ -1705,7 +1464,8 @@ public partial class FileEntry : Dare {
 					(IBinding data) => (data as FileEntry).LastWriteTime ),
 		new PropertyInteger32 ("Attributes", 
 					(IBinding data, int? value) => {(data as FileEntry).Attributes = value;}, 
-					(IBinding data) => (data as FileEntry).Attributes )		];
+					(IBinding data) => (data as FileEntry).Attributes )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1713,31 +1473,13 @@ public partial class FileEntry : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<FileEntry> _binding = new (
 			new() {
-
 			{ "Path", _properties [0]},
 			{ "CreationTime", _properties [1]},
 			{ "LastAccessTime", _properties [2]},
 			{ "LastWriteTime", _properties [3]},
-			{ "Attributes", _properties [4]}
-        }, __Tag,() => new FileEntry(), () => new List<FileEntry>(), () => new Dictionary<string,FileEntry>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Attributes", _properties [4]}}, __Tag,
+		() => new FileEntry(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1797,7 +1539,6 @@ public partial class Witness : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Id", 
 					(IBinding data, string? value) => {(data as Witness).Id = value;}, 
 					(IBinding data) => (data as Witness).Id ),
@@ -1809,7 +1550,8 @@ public partial class Witness : Dare {
 					(IBinding data) => (data as Witness).Apex ),
 		new PropertyInteger64 ("Index", 
 					(IBinding data, long? value) => {(data as Witness).Index = value;}, 
-					(IBinding data) => (data as Witness).Index )		];
+					(IBinding data) => (data as Witness).Index )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1817,30 +1559,12 @@ public partial class Witness : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Witness> _binding = new (
 			new() {
-
 			{ "Id", _properties [0]},
 			{ "Issuer", _properties [1]},
 			{ "Apex", _properties [2]},
-			{ "Index", _properties [3]}
-        }, __Tag,() => new Witness(), () => new List<Witness>(), () => new Dictionary<string,Witness>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Index", _properties [3]}}, __Tag,
+		() => new Witness(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1900,7 +1624,6 @@ public partial class Proof : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("SignedWitness", typeof (DareEnvelope),
 					(IBinding data, object? value) => {(data as Proof).SignedWitness = value as DareEnvelope;}, 
 					(IBinding data) => (data as Proof).SignedWitness,
@@ -1913,7 +1636,8 @@ public partial class Proof : Dare {
 					(IBinding data) => (data as Proof).Index ),
 		new PropertyListBinary ("Path", 
 					(IBinding data, List<byte[]>? value) => {(data as Proof).Path = value;}, 
-					(IBinding data) => (data as Proof).Path )		];
+					(IBinding data) => (data as Proof).Path )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1921,30 +1645,12 @@ public partial class Proof : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Proof> _binding = new (
 			new() {
-
 			{ "SignedWitness", _properties [0]},
 			{ "Hash", _properties [1]},
 			{ "Index", _properties [2]},
-			{ "Path", _properties [3]}
-        }, __Tag,() => new Proof(), () => new List<Proof>(), () => new Dictionary<string,Proof>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Path", _properties [3]}}, __Tag,
+		() => new Proof(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1991,7 +1697,6 @@ public partial class Unprotected : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("dig", 
 					(IBinding data, string? value) => {(data as Unprotected).DigestAlgorithm = value;}, 
 					(IBinding data) => (data as Unprotected).DigestAlgorithm ),
@@ -2002,7 +1707,8 @@ public partial class Unprotected : Dare {
 		new PropertyListStruct ("sigs", typeof (EarlSignature),
 					(IBinding data, object? value) => {(data as Unprotected).Signatures = value as List<EarlSignature>;}, 
 					(IBinding data) => (data as Unprotected).Signatures,
-					false, ()=>new  List<EarlSignature>(), ()=>new EarlSignature())		];
+					false, ()=>new  List<EarlSignature>(), ()=>new EarlSignature())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2010,29 +1716,11 @@ public partial class Unprotected : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Unprotected> _binding = new (
 			new() {
-
 			{ "dig", _properties [0]},
 			{ "signs", _properties [1]},
-			{ "sigs", _properties [2]}
-        }, __Tag,() => new Unprotected(), () => new List<Unprotected>(), () => new Dictionary<string,Unprotected>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "sigs", _properties [2]}}, __Tag,
+		() => new Unprotected(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2082,7 +1770,6 @@ public partial class EarlSignature : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("alg", 
 					(IBinding data, string? value) => {(data as EarlSignature).Alg = value;}, 
 					(IBinding data) => (data as EarlSignature).Alg ),
@@ -2091,7 +1778,8 @@ public partial class EarlSignature : Dare {
 					(IBinding data) => (data as EarlSignature).KeyIdentifier ),
 		new PropertyBinary ("val", 
 					(IBinding data, byte[]? value) => {(data as EarlSignature).Value = value;}, 
-					(IBinding data) => (data as EarlSignature).Value )		];
+					(IBinding data) => (data as EarlSignature).Value )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2099,29 +1787,11 @@ public partial class EarlSignature : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<EarlSignature> _binding = new (
 			new() {
-
 			{ "alg", _properties [0]},
 			{ "kid", _properties [1]},
-			{ "val", _properties [2]}
-        }, __Tag,() => new EarlSignature(), () => new List<EarlSignature>(), () => new Dictionary<string,EarlSignature>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "val", _properties [2]}}, __Tag,
+		() => new EarlSignature(), () => [], () => [], null);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
