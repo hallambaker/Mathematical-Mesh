@@ -102,13 +102,33 @@ public partial class GoedelProtocol {
     [Fact]
 
     public void TestEncodeDecode4() {
-        var First = TestDataBasic;
+        var First = new StoreUpdate() {
+            SomeString = "Hello",
+            AnEnvelope = 
+                new(){
+                    Header = new(),
+                    Trailer = new(),
+                    Body = "Hello".ToBytes()
+                    },
+            Envelopes = [
+                new(){
+                    Header = new(),
+                    Trailer = new(),
+                    Body = "Hello".ToBytes()
+                    },
+                new(){
+                    Header = new(),
+                    Trailer = new(),
+                    Body = "Hello".ToBytes()
+                    }
+               ]
+            };
 
         var FirstJSON = First.GetBytes(DataEncoding.JSON, true);
         Console.WriteLine($"Input: {FirstJSON.ToUTF8()}");
 
-        var Second = JsonObject.ParseTagged(FirstJSON) as MultiInstance;
-        CheckEqual(First, Second);
+        var Second = JsonObject.StreamParseTag<StoreUpdate>(FirstJSON, true);
+
         }
 
     [Fact]
@@ -122,6 +142,18 @@ public partial class GoedelProtocol {
         var Second = JsonObject.ParseTagged(FirstJSON) as MultiStruct;
         CheckEqual(First, Second);
         }
+
+    public void TestEncodeDecode6() {
+        var First = TestDataStruct;
+
+        var FirstJSON = First.GetBytes(DataEncoding.JSON, true);
+        Console.WriteLine($"Input: {FirstJSON.ToUTF8()}");
+
+        var Second = JsonObject.ParseTagged(FirstJSON) as MultiStruct;
+        CheckEqual(First, Second);
+        }
+
+
 
     [Fact]
 
@@ -137,7 +169,7 @@ public partial class GoedelProtocol {
         //var stream = new MemoryStream(FirstJSON);
 
         //var dom = JsonDocument.Parse(FirstJSON);
-        var Second = JsonObject.StreamParse<MultiStruct>(FirstJSON, false);
+        var Second = JsonObject.StreamParseTag<MultiStruct>(FirstJSON, true);
 
         var SecondJSON = Second.GetBytes(DataEncoding.JSON);
         Console.WriteLine($"Output: {SecondJSON.ToUTF8()}");
@@ -197,7 +229,7 @@ public partial class GoedelProtocol {
 
     #region // Test Data
     static readonly MultiInstance TestDataBasic = new() {
-        EnvelopeGeneric = new () {
+        TestEnvelopedGeneric = new () {
             Header = "head",
             Body = "bod",
             Trailer = "trailer"

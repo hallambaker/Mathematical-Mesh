@@ -185,7 +185,7 @@ public partial class LayerConnect : ExampleSet {
 
 
 
-    public DareEnvelope ResponseIdentifierEnvelope;
+    public Enveloped ResponseIdentifierEnvelope;
     public RequestConnection ResponseIdentifierMessage;
 
     public string ResponseIdentifierMessageId;

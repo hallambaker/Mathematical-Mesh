@@ -141,7 +141,7 @@ public partial class ResultConnect {
                 break;
                 }
             case CatalogedStandard catalogedStandard: {
-                builder.AppendLine($"   Device UDF = {catalogedStandard.ProfileDevice.UdfString}");
+                builder.AppendLine($"   Device UDF = {catalogedStandard.TheProfileDevice.UdfString}");
 
                 if (Profile is ProfileUser profileUser) {
                     builder.AppendLine($"   Account = {profileUser.AccountAddress}");

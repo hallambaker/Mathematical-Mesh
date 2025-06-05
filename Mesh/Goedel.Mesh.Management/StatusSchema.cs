@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 4:21:41 PM
+//  This file was automatically generated at 6/5/2025 7:43:05 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -73,23 +73,6 @@ public abstract partial class ServiceManagement : global::Goedel.Protocol.JsonOb
     /// </summary>
 	public new const string __Tag = "ServiceManagement";
 
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"WsmpRequest", WsmpRequest._Factory},
-	    {"WsmpResponse", WsmpResponse._Factory},
-	    {"ServiceConfigRequest", ServiceConfigRequest._Factory},
-	    {"ServiceConfigResponse", ServiceConfigResponse._Factory},
-	    {"ServiceStatusRequest", ServiceStatusRequest._Factory},
-	    {"ServiceStatusResponse", ServiceStatusResponse._Factory}
-		};
-	*/
-
 	/// <summary>
     /// Dictionary mapping types to bindings
     /// </summary>
@@ -105,8 +88,6 @@ public abstract partial class ServiceManagement : global::Goedel.Protocol.JsonOb
 	    {typeof(ServiceStatusResponse), ServiceStatusResponse._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -115,19 +96,8 @@ public abstract partial class ServiceManagement : global::Goedel.Protocol.JsonOb
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -326,28 +296,9 @@ public partial class WsmpRequest : Goedel.Protocol.Request {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<WsmpRequest> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new WsmpRequest(), () => [], () => [], Goedel.Protocol.Request._binding, Generic: false);
 
-        }, __Tag,() => new WsmpRequest(), () => new List<WsmpRequest>(), () => new Dictionary<string,WsmpRequest>(),Goedel.Protocol.Request._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Goedel.Protocol.Request._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -387,28 +338,9 @@ public partial class WsmpResponse : Goedel.Protocol.Response {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<WsmpResponse> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new WsmpResponse(), () => [], () => [], Goedel.Protocol.Response._binding, Generic: false);
 
-        }, __Tag,() => new WsmpResponse(), () => new List<WsmpResponse>(), () => new Dictionary<string,WsmpResponse>(),Goedel.Protocol.Response._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Goedel.Protocol.Response._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -445,28 +377,9 @@ public partial class ServiceConfigRequest : WsmpRequest {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ServiceConfigRequest> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new ServiceConfigRequest(), () => [], () => [], WsmpRequest._binding, Generic: false);
 
-        }, __Tag,() => new ServiceConfigRequest(), () => new List<ServiceConfigRequest>(), () => new Dictionary<string,ServiceConfigRequest>(),WsmpRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(WsmpRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -503,28 +416,9 @@ public partial class ServiceConfigResponse : WsmpResponse {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ServiceConfigResponse> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new ServiceConfigResponse(), () => [], () => [], WsmpResponse._binding, Generic: false);
 
-        }, __Tag,() => new ServiceConfigResponse(), () => new List<ServiceConfigResponse>(), () => new Dictionary<string,ServiceConfigResponse>(),WsmpResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(WsmpResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -561,28 +455,9 @@ public partial class ServiceStatusRequest : WsmpRequest {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ServiceStatusRequest> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new ServiceStatusRequest(), () => [], () => [], WsmpRequest._binding, Generic: false);
 
-        }, __Tag,() => new ServiceStatusRequest(), () => new List<ServiceStatusRequest>(), () => new Dictionary<string,ServiceStatusRequest>(),WsmpRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(WsmpRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -642,7 +517,6 @@ public partial class ServiceStatusResponse : WsmpResponse {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyDateTime ("Start", 
 					(IBinding data, DateTime? value) => {(data as ServiceStatusResponse).Start = value;}, 
 					(IBinding data) => (data as ServiceStatusResponse).Start ),
@@ -657,7 +531,8 @@ public partial class ServiceStatusResponse : WsmpResponse {
 					(IBinding data) => (data as ServiceStatusResponse).Completed ),
 		new PropertyInteger32 ("Pending", 
 					(IBinding data, int? value) => {(data as ServiceStatusResponse).Pending = value;}, 
-					(IBinding data) => (data as ServiceStatusResponse).Pending )		];
+					(IBinding data) => (data as ServiceStatusResponse).Pending )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -665,32 +540,13 @@ public partial class ServiceStatusResponse : WsmpResponse {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ServiceStatusResponse> _binding = new (
 			new() {
-
 			{ "Start", _properties [0]},
 			{ "End", _properties [1]},
 			{ "Started", _properties [2]},
 			{ "Completed", _properties [3]},
-			{ "Pending", _properties [4]}
-        }, __Tag,() => new ServiceStatusResponse(), () => new List<ServiceStatusResponse>(), () => new Dictionary<string,ServiceStatusResponse>(),WsmpResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Pending", _properties [4]}}, __Tag,
+		() => new ServiceStatusResponse(), () => [], () => [], WsmpResponse._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(WsmpResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class

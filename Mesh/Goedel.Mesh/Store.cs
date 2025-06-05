@@ -256,7 +256,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
     /// <param name="containerName">The name of the container.</param>
     /// <param name="keyLocate">The key location context.</param>
     public static void Append(string directory,
-            IKeyLocate keyLocate, List<DareEnvelope> envelopes, string containerName = null) {
+            IKeyLocate keyLocate, List<Enveloped> envelopes, string containerName = null) {
         envelopes.AssertNotNull(Internal.Throw);
         if (envelopes.Count == 0) {
             return;
@@ -289,7 +289,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
     /// Append the envelopes <paramref name="envelopes"/> to the
     /// store.
     /// </summary>
-    public void AppendDirect(IEnumerable<DareEnvelope> envelopes) {
+    public void AppendDirect(IEnumerable<Enveloped> envelopes) {
         foreach (var envelope in envelopes) {
             AppendDirect(envelope);
             }
@@ -299,7 +299,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
     /// Append the envelopes <paramref name="envelope"/> to the
     /// store.
     /// </summary>
-    public virtual SequenceIndexEntry AppendDirect(DareEnvelope envelope, bool updateEnvelope = true) {
+    public virtual SequenceIndexEntry AppendDirect(Enveloped envelope, bool updateEnvelope = true) {
         return Sequence.Append(envelope, updateEnvelope);
         }
 
@@ -315,7 +315,7 @@ public class Store : Disposable, IInternSequenceIndexEntry {
     /// work backwards. Otherwise begin at <paramref name="minIndex"/> and move
     /// forwards.</param>
     /// <returns></returns>
-    public virtual IEnumerable<DareEnvelope> Select(int minIndex, bool reverse = false) =>
+    public virtual IEnumerable<Enveloped> Select(int minIndex, bool reverse = false) =>
         Sequence.SelectEnvelope(minIndex, reverse);
 
 

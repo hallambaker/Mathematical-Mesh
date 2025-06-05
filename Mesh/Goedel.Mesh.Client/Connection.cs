@@ -38,7 +38,7 @@ public partial class CatalogedMachine {
     public override string _PrimaryKey => Id;
 
     ///<summary>The device profile</summary>
-    public virtual ProfileDevice ProfileDevice => throw new NYI();
+    public virtual ProfileDevice TheProfileDevice => throw new NYI();
 
     }
 
@@ -46,7 +46,7 @@ public partial class CatalogedMachine {
 public partial class CatalogedStandard {
 
     ///<summary>The device profile (from <see cref="CatalogedDevice"/>)</summary>
-    public override ProfileDevice ProfileDevice => CatalogedDevice?.ProfileDevice;
+    public override ProfileDevice TheProfileDevice => CatalogedDevice?.ProfileDevice;
 
 
     }
@@ -69,7 +69,7 @@ public partial class CatalogedPending {
 
     /////<summary>The decoded device profile (from <see cref="EnvelopedProfileDevice"/>)</summary>
     //public override ProfileDevice ProfileDevice => EnvelopedProfileDevice.Decode();
-
+    public override ProfileDevice TheProfileDevice => ProfileDevice;
 
     /// <summary>
     /// Cached convenience accessor returning the decoded <see cref="MessageConnectionResponse"/>.
@@ -95,5 +95,8 @@ public partial class CatalogedPreconfigured {
     //public ConnectionService ConnectionDevice =>
     //            EnvelopedConnectionDevice.Decode();
 
-    //            (var account, var key) = MeshUri.ParseConnectUri(devicePreconfiguration.ConnectUri);
+    public override ProfileDevice TheProfileDevice => ProfileDevice;
+
+
+    //(var account, var key) = MeshUri.ParseConnectUri(devicePreconfiguration.ConnectUri);
     }

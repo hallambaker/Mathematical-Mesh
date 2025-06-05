@@ -1079,7 +1079,7 @@ public partial class JbcdStream  {
         var position = PositionRead;
         var length = ReadFrame(out var HeaderData);
 
-        var header = JsonObject.StreamParse<DareHeader>(HeaderData, false);
+        var header = JsonObject.StreamParseTag<DareHeader>(HeaderData, false);
 
         return header;
         }
@@ -1104,7 +1104,7 @@ public partial class JbcdStream  {
         var length = ReadFrameReverse(out var HeaderData);
         End();
 
-        var header = JsonObject.StreamParse<DareHeader>(HeaderData, false);
+        var header = JsonObject.StreamParseTag<DareHeader>(HeaderData, false);
         //header.FrameStart = position - length;
         //header.FrameLength = length;
 
@@ -1117,19 +1117,19 @@ public partial class JbcdStream  {
     /// Return the current Sequence frame as a DareEnvelope.
     /// </summary>
     /// <returns>The Sequence data.</returns>
-    public DareEnvelope ReadDareEnvelope() {
+    public Enveloped ReadDareEnvelope() {
         var found = ReadFrame(out var headerData, out _, out var FrameData, out var trailerData);
         if (!found) {
             return null;
             }
-        var message = new DareEnvelope() { Body = FrameData };
+        var message = new Enveloped() { Body = FrameData };
         if (headerData != null) {
-            message.Header = JsonObject.StreamParse<DareHeader>(headerData, false);
+            message.Header = JsonObject.StreamParseTag<DareHeader>(headerData, false);
             }
         if (trailerData != null) {
             //JSONReader.Trace = true;
             //Console.WriteLine(trailerData.ToUTF8());
-            message.Trailer = JsonObject.StreamParse<DareTrailer>(trailerData, false);
+            message.Trailer = JsonObject.StreamParseTag<DareTrailer>(trailerData, false);
             }
         return message;
         }

@@ -50,7 +50,7 @@ public class TransactionUpdate<TEntry> : TransactionUpdate where TEntry : Catalo
     /// <param name="catalog">The catalog on which the transaction is to be performed.</param>
     public TransactionUpdate(Catalog<TEntry> catalog) {
         Store = catalog.StoreName;
-        Envelopes = new List<DareEnvelope>();
+        Envelopes = new List<Enveloped>();
         Catalog = catalog;
 
         // ToDo: fill in the fields Index and Bitmask here
@@ -73,7 +73,7 @@ public class TransactionUpdate<TEntry> : TransactionUpdate where TEntry : Catalo
     /// </summary>
     /// <param name="catalogedEntry">The new value of the catalog entry.</param>
     /// <returns>The enveloped update value.</returns>
-    public DareEnvelope Update(TEntry catalogedEntry) {
+    public Enveloped Update(TEntry catalogedEntry) {
 
         // ToDo: need to seriously revise this to get the interlock stuff right.
         var envelope = Catalog.PersistenceStore.PrepareUpdate(out _, catalogedEntry,
@@ -91,7 +91,7 @@ public class TransactionUpdate<TEntry> : TransactionUpdate where TEntry : Catalo
     /// </summary>
     /// <param name="catalogedEntry">The catalog entry to delete.</param>
     /// <returns>The enveloped update value.</returns>
-    public DareEnvelope Delete(TEntry catalogedEntry) {
+    public Enveloped Delete(TEntry catalogedEntry) {
 
         // ToDo: need to seriously revise this to get the interlock stuff right.
         var envelope = Catalog.PersistenceStore.PrepareDelete(out _, catalogedEntry._PrimaryKey);
@@ -152,6 +152,14 @@ public partial class ContextAccount {
                 // Hack: should completion messages be encrypted or not?
 
                 }
+
+            //if (transactRequest.EnvelopedInbound != null) {
+            //    var bytes = transactRequest.ToBytes();
+            //    Console.WriteLine(bytes.ToUTF8());
+            //    var parsed = JsonObject.StreamParse<TransactRequest>(bytes);
+            //    }
+
+
 
             response = await MeshClient.TransactAsync(transactRequest);
             response.Success().AssertTrue(NYI.Throw);
@@ -411,8 +419,10 @@ public abstract class Transaction<TAccount> : Disposable
         //"Fix the encryption of local messages".TaskFunctionality(true);
 
         var envelope = message.Envelope(SignLocalMessage, keyEncrypt);
-        envelope.JsonObject = message;
-        TransactRequest.EnvelopedLocal.Add(new Enveloped<Message>(envelope));
+        //envelope.Header.EnvelopeId = 
+        //envelope.JsonObject = message;
+        
+        TransactRequest.EnvelopedLocal.Add(envelope);
         }
 
     /// <summary>

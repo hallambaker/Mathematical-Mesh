@@ -50,7 +50,7 @@ public partial class Shell {
             options.Cover.Value.OpenReadToEnd(out cover);
             }
 
-        var Length = DareEnvelope.Encode(cryptoParameters, inputFile, outputFile,
+        var Length = Enveloped.Encode(cryptoParameters, inputFile, outputFile,
             contentMeta: ContentInfo, cover: cover);
 
         return new ResultFile() {
@@ -71,7 +71,7 @@ public partial class Shell {
         var verify = options.Verify.Value;
 
         var keyLocate = GetKeyCollection(options);
-        var Length = DareEnvelope.Decode(inputFile, outputFile, keyCollection: keyLocate, verify: verify);
+        var Length = Enveloped.Decode(inputFile, outputFile, keyCollection: keyLocate, verify: verify);
 
         return new ResultFile() {
             TotalBytes = (int)Length
@@ -87,7 +87,7 @@ public partial class Shell {
         var inputFile = options.Input.Value;
         var keyLocate = GetKeyCollection(options);
 
-        var result = DareEnvelope.Verify(inputFile, keyLocate);
+        var result = Enveloped.Verify(inputFile, keyLocate);
 
         "Should check that the signature value is correct".TaskFunctionality();
 

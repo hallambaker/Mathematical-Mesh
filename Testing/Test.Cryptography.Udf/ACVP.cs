@@ -103,10 +103,10 @@ public class UdfKeyGenTest : AcvpTest {
 
         var parameters = new CryptoParameters(signer: keyPair);
 
-        var envelope =  DareEnvelope.Encode (parameters, testData);
+        var envelope =  Enveloped.Encode (parameters, testData);
 
         // verify signature
-        var validEnvelope = DareEnvelope.Verify(envelope, keyCollection);
+        var validEnvelope = Enveloped.Verify(envelope, keyCollection);
         validEnvelope.VerifySignature(keyPair).TestTrue();
 
         var testDare = new TestDare(envelope);
@@ -119,7 +119,7 @@ public class UdfKeyGenTest : AcvpTest {
         e3.TestNotEqual(e2);
 
         // verify invalid signature
-        var invalidEnvelope = DareEnvelope.Verify(e3, keyCollection);
+        var invalidEnvelope = Enveloped.Verify(e3, keyCollection);
         invalidEnvelope.VerifySignature(keyPair).TestFalse();
 
         }
@@ -133,13 +133,13 @@ public class UdfKeyGenTest : AcvpTest {
 
         // encrypt the data
         var parameters = new CryptoParameters(recipient: keyPair);
-        var envelope = DareEnvelope.Encode(parameters, testData);
+        var envelope = Enveloped.Encode(parameters, testData);
 
 
         // decrypt the data
         var readStream = new MemoryStream(envelope);
         var output = new MemoryStream();
-        var data = DareEnvelope.Decode(readStream, output, keyCollection: keyCollection);
+        var data = Enveloped.Decode(readStream, output, keyCollection: keyCollection);
 
 
         var result = output.ToArray();

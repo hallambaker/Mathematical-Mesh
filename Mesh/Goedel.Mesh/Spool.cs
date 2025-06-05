@@ -127,7 +127,7 @@ public class Spool : Store {
     /// Append the envelopes <paramref name="envelope"/> to the
     /// store.
     /// </summary>
-    public override SequenceIndexEntry AppendDirect(DareEnvelope envelope, bool updateEnvelope = true) {
+    public override SequenceIndexEntry AppendDirect(Enveloped envelope, bool updateEnvelope = true) {
         return Sequence.Append(envelope, updateEnvelope);
         //Intern(envelope, null);
         }

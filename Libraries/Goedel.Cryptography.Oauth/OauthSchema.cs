@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/28/2025 12:00:12 AM
+//  This file was automatically generated at 6/5/2025 7:42:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -181,7 +181,7 @@ public partial class ResourceServerMetadata : Oauth {
 			{ "scopes_supported", _properties [2]},
 			{ "bearer_methods_supported", _properties [3]},
 			{ "resource_documentation", _properties [4]}}, __Tag,
-		() => new ResourceServerMetadata(), () => [], () => [], null);
+		() => new ResourceServerMetadata(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -478,7 +478,7 @@ public partial class AuthorizationServerMetadata : Oauth {
 			{ "require_pushed_authorization_requests", _properties [24]},
 			{ "dpop_signing_alg_values_supported", _properties [25]},
 			{ "client_id_metadata_document_supported", _properties [26]}}, __Tag,
-		() => new AuthorizationServerMetadata(), () => [], () => [], null);
+		() => new AuthorizationServerMetadata(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -630,7 +630,7 @@ public partial class AuthorizationRequest : Oauth {
 			{ "client_assertion_type", _properties [7]},
 			{ "client_assertion", _properties [8]},
 			{ "login_hint", _properties [9]}}, __Tag,
-		() => new AuthorizationRequest(), () => [], () => [], null);
+		() => new AuthorizationRequest(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -691,7 +691,7 @@ public partial class AuthorizationRequest2 : Oauth {
 			new() {
 			{ "client_id", _properties [0]},
 			{ "request_uri", _properties [1]}}, __Tag,
-		() => new AuthorizationRequest2(), () => [], () => [], null);
+		() => new AuthorizationRequest2(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -760,7 +760,7 @@ public partial class PushedAuthorizationResponse : Oauth {
 			new() {
 			{ "expires_in", _properties [0]},
 			{ "request_uri", _properties [1]}}, __Tag,
-		() => new PushedAuthorizationResponse(), () => [], () => [], null);
+		() => new PushedAuthorizationResponse(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -840,7 +840,7 @@ public partial class AuthorizationResponse : Oauth {
 			{ "code", _properties [0]},
 			{ "state", _properties [1]},
 			{ "iss", _properties [2]}}, __Tag,
-		() => new AuthorizationResponse(), () => [], () => [], null);
+		() => new AuthorizationResponse(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -957,7 +957,7 @@ public partial class ErrorResponse : Oauth {
 			{ "errorUri", _properties [2]},
 			{ "state", _properties [3]},
 			{ "iss", _properties [4]}}, __Tag,
-		() => new ErrorResponse(), () => [], () => [], null);
+		() => new ErrorResponse(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1144,7 +1144,7 @@ public partial class ClientMetadata : Oauth {
 			{ "logo_uri", _properties [12]},
 			{ "tos_uri", _properties [13]},
 			{ "policy_uri", _properties [14]}}, __Tag,
-		() => new ClientMetadata(), () => [], () => [], null);
+		() => new ClientMetadata(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1231,7 +1231,7 @@ public partial class DidDocument : Oauth {
 			{ "alsoKnownAs", _properties [2]},
 			{ "verificationMethod", _properties [3]},
 			{ "service", _properties [4]}}, __Tag,
-		() => new DidDocument(), () => [], () => [], null);
+		() => new DidDocument(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1316,7 +1316,7 @@ public partial class AuthorizationCodeGrant : Oauth {
 			{ "code", _properties [1]},
 			{ "code_verifier", _properties [2]},
 			{ "client_id", _properties [3]}}, __Tag,
-		() => new AuthorizationCodeGrant(), () => [], () => [], null);
+		() => new AuthorizationCodeGrant(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1366,7 +1366,7 @@ public partial class ClientCredentialsGrant : Oauth {
 	public static readonly new Binding<ClientCredentialsGrant> _binding = new (
 			new() {
 			{ "grant_type", _properties [0]}}, __Tag,
-		() => new ClientCredentialsGrant(), () => [], () => [], null);
+		() => new ClientCredentialsGrant(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1438,7 +1438,7 @@ public partial class RefreshTokenGrant : Oauth {
 			{ "grant_type", _properties [0]},
 			{ "refresh_token", _properties [1]},
 			{ "scope", _properties [2]}}, __Tag,
-		() => new RefreshTokenGrant(), () => [], () => [], null);
+		() => new RefreshTokenGrant(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1517,7 +1517,7 @@ public partial class DidVerificationMethod : Oauth {
 			{ "type", _properties [1]},
 			{ "controller", _properties [2]},
 			{ "publicKeyMultibase", _properties [3]}}, __Tag,
-		() => new DidVerificationMethod(), () => [], () => [], null);
+		() => new DidVerificationMethod(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1586,7 +1586,7 @@ public partial class DidService : Oauth {
 			{ "id", _properties [0]},
 			{ "type", _properties [1]},
 			{ "serviceEndpoint", _properties [2]}}, __Tag,
-		() => new DidService(), () => [], () => [], null);
+		() => new DidService(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1655,7 +1655,7 @@ public partial class AuthenticationResponse : Oauth {
 			{ "iss", _properties [0]},
 			{ "state", _properties [1]},
 			{ "code", _properties [2]}}, __Tag,
-		() => new AuthenticationResponse(), () => [], () => [], null);
+		() => new AuthenticationResponse(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1783,7 +1783,7 @@ public partial class DpopPayload : Oauth {
 			{ "ath", _properties [4]},
 			{ "nonce", _properties [5]},
 			{ "cnf", _properties [6]}}, __Tag,
-		() => new DpopPayload(), () => [], () => [], null);
+		() => new DpopPayload(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1836,7 +1836,7 @@ public partial class DpopConfirmation : Oauth {
 	public static readonly new Binding<DpopConfirmation> _binding = new (
 			new() {
 			{ "jkt", _properties [0]}}, __Tag,
-		() => new DpopConfirmation(), () => [], () => [], null);
+		() => new DpopConfirmation(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1907,7 +1907,7 @@ public partial class JwtDpop : Oauth {
 			{ "header", _properties [0]},
 			{ "payload", _properties [1]},
 			{ "signature", _properties [2]}}, __Tag,
-		() => new JwtDpop(), () => [], () => [], null);
+		() => new JwtDpop(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>

@@ -166,7 +166,7 @@ public partial class TestService {
         }
 
     private static JsContact GetContact(byte[] bytes) {
-        return JsonObject.StreamParse<JsContact>(bytes);
+        return JsonObject.StreamParseTag<JsContact>(bytes);
         }
 
     [Fact]
@@ -318,7 +318,7 @@ public partial class TestService {
         var credentialTempPrivate = contextAccountAlice.GetMeshCredentialPrivate();
         var credentialTemp = GetMeshCredentialPublic(credentialTempPrivate);
 
-        DareEnvelope alternative = null;
+        Enveloped alternative = null;
         if (dataValidity == DataValidity.CorruptSigner) {
             var mallet = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
             DeviceMallet, AccountMallet, "main");
@@ -351,7 +351,7 @@ public partial class TestService {
                 DeviceAliceAdmin, AccountAlice, "main");
         var credentialTemp = contextAccountAlice.GetMeshCredentialPrivate();
 
-        DareEnvelope alternative = null;
+        Enveloped alternative = null;
         if (dataValidity == DataValidity.CorruptSigner) {
             var mallet = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceMallet, AccountMallet, "main");

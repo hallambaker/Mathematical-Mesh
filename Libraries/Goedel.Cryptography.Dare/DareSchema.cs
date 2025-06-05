@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/28/2025 12:00:12 AM
+//  This file was automatically generated at 6/5/2025 7:42:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -77,7 +77,7 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 	static Dictionary<System.Type, Binding> _bindingDictionary = 
 			new () {
 
-	    {typeof(DareEnvelopeSequence), DareEnvelopeSequence._binding},
+	    {typeof(Enveloped), Enveloped._binding},
 	    {typeof(DareSignatureHeader), DareSignatureHeader._binding},
 	    {typeof(DareTrailer), DareTrailer._binding},
 	    {typeof(DareHeader), DareHeader._binding},
@@ -126,7 +126,7 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 	/// precede the body in a serialization, this allowing processing of the header
 	/// information to be performed before the entire body has been received.
 	/// </summary>
-public partial class DareEnvelopeSequence : Dare {
+public partial class Enveloped : Dare {
     /// <summary>
     ///The envelope header. May specify the key exchange data, pre-signature 
     ///or signature data, cloaked headers and/or encrypted data sequences.
@@ -156,15 +156,15 @@ public partial class DareEnvelopeSequence : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("Header", typeof (DareHeader),
-					(IBinding data, object? value) => {(data as DareEnvelopeSequence).Header = value as DareHeader;}, 
-					(IBinding data) => (data as DareEnvelopeSequence).Header,
+					(IBinding data, object? value) => {(data as Enveloped).Header = value as DareHeader;}, 
+					(IBinding data) => (data as Enveloped).Header,
 					false, ()=>new  DareHeader(), ()=>new DareHeader()),
 		new PropertyBinary ("Body", 
-					(IBinding data, byte[]? value) => {(data as DareEnvelopeSequence).Body = value;}, 
-					(IBinding data) => (data as DareEnvelopeSequence).Body ),
+					(IBinding data, byte[]? value) => {(data as Enveloped).Body = value;}, 
+					(IBinding data) => (data as Enveloped).Body ),
 		new PropertyStruct ("Trailer", typeof (DareTrailer),
-					(IBinding data, object? value) => {(data as DareEnvelopeSequence).Trailer = value as DareTrailer;}, 
-					(IBinding data) => (data as DareEnvelopeSequence).Trailer,
+					(IBinding data, object? value) => {(data as Enveloped).Trailer = value as DareTrailer;}, 
+					(IBinding data) => (data as Enveloped).Trailer,
 					false, ()=>new  DareTrailer(), ()=>new DareTrailer())
 		];
 
@@ -172,12 +172,12 @@ public partial class DareEnvelopeSequence : Dare {
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	public static readonly new Binding<DareEnvelopeSequence> _binding = new (
+	public static readonly new Binding<Enveloped> _binding = new (
 			new() {
 			{ "Header", _properties [0]},
 			{ "Body", _properties [1]},
 			{ "Trailer", _properties [2]}}, __Tag,
-		() => new DareEnvelopeSequence(), () => [], () => [], null);
+		() => new Enveloped(), () => [], () => [], null, Generic: true);
 
 
 	/// <summary>
@@ -188,13 +188,13 @@ public partial class DareEnvelopeSequence : Dare {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "DareEnvelopeSequence";
+	public new const string __Tag = "Enveloped";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new DareEnvelopeSequence();
+	public static new JsonObject _Factory () => new Enveloped();
 
 	}
 
@@ -285,7 +285,7 @@ public partial class DareSignatureHeader : Dare {
 			{ "ChainDigest", _properties [3]},
 			{ "ApexDigest", _properties [4]},
 			{ "dig", _properties [5]}}, __Tag,
-		() => new DareSignatureHeader(), () => [], () => [], null);
+		() => new DareSignatureHeader(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -386,7 +386,7 @@ public partial class DareTrailer : DareSignatureHeader {
 			{ "ApplicationContextValue", _properties [2]},
 			{ "SignedData", _properties [3]},
 			{ "SequenceSignedData", _properties [4]}}, __Tag,
-		() => new DareTrailer(), () => [], () => [], DareSignatureHeader._binding);
+		() => new DareTrailer(), () => [], () => [], DareSignatureHeader._binding, Generic: false);
 
 
 	/// <summary>
@@ -621,7 +621,7 @@ public partial class DareHeader : DareTrailer {
 			{ "Cover", _properties [13]},
 			{ "Bitmask", _properties [14]},
 			{ "Debug", _properties [15]}}, __Tag,
-		() => new DareHeader(), () => [], () => [], DareTrailer._binding);
+		() => new DareHeader(), () => [], () => [], DareTrailer._binding, Generic: false);
 
 
 	/// <summary>
@@ -825,7 +825,7 @@ public partial class ContentMeta : Dare {
 			{ "First", _properties [12]},
 			{ "Previous", _properties [13]},
 			{ "FileEntry", _properties [14]}}, __Tag,
-		() => new ContentMeta(), () => [], () => [], null);
+		() => new ContentMeta(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -958,7 +958,7 @@ public partial class DareSignature : Dare {
 			{ "Manifest", _properties [5]},
 			{ "SignatureKey", _properties [6]},
 			{ "signature", _properties [7]}}, __Tag,
-		() => new DareSignature(), () => [], () => [], null);
+		() => new DareSignature(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1022,7 +1022,7 @@ public partial class IntervalSignature : Dare {
 			new() {
 			{ "Index", _properties [0]},
 			{ "Envelopes", _properties [1]}}, __Tag,
-		() => new IntervalSignature(), () => [], () => [], null);
+		() => new IntervalSignature(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1084,7 +1084,7 @@ public partial class SignedEnvelope : Dare {
 			new() {
 			{ "Index", _properties [0]},
 			{ "Digest", _properties [1]}}, __Tag,
-		() => new SignedEnvelope(), () => [], () => [], null);
+		() => new SignedEnvelope(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1145,7 +1145,7 @@ public partial class X509Certificate : Dare {
 			new() {
 			{ "x5u", _properties [0]},
 			{ "x5c", _properties [1]}}, __Tag,
-		() => new X509Certificate(), () => [], () => [], null);
+		() => new X509Certificate(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1243,7 +1243,7 @@ public partial class DareRecipient : Dare {
 			{ "epk", _properties [2]},
 			{ "ek", _properties [3]},
 			{ "wmk", _properties [4]}}, __Tag,
-		() => new DareRecipient(), () => [], () => [], null);
+		() => new DareRecipient(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1384,7 +1384,7 @@ public partial class DarePolicy : Dare {
 			{ "EncryptKeys", _properties [5]},
 			{ "SignKeys", _properties [6]},
 			{ "Sealed", _properties [7]}}, __Tag,
-		() => new DarePolicy(), () => [], () => [], null);
+		() => new DarePolicy(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1478,7 +1478,7 @@ public partial class FileEntry : Dare {
 			{ "LastAccessTime", _properties [2]},
 			{ "LastWriteTime", _properties [3]},
 			{ "Attributes", _properties [4]}}, __Tag,
-		() => new FileEntry(), () => [], () => [], null);
+		() => new FileEntry(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1563,7 +1563,7 @@ public partial class Witness : Dare {
 			{ "Issuer", _properties [1]},
 			{ "Apex", _properties [2]},
 			{ "Index", _properties [3]}}, __Tag,
-		() => new Witness(), () => [], () => [], null);
+		() => new Witness(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1591,13 +1591,13 @@ public partial class Witness : Dare {
 	/// SignedWitness occurs at the index [Index]
 	/// </summary>
 public partial class Proof : Dare {
-    /// <summary>
-    ///The signed apex under which this proof chain is established
+	[JsonPropertyName("EnvelopedWitness")]
+	public virtual Enveloped<Witness>?					EnvelopedWitness  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("SignedWitness")]
-	public virtual DareEnvelope?					SignedWitness  {get; set;} //
-
+	public virtual Witness?				Witness  => EnvelopedWitness.Decode();
     /// <summary>
     ///
     /// </summary>
@@ -1624,10 +1624,12 @@ public partial class Proof : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyStruct ("SignedWitness", typeof (DareEnvelope),
-					(IBinding data, object? value) => {(data as Proof).SignedWitness = value as DareEnvelope;}, 
-					(IBinding data) => (data as Proof).SignedWitness,
-					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope()),
+		new PropertyGStruct ("EnvelopedWitness", /*typeof (Witness<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as Proof).EnvelopedWitness = value as Enveloped<Witness>;},
+					(IBinding data) => (data as Proof).EnvelopedWitness,
+					/*(IBinding data, object? value) => {(data as Proof).Witness = value as Witness;},
+					(IBinding data) => (data as Proof).Witness,*/
+					()=>new  Enveloped<Witness>(), ()=>new Enveloped<Witness>()),
 		new PropertyBinary ("Hash", 
 					(IBinding data, byte[]? value) => {(data as Proof).Hash = value;}, 
 					(IBinding data) => (data as Proof).Hash ),
@@ -1645,11 +1647,11 @@ public partial class Proof : Dare {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Proof> _binding = new (
 			new() {
-			{ "SignedWitness", _properties [0]},
+			{ "EnvelopedWitness", _properties [0]},
 			{ "Hash", _properties [1]},
 			{ "Index", _properties [2]},
 			{ "Path", _properties [3]}}, __Tag,
-		() => new Proof(), () => [], () => [], null);
+		() => new Proof(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1719,7 +1721,7 @@ public partial class Unprotected : Dare {
 			{ "dig", _properties [0]},
 			{ "signs", _properties [1]},
 			{ "sigs", _properties [2]}}, __Tag,
-		() => new Unprotected(), () => [], () => [], null);
+		() => new Unprotected(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1790,7 +1792,7 @@ public partial class EarlSignature : Dare {
 			{ "alg", _properties [0]},
 			{ "kid", _properties [1]},
 			{ "val", _properties [2]}}, __Tag,
-		() => new EarlSignature(), () => [], () => [], null);
+		() => new EarlSignature(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>

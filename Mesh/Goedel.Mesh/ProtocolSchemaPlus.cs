@@ -107,7 +107,7 @@ public partial class MeshResponse {
         var Text = ToString();
 
         // Convert text back to an object:
-        var Result = StreamParse<MeshResponse>(Text.ToUTF8());
+        var Result = StreamParseTag<MeshResponse>(Text.ToUTF8());
 
         return Result;
         }
@@ -127,7 +127,7 @@ public partial class MeshRequest {
         var Text = ToString();
 
         // Convert text back to an object:
-        var Result = StreamParse<MeshRequest>(Text.ToUTF8());
+        var Result = StreamParseTag<MeshRequest>(Text.ToUTF8());
 
         return Result;
         }

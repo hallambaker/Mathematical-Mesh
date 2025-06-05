@@ -47,7 +47,7 @@ public class MeshServiceConfiguration : ServiceConfiguration {
     /// <param name="profileAccount">The callsign registry profile.</param>
     /// <param name="filename">The file to save the profile to.</param>
     public void AddProfileRegistryCallsign(
-                DareEnvelope profileAccount,
+                Enveloped profileAccount,
                 string filename = "CallsignRegistryProfile.dare") {
         var path = Path.Combine(ServicePath, filename);
         profileAccount.ToFile(path);

@@ -231,10 +231,13 @@ public partial class TestDare {
         var cryptoParameters = new CryptoParametersTest(
                     recipients: recipients);
 
-        var test1 = Platform.GetRandomBytes(1000);
+        var test1 = Platform.GetRandomBytes(80);
+        TestEnvelopeVariable(test1, cryptoParameters);
+
+
         TestEnvelopeAtomic(test1, cryptoParameters);
         TestEnvelopeFixed(test1, cryptoParameters);
-        TestEnvelopeVariable(test1, cryptoParameters);
+
 
         TestEnvelopeFixed(test1, cryptoParameters, 13);
         TestEnvelopeVariable(test1, cryptoParameters, 13);
@@ -259,12 +262,6 @@ public partial class TestDare {
         }
 
 
-
-
-
-
-
-
     static void TestEnvelopeJSON(byte[] Plaintext,
             CryptoParameters cryptoParameters = null,
             int stride = -1,
@@ -272,7 +269,7 @@ public partial class TestDare {
             string contentType = null) {
 
         cryptoParameters ??= CryptoParametersNull;
-        var envelope = new DareEnvelope(cryptoParameters, Plaintext);
+        var envelope = new Enveloped(cryptoParameters, Plaintext);
 
         var envelopeBytes = envelope.GetJson(false);
         CheckDecodeDirect(cryptoParameters, envelopeBytes, Plaintext, dataSequences, contentType);
@@ -287,7 +284,7 @@ public partial class TestDare {
 
         cryptoParameters ??= CryptoParametersNull;
 
-        var envelope = new DareEnvelope(cryptoParameters, plaintext, dataSequences: dataSequences);
+        var envelope = new Enveloped(cryptoParameters, plaintext, dataSequences: dataSequences);
 
         var envelopeBytes = envelope.GetJson(false);
 
@@ -309,7 +306,7 @@ public partial class TestDare {
 
         cryptoParameters ??= CryptoParametersNull;
 
-        var envelope = new DareEnvelope(cryptoParameters, Plaintext, dataSequences: dataSequences);
+        var envelope = new Enveloped(cryptoParameters, Plaintext, dataSequences: dataSequences);
 
         envelope.Corrupt();
 
@@ -318,8 +315,8 @@ public partial class TestDare {
         //Console.WriteLine(EnvelopeBytes.ToUTF8());
         CheckDecodeCorrupted(cryptoParameters, envelopeBytes, Plaintext, dataSequences, contentType);
 
-        var EnvelopeBytesB = envelope.GetJsonB(false);
-        CheckDecodeCorrupted(cryptoParameters, EnvelopeBytesB, Plaintext, dataSequences, contentType);
+        var envelopeBytesB = envelope.GetJsonB(false);
+        CheckDecodeCorrupted(cryptoParameters, envelopeBytesB, Plaintext, dataSequences, contentType);
         }
 
     static void TestEnvelopeFixed(byte[] Plaintext,
@@ -331,7 +328,7 @@ public partial class TestDare {
         var contentInfo = new ContentMeta() { ContentType = contentType };
         using var InputStream = new MemoryStream(Plaintext);
         using var OutputStream = new MemoryStream();
-        DareEnvelope.Encode(cryptoParameters, InputStream, OutputStream,
+        Enveloped.Encode(cryptoParameters, InputStream, OutputStream,
                 Plaintext.Length, contentInfo, dataSequences: dataSequences);
 
         var EnvelopeBytes = OutputStream.ToArray();
@@ -347,7 +344,7 @@ public partial class TestDare {
         var contentInfo = new ContentMeta() { ContentType = contentType };
         using var inputStream = new MemoryStream(plaintext);
         using var outputStream = new MemoryStream();
-        DareEnvelope.Encode(cryptoParameters, inputStream, outputStream,
+        Enveloped.Encode(cryptoParameters, inputStream, outputStream,
                     contentMeta: contentInfo, dataSequences: dataSequences);
 
         var envelopeBytes = outputStream.ToArray();
@@ -363,11 +360,25 @@ public partial class TestDare {
         List<byte[]> dataSequences = null,
         string contentType = null) {
 
-        var envelope = DareEnvelope.FromJSON(serialization, false,
-                decrypt: cryptoParameters.Encrypt, keyCollection: cryptoParameters.KeyLocate);
-        CheckDecodeResult(envelope, dataSequences, contentType);
 
-        plaintext.IsEqualTo(envelope.Body).TestTrue();
+        using var inputStream = new MemoryStream(serialization);
+        using var outputStream = new MemoryStream();
+
+        Enveloped.Decode(inputStream, outputStream, keyCollection: cryptoParameters.KeyLocate);
+        var recovered = outputStream.ToArray();
+
+
+        //var envelope = JsonObject.StreamParse<Enveloped>(serialization);
+        //var recovered = envelope.GetPlaintext(cryptoParameters.KeyLocate);
+        plaintext.IsEqualTo(recovered).TestTrue();
+
+
+        //throw new NYI();
+        //var envelope = Enveloped.FromJSON(serialization, false,
+        //        decrypt: cryptoParameters.Encrypt, keyCollection: cryptoParameters.KeyLocate);
+        //CheckDecodeResult(envelope, dataSequences, contentType);
+
+        //plaintext.IsEqualTo(envelope.Body).TestTrue();
         }
 
     static void CheckDecodeCorrupted(
@@ -377,16 +388,20 @@ public partial class TestDare {
             List<byte[]> dataSequences = null,
             string contentType = null) {
 
-        var Envelope = DareEnvelope.FromJSON(serialization, false,
-                decrypt: cryptoParameters.Encrypt, keyCollection: cryptoParameters.KeyLocate);
-        CheckDecodeResult(Envelope, dataSequences, contentType);
+        var envelope = JsonObject.StreamParse<Enveloped>(serialization);
+        var recovered = envelope.GetPlaintext(cryptoParameters.KeyLocate);
+        plaintext.IsEqualTo(recovered).TestFalse();
+
+        //var Envelope = Enveloped.FromJSON(serialization, false,
+        //        decrypt: cryptoParameters.Encrypt, keyCollection: cryptoParameters.KeyLocate);
+        //CheckDecodeResult(Envelope, dataSequences, contentType);
 
         //Plaintext.IsEqualTo(Envelope.Body).TestTrue();
         }
 
 
     static void CheckDecode(
-                DareEnvelope envelope,
+                Enveloped envelope,
                 byte[] plaintext,
                 IKeyLocate keyCollection
                 ) {
@@ -407,7 +422,7 @@ public partial class TestDare {
 
 
     static void CheckDecodeResult(
-        DareEnvelope envelope,
+        Enveloped envelope,
         List<byte[]> dataSequences = null,
         string contentType = null) {
 

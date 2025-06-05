@@ -106,11 +106,7 @@ public delegate ItemResult FilterIndexDelegate(SequenceIndexEntry sequenceIndexE
 /// Sequence index with the decoded head and tail and extent information for
 /// the body.
 /// </summary>
-public partial class SequenceIndexEntry : DareEnvelope {
-
-    ///<summary>Return the body of the entry.</summary> 
-    public override byte[] GetBodyLazy() => GetBody();
-
+public partial class SequenceIndexEntry : DareEnvelopeLazy {
 
     ///<summary>The Sequence that is indexed.</summary> 
     public Sequence Sequence { get; set; }
@@ -232,19 +228,6 @@ public partial class SequenceIndexEntry : DareEnvelope {
     public void CopyPayload(Sequence sequence, IKeyLocate keyCollection, Stream output) {
         var reader = GetPayloadStreamn(sequence, keyCollection);
 
-
-        //// failing here because we have encryption but no recipients!!!
-
-        //DareHeader exchange = null;
-        //if (Header?.SequenceInfo?.ExchangePosition is not null) {
-        //    exchange = sequence.GetHeader(Header.SequenceInfo.ExchangePosition ?? 0);
-        //    }
-
-        //using var input = Sequence.FramerGetReader(DataPosition, DataLength);
-        //Header.GetDecoder(input,
-        //    out var Reader, keyCollection: keyCollection, exchange: exchange);
-
-
         reader.CopyTo(output);
         }
 
@@ -254,7 +237,7 @@ public partial class SequenceIndexEntry : DareEnvelope {
     /// <param name="envelope">The envelope to return an index for.</param>
     /// <param name="sequence">The Sequence in which the envelope is embedded.</param>
     /// <param name="dataPosition">PositionRead of the envelope in the Sequence.</param>
-    public SequenceIndexEntry(Sequence sequence, DareEnvelope envelope, long dataPosition) {
+    public SequenceIndexEntry(Sequence sequence, Enveloped envelope, long dataPosition) {
         Header = envelope.Header;
         Trailer = envelope.Trailer;
         JsonObject = envelope.JsonObject;
@@ -294,14 +277,14 @@ public partial class SequenceIndexEntry : DareEnvelope {
 
         var frameLength = jbcdStream.FramerOpen(position, previous);
         var headerBytes = jbcdStream.FramerGetData();
-        var header = StreamParse<DareHeader>(headerBytes, false);
+        var header = StreamParseTag<DareHeader>(headerBytes, false);
 
         jbcdStream.FramerGetFrameIndex(out var dataPosition, out var dataLength);
 
         var TrailerBytes = jbcdStream.FramerGetData();
         DareTrailer trailer = null;
         if (TrailerBytes != null && TrailerBytes.Length > 0) {
-            trailer = StreamParse<DareTrailer>(TrailerBytes, false);
+            trailer = StreamParseTag<DareTrailer>(TrailerBytes, false);
             }
 
         return sequence.SequenceIndexEntryFactoryDelegate(
@@ -363,10 +346,11 @@ public partial class SequenceIndexEntry : DareEnvelope {
     /// Return an envelope for the index data.
     /// </summary>
     /// <returns></returns>
-    public DareEnvelope GetEnvelope() {
-        return new DareEnvelopeLazy(GetBody) {
+    public Enveloped GetEnvelope() {
+        return new DareEnvelopeLazy() {
             Header = Header,
             Trailer = Trailer,
+            GetBodyDelegate = GetBody
             };
         }
 
@@ -431,7 +415,7 @@ public partial class SequenceIndexEntry : DareEnvelope {
         //var text = bytes.ToUTF8();
         //var result = bytes.JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
         var result = JsonObject.ParseTagged(bytes);
-        result.Enveloped = this;
+        result.Envelope = this;
 
         return result;
 
@@ -454,27 +438,27 @@ public partial class SequenceIndexEntry : DareEnvelope {
         }
 
 
-    /// <summary>
-    /// Return a DareEnvelope wrapping the fnewrame.
-    /// </summary>
-    /// <param name="sequence">The indexed Sequence.</param>
-    /// <param name="detatched">If true, </param>
-    /// <returns>The frame payload</returns>      
-    public DareEnvelope GetEnvelope(Sequence sequence, bool detatched = false) {
-        var envelope = new DareEnvelope() {
-            Header = Header,
-            Trailer = Trailer,
-            Body = GetBody(sequence)
-            };
+    ///// <summary>
+    ///// Return a DareEnvelope wrapping the fnewrame.
+    ///// </summary>
+    ///// <param name="sequence">The indexed Sequence.</param>
+    ///// <param name="detatched">If true, </param>
+    ///// <returns>The frame payload</returns>      
+    //public DareEnvelope GetEnvelope(Sequence sequence, bool detatched = false) {
+    //    var envelope = new DareEnvelope() {
+    //        Header = Header,
+    //        Trailer = Trailer,
+    //        Body = GetBody(sequence)
+    //        };
 
-        if (!detatched | Header?.SequenceInfo?.ExchangePosition is null) {
-            Header.Recipients = GetRecipients(sequence);
-            }
+    //    if (!detatched | Header?.SequenceInfo?.ExchangePosition is null) {
+    //        Header.Recipients = GetRecipients(sequence);
+    //        }
 
 
-        return envelope;
+    //    return envelope;
 
-        }
+    //    }
 
     List<DareRecipient> GetRecipients(Sequence sequence) {
         if (Header?.SequenceInfo?.ExchangePosition is null) {
@@ -523,42 +507,32 @@ public partial class SequenceIndexEntry : DareEnvelope {
 
 
 /// <summary>
-/// Delegate returning the body of a DARE envelope.
-/// </summary>
-/// <returns>The body of the envelope.</returns>
-public delegate byte[] GetBodyDelegate();
-
-/// <summary>
-/// Lazy evaluation version of <see cref="DareEnvelope"/>, only reads the
+/// Lazy evaluation version of <see cref="Enveloped"/>, only reads the
 /// body part when needed.
 /// </summary>
-public class DareEnvelopeLazy : DareEnvelope {
+public class DareEnvelopeLazy : Enveloped {
 
     ///<inheritdoc/>
     public override byte[] Body {
-        get => body ?? GetBodyDelegate().CacheValue(out body);
+        get => GetBodyLazy();
         set => throw new NYI();
         }
     byte[] body = null;
 
     ///<inheritdoc/>
-    public override byte[] GetBodyLazy() {
-        return body ?? GetBodyDelegate().CacheValue(out body);
-        }
+    public override byte[] GetBodyLazy() => body ?? GetBodyDelegate().CacheValue(out body);
 
     ///<inheritdoc/>
     public override void LoadBody() => body ??= GetBodyDelegate();
 
-
-    GetBodyDelegate GetBodyDelegate { get; }
+    public Func<byte[]> GetBodyDelegate { get; init; }
 
     /// <summary>
     /// Constructor, returns an envelope that will only read the body when needed
     /// using the <paramref name="getbody"/> delegate.
     /// </summary>
     /// <param name="getbody">Delegate returning the body of the envelope.</param>
-    public DareEnvelopeLazy(GetBodyDelegate getbody) {
-        GetBodyDelegate = getbody;
+    public DareEnvelopeLazy() {
         }
 
 

@@ -3,7 +3,20 @@
 	Description
 		|Classes to be used to test serialization an deserialization.
 
-	Structure Envelope
+
+
+	Structure StoreUpdate
+		String SomeString
+		Struct Enveloped AnEnvelope
+			Description
+				|The entries to be uploaded. 
+		Struct Enveloped Envelopes
+			Multiple
+			Description
+				|The entries to be uploaded. 
+
+
+	Structure TestEnveloped
 		Description
 			|Base for generic envelope
 		String		Header
@@ -12,7 +25,7 @@
 
 
 	Structure MultiInstance
-		GStruct Envelope MultiInstance Generic
+		GStruct TestEnveloped MultiInstance Generic
 		Description
 			|Contains one instance of each type of field.
 		String		Type

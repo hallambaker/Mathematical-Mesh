@@ -64,11 +64,35 @@ namespace Goedel.Protocol;
 public abstract record JsonElement2 {
 
 
-    public static JsonElementObject? Parse(
+    public static JsonElement2? Parse(
                     JsonReader jsonReader) {
-        //JsonReader.Trace = true;
-        bool going = jsonReader.StartObject();
-        return going ? new JsonElementObject(jsonReader) : null;
+        jsonReader.GetToken();
+
+
+        switch (jsonReader.TokenType) {
+            case Token.StartObject: {
+                jsonReader.PeekToken();
+                if (jsonReader.TokenType == Token.EndObject) {
+                    jsonReader.GetToken();
+                    return null;
+                    }
+                return new JsonElementObject(jsonReader);
+
+                break;
+                }
+            case Token.StartArray: {
+                jsonReader.PeekToken();
+                if (jsonReader.TokenType == Token.EndArray) {
+                    jsonReader.GetToken();
+                    return null;
+                    }
+                return new JsonElementArray(jsonReader);
+
+                }
+
+            }
+
+        return null;
         }
 
 

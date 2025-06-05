@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 4:21:35 PM
+//  This file was automatically generated at 6/5/2025 7:42:58 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -71,19 +71,6 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
     /// </summary>
 	public new const string __Tag = "CatalogItem";
 
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"AccountEntry", AccountEntry._Factory},
-	    {"AccountUser", AccountUser._Factory}
-		};
-	*/
-
 	/// <summary>
     /// Dictionary mapping types to bindings
     /// </summary>
@@ -95,8 +82,6 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 	    {typeof(AccountUser), AccountUser._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -105,19 +90,8 @@ public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -175,7 +149,6 @@ abstract public partial class AccountEntry : CatalogedEntry {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Directory", 
 					(IBinding data, string? value) => {(data as AccountEntry).Directory = value;}, 
 					(IBinding data) => (data as AccountEntry).Directory ),
@@ -190,7 +163,8 @@ abstract public partial class AccountEntry : CatalogedEntry {
 					(IBinding data) => (data as AccountEntry).Status ),
 		new PropertyString ("LocalAddress", 
 					(IBinding data, string? value) => {(data as AccountEntry).LocalAddress = value;}, 
-					(IBinding data) => (data as AccountEntry).LocalAddress )		];
+					(IBinding data) => (data as AccountEntry).LocalAddress )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -198,32 +172,13 @@ abstract public partial class AccountEntry : CatalogedEntry {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<AccountEntry> _binding = new (
 			new() {
-
 			{ "Directory", _properties [0]},
 			{ "ProfileUdf", _properties [1]},
 			{ "Quota", _properties [2]},
 			{ "Status", _properties [3]},
-			{ "LocalAddress", _properties [4]}
-        }, __Tag,null, null, null,CatalogedEntry._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "LocalAddress", _properties [4]}}, __Tag,
+		null, null, null, CatalogedEntry._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(CatalogedEntry._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -249,39 +204,39 @@ abstract public partial class AccountEntry : CatalogedEntry {
 	/// Represents a Mesh Account
 	/// </summary>
 public partial class AccountUser : AccountEntry {
-	[JsonPropertyName("ProfileUser")]
+	[JsonPropertyName("EnvelopedProfileUser")]
 	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileUser  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual ProfileAccount?				ProfileUser  {get; set;} 
-	[JsonPropertyName("AccountHostAssignment")]
+	public virtual ProfileAccount?				ProfileUser  => EnvelopedProfileUser.Decode();
+	[JsonPropertyName("EnvelopedAccountHostAssignment")]
 	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual AccountHostAssignment?				AccountHostAssignment  {get; set;} 
+	public virtual AccountHostAssignment?				AccountHostAssignment  => EnvelopedAccountHostAssignment.Decode();
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
-		new PropertyGStruct ("ProfileUser", /*typeof (ProfileAccount<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedProfileUser", /*typeof (ProfileAccount<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as AccountUser).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;},
 					(IBinding data) => (data as AccountUser).EnvelopedProfileUser,
 					/*(IBinding data, object? value) => {(data as AccountUser).ProfileUser = value as ProfileAccount;},
 					(IBinding data) => (data as AccountUser).ProfileUser,*/
 					()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
-		new PropertyGStruct ("AccountHostAssignment", /*typeof (AccountHostAssignment<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedAccountHostAssignment", /*typeof (AccountHostAssignment<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as AccountUser).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
 					(IBinding data) => (data as AccountUser).EnvelopedAccountHostAssignment,
 					/*(IBinding data, object? value) => {(data as AccountUser).AccountHostAssignment = value as AccountHostAssignment;},
 					(IBinding data) => (data as AccountUser).AccountHostAssignment,*/
-					()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())		];
+					()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -289,29 +244,10 @@ public partial class AccountUser : AccountEntry {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<AccountUser> _binding = new (
 			new() {
+			{ "EnvelopedProfileUser", _properties [0]},
+			{ "EnvelopedAccountHostAssignment", _properties [1]}}, __Tag,
+		() => new AccountUser(), () => [], () => [], AccountEntry._binding, Generic: false);
 
-			{ "ProfileUser", _properties [0]},
-			{ "AccountHostAssignment", _properties [1]}
-        }, __Tag,() => new AccountUser(), () => new List<AccountUser>(), () => new Dictionary<string,AccountUser>(),AccountEntry._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(AccountEntry._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class

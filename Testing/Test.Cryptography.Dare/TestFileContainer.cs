@@ -175,20 +175,20 @@ public partial class TestDareLog {
         seed.CheckTestFile(fileName, length);
 
         var tempEncode = seed.GetTempFilePath();
-        DareEnvelope.Encode(policy, fileName, tempEncode);
+        Enveloped.Encode(policy, fileName, tempEncode);
 
         var tempDecode = seed.GetTempFilePath();
-        DareEnvelope.Decode(tempEncode, tempDecode, policy.KeyLocate);
+        Enveloped.Decode(tempEncode, tempDecode, policy.KeyLocate);
 
         seed.CheckTestFile(tempDecode, length);
 
 
-        var v1 = DareEnvelope.Verify(tempEncode);
+        var v1 = Enveloped.Verify(tempEncode);
 
         if (policy.SignerKeys != null) {
             // Here corrupt the file data 
 
-            var v2 = DareEnvelope.Verify(tempEncode);
+            var v2 = Enveloped.Verify(tempEncode);
             }
         }
 

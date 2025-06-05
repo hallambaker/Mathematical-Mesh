@@ -148,7 +148,7 @@ public partial class StoreTests {
 
         }
 
-    static DareEnvelope MakeMessage(string id, KeyPair signingKey = null) {
+    static Enveloped MakeMessage(string id, KeyPair signingKey = null) {
         var message = new Message() {
             Sender = id,
             MessageId = id

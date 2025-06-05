@@ -190,7 +190,7 @@ public partial class JoseWebSignature {
     public bool Verify(KeyPair publicKey) {
         var signature = MatchSigner(publicKey);
 
-        var header = StreamParse<Header>(signature.Protected, false);
+        var header = StreamParseTag<Header>(signature.Protected, false);
 
         //var protectedText = signature.Protected.ToUTF8();
         //new Header();

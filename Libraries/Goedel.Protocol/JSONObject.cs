@@ -99,7 +99,7 @@ public abstract partial class JsonObject : IBinding {
     public virtual string _PrimaryKey => null;
 
     ///<summary>The enveloped object data.</summary> 
-    public object Enveloped;
+    public object Envelope;
 
     ///<summary>Key collection to be used to decrypt enveloped data within the object.</summary> 
     public object KeyLocate;
@@ -304,15 +304,15 @@ public abstract partial class JsonObject : IBinding {
     /// copied.</returns>
     public virtual JsonObject DeepCopy() => null;
 
-    ///// <summary>
-    ///// Convert object to string in JSON form
-    ///// </summary>
-    ///// <returns>Data as string.</returns>
-    //public override string ToString() {
-    //    //var _JSONWriter = JSONWriterFactory();
-    //    //Serialize(_JSONWriter, false);
-    //    //return _JSONWriter.GetUTF8;
-    //    }
+    /// <summary>
+    /// Convert object to string in JSON form
+    /// </summary>
+    /// <returns>Data as string.</returns>
+    public override string ToString() {
+        var _JSONWriter = JSONWriterFactory();
+        Serialize(_JSONWriter, false);
+        return _JSONWriter.GetUTF8;
+        }
 
     /// <summary>
     /// Convert object to string in JSON form and return as a byte array.
@@ -383,26 +383,44 @@ public abstract partial class JsonObject : IBinding {
             writer.WriteObjectStart();
             writer.WriteToken(_Tag, 0);
             }
-        writer.WriteObjectStart();
-        foreach (var entry in _Binding.AllProperties) {
-            var tag = entry.Key;
-            var property = entry.Value;
 
-            if (!property.IsNull(this)) {
-                writer.WriteObjectSeparator(ref first);
-                writer.WriteToken(tag, 1);
-                property.Serialize(this, writer);
-                }
-            else if (property is PropertyStringTag) {
-                writer.WriteObjectSeparator(ref first);
-                writer.WriteToken(tag, 1);
-                property.Serialize(this, writer);
-                }
+        if (_Binding.Generic) {
+            writer.WriteArrayStart();
+            foreach (var entry in _Binding.AllProperties) {
+                var tag = entry.Key;
+                var property = entry.Value;
 
+                if (!property.IsNull(this)) {
+                    writer.WriteArraySeparator(ref first);
+                    property.Serialize(this, writer);
+                    }
+                else if (property is PropertyStringTag) {
+                    // This is going to have to be the first item to work.
+                    writer.WriteArraySeparator(ref first);
+                    property.Serialize(this, writer);
+                    }
+                }
+            writer.WriteArrayEnd();
             }
+        else {
+            writer.WriteObjectStart();
+            foreach (var entry in _Binding.AllProperties) {
+                var tag = entry.Key;
+                var property = entry.Value;
 
-        //Serialize(writer, true, ref first);
-        writer.WriteObjectEnd();
+                if (!property.IsNull(this)) {
+                    writer.WriteObjectSeparator(ref first);
+                    writer.WriteToken(tag, 1);
+                    property.Serialize(this, writer);
+                    }
+                else if (property is PropertyStringTag) {
+                    writer.WriteObjectSeparator(ref first);
+                    writer.WriteToken(tag, 1);
+                    property.Serialize(this, writer);
+                    }
+                }
+            writer.WriteObjectEnd();
+            }
         if (tagged) {
             writer.WriteObjectEnd();
             }
@@ -879,68 +897,28 @@ public abstract partial class JsonObject : IBinding {
     /// <param name="collectUparsed">If true, collect unparseable items during the
     /// parse.</param>
     /// <returns>The typed, parsed object.</returns>
-    public static T? StreamParse<T>(
+    public static T? StreamParseTag<T>(
                     byte[] data,
                     bool tagged = true,
                     bool collectUparsed = false) where T : JsonObject =>
                         StreamParseCore(typeof(T), new JsonBcdReader(data), tagged, collectUparsed) as T;
 
 
-    ///// <summary>
-    ///// Parse the JSON document <paramref name="document"/> returning an
-    ///// object instance of type <typeparamref name="T"/>.
-    ///// </summary>
-    ///// <typeparam name="T">Type of the object to return.</typeparam>
-    ///// <param name="document">The document to parse.</param>
-    ///// <param name="collectUparsed">If true, collect up unknown elements in the 
-    ///// returned instance.</param>
-    ///// <returns>The parsed object.</returns>
-    //public static T? Parse<T>(
-    //                byte[] data,
-    //                bool collectUparsed = false) where T : JsonObject, new() {
-    //    var document = JsonDocument.Parse(data);
-    //    return Parse<T>(document.RootElement, collectUparsed);
-    //    }
-
-
-    ///// <summary>
-    ///// Parse the JSON document <paramref name="document"/> returning an
-    ///// object instance of type <typeparamref name="T"/>.
-    ///// </summary>
-    ///// <typeparam name="T">Type of the object to return.</typeparam>
-    ///// <param name="document">The document to parse.</param>
-    ///// <param name="collectUparsed">If true, collect up unknown elements in the 
-    ///// returned instance.</param>
-    ///// <returns>The parsed object.</returns>
-    //public static T? Parse<T>(
-    //                JsonDocument document,
-    //                bool collectUparsed = false) where T : JsonObject, new() =>
-    //    Parse<T>(document.RootElement, collectUparsed);
-
-    ///// <summary>
-    ///// Parse the JSON element <paramref name="element"/> returning an
-    ///// object instance of type <typeparamref name="T"/>.
-    ///// </summary>
-    ///// <typeparam name="T">Type of the object to return.</typeparam>
-    ///// <param name="element">The document to parse.</param>
-    ///// <param name="collectUparsed">If true, collect up unknown elements in the 
-    ///// returned instance.</param>
-    ///// <returns>The parsed object.</returns>
-    //public static T? Parse<T>(
-    //            JsonElement element,
-    //            bool collectUparsed = false) where T : JsonObject, new() {
-    //    if (element.ValueKind != JsonValueKind.Object) {
-    //        return null;
-    //        }
-
-    //    var type = typeof(T);
-    //    if (!BindingDictionary.TryGetValue(type, out var binding)) {
-    //        return null;
-    //        }
-
-    //    return Parse(element, binding, collectUparsed) as T;
-    //    }
-
+    /// <summary>
+    /// Perform a one pass streaming parse on the data <paramref name="data"/>. This
+    /// parser does not (currently) support schemas in which a variant object type is
+    /// specified by the object property.
+    /// </summary>
+    /// <typeparam name="T">The type of the object to be returned.</typeparam>
+    /// <param name="data">The data to parse</param>
+    /// <param name="tagged">If true, the data object has a typed wrapper.</param>
+    /// <param name="collectUparsed">If true, collect unparseable items during the
+    /// parse.</param>
+    /// <returns>The typed, parsed object.</returns>
+    public static T? StreamParse<T>(
+                    byte[] data,
+                    bool collectUparsed = false) where T : JsonObject =>
+                        StreamParseCore(typeof(T), new JsonBcdReader(data), false, collectUparsed) as T;
 
     public static JsonObject ParseTagged(
             byte[] data,
@@ -951,9 +929,12 @@ public abstract partial class JsonObject : IBinding {
                 bool collectUparsed = false) {
 
         //var reader = new JsonBcdReader(data);
-        var element = JsonElement2.Parse(reader);
+        var element = JsonElement2.Parse(reader) as JsonElementObject;
 
         //var document = JsonDocument.Parse(data);
+
+
+
 
         (element.Properties.Count == 1).AssertTrue(NYI.Throw);
         var p1 = element.SoloProperty();
@@ -1000,546 +981,16 @@ public abstract partial class JsonObject : IBinding {
             return binding.Factory() as JsonObject;
             }
 
-        if (tagged) {
-            return Binding.ParseTagged(element, binding, collectUparsed);
+        if (element is JsonElementArray array) {
+            var template = binding.Factory() as JsonObject;
+            return Binding.Parse(array, binding, template, collectUparsed);
             }
-
+        if (tagged) {
+            return Binding.ParseTagged(element as JsonElementObject, binding, collectUparsed);
+            }
         else {
-            return Binding.Parse(element, binding, collectUparsed);
+            return Binding.Parse(element as JsonElementObject, binding, collectUparsed);
             }
         }
-
-
-
-    ///// <summary>
-    ///// Parse the JSON element <paramref name="element"/> returning a JsonObject
-    ///// of the type specified by <paramref name="binding"/>.
-    ///// </summary>
-
-    ///// <param name="element">The document to parse.</param>
-    ///// <param name="binding">The type binding describing the object class.</param>
-    ///// <param name="collectUparsed">If true, collect up unknown elements in the 
-    ///// returned instance.</param>
-    ///// <returns>The parsed object.</returns>
-    //public static JsonObject Parse (
-    //            JsonElement element,
-    //            Binding binding,
-    //            bool collectUparsed = false) {
-
-    //    JsonObject? template = null;
-    //    if (binding.TypeTag == null) {
-    //        template = (JsonObject)binding.Factory();
-    //        }
-    //    else {
-    //        if (element.TryGetProperty(binding.TypeTag, out var typeField)) {
-    //            if (typeField.ValueKind == JsonValueKind.String) {
-    //                if (binding.TypeDictionary.TryGetValue(typeField.GetString(), out var subBinding)) {
-    //                    template = (JsonObject)subBinding.Factory();
-    //                    }
-    //                }
-    //            }
-    //        else {
-    //            template = (JsonObject)binding.Factory();
-    //            }
-    //        }
-
-    //    foreach (var property in element.EnumerateObject()) {
-    //        var collect = collectUparsed;
-    //        if (template._AllProperties.TryGetValue(property.Name, out var propertyValue)) {
-    //            collect &= MapProperty (template, property.Value, propertyValue);
-    //            }
-    //        if (collect) {
-    //            template.UnparsedProperties ??= [];
-    //            template.UnparsedProperties.Add(property.Name, property.Value);
-    //            }
-    //        }
-
-    //    return template;
-    //    }
-
-    ///// <summary>
-    ///// Map the JSON element <paramref name="element"/> onto the object <paramref name="target"/>
-    ///// under the property description <paramref name="specifier"/>.
-    ///// </summary>
-    ///// <param name="target"></param>
-    ///// <param name="element"></param>
-    ///// <param name="specifier"></param>
-    ///// <returns>True if successful, otherwise false.</returns>
-    //public static bool MapProperty(
-    //            JsonObject target,
-    //            JsonElement element,
-    //            Property specifier) {
-
-    //    switch (specifier) {
-    //        #region // Boolean
-    //        case PropertyBoolean subProperty: {
-    //            if (element.ValueKind == JsonValueKind.True) {
-    //                subProperty.Set(target, true);
-    //                return true;
-    //                }
-    //            if (element.ValueKind == JsonValueKind.False) {
-    //                subProperty.Set(target, false);
-    //                return true;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyListBoolean subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Array) {
-    //                var collected = true;
-    //                var array = new List<bool>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateArray()) {
-    //                    if (member.ValueKind == JsonValueKind.True) {
-    //                        array.Add(true);
-    //                        }
-    //                    else if (member.ValueKind == JsonValueKind.False) {
-    //                        array.Add(false);
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyDictionaryBoolean subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Object) {
-    //                var collected = true;
-    //                var array = new Dictionary<string, bool>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateObject()) {
-    //                    if (member.Value.ValueKind == JsonValueKind.True) {
-    //                        array.Add(member.Name, true);
-    //                        }
-    //                    else if (member.Value.ValueKind == JsonValueKind.False) {
-    //                        array.Add(member.Name, false);
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        #endregion
-    //        #region // String
-
-    //        case PropertyString subProperty: {
-    //            if (element.ValueKind == JsonValueKind.String) {
-    //                subProperty.Set(target, element.GetString());
-    //                return true;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyListString subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Array) {
-    //                var collected = true;
-    //                var array = new List<string>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateArray()) {
-    //                    if (member.ValueKind == JsonValueKind.String) {
-    //                        array.Add(member.GetString());
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyDictionaryString subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Object) {
-    //                var collected = true;
-    //                var array = new Dictionary<string, string>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateObject()) {
-    //                    if (member.Value.ValueKind == JsonValueKind.String) {
-    //                        array.Add(member.Name, member.Value.GetString());
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        #endregion
-    //        #region // Int32
-    //        case PropertyInteger32 subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Number) {
-    //                subProperty.Set(target, element.GetInt32());
-    //                return true;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyListInteger32 subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Array) {
-    //                var collected = true;
-    //                var array = new List<int>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateArray()) {
-    //                    if (member.ValueKind == JsonValueKind.Number) {
-    //                        array.Add(member.GetInt32());
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyDictionaryInteger32 subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Object) {
-    //                var collected = true;
-    //                var array = new Dictionary<string, int>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateObject()) {
-    //                    if (member.Value.ValueKind == JsonValueKind.Number) {
-    //                        array.Add(member.Name, member.Value.GetInt32());
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        #endregion
-    //        #region // Int64
-    //        case PropertyInteger64 subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Number) {
-    //                subProperty.Set(target, element.GetInt64());
-    //                return true;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyListInteger64 subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Array) {
-    //                var collected = true;
-    //                var array = new List<long>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateArray()) {
-    //                    if (member.ValueKind == JsonValueKind.Number) {
-    //                        array.Add(member.GetInt64());
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyDictionaryInteger64 subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Object) {
-    //                var collected = true;
-    //                var array = new Dictionary<string, long>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateObject()) {
-    //                    if (member.Value.ValueKind == JsonValueKind.Number) {
-    //                        array.Add(member.Name, member.Value.GetInt64());
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        #endregion
-    //        #region // Real32
-    //        case PropertyReal32 subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Number) {
-    //                subProperty.Set(target, element.GetSingle());
-    //                return true;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyListReal32 subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Array) {
-    //                var collected = true;
-    //                var array = new List<float>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateArray()) {
-    //                    if (member.ValueKind == JsonValueKind.Number) {
-    //                        array.Add(member.GetSingle());
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyDictionaryReal32 subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Object) {
-    //                var collected = true;
-    //                var array = new Dictionary<string, float>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateObject()) {
-    //                    if (member.Value.ValueKind == JsonValueKind.Number) {
-    //                        array.Add(member.Name, member.Value.GetSingle());
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        #endregion
-    //        #region // Real64
-    //        case PropertyReal64 subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Number) {
-    //                subProperty.Set(target, element.GetDouble());
-    //                return true;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyListReal64 subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Array) {
-    //                var collected = true;
-    //                var array = new List<double>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateArray()) {
-    //                    if (member.ValueKind == JsonValueKind.Number) {
-    //                        array.Add(member.GetDouble());
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyDictionaryReal64 subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Object) {
-    //                var collected = true;
-    //                var array = new Dictionary<string, double>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateObject()) {
-    //                    if (member.Value.ValueKind == JsonValueKind.Number) {
-    //                        array.Add(member.Name, member.Value.GetDouble());
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        #endregion
-    //        #region // DateTime
-    //        case PropertyDateTime subProperty: {
-    //            if (element.ValueKind == JsonValueKind.String) {
-    //                subProperty.Set(target, element.GetDateTime());
-    //                return true;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyListDateTime subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Array) {
-    //                var collected = true;
-    //                var array = new List<DateTime>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateArray()) {
-    //                    if (member.ValueKind == JsonValueKind.String) {
-    //                        array.Add(member.GetDateTime());
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyDictionaryDateTime subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Object) {
-    //                var collected = true;
-    //                var array = new Dictionary<string, DateTime>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateObject()) {
-    //                    if (member.Value.ValueKind == JsonValueKind.String) {
-    //                        array.Add(member.Name, member.Value.GetDateTime());
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        #endregion
-    //        #region // Binary
-    //        case PropertyBinary subProperty: {
-    //            if (element.ValueKind == JsonValueKind.String) {
-    //                var value = element.GetString().FromBase64();
-    //                subProperty.Set(target, value);
-    //                return true;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyListBinary subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Array) {
-    //                var collected = true;
-    //                var array = new List<byte[]>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateArray()) {
-    //                    if (member.ValueKind == JsonValueKind.String) {
-    //                        var value = member.GetString().FromBase64();
-    //                        array.Add(value);
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyDictionaryBinary subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Object) {
-    //                var collected = true;
-    //                var array = new Dictionary<string, byte[]>();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateObject()) {
-    //                    if (member.Value.ValueKind == JsonValueKind.String) {
-    //                        var value = member.Value.GetString().FromBase64();
-    //                        array.Add(member.Name, value);
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        #endregion
-    //        #region // Struct
-    //        case PropertyStruct subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Object) {
-    //                if (!BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
-    //                    return false;
-    //                    }
-    //                if (subProperty.Tagged) {
-    //                    var item = ParseTagged(element, binding);
-    //                    subProperty.Set(target, item);
-    //                    }
-    //                else {
-    //                    var item = Parse(element, binding);
-    //                    subProperty.Set(target, item);
-    //                    }
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyListStruct subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Array) {
-    //                if (!BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
-    //                    return false;
-    //                    }
-    //                var collected = true;
-    //                var array = binding.ListFactory();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateArray()) {
-    //                    if (member.ValueKind == JsonValueKind.Object) {
-
-    //                        if (subProperty.Tagged) {
-    //                            var item = ParseTagged(member, binding);
-    //                            binding.ListAdd(array, item);
-    //                            }
-    //                        else {
-    //                            var item = Parse(member, binding);
-    //                            binding.ListAdd(array, item);
-    //                            }
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        case PropertyDictionaryStruct subProperty: {
-    //            if (element.ValueKind == JsonValueKind.Object) {
-    //                if (!BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
-    //                    return false;
-    //                    }
-    //                var collected = true;
-    //                var array = binding.DictionaryFactory();
-    //                subProperty.Set(target, array);
-
-    //                foreach (var member in element.EnumerateObject()) {
-    //                    if (member.Value.ValueKind == JsonValueKind.Object) {
-    //                        if (subProperty.Tagged) {
-    //                            var item = ParseTagged(member.Value, binding);
-    //                            binding.DictionaryAdd(array, member.Name, item);
-    //                            }
-    //                        else {
-    //                            var item = Parse(member.Value, binding);
-    //                            binding.DictionaryAdd(array, member.Name, item);
-    //                            }
-    //                        }
-    //                    else {
-    //                        collected = false;
-    //                        }
-    //                    }
-    //                return collected;
-    //                }
-    //            return false;
-    //            }
-    //        #endregion
-    //        }
-
-    //    return false;
-
-    //    }
-
-
-    //static JsonObject ParseTagged(
-    //            JsonElement element,
-    //            Binding binding
-    //            ) {
-    //    foreach (var member in element.EnumerateObject()) {
-    //        if (binding.TypeDictionary.TryGetValue(member.Name, out var subBinding)) {
-    //            if (member.Value.ValueKind == JsonValueKind.Object) {
-    //                return Parse(member.Value, binding);
-    //                }
-    //            }
-    //        return null;
-    //        }
-    //    return null;
-    //    }
 
     }

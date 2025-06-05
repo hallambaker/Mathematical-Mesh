@@ -115,25 +115,25 @@ public class PersistenceStoreEphemeral : PersistenceStore {
 
     #region // Override update accessors so as to wrap with callse to open/close the sequence.
     ///<inheritdoc/>
-    public override IPersistenceEntry New(JsonObject jsonObject, Transaction transaction = null) {
+    public override IPersistenceEntry New(JsonObject jsonObject) {
         Reload();
-        var result = base.New(jsonObject, transaction);
+        var result = base.New(jsonObject);
         Unload();
         return result;
         }
 
     ///<inheritdoc/>
-    public override IPersistenceEntry Update(JsonObject jsonObject, bool create = true, Transaction transaction = null) {
+    public override IPersistenceEntry Update(JsonObject jsonObject, bool create = true) {
         Reload();
-        var result = base.Update(jsonObject, create, transaction);
+        var result = base.Update(jsonObject, create);
         Unload();
         return result;
         }
 
     ///<inheritdoc/>
-    public override bool Delete(string uniqueID, Transaction transaction = null, bool erase = false) {
+    public override bool Delete(string uniqueID, bool erase = false) {
         Reload();
-        var result = base.Delete(uniqueID, transaction, erase);
+        var result = base.Delete(uniqueID, erase);
         Unload();
         return result;
         }
@@ -329,7 +329,7 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     /// <param name="jsonObject">The object.</param>
     /// <param name="additionalRecipients">Encryption keys of additional recipients.</param>
     /// <returns>The prepared envelope.</returns>
-    public DareEnvelope Prepare(
+    public Enveloped Prepare(
             ContentMeta contentInfo,
             JsonObject jsonObject,
                 List<KeyPair> additionalRecipients = null) {
@@ -363,7 +363,7 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     /// </summary>
     /// <param name="jsonObject">Object to create</param>
 
-    public virtual DareEnvelope PrepareNew(
+    public virtual Enveloped PrepareNew(
             JsonObject jsonObject) {
 
         // Precondition UniqueID does not exist
@@ -391,7 +391,7 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
     /// <param name="additionalRecipients">Additional encryption keys for which recipient
     /// entries are to be created.</param>
-    public virtual DareEnvelope PrepareUpdate(
+    public virtual Enveloped PrepareUpdate(
                 out PersistentIndexEntry previous,
                 JsonObject jsonObject,
                 bool create = true, CryptographicKey encryptionKey = null,
@@ -418,7 +418,7 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     /// <param name="uniqueID">The UniqueID of the object to delete</param>
     /// <returns>True if the object was updated, otherwise false.</returns>
     /// 
-    public DareEnvelope PrepareDelete(
+    public Enveloped PrepareDelete(
         out PersistentIndexEntry previous, string uniqueID) {
 
         var exists = ObjectIndex.TryGetValue(uniqueID, out previous);
@@ -440,8 +440,8 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     /// Create a new persistence entry.
     /// </summary>
     /// <param name="jsonObject">Object to create</param>
-    /// <param name="transaction">The transaction context in which to prepare the update.</param>
-    public virtual IPersistenceEntry New(JsonObject jsonObject, Transaction transaction = null) {
+    /// 
+    public virtual IPersistenceEntry New(JsonObject jsonObject) {
         var envelope = PrepareNew(jsonObject);
         var result = Sequence.Append(envelope) as PersistentIndexEntry;
 
@@ -454,8 +454,8 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     /// </summary>
     /// <param name="jsonObject">The new object value</param>
     /// <param name="create">If true, create a new value if one does not already exist</param>
-    /// <param name="transaction">The transaction context in which to perform the update.</param>
-    public virtual IPersistenceEntry Update(JsonObject jsonObject, bool create = true, Transaction transaction = null) {
+    /// 
+    public virtual IPersistenceEntry Update(JsonObject jsonObject, bool create = true) {
 
         var envelope = PrepareUpdate(out _, jsonObject, create);
         var result = Sequence.Append(envelope) as PersistentIndexEntry;
@@ -468,11 +468,11 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     /// </summary>
     /// <threadsafety static="true" instance="true"/>
     /// <param name="uniqueID">The UniqueID of the object to delete</param>
-    /// <param name="transaction">The transaction context in which to perform the update.</param>
     /// <param name="erase">If true, render the payload data unavailable by either deleting the 
     /// decryption salt or erasing the payload itself.</param>
+    /// 
     /// <returns>True if the object was updated, otherwise false.</returns>
-    public virtual bool Delete(string uniqueID, Transaction transaction = null, bool erase = false) {
+    public virtual bool Delete(string uniqueID, bool erase = false) {
         erase.AssertFalse(NYI.Throw);
         var envelope = PrepareDelete(out var Previous, uniqueID);
         if (envelope == null) {
@@ -486,7 +486,7 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     /// Apply the specified message to the Sequence.
     /// </summary>
     /// <param name="dareMessage"></param>
-    public virtual PersistentIndexEntry Apply(DareEnvelope dareMessage) {
+    public virtual PersistentIndexEntry Apply(Enveloped dareMessage) {
         var frameIndex = Sequence.Append(dareMessage) as PersistentIndexEntry;
         return frameIndex;
         }
@@ -524,15 +524,5 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
 
     }
 
-/// <summary>
-/// Base class for transactions.
-/// </summary>
-public class Transaction {
-
-
-
-
-
-    }
 
 

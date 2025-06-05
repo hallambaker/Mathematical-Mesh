@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/28/2025 12:00:12 AM
+//  This file was automatically generated at 6/5/2025 7:42:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -616,7 +616,7 @@ public partial class JsCalendarEntry : JmapBase {
 			{ "localizations", _properties [29]},
 			{ "timeZone", _properties [30]},
 			{ "timeZones", _properties [31]}}, __Tag,
-		() => new JsCalendarEntry(), () => [], () => [], JmapBase._binding);
+		() => new JsCalendarEntry(), () => [], () => [], JmapBase._binding, Generic: false);
 
 
 	/// <summary>
@@ -697,7 +697,7 @@ public partial class JsEvent : JsCalendarEntry {
 			{ "start", _properties [0]},
 			{ "duration", _properties [1]},
 			{ "status", _properties [2]}}, __Tag,
-		() => new JsEvent(), () => [], () => [], JsCalendarEntry._binding);
+		() => new JsEvent(), () => [], () => [], JsCalendarEntry._binding, Generic: false);
 
 
 	/// <summary>
@@ -811,7 +811,7 @@ public partial class JsTask : JsCalendarEntry {
 			{ "percentComplete", _properties [3]},
 			{ "progress", _properties [4]},
 			{ "progressUpdated", _properties [5]}}, __Tag,
-		() => new JsTask(), () => [], () => [], JsCalendarEntry._binding);
+		() => new JsTask(), () => [], () => [], JsCalendarEntry._binding, Generic: false);
 
 
 	/// <summary>
@@ -874,7 +874,7 @@ public partial class JsGroup : JsCalendarEntry {
 			new() {
 			{ "entries", _properties [0]},
 			{ "source", _properties [1]}}, __Tag,
-		() => new JsGroup(), () => [], () => [], JsCalendarEntry._binding);
+		() => new JsGroup(), () => [], () => [], JsCalendarEntry._binding, Generic: false);
 
 
 	/// <summary>
@@ -1017,7 +1017,7 @@ public partial class Location : Calandars {
 			{ "timeZone", _properties [5]},
 			{ "coordinates", _properties [6]},
 			{ "link", _properties [7]}}, __Tag,
-		() => new Location(), () => [], () => [], null);
+		() => new Location(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1144,7 +1144,7 @@ public partial class Link : Calandars {
 			{ "rel", _properties [4]},
 			{ "display", _properties [5]},
 			{ "title", _properties [6]}}, __Tag,
-		() => new Link(), () => [], () => [], null);
+		() => new Link(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1240,7 +1240,7 @@ public partial class VirtualLocation : Calandars {
 			{ "description", _properties [2]},
 			{ "uri", _properties [3]},
 			{ "features", _properties [4]}}, __Tag,
-		() => new VirtualLocation(), () => [], () => [], null);
+		() => new VirtualLocation(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1615,7 +1615,7 @@ public partial class Participant : Calandars {
 			{ "progress", _properties [26]},
 			{ "progressUpdated", _properties [27]},
 			{ "percentComplete", _properties [28]}}, __Tag,
-		() => new Participant(), () => [], () => [], null);
+		() => new Participant(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1889,7 +1889,7 @@ public partial class RecurrenceRule : Calandars {
 			{ "bySetPosition", _properties [15]},
 			{ "count", _properties [16]},
 			{ "until", _properties [17]}}, __Tag,
-		() => new RecurrenceRule(), () => [], () => [], null);
+		() => new RecurrenceRule(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1951,7 +1951,7 @@ public partial class NDay : Calandars {
 			new() {
 			{ "@type", _properties [0]},
 			{ "day", _properties [1]}}, __Tag,
-		() => new NDay(), () => [], () => [], null);
+		() => new NDay(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -2061,7 +2061,7 @@ public partial class Alert : Calandars {
 			{ "acknowledged", _properties [2]},
 			{ "relatedTo", _properties [3]},
 			{ "action", _properties [4]}}, __Tag,
-		() => new Alert(), () => [], () => [], null);
+		() => new Alert(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -2148,7 +2148,7 @@ public partial class Trigger : Calandars {
 			{ "offset", _properties [1]},
 			{ "relativeTo", _properties [2]},
 			{ "when", _properties [3]}}, __Tag,
-		() => new Trigger(), () => [], () => [], null);
+		() => new Trigger(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -2285,7 +2285,7 @@ public partial class TimeZone : Calandars {
 			{ "aliases", _properties [5]},
 			{ "standard", _properties [6]},
 			{ "daylight", _properties [7]}}, __Tag,
-		() => new TimeZone(), () => [], () => [], null);
+		() => new TimeZone(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -2427,7 +2427,7 @@ public partial class TimeZoneRule : Calandars {
 			{ "recurrenceOverrides", _properties [5]},
 			{ "names", _properties [6]},
 			{ "comments", _properties [7]}}, __Tag,
-		() => new TimeZoneRule(), () => [], () => [], null);
+		() => new TimeZoneRule(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -2468,7 +2468,7 @@ public partial class EmptyPatchObject : Calandars {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<EmptyPatchObject> _binding = new (
 			new() {}, __Tag,
-		() => new EmptyPatchObject(), () => [], () => [], null);
+		() => new EmptyPatchObject(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>

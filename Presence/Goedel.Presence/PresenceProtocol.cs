@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 4:21:30 PM
+//  This file was automatically generated at 6/5/2025 7:42:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -73,34 +73,6 @@ public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObj
     /// </summary>
 	public new const string __Tag = "PresenceProtocol";
 
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"PresenceFromClient", PresenceFromClient._Factory},
-	    {"PresenceConnectRequest", PresenceConnectRequest._Factory},
-	    {"PresenceHeartbeat", PresenceHeartbeat._Factory},
-	    {"PresenceEndpointRequest", PresenceEndpointRequest._Factory},
-	    {"PresenceAcknowledge", PresenceAcknowledge._Factory},
-	    {"PresenceResolveRequest", PresenceResolveRequest._Factory},
-	    {"PresenceFromService", PresenceFromService._Factory},
-	    {"PresenceConnectResponse", PresenceConnectResponse._Factory},
-	    {"PresenceErrorInvalidSerial", PresenceErrorInvalidSerial._Factory},
-	    {"PresenceStatus", PresenceStatus._Factory},
-	    {"PresenceEndpointResponse", PresenceEndpointResponse._Factory},
-	    {"PresenceNotify", PresenceNotify._Factory},
-	    {"PresenceResolveResponse", PresenceResolveResponse._Factory},
-	    {"SessionRequest", SessionRequest._Factory},
-	    {"SessionResponse", SessionResponse._Factory},
-	    {"SessionEndpoint", SessionEndpoint._Factory},
-	    {"UdpEndpoint", UdpEndpoint._Factory}
-		};
-	*/
-
 	/// <summary>
     /// Dictionary mapping types to bindings
     /// </summary>
@@ -127,8 +99,6 @@ public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObj
 	    {typeof(UdpEndpoint), UdpEndpoint._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -137,19 +107,8 @@ public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObj
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -283,13 +242,13 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyInteger32 ("Serial", 
 					(IBinding data, int? value) => {(data as PresenceFromClient).Serial = value;}, 
 					(IBinding data) => (data as PresenceFromClient).Serial ),
 		new PropertyInteger32 ("Acknowledge", 
 					(IBinding data, int? value) => {(data as PresenceFromClient).Acknowledge = value;}, 
-					(IBinding data) => (data as PresenceFromClient).Acknowledge )		];
+					(IBinding data) => (data as PresenceFromClient).Acknowledge )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -297,29 +256,10 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PresenceFromClient> _binding = new (
 			new() {
-
 			{ "Serial", _properties [0]},
-			{ "Acknowledge", _properties [1]}
-        }, __Tag,() => new PresenceFromClient(), () => new List<PresenceFromClient>(), () => new Dictionary<string,PresenceFromClient>(),Goedel.Protocol.Request._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Acknowledge", _properties [1]}}, __Tag,
+		() => new PresenceFromClient(), () => [], () => [], Goedel.Protocol.Request._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Goedel.Protocol.Request._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -358,28 +298,9 @@ public partial class PresenceConnectRequest : PresenceFromClient {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PresenceConnectRequest> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new PresenceConnectRequest(), () => [], () => [], PresenceFromClient._binding, Generic: false);
 
-        }, __Tag,() => new PresenceConnectRequest(), () => new List<PresenceConnectRequest>(), () => new Dictionary<string,PresenceConnectRequest>(),PresenceFromClient._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(PresenceFromClient._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -416,28 +337,9 @@ public partial class PresenceHeartbeat : PresenceFromClient {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PresenceHeartbeat> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new PresenceHeartbeat(), () => [], () => [], PresenceFromClient._binding, Generic: false);
 
-        }, __Tag,() => new PresenceHeartbeat(), () => new List<PresenceHeartbeat>(), () => new Dictionary<string,PresenceHeartbeat>(),PresenceFromClient._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(PresenceFromClient._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -474,28 +376,9 @@ public partial class PresenceEndpointRequest : PresenceFromClient {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PresenceEndpointRequest> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new PresenceEndpointRequest(), () => [], () => [], PresenceFromClient._binding, Generic: false);
 
-        }, __Tag,() => new PresenceEndpointRequest(), () => new List<PresenceEndpointRequest>(), () => new Dictionary<string,PresenceEndpointRequest>(),PresenceFromClient._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(PresenceFromClient._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -532,28 +415,9 @@ public partial class PresenceAcknowledge : PresenceFromClient {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PresenceAcknowledge> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new PresenceAcknowledge(), () => [], () => [], PresenceFromClient._binding, Generic: false);
 
-        }, __Tag,() => new PresenceAcknowledge(), () => new List<PresenceAcknowledge>(), () => new Dictionary<string,PresenceAcknowledge>(),PresenceFromClient._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(PresenceFromClient._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -589,10 +453,10 @@ public partial class PresenceResolveRequest : PresenceFromClient {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("DnsRequest", 
 					(IBinding data, byte[]? value) => {(data as PresenceResolveRequest).DnsRequest = value;}, 
-					(IBinding data) => (data as PresenceResolveRequest).DnsRequest )		];
+					(IBinding data) => (data as PresenceResolveRequest).DnsRequest )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -600,28 +464,9 @@ public partial class PresenceResolveRequest : PresenceFromClient {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PresenceResolveRequest> _binding = new (
 			new() {
+			{ "DnsRequest", _properties [0]}}, __Tag,
+		() => new PresenceResolveRequest(), () => [], () => [], PresenceFromClient._binding, Generic: false);
 
-			{ "DnsRequest", _properties [0]}
-        }, __Tag,() => new PresenceResolveRequest(), () => new List<PresenceResolveRequest>(), () => new Dictionary<string,PresenceResolveRequest>(),PresenceFromClient._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(PresenceFromClient._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -672,7 +517,6 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("EndPoint", typeof (UdpEndpoint),
 					(IBinding data, object? value) => {(data as PresenceFromService).EndPoint = value as UdpEndpoint;}, 
 					(IBinding data) => (data as PresenceFromService).EndPoint,
@@ -682,7 +526,8 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
 					(IBinding data) => (data as PresenceFromService).Now ),
 		new PropertyInteger32 ("Acknowledge", 
 					(IBinding data, int? value) => {(data as PresenceFromService).Acknowledge = value;}, 
-					(IBinding data) => (data as PresenceFromService).Acknowledge )		];
+					(IBinding data) => (data as PresenceFromService).Acknowledge )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -690,30 +535,11 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PresenceFromService> _binding = new (
 			new() {
-
 			{ "EndPoint", _properties [0]},
 			{ "Now", _properties [1]},
-			{ "Acknowledge", _properties [2]}
-        }, __Tag,() => new PresenceFromService(), () => new List<PresenceFromService>(), () => new Dictionary<string,PresenceFromService>(),Goedel.Protocol.Response._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Acknowledge", _properties [2]}}, __Tag,
+		() => new PresenceFromService(), () => [], () => [], Goedel.Protocol.Response._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Goedel.Protocol.Response._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -753,10 +579,10 @@ public partial class PresenceConnectResponse : PresenceFromService {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyInteger32 ("ConnectionTimeout", 
 					(IBinding data, int? value) => {(data as PresenceConnectResponse).ConnectionTimeout = value;}, 
-					(IBinding data) => (data as PresenceConnectResponse).ConnectionTimeout )		];
+					(IBinding data) => (data as PresenceConnectResponse).ConnectionTimeout )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -764,28 +590,9 @@ public partial class PresenceConnectResponse : PresenceFromService {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PresenceConnectResponse> _binding = new (
 			new() {
+			{ "ConnectionTimeout", _properties [0]}}, __Tag,
+		() => new PresenceConnectResponse(), () => [], () => [], PresenceFromService._binding, Generic: false);
 
-			{ "ConnectionTimeout", _properties [0]}
-        }, __Tag,() => new PresenceConnectResponse(), () => new List<PresenceConnectResponse>(), () => new Dictionary<string,PresenceConnectResponse>(),PresenceFromService._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(PresenceFromService._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -821,10 +628,10 @@ public partial class PresenceErrorInvalidSerial : PresenceFromService {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyInteger32 ("Serial", 
 					(IBinding data, int? value) => {(data as PresenceErrorInvalidSerial).Serial = value;}, 
-					(IBinding data) => (data as PresenceErrorInvalidSerial).Serial )		];
+					(IBinding data) => (data as PresenceErrorInvalidSerial).Serial )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -832,28 +639,9 @@ public partial class PresenceErrorInvalidSerial : PresenceFromService {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PresenceErrorInvalidSerial> _binding = new (
 			new() {
+			{ "Serial", _properties [0]}}, __Tag,
+		() => new PresenceErrorInvalidSerial(), () => [], () => [], PresenceFromService._binding, Generic: false);
 
-			{ "Serial", _properties [0]}
-        }, __Tag,() => new PresenceErrorInvalidSerial(), () => new List<PresenceErrorInvalidSerial>(), () => new Dictionary<string,PresenceErrorInvalidSerial>(),PresenceFromService._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(PresenceFromService._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -890,28 +678,9 @@ public partial class PresenceStatus : PresenceFromService {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PresenceStatus> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new PresenceStatus(), () => [], () => [], PresenceFromService._binding, Generic: false);
 
-        }, __Tag,() => new PresenceStatus(), () => new List<PresenceStatus>(), () => new Dictionary<string,PresenceStatus>(),PresenceFromService._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(PresenceFromService._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -948,28 +717,9 @@ public partial class PresenceEndpointResponse : PresenceFromService {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PresenceEndpointResponse> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new PresenceEndpointResponse(), () => [], () => [], PresenceFromService._binding, Generic: false);
 
-        }, __Tag,() => new PresenceEndpointResponse(), () => new List<PresenceEndpointResponse>(), () => new Dictionary<string,PresenceEndpointResponse>(),PresenceFromService._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(PresenceFromService._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1011,13 +761,13 @@ public partial class PresenceNotify : PresenceFromService {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("Bitmask", 
 					(IBinding data, byte[]? value) => {(data as PresenceNotify).Bitmask = value;}, 
 					(IBinding data) => (data as PresenceNotify).Bitmask ),
 		new PropertyInteger32 ("Serial", 
 					(IBinding data, int? value) => {(data as PresenceNotify).Serial = value;}, 
-					(IBinding data) => (data as PresenceNotify).Serial )		];
+					(IBinding data) => (data as PresenceNotify).Serial )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1025,29 +775,10 @@ public partial class PresenceNotify : PresenceFromService {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PresenceNotify> _binding = new (
 			new() {
-
 			{ "Bitmask", _properties [0]},
-			{ "Serial", _properties [1]}
-        }, __Tag,() => new PresenceNotify(), () => new List<PresenceNotify>(), () => new Dictionary<string,PresenceNotify>(),PresenceFromService._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Serial", _properties [1]}}, __Tag,
+		() => new PresenceNotify(), () => [], () => [], PresenceFromService._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(PresenceFromService._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1083,10 +814,10 @@ public partial class PresenceResolveResponse : PresenceFromService {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("DnsResponse", 
 					(IBinding data, byte[]? value) => {(data as PresenceResolveResponse).DnsResponse = value;}, 
-					(IBinding data) => (data as PresenceResolveResponse).DnsResponse )		];
+					(IBinding data) => (data as PresenceResolveResponse).DnsResponse )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1094,28 +825,9 @@ public partial class PresenceResolveResponse : PresenceFromService {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PresenceResolveResponse> _binding = new (
 			new() {
+			{ "DnsResponse", _properties [0]}}, __Tag,
+		() => new PresenceResolveResponse(), () => [], () => [], PresenceFromService._binding, Generic: false);
 
-			{ "DnsResponse", _properties [0]}
-        }, __Tag,() => new PresenceResolveResponse(), () => new List<PresenceResolveResponse>(), () => new Dictionary<string,PresenceResolveResponse>(),PresenceFromService._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(PresenceFromService._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1168,7 +880,6 @@ public partial class SessionRequest : Message {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Protocol", 
 					(IBinding data, string? value) => {(data as SessionRequest).Protocol = value;}, 
 					(IBinding data) => (data as SessionRequest).Protocol ),
@@ -1181,7 +892,8 @@ public partial class SessionRequest : Message {
 					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint()),
 		new PropertyDateTime ("Expires", 
 					(IBinding data, DateTime? value) => {(data as SessionRequest).Expires = value;}, 
-					(IBinding data) => (data as SessionRequest).Expires )		];
+					(IBinding data) => (data as SessionRequest).Expires )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1189,31 +901,12 @@ public partial class SessionRequest : Message {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<SessionRequest> _binding = new (
 			new() {
-
 			{ "Protocol", _properties [0]},
 			{ "Options", _properties [1]},
 			{ "Inbound", _properties [2]},
-			{ "Expires", _properties [3]}
-        }, __Tag,() => new SessionRequest(), () => new List<SessionRequest>(), () => new Dictionary<string,SessionRequest>(),Message._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Expires", _properties [3]}}, __Tag,
+		() => new SessionRequest(), () => [], () => [], Message._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Message._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1266,7 +959,6 @@ public partial class SessionResponse : Message {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBoolean ("Accept", 
 					(IBinding data, bool? value) => {(data as SessionResponse).Accept = value;}, 
 					(IBinding data) => (data as SessionResponse).Accept ),
@@ -1279,7 +971,8 @@ public partial class SessionResponse : Message {
 		new PropertyStruct ("Inbound", typeof (UdpEndpoint),
 					(IBinding data, object? value) => {(data as SessionResponse).Inbound = value as UdpEndpoint;}, 
 					(IBinding data) => (data as SessionResponse).Inbound,
-					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())		];
+					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1287,31 +980,12 @@ public partial class SessionResponse : Message {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<SessionResponse> _binding = new (
 			new() {
-
 			{ "Accept", _properties [0]},
 			{ "Protocol", _properties [1]},
 			{ "Options", _properties [2]},
-			{ "Inbound", _properties [3]}
-        }, __Tag,() => new SessionResponse(), () => new List<SessionResponse>(), () => new Dictionary<string,SessionResponse>(),Message._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Inbound", _properties [3]}}, __Tag,
+		() => new SessionResponse(), () => [], () => [], Message._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Message._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1364,7 +1038,6 @@ public partial class SessionEndpoint : PresenceProtocol {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("IpAddress", 
 					(IBinding data, byte[]? value) => {(data as SessionEndpoint).IpAddress = value;}, 
 					(IBinding data) => (data as SessionEndpoint).IpAddress ),
@@ -1376,7 +1049,8 @@ public partial class SessionEndpoint : PresenceProtocol {
 					(IBinding data) => (data as SessionEndpoint).Protocol ),
 		new PropertyListString ("Options", 
 					(IBinding data, List<string>? value) => {(data as SessionEndpoint).Options = value;}, 
-					(IBinding data) => (data as SessionEndpoint).Options )		];
+					(IBinding data) => (data as SessionEndpoint).Options )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1384,30 +1058,12 @@ public partial class SessionEndpoint : PresenceProtocol {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<SessionEndpoint> _binding = new (
 			new() {
-
 			{ "IpAddress", _properties [0]},
 			{ "Port", _properties [1]},
 			{ "Protocol", _properties [2]},
-			{ "Options", _properties [3]}
-        }, __Tag,() => new SessionEndpoint(), () => new List<SessionEndpoint>(), () => new Dictionary<string,SessionEndpoint>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Options", _properties [3]}}, __Tag,
+		() => new SessionEndpoint(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1449,13 +1105,13 @@ public partial class UdpEndpoint : PresenceProtocol {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("IpAddress", 
 					(IBinding data, byte[]? value) => {(data as UdpEndpoint).IpAddress = value;}, 
 					(IBinding data) => (data as UdpEndpoint).IpAddress ),
 		new PropertyInteger32 ("Port", 
 					(IBinding data, int? value) => {(data as UdpEndpoint).Port = value;}, 
-					(IBinding data) => (data as UdpEndpoint).Port )		];
+					(IBinding data) => (data as UdpEndpoint).Port )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1463,28 +1119,10 @@ public partial class UdpEndpoint : PresenceProtocol {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<UdpEndpoint> _binding = new (
 			new() {
-
 			{ "IpAddress", _properties [0]},
-			{ "Port", _properties [1]}
-        }, __Tag,() => new UdpEndpoint(), () => new List<UdpEndpoint>(), () => new Dictionary<string,UdpEndpoint>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Port", _properties [1]}}, __Tag,
+		() => new UdpEndpoint(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class

@@ -61,6 +61,32 @@ public partial class Message {
         MessageId ??= Udf.Nonce();
         }
 
+
+    /// <summary>
+    /// Returns a new typed envelope containing the object <paramref name="data"/>
+    /// optionally encrypted under <paramref name="encryptionKey"/> and signed under
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="data">The object to be enveloped.</param>
+    /// <param name="signingKey">The signature key.</param>
+    /// <param name="encryptionKey">The encryption key.</param>
+    /// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
+    /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
+    /// <returns>The enveloped data</returns>
+    public Enveloped<Message> Envelope(
+                CryptographicKey signingKey = null,
+                CryptographicKey encryptionKey = null,
+                ContentMeta contentMeta = null,
+                ObjectEncoding objectEncoding = ObjectEncoding.JSON)  {
+        MessageId ??= Udf.Nonce(); // Add a message ID unless one is already defined.
+        var result = new Enveloped<Message>(this, signingKey, encryptionKey, contentMeta, objectEncoding);
+        result.Header.EnvelopeId = EnvelopeId;
+        result.JsonObject = this;
+        return result;
+        }
+
+
+
     /////<inheritdoc/>
     //public override DareEnvelope Envelope(
     //            CryptographicKey signingKey = null,
@@ -77,9 +103,10 @@ public partial class Message {
     /// <param name="envelope">The envelope to decode.</param>
     /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
     /// <returns>The decoded profile.</returns>
-    public static new Message Decode(DareEnvelope envelope,
+    public static new Message Decode(Enveloped envelope,
                 IKeyCollection keyCollection = null) =>
-                    MeshItem.Decode(envelope, keyCollection) as Message;
+                    envelope.StreamParseTag<Message>(keyCollection);
+                    //MeshItem.Decode(envelope, keyCollection) as Message;
 
 
 
@@ -281,7 +308,7 @@ public partial class MessagePin {
     public static ProcessingResult ValidatePin(
                 MessagePin messagePin,
                 string accountAddress,
-                DareEnvelope envelope,
+                Enveloped envelope,
                 byte[] nonce,
                 byte[] witness) {
 
@@ -340,7 +367,7 @@ public partial class MessagePin {
     public static byte[] GetPinWitness(
                 string pin,
                 string accountAddress,
-                DareEnvelope envelope,
+                Enveloped envelope,
                 byte[] clientNonce) {
 
         //Screen.WriteLine($"PIN Witness {pin} on {accountAddress}");

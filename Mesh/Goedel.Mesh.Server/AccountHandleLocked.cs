@@ -142,7 +142,7 @@ public class AccountHandleLocked : Disposable {
     #endregion
     #region // Methods
 
-    Sequence MakeNewSequence(string label, List<DareEnvelope> envelopes, Bitmask bitmask) {
+    Sequence MakeNewSequence(string label, List<Enveloped> envelopes, Bitmask bitmask) {
         var fileName = Store.FileName(Directory, label);
         var sequence = Sequence.MakeNewSequence(fileName, null, envelopes);
 
@@ -229,7 +229,7 @@ public class AccountHandleLocked : Disposable {
     /// </summary>
     /// <param name="envelope">The message to post.</param>
     /// <param name="bitmask">Bitmask value to update.</param>
-    public void PostInbound(DareEnvelope envelope, Bitmask bitmask) {
+    public void PostInbound(Enveloped envelope, Bitmask bitmask) {
         var sequence = GetSequence(SpoolInbound.Label);
 
         sequence.Append(envelope);
@@ -244,7 +244,7 @@ public class AccountHandleLocked : Disposable {
     /// </summary>
     /// <param name="envelope">The message to post.</param>
     /// <param name="bitmask">Bitmask to be updated.</param>
-    public void PostLocal(DareEnvelope envelope, Bitmask bitmask) {
+    public void PostLocal(Enveloped envelope, Bitmask bitmask) {
         var sequence = GetSequence(SpoolLocal.Label);
         sequence.Append(envelope);
         if (sequence.Bitmask != null) {
@@ -259,7 +259,7 @@ public class AccountHandleLocked : Disposable {
     /// <param name="label">The store to add the envelopes to.</param>
     /// <param name="envelopes">The envelopes to append.</param>
     ///  <param name="bitmask">Bitmask to be updated.</param>
-    public void StoreAppend(string label, List<DareEnvelope> envelopes, Bitmask bitmask) {
+    public void StoreAppend(string label, List<Enveloped> envelopes, Bitmask bitmask) {
         //"Implement fine grain access control".TaskFunctionality(suppress: Assert.HaltPhase1);
 
 
@@ -343,7 +343,7 @@ public class AccountHandleLocked : Disposable {
     /// </summary>
     /// <param name="messageId">Message to return.</param>
     /// <returns>The message (if found).</returns>
-    public DareEnvelope GetLocal(string messageId) {
+    public Enveloped GetLocal(string messageId) {
         var envelopeId = Message.GetEnvelopeId(messageId);
 
         using var spoolLocal = GetSequence(SpoolLocal.Label);

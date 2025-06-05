@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 4:21:30 PM
+//  This file was automatically generated at 6/5/2025 7:42:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -73,23 +73,6 @@ public abstract partial class CallsignResolver : global::Goedel.Protocol.JsonObj
     /// </summary>
 	public new const string __Tag = "CallsignResolver";
 
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"ResolverRequest", ResolverRequest._Factory},
-	    {"ResolverResponse", ResolverResponse._Factory},
-	    {"QueryRequest", QueryRequest._Factory},
-	    {"QueryResponse", QueryResponse._Factory},
-	    {"SyncRequest", SyncRequest._Factory},
-	    {"SyncResponse", SyncResponse._Factory}
-		};
-	*/
-
 	/// <summary>
     /// Dictionary mapping types to bindings
     /// </summary>
@@ -105,8 +88,6 @@ public abstract partial class CallsignResolver : global::Goedel.Protocol.JsonObj
 	    {typeof(SyncResponse), SyncResponse._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -115,19 +96,8 @@ public abstract partial class CallsignResolver : global::Goedel.Protocol.JsonObj
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -326,28 +296,9 @@ public partial class ResolverRequest : Goedel.Protocol.Request {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResolverRequest> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new ResolverRequest(), () => [], () => [], Goedel.Protocol.Request._binding, Generic: false);
 
-        }, __Tag,() => new ResolverRequest(), () => new List<ResolverRequest>(), () => new Dictionary<string,ResolverRequest>(),Goedel.Protocol.Request._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Goedel.Protocol.Request._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -387,28 +338,9 @@ public partial class ResolverResponse : Goedel.Protocol.Response {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResolverResponse> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new ResolverResponse(), () => [], () => [], Goedel.Protocol.Response._binding, Generic: false);
 
-        }, __Tag,() => new ResolverResponse(), () => new List<ResolverResponse>(), () => new Dictionary<string,ResolverResponse>(),Goedel.Protocol.Response._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Goedel.Protocol.Response._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -462,7 +394,6 @@ public partial class QueryRequest : ResolverRequest {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("CallSign", 
 					(IBinding data, string? value) => {(data as QueryRequest).CallSign = value;}, 
 					(IBinding data) => (data as QueryRequest).CallSign ),
@@ -471,7 +402,8 @@ public partial class QueryRequest : ResolverRequest {
 					(IBinding data) => (data as QueryRequest).RegistrationId ),
 		new PropertyString ("LogId", 
 					(IBinding data, string? value) => {(data as QueryRequest).LogId = value;}, 
-					(IBinding data) => (data as QueryRequest).LogId )		];
+					(IBinding data) => (data as QueryRequest).LogId )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -479,30 +411,11 @@ public partial class QueryRequest : ResolverRequest {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<QueryRequest> _binding = new (
 			new() {
-
 			{ "CallSign", _properties [0]},
 			{ "RegistrationId", _properties [1]},
-			{ "LogId", _properties [2]}
-        }, __Tag,() => new QueryRequest(), () => new List<QueryRequest>(), () => new Dictionary<string,QueryRequest>(),ResolverRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "LogId", _properties [2]}}, __Tag,
+		() => new QueryRequest(), () => [], () => [], ResolverRequest._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResolverRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -548,7 +461,6 @@ public partial class QueryResponse : ResolverResponse {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("Result", typeof (Enveloped<Registration>),
 					(IBinding data, object? value) => {(data as QueryResponse).Result = value as Enveloped<Registration>;}, 
 					(IBinding data) => (data as QueryResponse).Result,
@@ -556,7 +468,8 @@ public partial class QueryResponse : ResolverResponse {
 		new PropertyStruct ("Notarization", typeof (Enveloped<Notarization>),
 					(IBinding data, object? value) => {(data as QueryResponse).Notarization = value as Enveloped<Notarization>;}, 
 					(IBinding data) => (data as QueryResponse).Notarization,
-					false, ()=>new  Enveloped<Notarization>(), ()=>new Enveloped<Notarization>())		];
+					false, ()=>new  Enveloped<Notarization>(), ()=>new Enveloped<Notarization>())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -564,29 +477,10 @@ public partial class QueryResponse : ResolverResponse {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<QueryResponse> _binding = new (
 			new() {
-
 			{ "Result", _properties [0]},
-			{ "Notarization", _properties [1]}
-        }, __Tag,() => new QueryResponse(), () => new List<QueryResponse>(), () => new Dictionary<string,QueryResponse>(),ResolverResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Notarization", _properties [1]}}, __Tag,
+		() => new QueryResponse(), () => [], () => [], ResolverResponse._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResolverResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -625,28 +519,9 @@ public partial class SyncRequest : ResolverRequest {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<SyncRequest> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new SyncRequest(), () => [], () => [], ResolverRequest._binding, Generic: false);
 
-        }, __Tag,() => new SyncRequest(), () => new List<SyncRequest>(), () => new Dictionary<string,SyncRequest>(),ResolverRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResolverRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -685,28 +560,9 @@ public partial class SyncResponse : ResolverResponse {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<SyncResponse> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new SyncResponse(), () => [], () => [], ResolverResponse._binding, Generic: false);
 
-        }, __Tag,() => new SyncResponse(), () => new List<SyncResponse>(), () => new Dictionary<string,SyncResponse>(),ResolverResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResolverResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class

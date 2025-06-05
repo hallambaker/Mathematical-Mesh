@@ -177,7 +177,7 @@
 
 	Structure StoreUpdate
 		Inherits StoreStatus
-		Struct DareEnvelope Envelopes
+		Struct Enveloped Envelopes
 			Multiple
 			Description
 				|The entries to be uploaded. 

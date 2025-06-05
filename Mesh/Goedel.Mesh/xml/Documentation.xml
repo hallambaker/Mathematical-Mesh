@@ -2160,7 +2160,7 @@
             Write the 
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Catalog`1.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
+        <member name="M:Goedel.Mesh.Catalog`1.AppendDirect(Goedel.Cryptography.Dare.Enveloped,System.Boolean)">
             <summary>
             Append the envelopes <paramref name="envelope"/> to the
             store.
@@ -2762,7 +2762,7 @@
             <param name="self">If true, mark as the user's own contact.</param>
             <returns>The CatalogedContact entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogContact.Add(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.CatalogContact.Add(Goedel.Cryptography.Dare.Enveloped)">
             <summary>
             Add the contact contained inside <paramref name="envelope"/> to the catalog.
             </summary>
@@ -6195,7 +6195,7 @@
             <param name="publicKeys">The list of public keys to match</param>
             <returns>The key pair if found, otherwise <see langword="false"/></returns>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.Report(Goedel.Cryptography.Dare.DareEnvelope,System.Text.StringBuilder,System.Int32)">
+        <member name="M:Goedel.Mesh.Extensions.Report(Goedel.Cryptography.Dare.Enveloped,System.Text.StringBuilder,System.Int32)">
             <summary>
             Write a formatted version of the DareEnvelope <paramref name="envelope"/> to the
             string builder <paramref name="builder"/> indented by <paramref name="indent"/> 
@@ -7207,7 +7207,20 @@
             it is set to a random nonce value.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Message.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.Message.Envelope(Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
+            <summary>
+            Returns a new typed envelope containing the object <paramref name="data"/>
+            optionally encrypted under <paramref name="encryptionKey"/> and signed under
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="data">The object to be enveloped.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <param name="contentMeta">The value of the ContentMeta Header tag.</param>
+            <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
+            <returns>The enveloped data</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Message.Decode(Goedel.Cryptography.Dare.Enveloped,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.Message"/>
             </summary>
@@ -7483,7 +7496,7 @@
             <param name="action">The action to which the pin code is bound.</param>
             <returns>UDF presentation of the salted PIN.</returns>
         </member>
-        <member name="M:Goedel.Mesh.MessagePin.ValidatePin(Goedel.Mesh.MessagePin,System.String,Goedel.Cryptography.Dare.DareEnvelope,System.Byte[],System.Byte[])">
+        <member name="M:Goedel.Mesh.MessagePin.ValidatePin(Goedel.Mesh.MessagePin,System.String,Goedel.Cryptography.Dare.Enveloped,System.Byte[],System.Byte[])">
             <summary>
             Validate a message request against a pin value;
             </summary>
@@ -7508,7 +7521,7 @@
             <param name="accountAddress">The account address of the issuer of the PIN</param>
             <returns>The PIN Code identifier.</returns>
         </member>
-        <member name="M:Goedel.Mesh.MessagePin.GetPinWitness(System.String,System.String,Goedel.Cryptography.Dare.DareEnvelope,System.Byte[])">
+        <member name="M:Goedel.Mesh.MessagePin.GetPinWitness(System.String,System.String,Goedel.Cryptography.Dare.Enveloped,System.Byte[])">
             <summary>
             Witness value calculated as KDF (envelope + AccountAddress+ClientNonce, pin)
             </summary>
@@ -8418,7 +8431,7 @@
             <returns>The highest assurance level achieved by the set of included
             signatures.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Profile.Verify(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Profile.Verify(Goedel.Cryptography.Dare.Enveloped)">
             <summary>
             Verify that the assertion contained in <paramref name="envelopedAssertion"/>
             has a valid signature under this profile.
@@ -8439,7 +8452,7 @@
             <param name="keyIdentifier">The key identifier to verify.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Profile.ValidateAny(Goedel.Cryptography.Dare.DareEnvelope,System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Profile}},System.String)">
+        <member name="M:Goedel.Mesh.Profile.ValidateAny(Goedel.Cryptography.Dare.Enveloped,System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.Enveloped{Goedel.Mesh.Profile}},System.String)">
             <summary>
             Validate the binding value against the specified root of trust.
             </summary>
@@ -8491,6 +8504,9 @@
              Base class for the account profiles ProfileUser and ProfileGroup.
              These subclasses may be merged at some future date.
              </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileAccount.GetEnvelopedProfileAccount">
+            <summary>Typed enveloped data</summary> 
         </member>
         <member name="P:Goedel.Mesh.ProfileAccount.MeshActor">
             <summary>The actor type</summary> 
@@ -8653,7 +8669,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.ProfileDevice.Decode(Goedel.Cryptography.Dare.Enveloped,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.RespondConnection"/>
             </summary>
@@ -12410,7 +12426,7 @@
         <member name="P:Goedel.Mesh.MeshItem.EnvelopeId">
             <summary>The envelope Identifier.</summary> 
         </member>
-        <member name="M:Goedel.Mesh.MeshItem.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.Dare.IKeyCollection)">
+        <member name="M:Goedel.Mesh.MeshItem.Decode(Goedel.Cryptography.Dare.Enveloped,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Decode and parse the data 
             </summary>
@@ -13839,7 +13855,7 @@
         <member name="M:Goedel.Mesh.Spool.Intern(Goedel.Mesh.SpoolIndexEntry)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Spool.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
+        <member name="M:Goedel.Mesh.Spool.AppendDirect(Goedel.Cryptography.Dare.Enveloped,System.Boolean)">
             <summary>
             Append the envelopes <paramref name="envelope"/> to the
             store.
@@ -14254,7 +14270,7 @@
         <member name="M:Goedel.Mesh.Store.Intern(Goedel.Cryptography.Dare.SequenceIndexEntry)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Store.Append(System.String,Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.String)">
+        <member name="M:Goedel.Mesh.Store.Append(System.String,Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped},System.String)">
             <summary>
             Append the list of envelopes <paramref name="envelopes"/> to the
             container <paramref name="containerName"/> in <paramref name="directory"/>.
@@ -14273,13 +14289,13 @@
             <param name="containerName">The name of the container.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Store.AppendDirect(System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.DareEnvelope})">
+        <member name="M:Goedel.Mesh.Store.AppendDirect(System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.Enveloped})">
             <summary>
             Append the envelopes <paramref name="envelopes"/> to the
             store.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Store.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
+        <member name="M:Goedel.Mesh.Store.AppendDirect(Goedel.Cryptography.Dare.Enveloped,System.Boolean)">
             <summary>
             Append the envelopes <paramref name="envelope"/> to the
             store.

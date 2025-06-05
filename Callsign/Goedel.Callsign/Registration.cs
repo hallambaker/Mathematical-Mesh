@@ -141,7 +141,7 @@ public partial class Registration {
             Registration? registration = null,
             RegistrationReason registrationReason = RegistrationReason.Update) {
         Id = Udf.Nonce();
-        Entry = callsign.Enveloped as Enveloped<CallsignBinding>;
+        Entry = callsign.Envelope as Enveloped<CallsignBinding>;
         Submitted = System.DateTime.UtcNow;
 
         if (registration is null) {

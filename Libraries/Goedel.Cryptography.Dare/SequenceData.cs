@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/28/2025 12:00:12 AM
+//  This file was automatically generated at 6/5/2025 7:42:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -222,7 +222,7 @@ public partial class SequenceInfo : SequenceData {
 			{ "TreePosition", _properties [5]},
 			{ "IndexPosition", _properties [6]},
 			{ "ExchangePosition", _properties [7]}}, __Tag,
-		() => new SequenceInfo(), () => [], () => [], null);
+		() => new SequenceInfo(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -288,7 +288,7 @@ public partial class SequenceIndex : SequenceData {
 			new() {
 			{ "Full", _properties [0]},
 			{ "Positions", _properties [1]}}, __Tag,
-		() => new SequenceIndex(), () => [], () => [], null);
+		() => new SequenceIndex(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -362,7 +362,7 @@ public partial class IndexPosition : SequenceData {
 			{ "Index", _properties [0]},
 			{ "Position", _properties [1]},
 			{ "UniqueId", _properties [2]}}, __Tag,
-		() => new IndexPosition(), () => [], () => [], null);
+		() => new IndexPosition(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -425,7 +425,7 @@ public partial class KeyValue : SequenceData {
 			new() {
 			{ "Key", _properties [0]},
 			{ "Value", _properties [1]}}, __Tag,
-		() => new KeyValue(), () => [], () => [], null);
+		() => new KeyValue(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -466,7 +466,7 @@ public partial class ProofChain : SequenceData {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ProofChain> _binding = new (
 			new() {}, __Tag,
-		() => new ProofChain(), () => [], () => [], null);
+		() => new ProofChain(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>

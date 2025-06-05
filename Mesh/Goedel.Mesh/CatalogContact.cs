@@ -280,7 +280,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="envelope">The contact to add.</param>
 
     /// <returns>The CatalogedContact entry.</returns>
-    public CatalogedContact Add(DareEnvelope envelope) {
+    public CatalogedContact Add(Enveloped envelope) {
         throw new NYI();
 
         //var contact = Contact.Decode(envelope); // hack: should check the contact info.

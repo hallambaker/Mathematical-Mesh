@@ -32,14 +32,15 @@ public partial class AccountHostAssignment {
 
     }
 
+
 public partial class MeshItem {
 
     /// <summary>
     /// The DareEnvelope encapsulation of this object instance.
     /// </summary>
-    public virtual DareEnvelope DareEnvelope {
-        get => Enveloped as DareEnvelope;
-        set => Enveloped = value;
+    public virtual Enveloped DareEnvelope {
+        get => Envelope as Enveloped;
+        set => Envelope = value;
         }
 
 
@@ -61,15 +62,15 @@ public partial class MeshItem {
     /// <param name="envelope">The enveloped data.</param>
     /// <param name="keyCollection">The key collaecion to use to find the decryption key.</param>
     /// <returns>The decoded data item</returns>
-    public static MeshItem Decode(DareEnvelope envelope, IKeyCollection keyCollection = null) {
+    public static MeshItem Decode(Enveloped envelope, IKeyCollection keyCollection = null) {
         if (envelope == null) {
             return null;
             }
         
         var plaintext = envelope.GetPlaintext(keyCollection);
 
-        var result = StreamParse<MeshItem>(plaintext, true);
-        result.Enveloped = envelope;
+        var result = StreamParseTag<MeshItem>(plaintext, true);
+        result.Envelope = envelope;
         result.KeyCollection = keyCollection;
         return result;
 

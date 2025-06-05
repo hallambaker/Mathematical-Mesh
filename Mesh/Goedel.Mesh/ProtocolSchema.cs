@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 4:21:25 PM
+//  This file was automatically generated at 6/5/2025 7:42:42 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -71,65 +71,6 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
     /// Tag identifying this class
     /// </summary>
 	public new const string __Tag = "MeshProtocol";
-
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"MeshRequest", MeshRequest._Factory},
-	    {"MeshRequestUser", MeshRequestUser._Factory},
-	    {"MeshResponse", MeshResponse._Factory},
-	    {"KeyValue", KeyValue._Factory},
-	    {"ConstraintsSelect", ConstraintsSelect._Factory},
-	    {"ConstraintsData", ConstraintsData._Factory},
-	    {"PolicyAccount", PolicyAccount._Factory},
-	    {"StoreStatus", StoreStatus._Factory},
-	    {"StoreUpdate", StoreUpdate._Factory},
-	    {"MeshHelloRequest", MeshHelloRequest._Factory},
-	    {"MeshHelloResponse", MeshHelloResponse._Factory},
-	    {"BindRequest", BindRequest._Factory},
-	    {"BindResponse", BindResponse._Factory},
-	    {"UnbindRequest", UnbindRequest._Factory},
-	    {"UnbindResponse", UnbindResponse._Factory},
-	    {"ConnectRequest", ConnectRequest._Factory},
-	    {"ConnectResponse", ConnectResponse._Factory},
-	    {"CompleteRequest", CompleteRequest._Factory},
-	    {"CompleteResponse", CompleteResponse._Factory},
-	    {"StatusRequest", StatusRequest._Factory},
-	    {"StatusResponse", StatusResponse._Factory},
-	    {"DeviceStatus", DeviceStatus._Factory},
-	    {"DownloadRequest", DownloadRequest._Factory},
-	    {"DownloadResponse", DownloadResponse._Factory},
-	    {"UploadRequest", UploadRequest._Factory},
-	    {"UploadResponse", UploadResponse._Factory},
-	    {"GetDataRequest", GetDataRequest._Factory},
-	    {"GetDataResponse", GetDataResponse._Factory},
-	    {"TransactRequest", TransactRequest._Factory},
-	    {"TransactResponse", TransactResponse._Factory},
-	    {"EntryResponse", EntryResponse._Factory},
-	    {"PublicRequest", PublicRequest._Factory},
-	    {"PostRequest", PostRequest._Factory},
-	    {"PostResponse", PostResponse._Factory},
-	    {"ClaimRequest", ClaimRequest._Factory},
-	    {"ClaimResponse", ClaimResponse._Factory},
-	    {"PollClaimRequest", PollClaimRequest._Factory},
-	    {"PollClaimResponse", PollClaimResponse._Factory},
-	    {"CryptographicOperation", CryptographicOperation._Factory},
-	    {"CryptographicOperationSign", CryptographicOperationSign._Factory},
-	    {"CryptographicOperationKeyAgreement", CryptographicOperationKeyAgreement._Factory},
-	    {"CryptographicOperationGenerate", CryptographicOperationGenerate._Factory},
-	    {"CryptographicOperationShare", CryptographicOperationShare._Factory},
-	    {"CryptographicResult", CryptographicResult._Factory},
-	    {"CryptographicResultKeyAgreement", CryptographicResultKeyAgreement._Factory},
-	    {"CryptographicResultShare", CryptographicResultShare._Factory},
-	    {"OperateRequest", OperateRequest._Factory},
-	    {"OperateResponse", OperateResponse._Factory}
-		};
-	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -188,8 +129,6 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
 	    {typeof(OperateResponse), OperateResponse._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -198,19 +137,8 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -877,28 +805,9 @@ public partial class MeshRequest : Goedel.Protocol.Request {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<MeshRequest> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new MeshRequest(), () => [], () => [], Goedel.Protocol.Request._binding, Generic: false);
 
-        }, __Tag,() => new MeshRequest(), () => new List<MeshRequest>(), () => new Dictionary<string,MeshRequest>(),Goedel.Protocol.Request._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Goedel.Protocol.Request._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -939,32 +848,32 @@ public partial class MeshRequestUser : MeshRequest {
 	[JsonPropertyName("Capability")]
 	public virtual string?					Capability  {get; set;} //
 
-	[JsonPropertyName("ProfileDevice")]
+	[JsonPropertyName("EnvelopedProfileDevice")]
 	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual ProfileDevice?				ProfileDevice  {get; set;} 
+	public virtual ProfileDevice?				ProfileDevice  => EnvelopedProfileDevice.Decode();
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Account", 
 					(IBinding data, string? value) => {(data as MeshRequestUser).Account = value;}, 
 					(IBinding data) => (data as MeshRequestUser).Account ),
 		new PropertyString ("Capability", 
 					(IBinding data, string? value) => {(data as MeshRequestUser).Capability = value;}, 
 					(IBinding data) => (data as MeshRequestUser).Capability ),
-		new PropertyGStruct ("ProfileDevice", /*typeof (ProfileDevice<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedProfileDevice", /*typeof (ProfileDevice<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as MeshRequestUser).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;},
 					(IBinding data) => (data as MeshRequestUser).EnvelopedProfileDevice,
 					/*(IBinding data, object? value) => {(data as MeshRequestUser).ProfileDevice = value as ProfileDevice;},
 					(IBinding data) => (data as MeshRequestUser).ProfileDevice,*/
-					()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())		];
+					()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -972,30 +881,11 @@ public partial class MeshRequestUser : MeshRequest {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<MeshRequestUser> _binding = new (
 			new() {
-
 			{ "Account", _properties [0]},
 			{ "Capability", _properties [1]},
-			{ "ProfileDevice", _properties [2]}
-        }, __Tag,() => new MeshRequestUser(), () => new List<MeshRequestUser>(), () => new Dictionary<string,MeshRequestUser>(),MeshRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "EnvelopedProfileDevice", _properties [2]}}, __Tag,
+		() => new MeshRequestUser(), () => [], () => [], MeshRequest._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1035,28 +925,9 @@ public partial class MeshResponse : Goedel.Protocol.Response {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<MeshResponse> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new MeshResponse(), () => [], () => [], Goedel.Protocol.Response._binding, Generic: false);
 
-        }, __Tag,() => new MeshResponse(), () => new List<MeshResponse>(), () => new Dictionary<string,MeshResponse>(),Goedel.Protocol.Response._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Goedel.Protocol.Response._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1103,13 +974,13 @@ public partial class KeyValue : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Key", 
 					(IBinding data, string? value) => {(data as KeyValue).Key = value;}, 
 					(IBinding data) => (data as KeyValue).Key ),
 		new PropertyString ("Value", 
 					(IBinding data, string? value) => {(data as KeyValue).Value = value;}, 
-					(IBinding data) => (data as KeyValue).Value )		];
+					(IBinding data) => (data as KeyValue).Value )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1117,28 +988,10 @@ public partial class KeyValue : MeshProtocol {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<KeyValue> _binding = new (
 			new() {
-
 			{ "Key", _properties [0]},
-			{ "Value", _properties [1]}
-        }, __Tag,() => new KeyValue(), () => new List<KeyValue>(), () => new Dictionary<string,KeyValue>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Value", _properties [1]}}, __Tag,
+		() => new KeyValue(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1222,7 +1075,6 @@ public partial class ConstraintsSelect : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Store", 
 					(IBinding data, string? value) => {(data as ConstraintsSelect).Store = value;}, 
 					(IBinding data) => (data as ConstraintsSelect).Store ),
@@ -1240,7 +1092,8 @@ public partial class ConstraintsSelect : MeshProtocol {
 					(IBinding data) => (data as ConstraintsSelect).Before ),
 		new PropertyString ("PageKey", 
 					(IBinding data, string? value) => {(data as ConstraintsSelect).PageKey = value;}, 
-					(IBinding data) => (data as ConstraintsSelect).PageKey )		];
+					(IBinding data) => (data as ConstraintsSelect).PageKey )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1248,32 +1101,14 @@ public partial class ConstraintsSelect : MeshProtocol {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ConstraintsSelect> _binding = new (
 			new() {
-
 			{ "Store", _properties [0]},
 			{ "IndexMin", _properties [1]},
 			{ "IndexMax", _properties [2]},
 			{ "NotBefore", _properties [3]},
 			{ "Before", _properties [4]},
-			{ "PageKey", _properties [5]}
-        }, __Tag,() => new ConstraintsSelect(), () => new List<ConstraintsSelect>(), () => new Dictionary<string,ConstraintsSelect>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "PageKey", _properties [5]}}, __Tag,
+		() => new ConstraintsSelect(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1348,7 +1183,6 @@ public partial class ConstraintsData : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyInteger64 ("MaxEntries", 
 					(IBinding data, long? value) => {(data as ConstraintsData).MaxEntries = value;}, 
 					(IBinding data) => (data as ConstraintsData).MaxEntries ),
@@ -1366,7 +1200,8 @@ public partial class ConstraintsData : MeshProtocol {
 					(IBinding data) => (data as ConstraintsData).Payload ),
 		new PropertyBoolean ("Trailer", 
 					(IBinding data, bool? value) => {(data as ConstraintsData).Trailer = value;}, 
-					(IBinding data) => (data as ConstraintsData).Trailer )		];
+					(IBinding data) => (data as ConstraintsData).Trailer )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1374,32 +1209,14 @@ public partial class ConstraintsData : MeshProtocol {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ConstraintsData> _binding = new (
 			new() {
-
 			{ "MaxEntries", _properties [0]},
 			{ "BytesOffset", _properties [1]},
 			{ "BytesMax", _properties [2]},
 			{ "Header", _properties [3]},
 			{ "Payload", _properties [4]},
-			{ "Trailer", _properties [5]}
-        }, __Tag,() => new ConstraintsData(), () => new List<ConstraintsData>(), () => new Dictionary<string,ConstraintsData>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Trailer", _properties [5]}}, __Tag,
+		() => new ConstraintsData(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1456,7 +1273,6 @@ public partial class PolicyAccount : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyInteger32 ("Minimum", 
 					(IBinding data, int? value) => {(data as PolicyAccount).Minimum = value;}, 
 					(IBinding data) => (data as PolicyAccount).Minimum ),
@@ -1465,7 +1281,8 @@ public partial class PolicyAccount : MeshProtocol {
 					(IBinding data) => (data as PolicyAccount).Maximum ),
 		new PropertyString ("InvalidCharacters", 
 					(IBinding data, string? value) => {(data as PolicyAccount).InvalidCharacters = value;}, 
-					(IBinding data) => (data as PolicyAccount).InvalidCharacters )		];
+					(IBinding data) => (data as PolicyAccount).InvalidCharacters )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1473,29 +1290,11 @@ public partial class PolicyAccount : MeshProtocol {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PolicyAccount> _binding = new (
 			new() {
-
 			{ "Minimum", _properties [0]},
 			{ "Maximum", _properties [1]},
-			{ "InvalidCharacters", _properties [2]}
-        }, __Tag,() => new PolicyAccount(), () => new List<PolicyAccount>(), () => new Dictionary<string,PolicyAccount>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "InvalidCharacters", _properties [2]}}, __Tag,
+		() => new PolicyAccount(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1545,7 +1344,6 @@ public partial class StoreStatus : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Store", 
 					(IBinding data, string? value) => {(data as StoreStatus).Store = value;}, 
 					(IBinding data) => (data as StoreStatus).Store ),
@@ -1554,7 +1352,8 @@ public partial class StoreStatus : MeshProtocol {
 					(IBinding data) => (data as StoreStatus).Index ),
 		new PropertyBinary ("Digest", 
 					(IBinding data, byte[]? value) => {(data as StoreStatus).Digest = value;}, 
-					(IBinding data) => (data as StoreStatus).Digest )		];
+					(IBinding data) => (data as StoreStatus).Digest )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1562,29 +1361,11 @@ public partial class StoreStatus : MeshProtocol {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<StoreStatus> _binding = new (
 			new() {
-
 			{ "Store", _properties [0]},
 			{ "Index", _properties [1]},
-			{ "Digest", _properties [2]}
-        }, __Tag,() => new StoreStatus(), () => new List<StoreStatus>(), () => new Dictionary<string,StoreStatus>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Digest", _properties [2]}}, __Tag,
+		() => new StoreStatus(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1613,7 +1394,7 @@ public partial class StoreUpdate : StoreStatus {
     /// </summary>
 
 	[JsonPropertyName("Envelopes")]
-	public virtual List<DareEnvelope>?					Envelopes  {get; set;}
+	public virtual List<Enveloped>?					Envelopes  {get; set;}
     /// <summary>
     ///If false, the store update does not contain the last index entry
     ///in the store.
@@ -1636,17 +1417,17 @@ public partial class StoreUpdate : StoreStatus {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
-		new PropertyListStruct ("Envelopes", typeof (DareEnvelope),
-					(IBinding data, object? value) => {(data as StoreUpdate).Envelopes = value as List<DareEnvelope>;}, 
+		new PropertyListStruct ("Envelopes", typeof (Enveloped),
+					(IBinding data, object? value) => {(data as StoreUpdate).Envelopes = value as List<Enveloped>;}, 
 					(IBinding data) => (data as StoreUpdate).Envelopes,
-					false, ()=>new  List<DareEnvelope>(), ()=>new DareEnvelope()),
+					false, ()=>new  List<Enveloped>(), ()=>new Enveloped()),
 		new PropertyBoolean ("Partial", 
 					(IBinding data, bool? value) => {(data as StoreUpdate).Partial = value;}, 
 					(IBinding data) => (data as StoreUpdate).Partial ),
 		new PropertyInteger64 ("FinalIndex", 
 					(IBinding data, long? value) => {(data as StoreUpdate).FinalIndex = value;}, 
-					(IBinding data) => (data as StoreUpdate).FinalIndex )		];
+					(IBinding data) => (data as StoreUpdate).FinalIndex )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1654,30 +1435,11 @@ public partial class StoreUpdate : StoreStatus {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<StoreUpdate> _binding = new (
 			new() {
-
 			{ "Envelopes", _properties [0]},
 			{ "Partial", _properties [1]},
-			{ "FinalIndex", _properties [2]}
-        }, __Tag,() => new StoreUpdate(), () => new List<StoreUpdate>(), () => new Dictionary<string,StoreUpdate>(),StoreStatus._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "FinalIndex", _properties [2]}}, __Tag,
+		() => new StoreUpdate(), () => [], () => [], StoreStatus._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(StoreStatus._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1714,11 +1476,11 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("CallsignBinding", typeof (CallsignBinding),
 					(IBinding data, object? value) => {(data as MeshHelloRequest).CallsignBinding = value as CallsignBinding;}, 
 					(IBinding data) => (data as MeshHelloRequest).CallsignBinding,
-					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())		];
+					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1726,28 +1488,9 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<MeshHelloRequest> _binding = new (
 			new() {
+			{ "CallsignBinding", _properties [0]}}, __Tag,
+		() => new MeshHelloRequest(), () => [], () => [], Goedel.Protocol.HelloRequest._binding, Generic: false);
 
-			{ "CallsignBinding", _properties [0]}
-        }, __Tag,() => new MeshHelloRequest(), () => new List<MeshHelloRequest>(), () => new Dictionary<string,MeshHelloRequest>(),Goedel.Protocol.HelloRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Goedel.Protocol.HelloRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1792,13 +1535,13 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 	[JsonPropertyName("PolicyAccount")]
 	public virtual PolicyAccount?					PolicyAccount  {get; set;} //
 
-	[JsonPropertyName("ProfileService")]
+	[JsonPropertyName("EnvelopedProfileService")]
 	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual ProfileService?				ProfileService  {get; set;} 
+	public virtual ProfileService?				ProfileService  => EnvelopedProfileService.Decode();
     /// <summary>
     ///If the request specifies a callsign binding, returns a proposed binding for
     ///the requested callsign.
@@ -1813,7 +1556,6 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("ConstraintsUpdate", typeof (ConstraintsData),
 					(IBinding data, object? value) => {(data as MeshHelloResponse).ConstraintsUpdate = value as ConstraintsData;}, 
 					(IBinding data) => (data as MeshHelloResponse).ConstraintsUpdate,
@@ -1826,7 +1568,7 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 					(IBinding data, object? value) => {(data as MeshHelloResponse).PolicyAccount = value as PolicyAccount;}, 
 					(IBinding data) => (data as MeshHelloResponse).PolicyAccount,
 					false, ()=>new  PolicyAccount(), ()=>new PolicyAccount()),
-		new PropertyGStruct ("ProfileService", /*typeof (ProfileService<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedProfileService", /*typeof (ProfileService<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as MeshHelloResponse).EnvelopedProfileService = value as Enveloped<ProfileService>;},
 					(IBinding data) => (data as MeshHelloResponse).EnvelopedProfileService,
 					/*(IBinding data, object? value) => {(data as MeshHelloResponse).ProfileService = value as ProfileService;},
@@ -1835,7 +1577,8 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 		new PropertyStruct ("CallsignBinding", typeof (CallsignBinding),
 					(IBinding data, object? value) => {(data as MeshHelloResponse).CallsignBinding = value as CallsignBinding;}, 
 					(IBinding data) => (data as MeshHelloResponse).CallsignBinding,
-					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())		];
+					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1843,32 +1586,13 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<MeshHelloResponse> _binding = new (
 			new() {
-
 			{ "ConstraintsUpdate", _properties [0]},
 			{ "ConstraintsPost", _properties [1]},
 			{ "PolicyAccount", _properties [2]},
-			{ "ProfileService", _properties [3]},
-			{ "CallsignBinding", _properties [4]}
-        }, __Tag,() => new MeshHelloResponse(), () => new List<MeshHelloResponse>(), () => new Dictionary<string,MeshHelloResponse>(),Goedel.Protocol.HelloResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "EnvelopedProfileService", _properties [3]},
+			{ "CallsignBinding", _properties [4]}}, __Tag,
+		() => new MeshHelloResponse(), () => [], () => [], Goedel.Protocol.HelloResponse._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Goedel.Protocol.HelloResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1901,42 +1625,44 @@ public partial class BindRequest : MeshRequest {
 	[JsonPropertyName("AccountAddress")]
 	public virtual string?					AccountAddress  {get; set;} //
 
-	[JsonPropertyName("ProfileAccount")]
+	[JsonPropertyName("EnvelopedProfileAccount")]
 	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual ProfileAccount?				ProfileAccount  {get; set;} 
-	[JsonPropertyName("CallsignBinding")]
+	public virtual ProfileAccount?				ProfileAccount  => EnvelopedProfileAccount.Decode();
+	[JsonPropertyName("EnvelopedCallsignBinding")]
 	public virtual List<Enveloped<CallsignBinding>>?					EnvelopedCallsignBinding  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual List<CallsignBinding>?				CallsignBinding  {get; set;} 
+	public virtual List<CallsignBinding>?				CallsignBinding  => EnvelopedCallsignBinding.Decode();
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("AccountAddress", 
 					(IBinding data, string? value) => {(data as BindRequest).AccountAddress = value;}, 
 					(IBinding data) => (data as BindRequest).AccountAddress ),
-		new PropertyGStruct ("ProfileAccount", /*typeof (ProfileAccount<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedProfileAccount", /*typeof (ProfileAccount<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as BindRequest).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;},
 					(IBinding data) => (data as BindRequest).EnvelopedProfileAccount,
 					/*(IBinding data, object? value) => {(data as BindRequest).ProfileAccount = value as ProfileAccount;},
 					(IBinding data) => (data as BindRequest).ProfileAccount,*/
 					()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
-		new PropertyListGStruct ("CallsignBinding", /*typeof (CallsignBinding<>),*/typeof (Enveloped),
+		new PropertyListGStruct ("EnvelopedCallsignBinding", /*typeof (CallsignBinding<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as BindRequest).EnvelopedCallsignBinding = value as List<Enveloped<CallsignBinding>>;},
 					(IBinding data) => (data as BindRequest).EnvelopedCallsignBinding,
 					/*(IBinding data, object? value) => {(data as BindRequest).CallsignBinding = value as List<CallsignBinding>;},
 					(IBinding data) => (data as BindRequest).CallsignBinding,*/
-					()=>new  List<Enveloped<CallsignBinding>>(), ()=>new Enveloped<CallsignBinding>())		];
+					()=>new  List<Enveloped<CallsignBinding>>(), ()=>new Enveloped<CallsignBinding>(),
+					(object list,object item)=>(list as List<Enveloped<CallsignBinding>>).Add (item as Enveloped<CallsignBinding>)
+)
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1944,30 +1670,11 @@ public partial class BindRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<BindRequest> _binding = new (
 			new() {
-
 			{ "AccountAddress", _properties [0]},
-			{ "ProfileAccount", _properties [1]},
-			{ "CallsignBinding", _properties [2]}
-        }, __Tag,() => new BindRequest(), () => new List<BindRequest>(), () => new Dictionary<string,BindRequest>(),MeshRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "EnvelopedProfileAccount", _properties [1]},
+			{ "EnvelopedCallsignBinding", _properties [2]}}, __Tag,
+		() => new BindRequest(), () => [], () => [], MeshRequest._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2008,32 +1715,32 @@ public partial class BindResponse : MeshResponse {
 	[JsonPropertyName("URL")]
 	public virtual string?					URL  {get; set;} //
 
-	[JsonPropertyName("AccountHostAssignment")]
+	[JsonPropertyName("EnvelopedAccountHostAssignment")]
 	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual AccountHostAssignment?				AccountHostAssignment  {get; set;} 
+	public virtual AccountHostAssignment?				AccountHostAssignment  => EnvelopedAccountHostAssignment.Decode();
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Reason", 
 					(IBinding data, string? value) => {(data as BindResponse).Reason = value;}, 
 					(IBinding data) => (data as BindResponse).Reason ),
 		new PropertyString ("URL", 
 					(IBinding data, string? value) => {(data as BindResponse).URL = value;}, 
 					(IBinding data) => (data as BindResponse).URL ),
-		new PropertyGStruct ("AccountHostAssignment", /*typeof (AccountHostAssignment<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedAccountHostAssignment", /*typeof (AccountHostAssignment<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as BindResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
 					(IBinding data) => (data as BindResponse).EnvelopedAccountHostAssignment,
 					/*(IBinding data, object? value) => {(data as BindResponse).AccountHostAssignment = value as AccountHostAssignment;},
 					(IBinding data) => (data as BindResponse).AccountHostAssignment,*/
-					()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())		];
+					()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2041,30 +1748,11 @@ public partial class BindResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<BindResponse> _binding = new (
 			new() {
-
 			{ "Reason", _properties [0]},
 			{ "URL", _properties [1]},
-			{ "AccountHostAssignment", _properties [2]}
-        }, __Tag,() => new BindResponse(), () => new List<BindResponse>(), () => new Dictionary<string,BindResponse>(),MeshResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "EnvelopedAccountHostAssignment", _properties [2]}}, __Tag,
+		() => new BindResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2105,28 +1793,9 @@ public partial class UnbindRequest : MeshRequestUser {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<UnbindRequest> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new UnbindRequest(), () => [], () => [], MeshRequestUser._binding, Generic: false);
 
-        }, __Tag,() => new UnbindRequest(), () => new List<UnbindRequest>(), () => new Dictionary<string,UnbindRequest>(),MeshRequestUser._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshRequestUser._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2165,28 +1834,9 @@ public partial class UnbindResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<UnbindResponse> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new UnbindResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
 
-        }, __Tag,() => new UnbindResponse(), () => new List<UnbindResponse>(), () => new Dictionary<string,UnbindResponse>(),MeshResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2210,13 +1860,13 @@ public partial class UnbindResponse : MeshResponse {
 	/// <summary>
 	/// </summary>
 public partial class ConnectRequest : MeshRequest {
-	[JsonPropertyName("RequestConnection")]
+	[JsonPropertyName("EnvelopedRequestConnection")]
 	public virtual Enveloped<RequestConnection>?					EnvelopedRequestConnection  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual RequestConnection?				RequestConnection  {get; set;} 
+	public virtual RequestConnection?				RequestConnection  => EnvelopedRequestConnection.Decode();
     /// <summary>
     ///List of named access rights.
     /// </summary>
@@ -2229,8 +1879,7 @@ public partial class ConnectRequest : MeshRequest {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
-		new PropertyGStruct ("RequestConnection", /*typeof (RequestConnection<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedRequestConnection", /*typeof (RequestConnection<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as ConnectRequest).EnvelopedRequestConnection = value as Enveloped<RequestConnection>;},
 					(IBinding data) => (data as ConnectRequest).EnvelopedRequestConnection,
 					/*(IBinding data, object? value) => {(data as ConnectRequest).RequestConnection = value as RequestConnection;},
@@ -2238,7 +1887,8 @@ public partial class ConnectRequest : MeshRequest {
 					()=>new  Enveloped<RequestConnection>(), ()=>new Enveloped<RequestConnection>()),
 		new PropertyListString ("Rights", 
 					(IBinding data, List<string>? value) => {(data as ConnectRequest).Rights = value;}, 
-					(IBinding data) => (data as ConnectRequest).Rights )		];
+					(IBinding data) => (data as ConnectRequest).Rights )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2246,29 +1896,10 @@ public partial class ConnectRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ConnectRequest> _binding = new (
 			new() {
+			{ "EnvelopedRequestConnection", _properties [0]},
+			{ "Rights", _properties [1]}}, __Tag,
+		() => new ConnectRequest(), () => [], () => [], MeshRequest._binding, Generic: false);
 
-			{ "RequestConnection", _properties [0]},
-			{ "Rights", _properties [1]}
-        }, __Tag,() => new ConnectRequest(), () => new List<ConnectRequest>(), () => new Dictionary<string,ConnectRequest>(),MeshRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2292,39 +1923,39 @@ public partial class ConnectRequest : MeshRequest {
 	/// <summary>
 	/// </summary>
 public partial class ConnectResponse : MeshResponse {
-	[JsonPropertyName("AcknowledgeConnection")]
+	[JsonPropertyName("EnvelopedAcknowledgeConnection")]
 	public virtual Enveloped<AcknowledgeConnection>?					EnvelopedAcknowledgeConnection  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual AcknowledgeConnection?				AcknowledgeConnection  {get; set;} 
-	[JsonPropertyName("ProfileAccount")]
+	public virtual AcknowledgeConnection?				AcknowledgeConnection  => EnvelopedAcknowledgeConnection.Decode();
+	[JsonPropertyName("EnvelopedProfileAccount")]
 	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual ProfileAccount?				ProfileAccount  {get; set;} 
+	public virtual ProfileAccount?				ProfileAccount  => EnvelopedProfileAccount.Decode();
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
-		new PropertyGStruct ("AcknowledgeConnection", /*typeof (AcknowledgeConnection<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedAcknowledgeConnection", /*typeof (AcknowledgeConnection<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as ConnectResponse).EnvelopedAcknowledgeConnection = value as Enveloped<AcknowledgeConnection>;},
 					(IBinding data) => (data as ConnectResponse).EnvelopedAcknowledgeConnection,
 					/*(IBinding data, object? value) => {(data as ConnectResponse).AcknowledgeConnection = value as AcknowledgeConnection;},
 					(IBinding data) => (data as ConnectResponse).AcknowledgeConnection,*/
 					()=>new  Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>()),
-		new PropertyGStruct ("ProfileAccount", /*typeof (ProfileAccount<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedProfileAccount", /*typeof (ProfileAccount<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as ConnectResponse).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;},
 					(IBinding data) => (data as ConnectResponse).EnvelopedProfileAccount,
 					/*(IBinding data, object? value) => {(data as ConnectResponse).ProfileAccount = value as ProfileAccount;},
 					(IBinding data) => (data as ConnectResponse).ProfileAccount,*/
-					()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())		];
+					()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2332,29 +1963,10 @@ public partial class ConnectResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ConnectResponse> _binding = new (
 			new() {
+			{ "EnvelopedAcknowledgeConnection", _properties [0]},
+			{ "EnvelopedProfileAccount", _properties [1]}}, __Tag,
+		() => new ConnectResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
 
-			{ "AcknowledgeConnection", _properties [0]},
-			{ "ProfileAccount", _properties [1]}
-        }, __Tag,() => new ConnectResponse(), () => new List<ConnectResponse>(), () => new Dictionary<string,ConnectResponse>(),MeshResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2396,13 +2008,13 @@ public partial class CompleteRequest : StatusRequest {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("AccountAddress", 
 					(IBinding data, string? value) => {(data as CompleteRequest).AccountAddress = value;}, 
 					(IBinding data) => (data as CompleteRequest).AccountAddress ),
 		new PropertyString ("ResponseID", 
 					(IBinding data, string? value) => {(data as CompleteRequest).ResponseID = value;}, 
-					(IBinding data) => (data as CompleteRequest).ResponseID )		];
+					(IBinding data) => (data as CompleteRequest).ResponseID )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2410,29 +2022,10 @@ public partial class CompleteRequest : StatusRequest {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CompleteRequest> _binding = new (
 			new() {
-
 			{ "AccountAddress", _properties [0]},
-			{ "ResponseID", _properties [1]}
-        }, __Tag,() => new CompleteRequest(), () => new List<CompleteRequest>(), () => new Dictionary<string,CompleteRequest>(),StatusRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "ResponseID", _properties [1]}}, __Tag,
+		() => new CompleteRequest(), () => [], () => [], StatusRequest._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(StatusRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2456,39 +2049,39 @@ public partial class CompleteRequest : StatusRequest {
 	/// <summary>
 	/// </summary>
 public partial class CompleteResponse : MeshResponse {
-	[JsonPropertyName("RespondConnection")]
+	[JsonPropertyName("EnvelopedRespondConnection")]
 	public virtual Enveloped<RespondConnection>?					EnvelopedRespondConnection  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual RespondConnection?				RespondConnection  {get; set;} 
-	[JsonPropertyName("AccountHostAssignment")]
+	public virtual RespondConnection?				RespondConnection  => EnvelopedRespondConnection.Decode();
+	[JsonPropertyName("EnvelopedAccountHostAssignment")]
 	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual AccountHostAssignment?				AccountHostAssignment  {get; set;} 
+	public virtual AccountHostAssignment?				AccountHostAssignment  => EnvelopedAccountHostAssignment.Decode();
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
-		new PropertyGStruct ("RespondConnection", /*typeof (RespondConnection<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedRespondConnection", /*typeof (RespondConnection<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as CompleteResponse).EnvelopedRespondConnection = value as Enveloped<RespondConnection>;},
 					(IBinding data) => (data as CompleteResponse).EnvelopedRespondConnection,
 					/*(IBinding data, object? value) => {(data as CompleteResponse).RespondConnection = value as RespondConnection;},
 					(IBinding data) => (data as CompleteResponse).RespondConnection,*/
 					()=>new  Enveloped<RespondConnection>(), ()=>new Enveloped<RespondConnection>()),
-		new PropertyGStruct ("AccountHostAssignment", /*typeof (AccountHostAssignment<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedAccountHostAssignment", /*typeof (AccountHostAssignment<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as CompleteResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
 					(IBinding data) => (data as CompleteResponse).EnvelopedAccountHostAssignment,
 					/*(IBinding data, object? value) => {(data as CompleteResponse).AccountHostAssignment = value as AccountHostAssignment;},
 					(IBinding data) => (data as CompleteResponse).AccountHostAssignment,*/
-					()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())		];
+					()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2496,29 +2089,10 @@ public partial class CompleteResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CompleteResponse> _binding = new (
 			new() {
+			{ "EnvelopedRespondConnection", _properties [0]},
+			{ "EnvelopedAccountHostAssignment", _properties [1]}}, __Tag,
+		() => new CompleteResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
 
-			{ "RespondConnection", _properties [0]},
-			{ "AccountHostAssignment", _properties [1]}
-        }, __Tag,() => new CompleteResponse(), () => new List<CompleteResponse>(), () => new Dictionary<string,CompleteResponse>(),MeshResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2581,7 +2155,6 @@ public partial class StatusRequest : MeshRequestUser {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("DeviceUDF", 
 					(IBinding data, string? value) => {(data as StatusRequest).DeviceUDF = value;}, 
 					(IBinding data) => (data as StatusRequest).DeviceUDF ),
@@ -2599,7 +2172,8 @@ public partial class StatusRequest : MeshRequestUser {
 					(IBinding data) => (data as StatusRequest).Services ),
 		new PropertyBoolean ("DeviceStatus", 
 					(IBinding data, bool? value) => {(data as StatusRequest).DeviceStatus = value;}, 
-					(IBinding data) => (data as StatusRequest).DeviceStatus )		];
+					(IBinding data) => (data as StatusRequest).DeviceStatus )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2607,33 +2181,14 @@ public partial class StatusRequest : MeshRequestUser {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<StatusRequest> _binding = new (
 			new() {
-
 			{ "DeviceUDF", _properties [0]},
 			{ "CatalogedDeviceDigest", _properties [1]},
 			{ "Catalogs", _properties [2]},
 			{ "Spools", _properties [3]},
 			{ "Services", _properties [4]},
-			{ "DeviceStatus", _properties [5]}
-        }, __Tag,() => new StatusRequest(), () => new List<StatusRequest>(), () => new Dictionary<string,StatusRequest>(),MeshRequestUser._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "DeviceStatus", _properties [5]}}, __Tag,
+		() => new StatusRequest(), () => [], () => [], MeshRequestUser._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshRequestUser._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2663,20 +2218,20 @@ public partial class StatusResponse : MeshResponse {
 	[JsonPropertyName("Bitmask")]
 	public virtual byte[]?					Bitmask  {get; set;} //
 
-	[JsonPropertyName("ProfileAccount")]
+	[JsonPropertyName("EnvelopedProfileAccount")]
 	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual ProfileAccount?				ProfileAccount  {get; set;} 
-	[JsonPropertyName("CatalogedDevice")]
+	public virtual ProfileAccount?				ProfileAccount  => EnvelopedProfileAccount.Decode();
+	[JsonPropertyName("EnvelopedCatalogedDevice")]
 	public virtual Enveloped<CatalogedDevice>?					EnvelopedCatalogedDevice  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual CatalogedDevice?				CatalogedDevice  {get; set;} 
+	public virtual CatalogedDevice?				CatalogedDevice  => EnvelopedCatalogedDevice.Decode();
     /// <summary>
     /// </summary>
 
@@ -2688,13 +2243,13 @@ public partial class StatusResponse : MeshResponse {
 
 	[JsonPropertyName("StoreStatus")]
 	public virtual List<StoreStatus>?					StoreStatus  {get; set;}
-	[JsonPropertyName("AccountHostAssignment")]
+	[JsonPropertyName("EnvelopedAccountHostAssignment")]
 	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual AccountHostAssignment?				AccountHostAssignment  {get; set;} 
+	public virtual AccountHostAssignment?				AccountHostAssignment  => EnvelopedAccountHostAssignment.Decode();
     /// <summary>
     ///A series of access tokens for the requested services.
     /// </summary>
@@ -2712,17 +2267,16 @@ public partial class StatusResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("Bitmask", 
 					(IBinding data, byte[]? value) => {(data as StatusResponse).Bitmask = value;}, 
 					(IBinding data) => (data as StatusResponse).Bitmask ),
-		new PropertyGStruct ("ProfileAccount", /*typeof (ProfileAccount<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedProfileAccount", /*typeof (ProfileAccount<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;},
 					(IBinding data) => (data as StatusResponse).EnvelopedProfileAccount,
 					/*(IBinding data, object? value) => {(data as StatusResponse).ProfileAccount = value as ProfileAccount;},
 					(IBinding data) => (data as StatusResponse).ProfileAccount,*/
 					()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
-		new PropertyGStruct ("CatalogedDevice", /*typeof (CatalogedDevice<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedCatalogedDevice", /*typeof (CatalogedDevice<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;},
 					(IBinding data) => (data as StatusResponse).EnvelopedCatalogedDevice,
 					/*(IBinding data, object? value) => {(data as StatusResponse).CatalogedDevice = value as CatalogedDevice;},
@@ -2735,7 +2289,7 @@ public partial class StatusResponse : MeshResponse {
 					(IBinding data, object? value) => {(data as StatusResponse).StoreStatus = value as List<StoreStatus>;}, 
 					(IBinding data) => (data as StatusResponse).StoreStatus,
 					false, ()=>new  List<StoreStatus>(), ()=>new StoreStatus()),
-		new PropertyGStruct ("AccountHostAssignment", /*typeof (AccountHostAssignment<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedAccountHostAssignment", /*typeof (AccountHostAssignment<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
 					(IBinding data) => (data as StatusResponse).EnvelopedAccountHostAssignment,
 					/*(IBinding data, object? value) => {(data as StatusResponse).AccountHostAssignment = value as AccountHostAssignment;},
@@ -2748,7 +2302,8 @@ public partial class StatusResponse : MeshResponse {
 		new PropertyListStruct ("DeviceStatuses", typeof (DeviceStatus),
 					(IBinding data, object? value) => {(data as StatusResponse).DeviceStatuses = value as List<DeviceStatus>;}, 
 					(IBinding data) => (data as StatusResponse).DeviceStatuses,
-					false, ()=>new  List<DeviceStatus>(), ()=>new DeviceStatus())		];
+					false, ()=>new  List<DeviceStatus>(), ()=>new DeviceStatus())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2756,35 +2311,16 @@ public partial class StatusResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<StatusResponse> _binding = new (
 			new() {
-
 			{ "Bitmask", _properties [0]},
-			{ "ProfileAccount", _properties [1]},
-			{ "CatalogedDevice", _properties [2]},
+			{ "EnvelopedProfileAccount", _properties [1]},
+			{ "EnvelopedCatalogedDevice", _properties [2]},
 			{ "CatalogedDeviceDigest", _properties [3]},
 			{ "StoreStatus", _properties [4]},
-			{ "AccountHostAssignment", _properties [5]},
+			{ "EnvelopedAccountHostAssignment", _properties [5]},
 			{ "Services", _properties [6]},
-			{ "DeviceStatuses", _properties [7]}
-        }, __Tag,() => new StatusResponse(), () => new List<StatusResponse>(), () => new Dictionary<string,StatusResponse>(),MeshResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "DeviceStatuses", _properties [7]}}, __Tag,
+		() => new StatusResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2838,7 +2374,6 @@ public partial class DeviceStatus : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Id", 
 					(IBinding data, string? value) => {(data as DeviceStatus).Id = value;}, 
 					(IBinding data) => (data as DeviceStatus).Id ),
@@ -2850,7 +2385,8 @@ public partial class DeviceStatus : MeshProtocol {
 					(IBinding data) => (data as DeviceStatus).Comment ),
 		new PropertyDateTime ("LastConnected", 
 					(IBinding data, DateTime? value) => {(data as DeviceStatus).LastConnected = value;}, 
-					(IBinding data) => (data as DeviceStatus).LastConnected )		];
+					(IBinding data) => (data as DeviceStatus).LastConnected )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2858,30 +2394,12 @@ public partial class DeviceStatus : MeshProtocol {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<DeviceStatus> _binding = new (
 			new() {
-
 			{ "Id", _properties [0]},
 			{ "Status", _properties [1]},
 			{ "Comment", _properties [2]},
-			{ "LastConnected", _properties [3]}
-        }, __Tag,() => new DeviceStatus(), () => new List<DeviceStatus>(), () => new Dictionary<string,DeviceStatus>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "LastConnected", _properties [3]}}, __Tag,
+		() => new DeviceStatus(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2950,7 +2468,6 @@ public partial class DownloadRequest : MeshRequestUser {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyInteger32 ("MaxResults", 
 					(IBinding data, int? value) => {(data as DownloadRequest).MaxResults = value;}, 
 					(IBinding data) => (data as DownloadRequest).MaxResults ),
@@ -2967,7 +2484,8 @@ public partial class DownloadRequest : MeshRequestUser {
 		new PropertyStruct ("ConstraintsPost", typeof (ConstraintsData),
 					(IBinding data, object? value) => {(data as DownloadRequest).ConstraintsPost = value as ConstraintsData;}, 
 					(IBinding data) => (data as DownloadRequest).ConstraintsPost,
-					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())		];
+					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2975,32 +2493,13 @@ public partial class DownloadRequest : MeshRequestUser {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<DownloadRequest> _binding = new (
 			new() {
-
 			{ "MaxResults", _properties [0]},
 			{ "DeviceUDF", _properties [1]},
 			{ "CatalogedDeviceDigest", _properties [2]},
 			{ "Select", _properties [3]},
-			{ "ConstraintsPost", _properties [4]}
-        }, __Tag,() => new DownloadRequest(), () => new List<DownloadRequest>(), () => new Dictionary<string,DownloadRequest>(),MeshRequestUser._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "ConstraintsPost", _properties [4]}}, __Tag,
+		() => new DownloadRequest(), () => [], () => [], MeshRequestUser._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshRequestUser._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3042,20 +2541,19 @@ public partial class DownloadResponse : MeshResponse {
 	[JsonPropertyName("CatalogedDeviceDigest")]
 	public virtual string?					CatalogedDeviceDigest  {get; set;} //
 
-	[JsonPropertyName("CatalogedDevice")]
+	[JsonPropertyName("EnvelopedCatalogedDevice")]
 	public virtual Enveloped<CatalogedDevice>?					EnvelopedCatalogedDevice  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual CatalogedDevice?				CatalogedDevice  {get; set;} 
+	public virtual CatalogedDevice?				CatalogedDevice  => EnvelopedCatalogedDevice.Decode();
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("Updates", typeof (StoreUpdate),
 					(IBinding data, object? value) => {(data as DownloadResponse).Updates = value as List<StoreUpdate>;}, 
 					(IBinding data) => (data as DownloadResponse).Updates,
@@ -3063,12 +2561,13 @@ public partial class DownloadResponse : MeshResponse {
 		new PropertyString ("CatalogedDeviceDigest", 
 					(IBinding data, string? value) => {(data as DownloadResponse).CatalogedDeviceDigest = value;}, 
 					(IBinding data) => (data as DownloadResponse).CatalogedDeviceDigest ),
-		new PropertyGStruct ("CatalogedDevice", /*typeof (CatalogedDevice<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedCatalogedDevice", /*typeof (CatalogedDevice<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as DownloadResponse).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;},
 					(IBinding data) => (data as DownloadResponse).EnvelopedCatalogedDevice,
 					/*(IBinding data, object? value) => {(data as DownloadResponse).CatalogedDevice = value as CatalogedDevice;},
 					(IBinding data) => (data as DownloadResponse).CatalogedDevice,*/
-					()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>())		];
+					()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3076,30 +2575,11 @@ public partial class DownloadResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<DownloadResponse> _binding = new (
 			new() {
-
 			{ "Updates", _properties [0]},
 			{ "CatalogedDeviceDigest", _properties [1]},
-			{ "CatalogedDevice", _properties [2]}
-        }, __Tag,() => new DownloadResponse(), () => new List<DownloadResponse>(), () => new Dictionary<string,DownloadResponse>(),MeshResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "EnvelopedCatalogedDevice", _properties [2]}}, __Tag,
+		() => new DownloadResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3145,13 +2625,13 @@ public partial class UploadRequest : MeshRequestUser {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("DocumentId", 
 					(IBinding data, string? value) => {(data as UploadRequest).DocumentId = value;}, 
 					(IBinding data) => (data as UploadRequest).DocumentId ),
 		new PropertyBinary ("Data", 
 					(IBinding data, byte[]? value) => {(data as UploadRequest).Data = value;}, 
-					(IBinding data) => (data as UploadRequest).Data )		];
+					(IBinding data) => (data as UploadRequest).Data )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3159,29 +2639,10 @@ public partial class UploadRequest : MeshRequestUser {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<UploadRequest> _binding = new (
 			new() {
-
 			{ "DocumentId", _properties [0]},
-			{ "Data", _properties [1]}
-        }, __Tag,() => new UploadRequest(), () => new List<UploadRequest>(), () => new Dictionary<string,UploadRequest>(),MeshRequestUser._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Data", _properties [1]}}, __Tag,
+		() => new UploadRequest(), () => [], () => [], MeshRequestUser._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshRequestUser._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3220,28 +2681,9 @@ public partial class UploadResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<UploadResponse> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new UploadResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
 
-        }, __Tag,() => new UploadResponse(), () => new List<UploadResponse>(), () => new Dictionary<string,UploadResponse>(),MeshResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3280,10 +2722,10 @@ public partial class GetDataRequest : MeshRequest {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("DocumentId", 
 					(IBinding data, string? value) => {(data as GetDataRequest).DocumentId = value;}, 
-					(IBinding data) => (data as GetDataRequest).DocumentId )		];
+					(IBinding data) => (data as GetDataRequest).DocumentId )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3291,28 +2733,9 @@ public partial class GetDataRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<GetDataRequest> _binding = new (
 			new() {
+			{ "DocumentId", _properties [0]}}, __Tag,
+		() => new GetDataRequest(), () => [], () => [], MeshRequest._binding, Generic: false);
 
-			{ "DocumentId", _properties [0]}
-        }, __Tag,() => new GetDataRequest(), () => new List<GetDataRequest>(), () => new Dictionary<string,GetDataRequest>(),MeshRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3351,10 +2774,10 @@ public partial class GetDataResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("Data", 
 					(IBinding data, byte[]? value) => {(data as GetDataResponse).Data = value;}, 
-					(IBinding data) => (data as GetDataResponse).Data )		];
+					(IBinding data) => (data as GetDataResponse).Data )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3362,28 +2785,9 @@ public partial class GetDataResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<GetDataResponse> _binding = new (
 			new() {
+			{ "Data", _properties [0]}}, __Tag,
+		() => new GetDataResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
 
-			{ "Data", _properties [0]}
-        }, __Tag,() => new GetDataResponse(), () => new List<GetDataResponse>(), () => new Dictionary<string,GetDataResponse>(),MeshResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3422,34 +2826,33 @@ public partial class TransactRequest : MeshRequestUser {
 
 	[JsonPropertyName("Accounts")]
 	public virtual List<string>?					Accounts  {get; set;}
-	[JsonPropertyName("Outbound")]
+	[JsonPropertyName("EnvelopedOutbound")]
 	public virtual List<Enveloped<Message>>?					EnvelopedOutbound  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual List<Message>?				Outbound  {get; set;} 
-	[JsonPropertyName("Inbound")]
+	public virtual List<Message>?				Outbound  => EnvelopedOutbound.Decode();
+	[JsonPropertyName("EnvelopedInbound")]
 	public virtual List<Enveloped<Message>>?					EnvelopedInbound  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual List<Message>?				Inbound  {get; set;} 
-	[JsonPropertyName("Local")]
+	public virtual List<Message>?				Inbound  => EnvelopedInbound.Decode();
+	[JsonPropertyName("EnvelopedLocal")]
 	public virtual List<Enveloped<Message>>?					EnvelopedLocal  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual List<Message>?				Local  {get; set;} 
+	public virtual List<Message>?				Local  => EnvelopedLocal.Decode();
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("Updates", typeof (StoreUpdate),
 					(IBinding data, object? value) => {(data as TransactRequest).Updates = value as List<StoreUpdate>;}, 
 					(IBinding data) => (data as TransactRequest).Updates,
@@ -3457,24 +2860,31 @@ public partial class TransactRequest : MeshRequestUser {
 		new PropertyListString ("Accounts", 
 					(IBinding data, List<string>? value) => {(data as TransactRequest).Accounts = value;}, 
 					(IBinding data) => (data as TransactRequest).Accounts ),
-		new PropertyListGStruct ("Outbound", /*typeof (Message<>),*/typeof (Enveloped),
+		new PropertyListGStruct ("EnvelopedOutbound", /*typeof (Message<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as TransactRequest).EnvelopedOutbound = value as List<Enveloped<Message>>;},
 					(IBinding data) => (data as TransactRequest).EnvelopedOutbound,
 					/*(IBinding data, object? value) => {(data as TransactRequest).Outbound = value as List<Message>;},
 					(IBinding data) => (data as TransactRequest).Outbound,*/
-					()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>()),
-		new PropertyListGStruct ("Inbound", /*typeof (Message<>),*/typeof (Enveloped),
+					()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>(),
+					(object list,object item)=>(list as List<Enveloped<Message>>).Add (item as Enveloped<Message>)
+),
+		new PropertyListGStruct ("EnvelopedInbound", /*typeof (Message<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as TransactRequest).EnvelopedInbound = value as List<Enveloped<Message>>;},
 					(IBinding data) => (data as TransactRequest).EnvelopedInbound,
 					/*(IBinding data, object? value) => {(data as TransactRequest).Inbound = value as List<Message>;},
 					(IBinding data) => (data as TransactRequest).Inbound,*/
-					()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>()),
-		new PropertyListGStruct ("Local", /*typeof (Message<>),*/typeof (Enveloped),
+					()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>(),
+					(object list,object item)=>(list as List<Enveloped<Message>>).Add (item as Enveloped<Message>)
+),
+		new PropertyListGStruct ("EnvelopedLocal", /*typeof (Message<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as TransactRequest).EnvelopedLocal = value as List<Enveloped<Message>>;},
 					(IBinding data) => (data as TransactRequest).EnvelopedLocal,
 					/*(IBinding data, object? value) => {(data as TransactRequest).Local = value as List<Message>;},
 					(IBinding data) => (data as TransactRequest).Local,*/
-					()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())		];
+					()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>(),
+					(object list,object item)=>(list as List<Enveloped<Message>>).Add (item as Enveloped<Message>)
+)
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3482,32 +2892,13 @@ public partial class TransactRequest : MeshRequestUser {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<TransactRequest> _binding = new (
 			new() {
-
 			{ "Updates", _properties [0]},
 			{ "Accounts", _properties [1]},
-			{ "Outbound", _properties [2]},
-			{ "Inbound", _properties [3]},
-			{ "Local", _properties [4]}
-        }, __Tag,() => new TransactRequest(), () => new List<TransactRequest>(), () => new Dictionary<string,TransactRequest>(),MeshRequestUser._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "EnvelopedOutbound", _properties [2]},
+			{ "EnvelopedInbound", _properties [3]},
+			{ "EnvelopedLocal", _properties [4]}}, __Tag,
+		() => new TransactRequest(), () => [], () => [], MeshRequestUser._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshRequestUser._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3560,7 +2951,6 @@ public partial class TransactResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("Bitmask", 
 					(IBinding data, byte[]? value) => {(data as TransactResponse).Bitmask = value;}, 
 					(IBinding data) => (data as TransactResponse).Bitmask ),
@@ -3571,7 +2961,8 @@ public partial class TransactResponse : MeshResponse {
 		new PropertyStruct ("ConstraintsData", typeof (ConstraintsData),
 					(IBinding data, object? value) => {(data as TransactResponse).ConstraintsData = value as ConstraintsData;}, 
 					(IBinding data) => (data as TransactResponse).ConstraintsData,
-					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())		];
+					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3579,30 +2970,11 @@ public partial class TransactResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<TransactResponse> _binding = new (
 			new() {
-
 			{ "Bitmask", _properties [0]},
 			{ "Entries", _properties [1]},
-			{ "ConstraintsData", _properties [2]}
-        }, __Tag,() => new TransactResponse(), () => new List<TransactResponse>(), () => new Dictionary<string,TransactResponse>(),MeshResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "ConstraintsData", _properties [2]}}, __Tag,
+		() => new TransactResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3664,7 +3036,6 @@ public partial class EntryResponse : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyInteger64 ("IndexRequest", 
 					(IBinding data, long? value) => {(data as EntryResponse).IndexRequest = value;}, 
 					(IBinding data) => (data as EntryResponse).IndexRequest ),
@@ -3677,7 +3048,8 @@ public partial class EntryResponse : MeshProtocol {
 		new PropertyStruct ("ConstraintsData", typeof (ConstraintsData),
 					(IBinding data, object? value) => {(data as EntryResponse).ConstraintsData = value as ConstraintsData;}, 
 					(IBinding data) => (data as EntryResponse).ConstraintsData,
-					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())		];
+					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3685,30 +3057,12 @@ public partial class EntryResponse : MeshProtocol {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<EntryResponse> _binding = new (
 			new() {
-
 			{ "IndexRequest", _properties [0]},
 			{ "IndexContainer", _properties [1]},
 			{ "Result", _properties [2]},
-			{ "ConstraintsData", _properties [3]}
-        }, __Tag,() => new EntryResponse(), () => new List<EntryResponse>(), () => new Dictionary<string,EntryResponse>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "ConstraintsData", _properties [3]}}, __Tag,
+		() => new EntryResponse(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3747,28 +3101,9 @@ public partial class PublicRequest : DownloadRequest {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PublicRequest> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new PublicRequest(), () => [], () => [], DownloadRequest._binding, Generic: false);
 
-        }, __Tag,() => new PublicRequest(), () => new List<PublicRequest>(), () => new Dictionary<string,PublicRequest>(),DownloadRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(DownloadRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3800,29 +3135,31 @@ public partial class PostRequest : MeshRequest {
 
 	[JsonPropertyName("Accounts")]
 	public virtual List<string>?					Accounts  {get; set;}
-	[JsonPropertyName("Messages")]
+	[JsonPropertyName("EnvelopedMessages")]
 	public virtual List<Enveloped<Message>>?					EnvelopedMessages  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual List<Message>?				Messages  {get; set;} 
+	public virtual List<Message>?				Messages  => EnvelopedMessages.Decode();
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListString ("Accounts", 
 					(IBinding data, List<string>? value) => {(data as PostRequest).Accounts = value;}, 
 					(IBinding data) => (data as PostRequest).Accounts ),
-		new PropertyListGStruct ("Messages", /*typeof (Message<>),*/typeof (Enveloped),
+		new PropertyListGStruct ("EnvelopedMessages", /*typeof (Message<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as PostRequest).EnvelopedMessages = value as List<Enveloped<Message>>;},
 					(IBinding data) => (data as PostRequest).EnvelopedMessages,
 					/*(IBinding data, object? value) => {(data as PostRequest).Messages = value as List<Message>;},
 					(IBinding data) => (data as PostRequest).Messages,*/
-					()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>())		];
+					()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>(),
+					(object list,object item)=>(list as List<Enveloped<Message>>).Add (item as Enveloped<Message>)
+)
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3830,29 +3167,10 @@ public partial class PostRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PostRequest> _binding = new (
 			new() {
-
 			{ "Accounts", _properties [0]},
-			{ "Messages", _properties [1]}
-        }, __Tag,() => new PostRequest(), () => new List<PostRequest>(), () => new Dictionary<string,PostRequest>(),MeshRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "EnvelopedMessages", _properties [1]}}, __Tag,
+		() => new PostRequest(), () => [], () => [], MeshRequest._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3891,28 +3209,9 @@ public partial class PostResponse : TransactResponse {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PostResponse> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new PostResponse(), () => [], () => [], TransactResponse._binding, Generic: false);
 
-        }, __Tag,() => new PostResponse(), () => new List<PostResponse>(), () => new Dictionary<string,PostResponse>(),TransactResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(TransactResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3936,26 +3235,26 @@ public partial class PostResponse : TransactResponse {
 	/// <summary>
 	/// </summary>
 public partial class ClaimRequest : MeshRequest {
-	[JsonPropertyName("MessageClaim")]
+	[JsonPropertyName("EnvelopedMessageClaim")]
 	public virtual Enveloped<MessageClaim>?					EnvelopedMessageClaim  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual MessageClaim?				MessageClaim  {get; set;} 
+	public virtual MessageClaim?				MessageClaim  => EnvelopedMessageClaim.Decode();
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
-		new PropertyGStruct ("MessageClaim", /*typeof (MessageClaim<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedMessageClaim", /*typeof (MessageClaim<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as ClaimRequest).EnvelopedMessageClaim = value as Enveloped<MessageClaim>;},
 					(IBinding data) => (data as ClaimRequest).EnvelopedMessageClaim,
 					/*(IBinding data, object? value) => {(data as ClaimRequest).MessageClaim = value as MessageClaim;},
 					(IBinding data) => (data as ClaimRequest).MessageClaim,*/
-					()=>new  Enveloped<MessageClaim>(), ()=>new Enveloped<MessageClaim>())		];
+					()=>new  Enveloped<MessageClaim>(), ()=>new Enveloped<MessageClaim>())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3963,28 +3262,9 @@ public partial class ClaimRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ClaimRequest> _binding = new (
 			new() {
+			{ "EnvelopedMessageClaim", _properties [0]}}, __Tag,
+		() => new ClaimRequest(), () => [], () => [], MeshRequest._binding, Generic: false);
 
-			{ "MessageClaim", _properties [0]}
-        }, __Tag,() => new ClaimRequest(), () => new List<ClaimRequest>(), () => new Dictionary<string,ClaimRequest>(),MeshRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4021,11 +3301,11 @@ public partial class ClaimResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("CatalogedPublication", typeof (CatalogedPublication),
 					(IBinding data, object? value) => {(data as ClaimResponse).CatalogedPublication = value as CatalogedPublication;}, 
 					(IBinding data) => (data as ClaimResponse).CatalogedPublication,
-					false, ()=>new  CatalogedPublication(), ()=>new CatalogedPublication())		];
+					false, ()=>new  CatalogedPublication(), ()=>new CatalogedPublication())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4033,28 +3313,9 @@ public partial class ClaimResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ClaimResponse> _binding = new (
 			new() {
+			{ "CatalogedPublication", _properties [0]}}, __Tag,
+		() => new ClaimResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
 
-			{ "CatalogedPublication", _properties [0]}
-        }, __Tag,() => new ClaimResponse(), () => new List<ClaimResponse>(), () => new Dictionary<string,ClaimResponse>(),MeshResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4098,13 +3359,13 @@ public partial class PollClaimRequest : MeshRequest {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("PublicationId", 
 					(IBinding data, string? value) => {(data as PollClaimRequest).PublicationId = value;}, 
 					(IBinding data) => (data as PollClaimRequest).PublicationId ),
 		new PropertyString ("TargetAccountAddress", 
 					(IBinding data, string? value) => {(data as PollClaimRequest).TargetAccountAddress = value;}, 
-					(IBinding data) => (data as PollClaimRequest).TargetAccountAddress )		];
+					(IBinding data) => (data as PollClaimRequest).TargetAccountAddress )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4112,29 +3373,10 @@ public partial class PollClaimRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PollClaimRequest> _binding = new (
 			new() {
-
 			{ "PublicationId", _properties [0]},
-			{ "TargetAccountAddress", _properties [1]}
-        }, __Tag,() => new PollClaimRequest(), () => new List<PollClaimRequest>(), () => new Dictionary<string,PollClaimRequest>(),MeshRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "TargetAccountAddress", _properties [1]}}, __Tag,
+		() => new PollClaimRequest(), () => [], () => [], MeshRequest._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4158,26 +3400,26 @@ public partial class PollClaimRequest : MeshRequest {
 	/// <summary>
 	/// </summary>
 public partial class PollClaimResponse : MeshResponse {
-	[JsonPropertyName("Message")]
+	[JsonPropertyName("EnvelopedMessage")]
 	public virtual Enveloped<Message>?					EnvelopedMessage  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual Message?				Message  {get; set;} 
+	public virtual Message?				Message  => EnvelopedMessage.Decode();
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
-		new PropertyGStruct ("Message", /*typeof (Message<>),*/typeof (Enveloped),
+		new PropertyGStruct ("EnvelopedMessage", /*typeof (Message<>),*/typeof (Enveloped),
 					(IBinding data, object? value) => {(data as PollClaimResponse).EnvelopedMessage = value as Enveloped<Message>;},
 					(IBinding data) => (data as PollClaimResponse).EnvelopedMessage,
 					/*(IBinding data, object? value) => {(data as PollClaimResponse).Message = value as Message;},
 					(IBinding data) => (data as PollClaimResponse).Message,*/
-					()=>new  Enveloped<Message>(), ()=>new Enveloped<Message>())		];
+					()=>new  Enveloped<Message>(), ()=>new Enveloped<Message>())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4185,28 +3427,9 @@ public partial class PollClaimResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<PollClaimResponse> _binding = new (
 			new() {
+			{ "EnvelopedMessage", _properties [0]}}, __Tag,
+		() => new PollClaimResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
 
-			{ "Message", _properties [0]}
-        }, __Tag,() => new PollClaimResponse(), () => new List<PollClaimResponse>(), () => new Dictionary<string,PollClaimResponse>(),MeshResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4250,13 +3473,13 @@ abstract public partial class CryptographicOperation : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("KeyId", 
 					(IBinding data, string? value) => {(data as CryptographicOperation).KeyId = value;}, 
 					(IBinding data) => (data as CryptographicOperation).KeyId ),
 		new PropertyBinary ("KeyCoefficient", 
 					(IBinding data, byte[]? value) => {(data as CryptographicOperation).KeyCoefficient = value;}, 
-					(IBinding data) => (data as CryptographicOperation).KeyCoefficient )		];
+					(IBinding data) => (data as CryptographicOperation).KeyCoefficient )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4264,28 +3487,10 @@ abstract public partial class CryptographicOperation : MeshProtocol {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CryptographicOperation> _binding = new (
 			new() {
-
 			{ "KeyId", _properties [0]},
-			{ "KeyCoefficient", _properties [1]}
-        }, __Tag,null, null, null,null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "KeyCoefficient", _properties [1]}}, __Tag,
+		null, null, null, null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4329,13 +3534,13 @@ public partial class CryptographicOperationSign : CryptographicOperation {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBinary ("Data", 
 					(IBinding data, byte[]? value) => {(data as CryptographicOperationSign).Data = value;}, 
 					(IBinding data) => (data as CryptographicOperationSign).Data ),
 		new PropertyBinary ("PartialR", 
 					(IBinding data, byte[]? value) => {(data as CryptographicOperationSign).PartialR = value;}, 
-					(IBinding data) => (data as CryptographicOperationSign).PartialR )		];
+					(IBinding data) => (data as CryptographicOperationSign).PartialR )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4343,29 +3548,10 @@ public partial class CryptographicOperationSign : CryptographicOperation {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CryptographicOperationSign> _binding = new (
 			new() {
-
 			{ "Data", _properties [0]},
-			{ "PartialR", _properties [1]}
-        }, __Tag,() => new CryptographicOperationSign(), () => new List<CryptographicOperationSign>(), () => new Dictionary<string,CryptographicOperationSign>(),CryptographicOperation._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "PartialR", _properties [1]}}, __Tag,
+		() => new CryptographicOperationSign(), () => [], () => [], CryptographicOperation._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(CryptographicOperation._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4402,11 +3588,11 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("PublicKey", typeof (Key), 
 					(IBinding data, object? value) => {(data as CryptographicOperationKeyAgreement).PublicKey = value as Key;}, 
 					(IBinding data) => (data as CryptographicOperationKeyAgreement).PublicKey,
-					true) 		];
+					true) 
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4414,28 +3600,9 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CryptographicOperationKeyAgreement> _binding = new (
 			new() {
+			{ "PublicKey", _properties [0]}}, __Tag,
+		() => new CryptographicOperationKeyAgreement(), () => [], () => [], CryptographicOperation._binding, Generic: false);
 
-			{ "PublicKey", _properties [0]}
-        }, __Tag,() => new CryptographicOperationKeyAgreement(), () => new List<CryptographicOperationKeyAgreement>(), () => new Dictionary<string,CryptographicOperationKeyAgreement>(),CryptographicOperation._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(CryptographicOperation._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4472,28 +3639,9 @@ public partial class CryptographicOperationGenerate : CryptographicOperation {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CryptographicOperationGenerate> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new CryptographicOperationGenerate(), () => [], () => [], CryptographicOperation._binding, Generic: false);
 
-        }, __Tag,() => new CryptographicOperationGenerate(), () => new List<CryptographicOperationGenerate>(), () => new Dictionary<string,CryptographicOperationGenerate>(),CryptographicOperation._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(CryptographicOperation._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4535,13 +3683,13 @@ public partial class CryptographicOperationShare : CryptographicOperation {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyInteger32 ("Threshold", 
 					(IBinding data, int? value) => {(data as CryptographicOperationShare).Threshold = value;}, 
 					(IBinding data) => (data as CryptographicOperationShare).Threshold ),
 		new PropertyInteger32 ("Shares", 
 					(IBinding data, int? value) => {(data as CryptographicOperationShare).Shares = value;}, 
-					(IBinding data) => (data as CryptographicOperationShare).Shares )		];
+					(IBinding data) => (data as CryptographicOperationShare).Shares )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4549,29 +3697,10 @@ public partial class CryptographicOperationShare : CryptographicOperation {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CryptographicOperationShare> _binding = new (
 			new() {
-
 			{ "Threshold", _properties [0]},
-			{ "Shares", _properties [1]}
-        }, __Tag,() => new CryptographicOperationShare(), () => new List<CryptographicOperationShare>(), () => new Dictionary<string,CryptographicOperationShare>(),CryptographicOperation._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Shares", _properties [1]}}, __Tag,
+		() => new CryptographicOperationShare(), () => [], () => [], CryptographicOperation._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(CryptographicOperation._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4607,10 +3736,10 @@ public partial class CryptographicResult : MeshProtocol {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Error", 
 					(IBinding data, string? value) => {(data as CryptographicResult).Error = value;}, 
-					(IBinding data) => (data as CryptographicResult).Error )		];
+					(IBinding data) => (data as CryptographicResult).Error )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4618,27 +3747,9 @@ public partial class CryptographicResult : MeshProtocol {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CryptographicResult> _binding = new (
 			new() {
+			{ "Error", _properties [0]}}, __Tag,
+		() => new CryptographicResult(), () => [], () => [], null, Generic: false);
 
-			{ "Error", _properties [0]}
-        }, __Tag,() => new CryptographicResult(), () => new List<CryptographicResult>(), () => new Dictionary<string,CryptographicResult>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4674,11 +3785,11 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("KeyAgreement", typeof (KeyAgreement), 
 					(IBinding data, object? value) => {(data as CryptographicResultKeyAgreement).KeyAgreement = value as KeyAgreement;}, 
 					(IBinding data) => (data as CryptographicResultKeyAgreement).KeyAgreement,
-					true) 		];
+					true) 
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4686,28 +3797,9 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CryptographicResultKeyAgreement> _binding = new (
 			new() {
+			{ "KeyAgreement", _properties [0]}}, __Tag,
+		() => new CryptographicResultKeyAgreement(), () => [], () => [], CryptographicResult._binding, Generic: false);
 
-			{ "KeyAgreement", _properties [0]}
-        }, __Tag,() => new CryptographicResultKeyAgreement(), () => new List<CryptographicResultKeyAgreement>(), () => new Dictionary<string,CryptographicResultKeyAgreement>(),CryptographicResult._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(CryptographicResult._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4744,28 +3836,9 @@ public partial class CryptographicResultShare : CryptographicResult {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CryptographicResultShare> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new CryptographicResultShare(), () => [], () => [], CryptographicResult._binding, Generic: false);
 
-        }, __Tag,() => new CryptographicResultShare(), () => new List<CryptographicResultShare>(), () => new Dictionary<string,CryptographicResultShare>(),CryptographicResult._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(CryptographicResult._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4807,7 +3880,6 @@ public partial class OperateRequest : MeshRequest {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("AccountAddress", 
 					(IBinding data, string? value) => {(data as OperateRequest).AccountAddress = value;}, 
 					(IBinding data) => (data as OperateRequest).AccountAddress ),
@@ -4815,7 +3887,8 @@ public partial class OperateRequest : MeshRequest {
 					(IBinding data, object? value) => {(data as OperateRequest).Operations = value as List<CryptographicOperation>;}, 
 					(IBinding data) => (data as OperateRequest).Operations,
 					true, ()=>new List<CryptographicOperation>()
-) 		];
+) 
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4823,29 +3896,10 @@ public partial class OperateRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<OperateRequest> _binding = new (
 			new() {
-
 			{ "AccountAddress", _properties [0]},
-			{ "Operations", _properties [1]}
-        }, __Tag,() => new OperateRequest(), () => new List<OperateRequest>(), () => new Dictionary<string,OperateRequest>(),MeshRequest._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Operations", _properties [1]}}, __Tag,
+		() => new OperateRequest(), () => [], () => [], MeshRequest._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshRequest._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4880,12 +3934,12 @@ public partial class OperateResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("Results", typeof (CryptographicResult), 
 					(IBinding data, object? value) => {(data as OperateResponse).Results = value as List<CryptographicResult>;}, 
 					(IBinding data) => (data as OperateResponse).Results,
 					true, ()=>new List<CryptographicResult>()
-) 		];
+) 
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4893,28 +3947,9 @@ public partial class OperateResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<OperateResponse> _binding = new (
 			new() {
+			{ "Results", _properties [0]}}, __Tag,
+		() => new OperateResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
 
-			{ "Results", _properties [0]}
-        }, __Tag,() => new OperateResponse(), () => new List<OperateResponse>(), () => new Dictionary<string,OperateResponse>(),MeshResponse._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(MeshResponse._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class

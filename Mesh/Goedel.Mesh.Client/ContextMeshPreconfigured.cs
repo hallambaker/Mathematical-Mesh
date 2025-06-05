@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Cryptography.Dare;
+
 namespace Goedel.Mesh.Client;
 
 /// <summary>
@@ -33,7 +35,7 @@ public class ContextMeshPreconfigured : ContextAccount {
                 => CatalogedMachine as CatalogedPreconfigured;
 
     ///<summary>The manufacturer profile used to direct configuration.</summary>
-    public override Profile Profile => CatalogedPreconfigured.ProfileDevice;
+    public override Profile Profile => CatalogedPreconfigured.TheProfileDevice;
 
     ///<summary>Preconfigured devices have a connection to the manufacturer profile.</summary>
     public override Connection Connection => CatalogedPreconfigured.ConnectionDevice;
@@ -93,7 +95,9 @@ public class ContextMeshPreconfigured : ContextAccount {
             return null;
             }
 
-        var messageClaim = MeshItem.Decode(claimResponse.EnvelopedMessage, KeyCollection) as MessageClaim;
+        var messageClaim = claimResponse.EnvelopedMessage.StreamParseTag<MessageClaim>(KeyCollection);
+
+        //MeshItem.Decode(claimResponse.EnvelopedMessage, KeyCollection) as MessageClaim;
         messageClaim.AssertNotNull(InvalidServiceResponse.Throw); // should never be null
 
         messageClaim.Verify(
@@ -103,7 +107,7 @@ public class ContextMeshPreconfigured : ContextAccount {
         //Screen.WriteLine($"Have been claimed by {messageClaim.Sender}");
 
         // Create a pending connection entry.
-        var profileDevice = CatalogedPreconfigured.ProfileDevice;
+        var profileDevice = CatalogedPreconfigured.TheProfileDevice;
         var catalogedPending = new CatalogedPending() {
             Id = profileDevice.UdfString,
             DeviceUDF = profileDevice.UdfString,

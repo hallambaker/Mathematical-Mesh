@@ -21,6 +21,7 @@
 #endregion
 
 global using Goedel.Protocol;
+global using Goedel.Cryptography.Dare;
 global using Goedel.Test;
 global using Goedel.Utilities;
 

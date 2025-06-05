@@ -423,7 +423,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
     /// Append the envelopes <paramref name="envelope"/> to the
     /// store.
     /// </summary>
-    public override SequenceIndexEntry AppendDirect(DareEnvelope envelope, bool updateEnvelope = false) {
+    public override SequenceIndexEntry AppendDirect(Enveloped envelope, bool updateEnvelope = false) {
 
         // Appending the entry to the sequence should automatically trigger the Intern dispatch.
         var index = Sequence.Append(envelope, updateEnvelope);

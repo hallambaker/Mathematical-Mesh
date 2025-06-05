@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 4:36:35 PM
+//  This file was automatically generated at 6/5/2025 7:43:01 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -76,7 +76,8 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 	static Dictionary<System.Type, Binding> _bindingDictionary = 
 			new () {
 
-	    {typeof(Envelope), Envelope._binding},
+	    {typeof(StoreUpdate), StoreUpdate._binding},
+	    {typeof(TestEnveloped), TestEnveloped._binding},
 	    {typeof(MultiInstance), MultiInstance._binding},
 	    {typeof(MultiArray), MultiArray._binding},
 	    {typeof(DictArray), DictArray._binding},
@@ -105,10 +106,82 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 	// Transaction Classes
 
 	/// <summary>
+	/// </summary>
+public partial class StoreUpdate : TestSchema {
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("SomeString")]
+	public virtual string?					SomeString  {get; set;} //
+
+    /// <summary>
+    ///The entries to be uploaded. 
+    /// </summary>
+
+	[JsonPropertyName("AnEnvelope")]
+	public virtual Enveloped?					AnEnvelope  {get; set;} //
+
+    /// <summary>
+    ///The entries to be uploaded. 
+    /// </summary>
+
+	[JsonPropertyName("Envelopes")]
+	public virtual List<Enveloped>?					Envelopes  {get; set;}
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyString ("SomeString", 
+					(IBinding data, string? value) => {(data as StoreUpdate).SomeString = value;}, 
+					(IBinding data) => (data as StoreUpdate).SomeString ),
+		new PropertyStruct ("AnEnvelope", typeof (Enveloped),
+					(IBinding data, object? value) => {(data as StoreUpdate).AnEnvelope = value as Enveloped;}, 
+					(IBinding data) => (data as StoreUpdate).AnEnvelope,
+					false, ()=>new  Enveloped(), ()=>new Enveloped()),
+		new PropertyListStruct ("Envelopes", typeof (Enveloped),
+					(IBinding data, object? value) => {(data as StoreUpdate).Envelopes = value as List<Enveloped>;}, 
+					(IBinding data) => (data as StoreUpdate).Envelopes,
+					false, ()=>new  List<Enveloped>(), ()=>new Enveloped())
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<StoreUpdate> _binding = new (
+			new() {
+			{ "SomeString", _properties [0]},
+			{ "AnEnvelope", _properties [1]},
+			{ "Envelopes", _properties [2]}}, __Tag,
+		() => new StoreUpdate(), () => [], () => [], null, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "StoreUpdate";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new StoreUpdate();
+
+	}
+
+
+	/// <summary>
 	///
 	/// Base for generic envelope
 	/// </summary>
-public partial class Envelope : TestSchema {
+public partial class TestEnveloped : TestSchema {
     /// <summary>
     /// </summary>
 
@@ -134,26 +207,26 @@ public partial class Envelope : TestSchema {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Header", 
-					(IBinding data, string? value) => {(data as Envelope).Header = value;}, 
-					(IBinding data) => (data as Envelope).Header ),
+					(IBinding data, string? value) => {(data as TestEnveloped).Header = value;}, 
+					(IBinding data) => (data as TestEnveloped).Header ),
 		new PropertyString ("Body", 
-					(IBinding data, string? value) => {(data as Envelope).Body = value;}, 
-					(IBinding data) => (data as Envelope).Body ),
+					(IBinding data, string? value) => {(data as TestEnveloped).Body = value;}, 
+					(IBinding data) => (data as TestEnveloped).Body ),
 		new PropertyString ("Trailer", 
-					(IBinding data, string? value) => {(data as Envelope).Trailer = value;}, 
-					(IBinding data) => (data as Envelope).Trailer )
+					(IBinding data, string? value) => {(data as TestEnveloped).Trailer = value;}, 
+					(IBinding data) => (data as TestEnveloped).Trailer )
 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	public static readonly new Binding<Envelope> _binding = new (
+	public static readonly new Binding<TestEnveloped> _binding = new (
 			new() {
 			{ "Header", _properties [0]},
 			{ "Body", _properties [1]},
 			{ "Trailer", _properties [2]}}, __Tag,
-		() => new Envelope(), () => [], () => [], null);
+		() => new TestEnveloped(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -164,13 +237,13 @@ public partial class Envelope : TestSchema {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Envelope";
+	public new const string __Tag = "TestEnveloped";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Envelope();
+	public static new JsonObject _Factory () => new TestEnveloped();
 
 	}
 
@@ -180,13 +253,13 @@ public partial class Envelope : TestSchema {
 	/// Contains one instance of each type of field.
 	/// </summary>
 public partial class MultiInstance : TestSchema {
-	[JsonPropertyName("Generic")]
-	public virtual Envelope<MultiInstance>?					EnvelopeGeneric  {get; set;} 
+	[JsonPropertyName("TestEnvelopedGeneric")]
+	public virtual TestEnveloped<MultiInstance>?					TestEnvelopedGeneric  {get; set;} 
 
 	/// <summary>
 	/// Wrapped property
     /// </summary>
-	public virtual MultiInstance?				Generic  => EnvelopeGeneric.Decode();
+	public virtual MultiInstance?				Generic  => TestEnvelopedGeneric.Decode();
     /// <summary>
     /// </summary>
 
@@ -235,12 +308,12 @@ public partial class MultiInstance : TestSchema {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("Generic", /*typeof (MultiInstance<>),*/typeof (Envelope),
-					(IBinding data, object? value) => {(data as MultiInstance).EnvelopeGeneric = value as Envelope<MultiInstance>;},
-					(IBinding data) => (data as MultiInstance).EnvelopeGeneric,
+		new PropertyGStruct ("TestEnvelopedGeneric", /*typeof (MultiInstance<>),*/typeof (TestEnveloped),
+					(IBinding data, object? value) => {(data as MultiInstance).TestEnvelopedGeneric = value as TestEnveloped<MultiInstance>;},
+					(IBinding data) => (data as MultiInstance).TestEnvelopedGeneric,
 					/*(IBinding data, object? value) => {(data as MultiInstance).Generic = value as MultiInstance;},
 					(IBinding data) => (data as MultiInstance).Generic,*/
-					()=>new  Envelope<MultiInstance>(), ()=>new Envelope<MultiInstance>()),
+					()=>new  TestEnveloped<MultiInstance>(), ()=>new TestEnveloped<MultiInstance>()),
 		new PropertyStringTag ("Type", 
 					(IBinding data, string? value) => {(data as MultiInstance).Type = value;}, 
 					(IBinding data) => (data as MultiInstance).Type ),
@@ -270,7 +343,7 @@ public partial class MultiInstance : TestSchema {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<MultiInstance> _binding = new (
 			new() {
-			{ "Generic", _properties [0]},
+			{ "TestEnvelopedGeneric", _properties [0]},
 			{ "Type", _properties [1]},
 			{ "FieldBoolean", _properties [2]},
 			{ "FieldInteger", _properties [3]},
@@ -279,7 +352,7 @@ public partial class MultiInstance : TestSchema {
 			{ "FieldString", _properties [6]},
 			{ "FieldBinary", _properties [7]}}, __Tag,
 		() => new MultiInstance(), () => [], () => [], null, 
-		TypeTag:"Type" );
+		TypeTag:"Type" , Generic: false);
 
 
 	/// <summary>
@@ -372,7 +445,7 @@ public partial class MultiArray : MultiInstance {
 			{ "ArrayDateTime", _properties [3]},
 			{ "ArrayString", _properties [4]},
 			{ "ArrayBinary", _properties [5]}}, __Tag,
-		() => new MultiArray(), () => [], () => [], MultiInstance._binding);
+		() => new MultiArray(), () => [], () => [], MultiInstance._binding, Generic: false);
 
 
 	/// <summary>
@@ -471,7 +544,7 @@ public partial class DictArray : MultiArray {
 			{ "DictDateTime", _properties [3]},
 			{ "DictString", _properties [4]},
 			{ "DictBinary", _properties [5]}}, __Tag,
-		() => new DictArray(), () => [], () => [], MultiArray._binding);
+		() => new DictArray(), () => [], () => [], MultiArray._binding, Generic: false);
 
 
 	/// <summary>
@@ -553,7 +626,7 @@ public partial class MultiStruct : MultiArray {
 			{ "ArrayMultiInstance", _properties [1]},
 			{ "TFieldMultiInstance", _properties [2]},
 			{ "TArrayMultiInstance", _properties [3]}}, __Tag,
-		() => new MultiStruct(), () => [], () => [], MultiArray._binding);
+		() => new MultiStruct(), () => [], () => [], MultiArray._binding, Generic: false);
 
 
 	/// <summary>

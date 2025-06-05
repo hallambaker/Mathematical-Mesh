@@ -759,7 +759,7 @@
 		String Authenticator
 			Description
 				|The witness key value to use to request access to the record.	
-		Struct DareEnvelope EnvelopedData
+		Struct Enveloped EnvelopedData
 			Description
 				|Dare Envelope containing the entry data. The data type is specified
 				|by the envelope metadata.
@@ -984,7 +984,7 @@
 			Multiple
 		String Deny
 			Multiple
-		Struct DareEnvelope EnvelopedCapabilities
+		Struct Enveloped EnvelopedCapabilities
 			Multiple
 			Description
 				|Enveloped keys for use with Application
@@ -1166,7 +1166,7 @@
 
 	Structure MessageValidated
 		Inherits Message
-		Struct DareEnvelope AuthenticatedData
+		Struct Enveloped AuthenticatedData
 			Description
 				|Enveloped data that is authenticated by means of the PIN
 		Binary ClientNonce

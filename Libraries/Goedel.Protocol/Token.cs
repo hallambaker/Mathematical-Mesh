@@ -951,7 +951,8 @@ public record PropertyListGStruct(
             Action<IBinding, object?> Set,
             Func<IBinding, object?> Get,
             Func<object> Factory = null,
-            Func<object> IFactory = null) : Property(Tag, true) {
+            Func<object> IFactory = null,
+            Action<object, object> ListAdd = null) : Property(Tag, true) {
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         if (Get(data) is IEnumerable value) {

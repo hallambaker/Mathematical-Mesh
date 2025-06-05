@@ -169,11 +169,11 @@ public class SequenceWriterDeferred : SequenceWriter {
     /// </summary>
     /// <param name="body"></param>
     /// <returns></returns>
-    public DareEnvelope End(byte[] body) {
+    public Enveloped End(byte[] body) {
 
         Sequence.MakeTrailer(ref DareTrailer);
 
-        return new DareEnvelope() {
+        return new Enveloped() {
             Header = SequenceHeader,
             Body = body,
             Trailer = DareTrailer

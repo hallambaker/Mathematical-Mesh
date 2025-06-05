@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 4:21:30 PM
+//  This file was automatically generated at 6/5/2025 7:42:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -71,21 +71,6 @@ public abstract partial class CarnetProtocol : global::Goedel.Protocol.JsonObjec
     /// </summary>
 	public new const string __Tag = "CarnetProtocol";
 
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"ProfileCarnet", ProfileCarnet._Factory},
-	    {"CatalogedCarnet", CatalogedCarnet._Factory},
-	    {"CarnetRequest", CarnetRequest._Factory},
-	    {"CarnetResponse", CarnetResponse._Factory}
-		};
-	*/
-
 	/// <summary>
     /// Dictionary mapping types to bindings
     /// </summary>
@@ -99,8 +84,6 @@ public abstract partial class CarnetProtocol : global::Goedel.Protocol.JsonObjec
 	    {typeof(CarnetResponse), CarnetResponse._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -109,19 +92,8 @@ public abstract partial class CarnetProtocol : global::Goedel.Protocol.JsonObjec
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -248,28 +220,9 @@ public partial class ProfileCarnet : ProfileService {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ProfileCarnet> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new ProfileCarnet(), () => [], () => [], ProfileService._binding, Generic: false);
 
-        }, __Tag,() => new ProfileCarnet(), () => new List<ProfileCarnet>(), () => new Dictionary<string,ProfileCarnet>(),ProfileService._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ProfileService._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -326,7 +279,6 @@ public partial class CatalogedCarnet : CatalogedEntry {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Key", 
 					(IBinding data, string? value) => {(data as CatalogedCarnet).Key = value;}, 
 					(IBinding data) => (data as CatalogedCarnet).Key ),
@@ -341,7 +293,8 @@ public partial class CatalogedCarnet : CatalogedEntry {
 		new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
 					(IBinding data, object? value) => {(data as CatalogedCarnet).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, 
 					(IBinding data) => (data as CatalogedCarnet).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())		];
+					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -349,31 +302,12 @@ public partial class CatalogedCarnet : CatalogedEntry {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CatalogedCarnet> _binding = new (
 			new() {
-
 			{ "Key", _properties [0]},
 			{ "EnvelopedConnectionAddress", _properties [1]},
 			{ "EnvelopedProfileCarnet", _properties [2]},
-			{ "EnvelopedActivationCommon", _properties [3]}
-        }, __Tag,() => new CatalogedCarnet(), () => new List<CatalogedCarnet>(), () => new Dictionary<string,CatalogedCarnet>(),CatalogedEntry._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "EnvelopedActivationCommon", _properties [3]}}, __Tag,
+		() => new CatalogedCarnet(), () => [], () => [], CatalogedEntry._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(CatalogedEntry._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -412,28 +346,9 @@ public partial class CarnetRequest : Goedel.Protocol.Request {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CarnetRequest> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new CarnetRequest(), () => [], () => [], Goedel.Protocol.Request._binding, Generic: false);
 
-        }, __Tag,() => new CarnetRequest(), () => new List<CarnetRequest>(), () => new Dictionary<string,CarnetRequest>(),Goedel.Protocol.Request._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Goedel.Protocol.Request._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -473,28 +388,9 @@ public partial class CarnetResponse : Goedel.Protocol.Response {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CarnetResponse> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new CarnetResponse(), () => [], () => [], Goedel.Protocol.Response._binding, Generic: false);
 
-        }, __Tag,() => new CarnetResponse(), () => new List<CarnetResponse>(), () => new Dictionary<string,CarnetResponse>(),Goedel.Protocol.Response._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Goedel.Protocol.Response._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class

@@ -26,7 +26,7 @@ using System.Text.Json.Serialization;
 
 namespace Goedel.Protocol.Test;
 
-public partial class Envelope<T> : Envelope {
+public partial class TestEnveloped<T> : TestEnveloped {
 
     ///// <summary>
     ///// </summary>

@@ -85,8 +85,10 @@ public partial class TestCryptographyJose {
         var JWE = new JoseWebEncryption(TestString, EncrypterKeyPair);
         var JWEText = JWE.ToBytes();
         var JWEProt = JWE.Protected.ToUTF8();
+        System.Console.WriteLine(JWEText.ToUTF8());
 
-        var JWE2 = JsonObject.StreamParse < JoseWebEncryption>(JWEText, false);
+
+        var JWE2 = JsonObject.StreamParseTag < JoseWebEncryption>(JWEText, false);
         var Data = JWE2.Decrypt(EncrypterKeyPair);
         var Text = Data.ToUTF8();
 
@@ -102,7 +104,7 @@ public partial class TestCryptographyJose {
         var JWE = new JoseWebEncryption(TestString, Key);
         var JWEText = JWE.ToBytes();
 
-        var JWE2 = JsonObject.StreamParse<JoseWebEncryption>(JWEText, false);
+        var JWE2 = JsonObject.StreamParseTag<JoseWebEncryption>(JWEText, false);
 
         var Data = JWE2.Decrypt(Key);
         var Text = Data.ToUTF8();
@@ -119,7 +121,7 @@ public partial class TestCryptographyJose {
         foreach (var Signer in JWS.Signatures) {
             var JWSProt = Signer.Protected.ToUTF8();
             }
-        var JWS2 = JsonObject.StreamParse<JoseWebSignature>(JWSText, false);
+        var JWS2 = JsonObject.StreamParseTag<JoseWebSignature>(JWSText, false);
 
         var Verify1 = JWS2.Verify(SignerKeyPair);
         Verify1.TestTrue();
@@ -141,7 +143,7 @@ public partial class TestCryptographyJose {
             var JWSProt = Signer.Protected.ToUTF8();
             }
 
-        var JWES2 = JsonObject.StreamParse<JoseWebEncryption>(JWESText, false);
+        var JWES2 = JsonObject.StreamParseTag<JoseWebEncryption>(JWESText, false);
 
         var Data2 = JWES2.Decrypt(EncrypterKeyPair);
         var Text = Data2.ToUTF8();

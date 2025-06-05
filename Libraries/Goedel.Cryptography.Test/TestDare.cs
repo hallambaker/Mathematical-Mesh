@@ -35,7 +35,7 @@ public class TestDare {
 
     long BodyStart { get; }
     long TrailerStart { get; }
-    DareEnvelope Message { get; }
+    Enveloped Message { get; }
 
     /// <summary>
     /// Constructor, returns a test envelope from <paramref name="envelope"/>
@@ -51,42 +51,42 @@ public class TestDare {
     /// <param name="inputStream"></param>
     public TestDare(
                 Stream inputStream) {
+        throw new NYI();
+        //var jsonBcdReader = new JsonBcdReader(inputStream);
+        //Message = Enveloped.DecodeHeader(jsonBcdReader);
 
-        var jsonBcdReader = new JsonBcdReader(inputStream);
-        Message = DareEnvelope.DecodeHeader(jsonBcdReader);
+        //BodyStart = inputStream.Position;
 
-        BodyStart = inputStream.Position;
+        //// need to read in the value verbatim here...
 
-        // need to read in the value verbatim here...
-
-        //var decoder = Message.Header.GetDecoder(
-        //    jsonBcdReader, out var Reader,
-        //    keyCollection: keyCollection,
-        //    verify: true);
-
-
-        //var outputStream = new MemoryStream();
-        //Reader.CopyTo(outputStream);
-        //outputStream.Flush();
-        //decoder.Close();
-        //Message.Body = outputStream.ToArray();
-
-        Message.Body = jsonBcdReader.ReadBinary();
+        ////var decoder = Message.Header.GetDecoder(
+        ////    jsonBcdReader, out var Reader,
+        ////    keyCollection: keyCollection,
+        ////    verify: true);
 
 
-        // read in the trailer
-        if (jsonBcdReader.NextArray()) {
-            TrailerStart = inputStream.Position;
+        ////var outputStream = new MemoryStream();
+        ////Reader.CopyTo(outputStream);
+        ////outputStream.Flush();
+        ////decoder.Close();
+        ////Message.Body = outputStream.ToArray();
+
+        //Message.Body = jsonBcdReader.ReadBinary();
 
 
-            Message.Trailer = JsonObject.StreamParse<DareTrailer>(jsonBcdReader, false);
-            }
+        //// read in the trailer
+        //if (jsonBcdReader.NextArray()) {
+        //    TrailerStart = inputStream.Position;
 
-        //var payloadDigest = 
-        //        Message.Trailer?.PayloadDigest ??
-        //        Message.Header.PayloadDigest;
 
-        //payloadDigest.AssertEqual(decoder.DigestValue, NYI.Throw);
+        //    Message.Trailer = JsonObject.StreamParse<DareTrailer>(jsonBcdReader, false);
+        //    }
+
+        ////var payloadDigest = 
+        ////        Message.Trailer?.PayloadDigest ??
+        ////        Message.Header.PayloadDigest;
+
+        ////payloadDigest.AssertEqual(decoder.DigestValue, NYI.Throw);
 
         }
 

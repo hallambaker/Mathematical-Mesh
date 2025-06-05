@@ -98,9 +98,9 @@ public static class Extension {
 
 
     public static void Corrupt(
-            this DareEnvelope envelope,
+            this Enveloped envelope,
             DataValidity dataValidity = DataValidity.CorruptPayload,
-            DareEnvelope alternative = null) {
+            Enveloped alternative = null) {
 
         switch (dataValidity) {
             case DataValidity.CorruptPayload: {

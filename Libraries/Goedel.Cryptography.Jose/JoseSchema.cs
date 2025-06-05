@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/28/2025 12:00:09 AM
+//  This file was automatically generated at 6/5/2025 7:42:34 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -179,7 +179,7 @@ public partial class JoseWebSignature : Jose {
 			{ "unprotected", _properties [0]},
 			{ "payload", _properties [1]},
 			{ "signatures", _properties [2]}}, __Tag,
-		() => new JoseWebSignature(), () => [], () => [], null);
+		() => new JoseWebSignature(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -297,7 +297,7 @@ public partial class JoseWebEncryption : JoseWebSignature {
 			{ "aad", _properties [4]},
 			{ "ciphertext", _properties [5]},
 			{ "tag", _properties [6]}}, __Tag,
-		() => new JoseWebEncryption(), () => [], () => [], JoseWebSignature._binding);
+		() => new JoseWebEncryption(), () => [], () => [], JoseWebSignature._binding, Generic: false);
 
 
 	/// <summary>
@@ -346,7 +346,7 @@ public partial class JWKS : Jose {
 	public static readonly new Binding<JWKS> _binding = new (
 			new() {
 			{ "keys", _properties [0]}}, __Tag,
-		() => new JWKS(), () => [], () => [], null);
+		() => new JWKS(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -525,7 +525,7 @@ public partial class JWK : Jose {
 			{ "d", _properties [11]},
 			{ "n", _properties [12]},
 			{ "e", _properties [13]}}, __Tag,
-		() => new JWK(), () => [], () => [], null);
+		() => new JWK(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -598,7 +598,7 @@ public partial class JwtHeader : Jose {
 			{ "typ", _properties [0]},
 			{ "alg", _properties [1]},
 			{ "jwk", _properties [2]}}, __Tag,
-		() => new JwtHeader(), () => [], () => [], null);
+		() => new JwtHeader(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -672,7 +672,7 @@ public partial class Signed : Jose {
 			{ "protected", _properties [0]},
 			{ "payload", _properties [1]},
 			{ "signature", _properties [2]}}, __Tag,
-		() => new Signed(), () => [], () => [], null);
+		() => new Signed(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -758,7 +758,7 @@ public partial class Encrypted : Jose {
 			{ "iv", _properties [1]},
 			{ "ciphertext", _properties [2]},
 			{ "signature", _properties [3]}}, __Tag,
-		() => new Encrypted(), () => [], () => [], null);
+		() => new Encrypted(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -807,7 +807,7 @@ public partial class JsonWebKeys : Jose {
 	public static readonly new Binding<JsonWebKeys> _binding = new (
 			new() {
 			{ "keys", _properties [0]}}, __Tag,
-		() => new JsonWebKeys(), () => [], () => [], null);
+		() => new JsonWebKeys(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -937,7 +937,7 @@ public partial class KeyCore : Jose {
 			{ "x5c", _properties [5]},
 			{ "x5t", _properties [6]},
 			{ "x5t#S256", _properties [7]}}, __Tag,
-		() => new KeyCore(), () => [], () => [], null);
+		() => new KeyCore(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1068,7 +1068,7 @@ public partial class Header : KeyCore {
 			{ "cty", _properties [5]},
 			{ "crit", _properties [6]},
 			{ "val", _properties [7]}}, __Tag,
-		() => new Header(), () => [], () => [], KeyCore._binding);
+		() => new Header(), () => [], () => [], KeyCore._binding, Generic: false);
 
 
 	/// <summary>
@@ -1143,7 +1143,7 @@ public partial class Signature : Jose {
 			{ "header", _properties [0]},
 			{ "protected", _properties [1]},
 			{ "signature", _properties [2]}}, __Tag,
-		() => new Signature(), () => [], () => [], null);
+		() => new Signature(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1206,7 +1206,7 @@ public partial class KeyContainer : Jose {
 			new() {
 			{ "Exportable", _properties [0]},
 			{ "KeyCore", _properties [1]}}, __Tag,
-		() => new KeyContainer(), () => [], () => [], null);
+		() => new KeyContainer(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1303,7 +1303,7 @@ public partial class Key : KeyCore {
 			{ "use", _properties [2]},
 			{ "key_ops", _properties [3]},
 			{ "k", _properties [4]}}, __Tag,
-		() => new Key(), () => [], () => [], KeyCore._binding);
+		() => new Key(), () => [], () => [], KeyCore._binding, Generic: false);
 
 
 	/// <summary>
@@ -1367,7 +1367,7 @@ public partial class Recipient : Jose {
 			new() {
 			{ "Header", _properties [0]},
 			{ "encrypted_key", _properties [1]}}, __Tag,
-		() => new Recipient(), () => [], () => [], null);
+		() => new Recipient(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1430,7 +1430,7 @@ public partial class PublicKeyRSA : Key {
 			new() {
 			{ "n", _properties [0]},
 			{ "e", _properties [1]}}, __Tag,
-		() => new PublicKeyRSA(), () => [], () => [], Key._binding);
+		() => new PublicKeyRSA(), () => [], () => [], Key._binding, Generic: false);
 
 
 	/// <summary>
@@ -1537,7 +1537,7 @@ public partial class PrivateKeyRSA : PublicKeyRSA {
 			{ "dp", _properties [3]},
 			{ "dq", _properties [4]},
 			{ "qi", _properties [5]}}, __Tag,
-		() => new PrivateKeyRSA(), () => [], () => [], PublicKeyRSA._binding);
+		() => new PrivateKeyRSA(), () => [], () => [], PublicKeyRSA._binding, Generic: false);
 
 
 	/// <summary>
@@ -1600,7 +1600,7 @@ public partial class PublicKeyDH : Key {
 			new() {
 			{ "Domain", _properties [0]},
 			{ "Public", _properties [1]}}, __Tag,
-		() => new PublicKeyDH(), () => [], () => [], Key._binding);
+		() => new PublicKeyDH(), () => [], () => [], Key._binding, Generic: false);
 
 
 	/// <summary>
@@ -1652,7 +1652,7 @@ public partial class PrivateKeyDH : PublicKeyDH {
 	public static readonly new Binding<PrivateKeyDH> _binding = new (
 			new() {
 			{ "Private", _properties [0]}}, __Tag,
-		() => new PrivateKeyDH(), () => [], () => [], PublicKeyDH._binding);
+		() => new PrivateKeyDH(), () => [], () => [], PublicKeyDH._binding, Generic: false);
 
 
 	/// <summary>
@@ -1715,7 +1715,7 @@ public partial class PublicKeyECDH : Key {
 			new() {
 			{ "crv", _properties [0]},
 			{ "Public", _properties [1]}}, __Tag,
-		() => new PublicKeyECDH(), () => [], () => [], Key._binding);
+		() => new PublicKeyECDH(), () => [], () => [], Key._binding, Generic: false);
 
 
 	/// <summary>
@@ -1767,7 +1767,7 @@ public partial class PrivateKeyECDH : PublicKeyECDH {
 	public static readonly new Binding<PrivateKeyECDH> _binding = new (
 			new() {
 			{ "Private", _properties [0]}}, __Tag,
-		() => new PrivateKeyECDH(), () => [], () => [], PublicKeyECDH._binding);
+		() => new PrivateKeyECDH(), () => [], () => [], PublicKeyECDH._binding, Generic: false);
 
 
 	/// <summary>
@@ -1873,7 +1873,7 @@ public partial class PrivateKeyUDF : Key {
 			{ "AlgorithmEncrypt", _properties [3]},
 			{ "AlgorithmSign", _properties [4]},
 			{ "AlgorithmAuthenticate", _properties [5]}}, __Tag,
-		() => new PrivateKeyUDF(), () => [], () => [], Key._binding);
+		() => new PrivateKeyUDF(), () => [], () => [], Key._binding, Generic: false);
 
 
 	/// <summary>
@@ -1914,7 +1914,7 @@ public partial class KeyAgreement : Jose {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<KeyAgreement> _binding = new (
 			new() {}, __Tag,
-		() => new KeyAgreement(), () => [], () => [], null);
+		() => new KeyAgreement(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1966,7 +1966,7 @@ public partial class KeyAgreementDH : KeyAgreement {
 	public static readonly new Binding<KeyAgreementDH> _binding = new (
 			new() {
 			{ "Result", _properties [0]}}, __Tag,
-		() => new KeyAgreementDH(), () => [], () => [], KeyAgreement._binding);
+		() => new KeyAgreementDH(), () => [], () => [], KeyAgreement._binding, Generic: false);
 
 
 	/// <summary>
@@ -2029,7 +2029,7 @@ public partial class KeyAgreementECDH : KeyAgreement {
 			new() {
 			{ "Curve", _properties [0]},
 			{ "Result", _properties [1]}}, __Tag,
-		() => new KeyAgreementECDH(), () => [], () => [], KeyAgreement._binding);
+		() => new KeyAgreementECDH(), () => [], () => [], KeyAgreement._binding, Generic: false);
 
 
 	/// <summary>
@@ -2082,7 +2082,7 @@ public partial class PublicKeyBinary : Key {
 	public static readonly new Binding<PublicKeyBinary> _binding = new (
 			new() {
 			{ "Public", _properties [0]}}, __Tag,
-		() => new PublicKeyBinary(), () => [], () => [], Key._binding);
+		() => new PublicKeyBinary(), () => [], () => [], Key._binding, Generic: false);
 
 
 	/// <summary>
@@ -2135,7 +2135,7 @@ public partial class PrivateKeyBinary : Key {
 	public static readonly new Binding<PrivateKeyBinary> _binding = new (
 			new() {
 			{ "Public", _properties [0]}}, __Tag,
-		() => new PrivateKeyBinary(), () => [], () => [], Key._binding);
+		() => new PrivateKeyBinary(), () => [], () => [], Key._binding, Generic: false);
 
 
 	/// <summary>

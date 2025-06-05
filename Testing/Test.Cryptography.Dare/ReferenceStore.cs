@@ -93,7 +93,7 @@ public record ReferenceStore {
         }
 
 
-    public DareEnvelope AddMessage(int? length = null, bool? randomSize = null) {
+    public Enveloped AddMessage(int? length = null, bool? randomSize = null) {
 
         var envelope = new ReferenceEnvelope(this, Serial, length ?? Length, randomSize ?? RandomSize);
 
@@ -107,7 +107,7 @@ public record ReferenceStore {
         }
 
 
-    public DareEnvelope AddItem(int? length = null, bool? randomSize = null) {
+    public Enveloped AddItem(int? length = null, bool? randomSize = null) {
 
         var envelope = new ReferenceEnvelope(this, Serial, length ?? Length, randomSize ?? RandomSize);
 
@@ -123,7 +123,7 @@ public record ReferenceStore {
 
 
 
-    public void Verify(DareEnvelope envelope, int serial) {
+    public void Verify(Enveloped envelope, int serial) {
         }
 
 
@@ -185,7 +185,7 @@ public record ReferenceEnvelope {
                     ReferenceStore.GetCatalogEntryTest(Serial, Version, Length, RandomSize);
 
 
-    public DareEnvelope GetEnvelopedMessageTest() {
+    public Enveloped GetEnvelopedMessageTest() {
         var message = GetMessageTest();
         message.Envelope();
 

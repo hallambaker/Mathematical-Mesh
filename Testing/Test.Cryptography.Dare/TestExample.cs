@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 4:21:47 PM
+//  This file was automatically generated at 6/5/2025 7:43:11 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -70,21 +70,6 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
     /// </summary>
 	public new const string __Tag = "TestSchema";
 
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"TestEntry", TestEntry._Factory},
-	    {"TestItem", TestItem._Factory},
-	    {"MessageTest", MessageTest._Factory},
-	    {"CatalogEntryTest", CatalogEntryTest._Factory}
-		};
-	*/
-
 	/// <summary>
     /// Dictionary mapping types to bindings
     /// </summary>
@@ -98,8 +83,6 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 	    {typeof(CatalogEntryTest), CatalogEntryTest._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -108,19 +91,8 @@ public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -157,13 +129,13 @@ abstract public partial class TestEntry : TestSchema {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyDateTime ("Created", 
 					(IBinding data, DateTime? value) => {(data as TestEntry).Created = value;}, 
 					(IBinding data) => (data as TestEntry).Created ),
 		new PropertyDateTime ("Modified", 
 					(IBinding data, DateTime? value) => {(data as TestEntry).Modified = value;}, 
-					(IBinding data) => (data as TestEntry).Modified )		];
+					(IBinding data) => (data as TestEntry).Modified )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -171,28 +143,10 @@ abstract public partial class TestEntry : TestSchema {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<TestEntry> _binding = new (
 			new() {
-
 			{ "Created", _properties [0]},
-			{ "Modified", _properties [1]}
-        }, __Tag,null, null, null,null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Modified", _properties [1]}}, __Tag,
+		null, null, null, null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -247,7 +201,6 @@ public partial class TestItem : TestEntry {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("AccountID", 
 					(IBinding data, string? value) => {(data as TestItem).AccountID = value;}, 
 					(IBinding data) => (data as TestItem).AccountID ),
@@ -256,7 +209,8 @@ public partial class TestItem : TestEntry {
 					(IBinding data) => (data as TestItem).UserProfileUDF ),
 		new PropertyString ("Status", 
 					(IBinding data, string? value) => {(data as TestItem).Status = value;}, 
-					(IBinding data) => (data as TestItem).Status )		];
+					(IBinding data) => (data as TestItem).Status )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -264,30 +218,11 @@ public partial class TestItem : TestEntry {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<TestItem> _binding = new (
 			new() {
-
 			{ "AccountID", _properties [0]},
 			{ "UserProfileUDF", _properties [1]},
-			{ "Status", _properties [2]}
-        }, __Tag,() => new TestItem(), () => new List<TestItem>(), () => new Dictionary<string,TestItem>(),TestEntry._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Status", _properties [2]}}, __Tag,
+		() => new TestItem(), () => [], () => [], TestEntry._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(TestEntry._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -363,7 +298,6 @@ public partial class MessageTest : Goedel.Mesh.Message {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("UniqueId", 
 					(IBinding data, string? value) => {(data as MessageTest).UniqueId = value;}, 
 					(IBinding data) => (data as MessageTest).UniqueId ),
@@ -384,7 +318,8 @@ public partial class MessageTest : Goedel.Mesh.Message {
 					(IBinding data) => (data as MessageTest).Length ),
 		new PropertyBinary ("Data", 
 					(IBinding data, byte[]? value) => {(data as MessageTest).Data = value;}, 
-					(IBinding data) => (data as MessageTest).Data )		];
+					(IBinding data) => (data as MessageTest).Data )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -392,34 +327,15 @@ public partial class MessageTest : Goedel.Mesh.Message {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<MessageTest> _binding = new (
 			new() {
-
 			{ "UniqueId", _properties [0]},
 			{ "VersionId", _properties [1]},
 			{ "Seed", _properties [2]},
 			{ "Serial", _properties [3]},
 			{ "Version", _properties [4]},
 			{ "Length", _properties [5]},
-			{ "Data", _properties [6]}
-        }, __Tag,() => new MessageTest(), () => new List<MessageTest>(), () => new Dictionary<string,MessageTest>(),Goedel.Mesh.Message._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Data", _properties [6]}}, __Tag,
+		() => new MessageTest(), () => [], () => [], Goedel.Mesh.Message._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Goedel.Mesh.Message._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -495,7 +411,6 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("UniqueId", 
 					(IBinding data, string? value) => {(data as CatalogEntryTest).UniqueId = value;}, 
 					(IBinding data) => (data as CatalogEntryTest).UniqueId ),
@@ -516,7 +431,8 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
 					(IBinding data) => (data as CatalogEntryTest).Length ),
 		new PropertyBinary ("Data", 
 					(IBinding data, byte[]? value) => {(data as CatalogEntryTest).Data = value;}, 
-					(IBinding data) => (data as CatalogEntryTest).Data )		];
+					(IBinding data) => (data as CatalogEntryTest).Data )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -524,34 +440,15 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CatalogEntryTest> _binding = new (
 			new() {
-
 			{ "UniqueId", _properties [0]},
 			{ "VersionId", _properties [1]},
 			{ "Seed", _properties [2]},
 			{ "Serial", _properties [3]},
 			{ "Version", _properties [4]},
 			{ "Length", _properties [5]},
-			{ "Data", _properties [6]}
-        }, __Tag,() => new CatalogEntryTest(), () => new List<CatalogEntryTest>(), () => new Dictionary<string,CatalogEntryTest>(),Goedel.Mesh.CatalogedEntry._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Data", _properties [6]}}, __Tag,
+		() => new CatalogEntryTest(), () => [], () => [], Goedel.Mesh.CatalogedEntry._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Goedel.Mesh.CatalogedEntry._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class

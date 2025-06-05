@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 4:21:30 PM
+//  This file was automatically generated at 6/5/2025 7:42:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -67,24 +67,6 @@ public abstract partial class ThingDevice : global::Goedel.Protocol.JsonObject {
     /// </summary>
 	public new const string __Tag = "ThingDevice";
 
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"JsDevice", JsDevice._Factory},
-	    {"Resource", Resource._Factory},
-	    {"credential", DeviceCredential._Factory},
-	    {"image", DeviceImage._Factory},
-	    {"Service", Service._Factory},
-	    {"Physical", Physical._Factory},
-	    {"Storage", Storage._Factory}
-		};
-	*/
-
 	/// <summary>
     /// Dictionary mapping types to bindings
     /// </summary>
@@ -101,8 +83,6 @@ public abstract partial class ThingDevice : global::Goedel.Protocol.JsonObject {
 	    {typeof(Storage), Storage._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -111,19 +91,8 @@ public abstract partial class ThingDevice : global::Goedel.Protocol.JsonObject {
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -237,7 +206,6 @@ public partial class JsDevice : ThingDevice {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("ModelName", 
 					(IBinding data, string? value) => {(data as JsDevice).ModelName = value;}, 
 					(IBinding data) => (data as JsDevice).ModelName ),
@@ -281,7 +249,8 @@ public partial class JsDevice : ThingDevice {
 		new PropertyListStruct ("Storage", typeof (Storage),
 					(IBinding data, object? value) => {(data as JsDevice).Storage = value as List<Storage>;}, 
 					(IBinding data) => (data as JsDevice).Storage,
-					false, ()=>new  List<Storage>(), ()=>new Storage())		];
+					false, ()=>new  List<Storage>(), ()=>new Storage())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -289,7 +258,6 @@ public partial class JsDevice : ThingDevice {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<JsDevice> _binding = new (
 			new() {
-
 			{ "ModelName", _properties [0]},
 			{ "NameHint", _properties [1]},
 			{ "ModelSerial", _properties [2]},
@@ -302,26 +270,9 @@ public partial class JsDevice : ThingDevice {
 			{ "UsedServices", _properties [9]},
 			{ "Images", _properties [10]},
 			{ "Physical", _properties [11]},
-			{ "Storage", _properties [12]}
-        }, __Tag,() => new JsDevice(), () => new List<JsDevice>(), () => new Dictionary<string,JsDevice>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Storage", _properties [12]}}, __Tag,
+		() => new JsDevice(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -372,7 +323,6 @@ public partial class Resource : ThingDevice {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("MediaType", 
 					(IBinding data, string? value) => {(data as Resource).MediaType = value;}, 
 					(IBinding data) => (data as Resource).MediaType ),
@@ -381,7 +331,8 @@ public partial class Resource : ThingDevice {
 					(IBinding data) => (data as Resource).Uri ),
 		new PropertyBinary ("Data", 
 					(IBinding data, byte[]? value) => {(data as Resource).Data = value;}, 
-					(IBinding data) => (data as Resource).Data )		];
+					(IBinding data) => (data as Resource).Data )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -389,29 +340,11 @@ public partial class Resource : ThingDevice {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Resource> _binding = new (
 			new() {
-
 			{ "MediaType", _properties [0]},
 			{ "Uri", _properties [1]},
-			{ "Data", _properties [2]}
-        }, __Tag,() => new Resource(), () => new List<Resource>(), () => new Dictionary<string,Resource>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Data", _properties [2]}}, __Tag,
+		() => new Resource(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -448,28 +381,9 @@ public partial class DeviceCredential : Resource {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<DeviceCredential> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new DeviceCredential(), () => [], () => [], Resource._binding, Generic: false);
 
-        }, __Tag,() => new DeviceCredential(), () => new List<DeviceCredential>(), () => new Dictionary<string,DeviceCredential>(),Resource._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Resource._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -508,10 +422,10 @@ public partial class DeviceImage : Resource {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("View", 
 					(IBinding data, string? value) => {(data as DeviceImage).View = value;}, 
-					(IBinding data) => (data as DeviceImage).View )		];
+					(IBinding data) => (data as DeviceImage).View )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -519,28 +433,9 @@ public partial class DeviceImage : Resource {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<DeviceImage> _binding = new (
 			new() {
+			{ "View", _properties [0]}}, __Tag,
+		() => new DeviceImage(), () => [], () => [], Resource._binding, Generic: false);
 
-			{ "View", _properties [0]}
-        }, __Tag,() => new DeviceImage(), () => new List<DeviceImage>(), () => new Dictionary<string,DeviceImage>(),Resource._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Resource._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -606,7 +501,6 @@ public partial class Service : ThingDevice {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Name", 
 					(IBinding data, string? value) => {(data as Service).Name = value;}, 
 					(IBinding data) => (data as Service).Name ),
@@ -622,7 +516,8 @@ public partial class Service : ThingDevice {
 		new PropertyListStruct ("Credentials", typeof (DeviceCredential),
 					(IBinding data, object? value) => {(data as Service).Credentials = value as List<DeviceCredential>;}, 
 					(IBinding data) => (data as Service).Credentials,
-					false, ()=>new  List<DeviceCredential>(), ()=>new DeviceCredential())		];
+					false, ()=>new  List<DeviceCredential>(), ()=>new DeviceCredential())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -630,31 +525,13 @@ public partial class Service : ThingDevice {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Service> _binding = new (
 			new() {
-
 			{ "Name", _properties [0]},
 			{ "Requires", _properties [1]},
 			{ "Profiles", _properties [2]},
 			{ "Transports", _properties [3]},
-			{ "Credentials", _properties [4]}
-        }, __Tag,() => new Service(), () => new List<Service>(), () => new Dictionary<string,Service>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Credentials", _properties [4]}}, __Tag,
+		() => new Service(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -705,7 +582,6 @@ public partial class Physical : ThingDevice {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Name", 
 					(IBinding data, string? value) => {(data as Physical).Name = value;}, 
 					(IBinding data) => (data as Physical).Name ),
@@ -714,7 +590,8 @@ public partial class Physical : ThingDevice {
 					(IBinding data) => (data as Physical).Identifier ),
 		new PropertyListString ("Profiles", 
 					(IBinding data, List<string>? value) => {(data as Physical).Profiles = value;}, 
-					(IBinding data) => (data as Physical).Profiles )		];
+					(IBinding data) => (data as Physical).Profiles )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -722,29 +599,11 @@ public partial class Physical : ThingDevice {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Physical> _binding = new (
 			new() {
-
 			{ "Name", _properties [0]},
 			{ "Identifier", _properties [1]},
-			{ "Profiles", _properties [2]}
-        }, __Tag,() => new Physical(), () => new List<Physical>(), () => new Dictionary<string,Physical>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Profiles", _properties [2]}}, __Tag,
+		() => new Physical(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -801,7 +660,6 @@ public partial class Storage : ThingDevice {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Purpose", 
 					(IBinding data, string? value) => {(data as Storage).Purpose = value;}, 
 					(IBinding data) => (data as Storage).Purpose ),
@@ -814,7 +672,8 @@ public partial class Storage : ThingDevice {
 		new PropertyListStruct ("Services", typeof (Service),
 					(IBinding data, object? value) => {(data as Storage).Services = value as List<Service>;}, 
 					(IBinding data) => (data as Storage).Services,
-					false, ()=>new  List<Service>(), ()=>new Service())		];
+					false, ()=>new  List<Service>(), ()=>new Service())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -822,30 +681,12 @@ public partial class Storage : ThingDevice {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Storage> _binding = new (
 			new() {
-
 			{ "Purpose", _properties [0]},
 			{ "TypicalUse", _properties [1]},
 			{ "TypicalAnnual", _properties [2]},
-			{ "Services", _properties [3]}
-        }, __Tag,() => new Storage(), () => new List<Storage>(), () => new Dictionary<string,Storage>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Services", _properties [3]}}, __Tag,
+		() => new Storage(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class

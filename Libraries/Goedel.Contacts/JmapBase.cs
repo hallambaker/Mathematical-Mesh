@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/28/2025 12:00:12 AM
+//  This file was automatically generated at 6/5/2025 7:42:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -177,7 +177,7 @@ public partial class JmapBase : JmapBaseSchema {
 			{ "created", _properties [3]},
 			{ "updated", _properties [4]}}, __Tag,
 		() => new JmapBase(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -227,7 +227,7 @@ public partial class Relation : JmapBaseSchema {
 	public static readonly new Binding<Relation> _binding = new (
 			new() {
 			{ "relationships", _properties [0]}}, __Tag,
-		() => new Relation(), () => [], () => [], null);
+		() => new Relation(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>

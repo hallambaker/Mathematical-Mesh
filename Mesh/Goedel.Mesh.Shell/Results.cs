@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/27/2025 4:21:37 PM
+//  This file was automatically generated at 6/5/2025 7:43:00 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -71,67 +71,6 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
     /// Tag identifying this class
     /// </summary>
 	public new const string __Tag = "MeshmanShellResult";
-
-	/*
-	/// <summary>
-    /// Dictionary mapping tags to factory methods
-    /// </summary>
-	public static Dictionary<string, JsonFactoryDelegate> _TagDictionary=> _tagDictionary;
-	static Dictionary<string, JsonFactoryDelegate> _tagDictionary = 
-			new () {
-
-	    {"Result", Result._Factory},
-	    {"ResultAbout", ResultAbout._Factory},
-	    {"ResultFail", ResultFail._Factory},
-	    {"ResultHello", ResultHello._Factory},
-	    {"ResultSelf", ResultSelf._Factory},
-	    {"ResultInfo", ResultInfo._Factory},
-	    {"ResultKey", ResultKey._Factory},
-	    {"ResultDigest", ResultDigest._Factory},
-	    {"ResultFile", ResultFile._Factory},
-	    {"ResultKeyFile", ResultKeyFile._Factory},
-	    {"ResultListLog", ResultListLog._Factory},
-	    {"ResultLog", ResultLog._Factory},
-	    {"ResultArchive", ResultArchive._Factory},
-	    {"ResultFileDare", ResultFileDare._Factory},
-	    {"ResultFileEARL", ResultFileEARL._Factory},
-	    {"ResultDump", ResultDump._Factory},
-	    {"ResultList", ResultList._Factory},
-	    {"ResultAccountConnect", ResultAccountConnect._Factory},
-	    {"ResultPublish", ResultPublish._Factory},
-	    {"ResultPublishDevice", ResultPublishDevice._Factory},
-	    {"ResultCreateDevice", ResultCreateDevice._Factory},
-	    {"ResultCreatePersonal", ResultCreatePersonal._Factory},
-	    {"ResultCreateAccount", ResultCreateAccount._Factory},
-	    {"ResultDeleteAccount", ResultDeleteAccount._Factory},
-	    {"ResultRegisterService", ResultRegisterService._Factory},
-	    {"ResultRecover", ResultRecover._Factory},
-	    {"ResultStatus", ResultStatus._Factory},
-	    {"ResultSync", ResultSync._Factory},
-	    {"ResultEscrow", ResultEscrow._Factory},
-	    {"ResultMachine", ResultMachine._Factory},
-	    {"ResultPIN", ResultPIN._Factory},
-	    {"ResultSequence", ResultSequence._Factory},
-	    {"LogEntry", LogEntry._Factory},
-	    {"ResultEntry", ResultEntry._Factory},
-	    {"ResultEntrySent", ResultEntrySent._Factory},
-	    {"ResultMail", ResultMail._Factory},
-	    {"ResultSSH", ResultSSH._Factory},
-	    {"ResultGroupCreate", ResultGroupCreate._Factory},
-	    {"ResultSent", ResultSent._Factory},
-	    {"ResultPending", ResultPending._Factory},
-	    {"ResultAuthorize", ResultAuthorize._Factory},
-	    {"ResultProcess", ResultProcess._Factory},
-	    {"ResultConnect", ResultConnect._Factory},
-	    {"ResultTransactionRequest", ResultTransactionRequest._Factory},
-	    {"ResultReceived", ResultReceived._Factory},
-	    {"ResultApplication", ResultApplication._Factory},
-	    {"ResultApplicationList", ResultApplicationList._Factory},
-	    {"ResultCallsign", ResultCallsign._Factory},
-	    {"ResultCallsignResolution", ResultCallsignResolution._Factory},
-	    {"ResultCallsignList", ResultCallsignList._Factory}
-		};
-	*/
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -192,8 +131,6 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 	    {typeof(ResultCallsignList), ResultCallsignList._binding}
 		};
 
-
-
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
@@ -202,19 +139,8 @@ public abstract partial class MeshmanShellResult : global::Goedel.Protocol.JsonO
 		}
 
     internal static void _Initialize() {
-		//AddDictionary(ref _tagDictionary);
 		AddDictionary(ref _bindingDictionary);
 		}
-
-	/*
-	/// <summary>
-    /// Construct an instance from the specified tagged JsonReader stream.
-    /// </summary>
-    /// <param name="jsonReader">Input stream</param>
-    /// <param name="result">The created object</param>
-    public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
-		result = jsonReader.ReadTaggedObject(_TagDictionary);
-	*/
 
 	}
 
@@ -244,28 +170,9 @@ public partial class Result : ShellResult {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Result> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new Result(), () => [], () => [], ShellResult._binding, Generic: false);
 
-        }, __Tag,() => new Result(), () => new List<Result>(), () => new Dictionary<string,Result>(),ShellResult._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ShellResult._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -343,7 +250,6 @@ public partial class ResultAbout : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("DirectoryKeys", 
 					(IBinding data, string? value) => {(data as ResultAbout).DirectoryKeys = value;}, 
 					(IBinding data) => (data as ResultAbout).DirectoryKeys ),
@@ -367,7 +273,8 @@ public partial class ResultAbout : Result {
 					(IBinding data) => (data as ResultAbout).AssemblyVersion ),
 		new PropertyString ("Build", 
 					(IBinding data, string? value) => {(data as ResultAbout).Build = value;}, 
-					(IBinding data) => (data as ResultAbout).Build )		];
+					(IBinding data) => (data as ResultAbout).Build )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -375,7 +282,6 @@ public partial class ResultAbout : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultAbout> _binding = new (
 			new() {
-
 			{ "DirectoryKeys", _properties [0]},
 			{ "DirectoryMesh", _properties [1]},
 			{ "AssemblyTitle", _properties [2]},
@@ -383,27 +289,9 @@ public partial class ResultAbout : Result {
 			{ "AssemblyCopyright", _properties [4]},
 			{ "AssemblyCompany", _properties [5]},
 			{ "AssemblyVersion", _properties [6]},
-			{ "Build", _properties [7]}
-        }, __Tag,() => new ResultAbout(), () => new List<ResultAbout>(), () => new Dictionary<string,ResultAbout>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Build", _properties [7]}}, __Tag,
+		() => new ResultAbout(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -440,28 +328,9 @@ public partial class ResultFail : Result {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultFail> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new ResultFail(), () => [], () => [], Result._binding, Generic: false);
 
-        }, __Tag,() => new ResultFail(), () => new List<ResultFail>(), () => new Dictionary<string,ResultFail>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -503,14 +372,14 @@ public partial class ResultHello : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("ServiceAddress", 
 					(IBinding data, string? value) => {(data as ResultHello).ServiceAddress = value;}, 
 					(IBinding data) => (data as ResultHello).ServiceAddress ),
 		new PropertyStruct ("Response", typeof (MeshHelloResponse),
 					(IBinding data, object? value) => {(data as ResultHello).Response = value as MeshHelloResponse;}, 
 					(IBinding data) => (data as ResultHello).Response,
-					false, ()=>new  MeshHelloResponse(), ()=>new MeshHelloResponse())		];
+					false, ()=>new  MeshHelloResponse(), ()=>new MeshHelloResponse())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -518,29 +387,10 @@ public partial class ResultHello : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultHello> _binding = new (
 			new() {
-
 			{ "ServiceAddress", _properties [0]},
-			{ "Response", _properties [1]}
-        }, __Tag,() => new ResultHello(), () => new List<ResultHello>(), () => new Dictionary<string,ResultHello>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Response", _properties [1]}}, __Tag,
+		() => new ResultHello(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -588,7 +438,6 @@ public partial class ResultSelf : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("Contact", typeof (JsContact),
 					(IBinding data, object? value) => {(data as ResultSelf).Contact = value as JsContact;}, 
 					(IBinding data) => (data as ResultSelf).Contact,
@@ -598,7 +447,8 @@ public partial class ResultSelf : Result {
 					(IBinding data) => (data as ResultSelf).Locator ),
 		new PropertyString ("Earl", 
 					(IBinding data, string? value) => {(data as ResultSelf).Earl = value;}, 
-					(IBinding data) => (data as ResultSelf).Earl )		];
+					(IBinding data) => (data as ResultSelf).Earl )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -606,30 +456,11 @@ public partial class ResultSelf : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultSelf> _binding = new (
 			new() {
-
 			{ "Contact", _properties [0]},
 			{ "Locator", _properties [1]},
-			{ "Earl", _properties [2]}
-        }, __Tag,() => new ResultSelf(), () => new List<ResultSelf>(), () => new Dictionary<string,ResultSelf>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Earl", _properties [2]}}, __Tag,
+		() => new ResultSelf(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -666,28 +497,9 @@ public partial class ResultInfo : Result {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultInfo> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new ResultInfo(), () => [], () => [], Result._binding, Generic: false);
 
-        }, __Tag,() => new ResultInfo(), () => new List<ResultInfo>(), () => new Dictionary<string,ResultInfo>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -734,7 +546,6 @@ public partial class ResultKey : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Key", 
 					(IBinding data, string? value) => {(data as ResultKey).Key = value;}, 
 					(IBinding data) => (data as ResultKey).Key ),
@@ -743,7 +554,8 @@ public partial class ResultKey : Result {
 					(IBinding data) => (data as ResultKey).Identifier ),
 		new PropertyListString ("Shares", 
 					(IBinding data, List<string>? value) => {(data as ResultKey).Shares = value;}, 
-					(IBinding data) => (data as ResultKey).Shares )		];
+					(IBinding data) => (data as ResultKey).Shares )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -751,30 +563,11 @@ public partial class ResultKey : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultKey> _binding = new (
 			new() {
-
 			{ "Key", _properties [0]},
 			{ "Identifier", _properties [1]},
-			{ "Shares", _properties [2]}
-        }, __Tag,() => new ResultKey(), () => new List<ResultKey>(), () => new Dictionary<string,ResultKey>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Shares", _properties [2]}}, __Tag,
+		() => new ResultKey(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -822,7 +615,6 @@ public partial class ResultDigest : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Digest", 
 					(IBinding data, string? value) => {(data as ResultDigest).Digest = value;}, 
 					(IBinding data) => (data as ResultDigest).Digest ),
@@ -831,7 +623,8 @@ public partial class ResultDigest : Result {
 					(IBinding data) => (data as ResultDigest).Key ),
 		new PropertyBoolean ("Verified", 
 					(IBinding data, bool? value) => {(data as ResultDigest).Verified = value;}, 
-					(IBinding data) => (data as ResultDigest).Verified )		];
+					(IBinding data) => (data as ResultDigest).Verified )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -839,30 +632,11 @@ public partial class ResultDigest : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultDigest> _binding = new (
 			new() {
-
 			{ "Digest", _properties [0]},
 			{ "Key", _properties [1]},
-			{ "Verified", _properties [2]}
-        }, __Tag,() => new ResultDigest(), () => new List<ResultDigest>(), () => new Dictionary<string,ResultDigest>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Verified", _properties [2]}}, __Tag,
+		() => new ResultDigest(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -910,7 +684,6 @@ public partial class ResultFile : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Filename", 
 					(IBinding data, string? value) => {(data as ResultFile).Filename = value;}, 
 					(IBinding data) => (data as ResultFile).Filename ),
@@ -919,7 +692,8 @@ public partial class ResultFile : Result {
 					(IBinding data) => (data as ResultFile).TotalBytes ),
 		new PropertyBoolean ("Verified", 
 					(IBinding data, bool? value) => {(data as ResultFile).Verified = value;}, 
-					(IBinding data) => (data as ResultFile).Verified )		];
+					(IBinding data) => (data as ResultFile).Verified )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -927,30 +701,11 @@ public partial class ResultFile : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultFile> _binding = new (
 			new() {
-
 			{ "Filename", _properties [0]},
 			{ "TotalBytes", _properties [1]},
-			{ "Verified", _properties [2]}
-        }, __Tag,() => new ResultFile(), () => new List<ResultFile>(), () => new Dictionary<string,ResultFile>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Verified", _properties [2]}}, __Tag,
+		() => new ResultFile(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1004,7 +759,6 @@ public partial class ResultKeyFile : ResultFile {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Udf", 
 					(IBinding data, string? value) => {(data as ResultKeyFile).Udf = value;}, 
 					(IBinding data) => (data as ResultKeyFile).Udf ),
@@ -1016,7 +770,8 @@ public partial class ResultKeyFile : ResultFile {
 					(IBinding data) => (data as ResultKeyFile).Algorithm ),
 		new PropertyString ("Format", 
 					(IBinding data, string? value) => {(data as ResultKeyFile).Format = value;}, 
-					(IBinding data) => (data as ResultKeyFile).Format )		];
+					(IBinding data) => (data as ResultKeyFile).Format )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1024,31 +779,12 @@ public partial class ResultKeyFile : ResultFile {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultKeyFile> _binding = new (
 			new() {
-
 			{ "Udf", _properties [0]},
 			{ "Private", _properties [1]},
 			{ "Algorithm", _properties [2]},
-			{ "Format", _properties [3]}
-        }, __Tag,() => new ResultKeyFile(), () => new List<ResultKeyFile>(), () => new Dictionary<string,ResultKeyFile>(),ResultFile._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Format", _properties [3]}}, __Tag,
+		() => new ResultKeyFile(), () => [], () => [], ResultFile._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResultFile._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1090,13 +826,13 @@ public partial class ResultListLog : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Filename", 
 					(IBinding data, string? value) => {(data as ResultListLog).Filename = value;}, 
 					(IBinding data) => (data as ResultListLog).Filename ),
 		new PropertyInteger32 ("Count", 
 					(IBinding data, int? value) => {(data as ResultListLog).Count = value;}, 
-					(IBinding data) => (data as ResultListLog).Count )		];
+					(IBinding data) => (data as ResultListLog).Count )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1104,29 +840,10 @@ public partial class ResultListLog : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultListLog> _binding = new (
 			new() {
-
 			{ "Filename", _properties [0]},
-			{ "Count", _properties [1]}
-        }, __Tag,() => new ResultListLog(), () => new List<ResultListLog>(), () => new Dictionary<string,ResultListLog>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Count", _properties [1]}}, __Tag,
+		() => new ResultListLog(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1162,10 +879,10 @@ public partial class ResultLog : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyInteger32 ("Count", 
 					(IBinding data, int? value) => {(data as ResultLog).Count = value;}, 
-					(IBinding data) => (data as ResultLog).Count )		];
+					(IBinding data) => (data as ResultLog).Count )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1173,28 +890,9 @@ public partial class ResultLog : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultLog> _binding = new (
 			new() {
+			{ "Count", _properties [0]}}, __Tag,
+		() => new ResultLog(), () => [], () => [], Result._binding, Generic: false);
 
-			{ "Count", _properties [0]}
-        }, __Tag,() => new ResultLog(), () => new List<ResultLog>(), () => new Dictionary<string,ResultLog>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1247,7 +945,6 @@ public partial class ResultArchive : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("Entries", typeof (FileEntry),
 					(IBinding data, object? value) => {(data as ResultArchive).Entries = value as List<FileEntry>;}, 
 					(IBinding data) => (data as ResultArchive).Entries,
@@ -1260,7 +957,8 @@ public partial class ResultArchive : Result {
 					(IBinding data) => (data as ResultArchive).Deleted ),
 		new PropertyInteger32 ("IndexFrame", 
 					(IBinding data, int? value) => {(data as ResultArchive).IndexFrame = value;}, 
-					(IBinding data) => (data as ResultArchive).IndexFrame )		];
+					(IBinding data) => (data as ResultArchive).IndexFrame )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1268,31 +966,12 @@ public partial class ResultArchive : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultArchive> _binding = new (
 			new() {
-
 			{ "Entries", _properties [0]},
 			{ "Frames", _properties [1]},
 			{ "Deleted", _properties [2]},
-			{ "IndexFrame", _properties [3]}
-        }, __Tag,() => new ResultArchive(), () => new List<ResultArchive>(), () => new Dictionary<string,ResultArchive>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "IndexFrame", _properties [3]}}, __Tag,
+		() => new ResultArchive(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1320,7 +999,7 @@ public partial class ResultFileDare : ResultFile {
     /// </summary>
 
 	[JsonPropertyName("Envelope")]
-	public virtual DareEnvelope?					Envelope  {get; set;} //
+	public virtual Enveloped?					Envelope  {get; set;} //
 
 
     ///<summary>Implement IBinding</summary> 
@@ -1328,11 +1007,11 @@ public partial class ResultFileDare : ResultFile {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
-		new PropertyStruct ("Envelope", typeof (DareEnvelope),
-					(IBinding data, object? value) => {(data as ResultFileDare).Envelope = value as DareEnvelope;}, 
+		new PropertyStruct ("Envelope", typeof (Enveloped),
+					(IBinding data, object? value) => {(data as ResultFileDare).Envelope = value as Enveloped;}, 
 					(IBinding data) => (data as ResultFileDare).Envelope,
-					false, ()=>new  DareEnvelope(), ()=>new DareEnvelope())		];
+					false, ()=>new  Enveloped(), ()=>new Enveloped())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1340,28 +1019,9 @@ public partial class ResultFileDare : ResultFile {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultFileDare> _binding = new (
 			new() {
+			{ "Envelope", _properties [0]}}, __Tag,
+		() => new ResultFileDare(), () => [], () => [], ResultFile._binding, Generic: false);
 
-			{ "Envelope", _properties [0]}
-        }, __Tag,() => new ResultFileDare(), () => new List<ResultFileDare>(), () => new Dictionary<string,ResultFileDare>(),ResultFile._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResultFile._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1409,7 +1069,6 @@ public partial class ResultFileEARL : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Source", 
 					(IBinding data, string? value) => {(data as ResultFileEARL).Source = value;}, 
 					(IBinding data) => (data as ResultFileEARL).Source ),
@@ -1418,7 +1077,8 @@ public partial class ResultFileEARL : Result {
 					(IBinding data) => (data as ResultFileEARL).Created ),
 		new PropertyString ("URI", 
 					(IBinding data, string? value) => {(data as ResultFileEARL).URI = value;}, 
-					(IBinding data) => (data as ResultFileEARL).URI )		];
+					(IBinding data) => (data as ResultFileEARL).URI )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1426,30 +1086,11 @@ public partial class ResultFileEARL : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultFileEARL> _binding = new (
 			new() {
-
 			{ "Source", _properties [0]},
 			{ "Created", _properties [1]},
-			{ "URI", _properties [2]}
-        }, __Tag,() => new ResultFileEARL(), () => new List<ResultFileEARL>(), () => new Dictionary<string,ResultFileEARL>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "URI", _properties [2]}}, __Tag,
+		() => new ResultFileEARL(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1484,12 +1125,12 @@ public partial class ResultDump : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("CatalogedEntries", typeof (CatalogedEntry), 
 					(IBinding data, object? value) => {(data as ResultDump).CatalogedEntries = value as List<CatalogedEntry>;}, 
 					(IBinding data) => (data as ResultDump).CatalogedEntries,
 					true, ()=>new List<CatalogedEntry>()
-) 		];
+) 
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1497,28 +1138,9 @@ public partial class ResultDump : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultDump> _binding = new (
 			new() {
+			{ "CatalogedEntries", _properties [0]}}, __Tag,
+		() => new ResultDump(), () => [], () => [], Result._binding, Generic: false);
 
-			{ "CatalogedEntries", _properties [0]}
-        }, __Tag,() => new ResultDump(), () => new List<ResultDump>(), () => new Dictionary<string,ResultDump>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1558,7 +1180,6 @@ public partial class ResultList : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("CatalogedDevices", typeof (CatalogedDevice),
 					(IBinding data, object? value) => {(data as ResultList).CatalogedDevices = value as List<CatalogedDevice>;}, 
 					(IBinding data) => (data as ResultList).CatalogedDevices,
@@ -1567,7 +1188,8 @@ public partial class ResultList : Result {
 					(IBinding data, object? value) => {(data as ResultList).Profiles = value as List<Assertion>;}, 
 					(IBinding data) => (data as ResultList).Profiles,
 					true, ()=>new List<Assertion>()
-) 		];
+) 
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1575,29 +1197,10 @@ public partial class ResultList : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultList> _binding = new (
 			new() {
-
 			{ "CatalogedDevices", _properties [0]},
-			{ "Profiles", _properties [1]}
-        }, __Tag,() => new ResultList(), () => new List<ResultList>(), () => new Dictionary<string,ResultList>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Profiles", _properties [1]}}, __Tag,
+		() => new ResultList(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1633,11 +1236,11 @@ public partial class ResultAccountConnect : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("ProfileDevice", typeof (ProfileDevice),
 					(IBinding data, object? value) => {(data as ResultAccountConnect).ProfileDevice = value as ProfileDevice;}, 
 					(IBinding data) => (data as ResultAccountConnect).ProfileDevice,
-					false, ()=>new  ProfileDevice(), ()=>new ProfileDevice())		];
+					false, ()=>new  ProfileDevice(), ()=>new ProfileDevice())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1645,28 +1248,9 @@ public partial class ResultAccountConnect : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultAccountConnect> _binding = new (
 			new() {
+			{ "ProfileDevice", _properties [0]}}, __Tag,
+		() => new ResultAccountConnect(), () => [], () => [], Result._binding, Generic: false);
 
-			{ "ProfileDevice", _properties [0]}
-        }, __Tag,() => new ResultAccountConnect(), () => new List<ResultAccountConnect>(), () => new Dictionary<string,ResultAccountConnect>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1702,10 +1286,10 @@ public partial class ResultPublish : ResultCreateDevice {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Uri", 
 					(IBinding data, string? value) => {(data as ResultPublish).Uri = value;}, 
-					(IBinding data) => (data as ResultPublish).Uri )		];
+					(IBinding data) => (data as ResultPublish).Uri )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1713,28 +1297,9 @@ public partial class ResultPublish : ResultCreateDevice {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultPublish> _binding = new (
 			new() {
+			{ "Uri", _properties [0]}}, __Tag,
+		() => new ResultPublish(), () => [], () => [], ResultCreateDevice._binding, Generic: false);
 
-			{ "Uri", _properties [0]}
-        }, __Tag,() => new ResultPublish(), () => new List<ResultPublish>(), () => new Dictionary<string,ResultPublish>(),ResultCreateDevice._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResultCreateDevice._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1788,7 +1353,6 @@ public partial class ResultPublishDevice : ResultCreateDevice {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Uri", 
 					(IBinding data, string? value) => {(data as ResultPublishDevice).Uri = value;}, 
 					(IBinding data) => (data as ResultPublishDevice).Uri ),
@@ -1802,7 +1366,8 @@ public partial class ResultPublishDevice : ResultCreateDevice {
 		new PropertyStruct ("DevicePreconfigurationPrivate", typeof (DevicePreconfigurationPrivate),
 					(IBinding data, object? value) => {(data as ResultPublishDevice).DevicePreconfigurationPrivate = value as DevicePreconfigurationPrivate;}, 
 					(IBinding data) => (data as ResultPublishDevice).DevicePreconfigurationPrivate,
-					false, ()=>new  DevicePreconfigurationPrivate(), ()=>new DevicePreconfigurationPrivate())		];
+					false, ()=>new  DevicePreconfigurationPrivate(), ()=>new DevicePreconfigurationPrivate())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1810,31 +1375,12 @@ public partial class ResultPublishDevice : ResultCreateDevice {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultPublishDevice> _binding = new (
 			new() {
-
 			{ "Uri", _properties [0]},
 			{ "FileName", _properties [1]},
 			{ "DevicePreconfigurationPublic", _properties [2]},
-			{ "DevicePreconfigurationPrivate", _properties [3]}
-        }, __Tag,() => new ResultPublishDevice(), () => new List<ResultPublishDevice>(), () => new Dictionary<string,ResultPublishDevice>(),ResultCreateDevice._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "DevicePreconfigurationPrivate", _properties [3]}}, __Tag,
+		() => new ResultPublishDevice(), () => [], () => [], ResultCreateDevice._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResultCreateDevice._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1882,7 +1428,6 @@ public partial class ResultCreateDevice : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyBoolean ("Default", 
 					(IBinding data, bool? value) => {(data as ResultCreateDevice).Default = value;}, 
 					(IBinding data) => (data as ResultCreateDevice).Default ),
@@ -1892,7 +1437,8 @@ public partial class ResultCreateDevice : Result {
 		new PropertyStruct ("CatalogedDevice", typeof (CatalogedDevice),
 					(IBinding data, object? value) => {(data as ResultCreateDevice).CatalogedDevice = value as CatalogedDevice;}, 
 					(IBinding data) => (data as ResultCreateDevice).CatalogedDevice,
-					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())		];
+					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1900,30 +1446,11 @@ public partial class ResultCreateDevice : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultCreateDevice> _binding = new (
 			new() {
-
 			{ "Default", _properties [0]},
 			{ "DeviceUDF", _properties [1]},
-			{ "CatalogedDevice", _properties [2]}
-        }, __Tag,() => new ResultCreateDevice(), () => new List<ResultCreateDevice>(), () => new Dictionary<string,ResultCreateDevice>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "CatalogedDevice", _properties [2]}}, __Tag,
+		() => new ResultCreateDevice(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -1959,10 +1486,10 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("MeshUDF", 
 					(IBinding data, string? value) => {(data as ResultCreatePersonal).MeshUDF = value;}, 
-					(IBinding data) => (data as ResultCreatePersonal).MeshUDF )		];
+					(IBinding data) => (data as ResultCreatePersonal).MeshUDF )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -1970,28 +1497,9 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultCreatePersonal> _binding = new (
 			new() {
+			{ "MeshUDF", _properties [0]}}, __Tag,
+		() => new ResultCreatePersonal(), () => [], () => [], ResultCreateAccount._binding, Generic: false);
 
-			{ "MeshUDF", _properties [0]}
-        }, __Tag,() => new ResultCreatePersonal(), () => new List<ResultCreatePersonal>(), () => new Dictionary<string,ResultCreatePersonal>(),ResultCreateAccount._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResultCreateAccount._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2033,7 +1541,6 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("ProfileAccount", typeof (ProfileAccount),
 					(IBinding data, object? value) => {(data as ResultCreateAccount).ProfileAccount = value as ProfileAccount;}, 
 					(IBinding data) => (data as ResultCreateAccount).ProfileAccount,
@@ -2041,7 +1548,8 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 		new PropertyStruct ("ActivationAccount", typeof (ActivationAccount),
 					(IBinding data, object? value) => {(data as ResultCreateAccount).ActivationAccount = value as ActivationAccount;}, 
 					(IBinding data) => (data as ResultCreateAccount).ActivationAccount,
-					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount())		];
+					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2049,29 +1557,10 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultCreateAccount> _binding = new (
 			new() {
-
 			{ "ProfileAccount", _properties [0]},
-			{ "ActivationAccount", _properties [1]}
-        }, __Tag,() => new ResultCreateAccount(), () => new List<ResultCreateAccount>(), () => new Dictionary<string,ResultCreateAccount>(),ResultCreateDevice._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "ActivationAccount", _properties [1]}}, __Tag,
+		() => new ResultCreateAccount(), () => [], () => [], ResultCreateDevice._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResultCreateDevice._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2107,10 +1596,10 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("UDF", 
 					(IBinding data, string? value) => {(data as ResultDeleteAccount).UDF = value;}, 
-					(IBinding data) => (data as ResultDeleteAccount).UDF )		];
+					(IBinding data) => (data as ResultDeleteAccount).UDF )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2118,28 +1607,9 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultDeleteAccount> _binding = new (
 			new() {
+			{ "UDF", _properties [0]}}, __Tag,
+		() => new ResultDeleteAccount(), () => [], () => [], ResultCreateDevice._binding, Generic: false);
 
-			{ "UDF", _properties [0]}
-        }, __Tag,() => new ResultDeleteAccount(), () => new List<ResultDeleteAccount>(), () => new Dictionary<string,ResultDeleteAccount>(),ResultCreateDevice._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResultCreateDevice._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2175,10 +1645,10 @@ public partial class ResultRegisterService : ResultCreateAccount {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("AccountAddress", 
 					(IBinding data, string? value) => {(data as ResultRegisterService).AccountAddress = value;}, 
-					(IBinding data) => (data as ResultRegisterService).AccountAddress )		];
+					(IBinding data) => (data as ResultRegisterService).AccountAddress )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2186,28 +1656,9 @@ public partial class ResultRegisterService : ResultCreateAccount {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultRegisterService> _binding = new (
 			new() {
+			{ "AccountAddress", _properties [0]}}, __Tag,
+		() => new ResultRegisterService(), () => [], () => [], ResultCreateAccount._binding, Generic: false);
 
-			{ "AccountAddress", _properties [0]}
-        }, __Tag,() => new ResultRegisterService(), () => new List<ResultRegisterService>(), () => new Dictionary<string,ResultRegisterService>(),ResultCreateAccount._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResultCreateAccount._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2244,28 +1695,9 @@ public partial class ResultRecover : ResultCreatePersonal {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultRecover> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new ResultRecover(), () => [], () => [], ResultCreatePersonal._binding, Generic: false);
 
-        }, __Tag,() => new ResultRecover(), () => new List<ResultRecover>(), () => new Dictionary<string,ResultRecover>(),ResultCreatePersonal._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResultCreatePersonal._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2301,11 +1733,11 @@ public partial class ResultStatus : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("StatusResponse", typeof (StatusResponse),
 					(IBinding data, object? value) => {(data as ResultStatus).StatusResponse = value as StatusResponse;}, 
 					(IBinding data) => (data as ResultStatus).StatusResponse,
-					false, ()=>new  StatusResponse(), ()=>new StatusResponse())		];
+					false, ()=>new  StatusResponse(), ()=>new StatusResponse())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2313,28 +1745,9 @@ public partial class ResultStatus : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultStatus> _binding = new (
 			new() {
+			{ "StatusResponse", _properties [0]}}, __Tag,
+		() => new ResultStatus(), () => [], () => [], Result._binding, Generic: false);
 
-			{ "StatusResponse", _properties [0]}
-        }, __Tag,() => new ResultStatus(), () => new List<ResultStatus>(), () => new Dictionary<string,ResultStatus>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2381,7 +1794,6 @@ public partial class ResultSync : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyInteger64 ("Fetched", 
 					(IBinding data, long? value) => {(data as ResultSync).Fetched = value;}, 
 					(IBinding data) => (data as ResultSync).Fetched ),
@@ -2392,7 +1804,8 @@ public partial class ResultSync : Result {
 					(IBinding data, object? value) => {(data as ResultSync).ProcessResults = value as List<ProcessResult>;}, 
 					(IBinding data) => (data as ResultSync).ProcessResults,
 					true, ()=>new List<ProcessResult>()
-) 		];
+) 
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2400,30 +1813,11 @@ public partial class ResultSync : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultSync> _binding = new (
 			new() {
-
 			{ "Fetched", _properties [0]},
 			{ "ProcessedResults", _properties [1]},
-			{ "ProcessResults", _properties [2]}
-        }, __Tag,() => new ResultSync(), () => new List<ResultSync>(), () => new Dictionary<string,ResultSync>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "ProcessResults", _properties [2]}}, __Tag,
+		() => new ResultSync(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2464,13 +1858,13 @@ public partial class ResultEscrow : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Service", 
 					(IBinding data, string? value) => {(data as ResultEscrow).Service = value;}, 
 					(IBinding data) => (data as ResultEscrow).Service ),
 		new PropertyListString ("Shares", 
 					(IBinding data, List<string>? value) => {(data as ResultEscrow).Shares = value;}, 
-					(IBinding data) => (data as ResultEscrow).Shares )		];
+					(IBinding data) => (data as ResultEscrow).Shares )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2478,29 +1872,10 @@ public partial class ResultEscrow : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultEscrow> _binding = new (
 			new() {
-
 			{ "Service", _properties [0]},
-			{ "Shares", _properties [1]}
-        }, __Tag,() => new ResultEscrow(), () => new List<ResultEscrow>(), () => new Dictionary<string,ResultEscrow>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Shares", _properties [1]}}, __Tag,
+		() => new ResultEscrow(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2535,11 +1910,11 @@ public partial class ResultMachine : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("CatalogedMachines", typeof (CatalogedMachine),
 					(IBinding data, object? value) => {(data as ResultMachine).CatalogedMachines = value as List<CatalogedMachine>;}, 
 					(IBinding data) => (data as ResultMachine).CatalogedMachines,
-					false, ()=>new  List<CatalogedMachine>(), ()=>new CatalogedMachine())		];
+					false, ()=>new  List<CatalogedMachine>(), ()=>new CatalogedMachine())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2547,28 +1922,9 @@ public partial class ResultMachine : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultMachine> _binding = new (
 			new() {
+			{ "CatalogedMachines", _properties [0]}}, __Tag,
+		() => new ResultMachine(), () => [], () => [], Result._binding, Generic: false);
 
-			{ "CatalogedMachines", _properties [0]}
-        }, __Tag,() => new ResultMachine(), () => new List<ResultMachine>(), () => new Dictionary<string,ResultMachine>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2610,14 +1966,14 @@ public partial class ResultPIN : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("MessagePIN", typeof (MessagePin),
 					(IBinding data, object? value) => {(data as ResultPIN).MessagePIN = value as MessagePin;}, 
 					(IBinding data) => (data as ResultPIN).MessagePIN,
 					false, ()=>new  MessagePin(), ()=>new MessagePin()),
 		new PropertyString ("Uri", 
 					(IBinding data, string? value) => {(data as ResultPIN).Uri = value;}, 
-					(IBinding data) => (data as ResultPIN).Uri )		];
+					(IBinding data) => (data as ResultPIN).Uri )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2625,29 +1981,10 @@ public partial class ResultPIN : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultPIN> _binding = new (
 			new() {
-
 			{ "MessagePIN", _properties [0]},
-			{ "Uri", _properties [1]}
-        }, __Tag,() => new ResultPIN(), () => new List<ResultPIN>(), () => new Dictionary<string,ResultPIN>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Uri", _properties [1]}}, __Tag,
+		() => new ResultPIN(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2683,11 +2020,11 @@ public partial class ResultSequence : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("Entries", typeof (LogEntry),
 					(IBinding data, object? value) => {(data as ResultSequence).Entries = value as LogEntry;}, 
 					(IBinding data) => (data as ResultSequence).Entries,
-					false, ()=>new  LogEntry(), ()=>new LogEntry())		];
+					false, ()=>new  LogEntry(), ()=>new LogEntry())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2695,28 +2032,9 @@ public partial class ResultSequence : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultSequence> _binding = new (
 			new() {
+			{ "Entries", _properties [0]}}, __Tag,
+		() => new ResultSequence(), () => [], () => [], Result._binding, Generic: false);
 
-			{ "Entries", _properties [0]}
-        }, __Tag,() => new ResultSequence(), () => new List<ResultSequence>(), () => new Dictionary<string,ResultSequence>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2788,7 +2106,6 @@ public partial class LogEntry : MeshmanShellResult {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Key", 
 					(IBinding data, string? value) => {(data as LogEntry).Key = value;}, 
 					(IBinding data) => (data as LogEntry).Key ),
@@ -2809,7 +2126,8 @@ public partial class LogEntry : MeshmanShellResult {
 					(IBinding data) => (data as LogEntry).Signed ),
 		new PropertyBoolean ("KeyExchange", 
 					(IBinding data, bool? value) => {(data as LogEntry).KeyExchange = value;}, 
-					(IBinding data) => (data as LogEntry).KeyExchange )		];
+					(IBinding data) => (data as LogEntry).KeyExchange )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2817,33 +2135,15 @@ public partial class LogEntry : MeshmanShellResult {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<LogEntry> _binding = new (
 			new() {
-
 			{ "Key", _properties [0]},
 			{ "Length", _properties [1]},
 			{ "Digest", _properties [2]},
 			{ "Recorded", _properties [3]},
 			{ "Encrypted", _properties [4]},
 			{ "Signed", _properties [5]},
-			{ "KeyExchange", _properties [6]}
-        }, __Tag,() => new LogEntry(), () => new List<LogEntry>(), () => new Dictionary<string,LogEntry>(),null);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "KeyExchange", _properties [6]}}, __Tag,
+		() => new LogEntry(), () => [], () => [], null, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties = _StaticProperties;
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2879,11 +2179,11 @@ public partial class ResultEntry : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("CatalogEntry", typeof (CatalogedEntry), 
 					(IBinding data, object? value) => {(data as ResultEntry).CatalogEntry = value as CatalogedEntry;}, 
 					(IBinding data) => (data as ResultEntry).CatalogEntry,
-					true) 		];
+					true) 
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2891,28 +2191,9 @@ public partial class ResultEntry : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultEntry> _binding = new (
 			new() {
+			{ "CatalogEntry", _properties [0]}}, __Tag,
+		() => new ResultEntry(), () => [], () => [], Result._binding, Generic: false);
 
-			{ "CatalogEntry", _properties [0]}
-        }, __Tag,() => new ResultEntry(), () => new List<ResultEntry>(), () => new Dictionary<string,ResultEntry>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -2954,7 +2235,6 @@ public partial class ResultEntrySent : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("CatalogEntry", typeof (CatalogedEntry), 
 					(IBinding data, object? value) => {(data as ResultEntrySent).CatalogEntry = value as CatalogedEntry;}, 
 					(IBinding data) => (data as ResultEntrySent).CatalogEntry,
@@ -2962,7 +2242,8 @@ public partial class ResultEntrySent : Result {
 		new PropertyStruct ("Message", typeof (Message),
 					(IBinding data, object? value) => {(data as ResultEntrySent).Message = value as Message;}, 
 					(IBinding data) => (data as ResultEntrySent).Message,
-					false, ()=>new  Message(), ()=>new Message())		];
+					false, ()=>new  Message(), ()=>new Message())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -2970,29 +2251,10 @@ public partial class ResultEntrySent : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultEntrySent> _binding = new (
 			new() {
-
 			{ "CatalogEntry", _properties [0]},
-			{ "Message", _properties [1]}
-        }, __Tag,() => new ResultEntrySent(), () => new List<ResultEntrySent>(), () => new Dictionary<string,ResultEntrySent>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Message", _properties [1]}}, __Tag,
+		() => new ResultEntrySent(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3029,28 +2291,9 @@ public partial class ResultMail : ResultEntry {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultMail> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new ResultMail(), () => [], () => [], ResultEntry._binding, Generic: false);
 
-        }, __Tag,() => new ResultMail(), () => new List<ResultMail>(), () => new Dictionary<string,ResultMail>(),ResultEntry._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResultEntry._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3087,28 +2330,9 @@ public partial class ResultSSH : ResultEntry {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultSSH> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new ResultSSH(), () => [], () => [], ResultEntry._binding, Generic: false);
 
-        }, __Tag,() => new ResultSSH(), () => new List<ResultSSH>(), () => new Dictionary<string,ResultSSH>(),ResultEntry._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResultEntry._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3145,28 +2369,9 @@ public partial class ResultGroupCreate : ResultEntry {
 
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultGroupCreate> _binding = new (
-			new() {
+			new() {}, __Tag,
+		() => new ResultGroupCreate(), () => [], () => [], ResultEntry._binding, Generic: false);
 
-        }, __Tag,() => new ResultGroupCreate(), () => new List<ResultGroupCreate>(), () => new Dictionary<string,ResultGroupCreate>(),ResultEntry._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(ResultEntry._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3208,14 +2413,14 @@ public partial class ResultSent : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("Message", typeof (Message),
 					(IBinding data, object? value) => {(data as ResultSent).Message = value as Message;}, 
 					(IBinding data) => (data as ResultSent).Message,
 					false, ()=>new  Message(), ()=>new Message()),
 		new PropertyString ("Status", 
 					(IBinding data, string? value) => {(data as ResultSent).Status = value;}, 
-					(IBinding data) => (data as ResultSent).Status )		];
+					(IBinding data) => (data as ResultSent).Status )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3223,29 +2428,10 @@ public partial class ResultSent : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultSent> _binding = new (
 			new() {
-
 			{ "Message", _properties [0]},
-			{ "Status", _properties [1]}
-        }, __Tag,() => new ResultSent(), () => new List<ResultSent>(), () => new Dictionary<string,ResultSent>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Status", _properties [1]}}, __Tag,
+		() => new ResultSent(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3280,11 +2466,11 @@ public partial class ResultPending : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("Messages", typeof (Message),
 					(IBinding data, object? value) => {(data as ResultPending).Messages = value as List<Message>;}, 
 					(IBinding data) => (data as ResultPending).Messages,
-					false, ()=>new  List<Message>(), ()=>new Message())		];
+					false, ()=>new  List<Message>(), ()=>new Message())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3292,28 +2478,9 @@ public partial class ResultPending : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultPending> _binding = new (
 			new() {
+			{ "Messages", _properties [0]}}, __Tag,
+		() => new ResultPending(), () => [], () => [], Result._binding, Generic: false);
 
-			{ "Messages", _properties [0]}
-        }, __Tag,() => new ResultPending(), () => new List<ResultPending>(), () => new Dictionary<string,ResultPending>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3348,12 +2515,12 @@ public partial class ResultAuthorize : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("Messages", typeof (ProcessResult), 
 					(IBinding data, object? value) => {(data as ResultAuthorize).Messages = value as List<ProcessResult>;}, 
 					(IBinding data) => (data as ResultAuthorize).Messages,
 					true, ()=>new List<ProcessResult>()
-) 		];
+) 
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3361,28 +2528,9 @@ public partial class ResultAuthorize : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultAuthorize> _binding = new (
 			new() {
+			{ "Messages", _properties [0]}}, __Tag,
+		() => new ResultAuthorize(), () => [], () => [], Result._binding, Generic: false);
 
-			{ "Messages", _properties [0]}
-        }, __Tag,() => new ResultAuthorize(), () => new List<ResultAuthorize>(), () => new Dictionary<string,ResultAuthorize>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3418,11 +2566,11 @@ public partial class ResultProcess : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("ProcessResult", typeof (Message),
 					(IBinding data, object? value) => {(data as ResultProcess).ProcessResult = value as Message;}, 
 					(IBinding data) => (data as ResultProcess).ProcessResult,
-					false, ()=>new  Message(), ()=>new Message())		];
+					false, ()=>new  Message(), ()=>new Message())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3430,28 +2578,9 @@ public partial class ResultProcess : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultProcess> _binding = new (
 			new() {
+			{ "ProcessResult", _properties [0]}}, __Tag,
+		() => new ResultProcess(), () => [], () => [], Result._binding, Generic: false);
 
-			{ "ProcessResult", _properties [0]}
-        }, __Tag,() => new ResultProcess(), () => new List<ResultProcess>(), () => new Dictionary<string,ResultProcess>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3523,7 +2652,6 @@ public partial class ResultConnect : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("Profile", typeof (Profile), 
 					(IBinding data, object? value) => {(data as ResultConnect).Profile = value as Profile;}, 
 					(IBinding data) => (data as ResultConnect).Profile,
@@ -3551,7 +2679,8 @@ public partial class ResultConnect : Result {
 		new PropertyStruct ("RespondConnection", typeof (RespondConnection),
 					(IBinding data, object? value) => {(data as ResultConnect).RespondConnection = value as RespondConnection;}, 
 					(IBinding data) => (data as ResultConnect).RespondConnection,
-					false, ()=>new  RespondConnection(), ()=>new RespondConnection())		];
+					false, ()=>new  RespondConnection(), ()=>new RespondConnection())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3559,34 +2688,15 @@ public partial class ResultConnect : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultConnect> _binding = new (
 			new() {
-
 			{ "Profile", _properties [0]},
 			{ "CatalogedMachine", _properties [1]},
 			{ "ActivationAccount", _properties [2]},
 			{ "ActivationCommon", _properties [3]},
 			{ "RequestConnection", _properties [4]},
 			{ "AcknowledgeConnection", _properties [5]},
-			{ "RespondConnection", _properties [6]}
-        }, __Tag,() => new ResultConnect(), () => new List<ResultConnect>(), () => new Dictionary<string,ResultConnect>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "RespondConnection", _properties [6]}}, __Tag,
+		() => new ResultConnect(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3622,10 +2732,10 @@ public partial class ResultTransactionRequest : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Identifier", 
 					(IBinding data, string? value) => {(data as ResultTransactionRequest).Identifier = value;}, 
-					(IBinding data) => (data as ResultTransactionRequest).Identifier )		];
+					(IBinding data) => (data as ResultTransactionRequest).Identifier )
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3633,28 +2743,9 @@ public partial class ResultTransactionRequest : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultTransactionRequest> _binding = new (
 			new() {
+			{ "Identifier", _properties [0]}}, __Tag,
+		() => new ResultTransactionRequest(), () => [], () => [], Result._binding, Generic: false);
 
-			{ "Identifier", _properties [0]}
-        }, __Tag,() => new ResultTransactionRequest(), () => new List<ResultTransactionRequest>(), () => new Dictionary<string,ResultTransactionRequest>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3696,14 +2787,14 @@ public partial class ResultReceived : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyString ("Status", 
 					(IBinding data, string? value) => {(data as ResultReceived).Status = value;}, 
 					(IBinding data) => (data as ResultReceived).Status ),
 		new PropertyStruct ("Message", typeof (Message),
 					(IBinding data, object? value) => {(data as ResultReceived).Message = value as Message;}, 
 					(IBinding data) => (data as ResultReceived).Message,
-					false, ()=>new  Message(), ()=>new Message())		];
+					false, ()=>new  Message(), ()=>new Message())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3711,29 +2802,10 @@ public partial class ResultReceived : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultReceived> _binding = new (
 			new() {
-
 			{ "Status", _properties [0]},
-			{ "Message", _properties [1]}
-        }, __Tag,() => new ResultReceived(), () => new List<ResultReceived>(), () => new Dictionary<string,ResultReceived>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Message", _properties [1]}}, __Tag,
+		() => new ResultReceived(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3769,11 +2841,11 @@ public partial class ResultApplication : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("Application", typeof (CatalogedApplication), 
 					(IBinding data, object? value) => {(data as ResultApplication).Application = value as CatalogedApplication;}, 
 					(IBinding data) => (data as ResultApplication).Application,
-					true) 		];
+					true) 
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3781,28 +2853,9 @@ public partial class ResultApplication : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultApplication> _binding = new (
 			new() {
+			{ "Application", _properties [0]}}, __Tag,
+		() => new ResultApplication(), () => [], () => [], Result._binding, Generic: false);
 
-			{ "Application", _properties [0]}
-        }, __Tag,() => new ResultApplication(), () => new List<ResultApplication>(), () => new Dictionary<string,ResultApplication>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3837,12 +2890,12 @@ public partial class ResultApplicationList : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("Applications", typeof (CatalogedApplication), 
 					(IBinding data, object? value) => {(data as ResultApplicationList).Applications = value as List<CatalogedApplication>;}, 
 					(IBinding data) => (data as ResultApplicationList).Applications,
 					true, ()=>new List<CatalogedApplication>()
-) 		];
+) 
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3850,28 +2903,9 @@ public partial class ResultApplicationList : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultApplicationList> _binding = new (
 			new() {
+			{ "Applications", _properties [0]}}, __Tag,
+		() => new ResultApplicationList(), () => [], () => [], Result._binding, Generic: false);
 
-			{ "Applications", _properties [0]}
-        }, __Tag,() => new ResultApplicationList(), () => new List<ResultApplicationList>(), () => new Dictionary<string,ResultApplicationList>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3913,7 +2947,6 @@ public partial class ResultCallsign : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("CallsignApplication", typeof (CatalogedApplicationCallsign),
 					(IBinding data, object? value) => {(data as ResultCallsign).CallsignApplication = value as CatalogedApplicationCallsign;}, 
 					(IBinding data) => (data as ResultCallsign).CallsignApplication,
@@ -3921,7 +2954,8 @@ public partial class ResultCallsign : Result {
 		new PropertyStruct ("Message", typeof (Message),
 					(IBinding data, object? value) => {(data as ResultCallsign).Message = value as Message;}, 
 					(IBinding data) => (data as ResultCallsign).Message,
-					false, ()=>new  Message(), ()=>new Message())		];
+					false, ()=>new  Message(), ()=>new Message())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -3929,29 +2963,10 @@ public partial class ResultCallsign : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultCallsign> _binding = new (
 			new() {
-
 			{ "CallsignApplication", _properties [0]},
-			{ "Message", _properties [1]}
-        }, __Tag,() => new ResultCallsign(), () => new List<ResultCallsign>(), () => new Dictionary<string,ResultCallsign>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Message", _properties [1]}}, __Tag,
+		() => new ResultCallsign(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -3993,7 +3008,6 @@ public partial class ResultCallsignResolution : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyStruct ("CallsignRegistration", typeof (Registration),
 					(IBinding data, object? value) => {(data as ResultCallsignResolution).CallsignRegistration = value as Registration;}, 
 					(IBinding data) => (data as ResultCallsignResolution).CallsignRegistration,
@@ -4001,7 +3015,8 @@ public partial class ResultCallsignResolution : Result {
 		new PropertyStruct ("Message", typeof (Message),
 					(IBinding data, object? value) => {(data as ResultCallsignResolution).Message = value as Message;}, 
 					(IBinding data) => (data as ResultCallsignResolution).Message,
-					false, ()=>new  Message(), ()=>new Message())		];
+					false, ()=>new  Message(), ()=>new Message())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4009,29 +3024,10 @@ public partial class ResultCallsignResolution : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultCallsignResolution> _binding = new (
 			new() {
-
 			{ "CallsignRegistration", _properties [0]},
-			{ "Message", _properties [1]}
-        }, __Tag,() => new ResultCallsignResolution(), () => new List<ResultCallsignResolution>(), () => new Dictionary<string,ResultCallsignResolution>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
+			{ "Message", _properties [1]}}, __Tag,
+		() => new ResultCallsignResolution(), () => [], () => [], Result._binding, Generic: false);
 
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class
@@ -4066,11 +3062,11 @@ public partial class ResultCallsignList : Result {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-
 		new PropertyListStruct ("CallsignApplication", typeof (CatalogedApplicationCallsign),
 					(IBinding data, object? value) => {(data as ResultCallsignList).CallsignApplication = value as List<CatalogedApplicationCallsign>;}, 
 					(IBinding data) => (data as ResultCallsignList).CallsignApplication,
-					false, ()=>new  List<CatalogedApplicationCallsign>(), ()=>new CatalogedApplicationCallsign())		];
+					false, ()=>new  List<CatalogedApplicationCallsign>(), ()=>new CatalogedApplicationCallsign())
+		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
@@ -4078,28 +3074,9 @@ public partial class ResultCallsignList : Result {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultCallsignList> _binding = new (
 			new() {
+			{ "CallsignApplication", _properties [0]}}, __Tag,
+		() => new ResultCallsignList(), () => [], () => [], Result._binding, Generic: false);
 
-			{ "CallsignApplication", _properties [0]}
-        }, __Tag,() => new ResultCallsignList(), () => new List<ResultCallsignList>(), () => new Dictionary<string,ResultCallsignList>(),Result._binding);
-	/*
-    ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static new Dictionary<string, Property> _StaticProperties = _binding.Properties;
-
-	///<summary>Dictionary describing the serializable properties.</summary> 
-	public readonly static new Dictionary<string, Property> _StaticAllProperties =
-			Combine(Result._binding, _binding);
-
-
-    ///<inheritdoc/>
-	public override Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///<inheritdoc/>
-    public override Dictionary<string, Property> _ParentProperties => base._Properties;
-
-	*/
 
 	/// <summary>
     /// Tag identifying this class

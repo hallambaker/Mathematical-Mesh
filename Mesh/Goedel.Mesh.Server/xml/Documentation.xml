@@ -313,7 +313,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.PostInbound(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Mesh.Server.Bitmask)">
+        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.PostInbound(Goedel.Cryptography.Dare.Enveloped,Goedel.Mesh.Server.Bitmask)">
             <summary>
             Post a message to the spool associated with the account. This is the only operation
             that is supported for a device that is not connected to the account profile.
@@ -321,7 +321,7 @@
             <param name="envelope">The message to post.</param>
             <param name="bitmask">Bitmask value to update.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.PostLocal(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Mesh.Server.Bitmask)">
+        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.PostLocal(Goedel.Cryptography.Dare.Enveloped,Goedel.Mesh.Server.Bitmask)">
             <summary>
             Post a message to the spool associated with the account. This is the only operation
             that is supported for a device that is not connected to the account profile.
@@ -329,7 +329,7 @@
             <param name="envelope">The message to post.</param>
             <param name="bitmask">Bitmask to be updated.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.StoreAppend(System.String,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},Goedel.Mesh.Server.Bitmask)">
+        <member name="M:Goedel.Mesh.Server.AccountHandleLocked.StoreAppend(System.String,System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped},Goedel.Mesh.Server.Bitmask)">
             <summary>
             Append the envelopes <paramref name="envelopes"/> to the store named
             <paramref name="label"/>.
@@ -1597,7 +1597,7 @@
             <param name="local">Entries to be added to the user's local store.</param>
             <param name="accounts">Accounts to which outbound messages are to be sent.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePostOther(Goedel.Protocol.IJpcSession,Goedel.Mesh.Server.AccountHandleLocked,System.Collections.Generic.List{System.String},Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePostOther(Goedel.Protocol.IJpcSession,Goedel.Mesh.Server.AccountHandleLocked,System.Collections.Generic.List{System.String},Goedel.Cryptography.Dare.Enveloped)">
             <summary>
             Post message to a remote user.
             </summary>
@@ -1616,7 +1616,7 @@
             <param name="operations">The operations requested.</param>
             <returns>Result of the decryption request.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.Claim(Goedel.Protocol.IJpcSession,Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.Claim(Goedel.Protocol.IJpcSession,Goedel.Cryptography.Dare.Enveloped)">
             <summary>
             Verify a claim to a publication and return the value if accepted.
             </summary>
@@ -1667,7 +1667,7 @@
             <param name="serviceDns">The service endpoint DNS.</param>
             <returns>The configuration setting,</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshServiceConfiguration.AddProfileRegistryCallsign(Goedel.Cryptography.Dare.DareEnvelope,System.String)">
+        <member name="M:Goedel.Mesh.Server.MeshServiceConfiguration.AddProfileRegistryCallsign(Goedel.Cryptography.Dare.Enveloped,System.String)">
             <summary>
             Save the callsign registry profile <paramref name="profileAccount"/> to a file and record the file
             location in <paramref name="filename"/>.

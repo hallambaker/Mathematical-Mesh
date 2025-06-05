@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/28/2025 12:00:12 AM
+//  This file was automatically generated at 6/5/2025 7:42:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -369,7 +369,7 @@ public partial class JsDevice : JmapBase {
 			{ "relatedItems", _properties [16]},
 			{ "network", _properties [17]},
 			{ "cryptoKeys", _properties [18]}}, __Tag,
-		() => new JsDevice(), () => [], () => [], JmapBase._binding);
+		() => new JsDevice(), () => [], () => [], JmapBase._binding, Generic: false);
 
 
 	/// <summary>
@@ -482,7 +482,7 @@ public partial class Network : Devices {
 			{ "endpoints", _properties [4]},
 			{ "keys", _properties [5]},
 			{ "permissions", _properties [6]}}, __Tag,
-		() => new Network(), () => [], () => [], null);
+		() => new Network(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -558,7 +558,7 @@ public partial class Maintenance : Resource {
 			{ "recurring", _properties [0]},
 			{ "days", _properties [1]},
 			{ "months", _properties [2]}}, __Tag,
-		() => new Maintenance(), () => [], () => [], Resource._binding);
+		() => new Maintenance(), () => [], () => [], Resource._binding, Generic: false);
 
 
 	/// <summary>
@@ -599,7 +599,7 @@ public partial class Supplier : Resource {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Supplier> _binding = new (
 			new() {}, __Tag,
-		() => new Supplier(), () => [], () => [], Resource._binding);
+		() => new Supplier(), () => [], () => [], Resource._binding, Generic: false);
 
 
 	/// <summary>
@@ -663,7 +663,7 @@ public partial class RelatedItem : Resource {
 			new() {
 			{ "modelId", _properties [0]},
 			{ "suppliers", _properties [1]}}, __Tag,
-		() => new RelatedItem(), () => [], () => [], Resource._binding);
+		() => new RelatedItem(), () => [], () => [], Resource._binding, Generic: false);
 
 
 	/// <summary>
@@ -721,7 +721,7 @@ public partial class Component : Resource {
 	public static readonly new Binding<Component> _binding = new (
 			new() {
 			{ "dimensions", _properties [0]}}, __Tag,
-		() => new Component(), () => [], () => [], Resource._binding);
+		() => new Component(), () => [], () => [], Resource._binding, Generic: false);
 
 
 	/// <summary>
@@ -841,7 +841,7 @@ public partial class Dimensions : Devices {
 			{ "height", _properties [4]},
 			{ "temperatureMin", _properties [5]},
 			{ "temperatureMax", _properties [6]}}, __Tag,
-		() => new Dimensions(), () => [], () => [], null);
+		() => new Dimensions(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>

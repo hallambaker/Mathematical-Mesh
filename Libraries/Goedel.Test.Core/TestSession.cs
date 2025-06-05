@@ -80,7 +80,7 @@ public partial class TestSession : JpcSessionSerialized {
         var responseBytes = result.GetBytes();
 
         var trace = new TraceTransaction(requestBytes, responseBytes, Host);
-
+        Console.WriteLine(responseBytes.ToUTF8());
         MeshProtocolMessages.Add(trace);
         return new MemoryStream(responseBytes);
         }

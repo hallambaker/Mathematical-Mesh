@@ -304,7 +304,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <param name="minIndex">The minimum index.</param>
     /// <param name="reverse">If true, read the Sequence from the end.</param>
     /// <returns>The enumerator.</returns>
-    public IEnumerable<DareEnvelope> SelectEnvelope(long minIndex, bool reverse = false) =>
+    public IEnumerable<Enveloped> SelectEnvelope(long minIndex, bool reverse = false) =>
         new SequenceEnumerateEnvelope(this, minIndex, reverse);
 
 
@@ -720,7 +720,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     public static Sequence MakeNewSequence(
                     string fileName,
                     IKeyLocate keyLocate,
-                    List<DareEnvelope> envelopes,
+                    List<Enveloped> envelopes,
                     FileStatus fileStatus = FileStatus.CreateNew) {
         var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
         var sequence = new SequenceMerkleTree() {
@@ -908,7 +908,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <param name="envelope">The envelope to append to the Sequence</param>
     /// <param name="updateEnvelope">If true, update the headerData and trailerData of 
     /// <paramref name="envelope"/> to the computed values.</param>
-    public virtual SequenceIndexEntry Append(DareEnvelope envelope, bool updateEnvelope = false) {
+    public virtual SequenceIndexEntry Append(Enveloped envelope, bool updateEnvelope = false) {
 
         //var headerData = envelope.Header as DareHeader; // fails ! need to copy over !!
         var headerIn = envelope.Header;
@@ -959,7 +959,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <param name="index">The starting point at which to begin appending.</param>
     /// <param name="unverified">If true, do not attempt to verify the integrity or authenticity
     /// of the envelopes being appended.</param>
-    public void Append(List<DareEnvelope> envelopes, long index = 0, bool unverified = true) {
+    public void Append(List<Enveloped> envelopes, long index = 0, bool unverified = true) {
 
         for (var i = (int)index; i < envelopes.Count; i++) {
 
@@ -1090,7 +1090,7 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
     /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
     ///     as an EDSS headerData entry.</param>
     /// <returns>The created envelope</returns>
-    public static DareEnvelope Defer(
+    public static Enveloped Defer(
         SequenceWriterDeferred contextWrite,
         ContentMeta contentMeta,
         byte[] data,

@@ -437,7 +437,7 @@ public partial class JoseWebEncryption {
         //var AlgorithmJose = Recipient?.Header.Alg;
         //var ExchangeID = AlgorithmJose.FromJoseID();
 
-        var Header = StreamParse<Header>(Protected, false);
+        var Header = StreamParseTag<Header>(Protected, false);
 
         //var ProtectedText = Protected.ToUTF8();
         //new Header();
@@ -469,7 +469,7 @@ public partial class JoseWebEncryption {
         var AlgorithmJose = Recipient?.Header.Alg;
         var ExchangeID = AlgorithmJose.FromJoseID();
 
-        var ProtectedHeader = StreamParse<Header>(Protected, false);
+        var ProtectedHeader = StreamParseTag<Header>(Protected, false);
         var BulkID = ProtectedHeader.Enc.FromJoseID();
 
         var agreementData = Recipient.Header.GetAgreementData();
@@ -495,7 +495,7 @@ public partial class JoseWebEncryption {
     /// <param name="Info">Recipient information</param>
     /// <returns>The decrypted data</returns>
     public byte[] Decrypt(byte[] Secret, string Info = null) {
-        var Header = StreamParse<Header>(Protected, false);
+        var Header = StreamParseTag<Header>(Protected, false);
         var BulkID = Header.Enc.FromJoseID();
         var Provider = CryptoCatalog.Default.GetEncryption(BulkID);
 

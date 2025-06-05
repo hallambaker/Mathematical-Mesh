@@ -106,22 +106,22 @@ public class MeshKeyCredentialPrivate : KeyCredentialPrivate, ICredentialPrivate
 
                 case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshProfileDeviceTag: {
                     // convert the enveloped ConnectionDevice
-                    var envelope = DareEnvelope.FromJSON(extension.Value, false);
-                    profileDevice = envelope.DecodeJsonObject() as ProfileDevice;
+                    var envelope = JsonObject.StreamParseTag<Enveloped>(extension.Value, false);
+                    profileDevice = envelope.StreamParseTag<ProfileDevice>();
                     keyAuthentication ??= profileDevice.Authentication.GetKeyPairAdvanced();
                     break;
                     }
                 case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshConnectionDeviceTag: {
-                    // convert the enveloped ConnectionDevice
-                    var envelope = DareEnvelope.FromJSON(extension.Value, false);
-                    connectionDevice = envelope.DecodeJsonObject() as ConnectionService;
+                    // convert the enveloped ConnectionService
+                    var envelope = JsonObject.StreamParseTag<Enveloped>(extension.Value, false);
+                    connectionDevice = envelope.StreamParseTag<ConnectionService>();
                     keyAuthentication = connectionDevice.AuthenticationPublic;
                     break;
                     }
                 case Goedel.Protocol.Presentation.PresentationConstants.ExtensionTagsMeshConnectionAddressTag: {
-                    // convert the enveloped ConnectionDevice
-                    var envelope = DareEnvelope.FromJSON(extension.Value, false);
-                    connectionAddress = envelope.DecodeJsonObject() as ConnectionStripped;
+                    // convert the enveloped ConnectionStripped
+                    var envelope = JsonObject.StreamParseTag<Enveloped>(extension.Value, false);
+                    connectionAddress = envelope.StreamParseTag<ConnectionStripped>() ;
                     break;
                     }
                 }

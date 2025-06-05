@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/28/2025 12:00:12 AM
+//  This file was automatically generated at 6/5/2025 7:42:37 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -584,7 +584,7 @@ public partial class JsContact : JmapBase {
 			{ "personalInfo", _properties [26]},
 			{ "updates", _properties [27]},
 			{ "serviceGroups", _properties [28]}}, __Tag,
-		() => new JsContact(), () => [], () => [], JmapBase._binding);
+		() => new JsContact(), () => [], () => [], JmapBase._binding, Generic: false);
 
 
 	/// <summary>
@@ -704,7 +704,7 @@ public partial class Resource : Contacts {
 			{ "pref", _properties [5]},
 			{ "label", _properties [6]}}, __Tag,
 		() => new Resource(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -849,7 +849,7 @@ public partial class Name : Contacts {
 			{ "phoneticScript", _properties [6]},
 			{ "phoneticSystem", _properties [7]}}, __Tag,
 		() => new Name(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -940,7 +940,7 @@ public partial class NameComponent : Contacts {
 			{ "kind", _properties [2]},
 			{ "phonetic", _properties [3]}}, __Tag,
 		() => new NameComponent(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -1023,7 +1023,7 @@ public partial class NickName : Contacts {
 			{ "contexts", _properties [2]},
 			{ "pref", _properties [3]}}, __Tag,
 		() => new NickName(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -1123,7 +1123,7 @@ public partial class Organization : Contacts {
 			{ "sortAs", _properties [3]},
 			{ "contexts", _properties [4]}}, __Tag,
 		() => new Organization(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -1189,7 +1189,7 @@ public partial class OrgUnit : Contacts {
 			new() {
 			{ "name", _properties [0]},
 			{ "sortAs", _properties [1]}}, __Tag,
-		() => new OrgUnit(), () => [], () => [], null);
+		() => new OrgUnit(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1268,7 +1268,7 @@ public partial class SpeakToAs : Contacts {
 			{ "grammaticalGender", _properties [1]},
 			{ "pronouns", _properties [2]}}, __Tag,
 		() => new SpeakToAs(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -1353,7 +1353,7 @@ public partial class Pronouns : Contacts {
 			{ "contexts", _properties [2]},
 			{ "pref", _properties [3]}}, __Tag,
 		() => new Pronouns(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -1438,7 +1438,7 @@ public partial class Title : Contacts {
 			{ "kind", _properties [2]},
 			{ "organizationId", _properties [3]}}, __Tag,
 		() => new Title(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -1545,7 +1545,7 @@ public partial class EmailAddress : Contacts {
 			{ "label", _properties [4]},
 			{ "cryptoKeyIds", _properties [5]}}, __Tag,
 		() => new EmailAddress(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -1678,7 +1678,7 @@ public partial class OnlineService : Contacts {
 			{ "label", _properties [6]},
 			{ "cryptoKeyIds", _properties [7]}}, __Tag,
 		() => new OnlineService(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -1796,7 +1796,7 @@ public partial class Phone : Contacts {
 			{ "pref", _properties [4]},
 			{ "label", _properties [5]}}, __Tag,
 		() => new Phone(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -1879,7 +1879,7 @@ public partial class LanguagePref : Contacts {
 			{ "contexts", _properties [2]},
 			{ "pref", _properties [3]}}, __Tag,
 		() => new LanguagePref(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -1921,7 +1921,7 @@ public partial class Calendar : Resource {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Calendar> _binding = new (
 			new() {}, __Tag,
-		() => new Calendar(), () => [], () => [], Resource._binding);
+		() => new Calendar(), () => [], () => [], Resource._binding, Generic: false);
 
 
 	/// <summary>
@@ -2018,7 +2018,7 @@ public partial class SchedulingAddress : Contacts {
 			{ "pref", _properties [3]},
 			{ "label", _properties [4]}}, __Tag,
 		() => new SchedulingAddress(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -2202,7 +2202,7 @@ public partial class Address : Contacts {
 			{ "phoneticScript", _properties [10]},
 			{ "phoneticSystem", _properties [11]}}, __Tag,
 		() => new Address(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -2289,7 +2289,7 @@ public partial class AddressComponent : Contacts {
 			{ "kind", _properties [2]},
 			{ "phonetic", _properties [3]}}, __Tag,
 		() => new AddressComponent(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -2331,7 +2331,7 @@ public partial class CryptoKey : Resource {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CryptoKey> _binding = new (
 			new() {}, __Tag,
-		() => new CryptoKey(), () => [], () => [], Resource._binding);
+		() => new CryptoKey(), () => [], () => [], Resource._binding, Generic: false);
 
 
 	/// <summary>
@@ -2387,7 +2387,7 @@ public partial class ContactDirectory : Resource {
 	public static readonly new Binding<ContactDirectory> _binding = new (
 			new() {
 			{ "listAs", _properties [0]}}, __Tag,
-		() => new ContactDirectory(), () => [], () => [], Resource._binding);
+		() => new ContactDirectory(), () => [], () => [], Resource._binding, Generic: false);
 
 
 	/// <summary>
@@ -2428,7 +2428,7 @@ public partial class ResourceLink : Resource {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResourceLink> _binding = new (
 			new() {}, __Tag,
-		() => new ResourceLink(), () => [], () => [], Resource._binding);
+		() => new ResourceLink(), () => [], () => [], Resource._binding, Generic: false);
 
 
 	/// <summary>
@@ -2470,7 +2470,7 @@ public partial class Media : Resource {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Media> _binding = new (
 			new() {}, __Tag,
-		() => new Media(), () => [], () => [], Resource._binding);
+		() => new Media(), () => [], () => [], Resource._binding, Generic: false);
 
 
 	/// <summary>
@@ -2560,7 +2560,7 @@ public partial class Anniversary : Contacts {
 			{ "date", _properties [2]},
 			{ "place", _properties [3]}}, __Tag,
 		() => new Anniversary(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -2675,7 +2675,7 @@ public partial class TimeStamp : Contacts {
 			{ "calendarScale", _properties [4]},
 			{ "utc", _properties [5]}}, __Tag,
 		() => new TimeStamp(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -2761,7 +2761,7 @@ public partial class Note : Contacts {
 			{ "created", _properties [2]},
 			{ "author", _properties [3]}}, __Tag,
 		() => new Note(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -2835,7 +2835,7 @@ public partial class Author : Contacts {
 			{ "type", _properties [0]},
 			{ "name", _properties [1]},
 			{ "uri", _properties [2]}}, __Tag,
-		() => new Author(), () => [], () => [], null);
+		() => new Author(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -2946,7 +2946,7 @@ public partial class PersonalInfo : Contacts {
 			{ "listAs", _properties [4]},
 			{ "label", _properties [5]}}, __Tag,
 		() => new PersonalInfo(), () => [], () => [], null, 
-		TypeTag:"@type" );
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -3008,7 +3008,7 @@ public partial class Update : Resource {
 			new() {
 			{ "protocol", _properties [0]},
 			{ "keys", _properties [1]}}, __Tag,
-		() => new Update(), () => [], () => [], Resource._binding);
+		() => new Update(), () => [], () => [], Resource._binding, Generic: false);
 
 
 	/// <summary>
@@ -3069,7 +3069,7 @@ public partial class JsonWebKeySet : CryptoKey {
 			new() {
 			{ "data", _properties [0]},
 			{ "jsonWebKeys", _properties [1]}}, __Tag,
-		() => new JsonWebKeySet(), () => [], () => [], CryptoKey._binding);
+		() => new JsonWebKeySet(), () => [], () => [], CryptoKey._binding, Generic: false);
 
 
 	/// <summary>
@@ -3120,7 +3120,7 @@ public partial class ServiceGroup : Resource {
 	public static readonly new Binding<ServiceGroup> _binding = new (
 			new() {
 			{ "members", _properties [0]}}, __Tag,
-		() => new ServiceGroup(), () => [], () => [], Resource._binding);
+		() => new ServiceGroup(), () => [], () => [], Resource._binding, Generic: false);
 
 
 	/// <summary>

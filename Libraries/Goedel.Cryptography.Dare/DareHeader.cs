@@ -97,7 +97,7 @@ public partial class DareHeader {
     ///<summary>Routine called after serialization.</summary>
     public override void PostDecode() {
         if (ContentMetaData is not null) {
-            ContentMeta = StreamParse<ContentMeta>(ContentMetaData, false);
+            ContentMeta = StreamParseTag<ContentMeta>(ContentMetaData, false);
             }
         }
     /// <summary>

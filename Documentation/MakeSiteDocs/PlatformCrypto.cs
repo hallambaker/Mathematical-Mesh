@@ -786,7 +786,7 @@ public class CryptoGroup {
     public BigInteger KeyPairServicePrivateInt => (KeyPairService.IKeyAdvancedPrivate as CurveEdwards25519Private).SecretKey;
 
 
-    public DareEnvelope Envelope;
+    public Enveloped Envelope;
     //public KeyPairPartialTest KeyPairDeviceWrapped;
 
     public string GroupName = "GroupW@example.com";
@@ -812,7 +812,7 @@ public class CryptoGroup {
         KeyPairService = KeyPairGroup.GetThresholdKey(KeyPairDevice) as KeyPairEd25519;
 
 
-        Envelope = new DareEnvelope(CryptoParametersGroup, Plaintext);
+        Envelope = new Enveloped(CryptoParametersGroup, Plaintext);
 
 
 
@@ -832,7 +832,7 @@ public class CryptoGroup {
 
 
     static void CheckDecode(
-                DareEnvelope envelope,
+                Enveloped envelope,
                 byte[] plaintext,
                 KeyCollection keyCollection
                 ) {

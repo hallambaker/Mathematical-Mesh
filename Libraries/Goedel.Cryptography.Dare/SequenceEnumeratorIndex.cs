@@ -180,15 +180,15 @@ public class SequenceEnumeratorIndex : IEnumerator<SequenceIndexEntry>, IEnumera
 /// <summary>
 /// Enumerate the envelopes in a DARE store.
 /// </summary>
-public class SequenceEnumerateEnvelope : IEnumerator<DareEnvelope>, IEnumerable<DareEnvelope> {
+public class SequenceEnumerateEnvelope : IEnumerator<Enveloped>, IEnumerable<Enveloped> {
     #region // Properties
     SequenceEnumeratorIndex SequenceEnumeratorIndex { get; }
 
     ///<inheritdoc/>
-    public DareEnvelope Current => SequenceEnumeratorIndex.Current.GetEnvelope();
+    public Enveloped Current => SequenceEnumeratorIndex.Current.GetEnvelope();
 
     ///<inheritdoc/>
-    public IEnumerator<DareEnvelope> GetEnumerator() => this;
+    public IEnumerator<Enveloped> GetEnumerator() => this;
 
     ///<inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator() => this;

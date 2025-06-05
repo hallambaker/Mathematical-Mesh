@@ -944,7 +944,7 @@
             <param name="purge">If true, do not copy deleted items.</param>
             <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareArchive.Delete(System.String,Goedel.Cryptography.Dare.Transaction,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.DareArchive.Delete(System.String,System.Boolean)">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareArchive.ArchiveFile(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.ContentMeta,Goedel.IO.FileStatus)">
@@ -1284,350 +1284,9 @@
         </member>
         <member name="T:Goedel.Cryptography.Dare.DareEnvelope">
             <summary>
-            DARE Message class.
+            Base class for DARE Envelopes. These are encoded using the QUIC varint
+            encoding with the ContentType broken out as a separate header item.
             </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelope.Body">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.GetBodyLazy">
-            <summary>
-            Get the body through lazy evaluation
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelope._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelope.Signatures">
-            <summary>Convenience accessor to the list of signatures.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelope.DataSequences">
-            <summary>
-            Return the number of data sequences.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelope.JsonObject">
-            <summary>The inner enveloped content.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelope.Index">
-            <summary>Convenience accessor for the frame index.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelope.EnvelopeId">
-            <summary>Convenience accessor for the envelope id.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelope.PayloadDigest">
-            <summary>The declared payload digest value</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareEnvelope.PayloadDigestComputed">
-            <summary>The payload digest value calculated during decoding.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareEnvelope.PayloadMac">
-            <summary>The payload MAC value calculated during decoding.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareEnvelope.PayloadLength">
-            <summary>The length of the payload value</summary> 
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.LoadBody">
-            <summary>
-            Force loading of the payload body.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Dispose">
-            <summary>
-            Dispose method, frees all resources.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Dispose(System.Boolean)">
-            <summary>
-            Dispose method, frees resources when disposing, 
-            </summary>
-            <param name="disposing"></param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Finalize">
-            <summary>
-            Destructor.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Disposing">
-            <summary>
-            The class specific disposal routine.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.#ctor">
-            <summary>
-            Create an empty DARE Message (for use by deserializers)
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.#ctor(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]})">
-            <summary>
-            Create a DARE Message instance.
-            </summary>
-            <param name="cryptoParameters">Specifies the cryptographic enhancements to
-            be applied to this message.</param>
-            <param name="contentMeta">The content metadata</param>
-            <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
-            create the message body. Otherwise the body is specified by calls to the Process method.</param>
-            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-                as an EDSS header entry.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(System.Byte[],System.String)">
-            <summary>
-            Create a new DARE Message from the specified parameters.
-            </summary>
-            <param name="plaintext">The payload plaintext.</param>
-            <param name="contentType">The content type.</param>
-            <returns>The new envelope</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(System.Byte[],Goedel.Cryptography.Dare.ContentMeta,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,System.Byte[],System.Collections.Generic.List{System.Byte[]})">
-            <summary>
-            Create a new DARE Message from the specified parameters.
-            </summary>
-            <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
-            create the message body. Otherwise the body is specified by calls to the Process method.</param>
-            <param name="signingKey">The signature key.</param>
-            <param name="encryptionKey">The encryption key.</param>
-            <param name="contentMeta">The content metadata</param>
-            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-                as an EDSS header entry.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.DataSequence(System.Int32)">
-            <summary>
-            Return the plaintext of a data Sequence.
-            </summary>
-            <param name="i"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.GetBodyReader">
-            <summary>
-            Create a JSONReader for the decrypted body content according to the specified encoding.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.ReadChunk(Goedel.Protocol.JsonReader,System.Byte[]@)">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Serialize(Goedel.Protocol.Writer,System.Boolean)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
-            <summary>
-            Decode a streamed message
-            </summary>
-            <param name="inputData">The input data</param>
-            <param name="cryptoParameters">Specifies the cryptographic enhancements to
-            be applied to this message.</param>
-            <param name="contentMeta">The content metadata</param>
-            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-                as an EDSS header entry.</param>
-            <param name="chunk">The maximum chunk size. If unspecified, the default
-            system chunk size (2048) is used.</param>
-            <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
-            to be presented in place of an encrypted document if it cannot be decrypted.</param>
-            <returns>The serialized encoding of the data.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.FromJSON(System.Byte[],System.Boolean,System.Boolean,Goedel.Cryptography.IKeyLocate)">
-            <summary>
-            Deserialize 
-            </summary>
-            <param name="data">The data to deserialize</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <param name="decrypt">If true, attempt to decrypt the message body as it is read.</param>
-            <param name="keyCollection">Key collection to be used to discover decryption keys</param>
-            <returns>The created object.</returns>	
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.FromJSON(Goedel.Protocol.JsonBcdReader,System.Boolean,System.Boolean,Goedel.Cryptography.IKeyLocate,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <param name="decrypt">If true, attempt to decrypt the message body as it is read.</param>
-            <param name="keyCollection">Key collection to be used to discover decryption keys</param>
-            <param name="verify">If true perform specified verification after deserialization.</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.DecodeHeader(Goedel.Protocol.JsonBcdReader)">
-            <summary>
-            Read a DareEnvelope from a stream in incremental mode. The header of the 
-            message is read but not the body.
-            </summary>
-            <param name="jsonReader">The stream from which data is to be read.</param>
-            <returns>The DareEnvelope instance.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.GetPlaintext(Goedel.Cryptography.IKeyLocate)">
-            <summary>
-            Return the plaintext payload using the credentials stored in <paramref name="keyCollection"/>
-            to obtain decryption keys if necessary.
-            </summary>
-            <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-            <returns>The plaintext payload.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.DecodeJsonObject(Goedel.Cryptography.IKeyLocate)">
-            <summary>
-            Decode a tagged JSONObject using keys from <paramref name="keyCollection"/> to decrypt
-            if necessary.
-            </summary>
-            <param name="keyCollection">Key collection to be used for decryption.</param>
-            <returns>The decoded object.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.String,System.String,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
-            <summary>
-            Decode a streamed message
-            </summary>
-            <param name="inputFile">The input file, must support reading.</param>
-            <param name="outputFile">The output file, must support writing</param>
-            <param name="cryptoParameters">Specifies the cryptographic enhancements to
-            be applied to this message.</param>
-            <param name="contentMeta">The content metadata</param>
-            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-                as an EDSS header entry.</param>
-            <param name="chunk">The maximum chunk size. If unspecified, the default
-            system chunk size (2048) is used.</param>
-            <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
-            to be presented in place of an encrypted document if it cannot be decrypted.</param>
-            <returns>The number of bytes in the input file.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.IO.Stream,System.IO.Stream,System.Int64,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
-            <summary>
-            Encode data received on the input stream to the output stream with the specified
-            security enhancements. If the input stream supports the seek operation, and
-            the maximum chunk size is less than 1, the output file will be written as a 
-            single Sequence. Otherwise, the file will be written with a chunk size no
-            greater than the maximum specified.
-            </summary>
-            <param name="inputStream">The input stream, must support reading.</param>
-            <param name="outputStream">The output stream, must support writing</param>
-            <param name="cryptoParameters">Specifies the cryptographic enhancements to
-            be applied to this message.</param>
-            <param name="contentMeta">The content metadata</param>
-            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-                as an EDSS header entry.</param>
-            <param name="chunk">The maximum chunk size. If unspecified, the default
-            system chunk size (2048) is used.</param>
-            <param name="contentLength">The content length. This value is ignored if the Plaintext
-            parameter is not null. If the value is less than 0, chunked encoding
-            will be used for the payload data. </param>         
-            <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
-            to be presented in place of an encrypted document if it cannot be decrypted.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Decode(System.String,System.String,Goedel.Cryptography.IKeyLocate,System.Boolean)">
-            <summary>
-            Decode a streamed message
-            </summary>
-            <param name="inputFile">The input file, must support reading.</param>
-            <param name="outputFile">The output file, must support writing</param>
-            <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
-            <param name="verify">If true, verify the payload digest on the payload. The decoded data is 
-            written out to a temporary file which is deleted if the verification fails and renamed
-            to the output file otherwise.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Decode(System.IO.Stream,System.IO.Stream,System.String,Goedel.Cryptography.IKeyLocate,System.Boolean)">
-            <summary>
-            Decode a streamed message
-            </summary>
-            <param name="inputStream">The input stream, must support reading.</param>
-            <param name="outputStream">The output stream, must support writing</param>
-            <param name="outputFile">The output file, must support writing</param>
-            <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
-            <param name="verify">If true, verify the payload digest on the payload. The decoded data is 
-            written out to a temporary file which is deleted if the verification fails and renamed
-            to the output file otherwise.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Verify(System.Byte[],Goedel.Cryptography.IKeyLocate)">
-            <summary>
-            Static method that reads the bytes <paramref name="input"/>, parses the
-            content to return an envelope.
-            </summary>
-            <param name="input"></param>
-            <param name="keyCollection"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Verify(System.String,Goedel.Cryptography.IKeyLocate)">
-            <summary>
-            Decode a streamed message
-            </summary>
-            <param name="inputFile">File to be read as input</param>
-            <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Verify(System.IO.Stream,Goedel.Cryptography.IKeyLocate)">
-            <summary>
-            Decode a streamed message
-            </summary>
-            <param name="inputStream">The input stream, must support reading.</param>
-            <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.Verify(Goedel.Cryptography.KeyPair,System.Byte[])">
-            <summary>
-            Verify that the signature value is correct for the key <paramref name="key"/>
-            </summary>
-            <param name="key">The signature key.</param>
-            <param name="digest">The payload digest value if known.</param>
-            <returns>True, if the signature is valid.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.VerifySignature(Goedel.Cryptography.KeyPair)">
-            <summary>
-            Search the signatures over the envelope to verify the first
-            signature matching the key <paramref name="keyPair"/> returning
-            true if and only if the signature is valid.
-            </summary>
-            <param name="keyPair">The signing key to check.</param>
-            <returns></returns>
-            <exception cref="T:Goedel.Cryptography.Dare.EnvelopeSignatureMissing">The specified
-            signature could not be found.</exception>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.VerifySignature(Goedel.Cryptography.KeyPair,Goedel.Cryptography.Dare.DareSignature)">
-            <summary>
-            Verify the signature <paramref name="signature"/> against the keypair
-            <paramref name="keyPair"/>.
-            </summary>
-            <param name="signature">The signature entry to check.</param>
-            <param name="keyPair">The signing key to check.</param>
-            <returns></returns>
-            <exception cref="T:Goedel.Cryptography.Dare.EnvelopeSignatureMissing">The specified
-            signature could not be found.</exception>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.FindSignature(Goedel.Cryptography.CryptographicKey)">
-            <summary>
-            Find a signature whose key identifier matches <paramref name="key"/>
-            </summary>
-            <param name="key">The key</param>
-            <returns>The signature entry.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.GetValidatedDigest">
-            <summary>
-            Compute the digest of the payload and if a digest value is specified in the header
-            or trailer, verify that it matches.
-            </summary>
-            <returns>If a payload digest field is specified in the trailer that does not
-            match the digest of the payload, returns the payload. Otherwise returns the
-            digest of the payload.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelope.GetUnvalidatedDigest">
-            <summary>
-            Compute the digest of the payload and if a digest value is specified in the header
-            or trailer, verify that it matches.
-            </summary>
-            <returns>If a payload digest field is specified in the trailer that does not
-            match the digest of the payload, returns the payload. Otherwise returns the
-            digest of the payload.</returns>
         </member>
         <member name="P:Goedel.Cryptography.Dare.DareEnvelopeWriter.CanRead">
             <summary>
@@ -2152,7 +1811,7 @@
             <param name="encryptionKey">Optional encryption key.</param>
             <param name="objectEncoding">The encoding to use to compute the inner object.</param>
             <returns>Envelope containing the signed profile. Also updates the property
-            <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/></returns>
+            <see cref="T:Goedel.Cryptography.Dare.Enveloped"/></returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Extensions.Envelope(Goedel.Protocol.JsonObject,System.Collections.Generic.List{Goedel.Cryptography.CryptographicKey},System.Collections.Generic.List{Goedel.Cryptography.CryptographicKey},Goedel.Protocol.ObjectEncoding,System.Boolean)">
             <summary>
@@ -2166,7 +1825,7 @@
             <param name="includeSignatureKey">If true include the public key parameters in the
             signature.</param>
             <returns>Envelope containing the signed profile. Also updates the property
-            <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/></returns>
+            <see cref="T:Goedel.Cryptography.Dare.Enveloped"/></returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Extensions.Envelope(Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Protocol.ObjectEncoding)">
             <summary>
@@ -2177,7 +1836,7 @@
             <param name="cryptoParameters">The cryptographic parameters.</param>
             <param name="objectEncoding">The encoding to use to compute the inner object.</param>
             <returns>Envelope containing the signed profile. Also updates the property
-            <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/></returns>
+            <see cref="T:Goedel.Cryptography.Dare.Enveloped"/></returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Extensions.Envelope``1(``0,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
             <summary>
@@ -2677,7 +2336,7 @@
         <member name="P:Goedel.Cryptography.Dare.Dare._Initialized">
             <summary>Variable used to force static initialization</summary> 
         </member>
-        <member name="T:Goedel.Cryptography.Dare.DareEnvelopeSequence">
+        <member name="T:Goedel.Cryptography.Dare.Enveloped">
              <summary>
             
              A DARE envelope containing Header, EDS and Trailer in JSON object encoding.
@@ -2688,50 +2347,361 @@
              precede the body in a serialization, this allowing processing of the header
              information to be performed before the entire body has been received.
              </summary>
+            <summary>
+            DARE Message class.
+            </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence.Header">
+        <member name="P:Goedel.Cryptography.Dare.Enveloped.Header">
              <summary>
             The envelope header. May specify the key exchange data, pre-signature 
             or signature data, cloaked headers and/or encrypted data sequences.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence.Body">
+        <member name="P:Goedel.Cryptography.Dare.Enveloped.Body">
              <summary>
             The envelope body
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence.Trailer">
+        <member name="P:Goedel.Cryptography.Dare.Enveloped.Trailer">
              <summary>
             The envelope trailer. If present, this contains the signature.
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._Properties">
+        <member name="P:Goedel.Cryptography.Dare.Enveloped._Properties">
             <summary>Implement IBinding</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.Dare.DareEnvelopeSequence._properties">
+        <member name="F:Goedel.Cryptography.Dare.Enveloped._properties">
             <summary>Binding</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._Binding">
+        <member name="P:Goedel.Cryptography.Dare.Enveloped._Binding">
             <summary>Implement IBinding</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.Dare.DareEnvelopeSequence._binding">
+        <member name="F:Goedel.Cryptography.Dare.Enveloped._binding">
             <summary>Binding</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.Dare.DareEnvelopeSequence._Tag">
+        <member name="P:Goedel.Cryptography.Dare.Enveloped._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.Dare.DareEnvelopeSequence.__Tag">
+        <member name="F:Goedel.Cryptography.Dare.Enveloped.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeSequence._Factory">
+        <member name="M:Goedel.Cryptography.Dare.Enveloped._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Enveloped.Signatures">
+            <summary>Convenience accessor to the list of signatures.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Enveloped.DataSequences">
+            <summary>
+            Return the number of data sequences.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Enveloped.JsonObject">
+            <summary>The inner enveloped content.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Enveloped.Index">
+            <summary>Convenience accessor for the frame index.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Enveloped.EnvelopeId">
+            <summary>Convenience accessor for the envelope id.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Enveloped.PayloadDigest">
+            <summary>The declared payload digest value</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Enveloped.PayloadDigestComputed">
+            <summary>The payload digest value calculated during decoding.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Enveloped.PayloadMac">
+            <summary>The payload MAC value calculated during decoding.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.Enveloped.PayloadLength">
+            <summary>The length of the payload value</summary> 
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.LoadBody">
+            <summary>
+            Force loading of the payload body.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.GetBodyLazy">
+            <summary>
+            Get the body through lazy evaluation (if used)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Dispose">
+            <summary>
+            Dispose method, frees all resources.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Dispose(System.Boolean)">
+            <summary>
+            Dispose method, frees resources when disposing, 
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Finalize">
+            <summary>
+            Destructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Disposing">
+            <summary>
+            The class specific disposal routine.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.#ctor">
+            <summary>
+            Create an empty DARE Message (for use by deserializers)
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.#ctor(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]})">
+            <summary>
+            Create a DARE Message instance.
+            </summary>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="contentMeta">The content metadata</param>
+            <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
+            create the message body. Otherwise the body is specified by calls to the Process method.</param>
+            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+                as an EDSS header entry.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.#ctor(Goedel.Protocol.JsonObject,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
+            <summary>
+            Constructor returining an envelope containing the object <paramref name="data"/>
+            optionally encrypted under <paramref name="encryptionKey"/> and signed under
+            <paramref name="signingKey"/>.
+            </summary>
+            <param name="data">The object to be enveloped.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <param name="contentMeta">The value of the ContentMeta Header tag.</param>
+            <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Encode(System.Byte[],System.String)">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="plaintext">The payload plaintext.</param>
+            <param name="contentType">The content type.</param>
+            <returns>The new envelope</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Encode(System.Byte[],Goedel.Cryptography.Dare.ContentMeta,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,System.Byte[],System.Collections.Generic.List{System.Byte[]})">
+            <summary>
+            Create a new DARE Message from the specified parameters.
+            </summary>
+            <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
+            create the message body. Otherwise the body is specified by calls to the Process method.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <param name="contentMeta">The content metadata</param>
+            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+                as an EDSS header entry.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.DataSequence(System.Int32)">
+            <summary>
+            Return the plaintext of a data Sequence.
+            </summary>
+            <param name="i"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.GetBodyReader">
+            <summary>
+            Create a JSONReader for the decrypted body content according to the specified encoding.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.ReadChunk(Goedel.Protocol.JsonReader,System.Byte[]@)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
+            <summary>
+            Decode a streamed message
+            </summary>
+            <param name="inputData">The input data</param>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="contentMeta">The content metadata</param>
+            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+                as an EDSS header entry.</param>
+            <param name="chunk">The maximum chunk size. If unspecified, the default
+            system chunk size (2048) is used.</param>
+            <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
+            to be presented in place of an encrypted document if it cannot be decrypted.</param>
+            <returns>The serialized encoding of the data.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.DecodeHeader(Goedel.Protocol.JsonBcdReader)">
+            <summary>
+            Read a DareEnvelope from a stream in incremental mode. The header of the 
+            message is read but not the body.
+            </summary>
+            <param name="jsonReader">The stream from which data is to be read.</param>
+            <returns>The DareEnvelope instance.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.GetPlaintext(Goedel.Cryptography.IKeyLocate)">
+            <summary>
+            Return the plaintext payload using the credentials stored in <paramref name="keyCollection"/>
+            to obtain decryption keys if necessary.
+            </summary>
+            <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
+            <returns>The plaintext payload.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.String,System.String,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
+            <summary>
+            Decode a streamed message
+            </summary>
+            <param name="inputFile">The input file, must support reading.</param>
+            <param name="outputFile">The output file, must support writing</param>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="contentMeta">The content metadata</param>
+            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+                as an EDSS header entry.</param>
+            <param name="chunk">The maximum chunk size. If unspecified, the default
+            system chunk size (2048) is used.</param>
+            <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
+            to be presented in place of an encrypted document if it cannot be decrypted.</param>
+            <returns>The number of bytes in the input file.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Encode(Goedel.Cryptography.Dare.CryptoParameters,System.IO.Stream,System.IO.Stream,System.Int64,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Int32,System.Byte[])">
+            <summary>
+            Encode data received on the input stream to the output stream with the specified
+            security enhancements. If the input stream supports the seek operation, and
+            the maximum chunk size is less than 1, the output file will be written as a 
+            single Sequence. Otherwise, the file will be written with a chunk size no
+            greater than the maximum specified.
+            </summary>
+            <param name="inputStream">The input stream, must support reading.</param>
+            <param name="outputStream">The output stream, must support writing</param>
+            <param name="cryptoParameters">Specifies the cryptographic enhancements to
+            be applied to this message.</param>
+            <param name="contentMeta">The content metadata</param>
+            <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+            <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+                as an EDSS header entry.</param>
+            <param name="chunk">The maximum chunk size. If unspecified, the default
+            system chunk size (2048) is used.</param>
+            <param name="contentLength">The content length. This value is ignored if the Plaintext
+            parameter is not null. If the value is less than 0, chunked encoding
+            will be used for the payload data. </param>         
+            <param name="cover">Optional Sequence of plaintext bytes specifying a cover page
+            to be presented in place of an encrypted document if it cannot be decrypted.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Decode(System.String,System.String,Goedel.Cryptography.IKeyLocate,System.Boolean)">
+            <summary>
+            Decode a streamed message
+            </summary>
+            <param name="inputFile">The input file, must support reading.</param>
+            <param name="outputFile">The output file, must support writing</param>
+            <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
+            <param name="verify">If true, verify the payload digest on the payload. The decoded data is 
+            written out to a temporary file which is deleted if the verification fails and renamed
+            to the output file otherwise.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Decode(System.IO.Stream,System.IO.Stream,System.String,Goedel.Cryptography.IKeyLocate,System.Boolean)">
+            <summary>
+            Decode a streamed message
+            </summary>
+            <param name="inputStream">The input stream, must support reading.</param>
+            <param name="outputStream">The output stream, must support writing</param>
+            <param name="outputFile">The output file, must support writing</param>
+            <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
+            <param name="verify">If true, verify the payload digest on the payload. The decoded data is 
+            written out to a temporary file which is deleted if the verification fails and renamed
+            to the output file otherwise.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Verify(System.Byte[],Goedel.Cryptography.IKeyLocate)">
+            <summary>
+            Static method that reads the bytes <paramref name="input"/>, parses the
+            content to return an envelope.
+            </summary>
+            <param name="input"></param>
+            <param name="keyCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Verify(System.String,Goedel.Cryptography.IKeyLocate)">
+            <summary>
+            Decode a streamed message
+            </summary>
+            <param name="inputFile">File to be read as input</param>
+            <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Verify(System.IO.Stream,Goedel.Cryptography.IKeyLocate)">
+            <summary>
+            Decode a streamed message
+            </summary>
+            <param name="inputStream">The input stream, must support reading.</param>
+            <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.Verify(Goedel.Cryptography.KeyPair,System.Byte[])">
+            <summary>
+            Verify that the signature value is correct for the key <paramref name="key"/>
+            </summary>
+            <param name="key">The signature key.</param>
+            <param name="digest">The payload digest value if known.</param>
+            <returns>True, if the signature is valid.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.VerifySignature(Goedel.Cryptography.KeyPair)">
+            <summary>
+            Search the signatures over the envelope to verify the first
+            signature matching the key <paramref name="keyPair"/> returning
+            true if and only if the signature is valid.
+            </summary>
+            <param name="keyPair">The signing key to check.</param>
+            <returns></returns>
+            <exception cref="T:Goedel.Cryptography.Dare.EnvelopeSignatureMissing">The specified
+            signature could not be found.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.VerifySignature(Goedel.Cryptography.KeyPair,Goedel.Cryptography.Dare.DareSignature)">
+            <summary>
+            Verify the signature <paramref name="signature"/> against the keypair
+            <paramref name="keyPair"/>.
+            </summary>
+            <param name="signature">The signature entry to check.</param>
+            <param name="keyPair">The signing key to check.</param>
+            <returns></returns>
+            <exception cref="T:Goedel.Cryptography.Dare.EnvelopeSignatureMissing">The specified
+            signature could not be found.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.FindSignature(Goedel.Cryptography.CryptographicKey)">
+            <summary>
+            Find a signature whose key identifier matches <paramref name="key"/>
+            </summary>
+            <param name="key">The key</param>
+            <returns>The signature entry.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.GetValidatedDigest">
+            <summary>
+            Compute the digest of the payload and if a digest value is specified in the header
+            or trailer, verify that it matches.
+            </summary>
+            <returns>If a payload digest field is specified in the trailer that does not
+            match the digest of the payload, returns the payload. Otherwise returns the
+            digest of the payload.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped.GetUnvalidatedDigest">
+            <summary>
+            Compute the digest of the payload and if a digest value is specified in the header
+            or trailer, verify that it matches.
+            </summary>
+            <returns>If a payload digest field is specified in the trailer that does not
+            match the digest of the payload, returns the payload. Otherwise returns the
+            digest of the payload.</returns>
         </member>
         <member name="T:Goedel.Cryptography.Dare.DareSignatureHeader">
             <summary>
@@ -2950,7 +2920,7 @@
             <returns></returns>
             <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.IntervalSignature.Verify(System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.DareEnvelope})">
+        <member name="M:Goedel.Cryptography.Dare.IntervalSignature.Verify(System.Collections.Generic.IEnumerable{Goedel.Cryptography.Dare.Enveloped})">
             <summary>
             Attempt to verify the proof chain and return null if invalid
             </summary>
@@ -3190,10 +3160,10 @@
              SignedWitness occurs at the index [Index]
              </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.Proof.SignedWitness">
-             <summary>
-            The signed apex under which this proof chain is established
-             </summary>
+        <member name="P:Goedel.Cryptography.Dare.Proof.Witness">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Proof.Hash">
              <summary>
@@ -3645,98 +3615,6 @@
             <param name="authority">The authority section of the EARL URI, a DNS name.</param>
             <param name="locator">The locator key.</param>
             <returns></returns>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.EnvelopeValidation">
-            <summary>
-            Envelope validation levels
-            </summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.EnvelopeValidation.None">
-            <summary>Perform no validation of the envelope or its contents.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.EnvelopeValidation.Digest">
-            <summary>Verify that the calculated payload digest matches the purported
-            digest.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.EnvelopeValidation.Signature">
-            <summary>Verify that the signature is valid according to the specified 
-            public key parameters.</summary> 
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.EnvelopeValidation.Trusted">
-            <summary>Verify that the signature is valid according to the specified 
-            public key parameters and that there is a valid chain of trust under a 
-            specified root of trust.</summary> 
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.Enveloped">
-            <summary>
-            Typed DareEnvelope.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Enveloped.#ctor">
-            <summary>
-            Default constructor, used in deserialization.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Enveloped.#ctor(Goedel.Protocol.JsonObject,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
-            <summary>
-            Constructor returining an envelope containing the object <paramref name="data"/>
-            optionally encrypted under <paramref name="encryptionKey"/> and signed under
-            <paramref name="signingKey"/>.
-            </summary>
-            <param name="data">The object to be enveloped.</param>
-            <param name="signingKey">The signature key.</param>
-            <param name="encryptionKey">The encryption key.</param>
-            <param name="contentMeta">The value of the ContentMeta Header tag.</param>
-            <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.Enveloped`1">
-            <summary>
-            Typed DareEnvelope.
-            </summary>
-            <typeparam name="T">The type of the wrapped data item.</typeparam>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Enveloped`1.Body">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Enveloped`1.GetBodyLazy">
-            <inheritdoc/>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.Enveloped`1.EnvelopedObject">
-            <summary>The enveloped object cast to the generic type.</summary> 
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Enveloped`1.#ctor">
-            <summary>
-            Constructor for use by deserializers.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Enveloped`1.#ctor(Goedel.Cryptography.Dare.DareEnvelope)">
-            <summary>
-            Construct a typed copy of the envelope <paramref name="enveloped"/> with the same
-            Header, Trailer and JSONObject but omitting the body data.
-            </summary>
-            <param name="enveloped">The envelope to copy.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Enveloped`1.#ctor(Goedel.Protocol.JsonObject,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
-            <summary>
-            Constructor returining an envelope containing the object <paramref name="data"/>
-            optionally encrypted under <paramref name="encryptionKey"/> and signed under
-            <paramref name="signingKey"/>.
-            </summary>
-            <param name="data">The object to be enveloped.</param>
-            <param name="signingKey">The signature key.</param>
-            <param name="encryptionKey">The encryption key.</param>
-            <param name="contentMeta">The value of the ContentMeta Header tag.</param>
-            <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.Enveloped`1.Decode(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.Dare.EnvelopeValidation)">
-            <summary>
-            Decrypt and deserialize the envelope to obtain the typed contents and set the value of 
-            <see cref="F:Goedel.Protocol.JsonObject.Enveloped"/> to the original envelope data.
-            </summary>
-            <param name="keyCollection">Key collection to be used to find decryption keys and
-            roots of trust for verification keys.</param>
-            <param name="validation">Validation to be performed after decoding.</param>
-            <returns>The decoded data.</returns>
         </member>
         <member name="T:Goedel.Cryptography.Dare.StreamDataCorrupt">
             <summary>
@@ -4536,6 +4414,67 @@
             </summary>
             <returns>The created index.</returns>
         </member>
+        <member name="T:Goedel.Cryptography.Dare.EnvelopeValidation">
+            <summary>
+            Envelope validation levels
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EnvelopeValidation.None">
+            <summary>Perform no validation of the envelope or its contents.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EnvelopeValidation.Digest">
+            <summary>Verify that the calculated payload digest matches the purported
+            digest.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EnvelopeValidation.Signature">
+            <summary>Verify that the signature is valid according to the specified 
+            public key parameters.</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EnvelopeValidation.Trusted">
+            <summary>Verify that the signature is valid according to the specified 
+            public key parameters and that there is a valid chain of trust under a 
+            specified root of trust.</summary> 
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.Enveloped`1">
+            <summary>
+            Typed DareEnvelope.
+            </summary>
+            <typeparam name="T">The type of the wrapped data item.</typeparam>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped`1.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped`1.#ctor(Goedel.Cryptography.Dare.Enveloped)">
+            <summary>
+            Construct a typed copy of the envelope <paramref name="enveloped"/> with the same
+            Header, Trailer and JSONObject but omitting the body data.
+            </summary>
+            <param name="enveloped">The envelope to copy.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped`1.#ctor(Goedel.Protocol.JsonObject,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.ObjectEncoding)">
+            <summary>
+            Constructor returining an envelope containing the object <paramref name="data"/>
+            optionally encrypted under <paramref name="encryptionKey"/> and signed under
+            <paramref name="signingKey"/>.
+            </summary>
+            <param name="data">The object to be enveloped.</param>
+            <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
+            <param name="contentMeta">The value of the ContentMeta Header tag.</param>
+            <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Enveloped`1.Decode(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.Dare.EnvelopeValidation)">
+            <summary>
+            Decrypt and deserialize the envelope to obtain the typed contents and set the value of 
+            <see cref="F:Goedel.Protocol.JsonObject.Envelope"/> to the original envelope data.
+            </summary>
+            <param name="keyCollection">Key collection to be used to find decryption keys and
+            roots of trust for verification keys.</param>
+            <param name="validation">Validation to be performed after decoding.</param>
+            <returns>The decoded data.</returns>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.TrustResult">
             <summary>
             Stub class describing the result of a signature path validation. 
@@ -5300,13 +5239,13 @@
             <param name="keyLocate">The key collection to use to resolve private keys.</param>
             <param name="decrypt">If false, the contents of the store will never be decrypted (deprecated, use CatalogBlind)</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEphemeral.New(Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.Transaction)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEphemeral.New(Goedel.Protocol.JsonObject)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEphemeral.Update(Goedel.Protocol.JsonObject,System.Boolean,Goedel.Cryptography.Dare.Transaction)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEphemeral.Update(Goedel.Protocol.JsonObject,System.Boolean)">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEphemeral.Delete(System.String,Goedel.Cryptography.Dare.Transaction,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStoreEphemeral.Delete(System.String,System.Boolean)">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.Dare.PersistenceStore">
@@ -5414,33 +5353,33 @@
             <returns>True if the object was updated, otherwise false.</returns>
             
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.New(Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.Transaction)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.New(Goedel.Protocol.JsonObject)">
             <summary>
             Create a new persistence entry.
             </summary>
             <param name="jsonObject">Object to create</param>
-            <param name="transaction">The transaction context in which to prepare the update.</param>
+            
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Update(Goedel.Protocol.JsonObject,System.Boolean,Goedel.Cryptography.Dare.Transaction)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Update(Goedel.Protocol.JsonObject,System.Boolean)">
             <summary>
             Update an existing persistence entry
             </summary>
             <param name="jsonObject">The new object value</param>
             <param name="create">If true, create a new value if one does not already exist</param>
-            <param name="transaction">The transaction context in which to perform the update.</param>
+            
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Delete(System.String,Goedel.Cryptography.Dare.Transaction,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Delete(System.String,System.Boolean)">
             <summary>
             Delete a persistence entry
             </summary>
             <threadsafety static="true" instance="true"/>
             <param name="uniqueID">The UniqueID of the object to delete</param>
-            <param name="transaction">The transaction context in which to perform the update.</param>
             <param name="erase">If true, render the payload data unavailable by either deleting the 
             decryption salt or erasing the payload itself.</param>
+            
             <returns>True if the object was updated, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Apply(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Cryptography.Dare.PersistenceStore.Apply(Goedel.Cryptography.Dare.Enveloped)">
             <summary>
             Apply the specified message to the Sequence.
             </summary>
@@ -5460,11 +5399,6 @@
             </summary>
             <param name="uniqueID">The unique identifier of the object instance to locate.</param>
             <returns>True if found, otherwise false.</returns>
-        </member>
-        <member name="T:Goedel.Cryptography.Dare.Transaction">
-            <summary>
-            Base class for transactions.
-            </summary>
         </member>
         <member name="T:Goedel.Cryptography.Dare.PersistentIndexEntry">
             <summary>
@@ -5865,7 +5799,7 @@
             <param name="sequenceIndexEntryFactoryDelegate">Delegate to create index entries for
             items in the sequence.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.MakeNewSequence(System.String,Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},Goedel.IO.FileStatus)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.MakeNewSequence(System.String,Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped},Goedel.IO.FileStatus)">
             <summary>
             Create a new Sequence with the name <paramref name="fileName"/> and
             append <paramref name="envelopes"/> to the end of the Sequence.
@@ -5948,7 +5882,7 @@
             the value of <paramref name="payload"/> is correct.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(Goedel.Cryptography.Dare.Enveloped,System.Boolean)">
             <summary>
             Write a previously prepared or validated Dare Envelope to the Sequence directly.
             </summary>
@@ -5956,7 +5890,7 @@
             <param name="updateEnvelope">If true, update the headerData and trailerData of 
             <paramref name="envelope"/> to the computed values.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Int64,System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.Sequence.Append(System.Collections.Generic.List{Goedel.Cryptography.Dare.Enveloped},System.Int64,System.Boolean)">
             <summary>
             Append the envelopes <paramref name="envelopes"/> to the Sequence starting
             with the <paramref name="index"/>th envelope.
@@ -6677,8 +6611,8 @@
             <param name="frameLength">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.FrameLength"/> property.</param>
             <param name="dataPosition">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.DataPosition"/> property.</param>
             <param name="dataLength">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.DataLength"/> property.</param>
-            <param name="header">Value for the <see cref="P:Goedel.Cryptography.Dare.DareEnvelopeSequence.Header"/> property.</param>
-            <param name="trailer">Value for the <see cref="P:Goedel.Cryptography.Dare.DareEnvelopeSequence.Trailer"/> property.</param>
+            <param name="header">Value for the <see cref="!:DareEnvelopeSequence.Header"/> property.</param>
+            <param name="trailer">Value for the <see cref="!:DareEnvelopeSequence.Trailer"/> property.</param>
             <param name="jsonObject">Value for the <see cref="P:Goedel.Cryptography.Dare.SequenceIndexEntry.JsonObject"/> property.</param>
             <returns></returns>
         </member>
@@ -6691,9 +6625,6 @@
             Sequence index with the decoded head and tail and extent information for
             the body.
             </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.GetBodyLazy">
-            <summary>Return the body of the entry.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Dare.SequenceIndexEntry.Sequence">
             <summary>The Sequence that is indexed.</summary> 
@@ -6773,7 +6704,7 @@
             </summary>
             <returns>The frame payload data.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.#ctor(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.Dare.DareEnvelope,System.Int64)">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.#ctor(Goedel.Cryptography.Dare.Sequence,Goedel.Cryptography.Dare.Enveloped,System.Int64)">
             <summary>
             Constructor returning an instance for the envelope <paramref name="envelope"/>.
             </summary>
@@ -6864,14 +6795,6 @@
             <param name="sequence">The indexed Sequence.</param>
             <returns>The frame payload</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.GetEnvelope(Goedel.Cryptography.Dare.Sequence,System.Boolean)">
-            <summary>
-            Return a DareEnvelope wrapping the fnewrame.
-            </summary>
-            <param name="sequence">The indexed Sequence.</param>
-            <param name="detatched">If true, </param>
-            <returns>The frame payload</returns>      
-        </member>
         <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.CopyToFile(Goedel.Cryptography.Dare.Sequence,System.String)">
             <summary>
             Copy the payload data to file.
@@ -6885,15 +6808,9 @@
             </summary>
             <returns>The frame payload data.</returns>
         </member>
-        <member name="T:Goedel.Cryptography.Dare.GetBodyDelegate">
-            <summary>
-            Delegate returning the body of a DARE envelope.
-            </summary>
-            <returns>The body of the envelope.</returns>
-        </member>
         <member name="T:Goedel.Cryptography.Dare.DareEnvelopeLazy">
             <summary>
-            Lazy evaluation version of <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/>, only reads the
+            Lazy evaluation version of <see cref="T:Goedel.Cryptography.Dare.Enveloped"/>, only reads the
             body part when needed.
             </summary>
         </member>
@@ -6906,7 +6823,7 @@
         <member name="M:Goedel.Cryptography.Dare.DareEnvelopeLazy.LoadBody">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeLazy.#ctor(Goedel.Cryptography.Dare.GetBodyDelegate)">
+        <member name="M:Goedel.Cryptography.Dare.DareEnvelopeLazy.#ctor">
             <summary>
             Constructor, returns an envelope that will only read the body when needed
             using the <paramref name="getbody"/> delegate.

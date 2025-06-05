@@ -1046,7 +1046,7 @@ public partial class ContextUser : ContextAccount {
         // Convert the enveloped profile device to a binary field and take the envelope
         // of that.
         var plaintext = profileDevice.DareEnvelope.GetBytes();
-        var encryptedProfileDevice = DareEnvelope.Encode((byte[])plaintext, encryptionKey: key);
+        var encryptedProfileDevice = Enveloped.Encode((byte[])plaintext, encryptionKey: key);
         var catalogedPublication = new CatalogedPublication(pin) {
             EnvelopedData = encryptedProfileDevice,
             };
@@ -1168,7 +1168,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="uri">The EARL to resolve</param>
     /// <param name="responseId">The response from the service.</param>
     /// <returns>The recovered envelope.</returns>
-    public DareEnvelope ClaimPublication(string uri, out string responseId) {
+    public Enveloped ClaimPublication(string uri, out string responseId) {
         (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
 
         var key = new CryptoKeySymmetricSigner(pin);
@@ -1193,7 +1193,7 @@ public partial class ContextUser : ContextAccount {
         // Verify: if the key is a encrypt/sign, need to verify here.
         "If the key is a encrypt/sign, need to verify here.".TaskValidate();
 
-        var result = encryptedEnvelope.DecodeJsonObject(key) as DareEnvelope;
+        var result = encryptedEnvelope.StreamParseTag<Enveloped>(key);
 
         responseId = messageClaim.GetResponseId();
 
@@ -1657,7 +1657,7 @@ public partial class ContextUser : ContextAccount {
         var pin = combinedKey.SecretKey;
 
         // Add a signature under the signature key.
-        var encryptedContact = DareEnvelope.Encode(envelope.GetBytes(),
+        var encryptedContact = Enveloped.Encode(envelope.GetBytes(),
                 signingKey: combinedKey, encryptionKey: combinedKey);
 
         // publish the enveloped contact to the service.

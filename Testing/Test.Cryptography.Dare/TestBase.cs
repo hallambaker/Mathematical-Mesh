@@ -70,7 +70,7 @@ public abstract record TestBaseStore : TestBase {
             int index = 1,
             int group = 0);
 
-    public abstract DareEnvelope AddItem(Store spool, int? length = null, bool? randomSize = null);
+    public abstract Enveloped AddItem(Store spool, int? length = null, bool? randomSize = null);
 
 
     public abstract void Update(
@@ -168,7 +168,7 @@ public record TestSpool : TestBaseStore {
 
 
 
-    public override DareEnvelope AddItem(Store spool, int? length = null, bool? randomSize = null) {
+    public override Enveloped AddItem(Store spool, int? length = null, bool? randomSize = null) {
         var message = ReferenceStore.AddMessage(length, randomSize);
 
         // here add to the catalog
@@ -281,7 +281,7 @@ public record TestCatalog : TestBaseStore {
         }
 
 
-    public override DareEnvelope AddItem(Store spool, int? length = null, bool? randomSize = null) {
+    public override Enveloped AddItem(Store spool, int? length = null, bool? randomSize = null) {
         var message = ReferenceStore.AddItem(length, randomSize);
 
         // here add to the catalog
@@ -291,7 +291,7 @@ public record TestCatalog : TestBaseStore {
         }
 
 
-    public DareEnvelope Update(Store spool, int? length = null, bool? randomSize = null) {
+    public Enveloped Update(Store spool, int? length = null, bool? randomSize = null) {
         var message = ReferenceStore.AddItem(length, randomSize);
 
         // here add to the catalog

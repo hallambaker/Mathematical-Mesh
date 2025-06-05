@@ -57,13 +57,13 @@ public record ParametersClaim {
         }
 
 
-    public DareEnvelope[] GetFrames(long[] frames) => throw new NYI();
+    public Enveloped[] GetFrames(long[] frames) => throw new NYI();
 
 
     public IntervalSignature MakeCorrupted(IntervalSignature original) => throw new NYI();
 
 
-    public DareEnvelope[] MakeCorrupted(DareEnvelope[] frames) => throw new NYI();
+    public Enveloped[] MakeCorrupted(Enveloped[] frames) => throw new NYI();
 
 
     public long[] GetCheckFrames() {

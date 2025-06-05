@@ -140,12 +140,8 @@ public class PublicMeshService : MeshService {
         MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate, Logger, PresenceService);
 
         if (!meshServiceConfiguration.ProfileRegistryCallsign.IsBlank()) {
-            var envelope = JsonObject.StreamParse<DareEnvelope>(meshServiceConfiguration.ProfileRegistryCallsign);
-            var jsonObject = envelope.DecodeJsonObject();
-            //using var file = meshServiceConfiguration.ProfileRegistryCallsign.OpenFileRead() ;
-            //using var jsonReader = new JsonBcdReader(file);
-            //var envelope = DareEnvelope.FromJson(jsonReader);
-            CallsignServiceProfile = jsonObject as ProfileRegistry;
+            var envelope = JsonObject.StreamParse<Enveloped>(meshServiceConfiguration.ProfileRegistryCallsign);
+            CallsignServiceProfile = envelope.StreamParseTag<ProfileRegistry>();
             }
         //var instance = GenericHostConfiguration.Instance ?? meshMachine.Instance;
 
@@ -160,7 +156,7 @@ public class PublicMeshService : MeshService {
 
         if (catalogedService is CatalogedService hostServiceDescription) {
             // Decode the service and host profiles.
-            ProfileService = hostServiceDescription.EnvelopedProfileService.Decode();
+            ProfileService = hostServiceDescription.ProfileService;
             ProfileHost = hostServiceDescription.EnvelopedProfileHost.Decode();
 
             // Activate the host and load the decryption key.
@@ -350,6 +346,9 @@ public class PublicMeshService : MeshService {
         LogService.Logger.DispatchStart(token);
         var log = LogService.Start(token, request as IReport);
 
+
+
+
         try {
             var result = Dispatch(token, request, session);
             log.Success(result as IReport);
@@ -379,22 +378,21 @@ public class PublicMeshService : MeshService {
             HelloRequest request, IJpcSession jpcSession) {
 
         var envelopedProfileService = ProfileService.GetEnvelopedProfileService();
-        var HelloResponse = new MeshHelloResponse() {
+
+        var encoding = new Goedel.Protocol.Encoding() {
+            ID = ["application/json"]
+            };
+        var helloResponse = new MeshHelloResponse() {
             Version = new Goedel.Protocol.Version() {
                 Major = 3,
                 Minor = 0,
-                Encodings = new List<Goedel.Protocol.Encoding>(),
+                Encodings = [encoding],
                 },
             EnvelopedProfileService = envelopedProfileService,
             Status = 201 // Must specify this explicitly since not derrived from MeshResponse.
             };
 
-        var Encoding = new Goedel.Protocol.Encoding() {
-            ID = new List<string> { "application/json" }
-            };
-        HelloResponse.Version.Encodings.Add(Encoding);
-
-        return HelloResponse;
+        return helloResponse;
         }
 
     /// <summary>

@@ -25,6 +25,7 @@ using Goedel.Cryptography.Nist;
 
 using System.ComponentModel;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Goedel.Protocol;
 
@@ -41,7 +42,8 @@ public abstract record Binding(
             Dictionary<string, Property> Properties,
             string Tag,
             Binding Parent = null,
-            string? TypeTag = null
+            string? TypeTag = null,
+            bool Generic = false
             ) {
 
     ///<summary>Dictionary mapping child type tags to type definitions.</summary> 
@@ -190,7 +192,8 @@ public abstract record Binding(
                 JsonObject target,
                 JsonElement2 element,
                 Property specifier) {
-
+        if (specifier.Tag == "EnvelopedInbound") {
+            }
         switch (specifier) {
             #region // Boolean
             case PropertyBoolean subProperty: {
@@ -575,26 +578,67 @@ public abstract record Binding(
             #endregion
             #region // Struct
             case PropertyGStruct subProperty: {
-                if (element is JsonElementObject jsonElement) {
-                    if (!JsonObject.BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
-                        return false;
-                        }
-                    if (subProperty.Tagged) {
-                        var item = ParseTagged(jsonElement, binding);
-                        subProperty.Set(target, item);
-                        }
-                    else {
-                        var item = Parse(jsonElement, binding);
-                        subProperty.Set(target, item);
-                        }
-                    }
-                else if (element is JsonElementArray jsonArray) {
+                if (element is JsonElementArray jsonArray) {
                     if (!JsonObject.BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
                         return false;
                         }
                     var template = subProperty.Factory() as JsonObject;
                     var item = Parse(jsonArray, binding, template);
                     subProperty.Set(target, item);
+                    }
+                return false;
+                }
+            case PropertyListGStruct subProperty: {
+                if (element is JsonElementArray jsonArray) {
+                    if (!JsonObject.BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
+                        return false;
+                        }
+                    var collected = true;
+                    var array = subProperty.Factory();
+                    subProperty.Set(target, array);
+
+                    foreach (var member in jsonArray.Items) {
+                        if (member is JsonElementArray jsonArray1) {
+                            if (!JsonObject.BindingDictionary.TryGetValue(subProperty.Type, out var innerBinding)) {
+                                return false;
+                                }
+                            var template = subProperty.IFactory();
+                            var item = Parse(jsonArray1, innerBinding, template as JsonObject);
+                            subProperty.ListAdd(array, item);
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
+                    }
+                return false;
+                }
+            case PropertyDictionaryGStruct subProperty: {
+
+                if (element is JsonElementObject jsonDictionary) {
+                    if (!JsonObject.BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
+                        return false;
+                        }
+                    var collected = true;
+                    var array = binding.DictionaryFactory();
+                    subProperty.Set(target, array);
+
+
+                    foreach (var member in jsonDictionary.Properties) {
+                        if (member.Value is JsonElementArray jsonArray1) {
+                            if (!JsonObject.BindingDictionary.TryGetValue(subProperty.Type, out var innerBinding)) {
+                                return false;
+                                }
+                            var template = subProperty.IFactory() as JsonObject;
+                            var item = Parse(jsonArray1, innerBinding, template);
+                            binding.DictionaryAdd(array, member.Key, item);
+                            }
+                        else {
+                            collected = false;
+                            }
+                        }
+                    return collected;
                     }
                 return false;
                 }
@@ -612,10 +656,14 @@ public abstract record Binding(
                         subProperty.Set(target, item);
                         }
                     }
+
                 else if (element is JsonElementArray jsonArray) {
-                    if (!JsonObject.BindingDictionary.TryGetValue(subProperty.Type, out var binding)) {
+                    if (!JsonObject.BindingDictionary.TryGetValue(subProperty.Type, out var innerBinding)) {
                         return false;
                         }
+                    var template = subProperty.Factory() as JsonObject;
+                    var item = Parse(jsonArray, innerBinding, template);
+                    subProperty.Set(target, item);
                     }
                 return false;
                 }
@@ -630,7 +678,6 @@ public abstract record Binding(
 
                     foreach (var member in jsonArray.Items) {
                         if (member is JsonElementObject jsonElement) {
-
                             if (subProperty.Tagged) {
                                 var item = ParseTagged(jsonElement, binding);
                                 binding.ListAdd(array, item);
@@ -639,6 +686,14 @@ public abstract record Binding(
                                 var item = Parse(jsonElement, binding);
                                 binding.ListAdd(array, item);
                                 }
+                            }
+                        else if (member is JsonElementArray jsonArray1) {
+                            if (!JsonObject.BindingDictionary.TryGetValue(subProperty.Type, out var innerBinding)) {
+                                return false;
+                                }
+                            var template = subProperty.IFactory();
+                            var item = Parse(jsonArray1, innerBinding, template as JsonObject);
+                            binding.ListAdd(array, item);
                             }
                         else {
                             collected = false;
@@ -704,8 +759,9 @@ public record Binding<T>(
             Func<List<T>> LFactory,
             Func<Dictionary<string, T>> DFactory,
             Binding Parent = null,
-            string? TypeTag = null
-            ) : Binding(Properties, Tag, Parent, TypeTag) where T : class {
+            string? TypeTag = null,
+            bool Generic=false
+            ) : Binding(Properties, Tag, Parent, TypeTag, Generic) where T : class {
 
     ///<inheritdoc/>
     public override Func<object> Factory => () => OFactory();

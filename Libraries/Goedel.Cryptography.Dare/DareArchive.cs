@@ -301,7 +301,7 @@ public class DareArchive : PersistenceStore {
 
 
     ///<inheritdoc/>
-    public override bool Delete(string uniqueID, Transaction transaction = null, bool erase = false) {
+    public override bool Delete(string uniqueID, bool erase = false) {
         var envelope = PrepareDelete(out var Previous, uniqueID);
         if (envelope == null) {
             return false;

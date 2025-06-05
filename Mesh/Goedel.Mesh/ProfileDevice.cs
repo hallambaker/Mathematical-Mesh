@@ -125,9 +125,9 @@ public partial class ProfileDevice {
     /// <returns>The decoded profile.</returns>
     /// <remarks>This is one of the few convenience decoders that cannot be replaced because
     /// ProfileDevice is frequently passed as a Publication.</remarks>
-    public static new ProfileDevice Decode(DareEnvelope envelope,
+    public static new ProfileDevice Decode(Enveloped envelope,
                 IKeyCollection keyCollection = null) =>
-                    MeshItem.Decode(envelope, keyCollection) as ProfileDevice;
+                        envelope.StreamParseTag<ProfileDevice>(keyCollection);
 
 
     /// <summary>

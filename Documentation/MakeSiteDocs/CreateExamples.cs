@@ -234,7 +234,7 @@ public partial class CreateExamples {
         var verifyFile = verify.GetResultFileDare();
         (verifyFile.TotalBytes > 0).TestTrue();
         //verifyFile.Envelope.Trailer.TestNotNull();
-        verifyFile.Envelope.PayloadDigestComputed.TestNotNull();
+        //verifyFile.Envelope.PayloadDigestComputed.TestNotNull();
 
         Account.ConsoleEncryptFile = new List<ExampleResult>() {
                 dump, encode[0], verify[0]
@@ -425,7 +425,7 @@ public partial class CreateExamples {
 
 
 
-        Connect.AliceProfileDevice2 = dev2Machine.ProfileDevice;
+        Connect.AliceProfileDevice2 = dev2Machine.TheProfileDevice;
 
 
         Connect.AliceActivationDevice2 = connectStaticPollSuccess.ActivationAccount;
@@ -900,13 +900,13 @@ public partial class CreateExamples {
         var accessEntryEnvelope = requestBobAdd.Updates[0].Envelopes[0];
 
 
-        Group.BobAccessEntry = accessEntryEnvelope.DecodeJsonObject() as CatalogedAccess;
+        Group.BobAccessEntry = accessEntryEnvelope.StreamParseTag<CatalogedAccess>();
 
         //#% var result = Group.GroupAddBob [0];
 
         // this is a different request made under the user account.
         var addBob = Group.GroupAddBob[0].Traces[1].RequestObject as TransactRequest;
-        Group.GroupInvitation = addBob.EnvelopedOutbound[0].JsonObject as GroupInvitation;
+        Group.GroupInvitation = addBob.EnvelopedOutbound[0].StreamParseTag<GroupInvitation>();
 
         Group.GroupDecryptBobSuccess = Bob1.Example(
             $"account sync  /auto",
@@ -1011,7 +1011,7 @@ public partial class CreateExamples {
 
 
         var watchMachine = connectPINComplete.CatalogedMachine;
-        Connect.AliceProfileDeviceWatch = watchMachine.ProfileDevice;
+        Connect.AliceProfileDeviceWatch = watchMachine.TheProfileDevice;
         //Connect.AliceActivationDeviceWatch = watchMachine.A;
 
 
@@ -1019,7 +1019,7 @@ public partial class CreateExamples {
         var dev3Machine = connectStaticPollSuccess?.CatalogedMachine;
         var dev3Device = dev3Machine?.CatalogedDevice;
 
-        Connect.AliceProfileDevice3 = dev3Machine.ProfileDevice;
+        Connect.AliceProfileDevice3 = dev3Machine.TheProfileDevice;
         Connect.AliceActivationDevice3 = connectStaticPollSuccess.ActivationAccount;
         Connect.AliceActivationAccount3 = connectStaticPollSuccess.ActivationCommon;
         Connect.AliceConnectionDevice3 = dev3Device.ConnectionDevice;

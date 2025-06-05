@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/28/2025 12:00:06 AM
+//  This file was automatically generated at 6/5/2025 7:42:31 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -147,7 +147,7 @@ abstract public partial class Request : BaseMessage {
 			new() {
 			{ "Service", _properties [0]},
 			{ "ID", _properties [1]}}, __Tag,
-		null, null, null, null);
+		null, null, null, null, Generic: false);
 
 
 	/// <summary>
@@ -239,7 +239,7 @@ abstract public partial class Response : BaseMessage {
 			{ "StatusExtended", _properties [1]},
 			{ "StatusDescription", _properties [2]},
 			{ "ID", _properties [3]}}, __Tag,
-		null, null, null, null);
+		null, null, null, null, Generic: false);
 
 
 	/// <summary>
@@ -326,7 +326,7 @@ public partial class Version : BaseMessage {
 			{ "Minor", _properties [1]},
 			{ "Encodings", _properties [2]},
 			{ "URI", _properties [3]}}, __Tag,
-		() => new Version(), () => [], () => [], null);
+		() => new Version(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -389,7 +389,7 @@ public partial class Encoding : BaseMessage {
 			new() {
 			{ "ID", _properties [0]},
 			{ "Dictionary", _properties [1]}}, __Tag,
-		() => new Encoding(), () => [], () => [], null);
+		() => new Encoding(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -430,7 +430,7 @@ public partial class HelloRequest : Request {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<HelloRequest> _binding = new (
 			new() {}, __Tag,
-		() => new HelloRequest(), () => [], () => [], Request._binding);
+		() => new HelloRequest(), () => [], () => [], Request._binding, Generic: false);
 
 
 	/// <summary>
@@ -494,7 +494,7 @@ public partial class HelloResponse : Response {
 			new() {
 			{ "Version", _properties [0]},
 			{ "Alternates", _properties [1]}}, __Tag,
-		() => new HelloResponse(), () => [], () => [], Response._binding);
+		() => new HelloResponse(), () => [], () => [], Response._binding, Generic: false);
 
 
 	/// <summary>

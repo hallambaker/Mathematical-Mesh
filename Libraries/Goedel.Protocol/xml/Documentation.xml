@@ -15,7 +15,7 @@
             <param name="Parent">Parent the object inherits from.</param>
             <param name="TypeTag">Specifies the property name for the property specifying the type.</param>
         </member>
-        <member name="M:Goedel.Protocol.Binding.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,Goedel.Protocol.Binding,System.String)">
+        <member name="M:Goedel.Protocol.Binding.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,Goedel.Protocol.Binding,System.String,System.Boolean)">
             <summary>
             Untyped binding specification. The untyped binding provides the necessary factory,
             sequence addition and key/value pair extraction functions for serialization and
@@ -104,7 +104,7 @@
             <param name="DFactory">Dictionary instance factory type.</param>
             <param name="TypeTag">The type tag used to distinguish objects of this type.</param>
         </member>
-        <member name="M:Goedel.Protocol.Binding`1.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,System.Func{`0},System.Func{System.Collections.Generic.List{`0}},System.Func{System.Collections.Generic.Dictionary{System.String,`0}},Goedel.Protocol.Binding,System.String)">
+        <member name="M:Goedel.Protocol.Binding`1.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,System.Func{`0},System.Func{System.Collections.Generic.List{`0}},System.Func{System.Collections.Generic.Dictionary{System.String,`0}},Goedel.Protocol.Binding,System.String,System.Boolean)">
             <summary>
             Binding specification.
             </summary>
@@ -3177,7 +3177,7 @@
             Primary key to use for the object.
             </summary>
         </member>
-        <member name="F:Goedel.Protocol.JsonObject.Enveloped">
+        <member name="F:Goedel.Protocol.JsonObject.Envelope">
             <summary>The enveloped object data.</summary> 
         </member>
         <member name="F:Goedel.Protocol.JsonObject.KeyLocate">
@@ -3282,6 +3282,12 @@
             </summary>
             <returns>Deep copy of the object with all referenced objects
             copied.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.ToString">
+            <summary>
+            Convert object to string in JSON form
+            </summary>
+            <returns>Data as string.</returns>
         </member>
         <member name="M:Goedel.Protocol.JsonObject.ToBytes">
             <summary>
@@ -3389,7 +3395,20 @@
             parse.</param>
             <returns>The typed, parsed object.</returns>
         </member>
-        <member name="M:Goedel.Protocol.JsonObject.StreamParse``1(System.Byte[],System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Protocol.JsonObject.StreamParseTag``1(System.Byte[],System.Boolean,System.Boolean)">
+            <summary>
+            Perform a one pass streaming parse on the data <paramref name="data"/>. This
+            parser does not (currently) support schemas in which a variant object type is
+            specified by the object property.
+            </summary>
+            <typeparam name="T">The type of the object to be returned.</typeparam>
+            <param name="data">The data to parse</param>
+            <param name="tagged">If true, the data object has a typed wrapper.</param>
+            <param name="collectUparsed">If true, collect unparseable items during the
+            parse.</param>
+            <returns>The typed, parsed object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.StreamParse``1(System.Byte[],System.Boolean)">
             <summary>
             Perform a one pass streaming parse on the data <paramref name="data"/>. This
             parser does not (currently) support schemas in which a variant object type is
@@ -5637,7 +5656,7 @@
             object in the collection.</param>
             <param name="Tagged">If true, the property should be tagged.</param>
         </member>
-        <member name="M:Goedel.Protocol.PropertyListGStruct.#ctor(System.String,System.Type,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Func{System.Object},System.Func{System.Object})">
+        <member name="M:Goedel.Protocol.PropertyListGStruct.#ctor(System.String,System.Type,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Func{System.Object},System.Func{System.Object},System.Action{System.Object,System.Object})">
             <summary>
             Metadata record representing a property.
             </summary>

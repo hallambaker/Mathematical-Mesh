@@ -20,16 +20,30 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography.Nist;
+
 using System.IO;
 
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Cryptography.Dare;
 
+
 /// <summary>
 /// Extension methods
 /// </summary>
 public static partial class Extensions {
+
+    public static List<T> Decode<T>(this List<Enveloped<T>> enveloped) where T : JsonObject{
+        var result = new List<T>();
+
+        foreach (var item in enveloped) {
+            result.Add(item.Decode());
+            }
+
+        return result;
+        }
+
 
     public static int TagLength(
                 long value) {
@@ -366,7 +380,7 @@ public static partial class Extensions {
     /// <returns>The constructed URI.</returns>
     public static string DataUri(this JsonObject jsonObject) {
 
-        var enveloped = jsonObject.Enveloped as DareEnvelope;
+        var enveloped = jsonObject.Envelope as Enveloped;
         enveloped.AssertNotNull(NYI.Throw);
 
 
@@ -384,7 +398,7 @@ public static partial class Extensions {
         }
 
 
-    
+
 
     /// <summary>
     /// Sign and encrypt the JsonObject under <paramref name="signingKey"/> and
@@ -395,8 +409,8 @@ public static partial class Extensions {
     /// <param name="encryptionKey">Optional encryption key.</param>
     /// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
     /// <returns>Envelope containing the signed profile. Also updates the property
-    /// <see cref="DareEnvelope"/></returns>
-    public static DareEnvelope Envelope(
+    /// <see cref="Enveloped"/></returns>
+    public static Enveloped Envelope(
                 this JsonObject jsonObject,
                 CryptographicKey signingKey = null,
                 CryptographicKey encryptionKey = null,
@@ -420,8 +434,8 @@ public static partial class Extensions {
     /// <param name="includeSignatureKey">If true include the public key parameters in the
     /// signature.</param>
     /// <returns>Envelope containing the signed profile. Also updates the property
-    /// <see cref="DareEnvelope"/></returns>
-    public static DareEnvelope Envelope(
+    /// <see cref="Enveloped"/></returns>
+    public static Enveloped Envelope(
                 this JsonObject jsonObject,
                 List<CryptographicKey> signingKeys,
                 List<CryptographicKey> encryptionKeys = null,
@@ -444,8 +458,8 @@ public static partial class Extensions {
     /// <param name="cryptoParameters">The cryptographic parameters.</param>
     /// <param name="objectEncoding">The encoding to use to compute the inner object.</param>
     /// <returns>Envelope containing the signed profile. Also updates the property
-    /// <see cref="DareEnvelope"/></returns>
-    public static DareEnvelope Envelope(
+    /// <see cref="Enveloped"/></returns>
+    public static Enveloped Envelope(
                 this JsonObject jsonObject,
                 CryptoParameters cryptoParameters,
                 ObjectEncoding objectEncoding = ObjectEncoding.JSON
@@ -461,9 +475,9 @@ public static partial class Extensions {
 
         var bytes = jsonObject.GetBytes(objectEncoding: objectEncoding);
 
-        var enveloped = new DareEnvelope(cryptoParameters, bytes, contentMeta: contentMeta);
+        var enveloped = new Enveloped(cryptoParameters, bytes, contentMeta: contentMeta);
         enveloped.Header.EnvelopeId = jsonObject._PrimaryKey;
-        jsonObject.Enveloped = enveloped;
+        jsonObject.Envelope = enveloped;
 
         return enveloped;
         }

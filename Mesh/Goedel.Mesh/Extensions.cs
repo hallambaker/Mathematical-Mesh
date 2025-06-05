@@ -102,7 +102,7 @@ public static partial class Extensions {
     /// <param name="envelope">The envelope to present.</param>
     /// <param name="builder">The string builder.</param>
     /// <param name="indent">The indentation level.</param>
-    public static void Report(this DareEnvelope envelope, StringBuilder builder, int indent = 0) {
+    public static void Report(this Enveloped envelope, StringBuilder builder, int indent = 0) {
         if (envelope != null) {
 
             Report(envelope.Header, builder, indent);
@@ -257,7 +257,7 @@ public static partial class Extensions {
             return;
             }
         var uri = profile.AccountHandle is null ? null : "handle:" + profile.AccountHandle;
-        var cryptoData = (profile.Enveloped as DareEnvelope).GetBytes();
+        var cryptoData = (profile.Envelope as Enveloped).GetBytes();
 
         contact.AddServiceKeyData(profile.UdfString, "Mesh", uri: uri, user: profile.AccountAddress, label: null, contexts: [],
              mediaType: profile.IanaMediaType, cryptoData: cryptoData);
@@ -270,7 +270,7 @@ public static partial class Extensions {
     /// <param name="contact">The contact to add the application details to.</param>
     /// <param name="application">The application to add.</param>
     public static void AddGroup(this JsContact contact, CatalogedGroup application) {
-        var profile = application.EnvelopedProfileGroup.EnvelopedObject;
+        var profile = application.ProfileGroup;
         contact.AddMesh(profile);
 
         throw new NYI();

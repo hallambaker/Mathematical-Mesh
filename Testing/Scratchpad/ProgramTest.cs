@@ -64,11 +64,15 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-        Goedel.Protocol.JsonReader.Trace = true;
-        GoedelProtocol.Test().TestEncodeDecode4();
+        //Goedel.Protocol.JsonReader.Trace = true;
 
+        //GoedelProtocol.Test().TestEncodeDecode4();
+        //TestDare.Test().EnvelopeSignAtomic();
+        //TestDare.Test().EnvelopePlaintext();
+        //TestDare.Test().EnvelopePlaintextFixed();
+        //TestDare.Test().EnvelopePlaintextVariable();
 
-        //TestCryptographyJose.Test().Test_Jose_Encrypt_Symmetric();
+        //TestCryptographyJose.Test().Test_Jose_Encrypt();
         //TestCryptographyJose.Test().Test_Jose_Sign();
         //TestCryptographyJose.Test().Test_Jose_Sign_Encrypt();
 
@@ -77,6 +81,9 @@ partial class Program {
 
         //Jmap.Test().TestContactAlice();
         //Jmap.Test().TestDeviceFridge();
+        //TestService.Test().ProtocolSerialization();
+
+
 
         //TestService.Test().ProtocolHello();
         //TestOauth.Test().TestPAR();
@@ -85,8 +92,16 @@ partial class Program {
         //StoreTests.Test().TestSpoolSingle();
 
 
-        TestService.Test().MeshDeviceConnectPIN();
-        TestService.Test().MeshDeviceDirectKey();
+        //TestService.Test().MeshDeviceConnectPIN();
+        TestService.Test().MeshDeviceConnectApprove();
+        TestService.Test().TestCredentialAccountApps();
+        TestService.Test().TestCredentialFromHandle();
+
+        //ShellTests.Test().TestHandleThing();
+
+
+
+
 
         //Acme.Test().TestEnroll().Sync();
         //Acme.Test().TestJsDevice().Sync();

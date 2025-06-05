@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 5/28/2025 12:00:09 AM
+//  This file was automatically generated at 6/5/2025 7:42:33 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -137,7 +137,7 @@ public partial class ShellResult : JsonShellResult {
 			new() {
 			{ "Success", _properties [0]},
 			{ "Reason", _properties [1]}}, __Tag,
-		() => new ShellResult(), () => [], () => [], null);
+		() => new ShellResult(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>

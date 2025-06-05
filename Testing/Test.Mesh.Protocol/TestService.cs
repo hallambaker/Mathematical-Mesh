@@ -79,6 +79,26 @@ public partial class TestService {
         };
 
 
+    [Fact]
+    public void ProtocolSerialization() {
+        var testEnvironmentCommon = GetTestEnvironmentCommon();
+        var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+
+
+        var profileDevice = ProfileDevice.Generate();
+
+        var profileDeviceBytes = profileDevice.ToBytes();
+
+        var profileDevice2 = JsonObject.StreamParseTag<ProfileDevice>(profileDeviceBytes, false);
+
+
+
+        var catalogued = new CatalogedDevice() {
+            EnvelopedProfileDevice = profileDevice.GetEnvelopedProfileDevice()
+            };
+
+
+        }
 
     [Fact]
     public void ProtocolHello() {

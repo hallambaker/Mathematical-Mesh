@@ -46,13 +46,13 @@ public class TestFile {
         var cryptoParameters = new CryptoParameters(keyLocate,
             new List<string> { recipient },
             signer == null ? null : new List<string> { signer });
-        DareEnvelope.Encode(cryptoParameters, PlaintextFilename, EncryptedtFilename);
+        Enveloped.Encode(cryptoParameters, PlaintextFilename, EncryptedtFilename);
         }
 
 
     public void Decrypt(IKeyLocate keyLocate) {
         var outputFile = $"{PlaintextFilename}_{index++}";
-        var bytes_1 = DareEnvelope.Decode(EncryptedtFilename, outputFile,
+        var bytes_1 = Enveloped.Decode(EncryptedtFilename, outputFile,
             keyCollection: keyLocate);
 
         bytes_1.AssertEqual(PlaintextLength, NYI.Throw);

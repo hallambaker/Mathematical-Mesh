@@ -391,7 +391,7 @@ public class MeshPersist : Disposable {
             else {
                 var update = new StoreUpdate() {
                     Store = selection.Store,
-                    Envelopes = new List<DareEnvelope>()
+                    Envelopes = new List<Enveloped>()
                     };
 
                 foreach (var message in store.SelectEnvelope(selection.IndexMin ?? 0)) {
@@ -432,7 +432,7 @@ public class MeshPersist : Disposable {
 
             var update = new StoreUpdate() {
                 Store = selection.Store,
-                Envelopes = new List<DareEnvelope>()
+                Envelopes = new List<Enveloped>()
                 };
 
             foreach (var message in store.SelectEnvelope(selection.IndexMin ?? 0)) {
@@ -562,7 +562,7 @@ public class MeshPersist : Disposable {
         IJpcSession jpcSession,
             AccountHandleLocked senderAccount,
             List<string> accounts,
-            DareEnvelope dareMessage) {
+            Enveloped dareMessage) {
 
         var identifier = dareMessage.Header?.ContentMeta?.UniqueId;
         identifier.AssertNotNull(InvalidMessageID.Throw);
@@ -581,7 +581,7 @@ public class MeshPersist : Disposable {
 
     bool MessagePostLocal(
         IJpcSession jpcSession,
-        string recipient, DareEnvelope dareMessage) {
+        string recipient, Enveloped dareMessage) {
 
         using var recipientAccount = GetAccountHandleLocked(recipient, jpcSession, AccountPrivilege.Local);
 
@@ -596,7 +596,7 @@ public class MeshPersist : Disposable {
         return true;
         }
 
-    static bool MessagePostRemote(string recipient, DareEnvelope dareMessage) {
+    static bool MessagePostRemote(string recipient, Enveloped dareMessage) {
         recipient.Future();
         dareMessage.Future();
 
@@ -711,10 +711,11 @@ public class MeshPersist : Disposable {
     /// <returns>The claim response.</returns>
     public ClaimResponse Claim(
                 IJpcSession jpcSession,
-                DareEnvelope dareEnvelope
+                Enveloped dareEnvelope
                 ) {
 
-        var messageClaim = MeshItem.Decode(dareEnvelope) as MessageClaim;
+        var messageClaim = dareEnvelope.StreamParseTag<MessageClaim>(KeyCollection);
+        //MeshItem.Decode(dareEnvelope) as MessageClaim;
         var targetAccount = messageClaim.Recipient;
 
         using var accountHandle = GetAccountHandleLocked(targetAccount, jpcSession, AccountPrivilege.Post);

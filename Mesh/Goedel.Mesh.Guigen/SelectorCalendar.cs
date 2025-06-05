@@ -76,7 +76,7 @@ public partial class CalendarSelection : TaskSelection {
 
 
     public override bool Include(CatalogedTask? item) =>
-        item.EnvelopedTask.EnvelopedObject is WorkTask;
+        item.Task is WorkTask;
     }
 
 #endregion

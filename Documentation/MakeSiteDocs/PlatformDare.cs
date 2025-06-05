@@ -45,8 +45,8 @@ public class ExampleDare {
     public string EDSText;
 
     public string MailMessageAsRFC822;
-    public DareEnvelope MailMessageAsDAREPlaintext;
-    public DareEnvelope MailMessageAsDAREEncrypted;
+    public Enveloped MailMessageAsDAREPlaintext;
+    public Enveloped MailMessageAsDAREEncrypted;
 
     public List<SequenceFrame> ContainerHeadersSimple;
     public List<SequenceFrame> ContainerHeadersChain;
@@ -71,12 +71,12 @@ public class ExampleDare {
     public KeyPairEd25519 SignatureAliceKeyPair;
     public Key SignatureAliceKey;
 
-    public DareEnvelope DAREMessageAtomic;
-    public DareEnvelope DAREMessageAtomicSign;
-    public DareEnvelope DAREMessageAtomicSignEncrypt;
-    public DareEnvelope MessageAtomicDS;
-    public DareEnvelope MessageEnc;
-    public DareEnvelope MessageAtomicDSEnc;
+    public Enveloped DAREMessageAtomic;
+    public Enveloped DAREMessageAtomicSign;
+    public Enveloped DAREMessageAtomicSignEncrypt;
+    public Enveloped MessageAtomicDS;
+    public Enveloped MessageEnc;
+    public Enveloped MessageAtomicDSEnc;
 
     public DarePolicy DarePolicyPlaintext;
     public DarePolicy DarePolicyEncrypt;
@@ -197,14 +197,14 @@ public partial class CreateExamples {
             return Builder.ToString();
             }
 
-        public DareEnvelope GetDAREMessage(CryptoParameters cryptoParameters) {
+        public Enveloped GetDAREMessage(CryptoParameters cryptoParameters) {
             var data = new List<byte[]>() {
                 MakeData("From", From),MakeData("To", To),MakeData("Subject", Subject)
                 };
 
             var contentInfo = new ContentMeta() { ContentType = "application/example-mail" };
 
-            return new DareEnvelope(cryptoParameters, Body.ToUTF8(),
+            return new Enveloped(cryptoParameters, Body.ToUTF8(),
                 contentMeta: contentInfo, dataSequences: data);
             }
 
@@ -357,16 +357,16 @@ public partial class CreateExamples {
     void GoDareEnvelope() {
 
         // Plaintext atomic
-        Dare.DAREMessageAtomic = new DareEnvelope(Dare.CryptoParametersPlaintext, Dare.DareMessageTest1);
+        Dare.DAREMessageAtomic = new Enveloped(Dare.CryptoParametersPlaintext, Dare.DareMessageTest1);
 
         // Plaintext atomic EDS
-        Dare.MessageAtomicDS = new DareEnvelope(Dare.CryptoParametersPlaintext, Dare.DareMessageTest1, dataSequences: dataSequences);
+        Dare.MessageAtomicDS = new Enveloped(Dare.CryptoParametersPlaintext, Dare.DareMessageTest1, dataSequences: dataSequences);
 
-        Dare.DAREMessageAtomicSign = new DareEnvelope(Dare.CryptoParametersSign, Dare.DareMessageTest1);
-        Dare.DAREMessageAtomicSignEncrypt = new DareEnvelope(Dare.CryptoParametersSignEncrypt, Dare.DareMessageTest1);
+        Dare.DAREMessageAtomicSign = new Enveloped(Dare.CryptoParametersSign, Dare.DareMessageTest1);
+        Dare.DAREMessageAtomicSignEncrypt = new Enveloped(Dare.CryptoParametersSignEncrypt, Dare.DareMessageTest1);
 
 
-        var encEnvelope = new DareEnvelope {
+        var encEnvelope = new Enveloped {
             Header = new DareHeader() {
                 }
             };

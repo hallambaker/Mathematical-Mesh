@@ -40,7 +40,7 @@ public partial class IntervalSignature {
     /// <param name="envelopes">The envelope data to verify.</param>
     /// <returns></returns>
     /// <exception cref="NYI"></exception>
-    public bool Verify(IEnumerable<DareEnvelope> envelopes) => throw new NYI();
+    public bool Verify(IEnumerable<Enveloped> envelopes) => throw new NYI();
 
 
 

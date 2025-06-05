@@ -81,7 +81,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public abstract string ServiceDns { get; }
 
     ///<summary>The device profile</summary>
-    public virtual ProfileDevice ProfileDevice => CatalogedMachine?.ProfileDevice;
+    public virtual ProfileDevice ProfileDevice => CatalogedMachine?.TheProfileDevice;
 
     ///<summary>The cataloged device</summary>
     public virtual CatalogedDevice CatalogedDevice => CatalogedMachine?.CatalogedDevice;
@@ -770,7 +770,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         if (syncStatus.Index <= syncStatus.Store.FrameCount) {
             var sequence = syncStatus.Store.Sequence;
-            var envelopes = new List<DareEnvelope>();
+            var envelopes = new List<Enveloped>();
             var containerUpdate = new StoreUpdate() {
                 Store = syncStatus.Store.StoreName,
                 Envelopes = envelopes,
@@ -1190,7 +1190,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// for the specified recipients.</param>
     /// <param name="sign">If true sign the envelope.</param>
     /// <returns></returns>
-    public DareEnvelope DareEncode(
+    public Enveloped DareEncode(
                 byte[] plaintext,
                 ContentMeta contentMeta = null,
                 byte[] cloaked = null,
@@ -1213,7 +1213,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         var cryptoParameters = new CryptoParameters(keyCollection: this,
                     signer: signingKey, recipients: recipients);
-        return new DareEnvelope(cryptoParameters, plaintext, contentMeta, cloaked, dataSequences);
+        return new Enveloped(cryptoParameters, plaintext, contentMeta, cloaked, dataSequences);
 
         }
 
@@ -1224,7 +1224,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     /// <param name="verify">It true, verify the signature first.</param>
     /// <returns>The plaintext payload data.</returns>
     public byte[] DareDecode(
-                DareEnvelope envelope,
+                Enveloped envelope,
                 bool verify = false) {
         verify.Future();
         return envelope.GetPlaintext(this);

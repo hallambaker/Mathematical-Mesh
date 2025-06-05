@@ -244,7 +244,7 @@ public partial class Profile {
     /// <param name="envelopedAssertion">Envelope containing the assertion 
     /// to be verified.</param>
     /// <returns>True if there is a valid signature under this profile, otherwise false.</returns>
-    public bool Verify(DareEnvelope envelopedAssertion) =>
+    public bool Verify(Enveloped envelopedAssertion) =>
                 throw new NotImplementedException();
                 //envelopedAssertion.VerifySignature(ProfileSignatureKey);
 
@@ -281,7 +281,7 @@ public partial class Profile {
     /// </summary>
     /// <returns>True if the binding is valid, otherwise false.</returns>
     public static bool ValidateAny(
-                    DareEnvelope dareEnvelope,
+                    Enveloped dareEnvelope,
                     IEnumerable<Enveloped<Profile>> profiles,
                     string profileUdf) {
 

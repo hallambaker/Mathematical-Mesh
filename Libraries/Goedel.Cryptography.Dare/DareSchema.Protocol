@@ -19,7 +19,8 @@
 			|A DARE envelope contains a single DAREMessageSequence in either the JSON or 
 			|Compact serialization as directed by the protocol in which it is applied.
 
-	Structure DareEnvelopeSequence
+	Structure Enveloped
+		Generic
 		Description
 			|A DARE envelope containing Header, EDS and Trailer in JSON object encoding.
 			|Since a DAREMessage is almost invariably presented in JSON sequence or
@@ -438,7 +439,7 @@
 		Description
 			|Provides a proof that the payload with digest [hash] in the log described by 
 			|SignedWitness occurs at the index [Index]
-		Struct DareEnvelope SignedWitness
+		GStruct Enveloped Witness Witness 
 			Description
 				|The signed apex under which this proof chain is established
 		Binary Hash
