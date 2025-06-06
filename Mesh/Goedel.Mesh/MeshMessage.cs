@@ -79,6 +79,8 @@ public partial class Message {
                 ContentMeta contentMeta = null,
                 ObjectEncoding objectEncoding = ObjectEncoding.JSON)  {
         MessageId ??= Udf.Nonce(); // Add a message ID unless one is already defined.
+        contentMeta ??= new();
+        contentMeta.MessageType = _Tag;
         var result = new Enveloped<Message>(this, signingKey, encryptionKey, contentMeta, objectEncoding);
         result.Header.EnvelopeId = EnvelopeId;
         result.JsonObject = this;

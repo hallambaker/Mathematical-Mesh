@@ -93,9 +93,8 @@ partial class Program {
 
 
         //TestService.Test().MeshDeviceConnectPIN();
-        TestService.Test().MeshDeviceConnectApprove();
-        TestService.Test().TestCredentialAccountApps();
-        TestService.Test().TestCredentialFromHandle();
+        TestService.Test().MeshMessageContact();
+
 
         //ShellTests.Test().TestHandleThing();
 
