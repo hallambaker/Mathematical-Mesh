@@ -33,6 +33,7 @@ namespace Goedel.Test;
 public class UnitTestSet : Disposable {
     public static readonly string AccountAlice = "alice@example.com";
     public static readonly string HandleAlice = "@alice.alt";
+    public static readonly string HandleBob = "@bob.alt";
 
     public static readonly string ServiceName = "example.com";
     public static readonly string AccountBob = "bob@example.com";

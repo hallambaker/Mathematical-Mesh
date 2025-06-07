@@ -82,7 +82,10 @@ public enum Transport {
 public abstract class DnsClient {
 
     /// <summary>Default client context for DNS query (result is cached for reuse)</summary>
-    public static DnsClient Default => defaultClient ?? new DnsClientUDP().CacheValue(out defaultClient);
+    public static DnsClient Default {
+        get => defaultClient ?? new DnsClientUDP().CacheValue(out defaultClient);
+        set => defaultClient = value; 
+        }
     static DnsClient defaultClient = null;
 
     /// <summary>Return a DNS Client Context in which to make a set of queries.
@@ -91,19 +94,6 @@ public abstract class DnsClient {
     public abstract DNSContext GetContext();
 
     ILogger Logger => Component.Logger;
-
-    ///// <summary>
-    ///// Resolve a DNS name to an address and service characteristics.
-    ///// </summary>
-    ///// <param name="address">The address to use</param>
-    ///// <param name="service">The DNS service prefix</param>
-    ///// <param name="port">The default DNS port number</param>
-    ///// <param name="fallback">The fallback mode to use if SRV lookup fails</param>
-    ///// <returns>IP Destination describing the resolution results</returns>
-    //public static ServiceDescription ResolveService(string address, string service = null,
-    //            int? port = null, DNSFallback fallback = DNSFallback.Prefix) =>
-    //        ResolveServiceAsync(address, service, port, fallback).Sync();
-
 
     /// <summary>
     /// Perform Asynchronous query for Service discovery and description records
@@ -353,6 +343,14 @@ public abstract class DNSContext : Disposable {
     /// </summary>
     /// <returns>The first valid response received.</returns>
     public abstract Task<byte[]> GetResponseRawAsync();
+
+
+
+    public virtual Task<DNSResponse> PublishRecords(
+                            IEnumerable<DNSRecord> records) {
+        throw new NYI();
+        }
+
 
     /// <summary>
     /// Close the context.

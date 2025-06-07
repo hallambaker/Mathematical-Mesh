@@ -1,0 +1,54 @@
+﻿Protocol Goedel.Hsp HspProtocol HspProtocol
+	
+
+	Section 2 "Thing service"
+
+	Description 
+		|Carnet Ledger Protocol maintaining a record of carnet accounts.
+
+    Using Goedel.Cryptography.Jose
+    Using Goedel.Cryptography.Dare
+
+	Section 3 "Shared Classes"
+    Service ThingService "_thing._tcp" "carnet" ThingRequest ThingResponse
+		Description
+
+
+	Message ThingRequest
+		External Goedel.Protocol.Request
+		Description
+			|Base class for all requests made to a registrar
+
+
+	Message ThingResponse
+		External Goedel.Protocol.Response		
+		Description
+			|Base class for all response messages. Contains only the
+			|status code and status description fields.
+
+
+
+	//Hello
+    Transaction Public Hello HelloRequest MeshHelloResponse
+		Description
+			|Report service and version information. 
+		Description
+			|The Hello transaction provides a means of determining which protocol
+			|versions, message encodings and transport protocols are supported by
+			|the service.
+		Description
+			|The PostConstraints field MAY be used to advise senders of a maximum
+			|size of payload that MAY be sent in an initial Post request.
+
+
+	Message MeshHelloRequest
+		External Goedel.Protocol.HelloRequest		
+
+	Message MeshHelloResponse
+		External Goedel.Protocol.HelloResponse	
+		GStruct Enveloped ProfileService ProfileService
+			Description
+				|The enveloped master profile of the service.
+
+
+

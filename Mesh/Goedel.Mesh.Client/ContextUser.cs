@@ -1627,7 +1627,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="localName">Local name for the contact</param>
     /// <returns></returns>
     public Enveloped<JsContact> GetSelf(string localName) {
-        //var self = GetContact(ProfileUser.UdfString);
+        var self = GetContact(ProfileUser.UdfString);
 
         //foreach (var tagged in self.Contact.Sources) {
         //    if (tagged.EnvelopedSource == null) {
@@ -1749,7 +1749,9 @@ public partial class ContextUser : ContextAccount {
         }
 
 
-
+    public async Task<TransactResponse> AddContact(CatalogedContact contact) {
+        throw new NotImplementedException();
+        }
 
 
 
@@ -1945,13 +1947,6 @@ public partial class ContextUser : ContextAccount {
     /// <returns>The network entry, if found. Otherwise null.</returns>
     public CatalogedNetwork GetNetwork(string key) =>
         (GetStore(CatalogNetwork.Label) as CatalogNetwork).Get(key);
-
-
-
-
-
-
-
 
     /// <summary>
     /// Return the network entry for the address <paramref name="networkAddress"/>

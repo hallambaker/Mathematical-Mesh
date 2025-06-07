@@ -26,19 +26,56 @@ using Goedel.Discovery;
 using Goedel.Protocol;
 using Goedel.Test;
 using Goedel.Utilities;
-
+using Goedel.Mesh.Test;
 using Newtonsoft.Json.Linq;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 
 #pragma warning disable IDE0059
 
 namespace Goedel.XUnit;
 
+public partial class DummyTest {
 
+    string domain = "example.com";
+
+
+
+    public static DummyTest Test() => new();
+    [Fact]
+    public void TestDummy() {
+
+        // Override the DNS service
+        var service = new DummyDnsService();
+        var client = DnsClient.Default;
+        var context = client.GetContext();
+
+        var record = new DNSRecord_A() {
+            Domain = new (domain),
+            Address = IPAddress.Parse("127.0.0.1")
+            };
+
+        var records = new List<DNSRecord>() {
+            record
+            };
+
+
+        context.PublishRecords(records).Sync();
+
+
+        var context2 = client.GetContext();
+
+
+        var requext = new DNSRequest(domain, DNSTypeCode.A) ;
+        context2.SendRequest(requext);
+
+        var result = context2.GetResponseAsync().Sync();
+
+        }
+    }
 
 public partial class Jmap {
 

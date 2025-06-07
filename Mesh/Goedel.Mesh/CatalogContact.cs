@@ -53,7 +53,6 @@ public class CatalogContact : Catalog<CatalogedContact> {
     ///<summary>Default contact for self.</summary> 
     public CatalogedContact DefaultContactSelf { get; set; }
 
-
     ///<inheritdoc/>
     public override string SequenceDefault => Label;
 
@@ -293,16 +292,16 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="key">specifies the identifier to return.</param>
     /// <returns>The contact, if found. Otherwise null.</returns>
     public override CatalogedContact Get(string key) {
-        throw new NYI();
+        //throw new NYI();
 
 
-        //if (base.Get(key).NotNull(out var result)) {
-        //    return result;
-        //    }
-        //if (DictionaryByNetworkAddress.TryGetValue(key, out var networkEntry)) {
-        //    return networkEntry.CatalogedContact;
-        //    }
-        //return null;
+        if (base.Get(key).NotNull(out var result)) {
+            return result;
+            }
+        if (DictionaryByNetworkAddress.TryGetValue(key, out var networkEntry)) {
+            //return networkEntry.CatalogedContact;
+            }
+        return null;
         }
 
     /// <summary>
@@ -323,12 +322,11 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="networkAddress">The address to return the entry for.</param>
     /// <returns>The mesh account encryption key if found, otherwise, null.</returns>
     public CryptographicKey GetByAccountEncrypt(string networkAddress) {
-        throw new NYI();
-        //if (!DictionaryByNetworkAddress.TryGetValue(networkAddress, out var catalogedContact)) {
-        //    return null;
-        //    }
+        if (!DictionaryByNetworkAddress.TryGetValue(networkAddress, out var catalogedContact)) {
+            return null;
+            }
 
-        //return catalogedContact.MeshKeyEncryption;
+        return catalogedContact.GetMeshKeyEncryption();
         }
 
 
@@ -338,13 +336,11 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="keyId">The key identifier to match.</param>
     /// <returns>The key pair if found.</returns>
     public CryptographicKey TryMatchRecipient(string keyId) {
-        throw new NYI();
+        if (!DictionaryByNetworkAddress.TryGetValue(keyId, out var catalogedContact)) {
+            return null;
+            }
 
-        //if (!DictionaryByNetworkAddress.TryGetValue(keyId, out var catalogedContact)) {
-        //    return null;
-        //    }
-
-        //return catalogedContact.MeshKeyEncryption;
+        return catalogedContact.GetMeshKeyEncryption();
         }
 
 

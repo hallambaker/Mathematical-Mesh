@@ -384,4 +384,11 @@ public partial class OnlineService {
 
     public List<ServiceGroup> ServiceGroups { get; } = [];
 
+
+    public CryptographicKey GetMeshKeyEncryption() {
+
+
+        return null;
+        }
+
     }

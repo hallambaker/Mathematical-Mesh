@@ -214,6 +214,7 @@ public enum DNSClass {
 public class Domain {
     /// <summary>Unicode representation of name</summary>
     public string Name; // Unicode representation of name
+
     /// <summary>DNSClient represenation (punycode)</summary>
     public byte[] Data; // DNSClient represenation (punycode)
 
@@ -268,13 +269,13 @@ public class DNSMessage {
     public bool RA => ((Flags & DNSFlags.RA) == DNSFlags.RA);
 
     /// <summary>The DNS Query</summary>
-    public DNSQuery Query;
+    public DNSQuery Query { get; set; } = null;
     /// <summary>The authoritative answers</summary>
-    public DNSRecord[] Answers = Array.Empty<DNSRecord>();
+    public DNSRecord[] Answers { get; set; } = [];
     /// <summary>The authorities answering</summary>
-    public DNSRecord[] Authorities = Array.Empty<DNSRecord>();
+    public DNSRecord[] Authorities { get; set; } = [];
     /// <summary>Additional records</summary>
-    public DNSRecord[] Additional = Array.Empty<DNSRecord>();
+    public DNSRecord[] Additional { get; set; } = [];
 
 
     int QueryCount, AnswerCount, AuthorityCount, AdditionalCount;
@@ -409,6 +410,11 @@ public class DNSResponse : DNSMessage {
             Debug.WriteLine("Ooops");
             }
 
+        }
+
+
+    /// <summary>Default constructor</summary>
+    public DNSResponse() {
         }
     }
 

@@ -1095,16 +1095,16 @@
         <member name="P:Goedel.Discovery.DNSMessage.RA">
             <summary>The RA flag</summary>
         </member>
-        <member name="F:Goedel.Discovery.DNSMessage.Query">
+        <member name="P:Goedel.Discovery.DNSMessage.Query">
             <summary>The DNS Query</summary>
         </member>
-        <member name="F:Goedel.Discovery.DNSMessage.Answers">
+        <member name="P:Goedel.Discovery.DNSMessage.Answers">
             <summary>The authoritative answers</summary>
         </member>
-        <member name="F:Goedel.Discovery.DNSMessage.Authorities">
+        <member name="P:Goedel.Discovery.DNSMessage.Authorities">
             <summary>The authorities answering</summary>
         </member>
-        <member name="F:Goedel.Discovery.DNSMessage.Additional">
+        <member name="P:Goedel.Discovery.DNSMessage.Additional">
             <summary>Additional records</summary>
         </member>
         <member name="M:Goedel.Discovery.DNSMessage.Encode(Goedel.Discovery.DNSBufferIndex)">
@@ -1150,6 +1150,9 @@
         <member name="M:Goedel.Discovery.DNSResponse.#ctor(System.Byte[])">
             <summary>Default constructor</summary>
             <param name="Data">Input data</param>
+        </member>
+        <member name="M:Goedel.Discovery.DNSResponse.#ctor">
+            <summary>Default constructor</summary>
         </member>
         <member name="T:Goedel.Discovery.DNSQuery">
             <summary>DNS Query class</summary>

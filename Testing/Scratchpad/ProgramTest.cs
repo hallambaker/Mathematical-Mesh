@@ -64,6 +64,17 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
+
+        DummyTest.Test().TestDummy();
+
+
+        TestContact.Test().ContactSelf();
+        TestContact.Test().ContactOther();
+        TestContact.Test().ContactHandle();
+
+
+
+
         //Goedel.Protocol.JsonReader.Trace = true;
 
         //GoedelProtocol.Test().TestEncodeDecode4();

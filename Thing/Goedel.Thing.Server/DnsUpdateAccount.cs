@@ -65,6 +65,16 @@ public class ServiceThingClient {
 
         }
 
+
+
+    public async Task<ServiceThingResult> BindContact(
+                    string handle,
+                    JsContact contact) {
+
+        throw new NYI();
+        }
+
+
     public string GetName(
                     string zone,
                     string baseName) => (baseName ?? "iot") + "1." + zone;

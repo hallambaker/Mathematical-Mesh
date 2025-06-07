@@ -257,7 +257,6 @@
 			Description
 				|Contains one or more bindings of a callsign to the account.
 
-
 	Message BindResponse
 		Inherits MeshResponse
 		Description

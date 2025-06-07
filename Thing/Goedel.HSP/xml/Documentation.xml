@@ -1,0 +1,898 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Thing</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Thing.CatalogThing">
+            <summary>
+            Bookmark catalog. Describes the bookmarks in the user's Mesh account.
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.CatalogThing.Label">
+            <summary>The canonical label for the catalog</summary>
+        </member>
+        <member name="P:Goedel.Thing.CatalogThing.StoreType">
+            <inheritdocs/>
+        </member>
+        <member name="P:Goedel.Thing.CatalogThing.SequenceDefault">
+            <summary>The catalog label</summary>
+        </member>
+        <member name="M:Goedel.Thing.CatalogThing.Factory(System.String,System.String,Goedel.Mesh.IMeshClient,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Factory delegate
+            </summary>
+            <param name="directory">Directory of store file on local machine.</param>
+            <param name="storeId">Store identifier.</param>
+            <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+            <param name="policy">The cryptographic policy to be applied to the catalog.</param>
+            <param name="keyCollection">Key collection to be used to resolve keys</param>
+            <param name="decrypt">If true, attempt decryption of payload contents./</param>
+            <param name="create">If true, create a new file if none exists.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+            <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+            <returns>The instance created.</returns>
+        </member>
+        <member name="M:Goedel.Thing.CatalogThing.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
+            <summary>
+            Constructor for a catalog named <paramref name="storeName"/> in directory
+            <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+            and key collection <paramref name="keyCollection"/>.
+            </summary>
+            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+            <param name="directory">The directory in which the catalog persistence container is stored.</param>
+            <param name="storeName">The catalog persistence container file name.</param>
+            <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+            <param name="policy">The cryptographic policy to be applied to the container.</param>
+            <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
+             <param name="bitmask">The bitmask to identify the store for filtering purposes.</param>
+        </member>
+        <member name="T:Goedel.Thing.CatalogedThing">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.CatalogedThing._PrimaryKey">
+            <summary>The primary key is protocol:site </summary>
+        </member>
+        <member name="P:Goedel.Thing.CatalogedThing.ProfileCarnet">
+            <summary>
+            the unwrapped carnet profile.
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.CatalogedThing.#ctor">
+            <summary>
+            Create and return an empty instance.
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.CatalogedThing.Describe(System.Text.StringBuilder,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Thing.CatalogedThing.ItemToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Thing.CatalogedThing.Key">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.CatalogedThing.EnvelopedConnectionAddress">
+             <summary>
+            The connection allowing control of the registry.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.CatalogedThing.EnvelopedProfileThing">
+             <summary>
+            The Mesh profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.CatalogedThing.EnvelopedActivationCommon">
+             <summary>
+            The activation data for the registry.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.CatalogedThing._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.CatalogedThing._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.CatalogedThing._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.CatalogedThing._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.CatalogedThing._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.CatalogedThing.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.CatalogedThing._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Thing.ContextThing">
+            <summary>
+            Context for managing the callsign Carnet account.
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.ContextThing.ContextUser">
+            <summary>The enclosing user context.</summary>
+        </member>
+        <member name="P:Goedel.Thing.ContextThing.Profile">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Thing.ContextThing.Connection">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Thing.ContextThing.CatalogedThing">
+            <summary>The catalogued group description.</summary>
+        </member>
+        <member name="P:Goedel.Thing.ContextThing.DictionaryCatalogDelegates">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Thing.ContextThing.ServiceAddress">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Thing.ContextThing.ServiceDns">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Thing.ContextThing.CatalogCarnet">
+            <summary>Returns the inbound spool for the account</summary>
+        </member>
+        <member name="M:Goedel.Thing.ContextThing.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedService)">
+            <summary>
+            Constructor returning an instance of a resolver account context running on host
+            <paramref name="meshHost"/> using the description given in <paramref name="catalogedService"/>.
+            </summary>
+            <param name="meshHost">The mesh host.</param>
+            <param name="catalogedService">The resolver configuration description.</param>
+        </member>
+        <member name="M:Goedel.Thing.ContextThing.Create(Goedel.Mesh.Client.MeshHost,System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Collections.Generic.List{System.String})">
+            <summary>
+            Create a new client resolver context.
+            </summary>
+            <param name="meshHost">The mesh host.</param>
+            <param name="resolverAddress">The address of the resolver account.</param>
+            <param name="accountSeed">Optional account seed.</param>
+            <param name="roles">The authorized roles.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Thing.ContextThing.Issue(System.String,System.Int32)">
+            <summary>
+            Issue a carnet to <paramref name="recipient"/> with value <paramref name="tokens"/>.
+            </summary>
+            <param name="recipient">The recipient name.</param>
+            <param name="tokens">The number of tokens.</param>
+        </member>
+        <member name="T:Goedel.Thing.Internal">
+            <summary>
+            An internal assertion check failed.
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.Internal.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Thing.Internal.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Thing.Internal.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Thing.Internal._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Thing.Internal.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Thing.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Thing.Extensions">
+            <summary>
+            Extensions class. Provides static convenience extensions.
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.Extensions.Spend(Goedel.Mesh.Client.ContextUser,System.Int32)">
+            <summary>
+            Spend <paramref name="amount"/> tokens from the wallet of <paramref name="contextUser"/>.
+            </summary>
+            <param name="contextUser">The user context.</param>
+            <param name="amount">The number of tokens to spend.</param>
+            <returns>The number of tokens spent??</returns>
+        </member>
+        <member name="T:Goedel.Thing.Initialization">
+            <summary>Static class whose only function is to contain the initialization 
+            routine.</summary>
+        </member>
+        <member name="P:Goedel.Thing.Initialization.Initialized">
+            <summary>Initialization witness flag. This may be used to force initialization
+            of the module prior to other modules being initialized.</summary> 
+        </member>
+        <member name="M:Goedel.Thing.Initialization.Initialize">
+            <summary>
+            Initialization routine for cryptographic functions on the dotNet Core platform.
+            </summary>
+        </member>
+        <member name="T:Goedel.Thing.ThingDevice">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.ThingDevice._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.ThingDevice.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.ThingDevice._BindingDictionary">
+            <summary>
+            Dictionary mapping types to bindings
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.ThingDevice._Initialized">
+            <summary>Variable used to force static initialization</summary> 
+        </member>
+        <member name="T:Goedel.Thing.JsDevice">
+             <summary>
+            
+             Describes a device
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.JsDevice.ModelName">
+             <summary>
+            The name of the device
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.JsDevice.NameHint">
+             <summary>
+            Short string giving the type of device for naming purposes, e.g. 
+            'camera'
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.JsDevice.ModelSerial">
+             <summary>
+            The model serial identifier
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.JsDevice.DeviceSerial">
+             <summary>
+            The device serial identifier. 
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.JsDevice.DeviceIdentifier">
+             <summary>
+            Globally unique device identifier
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.JsDevice.Manufacturer">
+             <summary>
+            Name of the manufacturer
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.JsDevice.CountryOfOrigin">
+             <summary>
+            Country of Origin as ISO 2 letter country code.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.JsDevice.Manufactured">
+             <summary>
+            Datge of manufacture in UTC.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.JsDevice.OfferedServices">
+             <summary>
+            The set of services the device offers, e.g. SSH access, 
+            http/https access, etc.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.JsDevice.UsedServices">
+             <summary>
+            The set of services the device consumes, e.g. file storage,
+            DNS, WebPKI administration
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.JsDevice.Images">
+             <summary>
+            A list of images showing the device in order of relevance. The images need 
+            not be picttures of the specific device shown but SHOULD be representative.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.JsDevice.Physical">
+             <summary>
+            List of physical network media supported by the device, e.g.
+            Ethernet, WiFi, USB-C, etc.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.JsDevice.Storage">
+             <summary>
+            Describes off-device storage requirements
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.JsDevice._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.JsDevice._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.JsDevice._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.JsDevice._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.JsDevice._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.JsDevice.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.JsDevice._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Thing.Resource">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.Resource.MediaType">
+             <summary>
+            IANA media type for the resource.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Resource.Uri">
+             <summary>
+            Uri from which the resource can be fetched
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Resource.Data">
+             <summary>
+            The resource as Base64 encoded binary data.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Resource._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Resource._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.Resource._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Resource._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.Resource._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.Resource.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.Resource._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Thing.DeviceCredential">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.DeviceCredential._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.DeviceCredential._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.DeviceCredential._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.DeviceCredential._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.DeviceCredential._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.DeviceCredential.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.DeviceCredential._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Thing.DeviceImage">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.DeviceImage.View">
+             <summary>
+            Indication of the side being shown, e.g. 'front', 'left', 'right', 
+            'rear', 'top', 'bottom'. Sides MAY be combined to indicate isometric views
+            e.g. 'front-right-top'
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.DeviceImage._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.DeviceImage._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.DeviceImage._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.DeviceImage._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.DeviceImage._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.DeviceImage.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.DeviceImage._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Thing.Service">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.Service.Name">
+             <summary>
+            IANA protocol name
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Service.Requires">
+             <summary>
+            The service provision of this service requires to provide
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Service.Profiles">
+             <summary>
+            Service profiles supported, these MAY be protocol versions or a string
+            registered to represent a specific set of capabilities.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Service.Transports">
+             <summary>
+            The service transports supported, e.g TCP, TLS, UDP, QUIC, HTTP, HTTPS,
+            COAP.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Service.Credentials">
+             <summary>
+            List of credentials to be used in conjunction with the service.
+            Note that credentials supplied by the device manufacturer SHOULD NOT
+            be used for any purpose other than establishing secure credentials
+            for production use.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Service._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Service._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.Service._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Service._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.Service._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.Service.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.Service._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Thing.Physical">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.Physical.Name">
+             <summary>
+            The media type name
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Physical.Identifier">
+             <summary>
+            Identifier used by the device under that protocol, e.g. an EUI-48
+            or EUI-64 media access control address.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Physical.Profiles">
+             <summary>
+            Media profiles supported as specified by the media type.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Physical._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Physical._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.Physical._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Physical._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.Physical._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.Physical.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.Physical._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Thing.Storage">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.Storage.Purpose">
+             <summary>
+            The purpose of this storage type
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Storage.TypicalUse">
+             <summary>
+            Typical storage requirement in kilobytes
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Storage.TypicalAnnual">
+             <summary>
+            Typical storage requirement in kilobytes
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Storage.Services">
+             <summary>
+            The set of data storage protocols the device can use
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.Storage._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Storage._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.Storage._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Storage._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.Storage._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.Storage.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.Storage._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Thing.NamespaceDoc">
+            <summary>
+            Desctiption of the 
+            </summary>
+        </member>
+        <member name="T:Goedel.Thing.ProfileThing">
+             <summary>
+            
+             Describes a carnet issuer.
+             </summary>
+        </member>
+        <member name="M:Goedel.Thing.ProfileThing.GetEnvelopedProfileAccount">
+            <summary>Typed enveloped data</summary> 
+        </member>
+        <member name="M:Goedel.Thing.ProfileThing.#ctor">
+            <summary>
+            Default constructor, returns an empty instance.
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.ProfileThing.#ctor(System.String,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean)">
+            <summary>
+            Construct a Profile Host instance  from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
+            </summary>
+            <param name="accountAddress">The account address.</param>
+            <param name="secretSeed">The secret seed value.</param>
+            <param name="keyCollection">The base key collection</param>
+            <param name="persist">If true, persist the service record to the local machine
+            store.</param>
+        </member>
+        <member name="M:Goedel.Thing.ProfileThing.Generate">
+            <summary>
+            Generate profile specific keys.
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.ProfileThing.Generate(System.String,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Int32,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
+            <summary>
+            Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
+            seed.
+            </summary>
+            <param name="serviceAddress">The service address</param>
+            <param name="secretSeed">The secret seed value.</param>
+            <param name="algorithmEncrypt">The encryption algorithm.</param>
+            <param name="algorithmSign">The signature algorithm</param>
+            <param name="algorithmAuthenticate">The signature algorithm</param>
+            <param name="bits">The size of key to generate in bits/</param>
+            <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
+            <param name="persist">If <see langword="true"/> persist the secret seed value to
+            <paramref name="keyCollection"/>.</param>
+            <returns>The created profile.</returns>
+        </member>
+        <member name="M:Goedel.Thing.ProfileThing.Validate">
+            <summary>
+            Verify the profile to check that it is correctly signed and consistent.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Goedel.Thing.ProfileThing._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.ProfileThing._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.ProfileThing._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.ProfileThing._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.ProfileThing._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.ProfileThing.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.ProfileThing._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Thing.ThingProtocol">
+             <summary>
+            
+             Carnet Ledger Protocol maintaining a record of carnet accounts.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.ThingProtocol._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.ThingProtocol.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.ThingProtocol._BindingDictionary">
+            <summary>
+            Dictionary mapping types to bindings
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.ThingProtocol._Initialized">
+            <summary>Variable used to force static initialization</summary> 
+        </member>
+        <member name="T:Goedel.Thing.ThingService">
+            <summary>
+            The new base class for the client and service side APIs.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Thing.ThingService.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.ThingService.GetWellKnown">
+            <inheritdoc/>
+        </member>
+        <member name="F:Goedel.Thing.ThingService.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.ThingService.GetDiscovery">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Thing.ThingService.GetTagDictionary">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Thing.ThingService.Dispatch(System.String,Goedel.Protocol.JsonObject,Goedel.Protocol.IJpcSession)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Thing.ThingService.GetDirect(Goedel.Protocol.IJpcSession)">
+            <summary>
+            Return a client tapping the service API directly without serialization bound to
+            the session <paramref name="jpcSession"/>. This is intended for use in testing etc.
+            </summary>
+            <param name="jpcSession">Session to which requests are to be bound.</param>
+            <returns>The direct client instance.</returns>
+        </member>
+        <member name="T:Goedel.Thing.ThingServiceClient">
+            <summary>
+            Client class for ThingService.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Thing.ThingServiceClient.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.ThingServiceClient.GetWellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.ThingServiceClient.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.ThingServiceClient.GetDiscovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="T:Goedel.Thing.ThingServiceDirect">
+            <summary>
+            Direct API class for ThingService.
+            </summary>		
+        </member>
+        <member name="P:Goedel.Thing.ThingServiceDirect.Service">
+            <summary>
+            Interface object to dispatch requests to.
+            </summary>	
+        </member>
+        <member name="T:Goedel.Thing.ThingRequest">
+             <summary>
+            
+             Base class for all requests made to a registrar
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.ThingRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.ThingRequest._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.ThingRequest._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.ThingRequest._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.ThingRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.ThingRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.ThingRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Thing.ThingResponse">
+             <summary>
+            
+             Base class for all response messages. Contains only the
+             status code and status description fields.
+             </summary>
+        </member>
+        <member name="P:Goedel.Thing.ThingResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.ThingResponse._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.ThingResponse._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Thing.ThingResponse._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Thing.ThingResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.ThingResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.ThingResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+    </members>
+</doc>
