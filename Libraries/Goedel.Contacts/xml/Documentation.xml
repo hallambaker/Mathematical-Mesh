@@ -1439,6 +1439,30 @@
             Constants used to define contact formats
             </summary>
         </member>
+        <member name="F:Goedel.Contacts.ContactConstant.OnlineServiceMesh">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.OnlineServiceSmime">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.OnlineServiceOpenPgp">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.OnlineServiceSsh">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.OnlineServiceCredential">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.OnlineServiceMail">
+            <summary>
+            </summary>
+        </member>
         <member name="T:Goedel.Contacts.Contacts">
             <summary>
             </summary>

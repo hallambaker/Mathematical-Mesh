@@ -64,12 +64,22 @@ public partial class TestContact : UnitTestSet {
     [Fact]
     public void ContactHandle() {
 
+        // Need to be able to publish the handle records...
+        var service = new DummyDnsService();
         var testEnvironmentCommon = GetTestEnvironmentCommon();
         var contextAccountAlice = MakeAccount(testEnvironmentCommon, HandleAlice, DeviceAliceAdmin);
         var contextAccountBob = MakeAccount(testEnvironmentCommon, HandleBob, DeviceBobAdmin);
 
         TestExchange(contextAccountAlice, contextAccountBob);
         }
+
+
+
+
+
+
+
+
 
 
     private ContextUser MakeAccount(

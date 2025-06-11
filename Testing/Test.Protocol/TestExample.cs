@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/7/2025 7:22:48 PM
+//  This file was automatically generated at 6/10/2025 11:58:50 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -445,7 +445,8 @@ public partial class MultiArray : MultiInstance {
 			{ "ArrayDateTime", _properties [3]},
 			{ "ArrayString", _properties [4]},
 			{ "ArrayBinary", _properties [5]}}, __Tag,
-		() => new MultiArray(), () => [], () => [], MultiInstance._binding, Generic: false);
+		() => new MultiArray(), () => [], () => [], MultiInstance._binding, 
+		TypeTag:"Type" , Generic: false);
 
 
 	/// <summary>
@@ -544,7 +545,8 @@ public partial class DictArray : MultiArray {
 			{ "DictDateTime", _properties [3]},
 			{ "DictString", _properties [4]},
 			{ "DictBinary", _properties [5]}}, __Tag,
-		() => new DictArray(), () => [], () => [], MultiArray._binding, Generic: false);
+		() => new DictArray(), () => [], () => [], MultiArray._binding, 
+		TypeTag:"Type" , Generic: false);
 
 
 	/// <summary>
@@ -626,7 +628,8 @@ public partial class MultiStruct : MultiArray {
 			{ "ArrayMultiInstance", _properties [1]},
 			{ "TFieldMultiInstance", _properties [2]},
 			{ "TArrayMultiInstance", _properties [3]}}, __Tag,
-		() => new MultiStruct(), () => [], () => [], MultiArray._binding, Generic: false);
+		() => new MultiStruct(), () => [], () => [], MultiArray._binding, 
+		TypeTag:"Type" , Generic: false);
 
 
 	/// <summary>

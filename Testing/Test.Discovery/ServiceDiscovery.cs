@@ -74,6 +74,11 @@ public partial class DummyTest {
 
         var result = context2.GetResponseAsync().Sync();
 
+        (result.Answers.Length == 1).TestTrue();
+        var resultA = result.Answers[0] as DNSRecord_A;
+        (resultA.Address.ToString() == "127.0.0.1").TestTrue();
+        
+
         }
     }
 
@@ -121,6 +126,12 @@ public partial class Jmap {
                         Address = "jqpublic@xyz.example.com"
                         }
                     }
+                },
+            CryptoKeys = new() {
+                { "Fred", new JsonWebKeySet () { 
+                    Data = "Hello".ToBytes()
+                    } }
+
                 }
             };
 

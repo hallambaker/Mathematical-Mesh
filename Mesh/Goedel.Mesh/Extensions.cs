@@ -257,9 +257,9 @@ public static partial class Extensions {
             return;
             }
         var uri = profile.AccountHandle is null ? null : "handle:" + profile.AccountHandle;
-        var cryptoData = (profile.Envelope as Enveloped).GetBytes();
+        var cryptoData = (profile.Envelope as Enveloped).GetBytes(false);
 
-        contact.AddServiceKeyData(profile.UdfString, "Mesh", uri: uri, user: profile.AccountAddress, label: null, contexts: [],
+        contact.AddServiceKeyData(profile.UdfString, ContactConstant.OnlineServiceMesh, uri: uri, user: profile.AccountAddress, label: null, contexts: [],
              mediaType: profile.IanaMediaType, cryptoData: cryptoData);
         }
 
@@ -296,12 +296,12 @@ public static partial class Extensions {
 
         // ToDo: need to read the encoded JSContact OpenPGP/SMIME keys and check they can actually be used.
         // Conditionally add the S/MIME keys
-        contact.AddKeyData(application.SmimeSign, "smime", emailAddress.CryptoKeyIds, ["sig"]);
-        contact.AddKeyData(application.SmimeEncrypt, "smime", emailAddress.CryptoKeyIds, ["enc"]);
+        contact.AddKeyData(application.SmimeSign, ContactConstant.OnlineServiceSmime, emailAddress.CryptoKeyIds, ["sig"]);
+        contact.AddKeyData(application.SmimeEncrypt, ContactConstant.OnlineServiceSmime, emailAddress.CryptoKeyIds, ["enc"]);
 
         // Conditionally add the OpenPGP keys
-        contact.AddKeyData(application.OpenpgpSign, "openpgp", emailAddress.CryptoKeyIds, ["sig"]);
-        contact.AddKeyData(application.OpenpgpEncrypt, "openpgp", emailAddress.CryptoKeyIds, ["enc"]);
+        contact.AddKeyData(application.OpenpgpSign, ContactConstant.OnlineServiceOpenPgp, emailAddress.CryptoKeyIds, ["sig"]);
+        contact.AddKeyData(application.OpenpgpEncrypt, ContactConstant.OnlineServiceOpenPgp, emailAddress.CryptoKeyIds, ["enc"]);
 
         contact.Update();
         }
@@ -322,7 +322,7 @@ public static partial class Extensions {
         contact.OnlineServices ??= [];
         contact.OnlineServices.Add(application.Key, service);
 
-        contact.AddKeyData(application.ClientKey, "ssh", service.CryptoKeyIds, ["auth"]);
+        contact.AddKeyData(application.ClientKey, ContactConstant.OnlineServiceSsh, service.CryptoKeyIds, ["auth"]);
 
 
         contact.Update();
@@ -352,7 +352,7 @@ public static partial class Extensions {
         contact.OnlineServices ??= [];
         contact.OnlineServices.Add(application.Key, service);
 
-        contact.AddKeyData(application.Primary, "credential", service.CryptoKeyIds, ["sign"]);
+        contact.AddKeyData(application.Primary, ContactConstant.OnlineServiceCredential, service.CryptoKeyIds, ["sign"]);
         contact.Update();
         }
 

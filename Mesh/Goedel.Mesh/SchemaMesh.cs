@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/7/2025 7:22:29 PM
+//  This file was automatically generated at 6/10/2025 11:58:33 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -131,6 +131,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {typeof(CatalogedCredential), CatalogedCredential._binding},
 	    {typeof(CatalogedNetwork), CatalogedNetwork._binding},
 	    {typeof(CatalogedContact), CatalogedContact._binding},
+	    {typeof(MeshContact), MeshContact._binding},
 	    {typeof(CatalogedAccess), CatalogedAccess._binding},
 	    {typeof(Capability), Capability._binding},
 	    {typeof(NullCapability), NullCapability._binding},
@@ -4151,6 +4152,12 @@ public partial class CatalogedContact : CatalogedEntry {
 	[JsonPropertyName("Contact")]
 	public virtual JsContact?					Contact  {get; set;} //
 
+    /// <summary>
+    ///Mesh profiles
+    /// </summary>
+
+	[JsonPropertyName("VerifiedContacts")]
+	public virtual List<MeshContact>?					VerifiedContacts  {get; set;}
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -4166,7 +4173,11 @@ public partial class CatalogedContact : CatalogedEntry {
 		new PropertyStruct ("Contact", typeof (JsContact),
 					(IBinding data, object? value) => {(data as CatalogedContact).Contact = value as JsContact;}, 
 					(IBinding data) => (data as CatalogedContact).Contact,
-					false, ()=>new  JsContact(), ()=>new JsContact())
+					false, ()=>new  JsContact(), ()=>new JsContact()),
+		new PropertyListStruct ("VerifiedContacts", typeof (MeshContact),
+					(IBinding data, object? value) => {(data as CatalogedContact).VerifiedContacts = value as List<MeshContact>;}, 
+					(IBinding data) => (data as CatalogedContact).VerifiedContacts,
+					false, ()=>new  List<MeshContact>(), ()=>new MeshContact())
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -4177,7 +4188,8 @@ public partial class CatalogedContact : CatalogedEntry {
 			new() {
 			{ "Key", _properties [0]},
 			{ "Self", _properties [1]},
-			{ "Contact", _properties [2]}}, __Tag,
+			{ "Contact", _properties [2]},
+			{ "VerifiedContacts", _properties [3]}}, __Tag,
 		() => new CatalogedContact(), () => [], () => [], CatalogedEntry._binding, Generic: false);
 
 
@@ -4196,6 +4208,117 @@ public partial class CatalogedContact : CatalogedEntry {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedContact();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class MeshContact : MeshItem {
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("Verification")]
+	public virtual string?					Verification  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("DirectAddress")]
+	public virtual string?					DirectAddress  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("AccountAddresses")]
+	public virtual List<string>?					AccountAddresses  {get; set;}
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("ProfileUdf")]
+	public virtual string?					ProfileUdf  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("CommonEncryption")]
+	public virtual KeyData?					CommonEncryption  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("AdministratorSignature")]
+	public virtual KeyData?					AdministratorSignature  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("Profile")]
+	public virtual ProfileAccount?					Profile  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyString ("Verification", 
+					(IBinding data, string? value) => {(data as MeshContact).Verification = value;}, 
+					(IBinding data) => (data as MeshContact).Verification ),
+		new PropertyString ("DirectAddress", 
+					(IBinding data, string? value) => {(data as MeshContact).DirectAddress = value;}, 
+					(IBinding data) => (data as MeshContact).DirectAddress ),
+		new PropertyListString ("AccountAddresses", 
+					(IBinding data, List<string>? value) => {(data as MeshContact).AccountAddresses = value;}, 
+					(IBinding data) => (data as MeshContact).AccountAddresses ),
+		new PropertyString ("ProfileUdf", 
+					(IBinding data, string? value) => {(data as MeshContact).ProfileUdf = value;}, 
+					(IBinding data) => (data as MeshContact).ProfileUdf ),
+		new PropertyStruct ("CommonEncryption", typeof (KeyData),
+					(IBinding data, object? value) => {(data as MeshContact).CommonEncryption = value as KeyData;}, 
+					(IBinding data) => (data as MeshContact).CommonEncryption,
+					false, ()=>new  KeyData(), ()=>new KeyData()),
+		new PropertyStruct ("AdministratorSignature", typeof (KeyData),
+					(IBinding data, object? value) => {(data as MeshContact).AdministratorSignature = value as KeyData;}, 
+					(IBinding data) => (data as MeshContact).AdministratorSignature,
+					false, ()=>new  KeyData(), ()=>new KeyData()),
+		new PropertyStruct ("Profile", typeof (ProfileAccount), 
+					(IBinding data, object? value) => {(data as MeshContact).Profile = value as ProfileAccount;}, 
+					(IBinding data) => (data as MeshContact).Profile,
+					true) 
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<MeshContact> _binding = new (
+			new() {
+			{ "Verification", _properties [0]},
+			{ "DirectAddress", _properties [1]},
+			{ "AccountAddresses", _properties [2]},
+			{ "ProfileUdf", _properties [3]},
+			{ "CommonEncryption", _properties [4]},
+			{ "AdministratorSignature", _properties [5]},
+			{ "Profile", _properties [6]}}, __Tag,
+		() => new MeshContact(), () => [], () => [], null, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "MeshContact";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new MeshContact();
 
 	}
 

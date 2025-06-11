@@ -295,6 +295,32 @@ public partial class JsContact {
         }
 
 
+    public bool MapCryptoKeys(
+                    OnlineService service) {
+
+        if (service.CryptoKeyIds == null) {
+            return true;
+            }
+        if (CryptoKeys == null) {
+            return service.CryptoKeyIds.Count == 0;
+            }
+        var found = true;
+
+        service.CryptoKey = [];
+        foreach (var id in service.CryptoKeyIds) {
+            if (CryptoKeys.TryGetValue(id.Key, out var cryptoKey)) {
+                service.CryptoKey.Add(cryptoKey);
+                }
+            else {
+                found = false;
+                }
+
+            }
+
+        return found;
+        }
+
+
     //static bool CheckNotCyclic(
     //                Dictionary<string, OnlineService> worklist,
     //                OnlineService service,
@@ -376,7 +402,7 @@ public partial class OnlineService {
     public string Key { get; set; }
 
     ///<summary>The associated <see cref="CryptoKey"/> entry.</summary> 
-    public CryptoKey CryptoKey { get; set; }
+    public List<CryptoKey> CryptoKey { get; set; }
 
     ///<summary>Analysis of the service parent and children.</summary> 
     public AnalysizedContact Analysis { get; set; }
@@ -385,10 +411,15 @@ public partial class OnlineService {
     public List<ServiceGroup> ServiceGroups { get; } = [];
 
 
-    public CryptographicKey GetMeshKeyEncryption() {
 
 
-        return null;
-        }
+    }
+
+
+public partial class JsonWebKeySet {
+
+
+
+    public byte[] MeshProfileBytes => Data;
 
     }

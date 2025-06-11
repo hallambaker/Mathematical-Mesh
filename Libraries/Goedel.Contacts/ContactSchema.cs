@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/7/2025 7:22:26 PM
+//  This file was automatically generated at 6/10/2025 11:58:28 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1921,7 +1921,8 @@ public partial class Calendar : Resource {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Calendar> _binding = new (
 			new() {}, __Tag,
-		() => new Calendar(), () => [], () => [], Resource._binding, Generic: false);
+		() => new Calendar(), () => [], () => [], Resource._binding, 
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -2331,7 +2332,8 @@ public partial class CryptoKey : Resource {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<CryptoKey> _binding = new (
 			new() {}, __Tag,
-		() => new CryptoKey(), () => [], () => [], Resource._binding, Generic: false);
+		() => new CryptoKey(), () => [], () => [], Resource._binding, 
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -2387,7 +2389,8 @@ public partial class ContactDirectory : Resource {
 	public static readonly new Binding<ContactDirectory> _binding = new (
 			new() {
 			{ "listAs", _properties [0]}}, __Tag,
-		() => new ContactDirectory(), () => [], () => [], Resource._binding, Generic: false);
+		() => new ContactDirectory(), () => [], () => [], Resource._binding, 
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -2428,7 +2431,8 @@ public partial class ResourceLink : Resource {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResourceLink> _binding = new (
 			new() {}, __Tag,
-		() => new ResourceLink(), () => [], () => [], Resource._binding, Generic: false);
+		() => new ResourceLink(), () => [], () => [], Resource._binding, 
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -2470,7 +2474,8 @@ public partial class Media : Resource {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Media> _binding = new (
 			new() {}, __Tag,
-		() => new Media(), () => [], () => [], Resource._binding, Generic: false);
+		() => new Media(), () => [], () => [], Resource._binding, 
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -3008,7 +3013,8 @@ public partial class Update : Resource {
 			new() {
 			{ "protocol", _properties [0]},
 			{ "keys", _properties [1]}}, __Tag,
-		() => new Update(), () => [], () => [], Resource._binding, Generic: false);
+		() => new Update(), () => [], () => [], Resource._binding, 
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -3069,7 +3075,8 @@ public partial class JsonWebKeySet : CryptoKey {
 			new() {
 			{ "data", _properties [0]},
 			{ "jsonWebKeys", _properties [1]}}, __Tag,
-		() => new JsonWebKeySet(), () => [], () => [], CryptoKey._binding, Generic: false);
+		() => new JsonWebKeySet(), () => [], () => [], CryptoKey._binding, 
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -3120,7 +3127,8 @@ public partial class ServiceGroup : Resource {
 	public static readonly new Binding<ServiceGroup> _binding = new (
 			new() {
 			{ "members", _properties [0]}}, __Tag,
-		() => new ServiceGroup(), () => [], () => [], Resource._binding, Generic: false);
+		() => new ServiceGroup(), () => [], () => [], Resource._binding, 
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>

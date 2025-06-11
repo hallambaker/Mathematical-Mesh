@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Collections;
+
 namespace Goedel.Utilities;
 
 
@@ -29,7 +31,47 @@ namespace Goedel.Utilities;
 public static class Enumerable {
 
 
-    //public static IEnumerable<T> IfEnumerable (this IEnumerable<T>? item) =>
-    //    item is null 
+    public static IEnumerable<T> IfEnumerable<T>(this IEnumerable<T>? item) =>
+        new SafeEnumerable<T>(item);
+
 
     }
+
+public class SafeEnumerable<T> : IEnumerable<T> {
+
+    IEnumerable<T>? enumerable;
+    public SafeEnumerable(IEnumerable<T>? item) {
+        enumerable = item;
+        }
+
+    public IEnumerator<T> GetEnumerator() => enumerable is null ?
+        new NullEnumerator<T>() : enumerable.GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator() {
+        return GetEnumerator();
+        }
+    }
+
+
+
+
+
+
+public class NullEnumerator<T> : IEnumerator<T> {
+
+    public T Current => default;
+
+    object IEnumerator.Current => Current;
+
+    public NullEnumerator() {
+        }
+
+    public void Dispose() {
+        }
+
+    public bool MoveNext() => false;
+
+    public void Reset() {
+        }
+    }
+

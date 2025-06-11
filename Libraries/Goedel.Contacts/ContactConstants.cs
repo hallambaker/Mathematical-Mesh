@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 6/7/2025 7:22:26 PM
+//  This file was automatically generated at 6/10/2025 11:58:28 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -27,6 +27,32 @@ namespace Goedel.Contacts ;
 ///Constants used to define contact formats
 ///</summary>
 public static partial class ContactConstant {
+
+    // File: MiscUnsorted
+
+    ///<summary>
+    ///</summary>
+    public const string OnlineServiceMesh = "mesh";
+
+    ///<summary>
+    ///</summary>
+    public const string OnlineServiceSmime = "smime";
+
+    ///<summary>
+    ///</summary>
+    public const string OnlineServiceOpenPgp = "openpgp";
+
+    ///<summary>
+    ///</summary>
+    public const string OnlineServiceSsh = "ssh";
+
+    ///<summary>
+    ///</summary>
+    public const string OnlineServiceCredential = "credential";
+
+    ///<summary>
+    ///</summary>
+    public const string OnlineServiceMail = "mail";
 
     }
 

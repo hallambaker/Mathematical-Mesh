@@ -802,6 +802,20 @@
 		Struct JsContact Contact
 			Description
 				|The contact information as edited by the catalog owner.
+		Struct MeshContact VerifiedContacts
+			Multiple
+			Description
+				|Mesh profiles
+	
+	Structure MeshContact
+		String Verification
+		String DirectAddress
+		String AccountAddresses
+			Multiple
+		String ProfileUdf
+		Struct KeyData CommonEncryption
+		Struct KeyData AdministratorSignature
+		TStruct ProfileAccount Profile
 
 
 	Structure CatalogedAccess

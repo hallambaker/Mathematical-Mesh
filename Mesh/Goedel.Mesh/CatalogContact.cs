@@ -43,7 +43,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
     public override StoreType StoreType => StoreType.Contact;
 
     ///<summary>Dictionary mapping email addresses to contacts.</summary>
-    Dictionary<string, OnlineService> DictionaryByNetworkAddress { get; } = [];
+    Dictionary<string, MeshContact> DictionaryByNetworkAddress { get; } = [];
 
     Dictionary<string, List<CryptoKey>> DictionaryProfiles { get; } = [];
 
@@ -137,76 +137,11 @@ public class CatalogContact : Catalog<CatalogedContact> {
             }
 
 
-        if (contact.OnlineServices is null) {
-            return;
-            }
-
-        foreach (var servicePair in contact.OnlineServices) {
-            var service = servicePair.Value;
-
-            if (service.Service.ToLower() == "mesh") {
-                if (service.User is not null) {
-                    DictionaryByNetworkAddress.AddSafe(service.User, service);
-                    }
+        foreach (var entry in catalogedEntry.VerifiedContacts.IfEnumerable()) {
+            foreach (var address in entry.AccountAddresses) {
+                DictionaryByNetworkAddress.AddSafe(address, entry);
                 }
             }
-        if (contact.CryptoKeys is not null) {
-            foreach (var cryptoKey in contact.CryptoKeys) {
-                if (DictionaryProfiles.TryGetValue(cryptoKey.Key, out var profiles)) {
-                    profiles.Add(cryptoKey.Value);
-                    }
-                else {
-                    profiles = [cryptoKey.Value];
-                    DictionaryProfiles.Add(cryptoKey.Key, profiles);
-                    }
-                }
-            }
-        //if (contact.JsonWebKeys is not null) {
-        //    foreach (var cryptoKey in contact.JsonWebKeys) {
-        //        //if (DictionaryProfiles.TryGetValue(cryptoKey.Key, out var profiles)) {
-        //        //    profiles.Add(cryptoKey.Value);
-        //        //    }
-        //        //else {
-        //        //    profiles = [cryptoKey.Value];
-        //        //    DictionaryProfiles.Add(cryptoKey.Key, profiles);
-        //        //    }
-        //        }
-        //    }
-
-        // 
-
-
-        //if (contact.NetworkAddresses != null) {
-        //    foreach (var networkAddress in contact.NetworkAddresses) {
-        //        if (networkAddress.Address is not null) {
-        //            DictionaryByNetworkAddress.AddSafe(networkAddress.Address,
-        //                new NetworkProtocolEntry(catalogedContact, networkAddress));
-        //            }
-        //        if (networkAddress is NetworkCapability networkCapability) {
-        //            foreach (var capability in networkCapability.Capabilities) {
-        //                capability.KeyCollection = KeyCollection;
-        //                switch (capability) {
-        //                    case CapabilityDecrypt capabilityDecrypt: {
-        //                        //Console.WriteLine($"Key {networkAddress.Address} -> {capability.Id}");
-
-        //                        if (DictionaryDecryptByKeyId.TryGetValue(capability.Id, out var existing)) {
-        //                            if (capabilityDecrypt.Issued > existing.Issued) {
-        //                                DictionaryDecryptByKeyId.Remove(capability.Id);
-        //                                DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
-        //                                }
-        //                            }
-        //                        else {
-        //                            DictionaryDecryptByKeyId.Add(capability.Id, capabilityDecrypt);
-        //                            }
-
-        //                        //DictionaryDecryptByKeyId.Replace(capability.Id, capabilityDecrypt);
-        //                        break;
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
         }
 
     /// <summary>
@@ -322,11 +257,11 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="networkAddress">The address to return the entry for.</param>
     /// <returns>The mesh account encryption key if found, otherwise, null.</returns>
     public CryptographicKey GetByAccountEncrypt(string networkAddress) {
-        if (!DictionaryByNetworkAddress.TryGetValue(networkAddress, out var catalogedContact)) {
-            return null;
+        if (DictionaryByNetworkAddress.TryGetValue(networkAddress, out var verifiedProfile)) {
+            return verifiedProfile.CommonEncryption.GetKeyPair();
             }
 
-        return catalogedContact.GetMeshKeyEncryption();
+        return null;
         }
 
 
@@ -336,12 +271,15 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="keyId">The key identifier to match.</param>
     /// <returns>The key pair if found.</returns>
     public CryptographicKey TryMatchRecipient(string keyId) {
-        if (!DictionaryByNetworkAddress.TryGetValue(keyId, out var catalogedContact)) {
-            return null;
+        if (DictionaryByNetworkAddress.TryGetValue(keyId, out var verifiedProfile)) {
+            return verifiedProfile.CommonEncryption.GetKeyPair();
             }
 
-        return catalogedContact.GetMeshKeyEncryption();
+        return null;
         }
+
+
+
 
 
     /// <summary>
@@ -410,7 +348,48 @@ public partial class CatalogedContact {
     public CatalogedContact(JsContact contact, bool self = false) {
         Contact = contact;
         Key = contact.Uid ?? Udf.Nonce();
+
+        if (contact.CryptoKeys is not null) {
+            foreach (var service in contact.OnlineServices.IfEnumerable()) {
+                if (service.Value.Service == ContactConstant.OnlineServiceMesh) {
+                    AddMeshEntry(contact, service.Value);
+                    }
+                }
+            }
         }
+
+
+    void AddMeshEntry(JsContact contact, OnlineService service) {
+        foreach (var id in service.CryptoKeyIds.IfEnumerable()) {
+            if (contact.CryptoKeys.TryGetValue(id.Key, out var cryptoKey)) {
+
+                if (cryptoKey is JsonWebKeySet jsonWebKeySet) {
+                    VerifyProfileBytes(jsonWebKeySet.MeshProfileBytes);
+                    }
+
+
+                }
+            }
+        }
+
+
+    void VerifyProfileBytes(byte[]? data) {
+        if (data is null) {
+            return;
+            }
+
+
+        var envelope = JsonObject.StreamParse<Enveloped>(data);
+
+        Console.WriteLine(envelope.Body.ToUTF8());
+        var profile = envelope.StreamParseTag<ProfileAccount>();
+        profile.Validate();
+
+
+        VerifiedContacts ??= [];
+        VerifiedContacts.Add(new MeshContact (profile));
+        }
+
 
     #endregion
     #region // Override methods
@@ -454,152 +433,71 @@ public partial class CatalogedContact {
     #endregion
     }
 #endregion
+#region // Mesh Profile
+
+public record ContactEntryMesh {
+    OnlineService OnlineService;
+    JsonWebKeySet JsonWebKeySet;
+    public Enveloped EnvelopedProfileAccount => envelopedProfileAccount ??
+        JsonObject.StreamParse<Enveloped> (JsonWebKeySet.Data);
+    Enveloped envelopedProfileAccount;
+    public ContactEntryMesh(
+            OnlineService onlineService) {
+        OnlineService = onlineService;
+        if (onlineService.CryptoKey?.Count == 1) {
+            JsonWebKeySet = onlineService.CryptoKey[0] as JsonWebKeySet;
+
+
+            Console.WriteLine(JsonWebKeySet.Data.ToUTF8());
+            }
+
+
+
+        var x = EnvelopedProfileAccount;
+
+        }
+
+
+    public CryptographicKey GetMeshKeyEncryption() {
+
+
+        throw new NotImplementedException();
+        }
+
+
+    }
+
+
+#endregion
 #region // Contact and sub classes
 
 
 
+public partial class MeshContact {
 
 
-//public partial class ContactPerson {
-//    ///<summary>Base constructor</summary>
-//    public ContactPerson() {
-//        }
-
-//    /// <summary>
-//    /// Convenience constructor filling in basic fields
-//    /// </summary>
-//    /// <param name="first">The first name</param>
-//    /// <param name="last">The last name</param>
-//    /// <param name="prefix">Optional prefix</param>
-//    /// <param name="suffix">Optional suffix</param>
-//    /// <param name="email">Optional SMTP email address</param>
-//    public ContactPerson(
-//                    string first,
-//                    string last,
-//                    string prefix = null,
-//                    string suffix = null,
-//                    string email = null) {
-
-//        //var personName = new PersonName() {
-//        //    First = first,
-//        //    Last = last,
-//        //    Prefix = prefix,
-//        //    Suffix = suffix
-//        //    };
-//        //personName.SetFullName();
-//        //CommonNames = new List<PersonName> { personName };
-
-//        //if (email is not null) {
-//        //    var networkAddress = new NetworkAddress {
-//        //        Address = email,
-//        //        Protocol = "SMTP"
-//        //        //"SMTP"new NetworkProtocol() {
-//        //        //    Protocol = "SMTP"
-//        //        //    }
-//        //        };
-//        //    NetworkAddresses = new List<NetworkAddress> { networkAddress };
-//        //    }
-//        }
-//    }
-
-public partial class NetworkProfile {
-
-    ///<summary>Serialization constructor</summary>
-    public NetworkProfile() {
+    public MeshContact() {
         }
 
-    /// <summary>
-    /// Constructor returning a network address instance for the address
-    /// <paramref name="address"/> with keys populated from the Mesh profile
-    /// <paramref name="profile"/>.
-    /// </summary>
-    /// <param name="address">The Mesh account address (account@domain)</param>
-    /// <param name="profile">The Mesh profile to obtain public keys from.</param>
-    public NetworkProfile(string address, ProfileAccount profile) {
+    public MeshContact(
+                ProfileAccount profileAccount) {
 
-        ////List<CryptographicCapability> keyList = null;
+        ProfileUdf = profileAccount.UdfString;
+        CommonEncryption = profileAccount.CommonEncryption;
+        AdministratorSignature = profileAccount.AdministratorSignature;
 
-        //EnvelopedProfileAccount = profile.GetEnvelopedProfileAccount();
+        DirectAddress = profileAccount.DirectAddress;
+        AccountAddresses = [profileAccount.AccountAddress];
+        if (profileAccount.AccountHandle != null) {
+            AccountAddresses.Add(profileAccount.AccountHandle);
+            }
 
-
-        //Address = address;
-        ////Protocols = new List<NetworkProtocol>() {
-        ////            new NetworkProtocol() {
-        ////            Protocol = "mmm",
-        ////            Capabilities = keyList
-        ////            }
-        ////        };
         }
 
     }
 
-///// <summary>
-///// Network capability.
-///// </summary>
-//public partial class NetworkCapability {
-
-//    ///// <summary>
-//    ///// Default constructor used for deserialization.
-//    ///// </summary>
-//    //public NetworkCapability() {
-//    //    }
-
-//    ///// <summary>
-//    ///// Constructor returning a capability for <paramref name="address"/>,
-//    ///// <paramref name="profile"/>.
-//    ///// </summary>
-//    ///// <param name="address">The capability address.</param>
-//    ///// <param name="profile">The capability profile.</param>
-//    //public NetworkCapability(string address, ProfileAccount profile) : base(address, profile) {
-//    //    }
-//    }
 
 
-/// <summary>
-/// Person name.
-/// </summary>
-public partial class PersonName {
-
-    /// <summary>
-    /// Deserialization constructor.
-    /// </summary>
-    public PersonName() {
-        }
-
-    /// <summary>
-    /// Constructor returning an instance for <paramref name="fullname"/>.
-    /// </summary>
-    /// <param name="fullname">The person's full name.</param>
-    public PersonName(string fullname) {
-        //if (fullname is null) {
-        //    return;
-        //    }
-
-        //FullName = fullname;
-        //var items = fullname.Split(' ');
-        //if (items.Length == 0) {
-        //    return;
-        //    }
-
-        //First = items[0];
-        //if (items.Length == 1) {
-        //    return;
-        //    }
-
-        //Last = items[items.Length - 1];
-        //if (items.Length == 2) {
-        //    return;
-        //    }
-
-        //Middle = new();
-        //for (var i = 1; i < items.Length - 1; i++) {
-        //    Middle.Add(items[i]);
-        //    }
-
-        }
-
-
-    }
 
 /// <summary>
 /// Describes credentials bound to a network address.

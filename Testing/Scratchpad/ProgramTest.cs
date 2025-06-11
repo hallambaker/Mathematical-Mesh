@@ -63,9 +63,9 @@ partial class Program {
         //Trace.Listeners.Add(new GoedelTraceListener());
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
+        //Jmap.Test().TestContactAlice();
 
-
-        DummyTest.Test().TestDummy();
+        //DummyTest.Test().TestDummy();
 
 
         TestContact.Test().ContactSelf();

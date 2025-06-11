@@ -192,7 +192,7 @@ public abstract record Binding(
                 JsonObject target,
                 JsonElement2 element,
                 Property specifier) {
-        if (specifier.Tag == "EnvelopedInbound") {
+        if (specifier.Tag == "cryptoKeys") {
             }
         switch (specifier) {
             #region // Boolean

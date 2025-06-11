@@ -313,13 +313,7 @@ public partial class BoundContactPerson : IBoundPresentation, IDialog {
     public virtual void Fill() {
         var bound = Bound as CatalogedContact;
 
-        var personName = new PersonName() {
-            //FullName = Display,
-            //Prefix = Prefix,
-            //Suffix = Suffix,
-            //First = First,
-            //Last = Last
-            };
+
 
         //var addresses = FillNetworkAddress(NetworkAddresses);
         //var locations = FillLocations(PhysicalAddresses);
@@ -464,10 +458,7 @@ public partial class ContactSelection : SelectionCatalog<GuigenCatalogContact,
             CatalogedContact, BoundContactPerson> {
 
 
-    static PersonName Default = new PersonName() {
-        //First = "Unspecified",
-        //Last = "Contact"
-        };
+
 
 
     /// <summary>

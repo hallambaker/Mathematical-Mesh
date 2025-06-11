@@ -2862,6 +2862,11 @@
             The contact information as edited by the catalog owner.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedContact.VerifiedContacts">
+             <summary>
+            Mesh profiles
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedContact._Properties">
             <summary>Implement IBinding</summary> 
         </member>
@@ -2890,33 +2895,65 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.NetworkProfile.#ctor">
-            <summary>Serialization constructor</summary>
-        </member>
-        <member name="M:Goedel.Mesh.NetworkProfile.#ctor(System.String,Goedel.Mesh.ProfileAccount)">
+        <member name="T:Goedel.Mesh.MeshContact">
             <summary>
-            Constructor returning a network address instance for the address
-            <paramref name="address"/> with keys populated from the Mesh profile
-            <paramref name="profile"/>.
-            </summary>
-            <param name="address">The Mesh account address (account@domain)</param>
-            <param name="profile">The Mesh profile to obtain public keys from.</param>
-        </member>
-        <member name="T:Goedel.Mesh.PersonName">
-            <summary>
-            Person name.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.PersonName.#ctor">
+        <member name="P:Goedel.Mesh.MeshContact.Verification">
             <summary>
-            Deserialization constructor.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.PersonName.#ctor(System.String)">
+        <member name="P:Goedel.Mesh.MeshContact.DirectAddress">
             <summary>
-            Constructor returning an instance for <paramref name="fullname"/>.
             </summary>
-            <param name="fullname">The person's full name.</param>
+        </member>
+        <member name="P:Goedel.Mesh.MeshContact.AccountAddresses">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshContact.ProfileUdf">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshContact.CommonEncryption">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshContact.AdministratorSignature">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshContact.Profile">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshContact._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.MeshContact._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.MeshContact._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.MeshContact._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.MeshContact._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshContact.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshContact._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
         </member>
         <member name="T:Goedel.Mesh.NetworkProtocolEntry">
             <summary>

@@ -1,4 +1,12 @@
 ﻿Namespace Goedel.Contacts ContactConstant
 	|Constants used to define contact formats
 
+File MiscUnsorted
+	String OnlineServiceMesh "mesh"
+	String OnlineServiceSmime "smime"
+	String OnlineServiceOpenPgp "openpgp"
+	String OnlineServiceSsh "ssh"
+	String OnlineServiceCredential "credential"
+	String OnlineServiceMail "mail"
+
 
