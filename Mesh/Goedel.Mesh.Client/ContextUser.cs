@@ -1750,7 +1750,13 @@ public partial class ContextUser : ContextAccount {
 
 
     public async Task<TransactResponse> AddContact(CatalogedContact contact) {
-        throw new NotImplementedException();
+
+        var transaction = TransactBegin();
+        var catalog = transaction.GetCatalogContact();
+        transaction.CatalogUpdate(catalog, contact);
+        var response = await transaction.TransactAsync();
+
+        return response;
         }
 
 
