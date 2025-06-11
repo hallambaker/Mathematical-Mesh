@@ -1626,19 +1626,15 @@ public partial class ContextUser : ContextAccount {
     /// </summary>
     /// <param name="localName">Local name for the contact</param>
     /// <returns></returns>
-    public Enveloped<JsContact> GetSelf(string localName) {
-        var self = GetContact(ProfileUser.UdfString);
-
-        //foreach (var tagged in self.Contact.Sources) {
-        //    if (tagged.EnvelopedSource == null) {
-        //        // skip entries that don't have an enveloped source.
-        //        }
-        //    else if (localName == null || tagged.LocalName == localName) {
-        //        return tagged.EnvelopedSource;
-        //        }
-        //    }
-
-        throw new NYI();
+    public CatalogedContact GetSelf(string localName) {
+        var store = GetStore(CatalogContact.Label) as CatalogContact;
+        if (localName == null) {
+            return store.DefaultContactSelf;
+            }
+        if (store.DictionaryContactSelf.TryGetValue(localName, out var contact)) {
+            return contact;
+            }
+        return null;
         }
 
 
@@ -1651,7 +1647,10 @@ public partial class ContextUser : ContextAccount {
     /// <param name="automatic">If true, presentation of the pin code is sufficient
     /// to authenticate and authorize the action.</param>
     public async Task<string> ContactUri(bool automatic, System.DateTime? expire, string localName = null) {
-        var envelope = GetSelf(localName);
+        var cataloged = GetSelf(localName);
+        var contact = cataloged.Contact;
+        var envelope = contact.Envelope;
+
         var combinedKey = new CryptoKeySymmetricSigner();
 
         var pin = combinedKey.SecretKey;
@@ -1715,7 +1714,9 @@ public partial class ContextUser : ContextAccount {
                 }
             }
 
-        var contactSelf = GetSelf(localname);
+        var cataloged = GetSelf(localname);
+        var contact = cataloged.Contact;
+        var contactSelf = contact.Envelope;
 
         //"agh... not creating the pin code for the response here.".TaskFunctionality(true);
 

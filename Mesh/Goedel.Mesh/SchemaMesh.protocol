@@ -799,7 +799,8 @@
 		Boolean Self
 			Description
 				|If true, this catalog entry is for the user who created the catalog.
-		Struct JsContact Contact
+		GStruct Enveloped JsContact JsContact
+			//Struct JsContact Contact
 			Description
 				|The contact information as edited by the catalog owner.
 		Struct MeshContact VerifiedContacts

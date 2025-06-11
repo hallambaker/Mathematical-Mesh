@@ -21,6 +21,7 @@
 #endregion
 
 
+using Goedel.Contacts;
 using Goedel.Discovery;
 
 using System.Security.Principal;
@@ -138,6 +139,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
 
 
         foreach (var entry in catalogedEntry.VerifiedContacts.IfEnumerable()) {
+            DictionaryByNetworkAddress.AddSafe(entry.ProfileUdf, entry);
             foreach (var address in entry.AccountAddresses) {
                 DictionaryByNetworkAddress.AddSafe(address, entry);
                 }
