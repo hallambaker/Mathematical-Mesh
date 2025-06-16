@@ -493,7 +493,7 @@ public partial class ContextUser : ContextAccount {
         var (cataloged, success) = catalog.TryAdd(contact, localname, true);
 
         if (!success) {
-            cataloged.Contact = contact;
+            cataloged.EnvelopedJsContact = new(contact);
             transact.CatalogUpdate(catalog, cataloged);
             await transact.TransactAsync();
             }
@@ -559,7 +559,7 @@ public partial class ContextUser : ContextAccount {
         foreach (var application in applications) {
             transaction.ApplicationCreate(application);
             foreach (var contact in catalogedContacts) {
-                var jsContact = contact.Contact;
+                var jsContact = contact.JsContact;
 
                 jsContact.AddApplication(application);
                 }
@@ -1511,25 +1511,29 @@ public partial class ContextUser : ContextAccount {
             }
 
 
-        throw new NotImplementedException();
-        // Add the requestContact.Self contact to the catalog
-        //if (requestContact.AuthenticatedData != null) {
-        //    var contact = MeshItem.Decode(requestContact.AuthenticatedData) as Contact;
-        //    var cataloged = contact.CatalogedContact();
+        //Add the requestContact.Self contact to the catalog
+        if (requestContact.AuthenticatedData != null) {
+            Console.WriteLine(requestContact.AuthenticatedData.Body.ToUTF8());
+            var contact = requestContact.AuthenticatedData.StreamParseTag<JsContact>();
 
-        //    using var transaction = TransactBegin();
-        //    var catalog = transaction.GetCatalogContact();
 
-        //    transaction.CatalogUpdate(catalog, cataloged);
-        //    transaction.InboundComplete(StateSpoolMessage.Closed, requestContact);
-        //    await transaction.TransactAsync();
-        //    }
 
-        // Get the reply (if required)
-        //var reply = requestContact.Reply == true ?
-        //    await ContactRequestAsync(requestContact.Sender, requestContact.PIN, localname, false) : null;
+            //MeshItem.Decode(requestContact.AuthenticatedData) as JsContact;
+            var cataloged = new CatalogedContact(contact);
 
-        //return new ResultMessageContact(requestContact, reply);
+            using var transaction = TransactBegin();
+            var catalog = transaction.GetCatalogContact();
+
+            transaction.CatalogUpdate(catalog, cataloged);
+            transaction.InboundComplete(StateSpoolMessage.Closed, requestContact);
+            await transaction.TransactAsync();
+            }
+
+        //Get the reply(if required)
+        var reply = requestContact.Reply == true ?
+            await ContactRequestAsync(requestContact.Sender, requestContact.PIN, localname, false) : null;
+
+        return new ResultMessageContact(requestContact, reply);
         }
 
     /// <summary>
@@ -1648,36 +1652,44 @@ public partial class ContextUser : ContextAccount {
     /// to authenticate and authorize the action.</param>
     public async Task<string> ContactUri(bool automatic, System.DateTime? expire, string localName = null) {
         var cataloged = GetSelf(localName);
-        var contact = cataloged.Contact;
-        var envelope = contact.Envelope;
 
-        var combinedKey = new CryptoKeySymmetricSigner();
+        
+        // This mechanism needs to be redone using the EARL scheme
+        
+        throw new NYI();
 
-        var pin = combinedKey.SecretKey;
 
-        // Add a signature under the signature key.
-        var encryptedContact = Enveloped.Encode(envelope.GetBytes(),
-                signingKey: combinedKey, encryptionKey: combinedKey);
 
-        // publish the enveloped contact to the service.
-        var catalogedPublication = new CatalogedPublication(pin) {
-            EnvelopedData = encryptedContact,
-            NotOnOrAfter = expire
-            };
+        //var contact = cataloged.JsContact;
+        //var envelope = contact.Envelope;
 
-        // Register the pin
-        var messageConnectionPIN = new MessagePin(
-            pin, automatic, expire, ServiceAddress, MeshConstants.MessagePINActionContact);
+        //var combinedKey = new CryptoKeySymmetricSigner();
 
-        using (var transaction = TransactBegin()) {
-            transaction.LocalMessage(messageConnectionPIN, KeyCommonEncryption);
-            var catalogPublication = transaction.GetCatalogPublication();
-            transaction.CatalogUpdate(catalogPublication, catalogedPublication);
-            await transaction.TransactAsync();
-            }
+        //var pin = combinedKey.SecretKey;
 
-        // return the contact address
-        return MeshUri.ConnectUriDevice(ServiceAddress, pin);
+        //// Add a signature under the signature key.
+        //var encryptedContact = Enveloped.Encode(envelope.GetBytes(),
+        //        signingKey: combinedKey, encryptionKey: combinedKey);
+
+        //// publish the enveloped contact to the service.
+        //var catalogedPublication = new CatalogedPublication(pin) {
+        //    EnvelopedData = encryptedContact,
+        //    NotOnOrAfter = expire
+        //    };
+
+        //// Register the pin
+        //var messageConnectionPIN = new MessagePin(
+        //    pin, automatic, expire, ServiceAddress, MeshConstants.MessagePINActionContact);
+
+        //using (var transaction = TransactBegin()) {
+        //    transaction.LocalMessage(messageConnectionPIN, KeyCommonEncryption);
+        //    var catalogPublication = transaction.GetCatalogPublication();
+        //    transaction.CatalogUpdate(catalogPublication, catalogedPublication);
+        //    await transaction.TransactAsync();
+        //    }
+
+        //// return the contact address
+        //return MeshUri.ConnectUriDevice(ServiceAddress, pin);
         }
 
 
@@ -1715,17 +1727,11 @@ public partial class ContextUser : ContextAccount {
             }
 
         var cataloged = GetSelf(localname);
-        var contact = cataloged.Contact;
-        var contactSelf = contact.Envelope;
-
-        //"agh... not creating the pin code for the response here.".TaskFunctionality(true);
-
         var contactMessage = new MessageContact() {
             Recipient = recipient,
             Subject = recipient,
-            AuthenticatedData = contactSelf,
+            AuthenticatedData = cataloged.EnvelopedJsContact,
             Reply = reply
-
             };
 
         using (var transaction = TransactBegin()) {

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/11/2025 12:23:47 AM
+//  This file was automatically generated at 6/16/2025 2:24:07 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -4145,13 +4145,13 @@ public partial class CatalogedContact : CatalogedEntry {
 	[JsonPropertyName("Self")]
 	public virtual bool?					Self  {get; set;} //
 
-    /// <summary>
-    ///The contact information as edited by the catalog owner.
+	[JsonPropertyName("EnvelopedJsContact")]
+	public virtual Enveloped<JsContact>?					EnvelopedJsContact  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
     /// </summary>
-
-	[JsonPropertyName("Contact")]
-	public virtual JsContact?					Contact  {get; set;} //
-
+	public virtual JsContact?				JsContact  => EnvelopedJsContact.Decode();
     /// <summary>
     ///Mesh profiles
     /// </summary>
@@ -4170,10 +4170,12 @@ public partial class CatalogedContact : CatalogedEntry {
 		new PropertyBoolean ("Self", 
 					(IBinding data, bool? value) => {(data as CatalogedContact).Self = value;}, 
 					(IBinding data) => (data as CatalogedContact).Self ),
-		new PropertyStruct ("Contact", typeof (JsContact),
-					(IBinding data, object? value) => {(data as CatalogedContact).Contact = value as JsContact;}, 
-					(IBinding data) => (data as CatalogedContact).Contact,
-					false, ()=>new  JsContact(), ()=>new JsContact()),
+		new PropertyGStruct ("EnvelopedJsContact", /*typeof (JsContact<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as CatalogedContact).EnvelopedJsContact = value as Enveloped<JsContact>;},
+					(IBinding data) => (data as CatalogedContact).EnvelopedJsContact,
+					/*(IBinding data, object? value) => {(data as CatalogedContact).JsContact = value as JsContact;},
+					(IBinding data) => (data as CatalogedContact).JsContact,*/
+					()=>new  Enveloped<JsContact>(), ()=>new Enveloped<JsContact>()),
 		new PropertyListStruct ("VerifiedContacts", typeof (MeshContact),
 					(IBinding data, object? value) => {(data as CatalogedContact).VerifiedContacts = value as List<MeshContact>;}, 
 					(IBinding data) => (data as CatalogedContact).VerifiedContacts,
@@ -4188,7 +4190,7 @@ public partial class CatalogedContact : CatalogedEntry {
 			new() {
 			{ "Key", _properties [0]},
 			{ "Self", _properties [1]},
-			{ "Contact", _properties [2]},
+			{ "EnvelopedJsContact", _properties [2]},
 			{ "VerifiedContacts", _properties [3]}}, __Tag,
 		() => new CatalogedContact(), () => [], () => [], CatalogedEntry._binding, Generic: false);
 

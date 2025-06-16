@@ -133,7 +133,7 @@ public class JsContactResults {
 
 
         // write to file
-        Contact = catalogedContact.Contact;
+        Contact = catalogedContact.JsContact;
 
         Contact.Name = new() {
             Components = [

@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Hsp;
+
 using System.Runtime.CompilerServices;
 
 #pragma warning disable IDE0079
@@ -45,7 +47,7 @@ public static class Initialization {
         // Force initialization of dependent modules.
 
         Goedel.Mesh.Client.Initialization.Initialized.AssertTrue(NYI.Throw);
-        ThingProtocol._Initialized.AssertTrue(NYI.Throw);
+        HspProtocol._Initialized.AssertTrue(NYI.Throw);
 
         //MeshMachine.IMeshMachineFactory = MeshMachineCore.GetMachine;
         }

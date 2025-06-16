@@ -129,7 +129,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
         base.UpdateEntry(catalogedEntry);
 
         //var catalogedContact = catalogedEntry as CatalogedContact;
-        var contact = catalogedEntry.Contact;
+        var contact = catalogedEntry.JsContact;
 
 
         if (catalogedEntry.Self == true) {
@@ -139,6 +139,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
 
 
         foreach (var entry in catalogedEntry.VerifiedContacts.IfEnumerable()) {
+            entry.CatalogedContact ??= catalogedEntry;
             DictionaryByNetworkAddress.AddSafe(entry.ProfileUdf, entry);
             foreach (var address in entry.AccountAddresses) {
                 DictionaryByNetworkAddress.AddSafe(address, entry);
@@ -236,7 +237,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
             return result;
             }
         if (DictionaryByNetworkAddress.TryGetValue(key, out var networkEntry)) {
-            //return networkEntry.CatalogedContact;
+            return networkEntry.CatalogedContact;
             }
         return null;
         }
@@ -348,7 +349,7 @@ public partial class CatalogedContact {
     /// <param name="contact">Dare Envelope containing the contact to create a catalog wrapper for.</param>
 
     public CatalogedContact(JsContact contact, bool self = false) {
-        Contact = contact;
+        EnvelopedJsContact = new (contact);
         Key = contact.Uid ?? Udf.Nonce();
 
         if (contact.CryptoKeys is not null) {
@@ -389,7 +390,7 @@ public partial class CatalogedContact {
 
 
         VerifiedContacts ??= [];
-        VerifiedContacts.Add(new MeshContact (profile));
+        VerifiedContacts.Add(new MeshContact (this, profile));
         }
 
 
@@ -403,7 +404,7 @@ public partial class CatalogedContact {
     /// <param name="detail">If true, provide a detailed description.</param>
     public override void Describe(StringBuilder builder, bool detail = false) {
         builder.AppendLine($"Entry<{_Tag}>: {Key}");
-        if (Contact == null) {
+        if (JsContact == null) {
             builder.AppendLine($"  EMPTY!");
             return;
             }
@@ -476,14 +477,15 @@ public record ContactEntryMesh {
 
 
 public partial class MeshContact {
-
+    public CatalogedContact CatalogedContact { get; set; }
 
     public MeshContact() {
         }
 
     public MeshContact(
+                CatalogedContact catalogedContact,
                 ProfileAccount profileAccount) {
-
+        CatalogedContact = catalogedContact;
         ProfileUdf = profileAccount.UdfString;
         CommonEncryption = profileAccount.CommonEncryption;
         AdministratorSignature = profileAccount.AdministratorSignature;

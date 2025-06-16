@@ -2857,10 +2857,10 @@
             If true, this catalog entry is for the user who created the catalog.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedContact.Contact">
-             <summary>
-            The contact information as edited by the catalog owner.
-             </summary>
+        <member name="P:Goedel.Mesh.CatalogedContact.JsContact">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedContact.VerifiedContacts">
              <summary>

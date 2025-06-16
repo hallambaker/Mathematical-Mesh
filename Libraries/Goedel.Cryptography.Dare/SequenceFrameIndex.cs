@@ -350,7 +350,7 @@ public partial class SequenceIndexEntry : DareEnvelopeLazy {
         return new DareEnvelopeLazy() {
             Header = Header,
             Trailer = Trailer,
-            GetBodyDelegate = GetBody
+            GetBodyDelegate = GetBodyLazy
             };
         }
 
@@ -359,7 +359,7 @@ public partial class SequenceIndexEntry : DareEnvelopeLazy {
     /// Return the raw body bytes.
     /// </summary>
     /// <returns>The raw body bytes.</returns>
-    public byte[] GetBody() {
+    public override byte[] GetBodyLazy() {
         using var input = Sequence.FramerGetReader(DataPosition, DataLength);
         using var output = new MemoryStream();
         input.CopyTo(output);
@@ -384,7 +384,7 @@ public partial class SequenceIndexEntry : DareEnvelopeLazy {
         if (PayloadDigestComputed != null) {
             return PayloadDigestComputed;
             }
-        var payload = GetBody();
+        var payload = GetBodyLazy();
         var digestAlgorithm = Header.DigestAlgorithm.ToCryptoAlgorithmID();
         var digestProvider = CryptoCatalog.Default.Get(digestAlgorithm);
 

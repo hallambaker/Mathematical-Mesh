@@ -151,7 +151,7 @@ public partial class TransactUser : Transaction<ContextUser>, ITransactContextAc
                 CatalogedApplication application) {
         var catalogContact = GetCatalogContact();
 
-        var contact = catalogedContact.Contact;
+        var contact = catalogedContact.JsContact;
         contact.AddApplication(application);
         CatalogUpdate(catalogContact, catalogedContact);
 

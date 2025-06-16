@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Mesh.Test;
+
 using System.Collections.Generic;
 
 //#pragma warning disable IDE0059
@@ -500,13 +502,16 @@ public partial class TestService {
                 DeviceAliceAdmin, AccountAlice, "main");
         }
 
-    [Fact]
-    public void MeshMessageContact() {
+    bool MeshCreateAliceBob(
+        out TestEnvironmentCommon testEnvironmentCommon,
+        out ContextUser contextAccountAlice,
+        out ContextUser contextAccountBob
+            ) {
         // Test service, devices for Alice, Bob
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        testEnvironmentCommon = GetTestEnvironmentCommon();
+        contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                 DeviceAliceAdmin, AccountAlice, "main");
-        var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                 DeviceBobAdmin, AccountBob, "main");
 
 
@@ -520,9 +525,7 @@ public partial class TestService {
 
         // Bob
         var syncBob = contextAccountBob.SynchronizeAsync().Sync();
-
         var fromAlice = contextAccountBob.GetPendingMessageContactRequest();
-
 
         contextAccountBob.ProcessAsync(fromAlice).Sync();
 
@@ -530,16 +533,26 @@ public partial class TestService {
         (fromAlice as MessageContact).Reply.TestFalse();
 
         "Add checks to see that each has the contact info of the other in their catalog".TaskTest();
+
+        return true;
+        }
+
+
+
+    [Fact]
+    public void MeshMessageContact() {
+        MeshCreateAliceBob(out var testEnvironmentCommon,
+            out var contextAccountAlice,
+            out var contextAccountBob);
         }
 
     [Fact]
     public void MeshMessageConfirm() {
         // Test service, devices for Alice, Bob
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceAliceAdmin, AccountAlice, "main");
-        var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceBobAdmin, AccountBob, "main");
+        MeshCreateAliceBob(
+            out var testEnvironmentCommon,
+            out var contextAccountAlice,
+            out var contextAccountBob);
 
         // Bob ---> Alice
         contextAccountBob.ConfirmationRequestAsync(AccountAlice, "Open the pod bay doors").Sync();
@@ -556,37 +569,14 @@ public partial class TestService {
         }
 
 
-    public static bool Exchange(ContextUser contextAccountAlice, ContextUser contextAccountBob) {
-        contextAccountBob.ContactRequestAsync(AccountAlice).Sync();
-        var sync = contextAccountAlice.SynchronizeAsync().Sync();
-
-
-        var fromBob = contextAccountAlice.GetPendingMessageContactRequest();
-        contextAccountAlice.ProcessAsync(fromBob).Sync();
-        var syncBob = contextAccountBob.SynchronizeAsync().Sync();
-
-        var fromAlice = contextAccountBob.GetPendingMessageContactRequest();
-        contextAccountBob.ProcessAsync(fromAlice).Sync();
-
-        return true;
-        }
-
-
-
-
-
-
     [Fact]
     public void MeshCatalogGroup() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
         var plaintext = Platform.GetRandomBytes(1000);
 
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceAliceAdmin, AccountAlice, "main");
-        var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
-                DeviceBobAdmin, AccountBob, "main");
-
-        Exchange(contextAccountAlice, contextAccountBob);
+        MeshCreateAliceBob(
+            out var testEnvironmentCommon,
+            out var contextAccountAlice,
+            out var contextAccountBob);
 
         // Generate a recryption group
         var contextGroup = contextAccountAlice.CreateGroupAsync(AccountGroup, "TBS", roles: RightsDirect).Sync();

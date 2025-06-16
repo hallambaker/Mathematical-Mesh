@@ -6762,7 +6762,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.GetBody">
+        <member name="M:Goedel.Cryptography.Dare.SequenceIndexEntry.GetBodyLazy">
             <summary>
             Return the raw body bytes.
             </summary>

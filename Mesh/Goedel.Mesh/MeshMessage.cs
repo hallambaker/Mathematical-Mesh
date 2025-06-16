@@ -21,6 +21,10 @@
 #endregion
 
 
+using Goedel.Utilities;
+
+using System.Security.Cryptography;
+
 namespace Goedel.Mesh;
 
 
@@ -81,6 +85,7 @@ public partial class Message {
         MessageId ??= Udf.Nonce(); // Add a message ID unless one is already defined.
         contentMeta ??= new();
         contentMeta.MessageType = _Tag;
+        contentMeta.UniqueId = MessageId;
         var result = new Enveloped<Message>(this, signingKey, encryptionKey, contentMeta, objectEncoding);
         result.Header.EnvelopeId = EnvelopeId;
         result.JsonObject = this;
@@ -212,6 +217,14 @@ public partial class MessageValidated {
         var saltedPin = MessagePin.SaltPIN(pin, Action);
 
         ClientNonce = CryptoCatalog.GetBits(128);
+
+        AuthenticatedData.Trailer ??= new();
+        if (AuthenticatedData.PayloadDigest == null) {
+            AuthenticatedData.Trailer.DigestAlgorithm = JoseConstants.SHA3_512;
+            AuthenticatedData.Trailer.PayloadDigest = SHA3_512.HashData(AuthenticatedData.Body);
+            }
+
+
         PinWitness = MessagePin.GetPinWitness(saltedPin, Recipient, AuthenticatedData, ClientNonce);
         PinId = MessagePin.GetPinId(saltedPin, Recipient);
         }
@@ -236,6 +249,30 @@ public partial class MessageValidated {
         if (messagePin.Expires != null && messagePin.Expires < System.DateTime.UtcNow) {
             return ProcessingResult.PinExpired;
             }
+
+        switch (AuthenticatedData?.Trailer?.DigestAlgorithm) {
+            case JoseConstants.SHA3_512: {
+                var digest = SHA3_512.HashData(AuthenticatedData.Body);
+                if (!digest.IsEqualTo(AuthenticatedData?.Trailer?.PayloadDigest)) {
+                    return ProcessingResult.PinInvalid;
+                    }
+                break;
+                }
+            case JoseConstants.SHA2_512: {
+                var digest = SHA512.HashData(AuthenticatedData.Body);
+                if (!digest.IsEqualTo(AuthenticatedData?.Trailer?.PayloadDigest)) {
+                    return ProcessingResult.PinInvalid;
+                    }
+                break;
+                }
+
+            default: {
+                return ProcessingResult.PinInvalid;
+                }
+            }
+
+
+
         var pinWitness = MessagePin.GetPinWitness(
                     messagePin.SaltedPin,
                     accountAddress,
@@ -249,7 +286,15 @@ public partial class MessageValidated {
         }
 
 
+
+
+
+
     }
+
+
+
+
 public partial class MessagePin {
     ///<summary>Typed enveloped data</summary> 
     public Enveloped<MessagePin> EnvelopedMessagePIN =>

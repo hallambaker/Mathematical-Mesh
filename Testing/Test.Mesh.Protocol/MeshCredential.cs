@@ -203,7 +203,7 @@ public partial class TestService {
             }
 
         // write to file
-        var contact = catalogedContact.Contact;
+        var contact = catalogedContact.JsContact;
         var asbytes = contact.GetJson(false);
 
         var astext = asbytes.ToUTF8();

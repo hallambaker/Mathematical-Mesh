@@ -44,7 +44,7 @@ public partial class Shell {
 
 
         // write to file
-        var contact = catalogedContact.Contact;
+        var contact = catalogedContact.JsContact;
         var asbytes = contact.GetJson(false);
 
         // encrypt

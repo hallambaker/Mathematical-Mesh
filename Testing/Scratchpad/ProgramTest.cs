@@ -63,16 +63,28 @@ partial class Program {
         //Trace.Listeners.Add(new GoedelTraceListener());
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
-        //Jmap.Test().TestContactAlice();
 
-        //DummyTest.Test().TestDummy();
 
+        ShellTests.Test().TestAccount();
+        ShellTestsAdmin.Test().TestAccount();
+
+
+        TestService.Test().MeshServiceEncryptCredential();
+        TestService.Test().MeshCatalogGroup();
+        TestService.Test().MeshDeviceConnectStaticQR();
+        TestService.Test().MeshDeviceMail();
+        TestService.Test().MeshDeviceSsh();
+        TestService.Test().MeshDeviceThresholdKey();
+
+        TestService.Test().TestCredentialAccountApps();
+        TestService.Test().TestCredentialFromHandle();
+        TestService.Test().MeshServiceFull();
 
         TestContact.Test().ContactSelf();
         TestContact.Test().ContactOther();
         TestContact.Test().ContactHandle();
 
-
+        ShellTestsAdmin.Test().TestAccount();
 
 
         //Goedel.Protocol.JsonReader.Trace = true;
@@ -104,7 +116,7 @@ partial class Program {
 
 
         //TestService.Test().MeshDeviceConnectPIN();
-        TestService.Test().MeshMessageContact();
+
 
 
         //ShellTests.Test().TestHandleThing();

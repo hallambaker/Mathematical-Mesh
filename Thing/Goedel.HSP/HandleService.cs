@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/6/2025 2:47:28 AM
+//  This file was automatically generated at 6/16/2025 2:07:04 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -52,14 +52,14 @@ using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
 
 
-namespace Goedel.Thing;
+namespace Goedel.Hsp;
 
 
 	/// <summary>
 	///
 	/// Carnet Ledger Protocol maintaining a record of carnet accounts.
 	/// </summary>
-public abstract partial class ThingProtocol : global::Goedel.Protocol.JsonObject {
+public abstract partial class HspProtocol : global::Goedel.Protocol.JsonObject {
 
 	/// <summary>
     /// Tag identifying this class
@@ -69,7 +69,7 @@ public abstract partial class ThingProtocol : global::Goedel.Protocol.JsonObject
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "ThingProtocol";
+	public new const string __Tag = "HspProtocol";
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -78,16 +78,16 @@ public abstract partial class ThingProtocol : global::Goedel.Protocol.JsonObject
 	static Dictionary<System.Type, Binding> _bindingDictionary = 
 			new () {
 
-	    {typeof(ProfileThing), ProfileThing._binding},
-	    {typeof(CatalogedThing), CatalogedThing._binding},
 	    {typeof(ThingRequest), ThingRequest._binding},
-	    {typeof(ThingResponse), ThingResponse._binding}
+	    {typeof(ThingResponse), ThingResponse._binding},
+	    {typeof(MeshHelloRequest), MeshHelloRequest._binding},
+	    {typeof(MeshHelloResponse), MeshHelloResponse._binding}
 		};
 
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
-	static ThingProtocol() {
+	static HspProtocol() {
 		_Initialize();
 		}
 
@@ -127,6 +127,7 @@ public abstract partial class ThingService : Goedel.Protocol.JpcInterface {
 	public override Dictionary<string, Type>  GetTagDictionary => _TagDictionary;
 		
 	static Dictionary<string, Type> _TagDictionary = new () {
+				{"Hello", typeof(HelloRequest)}
 		};
 
     ///<inheritdoc/>
@@ -134,6 +135,7 @@ public abstract partial class ThingService : Goedel.Protocol.JpcInterface {
 			string token,
 			Goedel.Protocol.JsonObject request,
 			IJpcSession session) => token switch {
+		"Hello" => Hello(request as HelloRequest, session),
 		_ => throw new Goedel.Protocol.UnknownOperation(),
         };
 
@@ -153,6 +155,15 @@ public abstract partial class ThingService : Goedel.Protocol.JpcInterface {
 					Service = this
 					};
 
+
+    /// <summary>
+	/// Base method for implementing the transaction Hello.
+    /// </summary>
+    /// <param name="request">The request object to send to the host.</param>
+	/// <param name="session">The request context.</param>
+	/// <returns>The response object from the service</returns>
+    public abstract MeshHelloResponse Hello (
+            HelloRequest request, IJpcSession session);
 
     }
 
@@ -181,6 +192,22 @@ public partial class ThingServiceClient : Goedel.Protocol.JpcClientInterface {
     /// </summary>
 	public override string GetDiscovery => Discovery;
 
+    /// <summary>
+	/// Implement the transaction Hello.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public MeshHelloResponse Hello (HelloRequest request) =>
+			HelloAsync (request).Sync();
+
+    /// <summary>
+	/// Implement the transaction Hello asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<MeshHelloResponse> HelloAsync (HelloRequest request) =>
+			await JpcSession.PostAsync("Hello", request) as MeshHelloResponse;
+
 
 	}
 
@@ -195,138 +222,21 @@ public partial class ThingServiceDirect: ThingServiceClient {
 	public ThingService Service {get; set;}
 
 
+    /// <summary>
+	/// Implement the transaction
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public override Task<MeshHelloResponse> HelloAsync (HelloRequest request) =>
+			Task.FromResult(Service.Hello (request, JpcSession));
+
+
 		}
 
 
 
 
 	// Transaction Classes
-
-	/// <summary>
-	///
-	/// Describes a carnet issuer.
-	/// </summary>
-public partial class ProfileThing : ProfileService {
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<ProfileThing> _binding = new (
-			new() {}, __Tag,
-		() => new ProfileThing(), () => [], () => [], ProfileService._binding, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "ProfileThing";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ProfileThing();
-
-	}
-
-
-	/// <summary>
-	/// </summary>
-public partial class CatalogedThing : CatalogedEntry {
-    /// <summary>
-    /// </summary>
-
-	[JsonPropertyName("Key")]
-	public virtual string?					Key  {get; set;} //
-
-    /// <summary>
-    ///The connection allowing control of the registry.
-    /// </summary>
-
-	[JsonPropertyName("EnvelopedConnectionAddress")]
-	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;} //
-
-    /// <summary>
-    ///The Mesh profile
-    /// </summary>
-
-	[JsonPropertyName("EnvelopedProfileThing")]
-	public virtual Enveloped<ProfileThing>?					EnvelopedProfileThing  {get; set;} //
-
-    /// <summary>
-    ///The activation data for the registry.
-    /// </summary>
-
-	[JsonPropertyName("EnvelopedActivationCommon")]
-	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} //
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as CatalogedThing).Key = value;}, 
-					(IBinding data) => (data as CatalogedThing).Key ),
-		new PropertyStruct ("EnvelopedConnectionAddress", typeof (Enveloped<ConnectionStripped>),
-					(IBinding data, object? value) => {(data as CatalogedThing).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, 
-					(IBinding data) => (data as CatalogedThing).EnvelopedConnectionAddress,
-					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>()),
-		new PropertyStruct ("EnvelopedProfileThing", typeof (Enveloped<ProfileThing>),
-					(IBinding data, object? value) => {(data as CatalogedThing).EnvelopedProfileThing = value as Enveloped<ProfileThing>;}, 
-					(IBinding data) => (data as CatalogedThing).EnvelopedProfileThing,
-					false, ()=>new  Enveloped<ProfileThing>(), ()=>new Enveloped<ProfileThing>()),
-		new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
-					(IBinding data, object? value) => {(data as CatalogedThing).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, 
-					(IBinding data) => (data as CatalogedThing).EnvelopedActivationCommon,
-					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<CatalogedThing> _binding = new (
-			new() {
-			{ "Key", _properties [0]},
-			{ "EnvelopedConnectionAddress", _properties [1]},
-			{ "EnvelopedProfileThing", _properties [2]},
-			{ "EnvelopedActivationCommon", _properties [3]}}, __Tag,
-		() => new CatalogedThing(), () => [], () => [], CatalogedEntry._binding, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "CatalogedThing";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new CatalogedThing();
-
-	}
-
 
 	/// <summary>
 	///
@@ -407,6 +317,98 @@ public partial class ThingResponse : Goedel.Protocol.Response {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ThingResponse();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<MeshHelloRequest> _binding = new (
+			new() {}, __Tag,
+		() => new MeshHelloRequest(), () => [], () => [], Goedel.Protocol.HelloRequest._binding, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "MeshHelloRequest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new MeshHelloRequest();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
+	[JsonPropertyName("EnvelopedProfileService")]
+	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
+	public virtual ProfileService?				ProfileService  => EnvelopedProfileService.Decode();
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyGStruct ("EnvelopedProfileService", /*typeof (ProfileService<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as MeshHelloResponse).EnvelopedProfileService = value as Enveloped<ProfileService>;},
+					(IBinding data) => (data as MeshHelloResponse).EnvelopedProfileService,
+					/*(IBinding data, object? value) => {(data as MeshHelloResponse).ProfileService = value as ProfileService;},
+					(IBinding data) => (data as MeshHelloResponse).ProfileService,*/
+					()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<MeshHelloResponse> _binding = new (
+			new() {
+			{ "EnvelopedProfileService", _properties [0]}}, __Tag,
+		() => new MeshHelloResponse(), () => [], () => [], Goedel.Protocol.HelloResponse._binding, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "MeshHelloResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new MeshHelloResponse();
 
 	}
 

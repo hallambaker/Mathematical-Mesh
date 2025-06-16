@@ -26,14 +26,10 @@ LinkFiles = \
     Goedel.Mesh.dll
 
 ToolTargets = \
-	JSDevice.cs\
-	thing.cs\
+	HandleService.cs\
 	Exceptions.cs
-JSDevice.cs : JSDevice.protocol 
-	protogen JSDevice.protocol  /cs  JSDevice.cs
-
-thing.cs : thing.protocol 
-	protogen thing.protocol  /cs  thing.cs
+HandleService.cs : HandleService.protocol 
+	protogen HandleService.protocol  /cs  HandleService.cs
 
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
@@ -53,5 +49,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Thing.dll
+	powershell publishtarget Goedel.HSP.dll
 

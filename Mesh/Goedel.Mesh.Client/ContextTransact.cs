@@ -369,6 +369,7 @@ public abstract class Transaction<TAccount> : Disposable
             CryptographicKey recipientEncryptionKey,
             Message message,
             bool admin = true) {
+        message.MessageId ??= Udf.Nonce();
         TransactRequest.EnvelopedOutbound ??= new List<Enveloped<Message>>();
         TransactRequest.Accounts ??= new List<string>();
 
@@ -399,6 +400,7 @@ public abstract class Transaction<TAccount> : Disposable
     /// <param name="message">The message to append to the inbound spool.</param>
     public void InboundMessage(
             Message message) {
+        message.MessageId ??= Udf.Nonce();
         TransactRequest.EnvelopedInbound ??= new List<Enveloped<Message>>();
         var envelope = message.Envelope(SignInboundMessage); // Todo: Sign, encrypt
         envelope.JsonObject = message;
@@ -414,6 +416,7 @@ public abstract class Transaction<TAccount> : Disposable
     public void LocalMessage(
             Message message,
             CryptographicKey keyEncrypt) {
+        message.MessageId ??= Udf.Nonce();
         TransactRequest.EnvelopedLocal ??= new List<Enveloped<Message>>();
 
         //"Fix the encryption of local messages".TaskFunctionality(true);
