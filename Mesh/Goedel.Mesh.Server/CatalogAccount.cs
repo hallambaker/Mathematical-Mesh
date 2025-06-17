@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Discovery;
+
 namespace Goedel.Mesh.Server;
 
 /// <summary>
@@ -38,7 +40,11 @@ public class CatalogAccount : Catalog<AccountEntry> {
     public override string SequenceDefault => Label;
 
     ///<summary>Dictionary tracking accounts by their account address.</summary> 
-    public Dictionary<string, AccountEntry> AccountByAddress = new();
+    public Dictionary<string, AccountEntry> AccountByAddress = [];
+
+
+    ///<summary>Dictionary tracking accounts by their profile udf.</summary> 
+    public Dictionary<string, AccountEntry> AccountByUdf = [];
 
     /// <summary>
     /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -92,6 +98,12 @@ public class CatalogAccount : Catalog<AccountEntry> {
                 accountUser.SequenceIndexEntry = indexEntry;
                 AccountByAddress.Add(accountUser.LocalAddress, accountUser);
                 }
+
+            AccountByUdf.Remove(accountUser.ProfileUdf);
+            AccountByUdf.Add(accountUser.ProfileUdf, accountUser);
+
+
+
             }
         }
 
@@ -104,8 +116,27 @@ public class CatalogAccount : Catalog<AccountEntry> {
     /// or a profile UDF.</param>
     /// <param name="account">The account, if found otherwise null.</param>
     /// <returns>True if successful, otherwise false.</returns>
-    public bool TryGetAccountByAny(string identifier, out AccountEntry account) =>
-        AccountByAddress.TryGetValue(identifier, out account);
+    public bool TryGetAccountByAny(string identifier, out AccountEntry account) {
+        if (AccountByAddress.TryGetValue(identifier, out account)) {
+            return true;
+            }
+        var handle = new ParsedHandle(identifier);
+
+        switch (handle.HandleType) {
+            case HandleType.Fingerprint:
+            case HandleType.DirectServiceAddress:
+            case HandleType.DirectAccountServiceAddress:
+            case HandleType.DirectDnsHandle: {
+                return AccountByUdf.TryGetValue(handle.Fingerprint.ToLower(), out account);
+                }
+            case HandleType.AccountServiceAddress: {
+                return AccountByUdf.TryGetValue(handle.Name.ToLower(), out account);
+                }
+            }
+
+        return false;
+
+        }
 
 
     /// <summary>

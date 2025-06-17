@@ -531,24 +531,6 @@ public class MeshPersist : Disposable {
     #endregion
     #region // Post
 
-    ///// <summary>
-    ///// Post message to the local pickup spool.
-    ///// </summary>
-    ///// <param name="jpcSession">The session connection data.</param>
-    ///// <param name="account">The verified sending account.</param>
-    ///// <param name="dareMessage">The message.</param>
-    ///// <returns>Identifier of the message posted.</returns>
-    //public string MessagePostSelf(JpcSession jpcSession, MeshVerifiedAccount account, DareEnvelope dareMessage) {
-
-    //    var identifier = dareMessage.Header?.ContentMeta?.UniqueId;
-    //    identifier.AssertNotNull(InvalidMessageID.Throw);
-    //    using var accountHandle = GetAccountHandleLocked(jpcSession, AccountPrivilege.Connected);
-    //    //using var accountEntry = GetAccountVerified(account, jpcSession);
-    //    dareMessage.Header.ContentMeta = dareMessage.Header.ContentMeta ?? new ContentMeta();
-    //    accountHandle.PostLocal(dareMessage);
-
-    //    return identifier;
-    //    }
 
     /// <summary>
     /// Post message to a remote user.
@@ -792,19 +774,17 @@ public class MeshPersist : Disposable {
     LockedCatalogedEntry<AccountEntry> GetAccountLocked(string accountAddress) {
         AccountEntry result = null;
 
-        var key = GetAccountKey(accountAddress);
-
         lock (CatalogAccount) {
-
-            result = CatalogAccount.Get(key);
-            result.AssertNotNull(MeshUnknownAccount.Throw);
-
-            return new LockedCatalogedEntry<AccountEntry>(result, Logger);
+            if (CatalogAccount.TryGetAccountByAny(accountAddress, out result)) {
+                return new LockedCatalogedEntry<AccountEntry>(result, Logger);
+                }
+            throw new MeshUnknownAccount();
             }
         }
 
 
-    AccountHandleLocked GetAccountHandleLocked(string account,
+    AccountHandleLocked GetAccountHandleLocked(
+                string account,
                 IJpcSession session,
                 AccountPrivilege accountPrivilege) {
 
@@ -854,22 +834,6 @@ public class MeshPersist : Disposable {
             }
         }
 
-    string GetAccountKey(string accountIn) {
-        var account = accountIn.CannonicalAccountAddress();
-        if (CatalogAccount.TryGetAccount(account, out var catalogedCallsign)) {
-            return catalogedCallsign.ProfileUdf.ToLower();
-            }
-
-        switch (account.SplitAccountAddress(out var service, out var accountAddress)) {
-            case AddressType.AccountAtDns:
-            case AddressType.AccountOnly: {
-                return accountAddress;
-                }
-            default: {
-                throw new NYI();
-                }
-            }
-        }
 
     #endregion
 

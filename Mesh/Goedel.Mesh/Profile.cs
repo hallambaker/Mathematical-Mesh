@@ -77,6 +77,10 @@ public partial class Profile {
     ///
     public PrivateKeyUDF SecretSeed { get; set; }
 
+
+    public byte[] GetEnvelopedBytes() => (Envelope as Enveloped).GetBytes(false);
+
+
     #endregion
     #region // Constructors
     /// <summary>

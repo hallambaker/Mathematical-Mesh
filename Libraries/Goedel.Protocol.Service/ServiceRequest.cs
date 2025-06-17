@@ -382,6 +382,7 @@ public class ServiceRequestHttp : ServiceRequest {
         catch (Exception ex) {
             Console.WriteLine($" Unhandled error {ex.ToString()}");
 
+            Abort(RequestQuality.Abort);
 
             Service?.Monitor?.Logger.UnhandledException(ex);
             }

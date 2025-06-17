@@ -387,6 +387,9 @@
         <member name="F:Goedel.Mesh.Server.CatalogAccount.AccountByAddress">
             <summary>Dictionary tracking accounts by their account address.</summary> 
         </member>
+        <member name="F:Goedel.Mesh.Server.CatalogAccount.AccountByUdf">
+            <summary>Dictionary tracking accounts by their profile udf.</summary> 
+        </member>
         <member name="M:Goedel.Mesh.Server.CatalogAccount.#ctor(System.String,System.String,Goedel.Cryptography.Dare.DarePolicy,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Byte[])">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory

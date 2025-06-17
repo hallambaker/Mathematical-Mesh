@@ -1443,6 +1443,10 @@
             <summary>
             </summary>
         </member>
+        <member name="F:Goedel.Contacts.ContactConstant.OnlineServiceGroup">
+            <summary>
+            </summary>
+        </member>
         <member name="F:Goedel.Contacts.ContactConstant.OnlineServiceSmime">
             <summary>
             </summary>

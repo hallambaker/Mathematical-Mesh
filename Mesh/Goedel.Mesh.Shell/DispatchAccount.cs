@@ -57,39 +57,39 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult AccountHello(AccountHello options) {
-        //var account = options.Account.Value;
-        //account.AssertNotNull(NYI.Throw);
+        var account = options.Account.Value;
+        account.AssertNotNull(NYI.Throw);
 
-        //string serviceAddress = null;
-        throw new NYI();
-        //var handle = new ParsedHandle(account);
-        //if (handle.HandleType == HandleType.LocalName) {
-        //    var contextAccount = GetContextUser(options);
-        //    contextAccount.AssertNotNull(NYI.Throw); // Cannot have a local name without an account
+        string serviceAddress = null;
 
-        //    if (!contextAccount.TryFindContactLocal(handle.Name, out var contact)) {
-        //        throw new NYI(); // Should report local name not found
-        //        }
-        //    // here we are going to do a local name lookup
-        //    if (contact.Contact?.TryGetMeshAccount(out  handle) != true) {
-        //        throw new NYI(); // Should report local name not found
-        //        }
+        var handle = new ParsedHandle(account);
+        if (handle.HandleType == HandleType.LocalName) {
+            var contextAccount = GetContextUser(options);
+            contextAccount.AssertNotNull(NYI.Throw); // Cannot have a local name without an account
 
-        //    // We have substituted the handle obtained from the local address
-        //    }
+            if (!contextAccount.TryFindContactLocal(handle.Name, out var contact)) {
+                throw new NYI(); // Should report local name not found
+                }
+            // here we are going to do a local name lookup
+            //if (contact.Contact?.TryGetMeshAccount(out handle) != true) {
+            //    throw new NYI(); // Should report local name not found
+            //    }
 
-        //serviceAddress = handle.ResolveMeshService().Sync();
-        //var meshClient = GetMeshClient(options, serviceAddress);
+            // We have substituted the handle obtained from the local address
+            }
 
-        //var helloRequest = new HelloRequest();
-        //var response = meshClient.Hello(helloRequest);
+        serviceAddress = handle.ResolveMeshService().Sync();
+        var meshClient = GetMeshClient(options, serviceAddress);
 
-        //// need to stuff additional information in here
-        //return new ResultHello() {
-        //    Success = true,
-        //    ServiceAddress = serviceAddress,
-        //    Response = response,
-        //    };
+        var helloRequest = new HelloRequest();
+        var response = meshClient.Hello(helloRequest);
+
+        // need to stuff additional information in here
+        return new ResultHello() {
+            Success = true,
+            ServiceAddress = serviceAddress,
+            Response = response,
+            };
         }
 
 

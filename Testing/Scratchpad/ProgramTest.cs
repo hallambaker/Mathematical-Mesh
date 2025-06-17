@@ -65,11 +65,11 @@ partial class Program {
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
 
-        ShellTests.Test().TestAccount();
-        ShellTestsAdmin.Test().TestAccount();
+        //ServiceDiscovery.Test().TestDNSMultiple(100);
+        //ShellTestsAdmin.Test().TestAccount();
 
 
-        TestService.Test().MeshServiceEncryptCredential();
+
         TestService.Test().MeshCatalogGroup();
         TestService.Test().MeshDeviceConnectStaticQR();
         TestService.Test().MeshDeviceMail();
@@ -79,6 +79,8 @@ partial class Program {
         TestService.Test().TestCredentialAccountApps();
         TestService.Test().TestCredentialFromHandle();
         TestService.Test().MeshServiceFull();
+
+        TestService.Test().MeshServiceEncryptCredential();
 
         TestContact.Test().ContactSelf();
         TestContact.Test().ContactOther();

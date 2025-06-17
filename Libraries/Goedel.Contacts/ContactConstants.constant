@@ -3,6 +3,7 @@
 
 File MiscUnsorted
 	String OnlineServiceMesh "mesh"
+	String OnlineServiceGroup "group"
 	String OnlineServiceSmime "smime"
 	String OnlineServiceOpenPgp "openpgp"
 	String OnlineServiceSsh "ssh"

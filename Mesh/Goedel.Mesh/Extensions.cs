@@ -257,7 +257,7 @@ public static partial class Extensions {
             return;
             }
         var uri = profile.AccountHandle is null ? null : "handle:" + profile.AccountHandle;
-        var cryptoData = (profile.Envelope as Enveloped).GetBytes(false);
+        var cryptoData = profile.GetEnvelopedBytes();
 
         contact.AddServiceKeyData(profile.UdfString, ContactConstant.OnlineServiceMesh, uri: uri, user: profile.AccountAddress, label: null, contexts: [],
              mediaType: profile.IanaMediaType, cryptoData: cryptoData);

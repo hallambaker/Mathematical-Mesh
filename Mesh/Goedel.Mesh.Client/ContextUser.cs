@@ -1273,13 +1273,11 @@ public partial class ContextUser : ContextAccount {
         var transaction = TransactBegin();
         var catalogContact = transaction.GetCatalogContact();
 
-        throw new NotImplementedException();
+        transaction.CatalogUpdate(catalogContact, request.Contact);
+        transaction.InboundComplete(StateSpoolMessage.Closed, request);
+        await transaction.TransactAsync();
 
-        //transaction.CatalogUpdate(catalogContact, request.Contact);
-        //transaction.InboundComplete(StateSpoolMessage.Closed, request);
-        //await transaction.TransactAsync();
-
-        //return new ResultGroupInvitation(request);
+        return new ResultGroupInvitation(request);
         }
 
 
@@ -1966,7 +1964,7 @@ public partial class ContextUser : ContextAccount {
     /// </summary>
     /// <param name="networkAddress">The address to return the entry for.</param>
     /// <returns>The network entry if found, otherwise, null.</returns>
-    public NetworkProtocolEntry GetNetworkEntry(string networkAddress) =>
+    public MeshContact GetNetworkEntry(string networkAddress) =>
         (GetStore(CatalogContact.Label) as CatalogContact).GetNetworkEntry(networkAddress);
 
     /// <summary>

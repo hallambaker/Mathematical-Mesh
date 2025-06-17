@@ -134,7 +134,9 @@ public class CatalogContact : Catalog<CatalogedContact> {
 
         if (catalogedEntry.Self == true) {
             DefaultContactSelf ??= catalogedEntry;
-            DictionaryContactSelf.AddSafe(catalogedEntry.LocalName, catalogedEntry);
+            if (catalogedEntry.LocalName != null) {
+                DictionaryContactSelf.AddSafe(catalogedEntry.LocalName, catalogedEntry);
+                }
             }
 
 
@@ -247,11 +249,11 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// </summary>
     /// <param name="networkAddress">The address to return the entry for.</param>
     /// <returns>The network entry if found, otherwise, null.</returns>
-    public NetworkProtocolEntry GetNetworkEntry(string networkAddress) {
+    public MeshContact GetNetworkEntry(string networkAddress) {
 
-        throw new NYI();
-        //DictionaryByNetworkAddress.TryGetValue(networkAddress, out var catalogedContact);
-        //return catalogedContact;
+
+        DictionaryByNetworkAddress.TryGetValue(networkAddress, out var catalogedContact);
+        return catalogedContact;
         }
 
     /// <summary>
@@ -355,6 +357,9 @@ public partial class CatalogedContact {
         if (contact.CryptoKeys is not null) {
             foreach (var service in contact.OnlineServices.IfEnumerable()) {
                 if (service.Value.Service == ContactConstant.OnlineServiceMesh) {
+                    AddMeshEntry(contact, service.Value);
+                    }
+                else if (service.Value.Service == ContactConstant.OnlineServiceGroup) {
                     AddMeshEntry(contact, service.Value);
                     }
                 }

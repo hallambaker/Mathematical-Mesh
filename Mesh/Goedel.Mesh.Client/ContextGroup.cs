@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Contacts;
+
 namespace Goedel.Mesh.Client;
 
 /// <summary>
@@ -166,7 +168,7 @@ public partial class ContextGroup : ContextAccount {
 
         // Pull the contact information from the user's contact catalog
         var networkProtocolEntry = ContextUser.GetNetworkEntry(memberAddress);
-        var userEncryptionKey = networkProtocolEntry.MeshKeyEncryption;
+        var userEncryptionKey = networkProtocolEntry.CommonEncryption.GetKeyPair();
 
         // will fail because the ProfileService is not set.
         var serviceEncryptionKey = ContextUser.HostEncryptAccount;
@@ -187,41 +189,39 @@ public partial class ContextGroup : ContextAccount {
 
         var listCapability = new List<CryptographicCapability> { capabilityMember };
 
-        throw new NotImplementedException();
+        var contact = CreateContact(listCapability);
 
-        //var contact = CreateContact(listCapability);
+        var groupInvitation = new GroupInvitation() {
+            Sender = ContextUser.ServiceAddress,
+            Recipient = memberAddress,
+            Text = text,
+            Contact = contact
+            };
 
-        //var groupInvitation = new GroupInvitation() {
-        //    Sender = ContextUser.ServiceAddress,
-        //    Recipient = memberAddress,
-        //    Text = text,
-        //    Contact = contact
-        //    };
+        var catalogedMember = new CatalogedMember() {
+            ContactAddress = memberAddress,
+            MemberCapabilityId = capabilityMember.Id,
+            ServiceCapabilityId = capabilityService.Id,
+            };
 
-        //var catalogedMember = new CatalogedMember() {
-        //    ContactAddress = memberAddress,
-        //    MemberCapabilityId = capabilityMember.Id,
-        //    ServiceCapabilityId = capabilityService.Id,
-        //    };
+        transactInvitation.OutboundMessage(networkProtocolEntry.DirectAddress, groupInvitation);
 
-        //transactInvitation.OutboundMessage(networkProtocolEntry, groupInvitation);
+        // update the capabilities catalog to add the service capability
+        var catalogAccess = transactGroup.GetCatalogAccess();
+        var catalogedCapability = new CatalogedAccess(capabilityService);
+        transactGroup.CatalogUpdate(catalogAccess, catalogedCapability);
 
-        //// update the capabilities catalog to add the service capability
-        //var catalogAccess = transactGroup.GetCatalogAccess();
-        //var catalogedCapability = new CatalogedAccess(capabilityService);
-        //transactGroup.CatalogUpdate(catalogAccess, catalogedCapability);
+        // update the members catalog to add the member entry
+        transactGroup.CatalogUpdate(catalogMember, catalogedMember);
 
-        //// update the members catalog to add the member entry
-        //transactGroup.CatalogUpdate(catalogMember, catalogedMember);
+        //// commit the transactions
+        //Transact(transactGroup);
+        //Transact(transactInvitation);
 
-        ////// commit the transactions
-        ////Transact(transactGroup);
-        ////Transact(transactInvitation);
+        await transactGroup.TransactAsync();
+        await transactInvitation.TransactAsync();
 
-        //await transactGroup.TransactAsync();
-        //await transactInvitation.TransactAsync();
-
-        //return catalogedMember;
+        return catalogedMember;
 
 
         }
@@ -235,31 +235,38 @@ public partial class ContextGroup : ContextAccount {
                 List<CryptographicCapability> capabilities = null, string dnsHandle = null) {
 
 
-        //var anchorAccount = new Anchor() {
-        //    Udf = ProfileGroup.UdfString,
-        //    Validation = "Self"
-        //    };
 
-        throw new NotImplementedException();
+        var onlineService = new OnlineService() {
+            User = ServiceAddress,
+            Service = ContactConstant.OnlineServiceGroup,
+            CryptoKeyIds = new() {
+                    {KeyCommonEncryption.KeyIdentifier,  "encrypt" },
+                {Profile.UdfString,  "profile" }}
+            };
 
-        // ContextMesh.ProfileMesh.UDF 
 
-        //contact ??= new ContactPerson() {
-        //    Anchors = [anchorAccount]
-        //    };
+        var jwk = JWK.Factory(KeyCommonEncryption);
+        var keySet = new JsonWebKeySet() {
+            JsonWebKeys = [jwk]
+            };
 
-        //if (capabilities is null) {
-        //    var address = new NetworkProfile(ServiceAddress, Profile as ProfileAccount);
-        //    contact.NetworkAddresses = new List<NetworkAddress>() { address };
-        //    }
-        //else {
-        //    var address = new NetworkCapability(ServiceAddress, Profile as ProfileAccount) {
-        //        Capabilities = capabilities
-        //        };
-        //    contact.NetworkAddresses = new List<NetworkAddress>() { address };
-        //    }
 
-        //return contact;
+        var keySetProfile = new JsonWebKeySet() {
+            Data = Profile.GetEnvelopedBytes()
+            };
+
+        var contact = new JsContact("group") {
+            OnlineServices = new() {
+                    {"group",  onlineService }},
+            CryptoKeys = new() {
+                    {KeyCommonEncryption.KeyIdentifier,  keySet },
+                    {Profile.UdfString,  keySetProfile }}
+            };
+
+
+        Console.WriteLine(contact.ToString());
+        return contact;
+
         }
 
 
