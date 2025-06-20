@@ -68,25 +68,24 @@ partial class Program {
         //ServiceDiscovery.Test().TestDNSMultiple(100);
         //ShellTestsAdmin.Test().TestAccount();
 
-
-
-        TestService.Test().MeshCatalogGroup();
-        TestService.Test().MeshDeviceConnectStaticQR();
-        TestService.Test().MeshDeviceMail();
-        TestService.Test().MeshDeviceSsh();
-        TestService.Test().MeshDeviceThresholdKey();
-
-        TestService.Test().TestCredentialAccountApps();
+        //TestService.Test().MeshServiceEncryptCredential();
         TestService.Test().TestCredentialFromHandle();
-        TestService.Test().MeshServiceFull();
 
-        TestService.Test().MeshServiceEncryptCredential();
+
 
         TestContact.Test().ContactSelf();
         TestContact.Test().ContactOther();
         TestContact.Test().ContactHandle();
 
         ShellTestsAdmin.Test().TestAccount();
+
+
+        /*
+         *  Skipping tests here
+        TestService.Test().MeshDeviceConnectStaticQR();
+
+        */
+
 
 
         //Goedel.Protocol.JsonReader.Trace = true;

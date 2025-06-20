@@ -128,36 +128,36 @@ public partial class TestService {
         var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
         var machineAdminBob = new MeshMachineTest(testEnvironmentCommon, DeviceBobAdmin);
 
-        throw new NYI();
+        //throw new NYI();
 
-        //// first device
-        //var contextAccountAlice_1_a = machineAdminAlice.MeshHost.ConfigureMeshAsync(AccountAlice, "personal").Sync();
+        // first device
+        var contextAccountAlice_1_a = machineAdminAlice.MeshHost.ConfigureMeshAsync(AccountAlice, "personal").Sync();
         //contextAccountAlice_1_a.SetContactSelfAsync(ContactAlice).Sync();
 
-        //var profileAlice = contextAccountAlice_1_a.ProfileUser;
+        var profileAlice = contextAccountAlice_1_a.ProfileUser;
 
-        //using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
-        //    var catalogCredential = transaction1.GetCatalogCredential();
-        //    transaction1.CatalogUpdate(catalogCredential, password1);
-        //    transaction1.TransactAsync().Sync();
-
-
-        //    VerifyStoreEncrypted(catalogCredential, profileAlice.AccountEncryptionKey);
-        //    catalogCredential.Dump();
-        //    }
+        using (var transaction1 = contextAccountAlice_1_a.TransactBegin()) {
+            var catalogCredential = transaction1.GetCatalogCredential();
+            transaction1.CatalogUpdate(catalogCredential, password1);
+            transaction1.TransactAsync().Sync();
 
 
-        //// second device
-        //var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
-        //var boundPin = contextAccountAlice_1_a.GetPinAsync(MeshConstants.MessagePINActionDevice).Sync();
-        //var contextAccountAlice_2 = machineAlice2.MeshHost.ConnectAsync(AccountAlice, pin: boundPin.Pin).Sync();
-        //var sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
-        //var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
-        //contextAccountAlice_1_a.ProcessAsync(connectRequest, roles: RightsDirect).Sync();
-        //contextAccountAlice_2.CompleteAsync().Sync();
+            VerifyStoreEncrypted(catalogCredential, profileAlice.AccountEncryptionKey);
+            catalogCredential.Dump();
+            }
 
 
-        //CheckPinMessageSignedEncrypted(contextAccountAlice_1_a);
+        // second device
+        var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
+        var boundPin = contextAccountAlice_1_a.GetPinAsync(MeshConstants.MessagePINActionDevice).Sync();
+        var contextAccountAlice_2 = machineAlice2.MeshHost.ConnectAsync(AccountAlice, pin: boundPin.Pin).Sync();
+        var sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
+        var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
+        contextAccountAlice_1_a.ProcessAsync(connectRequest, roles: RightsDirect).Sync();
+        contextAccountAlice_2.CompleteAsync().Sync();
+
+
+        CheckPinMessageSignedEncrypted(contextAccountAlice_1_a);
         }
 
 
@@ -366,7 +366,7 @@ public partial class TestService {
     /// <summary>
     /// Connect a second device using the Dynamic QR connection mechanism
     /// </summary>
-    [Fact]
+    [Fact (Skip="Need to switch to the JSDevice scheme")]
     public void MeshDeviceConnectStaticQR() {
         var testEnvironmentCommon = GetTestEnvironmentCommon();
 
