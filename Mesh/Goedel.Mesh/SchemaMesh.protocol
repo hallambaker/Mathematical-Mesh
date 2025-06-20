@@ -814,6 +814,7 @@
 		String AccountAddresses
 			Multiple
 		String ProfileUdf
+		String ProfileType
 		Struct KeyData CommonEncryption
 		Struct KeyData AdministratorSignature
 		TStruct ProfileAccount Profile

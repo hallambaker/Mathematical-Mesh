@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/17/2025 6:49:04 PM
+//  This file was automatically generated at 6/20/2025 2:23:43 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -564,7 +564,7 @@ abstract public partial class Assertion : MeshItem {
 			{ "Updated", _properties [1]},
 			{ "NotaryToken", _properties [2]},
 			{ "Conditions", _properties [3]}}, __Tag,
-		null, null, null, null, Generic: false);
+		null, () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -605,7 +605,7 @@ abstract public partial class Condition : MeshItem {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Condition> _binding = new (
 			new() {}, __Tag,
-		null, null, null, null, Generic: false);
+		null, () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -820,7 +820,7 @@ abstract public partial class Profile : Assertion {
 			new() {
 			{ "Description", _properties [0]},
 			{ "RootUdfs", _properties [1]}}, __Tag,
-		null, null, null, Assertion._binding, Generic: false);
+		null, () => [], () => [], Assertion._binding, Generic: false);
 
 
 	/// <summary>
@@ -2626,7 +2626,7 @@ abstract public partial class ApplicationEntry : MeshItem {
 	public static readonly new Binding<ApplicationEntry> _binding = new (
 			new() {
 			{ "Identifier", _properties [0]}}, __Tag,
-		null, null, null, null, Generic: false);
+		null, () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -3332,7 +3332,7 @@ abstract public partial class CatalogedEntry : MeshItem {
 			{ "LocalName", _properties [1]},
 			{ "Path", _properties [2]},
 			{ "Description", _properties [3]}}, __Tag,
-		null, null, null, null, Generic: false);
+		null, () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -4243,6 +4243,12 @@ public partial class MeshContact : MeshItem {
     /// <summary>
     /// </summary>
 
+	[JsonPropertyName("ProfileType")]
+	public virtual string?					ProfileType  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
 	[JsonPropertyName("CommonEncryption")]
 	public virtual KeyData?					CommonEncryption  {get; set;} //
 
@@ -4276,6 +4282,9 @@ public partial class MeshContact : MeshItem {
 		new PropertyString ("ProfileUdf", 
 					(IBinding data, string? value) => {(data as MeshContact).ProfileUdf = value;}, 
 					(IBinding data) => (data as MeshContact).ProfileUdf ),
+		new PropertyString ("ProfileType", 
+					(IBinding data, string? value) => {(data as MeshContact).ProfileType = value;}, 
+					(IBinding data) => (data as MeshContact).ProfileType ),
 		new PropertyStruct ("CommonEncryption", typeof (KeyData),
 					(IBinding data, object? value) => {(data as MeshContact).CommonEncryption = value as KeyData;}, 
 					(IBinding data) => (data as MeshContact).CommonEncryption,
@@ -4300,9 +4309,10 @@ public partial class MeshContact : MeshItem {
 			{ "DirectAddress", _properties [1]},
 			{ "AccountAddresses", _properties [2]},
 			{ "ProfileUdf", _properties [3]},
-			{ "CommonEncryption", _properties [4]},
-			{ "AdministratorSignature", _properties [5]},
-			{ "Profile", _properties [6]}}, __Tag,
+			{ "ProfileType", _properties [4]},
+			{ "CommonEncryption", _properties [5]},
+			{ "AdministratorSignature", _properties [6]},
+			{ "Profile", _properties [7]}}, __Tag,
 		() => new MeshContact(), () => [], () => [], null, Generic: false);
 
 
@@ -4463,7 +4473,7 @@ abstract public partial class Capability : MeshItem {
 			{ "Mode", _properties [3]},
 			{ "Udf", _properties [4]},
 			{ "Witness", _properties [5]}}, __Tag,
-		null, null, null, null, Generic: false);
+		null, () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -4737,7 +4747,7 @@ abstract public partial class CryptographicCapability : Capability {
 			{ "GranteeAccount", _properties [1]},
 			{ "GranteeUdf", _properties [2]},
 			{ "EnvelopedKeyShare", _properties [3]}}, __Tag,
-		null, null, null, Capability._binding, Generic: false);
+		null, () => [], () => [], Capability._binding, Generic: false);
 
 
 	/// <summary>
@@ -5367,7 +5377,7 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
 			{ "Deny", _properties [3]},
 			{ "EnvelopedCapabilities", _properties [4]},
 			{ "EnvelopedEscrow", _properties [5]}}, __Tag,
-		null, null, null, CatalogedEntry._binding, Generic: false);
+		null, () => [], () => [], CatalogedEntry._binding, Generic: false);
 
 
 	/// <summary>

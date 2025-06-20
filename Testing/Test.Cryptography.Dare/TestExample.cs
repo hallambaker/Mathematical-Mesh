@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/17/2025 6:49:53 PM
+//  This file was automatically generated at 6/20/2025 2:24:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -145,7 +145,7 @@ abstract public partial class TestEntry : TestSchema {
 			new() {
 			{ "Created", _properties [0]},
 			{ "Modified", _properties [1]}}, __Tag,
-		null, null, null, null, Generic: false);
+		null, () => [], () => [], null, Generic: false);
 
 
 	/// <summary>

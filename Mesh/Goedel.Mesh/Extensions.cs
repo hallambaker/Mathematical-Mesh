@@ -457,7 +457,7 @@ public static partial class Extensions {
         contact.CryptoKeys ??= [];
         contact.CryptoKeys.Add(key, jwks);                                                                                                                                                     
 
-        service.CryptoKeyIds.Add(key, "");
+        service.CryptoKeyIds.Add(key, serviceId);
 
         //var groups = contact.CheckClaim(key);
 

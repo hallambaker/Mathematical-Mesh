@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/17/2025 6:49:30 PM
+//  This file was automatically generated at 6/20/2025 2:24:10 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -177,7 +177,7 @@ abstract public partial class AccountEntry : CatalogedEntry {
 			{ "Quota", _properties [2]},
 			{ "Status", _properties [3]},
 			{ "LocalAddress", _properties [4]}}, __Tag,
-		null, null, null, CatalogedEntry._binding, Generic: false);
+		null, () => [], () => [], CatalogedEntry._binding, Generic: false);
 
 
 	/// <summary>

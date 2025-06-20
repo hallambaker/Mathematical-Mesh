@@ -58,7 +58,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
     public override string SequenceDefault => Label;
 
     ///<summary>Dictionary for locating capabilities for use.</summary>
-    public Dictionary<string, CapabilityDecrypt> DictionaryDecryptByKeyId =
+    public Dictionary<string, PrivateKeyEntry> DictionaryDecryptByKeyId =
             new();
 
     #endregion
@@ -146,8 +146,28 @@ public class CatalogContact : Catalog<CatalogedContact> {
             foreach (var address in entry.AccountAddresses) {
                 DictionaryByNetworkAddress.AddSafe(address, entry);
                 }
+
+
+            if (entry.ProfileType == ProfileGroup.__Tag) {
+                //var profile = JsonObject.StreamParse<ProfileGroup>();
+
+
+
+                }
+            }
+
+        foreach (var publicKey in catalogedEntry.PublicKeys.IfEnumerable()) {
+
+            }
+        foreach (var privateKey in catalogedEntry.PrivateKeys.IfEnumerable()) {
+
+            DictionaryDecryptByKeyId.Remove(privateKey.KeyId.ToLower());
+            DictionaryDecryptByKeyId.Add(privateKey.KeyId.ToLower(), privateKey);
+
             }
         }
+
+
 
     /// <summary>
     /// Update the entry <paramref name="catalogedContact"/> in the catalog.
@@ -295,9 +315,15 @@ public class CatalogContact : Catalog<CatalogedContact> {
     /// <param name="keyDecrypt">The decryption key if found, otherwise null.</param>
     /// <returns>true if a key is found, otherwise false.</returns>
     public bool TryFindKeyDecryption(string keyId, out IKeyDecrypt keyDecrypt) {
-        var found = DictionaryDecryptByKeyId.TryGetValue(keyId, out var key);
-        keyDecrypt = key;
-        return found;
+        if (DictionaryDecryptByKeyId.TryGetValue(keyId.ToLower(), out var key)) {
+
+
+
+            keyDecrypt = key.GetKeyPair(KeyCollection);
+            return true;
+            }
+        keyDecrypt = null;
+        return false;
         }
 
     /// <summary>
@@ -311,6 +337,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
                     out CatalogedContact contact) => DictionaryByLocalName.TryGetValue(key, out contact);
     #endregion
     }
+
 
 public partial class CatalogedContact {
 
@@ -331,7 +358,8 @@ public partial class CatalogedContact {
     public Enveloped<CatalogedContact> GetEnvelopedCatalogedContact() =>
         new(DareEnvelope);
 
-
+    public List<CryptoKey> PublicKeys = [];
+    public List<PrivateKeyEntry> PrivateKeys = [];
 
     #endregion
     #region // Factory methods and constructors
@@ -372,7 +400,35 @@ public partial class CatalogedContact {
             if (contact.CryptoKeys.TryGetValue(id.Key, out var cryptoKey)) {
 
                 if (cryptoKey is JsonWebKeySet jsonWebKeySet) {
-                    VerifyProfileBytes(jsonWebKeySet.MeshProfileBytes);
+                    switch (id.Value) {
+                        case ContactConstant.CryptoKeyEncrypt:
+                        case ContactConstant.CryptoKeyVerify: {
+                            PublicKeys.Add(cryptoKey);
+                            break;
+                            }
+                        case ContactConstant.CryptoKeyDecryptShare: 
+                        case ContactConstant.CryptoKeyAuthenticate: 
+                        case ContactConstant.CryptoKeySign: {
+
+                            var privateKeyEntry = new PrivateKeyEntry(contact, service, jsonWebKeySet);
+
+                            PrivateKeys.Add(privateKeyEntry);
+                            break;
+                            }
+                        case ContactConstant.OnlineServiceMesh:
+                        case ContactConstant.OnlineServiceGroup: {
+                            VerifyProfileBytes(jsonWebKeySet.MeshProfileBytes);
+                            break;
+                            }
+
+                        case null: {
+                            break;
+                            }
+                        default: {
+                            break;
+                            }
+                        }
+
                     }
 
 
@@ -492,6 +548,7 @@ public partial class MeshContact {
                 ProfileAccount profileAccount) {
         CatalogedContact = catalogedContact;
         ProfileUdf = profileAccount.UdfString;
+        ProfileType = profileAccount._Tag;
         CommonEncryption = profileAccount.CommonEncryption;
         AdministratorSignature = profileAccount.AdministratorSignature;
 

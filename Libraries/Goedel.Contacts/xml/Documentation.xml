@@ -1467,6 +1467,34 @@
             <summary>
             </summary>
         </member>
+        <member name="F:Goedel.Contacts.ContactConstant.CryptoKeyEncrypt">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.CryptoKeyVerify">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.CryptoKeyDecrypt">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.CryptoKeyDecryptShare">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.CryptoKeyEncryptShare">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.CryptoKeyAuthenticate">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.CryptoKeySign">
+            <summary>
+            </summary>
+        </member>
         <member name="T:Goedel.Contacts.Contacts">
             <summary>
             </summary>

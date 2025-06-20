@@ -239,29 +239,25 @@ public partial class ContextGroup : ContextAccount {
         var onlineService = new OnlineService() {
             User = ServiceAddress,
             Service = ContactConstant.OnlineServiceGroup,
-            CryptoKeyIds = new() {
-                    {KeyCommonEncryption.KeyIdentifier,  "encrypt" },
-                {Profile.UdfString,  "profile" }}
-            };
-
-
-        var jwk = JWK.Factory(KeyCommonEncryption);
-        var keySet = new JsonWebKeySet() {
-            JsonWebKeys = [jwk]
-            };
-
-
-        var keySetProfile = new JsonWebKeySet() {
-            Data = Profile.GetEnvelopedBytes()
             };
 
         var contact = new JsContact("group") {
             OnlineServices = new() {
                     {"group",  onlineService }},
-            CryptoKeys = new() {
-                    {KeyCommonEncryption.KeyIdentifier,  keySet },
-                    {Profile.UdfString,  keySetProfile }}
             };
+
+        contact.Add(onlineService, KeyCommonEncryption.KeyIdentifier,
+            ContactConstant.CryptoKeyEncrypt, key: KeyCommonEncryption);
+        contact.Add(onlineService, Profile.UdfString,
+            ContactConstant.OnlineServiceGroup, data: Profile.GetEnvelopedBytes());
+
+        var count = 0;
+        foreach (var capability in capabilities.IfEnumerable()) {
+            var id = $"{capability.Id}-Share-{count++}";
+            contact.Add(onlineService, id,
+                    ContactConstant.CryptoKeyDecryptShare, 
+                    data: capability.EnvelopedKeyShare.GetBytes(false));
+            }
 
 
         Console.WriteLine(contact.ToString());

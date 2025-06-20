@@ -2915,6 +2915,10 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.MeshContact.ProfileType">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.MeshContact.CommonEncryption">
             <summary>
             </summary>

@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 6/17/2025 6:48:52 PM
+//  This file was automatically generated at 6/20/2025 2:23:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -57,6 +57,34 @@ public static partial class ContactConstant {
     ///<summary>
     ///</summary>
     public const string OnlineServiceMail = "mail";
+
+    ///<summary>
+    ///</summary>
+    public const string CryptoKeyEncrypt = "encrypt";
+
+    ///<summary>
+    ///</summary>
+    public const string CryptoKeyVerify = "verify";
+
+    ///<summary>
+    ///</summary>
+    public const string CryptoKeyDecrypt = "decrypt";
+
+    ///<summary>
+    ///</summary>
+    public const string CryptoKeyDecryptShare = "shareDecrypt";
+
+    ///<summary>
+    ///</summary>
+    public const string CryptoKeyEncryptShare = "shareEncrypt";
+
+    ///<summary>
+    ///</summary>
+    public const string CryptoKeyAuthenticate = "authenticate";
+
+    ///<summary>
+    ///</summary>
+    public const string CryptoKeySign = "sign";
 
     }
 

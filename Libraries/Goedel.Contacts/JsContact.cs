@@ -3,6 +3,8 @@ using Goedel.Cryptography.Nist;
 
 using System.Net.WebSockets;
 
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace Goedel.Contacts;
 
 
@@ -86,6 +88,9 @@ public partial class JsContact {
 
 
 
+
+
+
     /// <summary>
     /// Create a  contact of the specified kind with the Version, Created and Updated
     /// fields filled.
@@ -165,6 +170,31 @@ public partial class JsContact {
 
 
     #endregion
+
+
+
+    public void Add(
+                OnlineService service,
+                string id,
+                string kind,
+                byte[] data=null,
+                KeyPair key=null) {
+        service.CryptoKeyIds ??= [];
+        service.CryptoKeyIds.Add(id, kind);
+        var cryptoKey = new JsonWebKeySet() {
+            Data = data,
+            Kind=kind
+            };
+        if (key != null) {
+            cryptoKey.JsonWebKeys = [JWK.Factory(key)];
+            }
+        CryptoKeys ??= [];
+        CryptoKeys.Add(id, cryptoKey);
+        }
+
+
+
+
 
     /// <summary>
     /// Update the contact updated time.

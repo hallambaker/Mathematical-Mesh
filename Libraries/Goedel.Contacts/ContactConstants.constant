@@ -11,3 +11,10 @@ File MiscUnsorted
 	String OnlineServiceMail "mail"
 
 
+	String CryptoKeyEncrypt "encrypt"
+	String CryptoKeyVerify "verify"
+	String CryptoKeyDecrypt "decrypt"
+	String CryptoKeyDecryptShare "shareDecrypt"
+	String CryptoKeyEncryptShare "shareEncrypt"
+	String CryptoKeyAuthenticate "authenticate"
+	String CryptoKeySign "sign"

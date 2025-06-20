@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/17/2025 6:49:04 PM
+//  This file was automatically generated at 6/20/2025 2:23:43 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -3489,7 +3489,7 @@ abstract public partial class CryptographicOperation : MeshProtocol {
 			new() {
 			{ "KeyId", _properties [0]},
 			{ "KeyCoefficient", _properties [1]}}, __Tag,
-		null, null, null, null, Generic: false);
+		null, () => [], () => [], null, Generic: false);
 
 
 	/// <summary>

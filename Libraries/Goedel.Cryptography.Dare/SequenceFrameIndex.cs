@@ -405,19 +405,23 @@ public partial class SequenceIndexEntry : DareEnvelopeLazy {
         if (IsEncrypted & !Sequence.Decrypt) {
             throw new NotInDecryptionMode();
             }
+        try {
+            var bytes = GetPayload(Sequence, Sequence.KeyLocate);
 
-        var bytes = GetPayload(Sequence, Sequence.KeyLocate);
+            if (bytes.Length == 0) {
+                return null;
+                }
 
-        if (bytes.Length == 0) {
+            //var text = bytes.ToUTF8();
+            //var result = bytes.JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
+            var result = JsonObject.ParseTagged(bytes);
+            result.Envelope = this;
+
+            return result;
+            }
+        catch (NoAvailableDecryptionKey){
             return null;
             }
-
-        //var text = bytes.ToUTF8();
-        //var result = bytes.JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
-        var result = JsonObject.ParseTagged(bytes);
-        result.Envelope = this;
-
-        return result;
 
         }
     //=> JsonObject ??

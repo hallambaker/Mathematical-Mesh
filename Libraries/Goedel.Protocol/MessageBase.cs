@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/17/2025 6:48:45 PM
+//  This file was automatically generated at 6/20/2025 2:23:24 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -147,7 +147,7 @@ abstract public partial class Request : BaseMessage {
 			new() {
 			{ "Service", _properties [0]},
 			{ "ID", _properties [1]}}, __Tag,
-		null, null, null, null, Generic: false);
+		null, () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -239,7 +239,7 @@ abstract public partial class Response : BaseMessage {
 			{ "StatusExtended", _properties [1]},
 			{ "StatusDescription", _properties [2]},
 			{ "ID", _properties [3]}}, __Tag,
-		null, null, null, null, Generic: false);
+		null, () => [], () => [], null, Generic: false);
 
 
 	/// <summary>

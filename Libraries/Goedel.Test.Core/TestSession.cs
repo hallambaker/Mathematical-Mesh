@@ -75,6 +75,9 @@ public partial class TestSession : JpcSessionSerialized {
     public override Stream Post(MemoryStream data, JsonObject Request) {
         var requestBytes = data.ToArray();
 
+        Console.WriteLine(requestBytes.ToUTF8());
+
+
         var JSONReader = new JsonReader(requestBytes);
         var result = Host.Dispatch(this, JSONReader);
         var responseBytes = result.GetBytes();

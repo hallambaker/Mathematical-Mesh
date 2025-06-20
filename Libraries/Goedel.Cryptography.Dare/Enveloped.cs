@@ -251,10 +251,6 @@ public partial class Enveloped : IDisposable{
     #region // Payload decoding routines 
 
 
-
-    //public T StreamParse<T> () where T : JsonObject => StreamParseTag<T>(Body);
-
-
     public T StreamParseTag<T>(IKeyLocate keyCollection = null) where T : JsonObject {
 
         var plaintext = (keyCollection == null) ? Body : GetPlaintext(keyCollection);
