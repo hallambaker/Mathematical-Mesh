@@ -97,6 +97,9 @@ public class MeshPersist : Disposable {
     int count = 0;
     static int counter = 0;
     IPresence PresenceService { get; }
+
+
+    public EarlDispatch? EarlDispatch { get; set; }
     #endregion
 
 
@@ -763,6 +766,72 @@ public class MeshPersist : Disposable {
         return response;
         }
 
+
+
+
+
+    public PublishEarlResponse PublishEarl(
+                IJpcSession jpcSession,
+                byte[] prelocator,
+                byte[] data,
+                DateTime? expire
+                ) {
+        EarlDispatch.AssertNotNull(MeshServiceNotSupported.Throw, "EarlDispatch");
+
+        var locator = Udf.EarlLocator(prelocator);
+
+        var domain = EarlDispatch.Add(locator, data);
+
+        var response = new PublishEarlResponse() {
+            Domain = domain
+            };
+        return response;
+        }
+
+
+    public DeleteEarlResponse DeleteEarl(
+                IJpcSession jpcSession,
+                byte[] prelocator
+                ) {
+
+
+        var response = new DeleteEarlResponse();
+        return response;
+        }
+
+    public PublishDnsResponse PublishDns(
+                IJpcSession jpcSession,
+                IDnsPublisher publisher,
+                List<DnsUpdate> updates
+                ) {
+        var records = new List<DNSItem>();
+        foreach (var update in updates) {
+            var typecode = (DNSTypeCode)update.RR;
+            if (update.IsAdd == true) {
+                var record = new DNSRecord_Add(
+                    update.Name, typecode, update.Record);
+                records.Add(record);
+                }
+            else if (typecode == DNSTypeCode.ANY) {
+                var record = new DNSRecord_DeleteAll(update.Name);
+                records.Add(record);
+                }
+            else if (update.Record == null) {
+                var record = new DNSRecord_DeleteRRset(update.Name, typecode);
+                records.Add(record);
+                }
+            else {
+                var record = new DNSRecord_DeleteRR(update.Name,typecode, update.Record);
+                records.Add(record);
+                }
+            }
+
+        publisher.PublishRecords(records);
+
+        var response = new PublishDnsResponse();
+        return response;
+        }
+
     #endregion
     #region // Account handle management
     /// <summary>
@@ -833,6 +902,9 @@ public class MeshPersist : Disposable {
             throw;
             }
         }
+
+
+
 
 
     #endregion

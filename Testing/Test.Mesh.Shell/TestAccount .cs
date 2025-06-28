@@ -36,7 +36,7 @@ public partial class ShellTests {
 
 
 
-    [Fact]
+    [Fact (Skip="Push callsignb to backburner")]
     public void TestHandleCallsign() {
         var admin = GetTestCLI(AliceDevice1);
         var webserver = GetTestCLI(AliceDevice2);

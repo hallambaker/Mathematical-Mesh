@@ -161,7 +161,7 @@ public class RudService : Disposable {
         foreach (var provider in providers) {
             if (provider.Endpoints != null) {
                 foreach (var endpoint in provider.Endpoints) {
-                    if (endpoint is HttpEndpoint httpEndpoint) {
+                    if (endpoint is WebServiceEndpoint httpEndpoint) {
 
 
                         var uri = httpEndpoint.GetUriPrefix();

@@ -21,7 +21,12 @@
 #endregion
 
 
+using Goedel.Contacts;
+using Goedel.Cryptography.Dare;
+using Goedel.Discovery;
+
 using System.Net;
+using System.Text;
 
 namespace Goedel.Mesh.Client;
 
@@ -102,7 +107,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     ///<summary>Contact address for the callsign registry broker.</summary> 
     public string CallsignRegistry => ProfileRegistryCallsign?.AccountAddress;
 
-
+    //public EarlClient EarlClient { get; set; } = new EarlClientHttp();
     /// <summary>
     /// The Callsign Registry Profile.
     /// </summary>
@@ -592,102 +597,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         }
 
 
-    /// <summary>
-    /// Synchronize this device to the catalogs at the service. Since the authoritative copy of
-    /// the service is held at the service, this means only downloading updates at present.
-    /// </summary>
-    /// <param name="statusRequest">The status request to present</param>
-    /// <param name="meshClient">If not-null specifies a client to override the account
-    /// client (used to synchronize against other accounts).</param>
-    /// <returns>The number of items synchronized</returns>
-    public StatusResponse Sync(StatusRequest statusRequest, MeshServiceClient meshClient = null) {
-        throw new NYI();
-
-
-        //meshClient ??= MeshClient;
-
-        //Console.WriteLine($"Sync account {AccountAddress}");
-
-        //var status = meshClient.Status(statusRequest);
-
-        //// Compile download request
-        //// Enumerate the core stores
-        //// Add current status to the request.
-
-        //status.StoreStatus.AssertNotNull(ServerResponseInvalid.Throw, status);
-
-        //if (statusRequest.CatalogedDeviceDigest != null & status.EnvelopedCatalogedDevice != null) {
-        //    var catalogedDevice = status.EnvelopedCatalogedDevice.Decode(this);
-        //    UpdateCatalogedMachine(catalogedDevice, status.CatalogedDeviceDigest, true);
-        //    }
-
-        //var constraintsSelects = new List<ConstraintsSelect>();
-
-        //foreach (var container in status.StoreStatus) {
-        //    var constraintsSelect = GetStoreStatus(container);
-        //    if (constraintsSelect != null) {
-        //        constraintsSelects.Add(constraintsSelect);
-        //        }
-        //    }
-
-        //if (constraintsSelects.Count == 0) {
-        //    return status;
-        //    }
-
-        //var downloadRequest = new DownloadRequest() {
-        //    Select = constraintsSelects
-        //    };
-
-        //var (_, count) =  NewMethod(meshClient,  downloadRequest);
-
-        //status.Count = count;
-
-        //return status;
-        }
-
-    //private (bool, int) NewMethod(
-    //            MeshServiceClient meshClient, 
-    //            DownloadRequest downloadRequest) {
-    //    int count = 0;
-    //    var download = meshClient.Download(downloadRequest);
-
-    //    var partial = false;
-    //    foreach (var update in download.Updates) {
-    //        var records = UpdateStore(update);
-    //        count += records;
-
-    //        if (update.Partial == true) {
-    //            partial = true;
-    //            }
-
-    //        if (update.Store == SpoolInbound.Label) {
-
-    //            if (AccountAddress == "bob@example.com" & records > 0) {
-    //                Console.WriteLine($"&&&&& Add to bob here.");
-
-    //                }
-
-
-    //            Console.WriteLine($"Client Sync: {AccountAddress}: {update.Store} Added {records}");
-    //            foreach (var envelope in update.Envelopes) {
-    //                Console.WriteLine($"    {envelope.Index}: {envelope.EnvelopeId}");
-    //                }
-    //            }
-    //        }
-
-
-    //    if (downloadRequest.CatalogedDeviceDigest != null & download.EnvelopedCatalogedDevice != null) {
-    //        var catalogedDevice = download.EnvelopedCatalogedDevice.Decode(this);
-    //        UpdateCatalogedMachine(catalogedDevice, download.CatalogedDeviceDigest, true);
-    //        }
-
-
-    //    return (partial, count);
-    //    }
-
-    //public bool SyncProgress(int maxEnvelopes = -1) => SyncProgressUpload(maxEnvelopes);
-
-
+ 
 
     /// <summary>
     /// Update the <paramref name="catalogedDevice"/> entry in the machine catalog.
@@ -1311,19 +1221,119 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         }
 
 
-    ///// <summary>
-    ///// Return a list of endpoints for the presence service associated with the
-    ///// account.
-    ///// </summary>
-    ///// <returns>The list of presence service endpoints.</returns>
-    //public List<UdpServiceEndpoint> GetPresenceEndpoints() {
+    public async Task<PublishEarlResponse> PublishEarl(
+                byte[] data,
+                string scheme,
+                string contentType,
+                EarlEnvelopeContext context =null) {
+        var contentMeta = new ContentMeta() {
+            Nonce = Udf.Nonce(),
+            ContentType = contentType,
+            Created = DateTime.UtcNow
+            };
 
-    //    var endpoint = new UdpServiceEndpoint(
-    //        new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8888)
-    //        );
+        var enveloped = EarlEnvelopeWriter.GetBytes(contentMeta, data);
 
-    //    return new List<UdpServiceEndpoint>() { endpoint};
-    //    }
+
+
+
+        var(earl, _, ciphertext) = Udf.Earl(enveloped);
+        var preLocator = Udf.EarlPreLocator(earl);
+        var request = new PublishEarlRequest() {
+            PreLocator = preLocator,
+            Data = ciphertext
+            };
+
+        var result = await MeshClient.PublishEarlAsync(request);
+        var domain = result.Domain;
+
+        result.Earl = $"{scheme}://{domain}/{earl}";
+        return result;
+
+        }
+
+    public async Task<string> PublishEarl(
+                JsContact jsContact,
+                EarlEnvelopeContext context = null) {
+        var result = await PublishEarl(jsContact.ToBytes(), MediaTypes.JSContactScheme,
+                MediaTypes.JSContact, context);
+        return result.Earl;
+        }
+
+
+    public async Task<string> PublishEarl(
+                JsDevice jsDevice,
+                EarlEnvelopeContext context = null) {
+        var result = await PublishEarl(jsDevice.ToBytes(), MediaTypes.JSDeviceScheme,
+             MediaTypes.JSDevice, context);
+        return result.Earl;
+        }
+
+
+    public async Task<PublishDnsResponse> PublishDns(
+            IEnumerable<DNSRecord> records) {
+        var updates = new List<DnsUpdate>();
+        foreach (var record in records) {
+            var update = new DnsUpdate() {
+                Name = record.Domain.Name,
+                RR = (int)record.Code,
+                IsAdd = true,
+                Record = record.GetBytes()
+                };
+            updates.Add(update);
+            }
+        var request = new PublishDnsRequest() {
+            Updates = updates
+            };
+
+        var result = await MeshClient.PublishDnsAsync(request);
+
+        return result;
+        }
+
+
+    /// <summary>
+    /// Bind a TXT record to <paramref name="prefix"/>.<paramref name="handle"/>
+    /// using the tag/value pairs from <paramref name="tagvalues"/>
+    /// </summary>
+    /// <param name="prefix">The handle prefix.</param>
+    /// <param name="handle">The authority</param>
+    /// <param name="tagvalues">The tag/value pairs</param>
+    /// <returns></returns>
+    public async Task<PublishDnsResponse> BindHandle (
+            string prefix,
+            string handle,
+            params string[] tagvalues) {
+        var parsedHandle = new ParsedHandle(handle);
+        var domain = parsedHandle.HandleType switch {
+            HandleType.Domain => parsedHandle.Service,
+            HandleType.DnsHandle => parsedHandle.Name,
+            HandleType.DirectDnsHandle => parsedHandle.Name,
+            _ => throw new NYI(),
+            };
+
+        var zone = $"{prefix}.{domain}";
+
+        var builder = new StringBuilder();
+        for (var i = 0; i < tagvalues.Length; i += 2) {
+            if (i + 1 < tagvalues.Length) {
+                if (builder.Length > 0) {
+                    builder.Append(' ');
+                    }
+                builder.Append(tagvalues[i]);
+                builder.Append('=');
+                builder.Append(tagvalues[i+1]);
+                }
+            }
+        var record = new DNSRecord_TXT() {
+            Domain = new (zone),
+            Text = [builder.ToString()]
+            };
+
+        var result = await PublishDns([record]);
+
+        return result;
+        }
 
     #endregion
 
@@ -1331,5 +1341,6 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
 
     }
+
 
 

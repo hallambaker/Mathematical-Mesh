@@ -892,14 +892,37 @@ public record Udf(
     /// </summary>
     /// <param name="earl">The EARL to construct the locator path for.</param>
     /// <returns>The locator.</returns>
-    public static string EarlLocator(string earl) {
-        var source = earl.FromBase32(partial:true);
+    public static byte[] EarlPreLocator(string earl) {
+        var source = earl.FromBase32(partial: true);
 
         var l1 = SHA3Managed.Process256(source);
-        var l2 = SHA3Managed.Process256(l1);
+
+        return l1;
+        }
+
+
+    /// <summary>
+    /// Create the locator path for the EARL <paramref name="earl"/>
+    /// </summary>
+    /// <param name="earl">The EARL to construct the locator path for.</param>
+    /// <returns>The locator.</returns>
+    public static string EarlLocator(string earl) {
+        var l1 = EarlPreLocator(earl);
+        return EarlLocator(l1);
+        }
+
+
+    /// <summary>
+    /// Create the locator path for the EARL <paramref name="earl"/>
+    /// </summary>
+    /// <param name="prelocator">The EARL to construct the locator path for.</param>
+    /// <returns>The locator.</returns>
+    public static string EarlLocator(byte[] prelocator) {
+        var l2 = SHA3Managed.Process256(prelocator);
 
         return l2.ToStringBase64url();
         }
+
 
     /// <summary>
     /// Create the locator path for the EARL <paramref name="earl"/>

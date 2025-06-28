@@ -20,6 +20,9 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography;
+using Goedel.Discovery;
+
 namespace Goedel.Contacts;
 
 /// <summary>

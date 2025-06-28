@@ -147,7 +147,7 @@ public abstract class JpcInterface : Disposable {
         instance = hostConfiguration.Instance ?? instance;
 
         Endpoints.Add(
-            new HttpEndpoint(hostConfiguration.HostDns, GetWellKnown,
+            new WebServiceEndpoint(hostConfiguration.HostDns, GetWellKnown,
                     hostConfiguration.Port, instance, this));
 
         }
@@ -185,6 +185,8 @@ public abstract class JpcInterface : Disposable {
 
 
     }
+
+
 
 
 /// <summary>

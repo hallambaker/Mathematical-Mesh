@@ -23,6 +23,7 @@
 
 using Goedel.Callsign.Resolver;
 using Goedel.Carnet.Server;
+using Goedel.Discovery;
 
 namespace Goedel.Mesh.Test;
 
@@ -46,7 +47,7 @@ public abstract class TestEnvironmentBase : UnitTestSet {
     public string DirectoryPath => Seed.Directory;
     //public virtual string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
 
-
+    public EarlDispatch EarlDispatch {get; set;}
 
     public JpcConnection JpcConnection = JpcConnection.Serialized;
 
@@ -83,6 +84,8 @@ public abstract class TestEnvironmentBase : UnitTestSet {
 
     protected virtual CarnetServer GetCarnetServer() => throw new NYI();
 
+    public DummyDnsService DummyDnsService { get; }
+
     public TestCLI GetTestCLI(string machineName = null) {
         var testShell = new TestShell(this, machineName) {
             NoCatch = true
@@ -111,10 +114,15 @@ public abstract class TestEnvironmentBase : UnitTestSet {
     static TestEnvironmentBase() {
         }
 
-    public TestEnvironmentBase(DeterministicSeed seed = null) {
+    public TestEnvironmentBase(DeterministicSeed seed = null, bool dummyDns = false) {
 
         //seed ??= DeterministicSeed.Auto();
         Seed = seed ?? Seed;
+        if (dummyDns) {
+            DummyDnsService = new();
+            InitializeDNS();
+            }
+
 
         DirectoryPath.DirectoryDelete();
 
@@ -191,6 +199,39 @@ public abstract class TestEnvironmentBase : UnitTestSet {
 
         return new DarePolicy(keyCollection, signKey, encryptKey);
         }
+
+
+    public void InitializeDNS() {
+
+        var records = new List<DNSRecord>() {
+
+            new DNSRecord_A() {
+                Domain = new ("example.com"),
+                Address = IPAddress.Parse("127.0.0.1")
+                },
+            new DNSRecord_A() {
+                Domain = new ("mmm.example.com"),
+                Address = IPAddress.Parse("127.0.0.1")
+                },
+            new DNSRecord_A() {
+                Domain = new ("host1.example.com"),
+                Address = IPAddress.Parse("127.0.0.1")
+                },
+            new DNSRecord_SRV() {
+                Domain = new ("_mmm._tcp.example.com"),
+                Priority = 1,
+                Weight = 1,
+                Port = Truncate(150999),
+                Target = new ("host1.example.com")
+                }
+            };
+
+        ushort Truncate(int value) => (ushort)value;
+
+        DummyDnsService.PublishRecords(records);
+        }
+
+
 
 
     }

@@ -2696,6 +2696,55 @@
         <member name="F:Goedel.Cryptography.KeyUses.Any">
             <summary>Jose Sign or Encryption (alias for the PKIX bitmask)</summary>
         </member>
+        <member name="T:Goedel.Cryptography.MediaTypes">
+            <summary>
+            Constants specified in hallambaker-mesh-udf
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.MediaTypes.JSContact">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.MediaTypes.JSDevice">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.MediaTypes.JSCalendar">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.MediaTypes.JSContactScheme">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.MediaTypes.JSDeviceScheme">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.MediaTypes.JSCalendarScheme">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.MediaTypes.JSContactPrefix">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.MediaTypes.JSDevicePrefix">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.MediaTypes.JSCalendarPrefix">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.MediaTypes.EarlWellKnown">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.MediaTypes.EarlTag">
+            <summary>
+            </summary>
+        </member>
         <member name="T:Goedel.Cryptography.NamespaceDoc">
             <summary>
             Core class for cryptographic algorithm handling. Although .NET provides classes

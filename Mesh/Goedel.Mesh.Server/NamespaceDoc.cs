@@ -28,6 +28,7 @@ global using Goedel.IO;
 global using Goedel.Mesh.Client;
 global using Goedel.Mesh.Core;
 global using Goedel.Protocol;
+global using Goedel.Discovery;
 global using Goedel.Protocol.GenericHost;
 global using Goedel.Protocol.Presentation;
 global using Goedel.Protocol.Service;

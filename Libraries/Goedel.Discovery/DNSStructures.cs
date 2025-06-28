@@ -71,85 +71,19 @@ public partial struct DNSGateway {
 
     }
 
-/// <summary>Base class for DNS records</summary>
-public abstract partial class DNSRecord {
-    /// <summary>The domain name</summary>
-    public Domain Domain;
-    /// <summary>Record type code</summary>
-    public DNSTypeCode RType;
-    /// <summary>Record class</summary>
-    public DNSClass RClass;
-    /// <summary>Time to live</summary>
-    public uint TTL;
-    /// <summary>Record data</summary>
-    public DNSBufferIndex RData;
-    /// <summary>Start index</summary>
-    public int Start;
 
+public enum DNSUpdateCodes {
 
-    /// <summary>Default constructor</summary>
-    public DNSRecord() {
-        }
+    DeleteAllRRSets,
 
-    //public DNSRecord (DNSBufferIndex   IndexIn) {
-    //    Index = IndexIn;
-    //    Decode ();
-    //    }
+    DeleteRRSet,
 
+    DeleteRR,
 
-    // Reader method, reads buffer and returns the relevant record...
+    Add
 
-
-    //public void Encode () {
-    //    Index.WriteName (Domain.Name);
-    //    Index.WriteInt16 (RType);
-    //    Index.WriteInt16 (RClass);
-    //    Index.WriteInt32 (TTL);               
-    //    }
-
-    //public void Decode () {
-    //    Index.Dump ();
-
-    //    Domain.Name = Index.ReadName ();
-    //    RType = (DNSTypeCode)Index.ReadInt16 ();
-    //    RClass = (DNSClass)Index.ReadInt16 ();
-    //    TTL = Index.ReadInt32 ();
-    //    Index.ReadL16Data (out RData);
-    //    }
-
-
-
-
-    /// <summary>Write value</summary>
-    public static void Write() {
-        //Encode ();
-        }
-
-    /// <summary>Convert to canonical form</summary>
-    /// <returns>Canonical form of record data contents</returns>
-    public abstract string Canonical();
-
-    //// Debugging shortcut
-    ///// <summary></summary>
-    //public void Dump() {
-    //    //Console.WriteLine (Canonical ());
-    //    }
-
-    //// Convert from canonical form
-    //public virtual void Parse(string Canonical) {
-    //    }
-
-    /// <summary>Convert to wire form</summary>
-    /// <param name="Index">Output buffer</param>
-    public virtual void Encode(DNSBufferIndex Index) {
-        }
-
-    //// Convert from byte form
-    //public virtual void Decode (DNSBuffer DNSBuffer, int Length) {
-    //    }
 
     }
-
 
 /// <summary>DNS Flags</summary>
 public enum DNSFlags : ushort {
@@ -366,18 +300,18 @@ public class DNSRequest : DNSMessage {
     /// <summary>Text tag describing message type.</summary>
     public override string TypeTag => "Request";
 
-    /// <summary>Constructor for request</summary>
-    /// <param name="Domain">The domain name</param>
-    /// <param name="QType">The query type</param>
-    public DNSRequest(string Domain, string QType) {
-        if (QType == null) {
-            Query = new DNSQuery(Domain, DNSTypeCode.ALL);
-            }
-        else {
-            Query = new DNSQuery(Domain, DNS.TypeCode(QType));
-            }
-        Flags = DNSFlags.RD | DNSFlags.OPCODE_QUERY;
-        }
+    ///// <summary>Constructor for request</summary>
+    ///// <param name="Domain">The domain name</param>
+    ///// <param name="QType">The query type</param>
+    //public DNSRequest(string Domain, string QType) {
+    //    if (QType == null) {
+    //        Query = new DNSQuery(Domain, DNSTypeCode.ALL);
+    //        }
+    //    else {
+    //        Query = new DNSQuery(Domain, DNS.TypeCode(QType));
+    //        }
+    //    Flags = DNSFlags.RD | DNSFlags.OPCODE_QUERY;
+    //    }
 
     /// <summary>Constructor for request</summary>
     /// <param name="Domain">The domain name</param>
@@ -467,4 +401,8 @@ public class DNSQuery {
     /// <param name="QTypeIn">Query type</param>
     public DNSQuery(String Domain, DNSTypeCode QTypeIn) :
         this(Domain, QTypeIn, DNSClass.IN) { }
+    }
+
+
+public class DNSUpdate : DNSMessage {
     }

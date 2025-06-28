@@ -31,6 +31,11 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="MediaTypes.cs">
+			<DependentUpon>MediaTypes.Constant</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="UDFConstants.cs">
 			<DependentUpon>UDFConstants.Constant</DependentUpon>
 			<DesignTime>True</DesignTime>
@@ -43,6 +48,10 @@
 		<None Update="Exceptions.exceptional">
 			<LastGenOutput>Exceptions.cs</LastGenOutput>
 			<Generator>exceptional</Generator>
+		</None>
+		<None Update="MediaTypes.constant">
+		  <LastGenOutput>JoseConstants - Copy.cs</LastGenOutput>
+		  <Generator>Constant</Generator>
 		</None>
 		<None Update="JoseConstants.constant">
 			<LastGenOutput>JoseConstants.cs</LastGenOutput>

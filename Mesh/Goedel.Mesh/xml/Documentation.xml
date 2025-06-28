@@ -9296,6 +9296,30 @@
             <param name="session">The request context.</param>
             <returns>The response object from the service</returns>
         </member>
+        <member name="M:Goedel.Mesh.MeshService.PublishEarl(Goedel.Mesh.PublishEarlRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Base method for implementing the transaction PublishEarl.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The request context.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshService.DeleteEarl(Goedel.Mesh.DeleteEarlRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Base method for implementing the transaction DeleteEarl.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The request context.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshService.PublishDns(Goedel.Mesh.PublishDnsRequest,Goedel.Protocol.IJpcSession)">
+            <summary>
+            Base method for implementing the transaction PublishDns.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The request context.</param>
+            <returns>The response object from the service</returns>
+        </member>
         <member name="T:Goedel.Mesh.MeshServiceClient">
             <summary>
             Client class for MeshService.
@@ -9531,6 +9555,48 @@
             <param name="request">The request object.</param>
             <returns>The response object</returns>
         </member>
+        <member name="M:Goedel.Mesh.MeshServiceClient.PublishEarl(Goedel.Mesh.PublishEarlRequest)">
+            <summary>
+            Implement the transaction PublishEarl.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceClient.PublishEarlAsync(Goedel.Mesh.PublishEarlRequest)">
+            <summary>
+            Implement the transaction PublishEarl asynchronously.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceClient.DeleteEarl(Goedel.Mesh.DeleteEarlRequest)">
+            <summary>
+            Implement the transaction DeleteEarl.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceClient.DeleteEarlAsync(Goedel.Mesh.DeleteEarlRequest)">
+            <summary>
+            Implement the transaction DeleteEarl asynchronously.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceClient.PublishDns(Goedel.Mesh.PublishDnsRequest)">
+            <summary>
+            Implement the transaction PublishDns.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceClient.PublishDnsAsync(Goedel.Mesh.PublishDnsRequest)">
+            <summary>
+            Implement the transaction PublishDns asynchronously.
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
         <member name="T:Goedel.Mesh.MeshServiceDirect">
             <summary>
             Direct API class for MeshService.
@@ -9640,6 +9706,27 @@
             <returns>The response object</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshServiceDirect.OperateAsync(Goedel.Mesh.OperateRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.PublishEarlAsync(Goedel.Mesh.PublishEarlRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.DeleteEarlAsync(Goedel.Mesh.DeleteEarlRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceDirect.PublishDnsAsync(Goedel.Mesh.PublishDnsRequest)">
             <summary>
             Implement the transaction
             </summary>		
@@ -11925,6 +12012,311 @@
             <returns>Object of this type</returns>
         </member>
         <member name="M:Goedel.Mesh.OperateResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
+        </member>
+        <member name="T:Goedel.Mesh.PublishEarlRequest">
+             <summary>
+            
+             Publish an EARL package.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PublishEarlRequest.PreLocator">
+             <summary>
+            The prelocator used to construct the Base64 locator.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PublishEarlRequest.Data">
+             <summary>
+            The encrypted resource data
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PublishEarlRequest.Expire">
+             <summary>
+            Time after which the service should cease publishing the resource.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PublishEarlRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.PublishEarlRequest._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.PublishEarlRequest._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.PublishEarlRequest._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.PublishEarlRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.PublishEarlRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.PublishEarlRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Mesh.PublishEarlResponse">
+             <summary>
+            
+             Result of EARL publication request.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PublishEarlResponse.Domain">
+             <summary>
+            A domain from which the data can be retrieved.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PublishEarlResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.PublishEarlResponse._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.PublishEarlResponse._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.PublishEarlResponse._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.PublishEarlResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.PublishEarlResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.PublishEarlResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="P:Goedel.Mesh.PublishEarlResponse.Earl">
+            <summary>The EARL value, this cannot be returned by the service which
+            only knows the pre-locator. This property MAY be used to return the 
+            EARL value in client wrapper methods.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.PublishEarlResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
+        </member>
+        <member name="T:Goedel.Mesh.DeleteEarlRequest">
+             <summary>
+            
+             Delete an EARL package.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeleteEarlRequest.PreLocator">
+             <summary>
+            The prelocator used to construct the Base64 locator.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeleteEarlRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.DeleteEarlRequest._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.DeleteEarlRequest._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.DeleteEarlRequest._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.DeleteEarlRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.DeleteEarlRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.DeleteEarlRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Mesh.DeleteEarlResponse">
+             <summary>
+            
+             Result of attempt to delete an EARL
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeleteEarlResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.DeleteEarlResponse._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.DeleteEarlResponse._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.DeleteEarlResponse._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.DeleteEarlResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.DeleteEarlResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.DeleteEarlResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.DeleteEarlResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
+        </member>
+        <member name="T:Goedel.Mesh.PublishDnsRequest">
+             <summary>
+            
+             Publish an EARL package.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PublishDnsRequest.Updates">
+             <summary>
+            The updates to apply
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PublishDnsRequest._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.PublishDnsRequest._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.PublishDnsRequest._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.PublishDnsRequest._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.PublishDnsRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.PublishDnsRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.PublishDnsRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Mesh.DnsUpdate">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DnsUpdate.IsAdd">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DnsUpdate.Name">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DnsUpdate.RR">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DnsUpdate.Record">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DnsUpdate._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.DnsUpdate._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.DnsUpdate._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.DnsUpdate._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.DnsUpdate._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.DnsUpdate.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.DnsUpdate._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Mesh.PublishDnsResponse">
+             <summary>
+            
+             Result of EARL publication request.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PublishDnsResponse._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.PublishDnsResponse._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.PublishDnsResponse._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.PublishDnsResponse._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.PublishDnsResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.PublishDnsResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.PublishDnsResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.PublishDnsResponse.#ctor(System.Exception)">
             <summary>
             Default constructor. 
             </summary>

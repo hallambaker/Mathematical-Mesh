@@ -26,7 +26,10 @@ using Xunit;
 
 namespace Goedel.Mesh.Test;
 
-public class DummyDnsService {
+
+
+
+public class DummyDnsService : IDnsPublisher {
 
 
     public Dictionary<string, DnsNode> DictionaryData { get;} = [];
@@ -36,23 +39,27 @@ public class DummyDnsService {
         DnsClient.Default = new DummyDnsClient(this);
         }
 
+
     public void PublishRecords(
-                        IEnumerable<DNSRecord> records) {
+                IEnumerable<DNSItem> records) {
         foreach (DNSRecord record in records) {
             PublishRecord(record);
-                }
-        ;
+            }
         }
 
     public void PublishRecord(
-                        DNSRecord record) {
+                        DNSItem item) {
 
-        if (!DictionaryData.TryGetValue(record.Domain.Name, out var node)) {
-            node = new DnsNode(record.Domain.Name);
-            DictionaryData.Add(record.Domain.Name, node);
+
+
+
+        if (item is DNSRecord record) {
+            if (!DictionaryData.TryGetValue(item.Domain.Name, out var node)) {
+                node = new DnsNode(item.Domain.Name);
+                DictionaryData.Add(item.Domain.Name, node);
+                }
+            node.Add(record);
             }
-        node.Add(record);
-
         }
 
 
@@ -87,6 +94,10 @@ public record DnsNode(string Domain) {
                 records : null;
 
 
+
+
+
+
     }
 
 public class DummyDnsClient : DnsClient {
@@ -100,6 +111,12 @@ public class DummyDnsClient : DnsClient {
 
 
     public override DNSContext GetContext() => new DummyDnsContext(DnsService);
+
+
+
+
+
+
     }
 
 
@@ -141,6 +158,17 @@ public class DummyDnsContext : DNSContext {
     public override void SendRequest(DNSRequest request, int index = 0) {
         DNSRequest = request;
         }
+
+
+    public override Task<IEnumerable<DNSRecord>> QueryRecord(
+            string address,
+            DNSTypeCode typeCode = DNSTypeCode.TXT) {
+
+
+        throw new NYI();
+        }
+
+
 
     }
 

@@ -98,6 +98,26 @@
             </summary>
             <param name="identifier">The identifier to return an instance for.</param>
         </member>
+        <member name="T:Goedel.Discovery.DNS">
+            <summary>DNS management interface class.</summary>	
+            <summary>DNS management interface class.</summary>	
+        </member>
+        <member name="F:Goedel.Discovery.DNS.DictionaryTypeCode">
+            <summary>Dictionary of Type codes to descriptions</summary>	
+        </member>
+        <member name="F:Goedel.Discovery.DNS.DictionaryType">
+            <summary>Dictionary of Type names to codes</summary>	
+        </member>
+        <member name="M:Goedel.Discovery.DNS.TypeCode(System.String)">
+            <summary>Convert RR text code to type code.</summary>
+            <param name="Tag">DNS text code</param>
+            <returns>Type code</returns>
+        </member>
+        <member name="M:Goedel.Discovery.DNS.TypeCode(System.Int32)">
+            <summary>Convert RR type code to text code.</summary>
+            <param name="Code">Type code</param>
+            <returns>DNS text code</returns>
+        </member>
         <member name="T:Goedel.Discovery.DNSBuffer">
             <summary>
             Buffer class for DNS operations.
@@ -391,11 +411,6 @@
             <returns>The value read</returns>
             <remarks>Not yet implemented</remarks>
         </member>
-        <member name="M:Goedel.Discovery.DNSBufferIndex.ReadOptionalString">
-            <summary>Read value</summary>
-            <returns>The value read</returns>
-            <remarks>Not yet implemented</remarks>
-        </member>
         <member name="M:Goedel.Discovery.DNSBufferIndex.ReadTime32">
             <summary>Read 32 bit time value</summary>
             <returns>The value read</returns>
@@ -403,6 +418,11 @@
         </member>
         <member name="M:Goedel.Discovery.DNSBufferIndex.ReadTime48">
             <summary>Read 48 bit time value</summary>
+            <returns>The value read</returns>
+            <remarks>Not yet implemented</remarks>
+        </member>
+        <member name="M:Goedel.Discovery.DNSBufferIndex.ReadOptionalString">
+            <summary>Read value</summary>
             <returns>The value read</returns>
             <remarks>Not yet implemented</remarks>
         </member>
@@ -873,6 +893,83 @@
         <member name="M:Goedel.Discovery.DnsConfigWriter.WriteTag(System.String)">
             <inheritdoc/>
         </member>
+        <member name="F:Goedel.Discovery.DNSItem.Domain">
+            <summary>The domain name</summary>
+        </member>
+        <member name="F:Goedel.Discovery.DNSItem.RClass">
+            <summary>Record type code</summary>
+        </member>
+        <member name="F:Goedel.Discovery.DNSItem.TTL">
+            <summary>Time to live</summary>
+        </member>
+        <member name="F:Goedel.Discovery.DNSItem.RData">
+            <summary>Record data</summary>
+        </member>
+        <member name="F:Goedel.Discovery.DNSItem.Start">
+            <summary>Start index</summary>
+        </member>
+        <member name="M:Goedel.Discovery.DNSItem.Encode(Goedel.Discovery.DNSBufferIndex)">
+            <summary>Convert to wire form</summary>
+            <param name="Index">Output buffer</param>
+        </member>
+        <member name="T:Goedel.Discovery.DNSRecord">
+            <summary>
+            Base class for DNS Records
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.DNSRecord.Code">
+            <summary>The type code</summary>
+        </member>
+        <member name="P:Goedel.Discovery.DNSRecord.Label">
+            <summary>The type text</summary>		
+        </member>
+        <member name="P:Goedel.Discovery.DNSRecord.Description">
+            <summary>Description</summary>
+        </member>
+        <member name="M:Goedel.Discovery.DNSRecord.#ctor">
+            <summary>Default constructor</summary>
+        </member>
+        <member name="M:Goedel.Discovery.DNSRecord.Decode(Goedel.Discovery.DNSBufferIndex)">
+            <summary>Decode record or query from buffer</summary>	
+            <param name="Index">Input data</param>
+            <returns>Parsed record.</returns>
+        </member>
+        <member name="M:Goedel.Discovery.DNSRecord.Canonical">
+            <summary>Convert to canonical form</summary>
+            <returns>Canonical form of record data contents</returns>
+        </member>
+        <member name="M:Goedel.Discovery.DNSRecord.Unknown">
+            <summary>
+            Return data value in default unknown encoding.
+            </summary>
+            <returns>Encoding of record in unknown text encoding.</returns>
+        </member>
+        <member name="M:Goedel.Discovery.DNSRecord.Unknown(System.Byte[]@)">
+            <summary>
+            Return data value in default unknown encoding.
+            </summary>
+            <param name="encoding">Encoded parameters in byte form</param>
+            <returns>Encoding of record in unknown text encoding.</returns>
+        </member>
+        <member name="M:Goedel.Discovery.DNSRecord.Parse(System.String,Goedel.Discovery.Parse)">
+            <summary>Dispatch parser to parse text representation of specific DNS record</summary>
+            <param name="Tag">Record tag</param>
+            <param name="Parse">Parser</param>
+            <returns>Parsed record</returns>
+        </member>
+        <member name="T:Goedel.Discovery.DNSRecord_Unknown">
+            <summary>Unknown DNS record</summary>
+        </member>
+        <member name="M:Goedel.Discovery.DNSRecord_Unknown.Decode(Goedel.Discovery.DNSBufferIndex,System.Int32)">
+            <summary>Decode record or query from buffer</summary>	
+            <param name="Index">Input data</param>
+            <param name="Length">Maximum amount of data to read</param>
+            <returns>Parsed record.</returns>
+        </member>
+        <member name="M:Goedel.Discovery.DNSRecord_Unknown.Canonical">
+            <summary>Convert to canonical form</summary>
+            <returns>Canonical form of record data contents</returns>
+        </member>
         <member name="T:Goedel.Discovery.DNSOption">
             <summary>Describe DNS Option</summary>
         </member>
@@ -908,77 +1005,6 @@
         </member>
         <member name="P:Goedel.Discovery.DNSGateway.DomainName">
             <summary>The DNS address of the gateway</summary>
-        </member>
-        <member name="T:Goedel.Discovery.DNSRecord">
-            <summary>Base class for DNS records</summary>
-            <summary>
-            Base class for DNS Records
-            </summary>
-        </member>
-        <member name="F:Goedel.Discovery.DNSRecord.Domain">
-            <summary>The domain name</summary>
-        </member>
-        <member name="F:Goedel.Discovery.DNSRecord.RType">
-            <summary>Record type code</summary>
-        </member>
-        <member name="F:Goedel.Discovery.DNSRecord.RClass">
-            <summary>Record class</summary>
-        </member>
-        <member name="F:Goedel.Discovery.DNSRecord.TTL">
-            <summary>Time to live</summary>
-        </member>
-        <member name="F:Goedel.Discovery.DNSRecord.RData">
-            <summary>Record data</summary>
-        </member>
-        <member name="F:Goedel.Discovery.DNSRecord.Start">
-            <summary>Start index</summary>
-        </member>
-        <member name="M:Goedel.Discovery.DNSRecord.#ctor">
-            <summary>Default constructor</summary>
-        </member>
-        <member name="M:Goedel.Discovery.DNSRecord.Write">
-            <summary>Write value</summary>
-        </member>
-        <member name="M:Goedel.Discovery.DNSRecord.Canonical">
-            <summary>Convert to canonical form</summary>
-            <returns>Canonical form of record data contents</returns>
-        </member>
-        <member name="M:Goedel.Discovery.DNSRecord.Encode(Goedel.Discovery.DNSBufferIndex)">
-            <summary>Convert to wire form</summary>
-            <param name="Index">Output buffer</param>
-        </member>
-        <member name="P:Goedel.Discovery.DNSRecord.Code">
-            <summary>The type code</summary>
-        </member>
-        <member name="P:Goedel.Discovery.DNSRecord.Label">
-            <summary>The type text</summary>		
-        </member>
-        <member name="P:Goedel.Discovery.DNSRecord.Description">
-            <summary>Description</summary>
-        </member>
-        <member name="M:Goedel.Discovery.DNSRecord.Decode(Goedel.Discovery.DNSBufferIndex)">
-            <summary>Decode record or query from buffer</summary>	
-            <param name="Index">Input data</param>
-            <returns>Parsed record.</returns>
-        </member>
-        <member name="M:Goedel.Discovery.DNSRecord.Parse(System.String,Goedel.Discovery.Parse)">
-            <summary>Dispatch parser to parse text representation of specific DNS record</summary>
-            <param name="Tag">Record tag</param>
-            <param name="Parse">Parser</param>
-            <returns>Parsed record</returns>
-        </member>
-        <member name="M:Goedel.Discovery.DNSRecord.Unknown">
-            <summary>
-            Return data value in default unknown encoding.
-            </summary>
-            <returns>Encoding of record in unknown text encoding.</returns>
-        </member>
-        <member name="M:Goedel.Discovery.DNSRecord.Unknown(System.Byte[]@)">
-            <summary>
-            Return data value in default unknown encoding.
-            </summary>
-            <param name="encoding">Encoded parameters in byte form</param>
-            <returns>Encoding of record in unknown text encoding.</returns>
         </member>
         <member name="T:Goedel.Discovery.DNSFlags">
             <summary>DNS Flags</summary>
@@ -1131,11 +1157,6 @@
         <member name="P:Goedel.Discovery.DNSRequest.TypeTag">
             <summary>Text tag describing message type.</summary>
         </member>
-        <member name="M:Goedel.Discovery.DNSRequest.#ctor(System.String,System.String)">
-            <summary>Constructor for request</summary>
-            <param name="Domain">The domain name</param>
-            <param name="QType">The query type</param>
-        </member>
         <member name="M:Goedel.Discovery.DNSRequest.#ctor(System.String,Goedel.Discovery.DNSTypeCode)">
             <summary>Constructor for request</summary>
             <param name="Domain">The domain name</param>
@@ -1185,19 +1206,6 @@
             <summary>Constructor from main components for internet class</summary>
             <param name="Domain">Domain name</param>
             <param name="QTypeIn">Query type</param>
-        </member>
-        <member name="T:Goedel.Discovery.DNS">
-            <summary>DNS management interface class.</summary>	
-        </member>
-        <member name="M:Goedel.Discovery.DNS.TypeCode(System.String)">
-            <summary>Convert RR text code to type code.</summary>
-            <param name="Tag">DNS text code</param>
-            <returns>Type code</returns>
-        </member>
-        <member name="M:Goedel.Discovery.DNS.TypeCode(System.Int32)">
-            <summary>Convert RR type code to text code.</summary>
-            <param name="Code">Type code</param>
-            <returns>DNS text code</returns>
         </member>
         <member name="T:Goedel.Discovery.DNSTypeCode">
             <summary>DNT Type codes</summary>
@@ -1431,7 +1439,10 @@
             <summary>Resource record DLV = 32769, DNSSEC Lookaside Validation</summary>
         </member>
         <member name="F:Goedel.Discovery.DNSTypeCode.Unknown">
-            Unknown record type.
+            <summary>Unknownrecord type.</summary>
+        </member>
+        <member name="F:Goedel.Discovery.DNSTypeCode.ANY">
+            <summary>Synonym for ALL</summary>
         </member>
         <member name="T:Goedel.Discovery.DNSRecord_A">
             <summary> A 1 Host address see RFC1035</summary>
@@ -3506,19 +3517,6 @@
             <param name="Length">Maximum amount of data to read</param>
             <returns>Parsed record.</returns>
         </member>
-        <member name="T:Goedel.Discovery.DNSRecord_Unknown">
-            <summary>Unknown DNS record</summary>
-        </member>
-        <member name="M:Goedel.Discovery.DNSRecord_Unknown.Decode(Goedel.Discovery.DNSBufferIndex,System.Int32)">
-            <summary>Decode record or query from buffer</summary>	
-            <param name="Index">Input data</param>
-            <param name="Length">Maximum amount of data to read</param>
-            <returns>Parsed record.</returns>
-        </member>
-        <member name="M:Goedel.Discovery.DNSRecord_Unknown.Canonical">
-            <summary>Convert to canonical form</summary>
-            <returns>Canonical form of record data contents</returns>
-        </member>
         <member name="T:Goedel.Discovery.DiscoveryException">
             <summary>
             Base class for protocol exceptions.
@@ -4235,15 +4233,13 @@
             <param name="handle"></param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Discovery.ParsedHandle.ResolveEarl(System.String,System.String,System.String)">
+        <member name="M:Goedel.Discovery.ParsedHandle.ResolveEarlDns(System.String)">
             <summary>
             Resolve <paramref name="uriString"/> to obtain the HTTPS well known service, 
             fetch the ciphertext, decrypt and return the result.
             </summary>
             <param name="uriString">The uri to parse.</param>
-            <param name="wellKnown">The wellknown service type</param>
-            <param name="extension">The file extension (defaults to <paramref name="wellKnown"/>).</param>
-            <returns></returns>
+            <returns>The resolution result</returns>
         </member>
         <member name="M:Goedel.Discovery.ParsedHandle.GetServices">
             <summary>

@@ -64,6 +64,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
     //public override string ServiceDns { get; }
 
     public TestEnvironmentRdpShell(DeterministicSeed seed = null) : base(seed) {
+        EarlClient.Client = new EarlClientHttp(Test);
         }
 
 

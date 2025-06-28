@@ -440,7 +440,7 @@ public abstract class DNSContext : Disposable {
     /// <param name="address">The domain to query.</param>
     /// <param name="typeCode">The query type.</param>
     /// <returns></returns>
-    public async Task<IEnumerable<DNSRecord>> QueryRecord(
+    public virtual async Task<IEnumerable<DNSRecord>> QueryRecord(
                     string address,
                     DNSTypeCode typeCode = DNSTypeCode.TXT) {
 

@@ -241,9 +241,7 @@ public class ContextMeshPending : ContextAccount {
             case MeshConstants.TransactionResultPinInvalid: throw new RefusedPinInvalidException();
             }
 
-
         // Check the return result here!
-
         respondConnection.Result.AssertEqual(MeshConstants.TransactionResultAccept,
                 ConnectionException.Throw);
 

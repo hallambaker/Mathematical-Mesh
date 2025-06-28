@@ -165,7 +165,7 @@ public class ContextResolver : ContextAccount {
             Catalogs = new List<string> { CatalogRegistration.Label }
             };
 
-        Sync(statusRequest, MeshClient);
+        //Sync(statusRequest, MeshClient);
         // Sync against registryAddress!!!!
 
 

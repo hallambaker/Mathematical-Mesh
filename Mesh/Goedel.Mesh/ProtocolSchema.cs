@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 6/20/2025 3:02:05 PM
+//  This file was automatically generated at 6/28/2025 4:05:26 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -126,7 +126,14 @@ public abstract partial class MeshProtocol : global::Goedel.Protocol.JsonObject 
 	    {typeof(CryptographicResultKeyAgreement), CryptographicResultKeyAgreement._binding},
 	    {typeof(CryptographicResultShare), CryptographicResultShare._binding},
 	    {typeof(OperateRequest), OperateRequest._binding},
-	    {typeof(OperateResponse), OperateResponse._binding}
+	    {typeof(OperateResponse), OperateResponse._binding},
+	    {typeof(PublishEarlRequest), PublishEarlRequest._binding},
+	    {typeof(PublishEarlResponse), PublishEarlResponse._binding},
+	    {typeof(DeleteEarlRequest), DeleteEarlRequest._binding},
+	    {typeof(DeleteEarlResponse), DeleteEarlResponse._binding},
+	    {typeof(PublishDnsRequest), PublishDnsRequest._binding},
+	    {typeof(DnsUpdate), DnsUpdate._binding},
+	    {typeof(PublishDnsResponse), PublishDnsResponse._binding}
 		};
 
 	///<summary>Variable used to force static initialization</summary> 
@@ -186,7 +193,10 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
 				{"Post", typeof(PostRequest)},
 				{"Claim", typeof(ClaimRequest)},
 				{"PollClaim", typeof(PollClaimRequest)},
-				{"Operate", typeof(OperateRequest)}
+				{"Operate", typeof(OperateRequest)},
+				{"PublishEarl", typeof(PublishEarlRequest)},
+				{"DeleteEarl", typeof(DeleteEarlRequest)},
+				{"PublishDns", typeof(PublishDnsRequest)}
 		};
 
     ///<inheritdoc/>
@@ -209,6 +219,9 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
 		"Claim" => Claim(request as ClaimRequest, session),
 		"PollClaim" => PollClaim(request as PollClaimRequest, session),
 		"Operate" => Operate(request as OperateRequest, session),
+		"PublishEarl" => PublishEarl(request as PublishEarlRequest, session),
+		"DeleteEarl" => DeleteEarl(request as DeleteEarlRequest, session),
+		"PublishDns" => PublishDns(request as PublishDnsRequest, session),
 		_ => throw new Goedel.Protocol.UnknownOperation(),
         };
 
@@ -363,6 +376,33 @@ public abstract partial class MeshService : Goedel.Protocol.JpcInterface {
 	/// <returns>The response object from the service</returns>
     public abstract OperateResponse Operate (
             OperateRequest request, IJpcSession session);
+
+    /// <summary>
+	/// Base method for implementing the transaction PublishEarl.
+    /// </summary>
+    /// <param name="request">The request object to send to the host.</param>
+	/// <param name="session">The request context.</param>
+	/// <returns>The response object from the service</returns>
+    public abstract PublishEarlResponse PublishEarl (
+            PublishEarlRequest request, IJpcSession session);
+
+    /// <summary>
+	/// Base method for implementing the transaction DeleteEarl.
+    /// </summary>
+    /// <param name="request">The request object to send to the host.</param>
+	/// <param name="session">The request context.</param>
+	/// <returns>The response object from the service</returns>
+    public abstract DeleteEarlResponse DeleteEarl (
+            DeleteEarlRequest request, IJpcSession session);
+
+    /// <summary>
+	/// Base method for implementing the transaction PublishDns.
+    /// </summary>
+    /// <param name="request">The request object to send to the host.</param>
+	/// <param name="session">The request context.</param>
+	/// <returns>The response object from the service</returns>
+    public abstract PublishDnsResponse PublishDns (
+            PublishDnsRequest request, IJpcSession session);
 
     }
 
@@ -631,6 +671,54 @@ public partial class MeshServiceClient : Goedel.Protocol.JpcClientInterface {
     public virtual async Task<OperateResponse> OperateAsync (OperateRequest request) =>
 			await JpcSession.PostAsync("Operate", request) as OperateResponse;
 
+    /// <summary>
+	/// Implement the transaction PublishEarl.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public PublishEarlResponse PublishEarl (PublishEarlRequest request) =>
+			PublishEarlAsync (request).Sync();
+
+    /// <summary>
+	/// Implement the transaction PublishEarl asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<PublishEarlResponse> PublishEarlAsync (PublishEarlRequest request) =>
+			await JpcSession.PostAsync("PublishEarl", request) as PublishEarlResponse;
+
+    /// <summary>
+	/// Implement the transaction DeleteEarl.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public DeleteEarlResponse DeleteEarl (DeleteEarlRequest request) =>
+			DeleteEarlAsync (request).Sync();
+
+    /// <summary>
+	/// Implement the transaction DeleteEarl asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<DeleteEarlResponse> DeleteEarlAsync (DeleteEarlRequest request) =>
+			await JpcSession.PostAsync("DeleteEarl", request) as DeleteEarlResponse;
+
+    /// <summary>
+	/// Implement the transaction PublishDns.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public PublishDnsResponse PublishDns (PublishDnsRequest request) =>
+			PublishDnsAsync (request).Sync();
+
+    /// <summary>
+	/// Implement the transaction PublishDns asynchronously.
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public virtual async Task<PublishDnsResponse> PublishDnsAsync (PublishDnsRequest request) =>
+			await JpcSession.PostAsync("PublishDns", request) as PublishDnsResponse;
+
 
 	}
 
@@ -778,6 +866,33 @@ public partial class MeshServiceDirect: MeshServiceClient {
 	/// <returns>The response object</returns>
     public override Task<OperateResponse> OperateAsync (OperateRequest request) =>
 			Task.FromResult(Service.Operate (request, JpcSession));
+
+
+    /// <summary>
+	/// Implement the transaction
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public override Task<PublishEarlResponse> PublishEarlAsync (PublishEarlRequest request) =>
+			Task.FromResult(Service.PublishEarl (request, JpcSession));
+
+
+    /// <summary>
+	/// Implement the transaction
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public override Task<DeleteEarlResponse> DeleteEarlAsync (DeleteEarlRequest request) =>
+			Task.FromResult(Service.DeleteEarl (request, JpcSession));
+
+
+    /// <summary>
+	/// Implement the transaction
+    /// </summary>		
+    /// <param name="request">The request object.</param>
+	/// <returns>The response object</returns>
+    public override Task<PublishDnsResponse> PublishDnsAsync (PublishDnsRequest request) =>
+			Task.FromResult(Service.PublishDns (request, JpcSession));
 
 
 		}
@@ -3966,6 +4081,397 @@ public partial class OperateResponse : MeshResponse {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new OperateResponse();
+
+	}
+
+
+	/// <summary>
+	///
+	/// Publish an EARL package.
+	/// </summary>
+public partial class PublishEarlRequest : MeshRequest {
+    /// <summary>
+    ///The prelocator used to construct the Base64 locator.
+    /// </summary>
+
+	[JsonPropertyName("PreLocator")]
+	public virtual byte[]?					PreLocator  {get; set;} //
+
+    /// <summary>
+    ///The encrypted resource data
+    /// </summary>
+
+	[JsonPropertyName("Data")]
+	public virtual byte[]?					Data  {get; set;} //
+
+    /// <summary>
+    ///Time after which the service should cease publishing the resource.
+    /// </summary>
+
+	[JsonPropertyName("Expire")]
+	public virtual DateTime?					Expire  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyBinary ("PreLocator", 
+					(IBinding data, byte[]? value) => {(data as PublishEarlRequest).PreLocator = value;}, 
+					(IBinding data) => (data as PublishEarlRequest).PreLocator ),
+		new PropertyBinary ("Data", 
+					(IBinding data, byte[]? value) => {(data as PublishEarlRequest).Data = value;}, 
+					(IBinding data) => (data as PublishEarlRequest).Data ),
+		new PropertyDateTime ("Expire", 
+					(IBinding data, DateTime? value) => {(data as PublishEarlRequest).Expire = value;}, 
+					(IBinding data) => (data as PublishEarlRequest).Expire )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<PublishEarlRequest> _binding = new (
+			new() {
+			{ "PreLocator", _properties [0]},
+			{ "Data", _properties [1]},
+			{ "Expire", _properties [2]}}, __Tag,
+		() => new PublishEarlRequest(), () => [], () => [], MeshRequest._binding, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PublishEarlRequest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PublishEarlRequest();
+
+	}
+
+
+	/// <summary>
+	///
+	/// Result of EARL publication request.
+	/// </summary>
+public partial class PublishEarlResponse : MeshResponse {
+    /// <summary>
+    ///A domain from which the data can be retrieved.
+    /// </summary>
+
+	[JsonPropertyName("Domain")]
+	public virtual string?					Domain  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyString ("Domain", 
+					(IBinding data, string? value) => {(data as PublishEarlResponse).Domain = value;}, 
+					(IBinding data) => (data as PublishEarlResponse).Domain )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<PublishEarlResponse> _binding = new (
+			new() {
+			{ "Domain", _properties [0]}}, __Tag,
+		() => new PublishEarlResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PublishEarlResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PublishEarlResponse();
+
+	}
+
+
+	/// <summary>
+	///
+	/// Delete an EARL package.
+	/// </summary>
+public partial class DeleteEarlRequest : MeshRequest {
+    /// <summary>
+    ///The prelocator used to construct the Base64 locator.
+    /// </summary>
+
+	[JsonPropertyName("PreLocator")]
+	public virtual byte[]?					PreLocator  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyBinary ("PreLocator", 
+					(IBinding data, byte[]? value) => {(data as DeleteEarlRequest).PreLocator = value;}, 
+					(IBinding data) => (data as DeleteEarlRequest).PreLocator )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<DeleteEarlRequest> _binding = new (
+			new() {
+			{ "PreLocator", _properties [0]}}, __Tag,
+		() => new DeleteEarlRequest(), () => [], () => [], MeshRequest._binding, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DeleteEarlRequest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DeleteEarlRequest();
+
+	}
+
+
+	/// <summary>
+	///
+	/// Result of attempt to delete an EARL
+	/// </summary>
+public partial class DeleteEarlResponse : MeshResponse {
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<DeleteEarlResponse> _binding = new (
+			new() {}, __Tag,
+		() => new DeleteEarlResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DeleteEarlResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DeleteEarlResponse();
+
+	}
+
+
+	/// <summary>
+	///
+	/// Publish an EARL package.
+	/// </summary>
+public partial class PublishDnsRequest : MeshRequest {
+    /// <summary>
+    ///The updates to apply
+    /// </summary>
+
+	[JsonPropertyName("Updates")]
+	public virtual List<DnsUpdate>?					Updates  {get; set;}
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyListStruct ("Updates", typeof (DnsUpdate),
+					(IBinding data, object? value) => {(data as PublishDnsRequest).Updates = value as List<DnsUpdate>;}, 
+					(IBinding data) => (data as PublishDnsRequest).Updates,
+					false, ()=>new  List<DnsUpdate>(), ()=>new DnsUpdate())
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<PublishDnsRequest> _binding = new (
+			new() {
+			{ "Updates", _properties [0]}}, __Tag,
+		() => new PublishDnsRequest(), () => [], () => [], MeshRequest._binding, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PublishDnsRequest";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PublishDnsRequest();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class DnsUpdate : MeshProtocol {
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("IsAdd")]
+	public virtual bool?					IsAdd  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("Name")]
+	public virtual string?					Name  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("RR")]
+	public virtual int?					RR  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("Record")]
+	public virtual byte[]?					Record  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyBoolean ("IsAdd", 
+					(IBinding data, bool? value) => {(data as DnsUpdate).IsAdd = value;}, 
+					(IBinding data) => (data as DnsUpdate).IsAdd ),
+		new PropertyString ("Name", 
+					(IBinding data, string? value) => {(data as DnsUpdate).Name = value;}, 
+					(IBinding data) => (data as DnsUpdate).Name ),
+		new PropertyInteger32 ("RR", 
+					(IBinding data, int? value) => {(data as DnsUpdate).RR = value;}, 
+					(IBinding data) => (data as DnsUpdate).RR ),
+		new PropertyBinary ("Record", 
+					(IBinding data, byte[]? value) => {(data as DnsUpdate).Record = value;}, 
+					(IBinding data) => (data as DnsUpdate).Record )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<DnsUpdate> _binding = new (
+			new() {
+			{ "IsAdd", _properties [0]},
+			{ "Name", _properties [1]},
+			{ "RR", _properties [2]},
+			{ "Record", _properties [3]}}, __Tag,
+		() => new DnsUpdate(), () => [], () => [], null, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DnsUpdate";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DnsUpdate();
+
+	}
+
+
+	/// <summary>
+	///
+	/// Result of EARL publication request.
+	/// </summary>
+public partial class PublishDnsResponse : MeshResponse {
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<PublishDnsResponse> _binding = new (
+			new() {}, __Tag,
+		() => new PublishDnsResponse(), () => [], () => [], MeshResponse._binding, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "PublishDnsResponse";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new PublishDnsResponse();
 
 	}
 

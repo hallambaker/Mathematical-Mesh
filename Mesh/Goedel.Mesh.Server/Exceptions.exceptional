@@ -27,6 +27,17 @@ Namespace Goedel.Mesh.Server
 				Description
 					|The request message expired before the respondent replied
 
+		Exception MeshMissingParameter
+			Console "A required parameter was missing"
+			Description
+				|A required parameter was missing
+
+		Exception MeshServiceNotSupported
+			Console "The {0} service is not supported"
+
+				
+			Description
+				|The service is not supported
 
 		Exception MeshRequestSize
 			Console "The service request message is larger than permitted by the service policy"

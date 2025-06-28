@@ -451,6 +451,13 @@
             <param name="host">The service to inject.</param>
             <returns>The value of <paramref name="host"/> for chaining.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Server.ConsoleLoggerExtensions.AddEarlService(Microsoft.Extensions.Hosting.IHostBuilder)">
+            <summary>
+            Inject Mesh service and options to the builder <paramref name="host"/>
+            </summary>
+            <param name="host">The service to inject.</param>
+            <returns>The value of <paramref name="host"/> for chaining.</returns>
+        </member>
         <member name="T:Goedel.Mesh.Server.MeshConfiguredService">
             <summary>
             A Mesh service provider in a form suited for dependency injection.
@@ -485,6 +492,44 @@
             <param name="meshHostConfiguration">The Mesh service configuration.</param>
             <param name="genericHostConfiguration">The host configuration.</param>
             <param name="presenceServiceProvider">The presence service.</param>
+        </member>
+        <member name="T:Goedel.Mesh.Server.EarlDispatchCached">
+            <summary>
+            Dispatch nubin for EARL resolution service 
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EarlDispatchCached.Dispatch(System.Net.HttpListenerRequest,System.Net.HttpListenerResponse)">
+            <summary>
+            The HTTP dispatch routine, process the request <paramref name="request"/>
+            to construct the response <paramref name="response"/>.
+            </summary>
+            <param name="request">The HTTP request.</param>
+            <param name="response">The HTTP response.</param>
+            <returns>The HTTP status code returned.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EarlDispatchCached.Add(System.String,System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EarlDispatchCached.Delete(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EarlDispatchCached.TryGetValue(System.String,System.Byte[]@)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.Server.EarlClientDirect">
+            <summary>
+            EARL Client resolving direct to the service (for testing);
+            </summary>
+            <param name="EarlDispatch"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EarlClientDirect.#ctor(Goedel.Mesh.Server.EarlDispatch)">
+            <summary>
+            EARL Client resolving direct to the service (for testing);
+            </summary>
+            <param name="EarlDispatch"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EarlClientDirect.TryGetValue(System.String,System.String)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Mesh.Server.MeshServerException">
             <summary>
@@ -642,6 +687,70 @@
             public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="P:Goedel.Mesh.Server.MeshResponseExpired.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshMissingParameter">
+            <summary>
+            A required parameter was missing
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshMissingParameter.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshMissingParameter.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshMissingParameter.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshMissingParameter._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshMissingParameter.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshServiceNotSupported">
+            <summary>
+            The service is not supported
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshServiceNotSupported.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshServiceNotSupported.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshServiceNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshServiceNotSupported._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshServiceNotSupported.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -1297,6 +1406,12 @@
         </member>
         <member name="P:Goedel.Mesh.Server.PublicMeshService.CallsignServiceProfile">
             <summary>The callsign registry service profile.</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.EarlDispatch">
+            <summary>Earl dispatch service</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.PublicMeshService.IDnsPublisher">
+            <summary>DNS Publication hook.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Disposing">
             <inheritdoc/>

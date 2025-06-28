@@ -1,7 +1,4 @@
-﻿
-
-
-namespace Goedel.Mesh.Server;
+﻿namespace Goedel.Mesh.Server;
 
 /// <summary>
 /// Extensions class for adding a Mesh Service Provider to a host.
@@ -41,6 +38,25 @@ public static class ConsoleLoggerExtensions {
 
         return host;
         }
+
+
+    /// <summary>
+    /// Inject Mesh service and options to the builder <paramref name="host"/>
+    /// </summary>
+    /// <param name="host">The service to inject.</param>
+    /// <returns>The value of <paramref name="host"/> for chaining.</returns>
+
+    public static IHostBuilder AddEarlService(this IHostBuilder host) {
+
+        host.ConfigureServices((hostContext, services) => {
+            //var serviceConfig = hostContext.Configuration.GetSection(MeshServiceConfiguration.ConfigurationEntry.Name);
+            //services.AddSingleton<IConfguredService, MeshConfiguredService>();
+            //var configurationService = services.Configure<MeshServiceConfiguration>(serviceConfig);
+        });
+
+        return host;
+        }
+
     }
 
 
@@ -129,4 +145,5 @@ public class MeshConfiguredService : IConfguredService {
 
 
     }
+
 

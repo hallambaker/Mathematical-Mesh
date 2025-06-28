@@ -129,3 +129,17 @@ public record EarlSet {
 
 
     }
+
+
+
+public record EarlEnvelopeContext {
+
+
+
+    public string? Pin { get; init; } = null;
+
+    public IEnumerable<string>? SigningKeys { get; init; } = null;
+
+
+
+    }

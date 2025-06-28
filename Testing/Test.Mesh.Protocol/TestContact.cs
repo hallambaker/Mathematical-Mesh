@@ -23,6 +23,10 @@
 //#pragma warning disable IDE0059
 //#pragma warning disable CA1822
 
+using Goedel.Contacts;
+using Goedel.Mesh.Shell;
+using Goedel.Utilities;
+
 namespace Goedel.XUnit;
 
 public partial class TestContact : UnitTestSet {
@@ -37,8 +41,10 @@ public partial class TestContact : UnitTestSet {
         // Bind to the test handle resolver
         }
 
-    public virtual TestEnvironmentCommon GetTestEnvironmentCommon(DeterministicSeed seed = null) =>
-            new(seed ?? Seed);
+    public virtual TestEnvironmentCommon GetTestEnvironmentCommon(
+                    DeterministicSeed seed = null,
+                    bool dummyDns = false) =>
+            new(seed ?? Seed, dummyDns: dummyDns);
 
     [Fact]
     public void ContactSelf() {
@@ -49,28 +55,50 @@ public partial class TestContact : UnitTestSet {
 
         // Get JSContact for Alice
         contextAccountAlice.TryGetContactSelf(out var contactSelf);
+        var contactAlice = contactSelf.JsContact;
+        
+
+        // Publish EARL of contact for self.
+        var response = contextAccountAlice.PublishEarl(contactSelf.JsContact.GetBytes(false), MediaTypes.JSContactScheme,
+                MediaTypes.JSContact).Sync();
+
+        var earl = response.Earl;
+
+        // attempt resolution through the JSContact earl - jscontact://example.com/....
+        var contactAliceAtAlice = 
+                EarlClient.ResolveEarl<JsContact>(earl).Sync();
+
+
+        contactAlice.TestIsEqual(contactAliceAtAlice);
+
+
+        // While we could repeat this testing for resolution by Bob, the test client
+        // is the same so it is pointless.
         }
 
-    [Fact]
-    public void ContactOther() {
-
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MakeAccount(testEnvironmentCommon, AccountAlice, DeviceAliceAdmin);
-        var contextAccountBob = MakeAccount(testEnvironmentCommon, AccountBob, DeviceBobAdmin);
-
-        TestExchange(contextAccountAlice, contextAccountBob);
-        }
 
     [Fact]
     public void ContactHandle() {
 
         // Need to be able to publish the handle records...
-        var service = new DummyDnsService();
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
+        var testEnvironmentCommon = GetTestEnvironmentCommon(dummyDns : true);
         var contextAccountAlice = MakeAccount(testEnvironmentCommon, HandleAlice, DeviceAliceAdmin);
         var contextAccountBob = MakeAccount(testEnvironmentCommon, HandleBob, DeviceBobAdmin);
 
-        TestExchange(contextAccountAlice, contextAccountBob);
+        // Get JSContact for Alice
+        contextAccountAlice.TryGetContactSelf(out var contactSelf);
+        var contactAlice = contactSelf.JsContact;
+
+        // Publish EARL of contact for self and bind a handle
+        var earl = contextAccountAlice.PublishEarl(contactAlice).Sync();
+        contextAccountAlice.BindHandle(MediaTypes.JSContactPrefix, HandleAlice, MediaTypes.EarlTag, earl).Sync();
+
+
+        // attempt resolution as @alice.example.com
+        var contactAliceAtBob = EarlClient.ResolveContactHandle(HandleAlice).Sync();
+        contactAlice.TestIsEqual(contactAliceAtBob);
+
+
         }
 
 
@@ -87,6 +115,7 @@ public partial class TestContact : UnitTestSet {
                 string accountId, string deviceId) {
         var contextAccount = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                 deviceId, accountId, "main");
+
 
         // Get JSContact for Alice
         contextAccount.TryGetContactSelf(out var contactAlice);

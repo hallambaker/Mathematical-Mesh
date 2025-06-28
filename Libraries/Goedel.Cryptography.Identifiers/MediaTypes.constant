@@ -1,0 +1,20 @@
+﻿Namespace Goedel.Cryptography MediaTypes
+	|Constants specified in hallambaker-mesh-udf
+
+
+File MediaTypes
+	String JSContact "application/jscontact+json"
+	String JSDevice "application/jsdevice+json"
+	String JSCalendar "application/jscalendar+json"
+
+	String JSContactScheme "jscontact"
+	String JSDeviceScheme "jsdevice"
+	String JSCalendarScheme "jscalendar"
+
+	String JSContactPrefix "_jscontact"
+	String JSDevicePrefix "_jsdevice"
+	String JSCalendarPrefix "_jscalendar"
+
+	String EarlWellKnown "earl"
+	String EarlTag "uri"
+

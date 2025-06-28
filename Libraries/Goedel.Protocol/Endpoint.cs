@@ -21,6 +21,7 @@
 #endregion
 using Goedel.Discovery;
 
+using System.Net;
 using System.Net.Sockets;
 
 namespace Goedel.Protocol;
@@ -51,6 +52,9 @@ public enum TransportType {
     }
 
 
+
+
+
 /// <summary>
 /// Record describing a listener endpoint.
 /// </summary>
@@ -60,13 +64,23 @@ public enum TransportType {
 /// <param name="JpcInterface">The service provider.</param>
 public record Endpoint(
          string? Protocol,
-         string? Instance = null,
-         JpcInterface JpcInterface = null) {
-
-
-
-
+         string? Instance = null) {
     }
+
+
+/// <summary>
+/// Record describing a raw HTTP endpoint.
+/// </summary>
+/// <param name="Dispatch"></param>
+public record HttpEndpoint (
+            Func<HttpListenerRequest, HttpListenerResponse, HttpStatusCode> Dispatch,
+         string? Protocol,
+         string? Instance = null
+
+        ) : Endpoint(Protocol, Instance) {
+    }
+
+
 
 /// <summary>
 /// A HTTP Endpoint
@@ -76,12 +90,12 @@ public record Endpoint(
 /// <param name="Instance">The protocol instance.</param>
 /// <param name="Port">The port number.</param>
 /// <param name="JpcInterface">The service provider.</param>
-public record HttpEndpoint(
+public record WebServiceEndpoint(
          string? Domain,
          string Protocol,
          int Port,
          string? Instance = null,
-         JpcInterface JpcInterface = null) : Endpoint(Protocol, Instance, JpcInterface) {
+         JpcInterface JpcInterface = null) : Endpoint(Protocol, Instance) {
     #region // Properties
     #endregion
     #region // Methods 
@@ -138,7 +152,7 @@ public record HttpEndpoint(
     /// Return the service URI for the endpoint.
     /// </summary>
     /// <returns>The service URI.</returns>
-    public string GetServiceUri() => WebServiceEndpoint.GetEndpoint(Domain, Protocol, null, Instance);
+    public string GetServiceUri() => Discovery.WebServiceEndpoint.GetEndpoint(Domain, Protocol, null, Instance);
 
     #endregion
     }
@@ -156,7 +170,7 @@ public record UdpEndpoint(
          string? Instance = null,
          int Port = 0,
          AddressFamily AddressFamily = AddressFamily.InterNetwork,
-         JpcInterface JpcInterface = null) : Endpoint(Protocol, Instance, JpcInterface) {
+         JpcInterface JpcInterface = null) : Endpoint(Protocol, Instance) {
     #region // Methods 
 
     /// <summary>

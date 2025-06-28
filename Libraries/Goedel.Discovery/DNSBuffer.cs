@@ -598,24 +598,39 @@ public class DNSBufferIndex {
     /// <summary>Read value</summary>
     /// <returns>The value read</returns>
     /// <remarks>Not yet implemented</remarks>
-    public static string ReadMail() => null;
+    public string ReadMail() => ReadName();
+
+    /// <summary>Read 32 bit time value</summary>
+    /// <returns>The value read</returns>
+    /// <remarks>Not yet implemented</remarks>
+    public uint ReadTime32() {
+        CheckSpaceRead(4);
+        uint x0 = Read();
+        x0 = (x0 <<8) | Read();
+        x0 = (x0 << 8) | Read();
+        x0 = (x0 << 8) | Read();
+        return x0;
+        }
+
+    /// <summary>Read 48 bit time value</summary>
+    /// <returns>The value read</returns>
+    /// <remarks>Not yet implemented</remarks>
+    public  ulong ReadTime48() {
+        CheckSpaceRead(4);
+        ulong x0 = Read();
+        x0 = (x0 << 8) | Read();
+        x0 = (x0 << 8) | Read();
+        x0 = (x0 << 8) | Read();
+        x0 = (x0 << 8) | Read();
+        x0 = (x0 << 8) | Read();
+        return x0;
+        }
+
 
     /// <summary>Read value</summary>
     /// <returns>The value read</returns>
     /// <remarks>Not yet implemented</remarks>
     public static string ReadOptionalString() => null;
-
-    /// <summary>Read 32 bit time value</summary>
-    /// <returns>The value read</returns>
-    /// <remarks>Not yet implemented</remarks>
-    public static uint ReadTime32() => 0;
-
-    /// <summary>Read 48 bit time value</summary>
-    /// <returns>The value read</returns>
-    /// <remarks>Not yet implemented</remarks>
-    public static ulong ReadTime48() => 0;
-
-
 
     //public void Dump () {
     //    for (int i =0; i < Pointer; i++) {

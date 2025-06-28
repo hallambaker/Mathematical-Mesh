@@ -20,6 +20,10 @@
 #endregion
 
 
+using Goedel.Protocol;
+
+using System;
+
 namespace Goedel.Mesh.Server;
 
 
@@ -98,6 +102,12 @@ public class PublicMeshService : MeshService {
     ///<summary>The callsign registry service profile.</summary> 
     public ProfileAccount CallsignServiceProfile { get; set; }
 
+    ///<summary>Earl dispatch service</summary>
+    public EarlDispatch EarlDispatch { get; }
+
+    ///<summary>DNS Publication hook.</summary>
+    public IDnsPublisher IDnsPublisher { get; set; }
+
     #endregion
     #region // Disposing
     ///<inheritdoc/>
@@ -125,6 +135,10 @@ public class PublicMeshService : MeshService {
             MeshServiceConfiguration meshServiceConfiguration,
             LogService logService,
             IPresenceProvider presenceServiceProvider = null) {
+        EarlDispatch = new EarlDispatchCached("example.com",
+                        meshMachine.Instance);
+
+
         LogService = logService;
         MeshMachine = meshMachine;
         GenericHostConfiguration = hostConfiguration;
@@ -137,7 +151,9 @@ public class PublicMeshService : MeshService {
 
         // Load the Mesh persistence base
         var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryAccounts;
-        MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate, Logger, PresenceService);
+        MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate, Logger, PresenceService) {
+            EarlDispatch = EarlDispatch
+            };
 
         if (!meshServiceConfiguration.ProfileRegistryCallsign.IsBlank()) {
             var envelope = JsonObject.StreamParse<Enveloped>(meshServiceConfiguration.ProfileRegistryCallsign);
@@ -735,6 +751,51 @@ public class PublicMeshService : MeshService {
             }
         }
 
+
+    public override PublishEarlResponse PublishEarl(
+                PublishEarlRequest request, IJpcSession jpcSession) {
+        try {
+            request.Data.AssertNotNull(MeshMissingParameter.Throw);
+            request.PreLocator.AssertNotNull(MeshMissingParameter.Throw);
+            return MeshPersist.PublishEarl(jpcSession, request.PreLocator, request.Data, request.Expire);
+            }
+        catch (System.Exception exception) {
+            return new PublishEarlResponse(exception);
+
+            }
+
+
+        }
+
+    public override DeleteEarlResponse DeleteEarl(
+                DeleteEarlRequest request, IJpcSession jpcSession) {
+        try {
+            request.PreLocator.AssertNotNull(MeshMissingParameter.Throw);
+            return MeshPersist.DeleteEarl(jpcSession, request.PreLocator);
+            }
+        catch (System.Exception exception) {
+            return new DeleteEarlResponse(exception);
+
+            }
+
+
+        }
+
+    public override PublishDnsResponse PublishDns(PublishDnsRequest request, IJpcSession jpcSession) {
+        try {
+            request.Updates.AssertNotNull(MeshMissingParameter.Throw);
+            if (request.Updates.Count < 0) {
+                // no records to publish means we always succeed.
+                return new PublishDnsResponse();
+                }
+
+            return MeshPersist.PublishDns(jpcSession, IDnsPublisher, request.Updates);
+            }
+        catch (System.Exception exception) {
+            return new PublishDnsResponse(exception);
+
+            }
+        }
 
     #endregion
 

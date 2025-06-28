@@ -24,10 +24,14 @@ LinkFiles = \
 
 ToolTargets = \
 	Exceptions.cs\
+	MediaTypes.cs\
 	JoseConstants.cs\
 	UDFConstants.cs
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
+
+MediaTypes.cs : MediaTypes.constant 
+	constant MediaTypes.constant  /cs  MediaTypes.cs
 
 JoseConstants.cs : JoseConstants.constant 
 	constant JoseConstants.constant  /cs  JoseConstants.cs

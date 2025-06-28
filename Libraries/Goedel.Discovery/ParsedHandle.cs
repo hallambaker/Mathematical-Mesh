@@ -85,6 +85,8 @@ public enum HandleType {
 /// </summary>
 public class ParsedHandle {
 
+
+
     ///<summary>The handle type</summary> 
     public HandleType HandleType { get; init; }
 
@@ -255,6 +257,10 @@ public class ParsedHandle {
         throw new NYI();
         }
 
+
+
+
+
     /// <summary>
     /// Return the Account Service handle associated with the handle.
     /// </summary>
@@ -278,23 +284,27 @@ public class ParsedHandle {
 
         var contactTxt = await HandleServiceContact.Fetch(handle);
 
-        return await ResolveEarl(contactTxt.Uri, "jscontact");
+        return await ResolveEarl(contactTxt.Uri);
         }
+
+
+
+    public static Func<string, Task<byte[]>> ResolveEarl { get; set; } = ResolveEarlDns;
+
 
     /// <summary>
     /// Resolve <paramref name="uriString"/> to obtain the HTTPS well known service, 
     /// fetch the ciphertext, decrypt and return the result.
     /// </summary>
     /// <param name="uriString">The uri to parse.</param>
-    /// <param name="wellKnown">The wellknown service type</param>
-    /// <param name="extension">The file extension (defaults to <paramref name="wellKnown"/>).</param>
-    /// <returns></returns>
-    private static async Task<byte[]> ResolveEarl(
-                    string uriString, 
-                    string wellKnown = null,
-                    string extension = null) {
+    /// <returns>The resolution result</returns>
+    public static async Task<byte[]> ResolveEarlDns(
+                    string uriString) {
 
-        extension ??= wellKnown;
+        // The well known service and extension are ALWAYS earl, regardless of the
+        // uri scheme.
+        var wellKnown = "earl";
+        var extension = "earl";
 
         var uri = new Uri(uriString);
         var host = uri.Host;

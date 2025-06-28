@@ -22,6 +22,7 @@
 
 
 using Goedel.Callsign;
+using Goedel.Mesh.Client;
 
 namespace Goedel.Mesh.Test;
 
@@ -100,7 +101,9 @@ public class MeshMachineTest : MeshMachineCore {
         accountName.Future();
 
         var machine = new MeshMachineTest(TestEnvironmentCommon, DirectoryRoot);
-        return machine.MeshHost.GetContextMesh(localName) as ContextUser;
+        var result = machine.MeshHost.GetContextMesh(localName) as ContextUser;
+
+        return result;
         }
 
 
@@ -114,6 +117,7 @@ public class MeshMachineTest : MeshMachineCore {
         var result = new MeshMachineTest(testEnvironmentCommon, machineName);
         var contextUser = result.MeshHost.ConfigureMeshAsync(accountAddress, localName: localName, 
             dnsHandle: dnsHandle).Sync();
+
         return contextUser;
         }
 
@@ -123,7 +127,9 @@ public class MeshMachineTest : MeshMachineCore {
         var catalogedMachine = contextUser.CatalogedMachine;
 
         host.Deregister(contextUser);
-        return host.GetContext(catalogedMachine) as ContextUser;
+        var result = host.GetContext(catalogedMachine) as ContextUser;
+
+        return result;
         }
 
 

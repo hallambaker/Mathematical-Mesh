@@ -199,7 +199,22 @@ public static class AssertTest {
             }
         }
 
+    /// <summary>Test to see if two values are equal.
+    /// </summary>
+    /// <param name="test1">First test value</param>
+    /// <param name="test2">Second test value</param>
+    /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+    /// Condition is true</param>
+    /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
 
+    public static void TestIsEqual<T>(this T test1, T test2, ThrowDelegate throwDelegate = null,
+                params object[] args) where T: JsonObject{
+        var t1 = test1.ToString();
+        var t2 = test2.ToString();
+
+        TestEqual(test1.GetType(), test2.GetType(), throwDelegate ?? TestExpectedEqual.Throw, args);
+        TestEqual(t1, t2, throwDelegate ?? TestExpectedEqual.Throw, args);
+        }
 
     /// <summary>Test to see if two values are equal.
     /// </summary>

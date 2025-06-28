@@ -397,3 +397,51 @@ public partial class GetDataResponse {
     public GetDataResponse(Exception exception = null) : base(exception) {
         }
     }
+
+public partial class PublishEarlRequest {
+
+    }
+
+public partial class PublishEarlResponse {
+
+    ///<summary>The EARL value, this cannot be returned by the service which
+    ///only knows the pre-locator. This property MAY be used to return the 
+    ///EARL value in client wrapper methods.</summary>
+    public string? Earl { get; set; }
+
+
+    /// <summary>
+    /// Default constructor. 
+    /// </summary>
+    /// <param name="exception">Optional exception specifier.</param>
+    public PublishEarlResponse(Exception exception = null) : base(exception) {
+        }
+    }
+
+
+public partial class DeleteEarlRequest {
+
+    }
+
+public partial class DeleteEarlResponse {
+    /// <summary>
+    /// Default constructor. 
+    /// </summary>
+    /// <param name="exception">Optional exception specifier.</param>
+    public DeleteEarlResponse(Exception exception = null) : base(exception) {
+        }
+    }
+
+
+public partial class PublishDnsRequest {
+
+    }
+
+public partial class PublishDnsResponse {
+    /// <summary>
+    /// Default constructor. 
+    /// </summary>
+    /// <param name="exception">Optional exception specifier.</param>
+    public PublishDnsResponse(Exception exception = null) : base(exception) {
+        }
+    }

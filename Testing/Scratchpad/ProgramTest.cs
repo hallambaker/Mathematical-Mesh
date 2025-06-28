@@ -65,17 +65,68 @@ partial class Program {
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
 
+        TestContact.Test().ContactHandle();
+
+
+        DummyTest.Test().TestDummy();
+        ServiceDiscovery.Test().TestDNS();
+        ServiceDiscovery.Test().TestDNSMultiple(20);
+        ServiceDiscovery.Test().TestResoveHandles();
+        ServiceDiscovery.Test().TestResoveServices();
+
+        //TestContact.Test().ContactSelf();
+
+        TestService.Test().TestCredentialFromHandle();
+
+        ShellTests.Test().TestAccountHandle();
+
+        ShellTests.Test().TestHandleContactAlice();
+        ShellTests.Test().TestHandleContactAliceBob();
+        ShellTests.Test().TestHandleThing();
+
+
+
+
+        ShellTests.Test().TestLog();
+        ShellTests.Test().NewArchiveTestOnce(true, false, false, false);
+        ShellTests.Test().NewArchiveTestOnce(true, true, false, false);
+        ShellTests.Test().NewFileTestAll();
+        ShellTests.Test().NewFileTestOnce(true, false, false);
+
+
+        ShellTests.Test().TestMessageGroup();
+
+
+
+        ShellTests.Test().TestMessageConfirmationAccept();
+        ShellTests.Test().TestMessageConfirmationReject();
+        ShellTests.Test().TestMessageContactInPerson();
+        ShellTests.Test().TestMessageContactRemote();
+
+        // Need some new code - QR code from contact
+        ShellTests.Test().TestMessageContactBusinessCardFetch();
+        ShellTests.Test().TestMessageContactBusinessCardExchange();
+
+
+        // Need some new code - implement handles in Web service
+
+
+
+        // Need some new code - stuff with devices
+
+
+        ShellTests.Test().TestProfileConnectStaticQR();
+        ShellTestsAdmin.Test().TestLog();
+
         //ServiceDiscovery.Test().TestDNSMultiple(100);
         //ShellTestsAdmin.Test().TestAccount();
 
         //TestService.Test().MeshServiceEncryptCredential();
-        TestService.Test().TestCredentialFromHandle();
 
 
 
-        TestContact.Test().ContactSelf();
-        TestContact.Test().ContactOther();
-        TestContact.Test().ContactHandle();
+
+
 
         ShellTestsAdmin.Test().TestAccount();
 

@@ -12720,11 +12720,25 @@
             <param name="bits">The number of bits precision to specify in the output.</param>
             <returns>The key as a Base32 fingerprint.</returns>
         </member>
+        <member name="M:Goedel.Cryptography.Udf.EarlPreLocator(System.String)">
+            <summary>
+            Create the locator path for the EARL <paramref name="earl"/>
+            </summary>
+            <param name="earl">The EARL to construct the locator path for.</param>
+            <returns>The locator.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Udf.EarlLocator(System.String)">
             <summary>
             Create the locator path for the EARL <paramref name="earl"/>
             </summary>
             <param name="earl">The EARL to construct the locator path for.</param>
+            <returns>The locator.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Udf.EarlLocator(System.Byte[])">
+            <summary>
+            Create the locator path for the EARL <paramref name="earl"/>
+            </summary>
+            <param name="prelocator">The EARL to construct the locator path for.</param>
             <returns>The locator.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Udf.EarlLocator1(System.String)">

@@ -1651,6 +1651,22 @@ public partial class ContextUser : ContextAccount {
     public async Task<string> ContactUri(bool automatic, System.DateTime? expire, string localName = null) {
         var cataloged = GetSelf(localName);
 
+        // The new dynamic URI scheme
+
+        // First create a regular enveloped JSContact for self.
+        // Then add an unauthenticated header with a response coupon
+
+
+        // Wrap and return as an EARL
+
+
+        // When EARL is resolved, use coupon PIN to authenticate regular Mesh Contact request.
+
+
+
+
+
+
         
         // This mechanism needs to be redone using the EARL scheme
         

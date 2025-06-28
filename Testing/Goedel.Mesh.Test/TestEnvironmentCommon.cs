@@ -22,6 +22,7 @@
 
 using Goedel.Callsign;
 using Goedel.Callsign.Resolver;
+using Goedel.Discovery;
 using Goedel.Mesh.Core;
 
 namespace Goedel.Mesh.Test;
@@ -33,6 +34,8 @@ namespace Goedel.Mesh.Test;
 
 
 public class TestEnvironmentCommon : TestEnvironmentBase {
+
+
     protected LogService Logger { get; set; }
     protected Configuration Configuration { get; set; }
 
@@ -58,7 +61,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
 
 
     protected string HostFile = "whatev";
-    public TestEnvironmentCommon(DeterministicSeed seed = null) : base(seed) {
+    public TestEnvironmentCommon(DeterministicSeed seed = null, bool dummyDns=false) : base(seed, dummyDns) {
 
         }
 
@@ -81,8 +84,13 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
         Logger = new LogService(Configuration.GenericHost, Configuration.MeshService, null);
 
 
-        return new PublicMeshService(MeshMachineHost,
+        var service =  new PublicMeshService(MeshMachineHost,
             Configuration.GenericHost, Configuration.MeshService, Logger);
+
+        EarlClient.Client = new EarlClientDirect(service.EarlDispatch);
+
+
+        return service;
         }
 
     protected override PublicCallsignResolver GetCallsignResolver() {
@@ -153,4 +161,10 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
 
         return session.GetWebClient<MeshServiceClient>();
         }
+
+
+
+
+
+
     }

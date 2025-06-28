@@ -4,6 +4,38 @@
         <name>Goedel.Contacts</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Contacts.AnalysizedContact">
+            <summary>
+            Convenience class collecting together related parts of a <see cref="T:Goedel.Contacts.JsContact"/>.
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Parents">
+            <summary>Service groups this entry is a member of.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Children">
+            <summary>Services that are members of this service groups.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Emails">
+            <summary>Email addresses as an <see cref="T:Goedel.Contacts.OnlineService"/></summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Webs">
+            <summary>Services of type HTTP or HTTPS</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Mesh">
+            <summary>Mesh services</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Ssh">
+            <summary>Services of type SSH</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Other">
+            <summary>Services not included in any other category.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Groups">
+            <summary>Groups</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.AnalysizedContact.Credentials">
+            <summary>Services of type credential</summary> 
+        </member>
         <member name="T:Goedel.Contacts.Calandars">
             <summary>
             </summary>
@@ -4017,38 +4049,6 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
-        </member>
-        <member name="T:Goedel.Contacts.AnalysizedContact">
-            <summary>
-            Convenience class collecting together related parts of a <see cref="T:Goedel.Contacts.JsContact"/>.
-            </summary>
-        </member>
-        <member name="P:Goedel.Contacts.AnalysizedContact.Parents">
-            <summary>Service groups this entry is a member of.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.AnalysizedContact.Children">
-            <summary>Services that are members of this service groups.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.AnalysizedContact.Emails">
-            <summary>Email addresses as an <see cref="T:Goedel.Contacts.OnlineService"/></summary> 
-        </member>
-        <member name="P:Goedel.Contacts.AnalysizedContact.Webs">
-            <summary>Services of type HTTP or HTTPS</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.AnalysizedContact.Mesh">
-            <summary>Mesh services</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.AnalysizedContact.Ssh">
-            <summary>Services of type SSH</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.AnalysizedContact.Other">
-            <summary>Services not included in any other category.</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.AnalysizedContact.Groups">
-            <summary>Groups</summary> 
-        </member>
-        <member name="P:Goedel.Contacts.AnalysizedContact.Credentials">
-            <summary>Services of type credential</summary> 
         </member>
         <member name="T:Goedel.Contacts.NamespaceDoc">
             <summary>

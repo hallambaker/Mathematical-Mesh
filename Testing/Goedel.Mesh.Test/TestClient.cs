@@ -24,13 +24,13 @@
 namespace Goedel.Mesh.Test;
 
 public class TestClient {
-    readonly HttpEndpoint httpEndpoint;
+    readonly WebServiceEndpoint httpEndpoint;
     bool Created { get; set; } = false;
 
 
     public TestClient(string accountAddress, List<Endpoint> endpoints) {
 
-        httpEndpoint = endpoints[0] as HttpEndpoint;
+        httpEndpoint = endpoints[0] as WebServiceEndpoint;
 
 
         //var session = new WebRemoteSession(null, null, accountAddress);

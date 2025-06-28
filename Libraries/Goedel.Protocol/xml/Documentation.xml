@@ -689,7 +689,7 @@
             for testing etc.</param>
             <param name="JpcInterface">The service provider.</param>
         </member>
-        <member name="M:Goedel.Protocol.Endpoint.#ctor(System.String,System.String,Goedel.Protocol.JpcInterface)">
+        <member name="M:Goedel.Protocol.Endpoint.#ctor(System.String,System.String)">
             <summary>
             Record describing a listener endpoint.
             </summary>
@@ -705,20 +705,22 @@
             <summary>Optional instance tag to allow multiple instances to be run 
             for testing etc.</summary>
         </member>
-        <member name="P:Goedel.Protocol.Endpoint.JpcInterface">
-            <summary>The service provider.</summary>
-        </member>
         <member name="T:Goedel.Protocol.HttpEndpoint">
             <summary>
-            A HTTP Endpoint
+            Record describing a raw HTTP endpoint.
             </summary>
-            <param name="Domain">The DNS address specified in the original HTTP URI</param>
-            <param name="Protocol">The protocol serviced.</param>
-            <param name="Instance">The protocol instance.</param>
-            <param name="Port">The port number.</param>
-            <param name="JpcInterface">The service provider.</param>
+            <param name="Dispatch"></param>
         </member>
-        <member name="M:Goedel.Protocol.HttpEndpoint.#ctor(System.String,System.String,System.Int32,System.String,Goedel.Protocol.JpcInterface)">
+        <member name="M:Goedel.Protocol.HttpEndpoint.#ctor(System.Func{System.Net.HttpListenerRequest,System.Net.HttpListenerResponse,System.Net.HttpStatusCode},System.String,System.String)">
+            <summary>
+            Record describing a raw HTTP endpoint.
+            </summary>
+            <param name="Dispatch"></param>
+        </member>
+        <member name="P:Goedel.Protocol.HttpEndpoint.Dispatch">
+            <summary></summary>
+        </member>
+        <member name="T:Goedel.Protocol.WebServiceEndpoint">
             <summary>
             A HTTP Endpoint
             </summary>
@@ -728,20 +730,33 @@
             <param name="Port">The port number.</param>
             <param name="JpcInterface">The service provider.</param>
         </member>
-        <member name="P:Goedel.Protocol.HttpEndpoint.Domain">
+        <member name="M:Goedel.Protocol.WebServiceEndpoint.#ctor(System.String,System.String,System.Int32,System.String,Goedel.Protocol.JpcInterface)">
+            <summary>
+            A HTTP Endpoint
+            </summary>
+            <param name="Domain">The DNS address specified in the original HTTP URI</param>
+            <param name="Protocol">The protocol serviced.</param>
+            <param name="Instance">The protocol instance.</param>
+            <param name="Port">The port number.</param>
+            <param name="JpcInterface">The service provider.</param>
+        </member>
+        <member name="P:Goedel.Protocol.WebServiceEndpoint.Domain">
             <summary>The DNS address specified in the original HTTP URI</summary>
         </member>
-        <member name="P:Goedel.Protocol.HttpEndpoint.Port">
+        <member name="P:Goedel.Protocol.WebServiceEndpoint.Port">
             <summary>The port number.</summary>
         </member>
-        <member name="M:Goedel.Protocol.HttpEndpoint.Specializer(System.String)">
+        <member name="P:Goedel.Protocol.WebServiceEndpoint.JpcInterface">
+            <summary>The service provider.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.WebServiceEndpoint.Specializer(System.String)">
             <summary>
             Return the specializer path element, if used.
             </summary>
             <param name="instance">The instance values.</param>
             <returns>The specializer path.</returns>
         </member>
-        <member name="M:Goedel.Protocol.HttpEndpoint.GetUri(System.String,System.Int32,System.String,System.String)">
+        <member name="M:Goedel.Protocol.WebServiceEndpoint.GetUri(System.String,System.Int32,System.String,System.String)">
             <summary>
             Return the URI for the endpoint.
             </summary>
@@ -751,7 +766,7 @@
             <param name="port">The port number.</param>
             <returns>the URI for the endpoint.</returns>
         </member>
-        <member name="M:Goedel.Protocol.HttpEndpoint.GetUriBase(System.String,System.Int32,System.String,System.String)">
+        <member name="M:Goedel.Protocol.WebServiceEndpoint.GetUriBase(System.String,System.Int32,System.String,System.String)">
             <summary>
             Return the URI base for the specified parameters
             </summary>
@@ -761,19 +776,19 @@
             <param name="port">The port number.</param>>
             <returns>the URI base</returns>
         </member>
-        <member name="M:Goedel.Protocol.HttpEndpoint.GetUriPrefix">
+        <member name="M:Goedel.Protocol.WebServiceEndpoint.GetUriPrefix">
             <summary>
             Return the URI prefix for the endpoint.
             </summary>
             <returns>the URI prefix for the endpoint.</returns>
         </member>
-        <member name="M:Goedel.Protocol.HttpEndpoint.GetWellknown">
+        <member name="M:Goedel.Protocol.WebServiceEndpoint.GetWellknown">
             <summary>
             Return the provider map entry for the endpoint.
             </summary>
             <returns>The provider map entry minus the scheme section.</returns>
         </member>
-        <member name="M:Goedel.Protocol.HttpEndpoint.GetServiceUri">
+        <member name="M:Goedel.Protocol.WebServiceEndpoint.GetServiceUri">
             <summary>
             Return the service URI for the endpoint.
             </summary>
@@ -804,6 +819,9 @@
         </member>
         <member name="P:Goedel.Protocol.UdpEndpoint.AddressFamily">
             <summary>The address family.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.UdpEndpoint.JpcInterface">
+            <summary>The service provider.</summary>
         </member>
         <member name="M:Goedel.Protocol.UdpEndpoint.GetClient">
             <summary>

@@ -22,6 +22,7 @@
 
 global using Goedel.Cryptography.PKIX;
 global using Goedel.IO;
+global using Goedel.Protocol;
 global using Goedel.Utilities;
 
 global using System;

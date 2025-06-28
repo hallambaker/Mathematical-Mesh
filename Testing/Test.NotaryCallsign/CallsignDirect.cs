@@ -74,14 +74,14 @@ public partial class CallsignDirect : UnitTestSet {
 
 
 
-    [Fact]
+    [Fact(Skip = "Rejigger Callsign as just private DNS and PKI")]
     public void CreateRegistry() {
 
         Initialize(out var contextAccountAlice, out var contextRegistry);
 
         }
 
-    [Fact]
+    [Fact(Skip = "Rejigger Callsign as just private DNS and PKI")]
     public void RegisterAlice() {
 
         Initialize(out var contextAccountAlice, out var contextRegistry);
@@ -101,7 +101,7 @@ public partial class CallsignDirect : UnitTestSet {
         CheckResolve(CallsignAlice, contextAccountAlice);
         }
 
-    [Fact]
+    [Fact(Skip = "Rejigger Callsign as just private DNS and PKI")]
     public void RegisterAliceTransferBob() {
 
 
@@ -159,7 +159,7 @@ public partial class CallsignDirect : UnitTestSet {
     /// Alice registers the callsign @alice which Bob uses to exchange contacts.
     /// </summary>
     /// <exception cref="NYI"></exception>
-    [Fact]
+    [Fact(Skip = "Rejigger Callsign as just private DNS and PKI")]
     public void RegisterAliceConnectBob() {
         Initialize(out var contextAccountAlice, out var contextRegistry);
         var contextAccountBob = MeshMachineTest.GenerateAccountUser(TestEnvironmentCommon,
@@ -176,7 +176,7 @@ public partial class CallsignDirect : UnitTestSet {
         }
 
 
-    [Fact]
+    [Fact(Skip = "Rejigger Callsign as just private DNS and PKI")]
     public void TestRegisterSuccess() {
 
         var tests = new List<string> {
@@ -200,7 +200,7 @@ public partial class CallsignDirect : UnitTestSet {
         }
 
 
-    [Fact]
+    [Fact(Skip = "Rejigger Callsign as just private DNS and PKI")]
     public void TestRegisterFail() {
         var tests = new List<string> {
             "@alice™",

@@ -707,3 +707,76 @@
 
 
 
+	Transaction Public PublishEarl PublishEarlRequest PublishEarlResponse
+		Description
+			|Publish a package of EARL data to a location from where it can be retrieved.
+
+	Message PublishEarlRequest
+		Description
+			|Publish an EARL package.
+		Inherits MeshRequest
+		Binary PreLocator
+			Description
+				|The prelocator used to construct the Base64 locator.
+		Binary Data
+			Description
+				|The encrypted resource data
+		DateTime Expire
+			Description
+				|Time after which the service should cease publishing the resource.
+
+	Message PublishEarlResponse
+		Description
+			|Result of EARL publication request.
+		Inherits MeshResponse
+		String Domain
+			Description
+				|A domain from which the data can be retrieved.
+
+
+	Transaction Public DeleteEarl DeleteEarlRequest DeleteEarlResponse
+		Description
+			|Stop publishing the specified resource. The request is only valid if
+			|made by the same party that originally posted it or an administrator.
+
+	Message DeleteEarlRequest
+		Description
+			|Delete an EARL package.
+		Inherits MeshRequest
+		Binary PreLocator
+			Description
+				|The prelocator used to construct the Base64 locator.
+
+	Message DeleteEarlResponse
+		Description
+			|Result of attempt to delete an EARL
+		Inherits MeshResponse
+
+
+	Transaction Public PublishDns PublishDnsRequest PublishDnsResponse
+		Description
+			|Publish a package of EARL data to a location from where it can be retrieved.
+
+	Message PublishDnsRequest
+		Description
+			|Publish an EARL package.
+		Inherits MeshRequest
+		Struct DnsUpdate Updates
+			Multiple
+			Description
+				|The updates to apply
+			
+
+
+	Structure DnsUpdate
+		Boolean IsAdd
+		String Name
+		Integer RR
+		Binary Record
+
+
+	Message PublishDnsResponse
+		Description
+			|Result of EARL publication request.
+		Inherits MeshResponse
+
