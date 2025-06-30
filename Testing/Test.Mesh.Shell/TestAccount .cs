@@ -188,7 +188,7 @@ public partial class ShellTests {
         (h1.ServiceAddress == "example.com").TestTrue();
 
         var c1 = Dispatch($"account create alice@example.com /local=alice /handle=@alice.example.net") as ResultCreateAccount;
-        var h7 = Dispatch($"account hello @alice") as ResultHello;
+        var h7 = Dispatch($"account hello @alice.example.net") as ResultHello;
         (h7.ServiceAddress == "example.com").TestTrue();
 
         var h2 = Dispatch($"account hello @alice.example.com") as ResultHello;

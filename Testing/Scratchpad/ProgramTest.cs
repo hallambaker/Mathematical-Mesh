@@ -65,18 +65,18 @@ partial class Program {
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
 
-        TestContact.Test().ContactHandle();
+        //TestContact.Test().ContactHandle();
 
 
-        DummyTest.Test().TestDummy();
-        ServiceDiscovery.Test().TestDNS();
-        ServiceDiscovery.Test().TestDNSMultiple(20);
-        ServiceDiscovery.Test().TestResoveHandles();
-        ServiceDiscovery.Test().TestResoveServices();
+        //DummyTest.Test().TestDummy();
+        //ServiceDiscovery.Test().TestDNS();
+        //ServiceDiscovery.Test().TestDNSMultiple(20);
+        //ServiceDiscovery.Test().TestResoveHandles();
+        //ServiceDiscovery.Test().TestResoveServices();
 
-        //TestContact.Test().ContactSelf();
+        ////TestContact.Test().ContactSelf();
 
-        TestService.Test().TestCredentialFromHandle();
+        //TestService.Test().TestCredentialFromHandle();
 
         ShellTests.Test().TestAccountHandle();
 

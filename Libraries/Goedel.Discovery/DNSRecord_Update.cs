@@ -47,8 +47,9 @@ public class DNSRecord_Add : DNSRecord_Update {
                 string name,
                 DNSTypeCode typeCode,
                 byte[] add) {
-
-        var record = DNSRecord.DecodeRData(name, typeCode, add);
+        
+        Add = DNSRecord.DecodeRData(name, typeCode, add);
+        Add.Domain = new Domain(name);
         }
 
 

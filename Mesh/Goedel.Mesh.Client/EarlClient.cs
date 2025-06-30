@@ -45,10 +45,14 @@ public abstract class EarlClient {
         return JsonObject.StreamParse<T>(enveloped);
         }
 
-    public async Task<T> TryResolveHandle<T>(string domain) where T : JsonObject {
+    public async Task<T> TryResolveHandle<T>(string handle, string prefix) where T : JsonObject {
 
-        var handle = await DnsClient.GetPrefixedTXT(domain, "prefix");
-        var text = handle.FullText();
+        // need to reduce handle here to a domain.
+
+        var domain = ParsedHandle.GetDomain(handle);
+
+        var txt = await DnsClient.GetPrefixedTXT(domain, prefix);
+        var text = txt.FullText();
 
         var earl = GetTag(text, MediaTypes.EarlTag);
 
@@ -70,18 +74,18 @@ public abstract class EarlClient {
         return null;
         }
 
-    public static async Task<T> ResolveHandle<T>(string earl) where T : JsonObject =>
-            await Client.TryResolveHandle<T>(earl);
+    public static async Task<T> ResolveHandle<T>(string earl, string prefix) where T : JsonObject =>
+            await Client.TryResolveHandle<T>(earl, prefix);
     public static async Task<T> ResolveEarl<T>(string earl) where T : JsonObject => 
             await Client.TryResolveEarl<T>(earl);
 
     public static async Task<JsContact> ResolveContactHandle(string earl) => 
-            await Client.TryResolveHandle<JsContact>(earl);
+            await Client.TryResolveHandle<JsContact>(earl, MediaTypes.JSContactPrefix);
     public static async Task<JsContact> ResolveContactEarl(string earl) => 
             await Client.TryResolveEarl<JsContact>(earl);
 
     public static async Task<JsDevice> ResolveDeviceHandle(string earl) =>
-            await Client.TryResolveHandle<JsDevice>(earl);
+            await Client.TryResolveHandle<JsDevice>(earl, MediaTypes.JSDevicePrefix);
     public static async Task<JsDevice> ResolveDeviceEarl(string earl) =>
             await Client.TryResolveEarl<JsDevice>(earl);
 
@@ -100,6 +104,12 @@ public class EarlClientHttp(string? Instance = null) : EarlClient {
 
         var path = $"http://{authority}/{GetPrefix(Instance)}{locator}";
         var data = await path.DownloadByteArrayAsync();
+
+
+        if (data == null) {
+            throw new NYI();
+            }
+
         return data;
         }
 

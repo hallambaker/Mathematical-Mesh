@@ -1304,13 +1304,8 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             string prefix,
             string handle,
             params string[] tagvalues) {
-        var parsedHandle = new ParsedHandle(handle);
-        var domain = parsedHandle.HandleType switch {
-            HandleType.Domain => parsedHandle.Service,
-            HandleType.DnsHandle => parsedHandle.Name,
-            HandleType.DirectDnsHandle => parsedHandle.Name,
-            _ => throw new NYI(),
-            };
+
+        var domain = ParsedHandle.GetDomain(handle);
 
         var zone = $"{prefix}.{domain}";
 

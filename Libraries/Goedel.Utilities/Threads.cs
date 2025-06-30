@@ -51,6 +51,18 @@ public static partial class Extension {
         return task.Result;
         }
 
+    /// <summary>
+    /// Wait for the task <paramref name="task"/> to complete and return the result.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="task"></param>
+    /// <returns></returns>
+    public static T SyncNoCatch<T>(this Task<T> task) {
+        task.Wait();
+        return task.Result;
+        }
+
+
 
     /// <summary>
     /// Wrap the synchronous task result <paramref name="result"/> with a Task result

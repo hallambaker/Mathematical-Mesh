@@ -24,6 +24,7 @@
 //#pragma warning disable CA1822
 
 using Goedel.Contacts;
+using Goedel.Discovery;
 using Goedel.Mesh.Shell;
 using Goedel.Utilities;
 
@@ -91,14 +92,15 @@ public partial class TestContact : UnitTestSet {
 
         // Publish EARL of contact for self and bind a handle
         var earl = contextAccountAlice.PublishEarl(contactAlice).Sync();
-        contextAccountAlice.BindHandle(MediaTypes.JSContactPrefix, HandleAlice, MediaTypes.EarlTag, earl).Sync();
+        contextAccountAlice.BindHandle(
+            MediaTypes.JSContactPrefix, HandleAlice, MediaTypes.EarlTag, earl).Sync();
 
 
         // attempt resolution as @alice.example.com
-        var contactAliceAtBob = EarlClient.ResolveContactHandle(HandleAlice).Sync();
+        var contactAliceAtBob = EarlClient.ResolveContactHandle(HandleAlice).SyncNoCatch();
         contactAlice.TestIsEqual(contactAliceAtBob);
 
-
+        DnsClient.Default = null;
         }
 
 

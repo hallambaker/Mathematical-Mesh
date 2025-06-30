@@ -42,7 +42,7 @@ public class DummyDnsService : IDnsPublisher {
 
     public void PublishRecords(
                 IEnumerable<DNSItem> records) {
-        foreach (DNSRecord record in records) {
+        foreach (var record in records) {
             PublishRecord(record);
             }
         }
@@ -50,10 +50,12 @@ public class DummyDnsService : IDnsPublisher {
     public void PublishRecord(
                         DNSItem item) {
 
+        if (item is DNSRecord_Add recordAdd) {
+            PublishRecord(recordAdd.Add);
+            }
 
 
-
-        if (item is DNSRecord record) {
+        else if (item is DNSRecord record) {
             if (!DictionaryData.TryGetValue(item.Domain.Name, out var node)) {
                 node = new DnsNode(item.Domain.Name);
                 DictionaryData.Add(item.Domain.Name, node);
@@ -62,8 +64,13 @@ public class DummyDnsService : IDnsPublisher {
             }
         }
 
+    public IEnumerable<DNSRecord> QueryRecord(string address,
+            DNSTypeCode typeCode) =>
+                DictionaryData.TryGetValue(address, out var dnsNode) ?
+                    dnsNode.Query(typeCode) : null;
 
-    public List<DNSRecord>? Query(
+
+    public IEnumerable<DNSRecord>? Query(
             DNSRequest request)=>
                 DictionaryData.TryGetValue(request.Query.QName, out var dnsNode) ? 
                     dnsNode.Query(request) : null;
@@ -89,12 +96,13 @@ public record DnsNode(string Domain) {
         }
 
     public List<DNSRecord>? Query(
-        DNSRequest request) =>
-            DictionaryRecords.TryGetValue(request.Query.QType, out var records) ?
+        DNSTypeCode qType) =>
+            DictionaryRecords.TryGetValue(qType, out var records) ?
                 records : null;
 
 
-
+    public List<DNSRecord>? Query(
+        DNSRequest request) => Query(request.Query.QType);
 
 
 
@@ -164,8 +172,8 @@ public class DummyDnsContext : DNSContext {
             string address,
             DNSTypeCode typeCode = DNSTypeCode.TXT) {
 
-
-        throw new NYI();
+        var x = DnsService.QueryRecord(address, typeCode);
+        return Task.FromResult(x);
         }
 
 

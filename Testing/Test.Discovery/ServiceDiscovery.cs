@@ -309,6 +309,7 @@ public partial class ServiceDiscovery {
 
 
         TestResolveService("@alice.example.net", [
+
             new HandleServiceAtprotocol () { 
                 Did = "did:plc:k647x4n6h3jm347u3t5cm6ki"
                 },

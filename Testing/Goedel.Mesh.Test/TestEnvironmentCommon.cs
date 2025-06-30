@@ -86,6 +86,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
 
         var service =  new PublicMeshService(MeshMachineHost,
             Configuration.GenericHost, Configuration.MeshService, Logger);
+        service.IDnsPublisher = DummyDnsService;
 
         EarlClient.Client = new EarlClientDirect(service.EarlDispatch);
 

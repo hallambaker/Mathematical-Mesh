@@ -114,9 +114,12 @@ public  class EarlClientDirect (EarlDispatch EarlDispatch) : EarlClient {
                 string earl) {
 
         var locator = Udf.EarlLocator(earl);
-
-
         EarlDispatch.TryGetValue(locator, out var data);
+
+        if (data == null) {
+            throw new NYI();
+            }
+
         return Task.FromResult(data);
         }
 

@@ -441,6 +441,14 @@
             <param name="task"></param>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Utilities.Extension.SyncNoCatch``1(System.Threading.Tasks.Task{``0})">
+            <summary>
+            Wait for the task <paramref name="task"/> to complete and return the result.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="task"></param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Utilities.Extension.Async``1(``0)">
             <summary>
             Wrap the synchronous task result <paramref name="result"/> with a Task result

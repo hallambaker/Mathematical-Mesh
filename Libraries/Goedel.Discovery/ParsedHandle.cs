@@ -182,6 +182,20 @@ public class ParsedHandle {
 
         }
 
+
+    public static string GetDomain(string handle) {
+
+        var parsedHandle = new ParsedHandle(handle);
+        var domain = parsedHandle.HandleType switch {
+            HandleType.Domain => parsedHandle.Service,
+            HandleType.DnsHandle => parsedHandle.Name,
+            HandleType.DirectDnsHandle => parsedHandle.Name,
+            _ => throw new NYI(),
+            };
+        return domain;
+        }
+
+
     /// <summary>
     /// Convenience method, resolve the handle <paramref name="handle"/> and
     /// return the the corresponding account service address as a text string.
