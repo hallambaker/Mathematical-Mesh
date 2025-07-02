@@ -115,40 +115,40 @@ public static partial class Extension {
         }
 
 
-    /// <summary>
-    /// Parse a string that may contain an account identifier to extract the service and 
-    /// account components.
-    /// </summary>
-    /// <param name="identifier">The AccountID to split.</param>
-    /// <param name="service">The portal address.</param>
-    /// <param name="account">The account name.</param>
-    /// <returns>The type of address specified.</returns>
-    public static AddressType SplitAccountAddress(this string identifier,
-            out string service,
-            out string account) {
-        account = null;
-        service = null;
-        if (identifier == null) {
-            return AddressType.Null;
-            }
+    ///// <summary>
+    ///// Parse a string that may contain an account identifier to extract the service and 
+    ///// account components.
+    ///// </summary>
+    ///// <param name="identifier">The AccountID to split.</param>
+    ///// <param name="service">The portal address.</param>
+    ///// <param name="account">The account name.</param>
+    ///// <returns>The type of address specified.</returns>
+    //public static AddressType SplitAccountAddress(this string identifier,
+    //        out string service,
+    //        out string account) {
+    //    account = null;
+    //    service = null;
+    //    if (identifier == null) {
+    //        return AddressType.Null;
+    //        }
 
-        var at = identifier.LastIndexOf('@');
-        if (at < 0) {
-            account = identifier;
-            return AddressType.AccountOnly;
-            }
+    //    var at = identifier.LastIndexOf('@');
+    //    if (at < 0) {
+    //        account = identifier;
+    //        return AddressType.AccountOnly;
+    //        }
 
-        if (at == 0) {
-            account = identifier;
-            service = null;
-            return AddressType.Callsign;
-            }
+    //    if (at == 0) {
+    //        account = identifier;
+    //        service = null;
+    //        return AddressType.Callsign;
+    //        }
 
-        account = identifier[..at];
-        service = identifier[(at + 1)..];
+    //    account = identifier[..at];
+    //    service = identifier[(at + 1)..];
 
-        return AddressType.AccountAtDns;
-        }
+    //    return AddressType.AccountAtDns;
+    //    }
 
 
 
@@ -192,10 +192,13 @@ public static partial class Extension {
     /// <param name="identifier">The address to parse.</param>
     /// <returns>The address portion.</returns>
     public static string GetAccount(this string identifier) {
-        identifier.SplitAccountAddress(out var _, out var account);
-        return account;
-
+        if (identifier == null) {
+            return null;
+            }
+        var at = identifier.IndexOf('@');
+        return at < 0 ? identifier : identifier[..at];
         }
+
 
     /// <summary>
     /// Parse a string that may contain an account identifier to extract the service and 

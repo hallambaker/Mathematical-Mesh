@@ -70,6 +70,10 @@ public partial class Shell {
             if (!contextAccount.TryFindContactLocal(handle.Name, out var contact)) {
                 throw new NYI(); // Should report local name not found
                 }
+
+            var meshContact = contact.GetMeshContact();
+            handle = new ParsedHandle(meshContact.DirectAddress);
+
             // here we are going to do a local name lookup
             //if (contact.Contact?.TryGetMeshAccount(out handle) != true) {
             //    throw new NYI(); // Should report local name not found
@@ -104,6 +108,12 @@ public partial class Shell {
         var dnsHandle = options.DnsHandle.Value;
 
         var contextUser = MeshHost.ConfigureMeshAsync(accountID, localname, dnsHandle).Sync();
+
+        if (dnsHandle is not null) {
+
+            contextUser.BindContactHandle(dnsHandle);
+            }
+
         return new ResultCreateAccount() {
             Success = true,
             ProfileAccount = contextUser.ProfileUser,

@@ -323,16 +323,6 @@
             <returns><paramref name="accountID"/> if it is a well formed account identifier
             and null otherwise.</returns>
         </member>
-        <member name="M:Goedel.Utilities.Extension.SplitAccountAddress(System.String,System.String@,System.String@)">
-            <summary>
-            Parse a string that may contain an account identifier to extract the service and 
-            account components.
-            </summary>
-            <param name="identifier">The AccountID to split.</param>
-            <param name="service">The portal address.</param>
-            <param name="account">The account name.</param>
-            <returns>The type of address specified.</returns>
-        </member>
         <member name="M:Goedel.Utilities.Extension.SplitAccountIDService(System.String,System.String@,System.String@)">
             <summary>
             Parse a string that may contain an account identifier to extract the service and 

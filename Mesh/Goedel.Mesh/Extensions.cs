@@ -26,10 +26,12 @@ using Goedel.Contacts;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.KeyFile;
+using Goedel.Discovery;
 
 using System;
 using System.Net.Mail;
 using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -554,4 +556,34 @@ public static partial class Extensions {
 
 
         }
+
+
+
+
+    public static ProfileAccount GetProfileAccount(this JsContact contact, OnlineService onlineService) {
+
+        // get the key recor
+        string keyId = null;
+        foreach (var key in onlineService.CryptoKeyIds) {
+            if (key.Value == ContactConstant.OnlineServiceMesh) {
+                keyId = key.Key;
+                }
+            }
+        if (!contact.CryptoKeys.TryGetValue(keyId, out var crypotoKey)) {
+            return null;
+            }
+
+        var webKeySet = crypotoKey as JsonWebKeySet;
+
+        var enveloped = JsonObject.StreamParseTag<Enveloped>(webKeySet.Data);
+
+        var profile = JsonObject.StreamParseTag<ProfileAccount>(enveloped.Body);
+        Console.WriteLine(webKeySet.Data.ToUTF8());
+
+
+        return profile;
+
+        }
+
+
     }

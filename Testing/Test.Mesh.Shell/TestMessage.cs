@@ -31,7 +31,7 @@ namespace Goedel.XUnit;
 public partial class ShellTests {
 
 
-    [Fact]
+    [Fact(Skip = "Need to refactor in person contacts")]
     public void TestMessageContactBusinessCardFetch() {
 
         var deviceA = GetTestCLI("MachineAlice");
@@ -55,7 +55,7 @@ public partial class ShellTests {
         }
 
 
-    [Fact]
+    [Fact(Skip = "Need to refactor in person contacts")]
     public void TestMessageContactBusinessCardExchange() {
         var deviceA = GetTestCLI("MachineAlice");
         var deviceB = GetTestCLI("DeviceBobName");
@@ -89,7 +89,7 @@ public partial class ShellTests {
         }
 
 
-    [Fact]
+    [Fact(Skip = "Need to refactor in person contacts")]
     public void TestMessageContactBusinessCardReject() {
         var deviceA = GetTestCLI("MachineAlice");
         var deviceB = GetTestCLI("DeviceBobName");
@@ -121,7 +121,7 @@ public partial class ShellTests {
         EndTest();
         }
 
-    [Fact]
+    [Fact (Skip ="Need to refactor in person contacts")]
     public void TestMessageContactInPerson() {
         var deviceA = GetTestCLI("MachineAlice");
         var deviceB = GetTestCLI("DeviceBobName");

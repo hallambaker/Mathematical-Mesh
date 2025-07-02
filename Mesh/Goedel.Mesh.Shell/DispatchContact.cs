@@ -22,6 +22,7 @@
 
 
 using Goedel.Contacts;
+using Goedel.Discovery;
 
 namespace Goedel.Mesh.Shell;
 
@@ -64,45 +65,6 @@ public partial class Shell {
             };
         }
 
-    /// <summary>
-    /// Dispatch method
-    /// </summary>
-    /// <param name="options">The command line options.</param>
-    /// <returns>Mesh result instance</returns>
-    public override ShellResult ContactQuery(ContactQuery options) {
-
-        var address = options.Address.Value;
-
-        var all = options.Ssh.ByDefault & options.mail.ByDefault &
-                options.dev.ByDefault & options.place.ByDefault;
-
-
-        // Resolve to get the service and account
-
-
-        // construct protocol query for handle
-
-
-
-        // present to service, wait for a reply
-        var client = new MeshServiceClient();
-
-        var getRequest = new GetDataRequest() {
-            DocumentId = "fred"
-            };
-
-        var response = client.GetData(getRequest);
-
-        var contact = response.Data;
-
-
-        // 
-
-
-        return new ResultInfo() {
-            //Contact = null
-            };
-        }
 
     /// <summary>
     /// Dispatch method
@@ -168,23 +130,28 @@ public partial class Shell {
             };
         }
 
-    /// <summary>
-    /// Dispatch method
-    /// </summary>
-    /// <param name="options">The command line options.</param>
-    /// <returns>Mesh result instance</returns>
-    public override ShellResult ContactFetch(ContactFetch options) {
-        var contextUser = GetContextUser(options);
-        var recipient = options.Uri.Value;
+    ///// <summary>
+    ///// Dispatch method
+    ///// </summary>
+    ///// <param name="options">The command line options.</param>
+    ///// <returns>Mesh result instance</returns>
+    //public override ShellResult ContactFetch(ContactFetch options) {
+    //    var recipient = options.Handle.Value;
+    //    // pull the 
 
-        var entry = contextUser.ContactExchange(recipient, false).Sync();
+    //    var jsContact = ParsedHandle.ResolveMeshService();
 
-        return new ResultEntry() {
-            Success = true,
-            CatalogEntry = entry
-            };
+    //    var contextUser = GetContextUser(options);
 
-        }
+
+    //    var entry = contextUser.ContactExchange(recipient, false).Sync();
+
+    //    return new ResultEntry() {
+    //        Success = true,
+    //        CatalogEntry = entry
+    //        };
+
+    //    }
 
     /// <summary>
     /// Dispatch method

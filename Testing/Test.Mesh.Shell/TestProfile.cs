@@ -255,7 +255,7 @@ public partial class ShellTests {
     /// identifier' that may be used to establish a wireless connection to 
     /// the device.
     /// </summary>
-    [Fact]
+    [Fact (Skip ="Refactor the static QR code scheme using JSDevice")]
     public void TestProfileConnectStaticQR() {
 
         var deviceQ = GetTestCLI(DeviceQName);

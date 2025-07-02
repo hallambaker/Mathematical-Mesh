@@ -455,6 +455,19 @@ public partial class CatalogedContact {
         }
 
 
+    public MeshContact GetMeshContact() {
+
+        foreach (var entry in VerifiedContacts.IfEnumerable()) {
+            if (entry is MeshContact meshContact) {
+                return meshContact;
+                }
+
+            }
+
+        return null;
+        }
+
+
     #endregion
     #region // Override methods
 
@@ -493,6 +506,9 @@ public partial class CatalogedContact {
 
 
         }
+
+
+
 
     #endregion
     }

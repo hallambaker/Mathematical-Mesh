@@ -64,23 +64,17 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
-
+        // ---------- Problematic still
         //TestContact.Test().ContactHandle();
-
-
-        //DummyTest.Test().TestDummy();
-        //ServiceDiscovery.Test().TestDNS();
-        //ServiceDiscovery.Test().TestDNSMultiple(20);
-        //ServiceDiscovery.Test().TestResoveHandles();
-        //ServiceDiscovery.Test().TestResoveServices();
-
-        ////TestContact.Test().ContactSelf();
-
         //TestService.Test().TestCredentialFromHandle();
+        // -----------
 
-        ShellTests.Test().TestAccountHandle();
 
-        ShellTests.Test().TestHandleContactAlice();
+        //ShellTestsAdmin.Test().TestAccount();
+
+        ShellTests.Test().TestMessageConfirmationAccept();
+        ShellTests.Test().TestMessageConfirmationReject();
+
         ShellTests.Test().TestHandleContactAliceBob();
         ShellTests.Test().TestHandleThing();
 

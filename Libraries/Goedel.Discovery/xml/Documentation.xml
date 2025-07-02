@@ -4212,13 +4212,6 @@
             <returns></returns>
             <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
-        <member name="M:Goedel.Discovery.ParsedHandle.ResolveMeshService">
-            <summary>
-            Return the Mesh service provider associated with the handle.
-            </summary>
-            <returns>The service provider.</returns>
-            <exception cref="T:Goedel.Utilities.NYI"></exception>
-        </member>
         <member name="M:Goedel.Discovery.ParsedHandle.ResolveDnsHandle">
             <summary>
             Return the Account Service handle associated with the handle.

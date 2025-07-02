@@ -262,13 +262,6 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.ContactQuery(Goedel.Mesh.Shell.ContactQuery)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.ContactAdd(Goedel.Mesh.Shell.ContactAdd)">
             <summary>
             Dispatch method
@@ -291,13 +284,6 @@
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.ContactExchange(Goedel.Mesh.Shell.ContactExchange)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.ContactFetch(Goedel.Mesh.Shell.ContactFetch)">
             <summary>
             Dispatch method
             </summary>
@@ -794,41 +780,6 @@
         <member name="M:Goedel.Mesh.Shell.Shell.PasswordDump(Goedel.Mesh.Shell.PasswordDump)">
             <summary>
             Dispatch method to dump the credential catalog. 
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SelfPublish(Goedel.Mesh.Shell.SelfPublish)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SelfAnyone(Goedel.Mesh.Shell.SelfAnyone)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SelfAnything(Goedel.Mesh.Shell.SelfAnything)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SelfAnywhere(Goedel.Mesh.Shell.SelfAnywhere)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.SelfService(Goedel.Mesh.Shell.SelfService)">
-            <summary>
-            Dispatch method
             </summary>
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
@@ -2935,138 +2886,6 @@
         <member name="P:Goedel.Mesh.Shell._PasswordDump.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.Handle">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.Service">
-            <summary>Field accessor for option [service]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnywhere.Did">
-            <summary>Field accessor for option [did]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnyone.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnyone.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnyone.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnyone.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnyone.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnyone.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnyone.Handle">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnyone.Service">
-            <summary>Field accessor for option [service]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnything.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnything.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnything.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnything.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnything.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnything.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnything.Handle">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfAnything.Service">
-            <summary>Field accessor for option [service]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfService.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfService.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfService.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfService.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfService.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfService.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfService.Uri">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfService.Protocol">
-            <summary>Field accessor for option [protocol]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfPublish.Name">
-            <summary>Field accessor for option [name]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfPublish.Ssh">
-            <summary>Field accessor for option [ssh]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfPublish.mail">
-            <summary>Field accessor for option [mail]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfPublish.dev">
-            <summary>Field accessor for option [dev]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfPublish.place">
-            <summary>Field accessor for option [place]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfPublish.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfPublish.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfPublish.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfPublish.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfPublish.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._SelfPublish.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ContactAdd.Address">
             <summary>Field accessor for parameter []</summary>
         </member>
@@ -3081,42 +2900,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactAdd.Self">
             <summary>Field accessor for option [self]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactQuery.Address">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactQuery.Name">
-            <summary>Field accessor for option [name]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactQuery.Ssh">
-            <summary>Field accessor for option [ssh]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactQuery.mail">
-            <summary>Field accessor for option [mail]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactQuery.dev">
-            <summary>Field accessor for option [dev]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactQuery.place">
-            <summary>Field accessor for option [place]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactQuery.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactQuery.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactQuery.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactQuery.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactQuery.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactQuery.Json">
-            <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactStatic.AccountAddress">
             <summary>Field accessor for option [account]</summary>
@@ -3152,27 +2935,6 @@
             <summary>Field accessor for option [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDynamic.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactFetch.Uri">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactFetch.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactFetch.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactFetch.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactFetch.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactFetch.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactFetch.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactExchange.Uri">

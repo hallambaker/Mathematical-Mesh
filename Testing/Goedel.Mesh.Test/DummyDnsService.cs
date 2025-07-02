@@ -36,6 +36,7 @@ public class DummyDnsService : IDnsPublisher {
 
 
     public DummyDnsService() {
+        LogFile.WriteLine("Use DummyDnsService");
         DnsClient.Default = new DummyDnsClient(this);
         }
 
@@ -56,7 +57,10 @@ public class DummyDnsService : IDnsPublisher {
 
 
         else if (item is DNSRecord record) {
+            LogFile.WriteLine($"Add {item.Domain.Name}");
+
             if (!DictionaryData.TryGetValue(item.Domain.Name, out var node)) {
+
                 node = new DnsNode(item.Domain.Name);
                 DictionaryData.Add(item.Domain.Name, node);
                 }
@@ -65,16 +69,23 @@ public class DummyDnsService : IDnsPublisher {
         }
 
     public IEnumerable<DNSRecord> QueryRecord(string address,
-            DNSTypeCode typeCode) =>
-                DictionaryData.TryGetValue(address, out var dnsNode) ?
-                    dnsNode.Query(typeCode) : null;
+            DNSTypeCode typeCode) {
+        var result = DictionaryData.TryGetValue(address, out var dnsNode) ?
+            dnsNode.Query(typeCode) : null;
 
-
+        LogFile.WriteLine($"Request {address} {typeCode} -> {result is not null}");
+        return result;
+        }
     public IEnumerable<DNSRecord>? Query(
-            DNSRequest request)=>
-                DictionaryData.TryGetValue(request.Query.QName, out var dnsNode) ? 
-                    dnsNode.Query(request) : null;
+            DNSRequest request) {
 
+
+        var result = DictionaryData.TryGetValue(request.Query.QName, out var dnsNode) ?
+            dnsNode.Query(request) : null;
+
+        LogFile.WriteLine($"Request {request.Query.QType} {request.Query.QName} -> {result}");
+        return result;
+        }
     }
 
 public record DnsNode(string Domain) {
@@ -91,6 +102,8 @@ public record DnsNode(string Domain) {
             records = [];
             DictionaryRecords.Add(record.Code, records);
             }
+
+        LogFile.WriteLine($"   Node {record.Code}");
         records.Add(record);
 
         }
@@ -171,8 +184,10 @@ public class DummyDnsContext : DNSContext {
     public override Task<IEnumerable<DNSRecord>> QueryRecord(
             string address,
             DNSTypeCode typeCode = DNSTypeCode.TXT) {
-
+        LogFile.WriteLine($"Dummy querry record {address}, {typeCode}");
         var x = DnsService.QueryRecord(address, typeCode);
+
+
         return Task.FromResult(x);
         }
 

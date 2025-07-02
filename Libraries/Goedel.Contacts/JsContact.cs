@@ -291,6 +291,17 @@ public partial class JsContact {
         }
 
 
+    public OnlineService? GetMesh() {
+        foreach (var pair in OnlineServices.IfEnumerable()) {
+            if (pair.Value.Service == ContactConstant.OnlineServiceMesh) {
+                return pair.Value;
+                }
+            }
+
+        return null;
+        }
+
+
 
 
     }

@@ -305,6 +305,20 @@ public partial class ContextUser : ContextAccount {
     #region // Operations requiring OfflineSignatureKey - GrantAdmin, SetService
 
 
+    public async Task<string> BindContactHandle(string handle) {
+        TryGetContactSelf(out var contactSelf);
+        var jsContact = contactSelf.JsContact;
+
+        var earl = await PublishEarl(jsContact);
+        await BindHandle(
+            MediaTypes.JSContactPrefix, handle, MediaTypes.EarlTag, earl);
+
+        return earl;
+        }
+
+
+
+
     /// <summary>
     /// Set the initial Mesh Service. This MUST be called before devices are added to the 
     /// personal mesh. This method does not support transfer of the Mesh Service.
@@ -1724,21 +1738,47 @@ public partial class ContextUser : ContextAccount {
         // process the recipient to get the service, unless known.
 
         CryptographicKey recipientEncryptionKey = null;
+        var handle = new ParsedHandle(recipient);
 
-        var addressType = recipient.SplitAccountAddress(out var service, out var account);
-        switch (addressType) {
-            case AddressType.Callsign: {
-                var binding = await TryResolveCallsignAsync(account);
-                binding.AssertNotNull(NYI.Throw);
-                recipient = binding.GetMeshAccount();
-                recipientEncryptionKey = binding.GetEncryptionKey();
-                break;
-                }
-            case AddressType.AccountAtDns: {
+
+        switch (handle.HandleType) {
+            case HandleType.AccountServiceAddress: {
                 TryFindKeyEncryption(recipient, out recipientEncryptionKey);
                 break;
                 }
+            case HandleType.DnsHandle: {
+                var jsContact = await EarlClient.ResolveContactHandle(handle.Name);
+                var service = jsContact.GetMesh();
+                recipient = service?.User;
+
+                var profile = jsContact.GetProfileAccount(service);
+                recipientEncryptionKey = profile.CommonEncryption.GetKeyPair();
+                // here we fish out the encryption key
+                break;
+                }
+
+            default: {
+                throw new NYI();
+                }
             }
+
+
+
+
+        //var addressType = recipient.SplitAccountAddress(out var service, out var account);
+        //switch (addressType) {
+        //    case AddressType.Callsign: {
+        //        var binding = await TryResolveCallsignAsync(account);
+        //        binding.AssertNotNull(NYI.Throw);
+        //        recipient = binding.GetMeshAccount();
+        //        recipientEncryptionKey = binding.GetEncryptionKey();
+        //        break;
+        //        }
+        //    case AddressType.AccountAtDns: {
+        //        TryFindKeyEncryption(recipient, out recipientEncryptionKey);
+        //        break;
+        //        }
+        //    }
 
         var cataloged = GetSelf(localname);
         var contactMessage = new MessageContact() {

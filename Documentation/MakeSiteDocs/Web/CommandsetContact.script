@@ -212,14 +212,6 @@ by means of a dynamic URI.
 #% ConsoleReference (Contact.ContactCarolDynamicFetch);
 
 
-#! ------------------ contact fetch
-#% Describe(CommandSet, _ContactFetch._DescribeCommand);
-
-The 'contact fetch' command is used to acquire a dynamic or static contact
-presented as a URI or QR code without reciprocating the exchange.
-
-#% ConsoleReference (Contact.ContactDougStaticFetch);
-
 #! ------------------ contact get
 #% Describe(CommandSet, _ContactGet._DescribeCommand);
 

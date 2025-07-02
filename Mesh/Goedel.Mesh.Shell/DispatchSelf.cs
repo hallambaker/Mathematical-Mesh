@@ -25,54 +25,54 @@ namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
 
-    /// <summary>
-    /// Dispatch method
-    /// </summary>
-    /// <param name="options">The command line options.</param>
-    /// <returns>Mesh result instance</returns>
-    public override ShellResult SelfPublish(SelfPublish options) {
-        throw new NYI();
-        }
+    ///// <summary>
+    ///// Dispatch method
+    ///// </summary>
+    ///// <param name="options">The command line options.</param>
+    ///// <returns>Mesh result instance</returns>
+    //public override ShellResult SelfPublish(SelfPublish options) {
+    //    throw new NYI();
+    //    }
 
 
-    /// <summary>
-    /// Dispatch method
-    /// </summary>
-    /// <param name="options">The command line options.</param>
-    /// <returns>Mesh result instance</returns>
-    public override ShellResult SelfAnyone(SelfAnyone options) {
-        throw new NYI();
-        }
+    ///// <summary>
+    ///// Dispatch method
+    ///// </summary>
+    ///// <param name="options">The command line options.</param>
+    ///// <returns>Mesh result instance</returns>
+    //public override ShellResult SelfAnyone(SelfAnyone options) {
+    //    throw new NYI();
+    //    }
 
 
-    /// <summary>
-    /// Dispatch method
-    /// </summary>
-    /// <param name="options">The command line options.</param>
-    /// <returns>Mesh result instance</returns>
-    public override ShellResult SelfAnything(SelfAnything options) {
-        throw new NYI();
-        }
+    ///// <summary>
+    ///// Dispatch method
+    ///// </summary>
+    ///// <param name="options">The command line options.</param>
+    ///// <returns>Mesh result instance</returns>
+    //public override ShellResult SelfAnything(SelfAnything options) {
+    //    throw new NYI();
+    //    }
 
 
-    /// <summary>
-    /// Dispatch method
-    /// </summary>
-    /// <param name="options">The command line options.</param>
-    /// <returns>Mesh result instance</returns>
-    public override ShellResult SelfAnywhere(SelfAnywhere options) {
-        throw new NYI();
-        }
+    ///// <summary>
+    ///// Dispatch method
+    ///// </summary>
+    ///// <param name="options">The command line options.</param>
+    ///// <returns>Mesh result instance</returns>
+    //public override ShellResult SelfAnywhere(SelfAnywhere options) {
+    //    throw new NYI();
+    //    }
 
 
-    /// <summary>
-    /// Dispatch method
-    /// </summary>
-    /// <param name="options">The command line options.</param>
-    /// <returns>Mesh result instance</returns>
-    public override ShellResult SelfService(SelfService options) {
-        throw new NYI();
-        }
+    ///// <summary>
+    ///// Dispatch method
+    ///// </summary>
+    ///// <param name="options">The command line options.</param>
+    ///// <returns>Mesh result instance</returns>
+    //public override ShellResult SelfService(SelfService options) {
+    //    throw new NYI();
+    //    }
 
 
 

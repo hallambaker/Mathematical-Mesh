@@ -146,6 +146,8 @@ public partial class TestService {
 
     [Fact]
     public void TestCredentialFromHandle() {
+        DnsClient.Default = null;
+
 
         var handle = "phill.hallambaker.com";
 

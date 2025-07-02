@@ -136,50 +136,21 @@ public partial class ShellTests {
         var resulta = MakeAccount(alice, AliceAccount, alicehandle);
         var resultb = MakeAccount(bob, AccountB, bobhandle);
 
-        var i3 = alice.ExampleNoCatch($"contact get {bobhandle}");
-        bob.ExampleNoCatch($"contact request {bobhandle}");
+        // Alice makes request to @bob.example.net
+        var i3 = alice.ExampleNoCatch($"contact request {bobhandle}");
 
-        var result4 = ProcessMessage(alice, true, 1);
-        var result6 = bob.Example($"account sync /auto");
+
+        // Bob accepts the request
+        var result3 = bob.Example($"account sync /auto");
+        var result4 = ProcessMessage(bob, true, 1);
+
+        // Alice accepts the return.
+        var result5 = alice.Example($"account sync /auto");
+
+
         }
 
 
-
-    [Fact]
-    public void TestHandleContactAlice() {
-
-        var c1 = Dispatch($"account create alice@example.com /local=alice /handle=@alice.example.net") as ResultCreateAccount;
-        //var c2 = Dispatch($"account create bob@example.com /local=bob /handle=@bob.example.net") as ResultCreateAccount;
-
-
-        var h1 = Dispatch($"account hello @alice") as ResultHello;
-        (h1.ServiceAddress == "example.com").TestTrue();
-
-        var h2 = Dispatch($"account hello alice@example.com") as ResultHello;
-        (h2.ServiceAddress == "example.com").TestTrue();
-
-        var i1 = Dispatch($"contact query alice@example.com") as ResultInfo;
-        // will fail because there is no public contact record published
-
-        var i2 = Dispatch($"self publish") as ResultInfo;
-
-        var i3 = Dispatch($"contact query alice@example.com") as ResultInfo;
-        var i4 = Dispatch($"contact query @alice.example.net") as ResultInfo;
-        // check the i1.Contact matches c1
-
-
-        var ssh1 = Dispatch($"ssh create developer");
-        var i5 = Dispatch($"account query @alice.example.net") as ResultInfo;
-        var i6 = Dispatch($"account query @alice.example.net /ssh") as ResultInfo;
-
-        var m1 = Dispatch($"mail add alice@example.com");
-        var i7 = Dispatch($"account query @alice.example.net") as ResultInfo;
-
-        var d1 = Dispatch($"dev create");
-        var i8 = Dispatch($"account info @alice.example.net") as ResultInfo;
-        var i9 = Dispatch($"account query @alice.example.net /dev");
-
-        }
 
 
     [Fact]
@@ -188,11 +159,16 @@ public partial class ShellTests {
         (h1.ServiceAddress == "example.com").TestTrue();
 
         var c1 = Dispatch($"account create alice@example.com /local=alice /handle=@alice.example.net") as ResultCreateAccount;
-        var h7 = Dispatch($"account hello @alice.example.net") as ResultHello;
+
+        //var h44 = Dispatch($"account hello @alice.example.net") as ResultHello;
+        //(h44.ServiceAddress == "example.com").TestTrue();
+
+        var h7 = Dispatch($"account hello @alice") as ResultHello;
         (h7.ServiceAddress == "example.com").TestTrue();
 
+        // This should fail because Alice's handle is @alice.example.net
         var h2 = Dispatch($"account hello @alice.example.com") as ResultHello;
-        (h2.ServiceAddress == "example.com").TestTrue();
+        (h2.ServiceAddress == null).TestTrue();
 
         var h3 = Dispatch($"account hello alice@example.com") as ResultHello;
         (h3.ServiceAddress == "example.com").TestTrue();

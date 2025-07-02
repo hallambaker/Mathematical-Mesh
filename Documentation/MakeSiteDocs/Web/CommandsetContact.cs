@@ -237,14 +237,6 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			 ConsoleReference (Contact.ContactCarolDynamicFetch);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
-			// ------------------ contact fetch
-			 Describe(CommandSet, _ContactFetch._DescribeCommand);
-			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("The 'contact fetch' command is used to acquire a dynamic or static contact\n{0}", _Indent);
-			_Output.Write ("presented as a URI or QR code without reciprocating the exchange.\n{0}", _Indent);
-			_Output.Write ("\n{0}", _Indent);
-			 ConsoleReference (Contact.ContactDougStaticFetch);
-			_Output.Write ("\n{0}", _Indent);
 			// ------------------ contact get
 			 Describe(CommandSet, _ContactGet._DescribeCommand);
 			_Output.Write ("\n{0}", _Indent);

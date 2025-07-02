@@ -2953,6 +2953,54 @@
             <param name="accountAddress">Account name</param>
             <param name="_exception">Exception (if thrown)</param>
         </member>
+        <member name="T:Goedel.Mesh.Client.Extensions">
+            <summary>
+            Extensions class containing static extension methods
+            </summary>
+            
+        </member>
+        <member name="F:Goedel.Mesh.Client.Extensions.ConfigurationFileExtension">
+            <summary>Extension for hosts and services configuration files.</summary> 
+        </member>
+        <member name="M:Goedel.Mesh.Client.Extensions.GetService(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String)">
+            <summary>
+            Return the file path for the service description <paramref name="fileSpec"/>.
+            <para>If <paramref name="fileSpec"/> contains no file path specifier, it is
+            interpreted as a named service description to be stored in the location 
+            specified by <paramref name="meshMachine"/>. Otherwise, the specified file
+            path is used.
+            </para>
+            </summary>
+            <param name="meshMachine">The Mesh machine specification (used to determine
+            the location of system configuration files).</param>
+            <param name="defaultConfiguration">Default name for the configuration file
+            for this service.</param>
+            <param name="fileSpec">The service description specifier.</param>
+            <returns>The file path.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Extensions.Initialize(Goedel.Protocol.Service.IServiceConfiguration,Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initialize a base service configuration file for use on <paramref name="meshMachine"/>.
+            </summary>
+            <param name="meshMachine">The mesh Machine on which the service is to run.</param>
+            <param name="configuration">The configuration to initialize.</param>
+            <param name="serviceDns">The service DNS address to use.</param>
+            <param name="hostIp">The host IP addreess</param>
+            <param name="hostDns">The host DNS address,</param>
+            <param name="hostAccount">Optional host account.</param>
+            <returns>The configuration created.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.Extensions.GetHost(Goedel.Mesh.Client.IMeshMachineClient,System.String)">
+            <summary>
+            Return the file path for the service specified <paramref name="hostname"/>. The
+            host description is always stored in a location determined by 
+            <paramref name="meshMachine"/>.
+            </summary>
+            <param name="meshMachine">The Mesh machine specification (used to determine
+            the location of system configuration files).</param>
+            <param name="hostname">The host name.</param>
+            <returns>The file path.</returns>
+        </member>
         <member name="T:Goedel.Mesh.Client.CatalogedService">
              <summary>
             
@@ -3123,53 +3171,6 @@
         </member>
         <member name="P:Goedel.Mesh.Client.IMeshMachineClient.MeshHost">
             <summary>Direct access to the Catalog, should remove this</summary>
-        </member>
-        <member name="T:Goedel.Mesh.Client.Extensions">
-            <summary>
-            Extensions class containing static extension methods
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.Extensions.ConfigurationFileExtension">
-            <summary>Extension for hosts and services configuration files.</summary> 
-        </member>
-        <member name="M:Goedel.Mesh.Client.Extensions.GetService(Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String)">
-            <summary>
-            Return the file path for the service description <paramref name="fileSpec"/>.
-            <para>If <paramref name="fileSpec"/> contains no file path specifier, it is
-            interpreted as a named service description to be stored in the location 
-            specified by <paramref name="meshMachine"/>. Otherwise, the specified file
-            path is used.
-            </para>
-            </summary>
-            <param name="meshMachine">The Mesh machine specification (used to determine
-            the location of system configuration files).</param>
-            <param name="defaultConfiguration">Default name for the configuration file
-            for this service.</param>
-            <param name="fileSpec">The service description specifier.</param>
-            <returns>The file path.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.Extensions.Initialize(Goedel.Protocol.Service.IServiceConfiguration,Goedel.Mesh.Client.IMeshMachineClient,System.String,System.String,System.String,System.String)">
-            <summary>
-            Initialize a base service configuration file for use on <paramref name="meshMachine"/>.
-            </summary>
-            <param name="meshMachine">The mesh Machine on which the service is to run.</param>
-            <param name="configuration">The configuration to initialize.</param>
-            <param name="serviceDns">The service DNS address to use.</param>
-            <param name="hostIp">The host IP addreess</param>
-            <param name="hostDns">The host DNS address,</param>
-            <param name="hostAccount">Optional host account.</param>
-            <returns>The configuration created.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.Extensions.GetHost(Goedel.Mesh.Client.IMeshMachineClient,System.String)">
-            <summary>
-            Return the file path for the service specified <paramref name="hostname"/>. The
-            host description is always stored in a location determined by 
-            <paramref name="meshMachine"/>.
-            </summary>
-            <param name="meshMachine">The Mesh machine specification (used to determine
-            the location of system configuration files).</param>
-            <param name="hostname">The host name.</param>
-            <returns>The file path.</returns>
         </member>
         <member name="T:Goedel.Mesh.Client.Initialization">
             <summary>Static class whose only function is to contain the initialization 

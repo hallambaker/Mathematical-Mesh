@@ -598,54 +598,6 @@
 			Include Reporting
 
 
-		CommandSet Self "self"
-			Command SelfAnywhere "anywhere"
-				Include AccountOptions
-				Include Reporting	
-				Brief "Add anywhere entry to contact"
-				Parameter Handle "handle" String
-					Brief "The handle"
-				Option Service "service" String
-					Brief "The Auth'n service"
-				Option Did "did" String
-					Brief "The DID used as the unique authentication ID at the service"
-
-				
-			Command SelfAnyone "anyone"
-				Include AccountOptions
-				Include Reporting	
-				Brief "Add anyone entry to contact"
-				Parameter Handle "handle" String
-					Brief "The handle"
-				Option Service "service" String
-					Brief "The presence service"		
-
-			Command SelfAnything "anything"
-				Include AccountOptions
-				Include Reporting	
-				Brief "Add anywhere entry to contact"
-				Parameter Handle "handle" String
-					Brief "The handle"
-				Option Service "service" String
-					Brief "The anything service"
-
-			Command SelfService "service"
-				Include AccountOptions
-				Include Reporting	
-				Brief "Add service entry to contact"
-				Parameter Uri "uri" String
-					Brief "The web site uri"
-				Option Protocol "protocol" String
-					Brief "The protocol identifier"
-
-
-			Command SelfPublish "publish"
-				Brief "Create static contact retrieval URI"
-				Include ContactFilter
-				Include AccountOptions
-				Include Reporting
-
-
 	CommandSet Contact "contact"
 		Brief "Manage contact catalogs connected to an account"
 
@@ -662,15 +614,6 @@
 			Option Self "self" Flag
 				Brief "Contact is for self"
 
-
-		Command ContactQuery "query"
-			Brief "Attempt to provide the contact information for the specified handle"
-			Parameter Address "address" String
-				Brief "The user address"
-			Include ContactFilter
-			Include AccountOptions
-			Include Reporting
-
 		Command ContactStatic "static"
 			Brief "Create static contact retrieval URI"
 			Include AccountOptions
@@ -678,12 +621,6 @@
 
 		Command ContactDynamic "dynamic"
 			Brief "Create dynamic contact retrieval URI"
-			Include AccountOptions
-			Include Reporting
-
-		Command ContactFetch "fetch"
-			Brief "Request contact from URI without presenting own contact"
-			Parameter Uri "uri" String			
 			Include AccountOptions
 			Include Reporting
 

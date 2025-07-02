@@ -1,6 +1,10 @@
 ﻿using Goedel.Discovery;
 
+using System.Reflection.Metadata;
+
 namespace Goedel.Mesh.Client;
+
+
 
 /// <summary>
 /// Base class for EARL Clients
@@ -30,6 +34,9 @@ public abstract class EarlClient {
 
 
     public async Task<T> TryResolveEarl<T>(string uriString) where T : JsonObject{
+        LogFile.WriteLine($"Resolve earl {uriString}");
+
+
         var uri = new Uri(uriString);
         var earl = uri.AbsolutePath[1..];
 
@@ -41,22 +48,36 @@ public abstract class EarlClient {
         var (contentMeta, enveloped) = EarlEnvelopeReader.Parse(plaintext);
 
         Console.WriteLine(enveloped.ToUTF8());
-
+        LogFile.WriteLine($"Success earl {uriString}");
         return JsonObject.StreamParse<T>(enveloped);
         }
 
     public async Task<T> TryResolveHandle<T>(string handle, string prefix) where T : JsonObject {
+        LogFile.WriteLine($"Resolve handle {handle}, {prefix}");
 
         // need to reduce handle here to a domain.
 
         var domain = ParsedHandle.GetDomain(handle);
 
+
+        LogFile.WriteLine($"Get prefixed {domain}, {prefix}");
         var txt = await DnsClient.GetPrefixedTXT(domain, prefix);
+
+        if (txt is null) {
+            return null;
+            }
+
+
         var text = txt.FullText();
+        LogFile.WriteLine($" TXT prefixed {domain}, {prefix} -> {text}");
+
 
         var earl = GetTag(text, MediaTypes.EarlTag);
 
-        return await ResolveEarl<T>(earl);
+        var result = await ResolveEarl<T>(earl);
+
+        LogFile.WriteLine($"Finished handle {handle}, {prefix}");
+        return result;
         }
 
     static string GetTag(string text, string tag) {
@@ -73,6 +94,39 @@ public abstract class EarlClient {
             }
         return null;
         }
+
+
+    public static async Task<string> ResolveMeshService(string handle) {
+
+
+        var contact = await ResolveContactHandle(handle);
+        if (contact is null) {
+            return null;
+            }
+
+        foreach (var service in contact?.OnlineServices.IfEnumerable()) {
+            if (service.Value.Service == ContactConstant.OnlineServiceMesh) {
+                var user = service.Value.User;
+
+                var parsed = new ParsedHandle(user);
+
+                switch (parsed.HandleType) {
+                    case HandleType.Domain:
+                    case HandleType.AccountServiceAddress:
+                    case HandleType.DirectServiceAddress:
+                    case HandleType.DirectAccountServiceAddress: {
+                        return parsed.Service;
+                        }
+                    }
+                }
+
+            }
+
+        return null;
+        }
+
+
+
 
     public static async Task<T> ResolveHandle<T>(string earl, string prefix) where T : JsonObject =>
             await Client.TryResolveHandle<T>(earl, prefix);

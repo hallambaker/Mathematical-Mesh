@@ -123,6 +123,8 @@ public abstract class DnsClient {
     public static async Task<DNSRecord_TXT?> GetPrefixedTXT(string domain, string prefix) {
         domain = prefix + "." + domain;
 
+        LogFile.WriteLine($"GetPrefixedTXT {domain}");
+
         //Screen.WriteLine($"Resolve DNS {domain}");
         using var context = Default.GetContext();
         var records = await context.QueryRecord(domain, DNSTypeCode.TXT);

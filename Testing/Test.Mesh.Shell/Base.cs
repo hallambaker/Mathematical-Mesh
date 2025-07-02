@@ -76,7 +76,7 @@ public partial class ShellTestBase : Disposable {
     TestEnvironmentBase testEnvironment;
 
     public virtual TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) =>
-                new TestEnvironmentCommon(seed);
+                new TestEnvironmentCommon(seed, true);
 
     public virtual TestCLI GetTestCLI(string machineName = null) =>
     TestEnvironment.GetTestCLI(machineName);
