@@ -161,6 +161,10 @@ public class MeshMachineTest : MeshMachineCore {
                 base(testEnvironmentPerTest.MachinePath(name)) {
         Name = name;
         TestEnvironmentCommon = testEnvironmentPerTest;
+
+        DnsClient = testEnvironmentPerTest.DnsClient;
+        EarlClient = testEnvironmentPerTest.EarlClient;
+
         }
 
     //public MeshMachineTest(MeshMachineTest existing) :

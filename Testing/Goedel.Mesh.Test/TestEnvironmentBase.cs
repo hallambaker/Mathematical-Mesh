@@ -32,6 +32,10 @@ namespace Goedel.Mesh.Test;
 /// </summary>
 public abstract class TestEnvironmentBase : UnitTestSet {
 
+    public DnsClient DnsClient { get; init; } = new DnsClientUDP();
+
+    public EarlClient EarlClient { get; set; }
+
 
     public virtual string ServiceDns => "example.com";
 
@@ -120,6 +124,7 @@ public abstract class TestEnvironmentBase : UnitTestSet {
         Seed = seed ?? Seed;
         if (dummyDns) {
             DummyDnsService = new();
+            DnsClient = DummyDnsService.DnsClient;
             InitializeDNS();
             }
 

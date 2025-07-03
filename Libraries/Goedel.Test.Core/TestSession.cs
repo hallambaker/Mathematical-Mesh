@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Discovery;
+
 namespace Goedel.Test.Core;
 
 /// <summary>
@@ -27,6 +29,8 @@ namespace Goedel.Test.Core;
 /// request and response messages are captured.
 /// </summary>
 public partial class TestSession : JpcSessionSerialized {
+
+    public DnsClient DnsClient { get; init; } = new DnsClientUDP();
 
     //public static JpcSession JpcSessionFactory(JpcCredential jpcCredential) =>
     //        new TestSession(jpcCredential as JpcCredentialTest);

@@ -66,8 +66,8 @@ public partial class TestContact : UnitTestSet {
         var earl = response.Earl;
 
         // attempt resolution through the JSContact earl - jscontact://example.com/....
-        var contactAliceAtAlice = 
-                EarlClient.ResolveEarl<JsContact>(earl).Sync();
+        var contactAliceAtAlice =
+                testEnvironmentCommon.EarlClient.ResolveEarl<JsContact>(earl).Sync();
 
 
         contactAlice.TestIsEqual(contactAliceAtAlice);
@@ -97,10 +97,9 @@ public partial class TestContact : UnitTestSet {
 
 
         // attempt resolution as @alice.example.com
-        var contactAliceAtBob = EarlClient.ResolveContactHandle(HandleAlice).SyncNoCatch();
+        var contactAliceAtBob = testEnvironmentCommon.EarlClient.ResolveContactHandle(HandleAlice).SyncNoCatch();
         contactAlice.TestIsEqual(contactAliceAtBob);
 
-        DnsClient.Default = null;
         }
 
 

@@ -5226,6 +5226,42 @@
             <param name="recipient">The recipient account under which the </param>
             <returns>The EARL</returns>
         </member>
+        <member name="T:Goedel.Mesh.EarlClient">
+            <summary>
+            Base class for EARL Clients
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EarlClient.GetPrefix(System.String)">
+            <summary>
+            Compute the Well Known service prefix.
+            </summary>
+            <param name="instance">If not null, a service variation prefix used to 
+            separate multiple test instances on same service.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.EarlClient.TryGetValue(System.String,System.String)">
+            <summary>
+            Attempt to resolve an EARL
+            </summary>
+            <param name="authority">The EARL authoritah</param>
+            <param name="locator">The locator section.</param>
+            <returns>If successfull, the EARL ciphertext, otherwise null.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EarlClientHttp">
+            <summary>
+            EARL client resolving via HTTP.
+            </summary>
+            <param name="Instance"></param>
+        </member>
+        <member name="M:Goedel.Mesh.EarlClientHttp.#ctor(Goedel.Discovery.DnsClient,System.String)">
+            <summary>
+            EARL client resolving via HTTP.
+            </summary>
+            <param name="Instance"></param>
+        </member>
+        <member name="M:Goedel.Mesh.EarlClientHttp.TryGetValue(System.String,System.String)">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Mesh.StoreEnumerateEnvelope">
             <summary>
             Enumerate the envelopes in a DARE store.

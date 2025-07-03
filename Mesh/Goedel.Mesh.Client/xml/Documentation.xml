@@ -1982,42 +1982,6 @@
             in response to the message.</param>
             <returns>The result of processing the message.</returns>
         </member>
-        <member name="T:Goedel.Mesh.Client.EarlClient">
-            <summary>
-            Base class for EARL Clients
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.EarlClient.GetPrefix(System.String)">
-            <summary>
-            Compute the Well Known service prefix.
-            </summary>
-            <param name="instance">If not null, a service variation prefix used to 
-            separate multiple test instances on same service.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.EarlClient.TryGetValue(System.String,System.String)">
-            <summary>
-            Attempt to resolve an EARL
-            </summary>
-            <param name="authority">The EARL authoritah</param>
-            <param name="locator">The locator section.</param>
-            <returns>If successfull, the EARL ciphertext, otherwise null.</returns>
-        </member>
-        <member name="T:Goedel.Mesh.Client.EarlClientHttp">
-            <summary>
-            EARL client resolving via HTTP.
-            </summary>
-            <param name="Instance"></param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.EarlClientHttp.#ctor(System.String)">
-            <summary>
-            EARL client resolving via HTTP.
-            </summary>
-            <param name="Instance"></param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.EarlClientHttp.TryGetValue(System.String,System.String)">
-            <inheritdoc/>
-        </member>
         <member name="T:Goedel.Mesh.Client.Internal">
             <summary>
             An internal assertion check failed.

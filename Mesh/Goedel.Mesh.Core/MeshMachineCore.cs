@@ -21,6 +21,7 @@
 #endregion
 
 using Goedel.Cryptography.Core;
+using Goedel.Discovery;
 
 namespace Goedel.Mesh;
 
@@ -30,6 +31,12 @@ namespace Goedel.Mesh;
 public class MeshMachineCoreServer : Disposable, IMeshMachine {
 
     #region // Properties
+
+
+    public DnsClient DnsClient { get; init; }
+
+    public EarlClient EarlClient { get; init; } 
+
 
     ///<inheritdoc/>
     public virtual string? Instance => null;
@@ -66,6 +73,9 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
     static MeshMachineCoreServer() {
 
         Initialization.Initialized.AssertTrue(NYI.Throw);
+
+
+
         }
 
 
@@ -76,6 +86,10 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
     /// </summary>
     /// <param name="directory">Directory to store the server information.</param>
     public MeshMachineCoreServer(string? directory) {
+
+        DnsClient = new DnsClientUDP();
+        EarlClient = new EarlClientHttp (DnsClient);
+
         DirectoryRoot = directory;
         DirectoryMesh = GetServiceDirectory(MeshConstants.DirectoryProfiles);
         DirectoryKeys = GetServiceDirectory(MeshConstants.DirectoryKeys);
@@ -164,7 +178,9 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
 
         var service = accountAddress.GetService();
         var meshServiceBinding = new ConnectionInitiator(
-        credential, service, null, TransportType.Http, wellKnown);
+                credential, service, null, TransportType.Http, wellKnown) {
+            DnsClient = DnsClient
+            };
 
         return meshServiceBinding.GetClient<T>();
         }

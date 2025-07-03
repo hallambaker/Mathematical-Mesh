@@ -21,6 +21,8 @@
 #endregion
 
 
+using Goedel.Discovery;
+
 namespace Goedel.Mesh;
 
 /// <summary>
@@ -52,6 +54,12 @@ public delegate IMeshMachine GetMachineDelegate();
 /// Interface exposed by all Mesh Machine classes.
 /// </summary>
 public interface IMeshMachine {
+
+
+    EarlClient EarlClient { get; }
+
+    DnsClient DnsClient { get; }
+
 
     /// <summary>
     /// Convert the file path <paramref name="filepath"/> to a file path that will be 

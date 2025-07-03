@@ -88,7 +88,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
             Configuration.GenericHost, Configuration.MeshService, Logger);
         service.IDnsPublisher = DummyDnsService;
 
-        EarlClient.Client = new EarlClientDirect(service.EarlDispatch);
+        EarlClient = new EarlClientDirect(service.EarlDispatch, DnsClient);
 
 
         return service;
@@ -149,11 +149,13 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
                 },
             JpcConnection.Serialized => new TestSession(MeshService, credential,
                     meshMachineTest.MeshProtocolMessages, meshMachineTest) {
-                TargetAccount = accountAddress
+                TargetAccount = accountAddress,
+                DnsClient = DnsClient
                 },
             JpcConnection.Rud => new TestSessionRud(TestServiceRud, credential,
                     meshMachineTest.MeshProtocolMessages, meshMachineTest) {
-                TargetAccount = accountAddress
+                TargetAccount = accountAddress,
+                DnsClient = DnsClient
                 },
 
 

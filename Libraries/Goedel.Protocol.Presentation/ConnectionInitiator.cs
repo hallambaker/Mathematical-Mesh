@@ -29,6 +29,9 @@ namespace Goedel.Protocol.Presentation;
 public partial class ConnectionInitiator : RudConnection {
 
     #region // Properties
+
+    public DnsClient DnsClient { get; init; } = new DnsClientUDP();
+
     ///<inheritdoc/>
     public override byte[] ClientKeyIn => ClientKeyHostToClient;
     ///<inheritdoc/>
@@ -123,7 +126,9 @@ public partial class ConnectionInitiator : RudConnection {
         var client = new T();
 
         client.JpcSession = new RudStreamClient(null, client.GetWellKnown,
-            credential ?? CredentialSelf, rudConnection: this);
+            credential ?? CredentialSelf, rudConnection: this) {
+            DnsClient = DnsClient
+            };
         "Stash the initiator here".TaskFunctionality();
 
         //RudStreamInitial.MakeStreamClient(client.GetWellKnown, credential);

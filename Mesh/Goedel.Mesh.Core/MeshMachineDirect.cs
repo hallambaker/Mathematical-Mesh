@@ -21,6 +21,7 @@
 #endregion
 
 using Goedel.Cryptography.Core;
+using Goedel.Discovery;
 
 namespace Goedel.Mesh.Core;
 
@@ -31,6 +32,10 @@ public class MeshMachineDirect : Disposable, IMeshMachineClient {
 
     IMeshMachineClient MeshMachineClient { get; }
     MeshService PublicMeshService { get; }
+
+    public EarlClient EarlClient => MeshMachineClient.EarlClient;
+
+    public DnsClient DnsClient => MeshMachineClient.DnsClient;
 
     ///<summary>Services that are reachable by direct interface.</summary> 
     public Dictionary<string, JpcInterface> DirectServices { get; } = new();
@@ -75,6 +80,8 @@ public class MeshMachineDirect : Disposable, IMeshMachineClient {
 
     ///<summary>The Carnet payment service (if bound).</summary> 
     public CarnetService CarnetService { get; private set; }
+
+
 
     ///<inheritdoc/>
     public KeyPair CreateKeyPair(CryptoAlgorithmId algorithmID, KeySecurity keySecurity, int keySize = 0, KeyUses keyUses = KeyUses.Any) =>

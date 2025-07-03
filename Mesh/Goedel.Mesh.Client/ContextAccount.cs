@@ -98,6 +98,10 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     ///<summary>The Machine context.</summary>
     public IMeshMachineClient MeshMachine => MeshHost.MeshMachine;
 
+    public DnsClient DnsClient => MeshMachine.DnsClient;
+    public EarlClient EarlClient => MeshMachine.EarlClient;
+
+
     ///<summary>The key collection for use with the context.</summary>
     public virtual IKeyCollection KeyCollection => MeshMachine.KeyCollection;
 

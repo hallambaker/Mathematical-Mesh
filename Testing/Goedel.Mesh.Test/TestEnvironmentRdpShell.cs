@@ -64,7 +64,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
     //public override string ServiceDns { get; }
 
     public TestEnvironmentRdpShell(DeterministicSeed seed = null) : base(seed) {
-        EarlClient.Client = new EarlClientHttp(Test);
+        EarlClient= new EarlClientHttp(DnsClient, Test);
         }
 
 
@@ -233,7 +233,9 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
             }
 
         var meshServiceBinding = new ConnectionInitiator(
-                credential, ServiceDns, Test, TransportType.Http, MeshServiceClient.WellKnown);
+                credential, ServiceDns, Test, TransportType.Http, MeshServiceClient.WellKnown) {
+            DnsClient = meshMachineTest.DnsClient
+            };
         var client = meshServiceBinding.GetClient<MeshServiceClient>(credential, accountAddress);
 
 

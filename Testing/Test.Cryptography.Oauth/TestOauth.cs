@@ -2,8 +2,13 @@
 
 
 
+using Goedel.Discovery;
+
 namespace Goedel.XUnit;
 public class TestOauth {
+
+    public DnsClient DnsClient { get; set; } = new DnsClientUDP();
+
 
     string PHB1 => "hallam.bsky.social";
     string PHB2 => "phill.hallambaker.com";
@@ -25,7 +30,9 @@ public class TestOauth {
     [Fact]
     public void TestDidResolve() {
 
-        SessionManager SessionManager = new();
+        SessionManager SessionManager = new() {
+            DnsClient = DnsClient
+            };
 
         //var did2 = SessionManager.TryResolveDid("hallam.bsky.social").Sync();
         //var did1 = SessionManager.TryResolveDid("phill.hallambaker.com").Sync() ;
@@ -48,11 +55,15 @@ public class TestOauth {
         }
     [Fact]
     public void TestPAR() {
-        var client = new OauthClient(null, null, null);
+        var client = new OauthClient(null, null, null) {
+            DnsClient = DnsClient
+            };
         //var manager = new EncryptedTokenManager();
         //var par = client.PreRequest(PHB1, "fatfreddy").Sync();
 
-        SessionManager SessionManager = new();
+        SessionManager SessionManager = new() {
+            DnsClient = DnsClient
+            }; 
         var oauth1 = SessionManager.TryResolveHandle(PHB1).Sync();
         var req = client.ConstructPar(oauth1, "fat freddy");
         var state = new EncodedState(client.EncryptedTokenManager, req.State);

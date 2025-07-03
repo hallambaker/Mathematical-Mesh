@@ -522,7 +522,7 @@
             </summary>
             <param name="EarlDispatch"></param>
         </member>
-        <member name="M:Goedel.Mesh.Server.EarlClientDirect.#ctor(Goedel.Mesh.Server.EarlDispatch)">
+        <member name="M:Goedel.Mesh.Server.EarlClientDirect.#ctor(Goedel.Mesh.Server.EarlDispatch,Goedel.Discovery.DnsClient)">
             <summary>
             EARL Client resolving direct to the service (for testing);
             </summary>

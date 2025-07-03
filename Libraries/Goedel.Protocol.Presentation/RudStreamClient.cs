@@ -29,6 +29,9 @@ namespace Goedel.Protocol.Presentation;
 public class RudStreamClient : RudStream, IJpcSession {
     #region // Properties
 
+
+    public DnsClient DnsClient { get; init; } = new DnsClientUDP();
+
     ///<inheritdoc/>
     public virtual string TargetAccount => throw new NYI();
 

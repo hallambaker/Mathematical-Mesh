@@ -81,12 +81,12 @@ public enum Transport {
 /// </summary>
 public abstract class DnsClient {
 
-    /// <summary>Default client context for DNS query (result is cached for reuse)</summary>
-    public static DnsClient Default {
-        get => defaultClient ?? new DnsClientUDP().CacheValue(out defaultClient);
-        set => defaultClient = value; 
-        }
-    static DnsClient defaultClient = null;
+    ///// <summary>Default client context for DNS query (result is cached for reuse)</summary>
+    //public static DnsClient Default {
+    //    get => defaultClient ?? new DnsClientUDP().CacheValue(out defaultClient);
+    //    set => defaultClient = value; 
+    //    }
+    //static DnsClient defaultClient = null;
 
     /// <summary>Return a DNS Client Context in which to make a set of queries.
     /// </summary>
@@ -104,11 +104,11 @@ public abstract class DnsClient {
     /// <param name="port">The default DNS port number</param>
     /// <param name="fallback">The fallback mode to use if SRV lookup fails</param> 
     /// <returns>Description of the discovered services.</returns>
-    public static async Task<ServiceDescription> ResolveServiceAsync(string address,
+    public async Task<ServiceDescription> ResolveServiceAsync(string address,
                     string service = null,
                     int? port = null, DNSFallback fallback = DNSFallback.Prefix) {
 
-        using var context = Default.GetContext();
+        using var context = GetContext();
         var task = await context.QueryServiceAsync(address, service, port, fallback);
         return task;
         }
@@ -120,13 +120,13 @@ public abstract class DnsClient {
     /// <param name="domain">TThe domain component of the handle.</param>
     /// <param name="prefix">The protocol prefix (including underscore)</param>
     /// <returns>The resolved DID.</returns>
-    public static async Task<DNSRecord_TXT?> GetPrefixedTXT(string domain, string prefix) {
+    public async Task<DNSRecord_TXT?> GetPrefixedTXT(string domain, string prefix) {
         domain = prefix + "." + domain;
 
         LogFile.WriteLine($"GetPrefixedTXT {domain}");
 
         //Screen.WriteLine($"Resolve DNS {domain}");
-        using var context = Default.GetContext();
+        using var context = GetContext();
         var records = await context.QueryRecord(domain, DNSTypeCode.TXT);
         if (records == null) {
             return null;
@@ -158,11 +158,11 @@ public abstract class DnsClient {
     /// </summary>
     /// <param name="domain">TThe domain component of the handle.</param>
     /// <returns>The resolved DID.</returns>
-    public static async Task<Did?> ResolveAtHandleDNS(string domain) {
+    public async Task<Did?> ResolveAtHandleDNS(string domain) {
         domain = "_atproto." + domain;
 
         Screen.WriteLine($"Resolve DNS {domain}");
-        using var context = Default.GetContext();
+        using var context = GetContext();
         var records = await context.QueryRecord(domain, DNSTypeCode.TXT);
         if (records == null) {
             return null;
@@ -198,7 +198,7 @@ public abstract class DnsClient {
     /// </summary>
     /// <param name="domain">TThe domain component of the handle.</param>
     /// <returns>The resolved DID.</returns>
-    public static async Task<Did?> ResolveAtHandleHttp(string domain) {
+    public async Task<Did?> ResolveAtHandleHttp(string domain) {
         
         var uri = $"https://{domain}/.well-known/atproto-did";
 
@@ -220,7 +220,7 @@ public abstract class DnsClient {
     /// </summary>
     /// <param name="domain">TThe domain component of the handle.</param>
     /// <returns>The resolved DID.</returns>
-    public static async Task<Did?> ResolveAtHandle(string domain) {
+    public async Task<Did?> ResolveAtHandle(string domain) {
 
         var dnsTask = ResolveAtHandleDNS(domain);
         var httpTask = ResolveAtHandleHttp(domain);

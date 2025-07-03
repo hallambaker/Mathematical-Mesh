@@ -82,7 +82,10 @@ public partial class Shell {
             // We have substituted the handle obtained from the local address
             }
 
-        serviceAddress = handle.ResolveMeshService().Sync();
+
+        var EarlClient = MeshHost.MeshMachine.EarlClient;
+
+        serviceAddress = EarlClient.ResolveMeshService(handle).Sync();
         var meshClient = GetMeshClient(options, serviceAddress);
 
         var helloRequest = new HelloRequest();

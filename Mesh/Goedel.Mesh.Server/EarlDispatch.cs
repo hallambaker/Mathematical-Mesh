@@ -106,7 +106,7 @@ public class EarlDispatchCached: EarlDispatch {
 /// EARL Client resolving direct to the service (for testing);
 /// </summary>
 /// <param name="EarlDispatch"></param>
-public  class EarlClientDirect (EarlDispatch EarlDispatch) : EarlClient {
+public  class EarlClientDirect (EarlDispatch EarlDispatch, DnsClient dnsClient) : EarlClient (dnsClient){
 
     /// <inheritdoc/>
     public override Task<byte[]> TryGetValue(

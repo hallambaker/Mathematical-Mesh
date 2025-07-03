@@ -30,32 +30,7 @@ namespace Goedel.Mesh.Client;
 /// </summary>
 /// 
 public static partial class Extensions {
-    public static async Task<string> ResolveMeshService(this ParsedHandle handle) {
-        switch (handle.HandleType) {
-            // Just return the service component
-            case HandleType.Domain:
-            case HandleType.AccountServiceAddress:
-            case HandleType.DirectServiceAddress:
-            case HandleType.DirectAccountServiceAddress: {
-                return handle.Service;
-                }
 
-            // For a DNS handle, we have to first resolve to get the DirectServiceAddress
-            case HandleType.DnsHandle:
-            case HandleType.DirectDnsHandle: {
-                return await EarlClient.ResolveMeshService(handle.Name);
-                }
-
-            // These all fail because there isn't enough information to resolve a service
-            case HandleType.LocalName:
-            case HandleType.Invalid:
-            case HandleType.Fingerprint: {
-                throw new NYI();
-                }
-            }
-
-        throw new NYI();
-        }
 
 
 

@@ -11,6 +11,8 @@ namespace Goedel.Cryptography.Oauth;
 /// </summary>
 public class OauthClient {
 
+    public DnsClient DnsClient { get; init; } = new DnsClientUDP();
+
 
     ///<summary>Client description.</summary> 
     ClientMetadata ClientMetadata { get; }
@@ -40,7 +42,9 @@ public class OauthClient {
                 string redirectUri,
                 JWKS keys) {
         
-        SessionManager = new();
+        SessionManager = new() {
+            DnsClient = DnsClient
+            };
         SecretKey = Platform.GetRandomBytes(32);
 
 

@@ -31,13 +31,13 @@ namespace Goedel.Mesh.Test;
 
 public class DummyDnsService : IDnsPublisher {
 
-
+    public DnsClient DnsClient { get;  } 
     public Dictionary<string, DnsNode> DictionaryData { get;} = [];
 
 
     public DummyDnsService() {
         LogFile.WriteLine("Use DummyDnsService");
-        DnsClient.Default = new DummyDnsClient(this);
+        DnsClient = new DummyDnsClient(this);
         }
 
 

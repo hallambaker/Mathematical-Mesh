@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Discovery;
+
 namespace Goedel.Test.Core;
 
 
@@ -50,7 +52,9 @@ public partial class TestSessionRud : TestSession {
         MeshProtocolMessages = meshProtocolMessages;
 
 
-        ConnectionInitiatorTest = new ConnectionInitiatorTest(clientCredential, null);
+        ConnectionInitiatorTest = new ConnectionInitiatorTest(clientCredential, null) {
+            DnsClient = DnsClient
+            }; ;
         RudStream = new RudStream(null, null, clientCredential, null, ConnectionInitiatorTest);
         }
 
