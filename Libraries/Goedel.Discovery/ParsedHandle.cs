@@ -196,47 +196,51 @@ public class ParsedHandle {
         }
 
 
-    ///// <summary>
-    ///// Convenience method, resolve the handle <paramref name="handle"/> and
-    ///// return the the corresponding account service address as a text string.
-    ///// </summary>
-    ///// <param name="handle"></param>
-    ///// <returns></returns>
-    //public static string Resolve(string handle) {
-    //    var parsed = new ParsedHandle(handle);
-    //    return parsed.Resolve().Sync();
-    //    }
+    /// <summary>
+    /// Convenience method, resolve the handle <paramref name="handle"/> and
+    /// return the the corresponding account service address as a text string.
+    /// </summary>
+    /// <param name="handle"></param>
+    /// <returns></returns>
+    public static string Resolve(DnsClient dnsClient, string handle) {
+        var parsed = new ParsedHandle(handle);
+        return parsed.Resolve(dnsClient).Sync();
+        }
 
 
-    ///// <summary>
-    ///// Resolve the handle to return the account service address for the corresponding
-    ///// Mesh account.
-    ///// </summary>
-    ///// <returns></returns>
-    ///// <exception cref="NYI"></exception>
-    //public async Task<string> Resolve() {
+    /// <summary>
+    /// Resolve the handle to return the account service address for the corresponding
+    /// Mesh account.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="NYI"></exception>
+    public async Task<string> Resolve(DnsClient dnsClient) {
 
-    //    switch (HandleType) {
-    //        case HandleType.DirectDnsHandle:
-    //        case HandleType.DnsHandle: {
-    //            ResolvedHandle = await ResolveDnsHandle();
-    //            AccountAddress = ResolvedHandle.Fingerprint + "@@" + ResolvedHandle.Service;
-    //            return AccountAddress;
-    //            }
+        switch (HandleType) {
+            case HandleType.DirectDnsHandle:
+            case HandleType.DnsHandle: {
+                ResolvedHandle = await ResolveDnsHandle(dnsClient);
+                AccountAddress = ResolvedHandle.Fingerprint + "@@" + ResolvedHandle.Service;
+                return AccountAddress;
+                }
 
-    //        case HandleType.AccountServiceAddress: {
-    //            AccountAddress = Name + "@" + Service;
-    //            return AccountAddress;
-    //            }
-    //        case HandleType.DirectServiceAddress:
-    //        case HandleType.DirectAccountServiceAddress: {
-    //            AccountAddress = Fingerprint + "@@" + Service;
-    //            return AccountAddress;
-    //            }
+            case HandleType.AccountServiceAddress: {
+                AccountAddress = Name + "@" + Service;
+                return AccountAddress;
+                }
+            case HandleType.DirectServiceAddress:
+            case HandleType.DirectAccountServiceAddress: {
+                AccountAddress = Fingerprint + "@@" + Service;
+                return AccountAddress;
+                }
 
-    //        default: throw new NYI();
-    //        }
-    //    }
+            default: throw new NYI();
+            }
+        }
+
+
+
+
 
     ///// <summary>
     ///// Return the Mesh service provider associated with the handle.
@@ -275,19 +279,19 @@ public class ParsedHandle {
 
 
 
-    ///// <summary>
-    ///// Return the Account Service handle associated with the handle.
-    ///// </summary>
-    ///// <returns>The account service handle</returns>
-    //public async Task<ParsedHandle?> ResolveDnsHandle() {
+    /// <summary>
+    /// Return the Account Service handle associated with the handle.
+    /// </summary>
+    /// <returns>The account service handle</returns>
+    public async Task<ParsedHandle?> ResolveDnsHandle(DnsClient dnsClient) {
 
-    //    var meshService = await HandleServiceMesh.Fetch(TODO, Name);
-    //    if (meshService != null) {
-    //        return new ParsedHandle(meshService.Dsa);
-    //        }
+        var meshService = await HandleServiceMesh.Fetch(dnsClient, Name);
+        if (meshService != null) {
+            return new ParsedHandle(meshService.Dsa);
+            }
 
-    //    return null;
-    //    }
+        return null;
+        }
 
     ///// <summary>
     ///// Resolve the JSContact entry for the handle <paramref name="handle"/> and return the 
@@ -447,78 +451,78 @@ public class ParsedHandle {
 /// <summary>
 /// Base class for handle service records.
 /// </summary>
-//public abstract record HandleService {
+public abstract record HandleService {
 
-//    ///<summary>The text value of the handle.</summary> 
-//    public string? Text { get; }
+    ///<summary>The text value of the handle.</summary> 
+    public string? Text { get; }
 
-//    ///<summary>Dictionary mapping tag entries to the corresponding values.</summary> 
-//    public Dictionary<string, string> Tags = [];
+    ///<summary>Dictionary mapping tag entries to the corresponding values.</summary> 
+    public Dictionary<string, string> Tags = [];
 
-//    /// <summary>
-//    /// Constructor, create an entry from <paramref name="text"/>
-//    /// </summary>
-//    /// <param name="text">The text to create the entry.</param>
-//    protected HandleService(string? text) {
-//        Text = text;
-//        if (text is null) {
-//            return;
-//            }
+    /// <summary>
+    /// Constructor, create an entry from <paramref name="text"/>
+    /// </summary>
+    /// <param name="text">The text to create the entry.</param>
+    protected HandleService(string? text) {
+        Text = text;
+        if (text is null) {
+            return;
+            }
 
-//        var parts = text.Split(' ');
-//        foreach (var part in parts) {
-//            var index = part.IndexOf('=');
+        var parts = text.Split(' ');
+        foreach (var part in parts) {
+            var index = part.IndexOf('=');
 
-//            if (index > 0) {
-//                var tag = part.Substring(0, index);
-//                var rest = part.Substring(index + 1);
-//                Tags.Add(tag, rest);
-//                }
-//            }
-//        }
-//    }
-
-
+            if (index > 0) {
+                var tag = part.Substring(0, index);
+                var rest = part.Substring(index + 1);
+                Tags.Add(tag, rest);
+                }
+            }
+        }
+    }
 
 
-///// <summary>
-///// Mesh service description.
-///// </summary>
-//public record HandleServiceMesh : HandleService {
-
-//    ///<summary>The Direct Service Address</summary> 
-//    public string Dsa { get; set; }
-
-//    /// <summary>
-//    /// Constructor, create an instance from <paramref name="text"/>
-//    /// </summary>
-//    /// <param name="text">The TXT record text</param>
-//    public HandleServiceMesh(string? text = null) : base(text) {
-//        Tags.TryGetValue("dsa", out var did);
-//        Dsa = did;
-//        }
-
-//    /// <summary>
-//    /// Attempt to fetch the Mesh record associated with the handle 
-//    /// <paramref name="domain"/>.
-//    /// </summary>
-//    /// <param name="dnsClient"></param>
-//    /// <param name="domain">The domain to query.</param>
-//    /// <returns>The service description.</returns>
-//    /// <param name="dummy">If true return a dummy result if there is no 
-//    /// TXT record published, otherwise return null.</param>
-//    public static async Task<HandleServiceMesh> Fetch(DnsClient dnsClient, string domain, bool dummy = false) {
-//        var handle = await dnsClient.GetPrefixedTXT(domain, "_mesh");
-//        var text = handle.FullText();
-//        if (text is null) {
-//            return dummy ?  new HandleServiceMesh((string) null): null;
-//            }
-
-//        return new HandleServiceMesh(text);
-//        }
 
 
-//    }
+/// <summary>
+/// Mesh service description.
+/// </summary>
+public record HandleServiceMesh : HandleService {
+
+    ///<summary>The Direct Service Address</summary> 
+    public string Dsa { get; set; }
+
+    /// <summary>
+    /// Constructor, create an instance from <paramref name="text"/>
+    /// </summary>
+    /// <param name="text">The TXT record text</param>
+    public HandleServiceMesh(string? text = null) : base(text) {
+        Tags.TryGetValue("dsa", out var did);
+        Dsa = did;
+        }
+
+    /// <summary>
+    /// Attempt to fetch the Mesh record associated with the handle 
+    /// <paramref name="domain"/>.
+    /// </summary>
+    /// <param name="dnsClient"></param>
+    /// <param name="domain">The domain to query.</param>
+    /// <returns>The service description.</returns>
+    /// <param name="dummy">If true return a dummy result if there is no 
+    /// TXT record published, otherwise return null.</param>
+    public static async Task<HandleServiceMesh> Fetch(DnsClient dnsClient, string domain, bool dummy = false) {
+        var handle = await dnsClient.GetPrefixedTXT(domain, "_mesh");
+        var text = handle.FullText();
+        if (text is null) {
+            return dummy ? new HandleServiceMesh((string)null) : null;
+            }
+
+        return new HandleServiceMesh(text);
+        }
+
+
+    }
 
 ///// <summary>
 ///// Oauth service description.

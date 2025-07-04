@@ -1,0 +1,8 @@
+﻿
+
+Namespace Goedel.Device
+    
+	Exception DeviceException
+        Console "A device exception occurred.."
+		Description
+			|Base class for device exceptions.

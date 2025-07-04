@@ -164,8 +164,7 @@ public abstract record Binding(
     public static JsonObject ParseTagged(
                 JsonElementObject element,
                 Binding binding,
-                bool collectUparsed = false)
-        {
+                bool collectUparsed = false, JpcInterface service = null) {
         (element.Properties.Count == 1).AssertTrue(NYI.Throw);
         foreach (var member in element.Properties) {
             if (binding.TypeDictionary.TryGetValue(member.Key, out var subBinding)) {
@@ -173,6 +172,19 @@ public abstract record Binding(
 
                 if (member.Value is JsonElementObject child) {
                     return Parse(child, subBinding, collectUparsed);
+                    }
+                }
+            else if (service is not null){
+                if (service.GetTagDictionary.TryGetValue(member.Key, out var type)) {
+                    if (!JsonObject.BindingDictionary.TryGetValue(type, out var subBinding2)) {
+                        Console.WriteLine($"Type {type.FullName} not registered");
+                        throw new NYI();
+                        }
+
+                    if (member.Value is JsonElementObject child) {
+                        return Parse(child, subBinding2, collectUparsed);
+                        }
+
                     }
                 }
             return null;

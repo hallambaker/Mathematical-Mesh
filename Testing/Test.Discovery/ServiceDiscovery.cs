@@ -452,14 +452,10 @@ public partial class ServiceDiscovery {
     bool TestResolve(
                 DnsClient dnsClient,
                 string handle, string address) {
+        var result = ParsedHandle.Resolve(dnsClient,handle);
 
-        throw new NotImplementedException();
-        //var result = ParsedHandle.Resolve(handle);
-
-        //result.TestIsEqual(address);
-
-
-        //return true;
+        result.TestIsEqual(address);
+        return true;
         }
 
 

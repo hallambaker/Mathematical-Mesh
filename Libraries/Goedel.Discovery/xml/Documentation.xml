@@ -4193,6 +4193,70 @@
             <param name="handle">The string to parse.</param>
             <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
+        <member name="M:Goedel.Discovery.ParsedHandle.Resolve(Goedel.Discovery.DnsClient,System.String)">
+            <summary>
+            Convenience method, resolve the handle <paramref name="handle"/> and
+            return the the corresponding account service address as a text string.
+            </summary>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Discovery.ParsedHandle.Resolve(Goedel.Discovery.DnsClient)">
+            <summary>
+            Resolve the handle to return the account service address for the corresponding
+            Mesh account.
+            </summary>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="M:Goedel.Discovery.ParsedHandle.ResolveDnsHandle(Goedel.Discovery.DnsClient)">
+            <summary>
+            Return the Account Service handle associated with the handle.
+            </summary>
+            <returns>The account service handle</returns>
+        </member>
+        <member name="T:Goedel.Discovery.HandleService">
+            <summary>
+            Base class for handle service records.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.HandleService.Text">
+            <summary>The text value of the handle.</summary> 
+        </member>
+        <member name="F:Goedel.Discovery.HandleService.Tags">
+            <summary>Dictionary mapping tag entries to the corresponding values.</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.HandleService.#ctor(System.String)">
+            <summary>
+            Constructor, create an entry from <paramref name="text"/>
+            </summary>
+            <param name="text">The text to create the entry.</param>
+        </member>
+        <member name="T:Goedel.Discovery.HandleServiceMesh">
+            <summary>
+            Mesh service description.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.HandleServiceMesh.Dsa">
+            <summary>The Direct Service Address</summary> 
+        </member>
+        <member name="M:Goedel.Discovery.HandleServiceMesh.#ctor(System.String)">
+            <summary>
+            Constructor, create an instance from <paramref name="text"/>
+            </summary>
+            <param name="text">The TXT record text</param>
+        </member>
+        <member name="M:Goedel.Discovery.HandleServiceMesh.Fetch(Goedel.Discovery.DnsClient,System.String,System.Boolean)">
+            <summary>
+            Attempt to fetch the Mesh record associated with the handle 
+            <paramref name="domain"/>.
+            </summary>
+            <param name="dnsClient"></param>
+            <param name="domain">The domain to query.</param>
+            <returns>The service description.</returns>
+            <param name="dummy">If true return a dummy result if there is no 
+            TXT record published, otherwise return null.</param>
+        </member>
         <member name="T:Goedel.Discovery.ParsedAddressType">
             <summary>
             Recognized service address types

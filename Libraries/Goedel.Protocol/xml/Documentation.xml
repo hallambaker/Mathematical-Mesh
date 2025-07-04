@@ -3426,6 +3426,19 @@
             parse.</param>
             <returns>The typed, parsed object.</returns>
         </member>
+        <member name="M:Goedel.Protocol.JsonObject.StreamParseTag``1(System.Byte[],Goedel.Protocol.JpcInterface,System.Boolean)">
+            <summary>
+            Perform a one pass streaming parse on the data <paramref name="data"/>. This
+            parser does not (currently) support schemas in which a variant object type is
+            specified by the object property.
+            </summary>
+            <typeparam name="T">The type of the object to be returned.</typeparam>
+            <param name="data">The data to parse</param>
+            <param name="tagged">If true, the data object has a typed wrapper.</param>
+            <param name="collectUparsed">If true, collect unparseable items during the
+            parse.</param>
+            <returns>The typed, parsed object.</returns>
+        </member>
         <member name="M:Goedel.Protocol.JsonObject.StreamParse``1(System.Byte[],System.Boolean)">
             <summary>
             Perform a one pass streaming parse on the data <paramref name="data"/>. This
@@ -3439,7 +3452,7 @@
             parse.</param>
             <returns>The typed, parsed object.</returns>
         </member>
-        <member name="M:Goedel.Protocol.JsonObject.StreamParseCore(System.Type,Goedel.Protocol.JsonReader,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Protocol.JsonObject.StreamParseCore(System.Type,Goedel.Protocol.JsonReader,System.Boolean,System.Boolean,Goedel.Protocol.JpcInterface)">
             <summary>
             Perform a one pass streaming parse on the stream read using <paramref name="jsonReader"/> 
             returning an object of type <paramref name="type"/>. This
@@ -3452,6 +3465,7 @@
             <param name="collectUparsed">If true, collect unparseable items during the
             parse.</param>
             <returns>The typed, parsed object.</returns>
+            <param name="service"></param>
         </member>
         <member name="T:Goedel.Protocol.JSONReaderFactoryDelegate">
             <summary>

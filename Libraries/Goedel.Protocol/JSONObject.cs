@@ -904,6 +904,27 @@ public abstract partial class JsonObject : IBinding {
                         StreamParseCore(typeof(T), new JsonBcdReader(data), tagged, collectUparsed) as T;
 
 
+
+
+    /// <summary>
+    /// Perform a one pass streaming parse on the data <paramref name="data"/>. This
+    /// parser does not (currently) support schemas in which a variant object type is
+    /// specified by the object property.
+    /// </summary>
+    /// <typeparam name="T">The type of the object to be returned.</typeparam>
+    /// <param name="data">The data to parse</param>
+    /// <param name="tagged">If true, the data object has a typed wrapper.</param>
+    /// <param name="collectUparsed">If true, collect unparseable items during the
+    /// parse.</param>
+    /// <returns>The typed, parsed object.</returns>
+    public static T? StreamParseTag<T>(
+                    byte[] data,
+                    JpcInterface service,
+                    bool collectUparsed = false) where T : JsonObject =>
+                        StreamParseCore(typeof(T), new JsonBcdReader(data), true, collectUparsed,
+                            service: service) as T;
+
+
     /// <summary>
     /// Perform a one pass streaming parse on the data <paramref name="data"/>. This
     /// parser does not (currently) support schemas in which a variant object type is
@@ -963,11 +984,12 @@ public abstract partial class JsonObject : IBinding {
     /// <param name="collectUparsed">If true, collect unparseable items during the
     /// parse.</param>
     /// <returns>The typed, parsed object.</returns>
+    /// <param name="service"></param>
     public static JsonObject? StreamParseCore(
                 Type type,
                 JsonReader jsonReader,
                 bool tagged = true,
-                bool collectUparsed = false) {
+                bool collectUparsed = false, JpcInterface service = null) {
 
         if (!BindingDictionary.TryGetValue (type, out var binding)) {
             Console.WriteLine($"Type {type.FullName} not registered");
@@ -986,7 +1008,7 @@ public abstract partial class JsonObject : IBinding {
             return Binding.Parse(array, binding, template, collectUparsed);
             }
         if (tagged) {
-            return Binding.ParseTagged(element as JsonElementObject, binding, collectUparsed);
+            return Binding.ParseTagged(element as JsonElementObject, binding, collectUparsed, service: service);
             }
         else {
             return Binding.Parse(element as JsonElementObject, binding, collectUparsed);

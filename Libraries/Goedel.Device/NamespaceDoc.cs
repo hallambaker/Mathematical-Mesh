@@ -19,11 +19,26 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+global using Goedel.IO;
+global using Goedel.Contacts;
+global using Goedel.Protocol;
+global using Goedel.Utilities;
+global using System.Numerics;
+global using System.Text;
+global using System.Net;
 
-namespace Goedel.Mesh.Test;
+#if !(_Github_)
+[assembly: System.Reflection.AssemblyKeyName("SigningKeyDeveloper")]
+#endif
 
+namespace Goedel.Cryptography;
 
-public static class Check {
+/// <summary>
+/// Core class for cryptographic algorithm handling. Although .NET provides classes
+/// to do some of this, the implementations are inconsistent across algorithm types
+/// and do not support many of the algorithms that we wish to use. 
+/// </summary>
 
-
+[System.Runtime.CompilerServices.CompilerGenerated]
+class NamespaceDoc {
     }

@@ -66,11 +66,12 @@ partial class Program {
 
         // ---------- Problematic still
         //TestContact.Test().ContactHandle();
-        //TestService.Test().TestCredentialFromHandle();
+        //TestService.Test().MeshServiceFull();
         // -----------
 
-
-        //ShellTestsAdmin.Test().TestAccount();
+        //Goedel.XUnit.MakeSiteDocs.Test().DeleteDevice();
+        //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
+        //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
         ShellTests.Test().TestMessageConfirmationAccept();
         ShellTests.Test().TestMessageConfirmationReject();

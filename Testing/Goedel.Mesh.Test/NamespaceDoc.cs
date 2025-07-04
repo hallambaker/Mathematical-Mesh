@@ -25,6 +25,7 @@ global using Goedel.Cryptography;
 global using Goedel.Cryptography.Core;
 global using Goedel.Cryptography.Dare;
 global using Goedel.Cryptography.PKIX;
+global using Goedel.Device;
 global using Goedel.IO;
 global using Goedel.Mesh.Client;
 global using Goedel.Mesh.Server;

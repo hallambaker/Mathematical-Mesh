@@ -32,7 +32,7 @@ namespace Goedel.Mesh.Test;
 /// </summary>
 public abstract class TestEnvironmentBase : UnitTestSet {
 
-    public DnsClient DnsClient { get; init; } = new DnsClientUDP();
+    public DnsClient DnsClient { get; init; } 
 
     public EarlClient EarlClient { get; set; }
 
@@ -127,9 +127,13 @@ public abstract class TestEnvironmentBase : UnitTestSet {
             DnsClient = DummyDnsService.DnsClient;
             InitializeDNS();
             }
+        else {
+            DnsClient = new DnsClientUDP();
+            }
+        EarlClient = new EarlClientHttp(DnsClient);
 
 
-        DirectoryPath.DirectoryDelete();
+            DirectoryPath.DirectoryDelete();
 
         Directory.CreateDirectory(DirectoryPath);
         Directory.CreateDirectory(WorkingDirectory);

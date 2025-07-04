@@ -34,6 +34,8 @@ using System.Collections.Generic;
 using System.IO;
 
 using Goedel.Protocol;
+using Goedel.Discovery;
+using Goedel.Mesh;
 
 #pragma warning disable IDE0059
 
@@ -73,6 +75,11 @@ namespace ExampleGenerator;
 // Design: Should the access catalog he encrypted under a different key?
 
 public partial class CreateExamples {
+
+    public DnsClient DnsClient { get; }
+    public EarlClient EarlClient { get; }
+
+
 
     public AssemblyLogger Logger { get; } = new AssemblyLogger();
 
@@ -211,6 +218,12 @@ public partial class CreateExamples {
     public LayerNYI NotYetImplemented;
 
     string deviceId;
+
+    public CreateExamples() {
+        DnsClient = new DnsClientUDP();
+        EarlClient = new EarlClientHttp(DnsClient);
+        }
+
 
 
     public void Examples() {

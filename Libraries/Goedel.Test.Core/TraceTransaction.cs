@@ -59,7 +59,10 @@ public class TraceTransaction {
         //var requestObject = factory();
         //requestObject.Deserialize(jsonReader);
 
-        RequestObject = JsonObject.StreamParseTag<Request>(Request, true);
+
+
+
+        RequestObject = JsonObject.StreamParseTag<Request>(Request, service, true);
         ResponseObject = JsonObject.StreamParseTag<Response>(Response, true);
         }
 

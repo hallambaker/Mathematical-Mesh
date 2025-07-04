@@ -87,7 +87,7 @@ public class MakeSiteDocs : CreateExamples {
         Confirmation();
         GroupOperations();
         ConnectPINDynamicQR();
-        ConnectStaticQR();
+        //ConnectStaticQR();
 
         CreateCarolAccount();
         LayerAccount(); // Auth device unfinished

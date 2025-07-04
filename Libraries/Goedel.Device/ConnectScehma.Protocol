@@ -1,0 +1,55 @@
+﻿Protocol Goedel.Device  DeviceData DeviceData
+ 
+
+	Description
+		|Support classes for JSON Object Signing and Encryption
+
+	Structure DeviceConnect
+		Description
+			|A device connection description providing a device with instructions to allow
+			|it to complete the onboarding process.
+		TStruct NetworkConnect
+			Multiple
+			Description
+				|The network connections supported.
+		TStruct OnboardingService
+			Dictionary
+			Description
+				|Onboarding services that MAY be used to complete the 
+
+	Structure NetworkConnect
+		Description
+			|
+		String Profiles
+			Multiple
+			Description
+				|Connection profiles supported by the network connection
+		String ServiceIds
+			Description
+				|Identifiers of the onboarding services that MAY be reached through
+				|the network connection. If null or empty, the network connection supports
+				|ALL the listed network connections.
+
+	Structure NetworkConnectEthernet
+		Inherits NetworkConnect
+		Description
+			|
+
+	Structure NetworkConnectWiFi
+		Inherits NetworkConnect
+		Description
+			|
+		Binary SSID
+			Description
+				|The SSID of the network to connect to. While SSIDs are usually encoded as UTF8, 
+				|the specifications actually specify a 0-32 octet binary field.
+		String Password
+			Description
+				|Password to be used to connect to the SSID. Note that since this is
+				|sensitive data, DeviceConnect profiles containing password data MUST NOT
+				|be passed plaintext.
+
+	Structure OnboardingService
+		Description
+			|An onboarding service that MAY be reached through one or more local
+			|network connections.
