@@ -73,7 +73,7 @@ partial class Program {
         //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
         //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
-        ShellTests.Test().TestCreateSuper();
+        ShellTestsAdmin.Test().TestCreateSuper();
         // This depends on fixing the 'onboard device' thing
 
         ShellTests.Test().TestHandleThing();

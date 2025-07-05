@@ -38,6 +38,74 @@ namespace Goedel.XUnit;
 
 public partial class ShellTestBase : MeshTestSet {
 
+
+
+
+
+    #region // The test environment specific calls
+
+    #endregion
+
+
+    }
+
+
+public partial class ShellTestsAdmin : ShellTests {
+
+    public static TestServiceStubs TestServiceStubsAdmin =
+            new(Dns: false);
+
+    public override string SeedSuffix => "-Admin";
+    public override string Mode => "Shell";
+
+
+
+
+
+    public override TestEnvironmentBase GetTestEnvironment() =>
+            new TestEnvironmentRdpShell(this) {
+                JpcConnection = Protocol.JpcConnection.Http
+                };
+
+
+    //// Use the new test environment (when defined.)
+    //public override TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) {
+    //    testEnvironmentCommon = new TestEnvironmentRdpShell(seed) {
+    //        JpcConnection = Protocol.JpcConnection.Http
+    //        };
+    //    return testEnvironmentCommon;
+    //    }
+
+
+    public ShellTestsAdmin() : base(TestServiceStubsAdmin) {
+        }
+
+    public static new ShellTestsAdmin Test() => new();
+
+
+
+
+    [Fact]
+    public void TestDns() {
+
+        var testCLI = GetTestCLI();
+
+        var result = testCLI.Dispatch("account hello alice@example.com");
+
+        EndTest();
+
+        }
+
+
+    }
+
+
+
+
+public partial class ShellTests : MeshTestSet {
+
+
+
     public virtual string Mode => "";
 
 
@@ -59,7 +127,7 @@ public partial class ShellTestBase : MeshTestSet {
 
 
 
-    #region // The test environment specific calls
+
 
 
     /////<summary>The test environment, base for all </summary>
@@ -73,67 +141,11 @@ public partial class ShellTestBase : MeshTestSet {
     public virtual TestCLI GetTestCLI(string machineName = null) =>
     TestEnvironment.GetTestCLI(machineName);
 
-
-
-
-
-    #endregion
-
-
-    }
-
-
-public partial class ShellTestsAdmin : ShellTests {
-
-    public override string SeedSuffix => "-Admin";
-    public override string Mode => "Shell";
-
-    TestEnvironmentBase testEnvironmentCommon;
-
-
-    protected override void Disposing() {
-        testEnvironmentCommon.Dispose();
-        base.Disposing();
-        }
-
-    public override TestEnvironmentBase GetTestEnvironment() =>
-            new TestEnvironmentRdpShell(this) {
-                JpcConnection = Protocol.JpcConnection.Http
-                };
-
-
-    //// Use the new test environment (when defined.)
-    //public override TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) {
-    //    testEnvironmentCommon = new TestEnvironmentRdpShell(seed) {
-    //        JpcConnection = Protocol.JpcConnection.Http
-    //        };
-    //    return testEnvironmentCommon;
-    //    }
-
-    public static new ShellTestsAdmin Test() => new();
-
-
-    [Fact]
-    public void TestDns() {
-
-        var testCLI = GetTestCLI();
-
-        var result = testCLI.Dispatch("account hello alice@example.com");
-
-        EndTest();
-
-        }
-
-
-    }
-
-
-
-
-public partial class ShellTests : ShellTestBase {
-
     static ShellTests() {
         }
+
+
+
 
     public static ShellTests Test() => new();
 
@@ -147,7 +159,10 @@ public partial class ShellTests : ShellTestBase {
 
 
 
-    public ShellTests() { }
+    public ShellTests(TestServiceStubs testServiceStubs=null) : base (testServiceStubs) { 
+        
+        
+        }
 
 
 

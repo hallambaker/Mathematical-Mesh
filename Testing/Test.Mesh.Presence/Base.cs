@@ -19,8 +19,10 @@ namespace Goedel.XUnit;
 /// <summary>
 /// Test involving the presence client.
 /// </summary>
-public partial class TestPresence : ShellTestBase {
+public partial class TestPresence : ShellTests{
 
+    public static TestServiceStubs TestServiceStubsPresence =
+        new(Dns: false);
 
     List<IDisposable> Disposables = new List<IDisposable>();
 
@@ -145,7 +147,8 @@ public partial class TestPresence : ShellTestBase {
     /// </summary>
     /// <returns>The instance</returns>
     public static TestPresence Test() => new();
-
+    public TestPresence() : base(TestServiceStubsPresence) {
+        }
 
     MessageContent GenerateMessage(int index) => throw new NYI();
 

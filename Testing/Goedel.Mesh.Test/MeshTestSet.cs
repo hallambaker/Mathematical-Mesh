@@ -25,6 +25,16 @@ using Goedel.Discovery;
 namespace Goedel.Mesh.Test;
 
 
+
+public record TestServiceStubs (
+                    string Domain = "example.com",
+                    bool Dns = true,
+                    bool Earl = true,
+                    bool Device = true
+            ) {
+
+    }
+
 public class MeshTestSetSerialized : MeshTestSet {
     public virtual TestEnvironmentBase GetTestEnvironment() =>
             new TestEnvironmentCommon(this) {
@@ -34,7 +44,9 @@ public class MeshTestSetSerialized : MeshTestSet {
 
 public class MeshTestSet : UnitTestSet {
 
+    public static TestServiceStubs TestServiceStubsDefault = new();
 
+    public TestServiceStubs TestServiceStubs { get; }
     public string WorkingDirectory { get; }
 
     public string Instance => Seed.Seed;
@@ -89,25 +101,20 @@ public class MeshTestSet : UnitTestSet {
         }
     DeviceConnectServer deviceConnectServer;
 
-    public string Domain { get; }
-    public bool Dns { get; }
-    public bool Earl { get; }
-    public bool Device { get; }
-
+    protected override void Disposing() {
+        testEnvironment?.Dispose();
+        testEnvironment = null;
+        base.Disposing();
+        }
 
 
     public MeshTestSet(
-                    string domain = "example.com",
-                    bool dns=true, 
-                    bool earl=true, 
-                    bool device=true) {
-        Domain = domain;
+                    TestServiceStubs testServiceStubs= null) {
+        TestServiceStubs = testServiceStubs ?? TestServiceStubsDefault;
 
-        Dns = dns;
-        Earl = earl;    
-        Device = device;
 
-        if (dns) {
+
+        if (TestServiceStubs.Dns) {
             var dummyDns = new DummyDnsService();
             DnsClient = dummyDns.DnsClient;
             dnsPublisher = dummyDns;
@@ -122,8 +129,8 @@ public class MeshTestSet : UnitTestSet {
 
 
     void GetEarl() {
-        if (Earl) {
-            earlPublisher = new EarlDispatchCached(Domain, Instance);
+        if (TestServiceStubs.Earl) {
+            earlPublisher = new EarlDispatchCached(TestServiceStubs.Domain, Instance);
             earlClient = new EarlClientDirect(earlPublisher, DnsClient);
             }
         else {
@@ -133,7 +140,7 @@ public class MeshTestSet : UnitTestSet {
         }
 
     void GetDevice() {
-        if (Device) {
+        if (TestServiceStubs.Device) {
             deviceConnectServer = new(Instance);
             deviceConnectClient = new(deviceConnectServer);
             }
