@@ -258,7 +258,7 @@ public partial class ShellTests {
     [Fact (Skip ="Refactor the static QR code scheme using JSDevice")]
     public void TestProfileConnectStaticQR() {
 
-        var deviceQ = GetTestCLI(DeviceQName);
+        var deviceQ = GetTestCLI(DeviceQ);
         var deviceAdmin = GetTestCLI(DeviceAdminName);
         var deviceConnect1 = GetTestCLI(DeviceConnect1Name);
 

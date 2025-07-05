@@ -63,8 +63,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
 
     //public override string ServiceDns { get; }
 
-    public TestEnvironmentRdpShell(DeterministicSeed seed = null) : base(seed) {
-        EarlClient= new EarlClientHttp(DnsClient, Test);
+    public TestEnvironmentRdpShell(MeshTestSet meshTestSet) : base(meshTestSet) {
         }
 
 
@@ -167,10 +166,10 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
         ServiceAdminCLI = new();
 
         var createCommand = $"create {ServiceDnsMesh} /host=host1.{ServiceDnsMesh} " +
-            $"/ip={ServiceIpMesh} /admin={AccountServiceAdmin} /account=Domain\\user";
-        if (InitializeResolver) {
-            createCommand += $" /resolver /registry={AccountRegistry}";
-            }
+            $"/ip={ServiceIpMesh} /admin={UnitTestSet.AccountServiceAdmin} /account=Domain\\user";
+        //if (InitializeResolver) {
+        //    createCommand += $" /resolver /registry={AccountRegistry}";
+        //    }
         if (InitializePresence) {
             createCommand += $" /presence={ServiceDnsMesh} ";
             }

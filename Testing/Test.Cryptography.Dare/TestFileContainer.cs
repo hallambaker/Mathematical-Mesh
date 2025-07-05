@@ -26,7 +26,7 @@ namespace Goedel.XUnit;
 /// <summary>
 /// Test routines for file containers
 /// </summary>
-public partial class TestDareLog {
+public partial class TestDareLog : MeshTestSet {
 
 
 
@@ -37,8 +37,6 @@ public partial class TestDareLog {
     /// </summary>
     [Fact]
     public void TestFileContainer1() {
-        var seed = DeterministicSeed.AutoClean();
-
         ReadWriteEnvelope(100);
         }
 
@@ -48,7 +46,6 @@ public partial class TestDareLog {
     /// </summary>
     [Fact]
     public void TestFileContainer16() {
-        var seed = DeterministicSeed.AutoClean();
         ReadWriteEnvelope(0);
 
         int length = 1;
@@ -67,8 +64,8 @@ public partial class TestDareLog {
     /// </summary>
     [Fact]
     public void TestFileContainerEncrypted1() {
-        var seed = DeterministicSeed.AutoClean();
-        var policy = TestEnvironmentCommon.MakeCrypto(seed, encryptId: CryptoAlgorithmId.X448);
+        //var seed = DeterministicSeed.AutoClean();
+        var policy = TestEnvironment.MakeCrypto(Seed, encryptId: CryptoAlgorithmId.X448);
 
         ReadWriteEnvelope(100, policy);
         }
@@ -79,8 +76,8 @@ public partial class TestDareLog {
     /// </summary>
     [Fact]
     public void TestFileContainerEncrypted16() {
-        var seed = DeterministicSeed.AutoClean();
-        var policy = TestEnvironmentCommon.MakeCrypto(seed, encryptId: CryptoAlgorithmId.X448);
+        //var seed = DeterministicSeed.AutoClean();
+        var policy = TestEnvironment.MakeCrypto(Seed, encryptId: CryptoAlgorithmId.X448);
 
 
         ReadWriteEnvelope(0, policy);
@@ -115,8 +112,8 @@ public partial class TestDareLog {
     /// </summary>
     [Fact]
     public void TestLogEncrypted10Bulk() {
-        var seed = DeterministicSeed.AutoClean();
-        var policy = TestEnvironmentBase.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
+        //var seed = DeterministicSeed.AutoClean();
+        var policy = TestEnvironment.MakePolicy(Seed, encryptId: CryptoAlgorithmId.X448);
         ReadWriteLog(10, policy, false);
         }
 
@@ -125,8 +122,8 @@ public partial class TestDareLog {
     /// </summary>
     [Fact]
     public void TestLogEncrypted10Individual() {
-        var seed = DeterministicSeed.AutoClean();
-        var policy = TestEnvironmentBase.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
+        //var seed = DeterministicSeed.AutoClean();
+        var policy = TestEnvironment.MakePolicy(Seed, encryptId: CryptoAlgorithmId.X448);
         ReadWriteLog(10, policy, true);
         }
 
@@ -139,12 +136,12 @@ public partial class TestDareLog {
 
         foreach (var entry in entries) {
             var seed = DeterministicSeed.AutoClean(entry);
-            var policy = TestEnvironmentBase.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
+            var policy = TestEnvironment.MakePolicy(seed, encryptId: CryptoAlgorithmId.X448);
 
 
-            ReadWriteLog(entry, seed: seed);
-            ReadWriteLog(entry, policy, false, seed: seed);
-            ReadWriteLog(entry, policy, true, seed: seed);
+            ReadWriteLog(entry);
+            ReadWriteLog(entry, policy, false);
+            ReadWriteLog(entry, policy, true);
             }
         }
 
@@ -156,14 +153,12 @@ public partial class TestDareLog {
     static string GetLabel(DarePolicy policy, bool independent = false) =>
         policy == null ? "null" : policy.Encrypt ? (independent ? "Ind" : "Bulk") : "Plaintext";
 
-    static void ReadWriteEnvelope(
+    void ReadWriteEnvelope(
                     int length = 1000,
-                    CryptoParameters policy = null,
-                    DeterministicSeed seed = null) {
+                    CryptoParameters policy = null) {
 
 
-        seed ??= DeterministicSeed.Auto(length);
-        var fileName = seed.GetFilename("Sequence.random");
+        var fileName = Seed.GetFilename("Sequence.random");
         policy ??= new CryptoParameters();
 
 
@@ -171,16 +166,16 @@ public partial class TestDareLog {
         //    }
 
         //static void ReadWriteContainer(string fileName, byte[] testData, DarePolicy policy = null) {
-        seed.MakeTestFile(fileName, length);
-        seed.CheckTestFile(fileName, length);
+        Seed.MakeTestFile(fileName, length);
+        Seed.CheckTestFile(fileName, length);
 
-        var tempEncode = seed.GetTempFilePath();
+        var tempEncode = Seed.GetTempFilePath();
         Enveloped.Encode(policy, fileName, tempEncode);
 
-        var tempDecode = seed.GetTempFilePath();
+        var tempDecode = Seed.GetTempFilePath();
         Enveloped.Decode(tempEncode, tempDecode, policy.KeyLocate);
 
-        seed.CheckTestFile(tempDecode, length);
+        Seed.CheckTestFile(tempDecode, length);
 
 
         var v1 = Enveloped.Verify(tempEncode);
@@ -193,34 +188,17 @@ public partial class TestDareLog {
         }
 
 
-    static void ReadWriteLog(
+    void ReadWriteLog(
                     int entries,
                     DarePolicy policy = null,
-                    bool independent = false,
-                    DeterministicSeed seed = null) {
+                    bool independent = false) {
 
 
-        seed ??= DeterministicSeed.Auto(entries, GetLabel(policy, independent));
-        policy ??= TestEnvironmentBase.MakePolicy(seed);
+        policy ??= TestEnvironment.MakePolicy(Seed);
 
         var policyNill = policy == null ? "-null" : "";
         var mode = policy.Encrypt ? (independent ? "-Ind" : "-Bulk") : "-plaintext";
-
-
-
-        var filename = seed.GetFilename("Sequence");
-
-        //    ReadWriteArchive(fileName, entries, policy, independent);
-        //    }
-
-
-
-        //static void ReadWriteArchive(
-        //            string filename, 
-        //            int entries,
-        //            DarePolicy policy = null, 
-        //            bool independent = false) {
-
+        var filename = Seed.GetFilename("Sequence");
 
         var testData = new byte[entries][];
         for (var i = 0; i < entries; i++) {

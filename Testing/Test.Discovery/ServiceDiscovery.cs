@@ -38,7 +38,7 @@ using System.Security.Cryptography;
 
 namespace Goedel.XUnit;
 
-public partial class DummyTest {
+public partial class DummyTest : UnitTestSet {
 
     string domain = "example.com";
 

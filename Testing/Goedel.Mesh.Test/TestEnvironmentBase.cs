@@ -30,11 +30,14 @@ namespace Goedel.Mesh.Test;
 /// <summary>
 /// Test environment for one test with one service with one or more devices.
 /// </summary>
-public abstract class TestEnvironmentBase : UnitTestSet {
+public abstract class TestEnvironmentBase : Disposable {
+    public MeshTestSet TestSet { get; }
 
-    public DnsClient DnsClient { get; init; } 
+    public DeterministicSeed Seed => TestSet.Seed;
 
-    public EarlClient EarlClient { get; set; }
+    public DnsClient DnsClient => TestSet.DnsClient;
+    public EarlClient EarlClient => TestSet.EarlClient;
+    public EarlDispatch EarlDispatch => TestSet.EarlPublisher;
 
 
     public virtual string ServiceDns => "example.com";
@@ -49,25 +52,13 @@ public abstract class TestEnvironmentBase : UnitTestSet {
     public string WorkingDirectory => System.IO.Path.Combine(DirectoryPath, "Working");
 
     public string DirectoryPath => Seed.Directory;
-    //public virtual string ServiceDirectory => System.IO.Path.Combine(Path, "ServiceDirectory");
 
-    public EarlDispatch EarlDispatch {get; set;}
 
     public JpcConnection JpcConnection = JpcConnection.Serialized;
 
     public List<TestCLI> testCLIs = new();
 
     public Enveloped<ProfileAccount> EnvelopedProfileRegistry { get; set; }
-
-
-    public virtual PublicCallsignResolver Resolver => callsignResolver ??
-             GetCallsignResolver().CacheValue(out callsignResolver);
-    PublicCallsignResolver callsignResolver;
-
-
-    public virtual CarnetServer CarnetServer => carnetServer ??
-         GetCarnetServer().CacheValue(out carnetServer);
-    CarnetServer carnetServer;
 
 
 
@@ -118,22 +109,12 @@ public abstract class TestEnvironmentBase : UnitTestSet {
     static TestEnvironmentBase() {
         }
 
-    public TestEnvironmentBase(DeterministicSeed seed = null, bool dummyDns = false) {
-
+    public TestEnvironmentBase(MeshTestSet testSet) {
+        TestSet = testSet;
         //seed ??= DeterministicSeed.Auto();
-        Seed = seed ?? Seed;
-        if (dummyDns) {
-            DummyDnsService = new();
-            DnsClient = DummyDnsService.DnsClient;
-            InitializeDNS();
-            }
-        else {
-            DnsClient = new DnsClientUDP();
-            }
-        EarlClient = new EarlClientHttp(DnsClient);
 
 
-            DirectoryPath.DirectoryDelete();
+        DirectoryPath.DirectoryDelete();
 
         Directory.CreateDirectory(DirectoryPath);
         Directory.CreateDirectory(WorkingDirectory);
@@ -146,19 +127,17 @@ public abstract class TestEnvironmentBase : UnitTestSet {
     public string MachinePath(string machineName) => Path.Combine(DirectoryPath, machineName);
 
 
-    public static KeyCollection MakeKeyCollection(DeterministicSeed seed) {
-        var testEnvironment = new TestEnvironmentCommon(seed);
-        //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
-        return new KeyCollectionTestEnv(testEnvironment.DirectoryPath);
+    public KeyCollection MakeKeyCollection(DeterministicSeed seed) {
+        return new KeyCollectionTestEnv(DirectoryPath);
         }
 
 
-    public static CryptoParameters MakeCrypto(DeterministicSeed seed,
+    public CryptoParameters MakeCrypto(DeterministicSeed seed,
             CryptoAlgorithmId signId = CryptoAlgorithmId.NULL,
             CryptoAlgorithmId encryptId = CryptoAlgorithmId.NULL) =>
                 MakeCrypto(seed, out _, out _, signId, encryptId);
 
-    public static CryptoParameters MakeCrypto(DeterministicSeed seed,
+    public CryptoParameters MakeCrypto(DeterministicSeed seed,
             out KeyPair signKey, out KeyPair encryptKey,
             CryptoAlgorithmId signId = CryptoAlgorithmId.NULL,
             CryptoAlgorithmId encryptId = CryptoAlgorithmId.NULL) {
@@ -182,11 +161,12 @@ public abstract class TestEnvironmentBase : UnitTestSet {
         }
 
 
-    public static DarePolicy MakePolicy(DeterministicSeed seed,
+    public DarePolicy MakePolicy(DeterministicSeed seed,
             CryptoAlgorithmId signId = CryptoAlgorithmId.NULL,
             CryptoAlgorithmId encryptId = CryptoAlgorithmId.NULL) =>
         MakePolicy(seed, out _, out _, signId, encryptId);
-    public static DarePolicy MakePolicy(DeterministicSeed seed,
+
+    public DarePolicy MakePolicy(DeterministicSeed seed,
         out KeyPair signKey, out KeyPair encryptKey,
         CryptoAlgorithmId signId = CryptoAlgorithmId.NULL,
         CryptoAlgorithmId encryptId = CryptoAlgorithmId.NULL) {
@@ -208,39 +188,5 @@ public abstract class TestEnvironmentBase : UnitTestSet {
 
         return new DarePolicy(keyCollection, signKey, encryptKey);
         }
-
-
-    public void InitializeDNS() {
-
-        var records = new List<DNSRecord>() {
-
-            new DNSRecord_A() {
-                Domain = new ("example.com"),
-                Address = IPAddress.Parse("127.0.0.1")
-                },
-            new DNSRecord_A() {
-                Domain = new ("mmm.example.com"),
-                Address = IPAddress.Parse("127.0.0.1")
-                },
-            new DNSRecord_A() {
-                Domain = new ("host1.example.com"),
-                Address = IPAddress.Parse("127.0.0.1")
-                },
-            new DNSRecord_SRV() {
-                Domain = new ("_mmm._tcp.example.com"),
-                Priority = 1,
-                Weight = 1,
-                Port = Truncate(150999),
-                Target = new ("host1.example.com")
-                }
-            };
-
-        ushort Truncate(int value) => (ushort)value;
-
-        DummyDnsService.PublishRecords(records);
-        }
-
-
-
 
     }

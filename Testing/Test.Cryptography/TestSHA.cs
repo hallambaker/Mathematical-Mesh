@@ -22,7 +22,7 @@
 
 namespace Goedel.XUnit;
 
-public partial class TestGoedelCryptography {
+public partial class TestGoedelCryptography:UnitTestSet {
 
 
     public static TestGoedelCryptography Test() => new();

@@ -91,7 +91,7 @@ public partial class ShellTests {
 
     ResultDigest TestCommitmentInt(string content, string key = null, string alg = null) {
         var testCLI = GetTestCLI();
-        var filename = content.ToFileUnique();
+        var filename = GetUniqueFilepathData(content);
         var keyClause = key == null ? "" : $" /key {key}";
         var algClause = alg == null ? "" : $" /alg {alg}";
         var result = testCLI.Dispatch($"hash mac {filename}{keyClause}{algClause}") as ResultDigest;
@@ -233,7 +233,7 @@ public partial class ShellTests {
 
     string TestUDFInt(string content, string contentType, string alg = null) {
         var testCLI = GetTestCLI();
-        var filename = content.ToFileUnique();
+        var filename = GetUniqueFilepathData(content);
         var contentClause = contentType == null ? "" : $" /cty {contentType}";
         var algClause = alg == null ? "" : $" /alg {alg}";
         var result = testCLI.Dispatch($"hash udf {filename}{contentClause}{algClause}") as ResultDigest;
@@ -272,7 +272,7 @@ public partial class ShellTests {
 
     string TestDigestInt(string content, string alg = null) {
         var testCLI = GetTestCLI();
-        var filename = content.ToFileUnique();
+        var filename = GetUniqueFilepathData(content);
         var algClause = alg == null ? "" : $" /alg {alg}";
         var result = testCLI.Dispatch($"hash digest {filename}{algClause}") as ResultDigest;
         result.TestNotNull();

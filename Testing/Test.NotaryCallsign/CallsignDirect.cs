@@ -31,44 +31,36 @@ using Goedel.Mesh;
 
 namespace Goedel.XUnit;
 
-public partial class CallsignDirect : UnitTestSet {
+public partial class CallsignDirect : MeshTestSet {
 
     public static CallsignDirect Test() => new();
     public PublicCallsignResolver CallsignResolver { get; set; }
 
     public ResolverServiceClient ResolverServiceClient { get; set; }
 
-    public TestEnvironmentCommon TestEnvironmentCommon => testEnvironmentCommon ??
-        GetTestEnvironmentCommon().CacheValue(out testEnvironmentCommon);
-    TestEnvironmentCommon testEnvironmentCommon;
-
-    public virtual TestEnvironmentCommon GetTestEnvironmentCommon(DeterministicSeed seed = null) =>
-            new(seed ?? Seed) {
-                };
-
 
     void Initialize(out ContextUser contextAccountRegistry, out ContextRegistry contextRegistry) {
+        throw new NYI();
+        //contextAccountRegistry = MeshMachineTest.GenerateAccountUser(TestEnvironment,
+        //        DeviceAliceAdmin, AccountAlice, "main");
 
-        contextAccountRegistry = MeshMachineTest.GenerateAccountUser(TestEnvironmentCommon,
-                DeviceAliceAdmin, AccountAlice, "main");
+        //var pages = Page.LoadResources();
 
-        var pages = Page.LoadResources();
-
-        var callsignMapping = new CallsignMapping();
-
-
-        contextRegistry = contextAccountRegistry.CreateRegistry(AccountRegistry);
-
-        // Bind to the callsign @callsign
-        TestEnvironmentCommon.MeshService.CallsignServiceProfile = contextRegistry.Profile as ProfileAccount;
-        var bindRegistry = contextAccountRegistry.CallsignRequestAsync(CallsignRegistry, bind: true, transfer: null).Sync();
-        contextRegistry.ProcessAsync().Sync();
+        //var callsignMapping = new CallsignMapping();
 
 
-        CallsignResolver = TestEnvironmentCommon.Resolver;
-        ResolverServiceClient = CallsignResolver.GetClient();
+        //contextRegistry = contextAccountRegistry.CreateRegistry(AccountRegistry);
 
-        CallsignResolver.SyncToRegistry();
+        //// Bind to the callsign @callsign
+        //TestEnvironment.MeshService.CallsignServiceProfile = contextRegistry.Profile as ProfileAccount;
+        //var bindRegistry = contextAccountRegistry.CallsignRequestAsync(CallsignRegistry, bind: true, transfer: null).Sync();
+        //contextRegistry.ProcessAsync().Sync();
+
+
+        //CallsignResolver = TestEnvironment.Resolver;
+        //ResolverServiceClient = CallsignResolver.GetClient();
+
+        //CallsignResolver.SyncToRegistry();
         }
 
 
@@ -106,7 +98,7 @@ public partial class CallsignDirect : UnitTestSet {
 
 
         Initialize(out var contextAccountAlice, out var contextRegistry);
-        var contextAccountBob = MeshMachineTest.GenerateAccountUser(TestEnvironmentCommon,
+        var contextAccountBob = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                     DeviceBobAdmin, AccountBob, "main");
         var profileBob = contextAccountBob.ProfileUser;
 
@@ -138,7 +130,7 @@ public partial class CallsignDirect : UnitTestSet {
 
 
         Initialize(out var contextAccountAlice, out var contextRegistry);
-        var contextAccountMallet = MeshMachineTest.GenerateAccountUser(TestEnvironmentCommon,
+        var contextAccountMallet = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceMallet, AccountMallet, "main");
         //contextAccountMallet.ProfileRegistryCallsign = contextAccountAlice.ProfileRegistryCallsign;
 
@@ -162,7 +154,7 @@ public partial class CallsignDirect : UnitTestSet {
     [Fact(Skip = "Rejigger Callsign as just private DNS and PKI")]
     public void RegisterAliceConnectBob() {
         Initialize(out var contextAccountAlice, out var contextRegistry);
-        var contextAccountBob = MeshMachineTest.GenerateAccountUser(TestEnvironmentCommon,
+        var contextAccountBob = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceBobAdmin, AccountBob, "mainbob");
 
         var bindAlice = contextAccountAlice.CallsignRequestAsync(CallsignAlice, bind: true, transfer: null).Sync();

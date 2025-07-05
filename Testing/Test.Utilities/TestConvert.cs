@@ -23,7 +23,7 @@
 
 namespace Goedel.XUnit;
 
-public class Utilities {
+public class Utilities: UnitTestSet {
     public static Utilities Test() => new();
 
     class TestVectorBaseConvert {

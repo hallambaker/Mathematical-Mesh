@@ -26,7 +26,11 @@ using Goedel.Cryptography.KeyFile;
 namespace Goedel.XUnit;
 
 
-public partial class TestCryptographyJose {
+public partial class TestCryptographyJose : UnitTestSet {
+
+
+    public static TestCryptographyJose Test() => new();
+
 
     static readonly KeyPairBaseRSA EncrypterKeyPair;
     static readonly KeyPairBaseRSA SignerKeyPair;

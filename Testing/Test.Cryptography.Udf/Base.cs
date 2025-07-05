@@ -20,7 +20,7 @@ public enum KeyGenTestMode {
 /// <summary>
 /// Test library for PQC algorithms.
 /// </summary>
-public class TestUdf : Disposable {
+public class TestUdf : UnitTestSet {
 
     public static TestUdf Test()  => new();
 

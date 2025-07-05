@@ -26,7 +26,7 @@ using Goedel.Mesh.Shell;
 
 namespace Goedel.XUnit;
 
-public partial class RegistrationTests : Disposable {
+public partial class RegistrationTests : MeshTestSet {
 
     static RegistrationTests() {
         Goedel.Mesh.Client.Initialization.Initialized.AssertTrue(NYI.Throw);
@@ -37,7 +37,7 @@ public partial class RegistrationTests : Disposable {
 
     public static RegistrationTests Test() => new();
 
-    protected virtual void EndTest() {
+    protected override void EndTest() {
         testEnvironment?.Dispose();
         testEnvironment = null;
         }
@@ -49,7 +49,7 @@ public partial class RegistrationTests : Disposable {
 
 
     #region // The test environment specific calls
-    public virtual TestEnvironmentRdpShell GetTestEnvironment() => new TestEnvironmentRdpShell() {
+    public virtual TestEnvironmentRdpShell GetTestEnvironment() => new TestEnvironmentRdpShell(this) {
         JpcConnection = Protocol.JpcConnection.Http,
         InitializeResolver = true
         };

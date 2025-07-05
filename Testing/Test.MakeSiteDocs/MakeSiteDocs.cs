@@ -29,14 +29,7 @@ namespace Goedel.XUnit;
 
 public class MakeSiteDocs : CreateExamples {
     public static new MakeSiteDocs Test() => new();
-
-
-    public override TestEnvironmentCommon TestEnvironment => testEnvironment ??
-        new TestEnvironmentCommon(DeterministicSeed.AutoClean()) {
-            //JpcConnection = Protocol.JpcConnection.Rud
-            JpcConnection = Protocol.JpcConnection.Serialized
-            }.CacheValue(out testEnvironment);
-    TestEnvironmentCommon testEnvironment;
+    MeshTestSet MeshTestSet = new MeshTestSetSerialized();
 
     public MakeSiteDocs() {
 

@@ -83,8 +83,8 @@ public partial class TestService {
 
     [Fact]
     public void ProtocolSerialization() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+
+        var machineAdminAlice = new MeshMachineTest(TestEnvironment, DeviceAliceAdmin);
 
 
         var profileDevice = ProfileDevice.Generate();
@@ -104,8 +104,7 @@ public partial class TestService {
 
     [Fact]
     public void ProtocolHello() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+        var machineAdminAlice = new MeshMachineTest(TestEnvironment, DeviceAliceAdmin);
 
 
         var profileDevice = ProfileDevice.Generate();
@@ -124,9 +123,8 @@ public partial class TestService {
 
     [Fact]
     public void MeshServiceEncryptCredential() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
-        var machineAdminBob = new MeshMachineTest(testEnvironmentCommon, DeviceBobAdmin);
+        var machineAdminAlice = new MeshMachineTest(TestEnvironment, DeviceAliceAdmin);
+        var machineAdminBob = new MeshMachineTest(TestEnvironment, DeviceBobAdmin);
 
         //throw new NYI();
 
@@ -148,7 +146,7 @@ public partial class TestService {
 
 
         // second device
-        var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
+        var machineAlice2 = new MeshMachineTest(TestEnvironment, DeviceAlice2);
         var boundPin = contextAccountAlice_1_a.GetPinAsync(MeshConstants.MessagePINActionDevice).Sync();
         var contextAccountAlice_2 = machineAlice2.MeshHost.ConnectAsync(AccountAlice, pin: boundPin.Pin).Sync();
         var sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
@@ -165,9 +163,9 @@ public partial class TestService {
 
     [Fact]
     public void MeshServiceFull() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
-        var machineAdminBob = new MeshMachineTest(testEnvironmentCommon, DeviceBobAdmin);
+
+        var machineAdminAlice = new MeshMachineTest(TestEnvironment, DeviceAliceAdmin);
+        var machineAdminBob = new MeshMachineTest(TestEnvironment, DeviceBobAdmin);
 
 
         machineAdminAlice.CheckHostCatalogExtended();
@@ -187,14 +185,14 @@ public partial class TestService {
         Verify(contextAccountAlice_1_a, contextAccountAlice_1_b);
 
         // Check that we can read back from the data stored on disk.
-        var machineAdmin_3 = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+        var machineAdmin_3 = new MeshMachineTest(TestEnvironment, DeviceAliceAdmin);
         var contextAccountAlice_1_c = machineAdmin_3.GetContextAccount();
 
 
         // ****  Multiple device tests
 
         // Connect a second device using the PIN connection mechanism
-        var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
+        var machineAlice2 = new MeshMachineTest(TestEnvironment, DeviceAlice2);
         machineAlice2.CheckHostCatalogExtended(); // initial
 
         var boundPin = contextAccountAlice_1_a.GetPinAsync(MeshConstants.MessagePINActionDevice).Sync();
@@ -224,7 +222,7 @@ public partial class TestService {
             }
 
         // Connect a third device by approving a request
-        var machineAlice3 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice3);
+        var machineAlice3 = new MeshMachineTest(TestEnvironment, DeviceAlice3);
         var contextAccount3 = machineAlice3.MeshHost.ConnectAsync(AccountAlice).Sync();
 
         sync = contextAccountAlice_1_a.SynchronizeAsync().Sync();
@@ -288,12 +286,12 @@ public partial class TestService {
     /// </summary>
     [Fact]
     public void MeshDeviceConnectApprove() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main");
 
         // New Device
-        var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
+        var contextOnboardPending = MeshMachineTest.Connect(TestEnvironment, DeviceAlice3,
                 AccountAlice);
 
         // Admin Device
@@ -312,16 +310,16 @@ public partial class TestService {
     /// </summary>
     [Fact]
     public void MeshDeviceConnectPIN() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
+
         var contextAdmin = MeshMachineTest.GenerateAccountUser(
-            testEnvironmentCommon, DeviceAliceAdmin, AccountAlice, "main");
+            TestEnvironment, DeviceAliceAdmin, AccountAlice, "main");
 
         // Admin Device
         var boundPin = contextAdmin.GetPinAsync(MeshConstants.MessagePINActionDevice, roles: RightsDirect).Sync();
         ReportDevices(contextAdmin);
 
         // New Device
-        var contextOnboarding = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
+        var contextOnboarding = MeshMachineTest.Connect(TestEnvironment, DeviceAlice2,
             AccountAlice, PIN: boundPin.Pin);
 
         // Admin Device
@@ -338,9 +336,9 @@ public partial class TestService {
     /// </summary>
     [Fact]
     public void MeshDeviceConnectDynamicQR() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
 
-        var contextAdmin = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon, DeviceAliceAdmin, AccountAlice,
+
+        var contextAdmin = MeshMachineTest.GenerateAccountUser(TestEnvironment, DeviceAliceAdmin, AccountAlice,
             "main");
 
         // Create the QR Code with PIN
@@ -350,7 +348,7 @@ public partial class TestService {
         ReportDevices(contextAdmin);
 
         // Present the QR code URI
-        var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2, connectUri);
+        var contextOnboardPending = MeshMachineTest.Connect(TestEnvironment, DeviceAlice2, connectUri);
 
         // Admin Device
         ProcessAutomatics(contextAdmin);
@@ -366,15 +364,12 @@ public partial class TestService {
     /// </summary>
     [Fact (Skip="Need to switch to the JSDevice scheme")]
     public void MeshDeviceConnectStaticQR() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-
-
-        var contextQ = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon, DeviceQ, AccountQ,
+        var contextQ = MeshMachineTest.GenerateAccountUser(TestEnvironment, DeviceQ, AccountQ,
             "main");
         var contextAdmin = MeshMachineTest.GenerateAccountUser(
-            testEnvironmentCommon, DeviceAliceAdmin, AccountAlice, "main");
+            TestEnvironment, DeviceAliceAdmin, AccountAlice, "main");
 
-        var DeviceOnboarding = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
+        var DeviceOnboarding = new MeshMachineTest(TestEnvironment, DeviceAlice2);
 
         // Generate the profile and install it on the device
         var preconfig = contextQ.Preconfigure();
@@ -402,15 +397,14 @@ public partial class TestService {
     public void MeshEscrowRecover() {
 
         // Create mesh
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAliceOriginal = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        var contextAliceOriginal = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main");
 
         // create key shares
         var shares = contextAliceOriginal.Escrow(3, 2);
 
         // Recover on different device from key shares
-        var recoveryMachine = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
+        var recoveryMachine = new MeshMachineTest(TestEnvironment, DeviceAlice2);
 
         // create key shares
         var recoveryShares = new List<string> { shares[0].UDFKey, shares[1].UDFKey };
@@ -457,12 +451,11 @@ public partial class TestService {
 
     (ContextUser, ContextUser) CreateConnectGrant(string roles) {
 
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main");
 
         // New Device
-        var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
+        var contextOnboardPending = MeshMachineTest.Connect(TestEnvironment, DeviceAlice3,
                 AccountAlice, "device2");
 
         // Admin Device
@@ -487,29 +480,25 @@ public partial class TestService {
 
     [Fact]
     public void MeshCatalogAccount() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main");
         }
 
     [Fact]
     public void MeshCatalogMultipleDevice() {
         // Test service, devices for Alice, Bob
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main");
         }
 
     bool MeshCreateAliceBob(
-        out TestEnvironmentCommon testEnvironmentCommon,
-        out ContextUser contextAccountAlice,
-        out ContextUser contextAccountBob
+            out ContextUser contextAccountAlice,
+            out ContextUser contextAccountBob
             ) {
         // Test service, devices for Alice, Bob
-        testEnvironmentCommon = GetTestEnvironmentCommon();
-        contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main");
-        contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        contextAccountBob = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceBobAdmin, AccountBob, "main");
 
 
@@ -539,8 +528,7 @@ public partial class TestService {
 
     [Fact]
     public void MeshMessageContact() {
-        MeshCreateAliceBob(out var testEnvironmentCommon,
-            out var contextAccountAlice,
+        MeshCreateAliceBob(out var contextAccountAlice,
             out var contextAccountBob);
         }
 
@@ -548,7 +536,6 @@ public partial class TestService {
     public void MeshMessageConfirm() {
         // Test service, devices for Alice, Bob
         MeshCreateAliceBob(
-            out var testEnvironmentCommon,
             out var contextAccountAlice,
             out var contextAccountBob);
 
@@ -572,7 +559,6 @@ public partial class TestService {
         var plaintext = Platform.GetRandomBytes(1000);
 
         MeshCreateAliceBob(
-            out var testEnvironmentCommon,
             out var contextAccountAlice,
             out var contextAccountBob);
 

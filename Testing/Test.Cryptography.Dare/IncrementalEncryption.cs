@@ -23,13 +23,11 @@
 #pragma warning disable IDE0060
 namespace Goedel.XUnit;
 
-public partial class TestSequences {
+public partial class TestSequences{
     static TestSequences() {
         }
 
     KeyCollection MakeKeyCollection(params object[] parameters) {
-        var TestEnvironment = new TestEnvironmentCommon(Seed ?? DeterministicSeed.Auto(parameters));
-        //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
         return new KeyCollectionTestEnv(TestEnvironment.DirectoryPath);
         }
 
@@ -61,7 +59,7 @@ public partial class TestSequences {
             int reOpen = 0, int moveStep = 0,
             CryptoAlgorithmId cryptoAlgorithmId = CryptoAlgorithmId.X448) {
 
-        Seed = DeterministicSeed.Auto(testLabel);
+        StartTest(testLabel);
 
         // Setup
         var keyCollection = MakeKeyCollection();

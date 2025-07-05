@@ -205,43 +205,46 @@ public partial class RegistrationTests {
     public ContextRegistry GetContextRegistry(
                     int charge = 0) {
 
-        TestEnvironment.StartService();
-
-        // Create admin context
-        var adminContext = TestEnvironment.HostMachineMesh.MeshHost.GetContextMesh(AccountServiceAdmin) as ContextUser;
-        ContextRegistry = adminContext.GetRegistryAsync().Sync();
 
 
-        //var contextAccountQ = MeshMachineTest.GenerateAccountUser(TestEnvironment,
-        //         DeviceQName, AccountQ, "main");
+        throw new NYI();
+        //TestEnvironment.StartService();
 
-        var pages = Page.LoadResources();
-
-        var callsignMapping = new CallsignMapping();
-
-
-        //var contextRegistry = contextAccountQ.CreateRegistry(AccountRegistry);
-
-        TestEnvironment.EnvelopedProfileRegistry = new Enveloped<ProfileAccount>(ContextRegistry.Profile.DareEnvelope);
-
-        //// Bind to the callsign @callsign
-        var meshService = TestEnvironment.GetMeshService();
-        meshService.CallsignServiceProfile = ContextRegistry.Profile as ProfileAccount;
+        //// Create admin context
+        //var adminContext = TestEnvironment.HostMachineMesh.MeshHost.GetContextMesh(AccountServiceAdmin) as ContextUser;
+        //ContextRegistry = adminContext.GetRegistryAsync().Sync();
 
 
-        adminContext.AccountHostAssignment.CallsignServiceProfile = ContextRegistry.Profile as ProfileRegistry;
+        ////var contextAccountQ = MeshMachineTest.GenerateAccountUser(TestEnvironment,
+        ////         DeviceQName, AccountQ, "main");
 
-        var bindRegistry = adminContext.CallsignRequestAsync(CallsignRegistry, bind: true, transfer: null).Sync();
-        ContextRegistry.ProcessAsync().Sync();
+        //var pages = Page.LoadResources();
 
-        CallsignResolver = TestEnvironment.Resolver;
-        ResolverServiceClient = CallsignResolver.GetClient();
-
-        CallsignResolver.SyncToRegistry();
+        //var callsignMapping = new CallsignMapping();
 
 
+        ////var contextRegistry = contextAccountQ.CreateRegistry(AccountRegistry);
 
-        return ContextRegistry;
+        //TestEnvironment.EnvelopedProfileRegistry = new Enveloped<ProfileAccount>(ContextRegistry.Profile.DareEnvelope);
+
+        ////// Bind to the callsign @callsign
+        //var meshService = TestEnvironment.GetMeshService();
+        //meshService.CallsignServiceProfile = ContextRegistry.Profile as ProfileAccount;
+
+
+        //adminContext.AccountHostAssignment.CallsignServiceProfile = ContextRegistry.Profile as ProfileRegistry;
+
+        //var bindRegistry = adminContext.CallsignRequestAsync(CallsignRegistry, bind: true, transfer: null).Sync();
+        //ContextRegistry.ProcessAsync().Sync();
+
+        //CallsignResolver = TestEnvironment.Resolver;
+        //ResolverServiceClient = CallsignResolver.GetClient();
+
+        //CallsignResolver.SyncToRegistry();
+
+
+
+        //return ContextRegistry;
         }
 
 

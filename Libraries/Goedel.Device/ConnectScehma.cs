@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 7/3/2025 1:24:01 PM
+//  This file was automatically generated at 7/5/2025 2:59:32 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -48,17 +48,16 @@ using Goedel.Utilities;
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
 
-using Goedel.Cryptography.Jose;
 
 
-namespace Goedel.Cryptography.Dare;
+namespace Goedel.Device;
 
 
 	/// <summary>
 	///
 	/// Support classes for JSON Object Signing and Encryption
 	/// </summary>
-public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
+public abstract partial class DeviceData : global::Goedel.Protocol.JsonObject {
 
 	/// <summary>
     /// Tag identifying this class
@@ -68,7 +67,7 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Dare";
+	public new const string __Tag = "DeviceData";
 
 	/// <summary>
     /// Dictionary mapping types to bindings
@@ -77,28 +76,17 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 	static Dictionary<System.Type, Binding> _bindingDictionary = 
 			new () {
 
-	    {typeof(Enveloped), Enveloped._binding},
-	    {typeof(DareSignatureHeader), DareSignatureHeader._binding},
-	    {typeof(DareTrailer), DareTrailer._binding},
-	    {typeof(DareHeader), DareHeader._binding},
-	    {typeof(ContentMeta), ContentMeta._binding},
-	    {typeof(DareSignature), DareSignature._binding},
-	    {typeof(IntervalSignature), IntervalSignature._binding},
-	    {typeof(SignedEnvelope), SignedEnvelope._binding},
-	    {typeof(X509Certificate), X509Certificate._binding},
-	    {typeof(DareRecipient), DareRecipient._binding},
-	    {typeof(DarePolicy), DarePolicy._binding},
-	    {typeof(FileEntry), FileEntry._binding},
-	    {typeof(Witness), Witness._binding},
-	    {typeof(Proof), Proof._binding},
-	    {typeof(Unprotected), Unprotected._binding},
-	    {typeof(EarlSignature), EarlSignature._binding}
+	    {typeof(DeviceConnect), DeviceConnect._binding},
+	    {typeof(NetworkConnect), NetworkConnect._binding},
+	    {typeof(NetworkConnectEthernet), NetworkConnectEthernet._binding},
+	    {typeof(NetworkConnectWiFi), NetworkConnectWiFi._binding},
+	    {typeof(OnboardingService), OnboardingService._binding}
 		};
 
 	///<summary>Variable used to force static initialization</summary> 
 	public static bool _Initialized => true;
 
-	static Dare() {
+	static DeviceData() {
 		_Initialize();
 		}
 
@@ -118,1273 +106,49 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 
 	/// <summary>
 	///
-	/// A DARE envelope containing Header, EDS and Trailer in JSON object encoding.
-	/// Since a DAREMessage is almost invariably presented in JSON sequence or
-	/// compact encoding, use of the DAREMessage subclass is preferred.
-	/// Although a DARE envelope is functionally an object, it is serialized as 
-	/// an ordered sequence. This ensures that the envelope header field will always
-	/// precede the body in a serialization, this allowing processing of the header
-	/// information to be performed before the entire body has been received.
+	/// A device connection description providing a device with instructions to allow
+	/// it to complete the onboarding process.
 	/// </summary>
-public partial class Enveloped : Dare {
+public partial class DeviceConnect : DeviceData {
     /// <summary>
-    ///The envelope header. May specify the key exchange data, pre-signature 
-    ///or signature data, cloaked headers and/or encrypted data sequences.
+    ///The network connections supported.
     /// </summary>
 
-	[JsonPropertyName("Header")]
-	public virtual DareHeader?					Header  {get; set;} //
-
+	[JsonPropertyName("Networks")]
+	public virtual List<NetworkConnect>?					Networks  {get; set;}
     /// <summary>
-    ///The envelope body
+    ///Onboarding services that MAY be used to complete the 
     /// </summary>
 
-	[JsonPropertyName("Body")]
-	public virtual byte[]?					Body  {get; set;} //
-
-    /// <summary>
-    ///The envelope trailer. If present, this contains the signature.
-    /// </summary>
-
-	[JsonPropertyName("Trailer")]
-	public virtual DareTrailer?					Trailer  {get; set;} //
-
+	[JsonPropertyName("Services")]
+	public virtual List<OnboardingService>?					Services  {get; set;}
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyStruct ("Header", typeof (DareHeader),
-					(IBinding data, object? value) => {(data as Enveloped).Header = value as DareHeader;}, 
-					(IBinding data) => (data as Enveloped).Header,
-					false, ()=>new  DareHeader(), ()=>new DareHeader()),
-		new PropertyBinary ("Body", 
-					(IBinding data, byte[]? value) => {(data as Enveloped).Body = value;}, 
-					(IBinding data) => (data as Enveloped).Body ),
-		new PropertyStruct ("Trailer", typeof (DareTrailer),
-					(IBinding data, object? value) => {(data as Enveloped).Trailer = value as DareTrailer;}, 
-					(IBinding data) => (data as Enveloped).Trailer,
-					false, ()=>new  DareTrailer(), ()=>new DareTrailer())
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<Enveloped> _binding = new (
-			new() {
-			{ "Header", _properties [0]},
-			{ "Body", _properties [1]},
-			{ "Trailer", _properties [2]}}, __Tag,
-		() => new Enveloped(), () => [], () => [], null, Generic: true);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "Enveloped";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Enveloped();
-
-	}
-
-
-	/// <summary>
-	/// </summary>
-public partial class DareSignatureHeader : Dare {
-    /// <summary>
-    ///The encrypted witness value	
-    /// </summary>
-
-	[JsonPropertyName("WitnessValue")]
-	public virtual byte[]?					WitnessValue  {get; set;} //
-
-    /// <summary>
-    ///If present, contains the authentication tag value generated by the AEAD encryption
-    ///algorithm used to encrypt the payload.
-    /// </summary>
-
-	[JsonPropertyName("PayloadTag")]
-	public virtual byte[]?					PayloadTag  {get; set;} //
-
-    /// <summary>
-    ///If present, contains the digest of the Payload.
-    /// </summary>
-
-	[JsonPropertyName("PayloadDigest")]
-	public virtual byte[]?					PayloadDigest  {get; set;} //
-
-    /// <summary>
-    ///If present, contains the digest of the PayloadDigest values of this
-    ///frame and the frame immediately preceding.
-    /// </summary>
-
-	[JsonPropertyName("ChainDigest")]
-	public virtual byte[]?					ChainDigest  {get; set;} //
-
-    /// <summary>
-    ///If present, contains the Binary Merkle Tree digest value.
-    /// </summary>
-
-	[JsonPropertyName("ApexDigest")]
-	public virtual byte[]?					ApexDigest  {get; set;} //
-
-    /// <summary>
-    ///Digest Algorithm. If specified, tells decoder that the digest algorithm is used to
-    ///construct a signature over the envelope payload.
-    /// </summary>
-
-	[JsonPropertyName("dig")]
-	public virtual string?					DigestAlgorithm  {get; set;} //
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyBinary ("WitnessValue", 
-					(IBinding data, byte[]? value) => {(data as DareSignatureHeader).WitnessValue = value;}, 
-					(IBinding data) => (data as DareSignatureHeader).WitnessValue ),
-		new PropertyBinary ("PayloadTag", 
-					(IBinding data, byte[]? value) => {(data as DareSignatureHeader).PayloadTag = value;}, 
-					(IBinding data) => (data as DareSignatureHeader).PayloadTag ),
-		new PropertyBinary ("PayloadDigest", 
-					(IBinding data, byte[]? value) => {(data as DareSignatureHeader).PayloadDigest = value;}, 
-					(IBinding data) => (data as DareSignatureHeader).PayloadDigest ),
-		new PropertyBinary ("ChainDigest", 
-					(IBinding data, byte[]? value) => {(data as DareSignatureHeader).ChainDigest = value;}, 
-					(IBinding data) => (data as DareSignatureHeader).ChainDigest ),
-		new PropertyBinary ("ApexDigest", 
-					(IBinding data, byte[]? value) => {(data as DareSignatureHeader).ApexDigest = value;}, 
-					(IBinding data) => (data as DareSignatureHeader).ApexDigest ),
-		new PropertyString ("dig", 
-					(IBinding data, string? value) => {(data as DareSignatureHeader).DigestAlgorithm = value;}, 
-					(IBinding data) => (data as DareSignatureHeader).DigestAlgorithm )
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<DareSignatureHeader> _binding = new (
-			new() {
-			{ "WitnessValue", _properties [0]},
-			{ "PayloadTag", _properties [1]},
-			{ "PayloadDigest", _properties [2]},
-			{ "ChainDigest", _properties [3]},
-			{ "ApexDigest", _properties [4]},
-			{ "dig", _properties [5]}}, __Tag,
-		() => new DareSignatureHeader(), () => [], () => [], null, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "DareSignatureHeader";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new DareSignatureHeader();
-
-	}
-
-
-	/// <summary>
-	///
-	/// A DARE envelope Trailer
-	/// </summary>
-public partial class DareTrailer : DareSignatureHeader {
-    /// <summary>
-    ///A list of signatures over the PayloadDigest.
-    ///A envelope trailer MUST NOT contain a signatures field if the header contains 
-    ///a signatures field.
-    /// </summary>
-
-	[JsonPropertyName("signatures")]
-	public virtual List<DareSignature>?					Signatures  {get; set;}
-    /// <summary>
-    ///A list of signatures over the ChainDigest and/or ApexDigest if present.
-    /// </summary>
-
-	[JsonPropertyName("seqsignatures")]
-	public virtual List<DareSignature>?					SequenceSignatures  {get; set;}
-    /// <summary>
-    ///Additional data added to the signature to bind to an application 
-    ///defined context.
-    /// </summary>
-
-	[JsonPropertyName("ApplicationContextValue")]
-	public virtual byte[]?					ApplicationContextValue  {get; set;} //
-
-    /// <summary>
-    ///Contains a DareSignatureHeader object containing the manifest over which the 
-    ///envelope signature is calculated.
-    /// </summary>
-
-	[JsonPropertyName("SignedData")]
-	public virtual byte[]?					SignedData  {get; set;} //
-
-    /// <summary>
-    ///Contains a DareSignatureHeader object containing an additional manifest.
-    ///The sequence signature is calculated over SignedData + SequenceSignedData
-    /// </summary>
-
-	[JsonPropertyName("SequenceSignedData")]
-	public virtual byte[]?					SequenceSignedData  {get; set;} //
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyListStruct ("signatures", typeof (DareSignature),
-					(IBinding data, object? value) => {(data as DareTrailer).Signatures = value as List<DareSignature>;}, 
-					(IBinding data) => (data as DareTrailer).Signatures,
-					false, ()=>new  List<DareSignature>(), ()=>new DareSignature()),
-		new PropertyListStruct ("seqsignatures", typeof (DareSignature),
-					(IBinding data, object? value) => {(data as DareTrailer).SequenceSignatures = value as List<DareSignature>;}, 
-					(IBinding data) => (data as DareTrailer).SequenceSignatures,
-					false, ()=>new  List<DareSignature>(), ()=>new DareSignature()),
-		new PropertyBinary ("ApplicationContextValue", 
-					(IBinding data, byte[]? value) => {(data as DareTrailer).ApplicationContextValue = value;}, 
-					(IBinding data) => (data as DareTrailer).ApplicationContextValue ),
-		new PropertyBinary ("SignedData", 
-					(IBinding data, byte[]? value) => {(data as DareTrailer).SignedData = value;}, 
-					(IBinding data) => (data as DareTrailer).SignedData ),
-		new PropertyBinary ("SequenceSignedData", 
-					(IBinding data, byte[]? value) => {(data as DareTrailer).SequenceSignedData = value;}, 
-					(IBinding data) => (data as DareTrailer).SequenceSignedData )
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<DareTrailer> _binding = new (
-			new() {
-			{ "signatures", _properties [0]},
-			{ "seqsignatures", _properties [1]},
-			{ "ApplicationContextValue", _properties [2]},
-			{ "SignedData", _properties [3]},
-			{ "SequenceSignedData", _properties [4]}}, __Tag,
-		() => new DareTrailer(), () => [], () => [], DareSignatureHeader._binding, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "DareTrailer";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new DareTrailer();
-
-	}
-
-
-	/// <summary>
-	///
-	/// A DARE Envelope Header. Since any field that is present in a trailer MAY be 
-	/// placed in a header instead, the envelope header inherits from the trailer.
-	/// </summary>
-public partial class DareHeader : DareTrailer {
-    /// <summary>
-    ///Unique identifier
-    /// </summary>
-
-	[JsonPropertyName("EnvelopeId")]
-	public virtual string?					EnvelopeId  {get; set;} //
-
-    /// <summary>
-    ///The encryption algorithm as specified in JWE
-    /// </summary>
-
-	[JsonPropertyName("enc")]
-	public virtual string?					EncryptionAlgorithm  {get; set;} //
-
-    /// <summary>
-    ///Base seed identifier.
-    /// </summary>
-
-	[JsonPropertyName("kid")]
-	public virtual string?					KeyIdentifier  {get; set;} //
-
-    /// <summary>
-    ///Salt value used to derrive cryptographic parameters for the content data.
-    /// </summary>
-
-	[JsonPropertyName("Salt")]
-	public virtual byte[]?					Salt  {get; set;} //
-
-    /// <summary>
-    ///Hash of the Salt value used to derrive cryptographic parameters for the content data.
-    ///This field SHOULD NOT be present if the Salt field is present. It is used to
-    ///allow the salt value to be erased (thus rendering the payload content irrecoverable)
-    ///without affecting the ability to calculate the payload digest value.
-    /// </summary>
-
-	[JsonPropertyName("Malt")]
-	public virtual byte[]?					Malt  {get; set;} //
-
-    /// <summary>
-    ///If present in a header or trailer, specifies an encrypted data block 
-    ///containing additional header fields whose values override those specified 
-    ///in the envelope and context headers.
-    ///When specified in a header, a cloaked field MAY be used to conceal metadata 
-    ///(content type, compression) and/or to specify an additional layer of key exchange. 
-    ///That applies to both the envelope body and to headers specified within the cloaked 
-    ///header.
-    ///Processing of cloaked data is described in…
-    /// </summary>
-
-	[JsonPropertyName("cloaked")]
-	public virtual byte[]?					Cloaked  {get; set;} //
-
-    /// <summary>
-    ///If present, the Annotations field contains a sequence of Encrypted Data 
-    ///Segments encrypted under the envelope base seed. The interpretation of these fields 
-    ///is application specific.
-    /// </summary>
-
-	[JsonPropertyName("annotations")]
-	public virtual List<byte[]>?					EDSS  {get; set;}
-    /// <summary>
-    ///A list of recipient key exchange information blocks.
-    /// </summary>
-
-	[JsonPropertyName("recipients")]
-	public virtual List<DareRecipient>?					Recipients  {get; set;}
-    /// <summary>
-    ///A DARE security policy governing future additions to the container.
-    /// </summary>
-
-	[JsonPropertyName("policy")]
-	public virtual DarePolicy?					Policy  {get; set;} //
-
-    /// <summary>
-    ///If present contains a JSON encoded ContentInfo structure which specifies
-    ///plaintext content metadata and forms one of the inputs to the envelope digest value.
-    /// </summary>
-
-	[JsonPropertyName("ContentMetaData")]
-	public virtual byte[]?					ContentMetaData  {get; set;} //
-
-    /// <summary>
-    ///Information that describes container information
-    /// </summary>
-
-	[JsonPropertyName("SequenceInfo")]
-	public virtual SequenceInfo?					SequenceInfo  {get; set;} //
-
-    /// <summary>
-    ///An index of records in the current container up to but not including
-    ///this one.
-    /// </summary>
-
-	[JsonPropertyName("SequenceIndex")]
-	public virtual SequenceIndex?					SequenceIndex  {get; set;} //
-
-    /// <summary>
-    ///Date on which the envelope was received.
-    /// </summary>
-
-	[JsonPropertyName("Received")]
-	public virtual DateTime?					Received  {get; set;} //
-
-    /// <summary>
-    ///HTML document containing cover text to be presented if the document cannot be decrypted.
-    /// </summary>
-
-	[JsonPropertyName("Cover")]
-	public virtual byte[]?					Cover  {get; set;} //
-
-    /// <summary>
-    ///Bitmask used to identify a container within a group for use in update notification
-    ///etc.
-    /// </summary>
-
-	[JsonPropertyName("Bitmask")]
-	public virtual byte[]?					Bitmask  {get; set;} //
-
-    /// <summary>
-    ///Field reserved for use in debugging.
-    /// </summary>
-
-	[JsonPropertyName("Debug")]
-	public virtual string?					Debug  {get; set;} //
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyString ("EnvelopeId", 
-					(IBinding data, string? value) => {(data as DareHeader).EnvelopeId = value;}, 
-					(IBinding data) => (data as DareHeader).EnvelopeId ),
-		new PropertyString ("enc", 
-					(IBinding data, string? value) => {(data as DareHeader).EncryptionAlgorithm = value;}, 
-					(IBinding data) => (data as DareHeader).EncryptionAlgorithm ),
-		new PropertyString ("kid", 
-					(IBinding data, string? value) => {(data as DareHeader).KeyIdentifier = value;}, 
-					(IBinding data) => (data as DareHeader).KeyIdentifier ),
-		new PropertyBinary ("Salt", 
-					(IBinding data, byte[]? value) => {(data as DareHeader).Salt = value;}, 
-					(IBinding data) => (data as DareHeader).Salt ),
-		new PropertyBinary ("Malt", 
-					(IBinding data, byte[]? value) => {(data as DareHeader).Malt = value;}, 
-					(IBinding data) => (data as DareHeader).Malt ),
-		new PropertyBinary ("cloaked", 
-					(IBinding data, byte[]? value) => {(data as DareHeader).Cloaked = value;}, 
-					(IBinding data) => (data as DareHeader).Cloaked ),
-		new PropertyListBinary ("annotations", 
-					(IBinding data, List<byte[]>? value) => {(data as DareHeader).EDSS = value;}, 
-					(IBinding data) => (data as DareHeader).EDSS ),
-		new PropertyListStruct ("recipients", typeof (DareRecipient),
-					(IBinding data, object? value) => {(data as DareHeader).Recipients = value as List<DareRecipient>;}, 
-					(IBinding data) => (data as DareHeader).Recipients,
-					false, ()=>new  List<DareRecipient>(), ()=>new DareRecipient()),
-		new PropertyStruct ("policy", typeof (DarePolicy),
-					(IBinding data, object? value) => {(data as DareHeader).Policy = value as DarePolicy;}, 
-					(IBinding data) => (data as DareHeader).Policy,
-					false, ()=>new  DarePolicy(), ()=>new DarePolicy()),
-		new PropertyBinary ("ContentMetaData", 
-					(IBinding data, byte[]? value) => {(data as DareHeader).ContentMetaData = value;}, 
-					(IBinding data) => (data as DareHeader).ContentMetaData ),
-		new PropertyStruct ("SequenceInfo", typeof (SequenceInfo),
-					(IBinding data, object? value) => {(data as DareHeader).SequenceInfo = value as SequenceInfo;}, 
-					(IBinding data) => (data as DareHeader).SequenceInfo,
-					false, ()=>new  SequenceInfo(), ()=>new SequenceInfo()),
-		new PropertyStruct ("SequenceIndex", typeof (SequenceIndex),
-					(IBinding data, object? value) => {(data as DareHeader).SequenceIndex = value as SequenceIndex;}, 
-					(IBinding data) => (data as DareHeader).SequenceIndex,
-					false, ()=>new  SequenceIndex(), ()=>new SequenceIndex()),
-		new PropertyDateTime ("Received", 
-					(IBinding data, DateTime? value) => {(data as DareHeader).Received = value;}, 
-					(IBinding data) => (data as DareHeader).Received ),
-		new PropertyBinary ("Cover", 
-					(IBinding data, byte[]? value) => {(data as DareHeader).Cover = value;}, 
-					(IBinding data) => (data as DareHeader).Cover ),
-		new PropertyBinary ("Bitmask", 
-					(IBinding data, byte[]? value) => {(data as DareHeader).Bitmask = value;}, 
-					(IBinding data) => (data as DareHeader).Bitmask ),
-		new PropertyString ("Debug", 
-					(IBinding data, string? value) => {(data as DareHeader).Debug = value;}, 
-					(IBinding data) => (data as DareHeader).Debug )
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<DareHeader> _binding = new (
-			new() {
-			{ "EnvelopeId", _properties [0]},
-			{ "enc", _properties [1]},
-			{ "kid", _properties [2]},
-			{ "Salt", _properties [3]},
-			{ "Malt", _properties [4]},
-			{ "cloaked", _properties [5]},
-			{ "annotations", _properties [6]},
-			{ "recipients", _properties [7]},
-			{ "policy", _properties [8]},
-			{ "ContentMetaData", _properties [9]},
-			{ "SequenceInfo", _properties [10]},
-			{ "SequenceIndex", _properties [11]},
-			{ "Received", _properties [12]},
-			{ "Cover", _properties [13]},
-			{ "Bitmask", _properties [14]},
-			{ "Debug", _properties [15]}}, __Tag,
-		() => new DareHeader(), () => [], () => [], DareTrailer._binding, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "DareHeader";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new DareHeader();
-
-	}
-
-
-	/// <summary>
-	/// </summary>
-public partial class ContentMeta : Dare {
-    /// <summary>
-    ///Unique object identifier
-    /// </summary>
-
-	[JsonPropertyName("UniqueId")]
-	public virtual string?					UniqueId  {get; set;} //
-
-    /// <summary>
-    ///Nonce value, optionally used to ensure uniqueness of a digest over the content 
-    ///and associated metadata.
-    /// </summary>
-
-	[JsonPropertyName("Nonce")]
-	public virtual string?					Nonce  {get; set;} //
-
-    /// <summary>
-    ///List of labels that are applied to the payload of the frame.
-    /// </summary>
-
-	[JsonPropertyName("Labels")]
-	public virtual List<string>?					Labels  {get; set;}
-    /// <summary>
-    ///List of key/value pairs describing the payload of the frame.
-    /// </summary>
-
-	[JsonPropertyName("KeyValues")]
-	public virtual List<KeyValue>?					KeyValues  {get; set;}
-    /// <summary>
-    ///The mesh message type
-    /// </summary>
-
-	[JsonPropertyName("MessageType")]
-	public virtual string?					MessageType  {get; set;} //
-
-    /// <summary>
-    ///The content type field as specified in JWE
-    /// </summary>
-
-	[JsonPropertyName("cty")]
-	public virtual string?					ContentType  {get; set;} //
-
-    /// <summary>
-    ///List of filename paths for the payload of the frame.
-    /// </summary>
-
-	[JsonPropertyName("Paths")]
-	public virtual List<string>?					Paths  {get; set;}
-    /// <summary>
-    ///The original filename under which the data was stored.
-    /// </summary>
-
-	[JsonPropertyName("Filename")]
-	public virtual string?					Filename  {get; set;} //
-
-    /// <summary>
-    ///Operation on the header
-    /// </summary>
-
-	[JsonPropertyName("Event")]
-	public virtual string?					Event  {get; set;} //
-
-    /// <summary>
-    ///Initial creation date.
-    /// </summary>
-
-	[JsonPropertyName("Created")]
-	public virtual DateTime?					Created  {get; set;} //
-
-    /// <summary>
-    ///Date of last modification.
-    /// </summary>
-
-	[JsonPropertyName("Modified")]
-	public virtual DateTime?					Modified  {get; set;} //
-
-    /// <summary>
-    ///Date at which the associated transaction will expire
-    /// </summary>
-
-	[JsonPropertyName("Expire")]
-	public virtual DateTime?					Expire  {get; set;} //
-
-    /// <summary>
-    ///Frame number of the first object instance value.
-    /// </summary>
-
-	[JsonPropertyName("First")]
-	public virtual long?					First  {get; set;} //
-
-    /// <summary>
-    ///Frame number of the immediately prior object instance value	
-    /// </summary>
-
-	[JsonPropertyName("Previous")]
-	public virtual long?					Previous  {get; set;} //
-
-    /// <summary>
-    ///Information describing the file entry on disk.
-    /// </summary>
-
-	[JsonPropertyName("FileEntry")]
-	public virtual FileEntry?					FileEntry  {get; set;} //
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyString ("UniqueId", 
-					(IBinding data, string? value) => {(data as ContentMeta).UniqueId = value;}, 
-					(IBinding data) => (data as ContentMeta).UniqueId ),
-		new PropertyString ("Nonce", 
-					(IBinding data, string? value) => {(data as ContentMeta).Nonce = value;}, 
-					(IBinding data) => (data as ContentMeta).Nonce ),
-		new PropertyListString ("Labels", 
-					(IBinding data, List<string>? value) => {(data as ContentMeta).Labels = value;}, 
-					(IBinding data) => (data as ContentMeta).Labels ),
-		new PropertyListStruct ("KeyValues", typeof (KeyValue),
-					(IBinding data, object? value) => {(data as ContentMeta).KeyValues = value as List<KeyValue>;}, 
-					(IBinding data) => (data as ContentMeta).KeyValues,
-					false, ()=>new  List<KeyValue>(), ()=>new KeyValue()),
-		new PropertyString ("MessageType", 
-					(IBinding data, string? value) => {(data as ContentMeta).MessageType = value;}, 
-					(IBinding data) => (data as ContentMeta).MessageType ),
-		new PropertyString ("cty", 
-					(IBinding data, string? value) => {(data as ContentMeta).ContentType = value;}, 
-					(IBinding data) => (data as ContentMeta).ContentType ),
-		new PropertyListString ("Paths", 
-					(IBinding data, List<string>? value) => {(data as ContentMeta).Paths = value;}, 
-					(IBinding data) => (data as ContentMeta).Paths ),
-		new PropertyString ("Filename", 
-					(IBinding data, string? value) => {(data as ContentMeta).Filename = value;}, 
-					(IBinding data) => (data as ContentMeta).Filename ),
-		new PropertyString ("Event", 
-					(IBinding data, string? value) => {(data as ContentMeta).Event = value;}, 
-					(IBinding data) => (data as ContentMeta).Event ),
-		new PropertyDateTime ("Created", 
-					(IBinding data, DateTime? value) => {(data as ContentMeta).Created = value;}, 
-					(IBinding data) => (data as ContentMeta).Created ),
-		new PropertyDateTime ("Modified", 
-					(IBinding data, DateTime? value) => {(data as ContentMeta).Modified = value;}, 
-					(IBinding data) => (data as ContentMeta).Modified ),
-		new PropertyDateTime ("Expire", 
-					(IBinding data, DateTime? value) => {(data as ContentMeta).Expire = value;}, 
-					(IBinding data) => (data as ContentMeta).Expire ),
-		new PropertyInteger64 ("First", 
-					(IBinding data, long? value) => {(data as ContentMeta).First = value;}, 
-					(IBinding data) => (data as ContentMeta).First ),
-		new PropertyInteger64 ("Previous", 
-					(IBinding data, long? value) => {(data as ContentMeta).Previous = value;}, 
-					(IBinding data) => (data as ContentMeta).Previous ),
-		new PropertyStruct ("FileEntry", typeof (FileEntry),
-					(IBinding data, object? value) => {(data as ContentMeta).FileEntry = value as FileEntry;}, 
-					(IBinding data) => (data as ContentMeta).FileEntry,
-					false, ()=>new  FileEntry(), ()=>new FileEntry())
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<ContentMeta> _binding = new (
-			new() {
-			{ "UniqueId", _properties [0]},
-			{ "Nonce", _properties [1]},
-			{ "Labels", _properties [2]},
-			{ "KeyValues", _properties [3]},
-			{ "MessageType", _properties [4]},
-			{ "cty", _properties [5]},
-			{ "Paths", _properties [6]},
-			{ "Filename", _properties [7]},
-			{ "Event", _properties [8]},
-			{ "Created", _properties [9]},
-			{ "Modified", _properties [10]},
-			{ "Expire", _properties [11]},
-			{ "First", _properties [12]},
-			{ "Previous", _properties [13]},
-			{ "FileEntry", _properties [14]}}, __Tag,
-		() => new ContentMeta(), () => [], () => [], null, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "ContentMeta";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new ContentMeta();
-
-	}
-
-
-	/// <summary>
-	///
-	/// The signature value
-	/// </summary>
-public partial class DareSignature : Dare {
-    /// <summary>
-    ///Digest algorithm hint. Specifying the digest algorithm to be applied
-    ///to the envelope body allows the body to be processed in streaming mode.
-    /// </summary>
-
-	[JsonPropertyName("dig")]
-	public virtual string?					Dig  {get; set;} //
-
-    /// <summary>
-    ///Key exchange algorithm
-    /// </summary>
-
-	[JsonPropertyName("alg")]
-	public virtual string?					Alg  {get; set;} //
-
-    /// <summary>
-    ///Key identifier of the signature key.
-    /// </summary>
-
-	[JsonPropertyName("kid")]
-	public virtual string?					KeyIdentifier  {get; set;} //
-
-    /// <summary>
-    ///PKIX certificate of signer.
-    /// </summary>
-
-	[JsonPropertyName("cert")]
-	public virtual X509Certificate?					Certificate  {get; set;} //
-
-    /// <summary>
-    ///PKIX certificates that establish a trust path for the signer.
-    /// </summary>
-
-	[JsonPropertyName("path")]
-	public virtual X509Certificate?					Path  {get; set;} //
-
-    /// <summary>
-    ///The data description that was signed.
-    /// </summary>
-
-	[JsonPropertyName("Manifest")]
-	public virtual byte[]?					Manifest  {get; set;} //
-
-    /// <summary>
-    ///The key used to create the signature.
-    /// </summary>
-
-	[JsonPropertyName("SignatureKey")]
-	public virtual Key?					SignatureKey  {get; set;} //
-
-    /// <summary>
-    ///The signature value as an Enhanced Data Sequence under the envelope base seed.
-    /// </summary>
-
-	[JsonPropertyName("signature")]
-	public virtual byte[]?					SignatureValue  {get; set;} //
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyString ("dig", 
-					(IBinding data, string? value) => {(data as DareSignature).Dig = value;}, 
-					(IBinding data) => (data as DareSignature).Dig ),
-		new PropertyString ("alg", 
-					(IBinding data, string? value) => {(data as DareSignature).Alg = value;}, 
-					(IBinding data) => (data as DareSignature).Alg ),
-		new PropertyString ("kid", 
-					(IBinding data, string? value) => {(data as DareSignature).KeyIdentifier = value;}, 
-					(IBinding data) => (data as DareSignature).KeyIdentifier ),
-		new PropertyStruct ("cert", typeof (X509Certificate),
-					(IBinding data, object? value) => {(data as DareSignature).Certificate = value as X509Certificate;}, 
-					(IBinding data) => (data as DareSignature).Certificate,
-					false, ()=>new  X509Certificate(), ()=>new X509Certificate()),
-		new PropertyStruct ("path", typeof (X509Certificate),
-					(IBinding data, object? value) => {(data as DareSignature).Path = value as X509Certificate;}, 
-					(IBinding data) => (data as DareSignature).Path,
-					false, ()=>new  X509Certificate(), ()=>new X509Certificate()),
-		new PropertyBinary ("Manifest", 
-					(IBinding data, byte[]? value) => {(data as DareSignature).Manifest = value;}, 
-					(IBinding data) => (data as DareSignature).Manifest ),
-		new PropertyStruct ("SignatureKey", typeof (Key), 
-					(IBinding data, object? value) => {(data as DareSignature).SignatureKey = value as Key;}, 
-					(IBinding data) => (data as DareSignature).SignatureKey,
-					true) ,
-		new PropertyBinary ("signature", 
-					(IBinding data, byte[]? value) => {(data as DareSignature).SignatureValue = value;}, 
-					(IBinding data) => (data as DareSignature).SignatureValue )
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<DareSignature> _binding = new (
-			new() {
-			{ "dig", _properties [0]},
-			{ "alg", _properties [1]},
-			{ "kid", _properties [2]},
-			{ "cert", _properties [3]},
-			{ "path", _properties [4]},
-			{ "Manifest", _properties [5]},
-			{ "SignatureKey", _properties [6]},
-			{ "signature", _properties [7]}}, __Tag,
-		() => new DareSignature(), () => [], () => [], null, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "DareSignature";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new DareSignature();
-
-	}
-
-
-	/// <summary>
-	///
-	/// A digital signature over one or more envelopes consisting of an apex signature value 
-	/// </summary>
-public partial class IntervalSignature : Dare {
-    /// <summary>
-    ///The index number of the frame containing the apex signature.
-    /// </summary>
-
-	[JsonPropertyName("Index")]
-	public virtual long?					Index  {get; set;} //
-
-    /// <summary>
-    ///The signed envelopes in order, lowest index first.
-    /// </summary>
-
-	[JsonPropertyName("Envelopes")]
-	public virtual SignedEnvelope?					Envelopes  {get; set;} //
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyInteger64 ("Index", 
-					(IBinding data, long? value) => {(data as IntervalSignature).Index = value;}, 
-					(IBinding data) => (data as IntervalSignature).Index ),
-		new PropertyStruct ("Envelopes", typeof (SignedEnvelope),
-					(IBinding data, object? value) => {(data as IntervalSignature).Envelopes = value as SignedEnvelope;}, 
-					(IBinding data) => (data as IntervalSignature).Envelopes,
-					false, ()=>new  SignedEnvelope(), ()=>new SignedEnvelope())
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<IntervalSignature> _binding = new (
-			new() {
-			{ "Index", _properties [0]},
-			{ "Envelopes", _properties [1]}}, __Tag,
-		() => new IntervalSignature(), () => [], () => [], null, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "IntervalSignature";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new IntervalSignature();
-
-	}
-
-
-	/// <summary>
-	///
-	/// An entry describing one signed envelope within an IntervalSignature
-	/// </summary>
-public partial class SignedEnvelope : Dare {
-    /// <summary>
-    ///The index number of the envelope.
-    /// </summary>
-
-	[JsonPropertyName("Index")]
-	public virtual long?					Index  {get; set;} //
-
-    /// <summary>
-    ///The digests required to complete the verification of the signature.		
-    /// </summary>
-
-	[JsonPropertyName("Digest")]
-	public virtual List<byte[]>?					Digest  {get; set;}
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyInteger64 ("Index", 
-					(IBinding data, long? value) => {(data as SignedEnvelope).Index = value;}, 
-					(IBinding data) => (data as SignedEnvelope).Index ),
-		new PropertyListBinary ("Digest", 
-					(IBinding data, List<byte[]>? value) => {(data as SignedEnvelope).Digest = value;}, 
-					(IBinding data) => (data as SignedEnvelope).Digest )
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<SignedEnvelope> _binding = new (
-			new() {
-			{ "Index", _properties [0]},
-			{ "Digest", _properties [1]}}, __Tag,
-		() => new SignedEnvelope(), () => [], () => [], null, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "SignedEnvelope";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new SignedEnvelope();
-
-	}
-
-
-	/// <summary>
-	/// </summary>
-public partial class X509Certificate : Dare {
-    /// <summary>
-    ///URL identifying an X.509 public key certificate
-    /// </summary>
-
-	[JsonPropertyName("x5u")]
-	public virtual string?					X5u  {get; set;} //
-
-    /// <summary>
-    ///An X.509 public key certificate
-    /// </summary>
-
-	[JsonPropertyName("x5c")]
-	public virtual byte[]?					X5  {get; set;} //
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyString ("x5u", 
-					(IBinding data, string? value) => {(data as X509Certificate).X5u = value;}, 
-					(IBinding data) => (data as X509Certificate).X5u ),
-		new PropertyBinary ("x5c", 
-					(IBinding data, byte[]? value) => {(data as X509Certificate).X5 = value;}, 
-					(IBinding data) => (data as X509Certificate).X5 )
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<X509Certificate> _binding = new (
-			new() {
-			{ "x5u", _properties [0]},
-			{ "x5c", _properties [1]}}, __Tag,
-		() => new X509Certificate(), () => [], () => [], null, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "X509Certificate";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new X509Certificate();
-
-	}
-
-
-	/// <summary>
-	///
-	/// Recipient information
-	/// </summary>
-public partial class DareRecipient : Dare {
-    /// <summary>
-    ///Key identifier for the encryption key.
-    ///The Key identifier MUST be either a UDF fingerprint of a key or a Group Key Identifier
-    /// </summary>
-
-	[JsonPropertyName("kid")]
-	public virtual string?					KeyIdentifier  {get; set;} //
-
-    /// <summary>
-    ///The key wrapping and derivation algorithms.
-    /// </summary>
-
-	[JsonPropertyName("kwd")]
-	public virtual string?					KeyWrapDerivation  {get; set;} //
-
-    /// <summary>
-    ///The key parameters of the ephemeral key as specified in JWE
-    /// </summary>
-
-	[JsonPropertyName("epk")]
-	public virtual Key?					Epk  {get; set;} //
-
-    /// <summary>
-    ///Binary cryptographic exchange parameters
-    /// </summary>
-
-	[JsonPropertyName("ek")]
-	public virtual byte[]?					Ek  {get; set;} //
-
-    /// <summary>
-    ///The wrapped base seed. The base seed is encrypted under the result of the key exchange.
-    /// </summary>
-
-	[JsonPropertyName("wmk")]
-	public virtual byte[]?					WrappedBaseSeed  {get; set;} //
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyString ("kid", 
-					(IBinding data, string? value) => {(data as DareRecipient).KeyIdentifier = value;}, 
-					(IBinding data) => (data as DareRecipient).KeyIdentifier ),
-		new PropertyString ("kwd", 
-					(IBinding data, string? value) => {(data as DareRecipient).KeyWrapDerivation = value;}, 
-					(IBinding data) => (data as DareRecipient).KeyWrapDerivation ),
-		new PropertyStruct ("epk", typeof (Key), 
-					(IBinding data, object? value) => {(data as DareRecipient).Epk = value as Key;}, 
-					(IBinding data) => (data as DareRecipient).Epk,
-					true) ,
-		new PropertyBinary ("ek", 
-					(IBinding data, byte[]? value) => {(data as DareRecipient).Ek = value;}, 
-					(IBinding data) => (data as DareRecipient).Ek ),
-		new PropertyBinary ("wmk", 
-					(IBinding data, byte[]? value) => {(data as DareRecipient).WrappedBaseSeed = value;}, 
-					(IBinding data) => (data as DareRecipient).WrappedBaseSeed )
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<DareRecipient> _binding = new (
-			new() {
-			{ "kid", _properties [0]},
-			{ "kwd", _properties [1]},
-			{ "epk", _properties [2]},
-			{ "ek", _properties [3]},
-			{ "wmk", _properties [4]}}, __Tag,
-		() => new DareRecipient(), () => [], () => [], null, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "DareRecipient";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new DareRecipient();
-
-	}
-
-
-	/// <summary>
-	/// </summary>
-public partial class DarePolicy : Dare {
-    /// <summary>
-    ///When applied to a store, indicates it is world readable.
-    /// </summary>
-
-	[JsonPropertyName("Public")]
-	public virtual bool?					Public  {get; set;} //
-
-    /// <summary>
-    ///The encryption algorithm to be used to compute the payload.
-    /// </summary>
-
-	[JsonPropertyName("enc")]
-	public virtual string?					EncryptionAlgorithm  {get; set;} //
-
-    /// <summary>
-    ///The digest algorithm to be used to compute the payload digest.
-    /// </summary>
-
-	[JsonPropertyName("dig")]
-	public virtual string?					DigestAlgorithm  {get; set;} //
-
-    /// <summary>
-    ///The encryption policy specifier, determines how often a key exchange is required.
-    ///'Single': All entries are encrypted under the key exchange specified in the 
-    ///entry specifying this policy.
-    ///'Isolated': All entries are encrypted under a separate key exchange.
-    ///'All': All entries are encrypted.
-    ///'None': No entries are encrypted.
-    ///Default value is 'None' if EncryptKeys is null, and 'All' otherwise.
-    /// </summary>
-
-	[JsonPropertyName("Encryption")]
-	public virtual string?					Encryption  {get; set;} //
-
-    /// <summary>
-    ///The signature policy
-    ///'None': No entries are signed.
-    ///'Last': The last entry in the container is signed.
-    ///'Isolated': All entries are independently signed.
-    ///'Any': Entries may be signed.
-    ///Default value is 'None' if SignKeys is null, and 'Any' otherwise.
-    /// </summary>
-
-	[JsonPropertyName("Signature")]
-	public virtual string?					Signature  {get; set;} //
-
-    /// <summary>
-    ///The public parameters of keys used for encryption
-    /// </summary>
-
-	[JsonPropertyName("EncryptKeys")]
-	public virtual List<Key>?					EncryptKeys  {get; set;}
-    /// <summary>
-    ///The public parameters of the signing keys under which records are signed in accordance
-    ///with the Signature policy
-    /// </summary>
-
-	[JsonPropertyName("SignKeys")]
-	public virtual List<Key>?					SignKeys  {get; set;}
-    /// <summary>
-    ///If true the policy is immutable and cannot be changed by a subsequent policy override.
-    /// </summary>
-
-	[JsonPropertyName("Sealed")]
-	public virtual bool?					Sealed  {get; set;} //
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyBoolean ("Public", 
-					(IBinding data, bool? value) => {(data as DarePolicy).Public = value;}, 
-					(IBinding data) => (data as DarePolicy).Public ),
-		new PropertyString ("enc", 
-					(IBinding data, string? value) => {(data as DarePolicy).EncryptionAlgorithm = value;}, 
-					(IBinding data) => (data as DarePolicy).EncryptionAlgorithm ),
-		new PropertyString ("dig", 
-					(IBinding data, string? value) => {(data as DarePolicy).DigestAlgorithm = value;}, 
-					(IBinding data) => (data as DarePolicy).DigestAlgorithm ),
-		new PropertyString ("Encryption", 
-					(IBinding data, string? value) => {(data as DarePolicy).Encryption = value;}, 
-					(IBinding data) => (data as DarePolicy).Encryption ),
-		new PropertyString ("Signature", 
-					(IBinding data, string? value) => {(data as DarePolicy).Signature = value;}, 
-					(IBinding data) => (data as DarePolicy).Signature ),
-		new PropertyListStruct ("EncryptKeys", typeof (Key), 
-					(IBinding data, object? value) => {(data as DarePolicy).EncryptKeys = value as List<Key>;}, 
-					(IBinding data) => (data as DarePolicy).EncryptKeys,
-					true, ()=>new List<Key>()
+		new PropertyListStruct ("Networks", typeof (NetworkConnect), 
+					(IBinding data, object? value) => {(data as DeviceConnect).Networks = value as List<NetworkConnect>;}, 
+					(IBinding data) => (data as DeviceConnect).Networks,
+					true, ()=>new List<NetworkConnect>()
 ) ,
-		new PropertyListStruct ("SignKeys", typeof (Key), 
-					(IBinding data, object? value) => {(data as DarePolicy).SignKeys = value as List<Key>;}, 
-					(IBinding data) => (data as DarePolicy).SignKeys,
-					true, ()=>new List<Key>()
-) ,
-		new PropertyBoolean ("Sealed", 
-					(IBinding data, bool? value) => {(data as DarePolicy).Sealed = value;}, 
-					(IBinding data) => (data as DarePolicy).Sealed )
+		new PropertyListStruct ("Services", typeof (OnboardingService), 
+					(IBinding data, object? value) => {(data as DeviceConnect).Services = value as List<OnboardingService>;}, 
+					(IBinding data) => (data as DeviceConnect).Services,
+					true, ()=>new List<OnboardingService>()
+) 
 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	public static readonly new Binding<DarePolicy> _binding = new (
+	public static readonly new Binding<DeviceConnect> _binding = new (
 			new() {
-			{ "Public", _properties [0]},
-			{ "enc", _properties [1]},
-			{ "dig", _properties [2]},
-			{ "Encryption", _properties [3]},
-			{ "Signature", _properties [4]},
-			{ "EncryptKeys", _properties [5]},
-			{ "SignKeys", _properties [6]},
-			{ "Sealed", _properties [7]}}, __Tag,
-		() => new DarePolicy(), () => [], () => [], null, Generic: false);
+			{ "Networks", _properties [0]},
+			{ "Services", _properties [1]}}, __Tag,
+		() => new DeviceConnect(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1395,54 +159,36 @@ public partial class DarePolicy : Dare {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "DarePolicy";
+	public new const string __Tag = "DeviceConnect";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new DarePolicy();
+	public static new JsonObject _Factory () => new DeviceConnect();
 
 	}
 
 
 	/// <summary>
+	///
+	/// 
 	/// </summary>
-public partial class FileEntry : Dare {
+public partial class NetworkConnect : DeviceData {
     /// <summary>
-    ///The file path in canonical form. 
+    ///Connection profiles supported by the network connection
     /// </summary>
 
-	[JsonPropertyName("Path")]
-	public virtual string?					Path  {get; set;} //
-
+	[JsonPropertyName("Profiles")]
+	public virtual List<string>?					Profiles  {get; set;}
     /// <summary>
-    ///The creation time of the file on disk in UTC
+    ///Identifiers of the onboarding services that MAY be reached through
+    ///the network connection. If null or empty, the network connection supports
+    ///ALL the listed network connections.
     /// </summary>
 
-	[JsonPropertyName("CreationTime")]
-	public virtual DateTime?					CreationTime  {get; set;} //
-
-    /// <summary>
-    ///The last access time of the file on disk in UTC
-    /// </summary>
-
-	[JsonPropertyName("LastAccessTime")]
-	public virtual DateTime?					LastAccessTime  {get; set;} //
-
-    /// <summary>
-    ///The last write time of the file on disk in UTC
-    /// </summary>
-
-	[JsonPropertyName("LastWriteTime")]
-	public virtual DateTime?					LastWriteTime  {get; set;} //
-
-    /// <summary>
-    ///The file attribues as a bitmapped integer.
-    /// </summary>
-
-	[JsonPropertyName("Attributes")]
-	public virtual int?					Attributes  {get; set;} //
+	[JsonPropertyName("ServiceIds")]
+	public virtual string?					ServiceIds  {get; set;} //
 
 
     ///<summary>Implement IBinding</summary> 
@@ -1450,35 +196,23 @@ public partial class FileEntry : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyString ("Path", 
-					(IBinding data, string? value) => {(data as FileEntry).Path = value;}, 
-					(IBinding data) => (data as FileEntry).Path ),
-		new PropertyDateTime ("CreationTime", 
-					(IBinding data, DateTime? value) => {(data as FileEntry).CreationTime = value;}, 
-					(IBinding data) => (data as FileEntry).CreationTime ),
-		new PropertyDateTime ("LastAccessTime", 
-					(IBinding data, DateTime? value) => {(data as FileEntry).LastAccessTime = value;}, 
-					(IBinding data) => (data as FileEntry).LastAccessTime ),
-		new PropertyDateTime ("LastWriteTime", 
-					(IBinding data, DateTime? value) => {(data as FileEntry).LastWriteTime = value;}, 
-					(IBinding data) => (data as FileEntry).LastWriteTime ),
-		new PropertyInteger32 ("Attributes", 
-					(IBinding data, int? value) => {(data as FileEntry).Attributes = value;}, 
-					(IBinding data) => (data as FileEntry).Attributes )
+		new PropertyListString ("Profiles", 
+					(IBinding data, List<string>? value) => {(data as NetworkConnect).Profiles = value;}, 
+					(IBinding data) => (data as NetworkConnect).Profiles ),
+		new PropertyString ("ServiceIds", 
+					(IBinding data, string? value) => {(data as NetworkConnect).ServiceIds = value;}, 
+					(IBinding data) => (data as NetworkConnect).ServiceIds )
 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	public static readonly new Binding<FileEntry> _binding = new (
+	public static readonly new Binding<NetworkConnect> _binding = new (
 			new() {
-			{ "Path", _properties [0]},
-			{ "CreationTime", _properties [1]},
-			{ "LastAccessTime", _properties [2]},
-			{ "LastWriteTime", _properties [3]},
-			{ "Attributes", _properties [4]}}, __Tag,
-		() => new FileEntry(), () => [], () => [], null, Generic: false);
+			{ "Profiles", _properties [0]},
+			{ "ServiceIds", _properties [1]}}, __Tag,
+		() => new NetworkConnect(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1489,49 +223,147 @@ public partial class FileEntry : Dare {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "FileEntry";
+	public new const string __Tag = "NetworkConnect";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new FileEntry();
+	public static new JsonObject _Factory () => new NetworkConnect();
 
 	}
 
 
 	/// <summary>
 	///
-	/// Entry containing the latest apex value of a specified append only log.
+	/// 
 	/// </summary>
-public partial class Witness : Dare {
+public partial class NetworkConnectEthernet : NetworkConnect {
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<NetworkConnectEthernet> _binding = new (
+			new() {}, __Tag,
+		() => new NetworkConnectEthernet(), () => [], () => [], NetworkConnect._binding, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "NetworkConnectEthernet";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new NetworkConnectEthernet();
+
+	}
+
+
+	/// <summary>
+	///
+	/// 
+	/// </summary>
+public partial class NetworkConnectWiFi : NetworkConnect {
     /// <summary>
-    ///Globally unique log identifier
+    ///The SSID of the network to connect to. While SSIDs are usually encoded as UTF8, 
+    ///the specifications actually specify a 0-32 octet binary field.
+    /// </summary>
+
+	[JsonPropertyName("SSID")]
+	public virtual byte[]?					SSID  {get; set;} //
+
+    /// <summary>
+    ///Password to be used to connect to the SSID. Note that since this is
+    ///sensitive data, DeviceConnect profiles containing password data MUST NOT
+    ///be passed plaintext.
+    /// </summary>
+
+	[JsonPropertyName("Password")]
+	public virtual string?					Password  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyBinary ("SSID", 
+					(IBinding data, byte[]? value) => {(data as NetworkConnectWiFi).SSID = value;}, 
+					(IBinding data) => (data as NetworkConnectWiFi).SSID ),
+		new PropertyString ("Password", 
+					(IBinding data, string? value) => {(data as NetworkConnectWiFi).Password = value;}, 
+					(IBinding data) => (data as NetworkConnectWiFi).Password )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<NetworkConnectWiFi> _binding = new (
+			new() {
+			{ "SSID", _properties [0]},
+			{ "Password", _properties [1]}}, __Tag,
+		() => new NetworkConnectWiFi(), () => [], () => [], NetworkConnect._binding, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "NetworkConnectWiFi";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new NetworkConnectWiFi();
+
+	}
+
+
+	/// <summary>
+	///
+	/// An onboarding service that MAY be reached through one or more local
+	/// network connections.
+	/// </summary>
+public partial class OnboardingService : DeviceData {
+    /// <summary>
     /// </summary>
 
 	[JsonPropertyName("Id")]
 	public virtual string?					Id  {get; set;} //
 
     /// <summary>
-    ///The issuer of the log
     /// </summary>
 
-	[JsonPropertyName("Issuer")]
-	public virtual string?					Issuer  {get; set;} //
+	[JsonPropertyName("Protocol")]
+	public virtual string?					Protocol  {get; set;} //
 
     /// <summary>
-    ///The Apex hash value
     /// </summary>
 
-	[JsonPropertyName("Apex")]
-	public virtual byte[]?					Apex  {get; set;} //
-
-    /// <summary>
-    ///Specifies the index number assigned to the entry in the log.
-    /// </summary>
-
-	[JsonPropertyName("Index")]
-	public virtual long?					Index  {get; set;} //
+	[JsonPropertyName("Endpoint")]
+	public virtual string?					Endpoint  {get; set;} //
 
 
     ///<summary>Implement IBinding</summary> 
@@ -1540,30 +372,26 @@ public partial class Witness : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Id", 
-					(IBinding data, string? value) => {(data as Witness).Id = value;}, 
-					(IBinding data) => (data as Witness).Id ),
-		new PropertyString ("Issuer", 
-					(IBinding data, string? value) => {(data as Witness).Issuer = value;}, 
-					(IBinding data) => (data as Witness).Issuer ),
-		new PropertyBinary ("Apex", 
-					(IBinding data, byte[]? value) => {(data as Witness).Apex = value;}, 
-					(IBinding data) => (data as Witness).Apex ),
-		new PropertyInteger64 ("Index", 
-					(IBinding data, long? value) => {(data as Witness).Index = value;}, 
-					(IBinding data) => (data as Witness).Index )
+					(IBinding data, string? value) => {(data as OnboardingService).Id = value;}, 
+					(IBinding data) => (data as OnboardingService).Id ),
+		new PropertyString ("Protocol", 
+					(IBinding data, string? value) => {(data as OnboardingService).Protocol = value;}, 
+					(IBinding data) => (data as OnboardingService).Protocol ),
+		new PropertyString ("Endpoint", 
+					(IBinding data, string? value) => {(data as OnboardingService).Endpoint = value;}, 
+					(IBinding data) => (data as OnboardingService).Endpoint )
 		];
 
     ///<summary>Implement IBinding</summary> 
 	public override Binding _Binding => _binding;
 
 	///<summary>Binding</summary> 
-	public static readonly new Binding<Witness> _binding = new (
+	public static readonly new Binding<OnboardingService> _binding = new (
 			new() {
 			{ "Id", _properties [0]},
-			{ "Issuer", _properties [1]},
-			{ "Apex", _properties [2]},
-			{ "Index", _properties [3]}}, __Tag,
-		() => new Witness(), () => [], () => [], null, Generic: false);
+			{ "Protocol", _properties [1]},
+			{ "Endpoint", _properties [2]}}, __Tag,
+		() => new OnboardingService(), () => [], () => [], null, Generic: false);
 
 
 	/// <summary>
@@ -1574,242 +402,13 @@ public partial class Witness : Dare {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Witness";
+	public new const string __Tag = "OnboardingService";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Witness();
-
-	}
-
-
-	/// <summary>
-	///
-	/// Provides a proof that the payload with digest [hash] in the log described by 
-	/// SignedWitness occurs at the index [Index]
-	/// </summary>
-public partial class Proof : Dare {
-	[JsonPropertyName("EnvelopedWitness")]
-	public virtual Enveloped<Witness>?					EnvelopedWitness  {get; set;} 
-
-	/// <summary>
-	/// Wrapped property
-    /// </summary>
-	public virtual Witness?				Witness  => EnvelopedWitness.Decode();
-    /// <summary>
-    ///
-    /// </summary>
-
-	[JsonPropertyName("Hash")]
-	public virtual byte[]?					Hash  {get; set;} //
-
-    /// <summary>
-    ///Specifies the index number assigned to the entry in the log.
-    /// </summary>
-
-	[JsonPropertyName("Index")]
-	public virtual long?					Index  {get; set;} //
-
-    /// <summary>
-    ///The list of entries from which the proof path is computed.
-    /// </summary>
-
-	[JsonPropertyName("Path")]
-	public virtual List<byte[]>?					Path  {get; set;}
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedWitness", /*typeof (Witness<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as Proof).EnvelopedWitness = value as Enveloped<Witness>;},
-					(IBinding data) => (data as Proof).EnvelopedWitness,
-					/*(IBinding data, object? value) => {(data as Proof).Witness = value as Witness;},
-					(IBinding data) => (data as Proof).Witness,*/
-					()=>new  Enveloped<Witness>(), ()=>new Enveloped<Witness>()),
-		new PropertyBinary ("Hash", 
-					(IBinding data, byte[]? value) => {(data as Proof).Hash = value;}, 
-					(IBinding data) => (data as Proof).Hash ),
-		new PropertyInteger64 ("Index", 
-					(IBinding data, long? value) => {(data as Proof).Index = value;}, 
-					(IBinding data) => (data as Proof).Index ),
-		new PropertyListBinary ("Path", 
-					(IBinding data, List<byte[]>? value) => {(data as Proof).Path = value;}, 
-					(IBinding data) => (data as Proof).Path )
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<Proof> _binding = new (
-			new() {
-			{ "EnvelopedWitness", _properties [0]},
-			{ "Hash", _properties [1]},
-			{ "Index", _properties [2]},
-			{ "Path", _properties [3]}}, __Tag,
-		() => new Proof(), () => [], () => [], null, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "Proof";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Proof();
-
-	}
-
-
-	/// <summary>
-	/// </summary>
-public partial class Unprotected : Dare {
-    /// <summary>
-    ///The digest algorithm to be used to compute the payload digest.
-    /// </summary>
-
-	[JsonPropertyName("dig")]
-	public virtual string?					DigestAlgorithm  {get; set;} //
-
-    /// <summary>
-    /// </summary>
-
-	[JsonPropertyName("signs")]
-	public virtual List<EarlSignature>?					Signers  {get; set;}
-    /// <summary>
-    /// </summary>
-
-	[JsonPropertyName("sigs")]
-	public virtual List<EarlSignature>?					Signatures  {get; set;}
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyString ("dig", 
-					(IBinding data, string? value) => {(data as Unprotected).DigestAlgorithm = value;}, 
-					(IBinding data) => (data as Unprotected).DigestAlgorithm ),
-		new PropertyListStruct ("signs", typeof (EarlSignature),
-					(IBinding data, object? value) => {(data as Unprotected).Signers = value as List<EarlSignature>;}, 
-					(IBinding data) => (data as Unprotected).Signers,
-					false, ()=>new  List<EarlSignature>(), ()=>new EarlSignature()),
-		new PropertyListStruct ("sigs", typeof (EarlSignature),
-					(IBinding data, object? value) => {(data as Unprotected).Signatures = value as List<EarlSignature>;}, 
-					(IBinding data) => (data as Unprotected).Signatures,
-					false, ()=>new  List<EarlSignature>(), ()=>new EarlSignature())
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<Unprotected> _binding = new (
-			new() {
-			{ "dig", _properties [0]},
-			{ "signs", _properties [1]},
-			{ "sigs", _properties [2]}}, __Tag,
-		() => new Unprotected(), () => [], () => [], null, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "Unprotected";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new Unprotected();
-
-	}
-
-
-	/// <summary>
-	/// </summary>
-public partial class EarlSignature : Dare {
-    /// <summary>
-    ///Key exchange algorithm
-    /// </summary>
-
-	[JsonPropertyName("alg")]
-	public virtual string?					Alg  {get; set;} //
-
-    /// <summary>
-    ///Key identifier of the signature key.		
-    /// </summary>
-
-	[JsonPropertyName("kid")]
-	public virtual string?					KeyIdentifier  {get; set;} //
-
-    /// <summary>
-    /// </summary>
-
-	[JsonPropertyName("val")]
-	public virtual byte[]?					Value  {get; set;} //
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyString ("alg", 
-					(IBinding data, string? value) => {(data as EarlSignature).Alg = value;}, 
-					(IBinding data) => (data as EarlSignature).Alg ),
-		new PropertyString ("kid", 
-					(IBinding data, string? value) => {(data as EarlSignature).KeyIdentifier = value;}, 
-					(IBinding data) => (data as EarlSignature).KeyIdentifier ),
-		new PropertyBinary ("val", 
-					(IBinding data, byte[]? value) => {(data as EarlSignature).Value = value;}, 
-					(IBinding data) => (data as EarlSignature).Value )
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<EarlSignature> _binding = new (
-			new() {
-			{ "alg", _properties [0]},
-			{ "kid", _properties [1]},
-			{ "val", _properties [2]}}, __Tag,
-		() => new EarlSignature(), () => [], () => [], null, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "EarlSignature";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new EarlSignature();
+	public static new JsonObject _Factory () => new OnboardingService();
 
 	}
 

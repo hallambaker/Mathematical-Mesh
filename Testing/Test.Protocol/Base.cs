@@ -32,7 +32,7 @@ namespace Goedel.XUnit;
 
 
 
-public partial class GoedelProtocol {
+public partial class GoedelProtocol : UnitTestSet {
 
     public static GoedelProtocol Test() => new();
 

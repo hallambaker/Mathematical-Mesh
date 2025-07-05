@@ -38,7 +38,7 @@ public record TestBasicParams(
 
 
 
-public record TestSequence : TestBase {
+public class TestSequence : TestBase {
 
 
     public SequenceType SequenceType { get; }

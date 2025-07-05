@@ -75,11 +75,8 @@ namespace ExampleGenerator;
 // Design: Should the access catalog he encrypted under a different key?
 
 public partial class CreateExamples {
-
-    public DnsClient DnsClient { get; }
-    public EarlClient EarlClient { get; }
-
-
+    public MeshTestSet MeshTestSet { get; }
+    public TestEnvironmentBase TestEnvironment => MeshTestSet.TestEnvironment;
 
     public AssemblyLogger Logger { get; } = new AssemblyLogger();
 
@@ -219,9 +216,10 @@ public partial class CreateExamples {
 
     string deviceId;
 
+
+
     public CreateExamples() {
-        DnsClient = new DnsClientUDP();
-        EarlClient = new EarlClientHttp(DnsClient);
+        MeshTestSet = new();
         }
 
 
@@ -238,8 +236,6 @@ public partial class CreateExamples {
         All = false;
 
 
-        var seed = DeterministicSeed.Create("InternetDrafts");
-        testEnvironment = new TestEnvironmentCommon(seed);
 
         Directory.CreateDirectory(TestDir1);
         TestFile1.WriteFileNew(TestFile1Text.ToString());
@@ -281,7 +277,7 @@ public partial class CreateExamples {
 
 
             // Dare uses the keys from the contacts catalog.
-            PlatformDare(testEnvironment);
+            PlatformDare();
 
             TestConnectDisconnect("");
             EscrowAndRecover();
@@ -445,8 +441,9 @@ public partial class CreateExamples {
         return $">>>> Unfinished {example}\n\n" ?? "TBS";
         }
 
-    public virtual TestEnvironmentCommon TestEnvironment => testEnvironment;
-    TestEnvironmentCommon testEnvironment;
+
+
+
     public TestCLI GetTestCLI(string MachineName = null) {
         var testShell = new TestShell(TestEnvironment, MachineName);
         return new TestCLI(testShell);

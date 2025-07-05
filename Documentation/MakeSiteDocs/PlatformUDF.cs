@@ -28,6 +28,7 @@ using Goedel.Utilities;
 using System;
 using System.IO;
 using System.Numerics;
+using System.Reflection.Metadata;
 
 using GC = Goedel.Cryptography;
 
@@ -76,6 +77,7 @@ public partial class CreateExamples {
 
         ResultUDFSecret = testCLI.Dispatch("key share /quorum=2 /shares=3") as ResultKey;
         ResultUDFEARL = testCLI.Dispatch("key earl") as ResultKey;
+
 
         var filename = TestStringValue.ToFileUnique();
         ResultDigestSHA2 = testCLI.Dispatch($"hash udf {filename} /alg sha2") as ResultDigest;

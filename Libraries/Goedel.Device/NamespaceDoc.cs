@@ -22,6 +22,8 @@
 global using Goedel.IO;
 global using Goedel.Contacts;
 global using Goedel.Protocol;
+global using Goedel.Cryptography;
+global using Goedel.Cryptography.Dare;
 global using Goedel.Utilities;
 global using System.Numerics;
 global using System.Text;

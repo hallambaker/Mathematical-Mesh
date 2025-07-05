@@ -50,8 +50,7 @@ public partial class TestService {
     void MeshCheckAccountAuth(string role) {
         var rights = new List<string> { role };
 
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main");
 
         // Encrypt file here
@@ -60,7 +59,7 @@ public partial class TestService {
         testFile.Decrypt(contextAccountAlice.KeyCollection);
 
         // New Device
-        var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
+        var contextOnboardPending = MeshMachineTest.Connect(TestEnvironment, DeviceAlice3,
                 AccountAlice);
 
         // test decrypt - onbaording FAIL
@@ -103,12 +102,11 @@ public partial class TestService {
     public void MeshDeviceSsh() {
         var roles = new List<string> { Rights.IdRolesWeb };
 
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main");
 
         // New Device
-        var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2, AccountAlice);
+        var contextOnboardPending = MeshMachineTest.Connect(TestEnvironment, DeviceAlice2, AccountAlice);
 
         // Admin Device
         contextAccountAlice.SynchronizeAsync().Sync();
@@ -129,7 +127,7 @@ public partial class TestService {
 
 
         // Connect a third device
-        var contextOnboardPending2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3, AccountAlice);
+        var contextOnboardPending2 = MeshMachineTest.Connect(TestEnvironment, DeviceAlice3, AccountAlice);
 
         // Admin Device
         contextAccountAlice.SynchronizeAsync().Sync();
@@ -181,12 +179,12 @@ public partial class TestService {
     public void MeshDeviceMail() {
         var roles = new List<string> { Rights.IdRolesWeb };
 
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main");
 
         // New Device
-        var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2, AccountAlice);
+        var contextOnboardPending = MeshMachineTest.Connect(TestEnvironment, DeviceAlice2, AccountAlice);
 
         // Admin Device
         contextAccountAlice.SynchronizeAsync().Sync();
@@ -207,7 +205,7 @@ public partial class TestService {
 
 
         // Connect a third device
-        var contextOnboardPending2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3, AccountAlice);
+        var contextOnboardPending2 = MeshMachineTest.Connect(TestEnvironment, DeviceAlice3, AccountAlice);
 
         // Admin Device
         contextAccountAlice.SynchronizeAsync().Sync();
@@ -309,12 +307,12 @@ public partial class TestService {
         var rights = new List<string> { Rights.IdRolesDeveloper, Rights.IdRolesWeb };
 
 
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main");
 
         // New Device
-        var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
+        var contextOnboardPending = MeshMachineTest.Connect(TestEnvironment, DeviceAlice3,
                 AccountAlice);
 
         // Admin Device

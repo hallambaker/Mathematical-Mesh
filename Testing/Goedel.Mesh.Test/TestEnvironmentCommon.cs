@@ -61,7 +61,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
 
 
     protected string HostFile = "whatev";
-    public TestEnvironmentCommon(DeterministicSeed seed = null, bool dummyDns=false) : base(seed, dummyDns) {
+    public TestEnvironmentCommon(MeshTestSet testSet) : base(testSet) {
 
         }
 
@@ -85,52 +85,49 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
 
 
         var service =  new PublicMeshService(MeshMachineHost,
-            Configuration.GenericHost, Configuration.MeshService, Logger);
-        service.IDnsPublisher = DummyDnsService;
-
-        EarlClient = new EarlClientDirect(service.EarlDispatch, DnsClient);
-
+            Configuration.GenericHost, Configuration.MeshService, Logger, earlDispatch: EarlDispatch);
+        service.IDnsPublisher = TestSet.dnsPublisher;
 
         return service;
         }
 
-    protected override PublicCallsignResolver GetCallsignResolver() {
-        _ = MeshService;
+    //protected override PublicCallsignResolver GetCallsignResolver() {
+    //    _ = MeshService;
 
 
-        var pathHost = System.IO.Path.Combine(
-                MeshMachineHost.DirectoryMesh, CallsignResolver.__Tag); ;
+    //    var pathHost = System.IO.Path.Combine(
+    //            MeshMachineHost.DirectoryMesh, CallsignResolver.__Tag); ;
 
-        var callsignResolver = new CallsignResolverConfiguration() {
-            RegistryServiceAddress = AccountRegistry,
-            HostPath = pathHost
-            };
-        Configuration.Add(callsignResolver);
-
-
-        var result = PublicCallsignResolver.Create(
-                    MeshMachineHost,
-                    EnvelopedProfileRegistry,
-                    Configuration.GenericHost,
-                    Configuration.CallsignResolver,
-                    Logger);
+    //    var callsignResolver = new CallsignResolverConfiguration() {
+    //        RegistryServiceAddress = AccountRegistry,
+    //        HostPath = pathHost
+    //        };
+    //    Configuration.Add(callsignResolver);
 
 
-        result.Initialize(null);
+    //    var result = PublicCallsignResolver.Create(
+    //                MeshMachineHost,
+    //                EnvelopedProfileRegistry,
+    //                Configuration.GenericHost,
+    //                Configuration.CallsignResolver,
+    //                Logger);
 
-        result.SyncToRegistry();
 
-        if (MeshMachineHost is MeshMachineDirect meshMachineDirect) {
-            meshMachineDirect.AddService(result);
-            }
+    //    result.Initialize(null);
+
+    //    result.SyncToRegistry();
+
+    //    if (MeshMachineHost is MeshMachineDirect meshMachineDirect) {
+    //        meshMachineDirect.AddService(result);
+    //        }
 
 
-        return result;
+    //    return result;
 
-        //return new PublicCallsignResolver(MeshMachineHost,
-        //    Configuration.GenericHostConfiguration, Configuration.CallsignResolverConfiguration, Logger);
+    //    //return new PublicCallsignResolver(MeshMachineHost,
+    //    //    Configuration.GenericHostConfiguration, Configuration.CallsignResolverConfiguration, Logger);
 
-        }
+    //    }
 
 
 

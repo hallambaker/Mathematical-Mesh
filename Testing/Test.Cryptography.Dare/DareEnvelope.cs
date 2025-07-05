@@ -27,7 +27,7 @@ using Goedel.Test.Core;
 
 namespace Goedel.XUnit;
 
-public partial class TestDare {
+public partial class TestDare : MeshTestSet {
     public static TestDare Test() => new();
 
     static readonly CryptoParameters CryptoParametersNull = new CryptoParametersTest();
@@ -72,10 +72,10 @@ public partial class TestDare {
         TestEnvelopeVariable(test1);
         }
 
-    static KeyCollection MakeKeyCollection() {
-        var testEnvironment = new TestEnvironmentCommon(DeterministicSeed.Auto());
+    KeyCollection MakeKeyCollection() {
+
         //var machineAdmin = new MeshMachineTest(TestEnvironment, "Test");
-        return new KeyCollectionTestEnv(testEnvironment.DirectoryPath);
+        return new KeyCollectionTestEnv(TestEnvironment.DirectoryPath);
         }
     static List<string> MakeRecipients(IKeyLocate keyLocate) {
         var encrypt = KeyPair.Factory(CryptoAlgorithmId.X448,

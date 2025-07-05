@@ -30,7 +30,7 @@ using Goedel.Utilities;
 
 namespace Goedel.XUnit;
 
-public partial class TestContact : UnitTestSet {
+public partial class TestContact : MeshTestSet {
 
     public static TestContact Test() => new();
 
@@ -42,17 +42,14 @@ public partial class TestContact : UnitTestSet {
         // Bind to the test handle resolver
         }
 
-    public virtual TestEnvironmentCommon GetTestEnvironmentCommon(
-                    DeterministicSeed seed = null,
-                    bool dummyDns = false) =>
-            new(seed ?? Seed, dummyDns: dummyDns);
+
 
     [Fact]
     public void ContactSelf() {
         // Create an account for alice
 
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MakeAccount(testEnvironmentCommon, AccountAlice, DeviceAliceAdmin);
+
+        var contextAccountAlice = MakeAccount(TestEnvironment, AccountAlice, DeviceAliceAdmin);
 
         // Get JSContact for Alice
         contextAccountAlice.TryGetContactSelf(out var contactSelf);
@@ -67,7 +64,7 @@ public partial class TestContact : UnitTestSet {
 
         // attempt resolution through the JSContact earl - jscontact://example.com/....
         var contactAliceAtAlice =
-                testEnvironmentCommon.EarlClient.ResolveEarl<JsContact>(earl).Sync();
+                TestEnvironment.EarlClient.ResolveEarl<JsContact>(earl).Sync();
 
 
         contactAlice.TestIsEqual(contactAliceAtAlice);
@@ -82,9 +79,9 @@ public partial class TestContact : UnitTestSet {
     public void ContactHandle() {
 
         // Need to be able to publish the handle records...
-        var testEnvironmentCommon = GetTestEnvironmentCommon(dummyDns : true);
-        var contextAccountAlice = MakeAccount(testEnvironmentCommon, HandleAlice, DeviceAliceAdmin);
-        var contextAccountBob = MakeAccount(testEnvironmentCommon, HandleBob, DeviceBobAdmin);
+
+        var contextAccountAlice = MakeAccount(TestEnvironment, HandleAlice, DeviceAliceAdmin);
+        var contextAccountBob = MakeAccount(TestEnvironment, HandleBob, DeviceBobAdmin);
 
         // Get JSContact for Alice
         contextAccountAlice.TryGetContactSelf(out var contactSelf);
@@ -97,22 +94,13 @@ public partial class TestContact : UnitTestSet {
 
 
         // attempt resolution as @alice.example.com
-        var contactAliceAtBob = testEnvironmentCommon.EarlClient.ResolveContactHandle(HandleAlice).SyncNoCatch();
+        var contactAliceAtBob = TestEnvironment.EarlClient.ResolveContactHandle(HandleAlice).SyncNoCatch();
         contactAlice.TestIsEqual(contactAliceAtBob);
 
         }
 
-
-
-
-
-
-
-
-
-
     private ContextUser MakeAccount(
-                TestEnvironmentCommon testEnvironmentCommon,
+                TestEnvironmentBase testEnvironmentCommon,
                 string accountId, string deviceId) {
         var contextAccount = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                 deviceId, accountId, "main");
@@ -124,26 +112,26 @@ public partial class TestContact : UnitTestSet {
         }
 
 
-    private bool TestExchange(ContextUser contextAccountAlice, ContextUser contextAccountBob) {
+    //private bool TestExchange(ContextUser contextAccountAlice, ContextUser contextAccountBob) {
 
-        // Get JSContact for Alice
-        contextAccountBob.TryGetContactSelf(out var contactBob);
+    //    // Get JSContact for Alice
+    //    contextAccountBob.TryGetContactSelf(out var contactBob);
 
-        contextAccountAlice.AddContact(contactBob);
+    //    contextAccountAlice.AddContact(contactBob);
 
-        // check contact is the same when fetched
-        var contactBob2 = contextAccountAlice.GetContact(AccountBob);
-        (contactBob2 == contactBob).TestTrue();
-
-
-        // Alice create message to send to Bob
-        throw new NYI();
+    //    // check contact is the same when fetched
+    //    var contactBob2 = contextAccountAlice.GetContact(AccountBob);
+    //    (contactBob2 == contactBob).TestTrue();
 
 
-        // Bob Authenticate message
+    //    // Alice create message to send to Bob
+    //    throw new NYI();
 
-        return true;
-        }
+
+    //    // Bob Authenticate message
+
+    //    return true;
+    //    }
 
 
 

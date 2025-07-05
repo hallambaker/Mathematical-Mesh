@@ -5,7 +5,7 @@
 using Goedel.Discovery;
 
 namespace Goedel.XUnit;
-public class TestOauth {
+public class TestOauth : UnitTestSet {
 
     public DnsClient DnsClient { get; set; } = new DnsClientUDP();
 

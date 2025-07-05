@@ -23,26 +23,17 @@
 
 namespace Goedel.XUnit;
 
-public partial class TestService : UnitTestSet {
+public partial class TestService : MeshTestSet {
     #region // Properties
 
     public static TestService Test() => new();
 
     #endregion
 
-    #region // Destructor
-    #endregion
-
-    #region // Constructors
-    #endregion
-
-    #region // Implement Interface: Ixxx
-    #endregion
-
     #region // Methods 
 
-    public virtual TestEnvironmentCommon GetTestEnvironmentCommon(DeterministicSeed seed = null) =>
-                new(seed ?? Seed);
+    public override TestEnvironmentBase GetTestEnvironment() =>
+                new TestEnvironmentCommon(this);
 
 
     #endregion

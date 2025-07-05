@@ -73,34 +73,48 @@ partial class Program {
         //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
         //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
-        ShellTests.Test().TestMessageConfirmationAccept();
-        ShellTests.Test().TestMessageConfirmationReject();
+        ShellTests.Test().TestCreateSuper();
+        // This depends on fixing the 'onboard device' thing
 
-        ShellTests.Test().TestHandleContactAliceBob();
         ShellTests.Test().TestHandleThing();
 
 
+        // These depend on fixing the 'connect from contact URI' scheme
 
-
-        ShellTests.Test().TestLog();
         ShellTests.Test().NewArchiveTestOnce(true, false, false, false);
         ShellTests.Test().NewArchiveTestOnce(true, true, false, false);
         ShellTests.Test().NewFileTestAll();
         ShellTests.Test().NewFileTestOnce(true, false, false);
 
 
+        ShellTests.Test().TestAccountHandle();
+        ShellTests.Test().TestHandleContactAliceBob();
+
+        ShellTests.Test().TestMessageConfirmationAccept();
+        ShellTests.Test().TestMessageConfirmationReject();
         ShellTests.Test().TestMessageGroup();
 
 
 
-        ShellTests.Test().TestMessageConfirmationAccept();
-        ShellTests.Test().TestMessageConfirmationReject();
-        ShellTests.Test().TestMessageContactInPerson();
-        ShellTests.Test().TestMessageContactRemote();
+        //ShellTests.Test().TestLog();
+        //ShellTests.Test().NewArchiveTestOnce(true, false, false, false);
+        //ShellTests.Test().NewArchiveTestOnce(true, true, false, false);
+        //ShellTests.Test().NewFileTestAll();
+        //ShellTests.Test().NewFileTestOnce(true, false, false);
 
-        // Need some new code - QR code from contact
-        ShellTests.Test().TestMessageContactBusinessCardFetch();
-        ShellTests.Test().TestMessageContactBusinessCardExchange();
+
+        //ShellTests.Test().TestMessageGroup();
+
+
+
+        //ShellTests.Test().TestMessageConfirmationAccept();
+        //ShellTests.Test().TestMessageConfirmationReject();
+        //ShellTests.Test().TestMessageContactInPerson();
+        //ShellTests.Test().TestMessageContactRemote();
+
+        //// Need some new code - QR code from contact
+        //ShellTests.Test().TestMessageContactBusinessCardFetch();
+        //ShellTests.Test().TestMessageContactBusinessCardExchange();
 
 
         // Need some new code - implement handles in Web service
@@ -382,7 +396,8 @@ partial class Program {
 
 
     public static void Debug() {
-        var testEnvironmentCommon = new TestEnvironmentCommon(DeterministicSeed.Create());
+        var meshTestSet = new MeshTestSet();
+        var testEnvironmentCommon = new TestEnvironmentCommon(meshTestSet);
         var meshMachine = new MeshMachineTest(testEnvironmentCommon);
         var keyCollection = new KeyCollectionTest(meshMachine);
 

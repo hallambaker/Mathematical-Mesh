@@ -8,12 +8,12 @@
 		Description
 			|A device connection description providing a device with instructions to allow
 			|it to complete the onboarding process.
-		TStruct NetworkConnect
+		TStruct NetworkConnect Networks
 			Multiple
 			Description
 				|The network connections supported.
-		TStruct OnboardingService
-			Dictionary
+		TStruct OnboardingService Services
+			Multiple
 			Description
 				|Onboarding services that MAY be used to complete the 
 
@@ -53,3 +53,6 @@
 		Description
 			|An onboarding service that MAY be reached through one or more local
 			|network connections.
+		String Id
+		String Protocol
+		String Endpoint

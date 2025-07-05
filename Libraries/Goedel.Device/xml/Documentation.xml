@@ -1,0 +1,346 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Device</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Device.DeviceData">
+             <summary>
+            
+             Support classes for JSON Object Signing and Encryption
+             </summary>
+        </member>
+        <member name="P:Goedel.Device.DeviceData._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Device.DeviceData.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Device.DeviceData._BindingDictionary">
+            <summary>
+            Dictionary mapping types to bindings
+            </summary>
+        </member>
+        <member name="P:Goedel.Device.DeviceData._Initialized">
+            <summary>Variable used to force static initialization</summary> 
+        </member>
+        <member name="T:Goedel.Device.DeviceConnect">
+             <summary>
+            
+             A device connection description providing a device with instructions to allow
+             it to complete the onboarding process.
+             </summary>
+        </member>
+        <member name="P:Goedel.Device.DeviceConnect.Networks">
+             <summary>
+            The network connections supported.
+             </summary>
+        </member>
+        <member name="P:Goedel.Device.DeviceConnect.Services">
+             <summary>
+            Onboarding services that MAY be used to complete the 
+             </summary>
+        </member>
+        <member name="P:Goedel.Device.DeviceConnect._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Device.DeviceConnect._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Device.DeviceConnect._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Device.DeviceConnect._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Device.DeviceConnect._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Device.DeviceConnect.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Device.DeviceConnect._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Device.NetworkConnect">
+             <summary>
+            
+             
+             </summary>
+        </member>
+        <member name="P:Goedel.Device.NetworkConnect.Profiles">
+             <summary>
+            Connection profiles supported by the network connection
+             </summary>
+        </member>
+        <member name="P:Goedel.Device.NetworkConnect.ServiceIds">
+             <summary>
+            Identifiers of the onboarding services that MAY be reached through
+            the network connection. If null or empty, the network connection supports
+            ALL the listed network connections.
+             </summary>
+        </member>
+        <member name="P:Goedel.Device.NetworkConnect._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Device.NetworkConnect._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Device.NetworkConnect._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Device.NetworkConnect._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Device.NetworkConnect._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Device.NetworkConnect.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Device.NetworkConnect._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Device.NetworkConnectEthernet">
+             <summary>
+            
+             
+             </summary>
+        </member>
+        <member name="P:Goedel.Device.NetworkConnectEthernet._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Device.NetworkConnectEthernet._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Device.NetworkConnectEthernet._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Device.NetworkConnectEthernet._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Device.NetworkConnectEthernet._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Device.NetworkConnectEthernet.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Device.NetworkConnectEthernet._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Device.NetworkConnectWiFi">
+             <summary>
+            
+             
+             </summary>
+        </member>
+        <member name="P:Goedel.Device.NetworkConnectWiFi.SSID">
+             <summary>
+            The SSID of the network to connect to. While SSIDs are usually encoded as UTF8, 
+            the specifications actually specify a 0-32 octet binary field.
+             </summary>
+        </member>
+        <member name="P:Goedel.Device.NetworkConnectWiFi.Password">
+             <summary>
+            Password to be used to connect to the SSID. Note that since this is
+            sensitive data, DeviceConnect profiles containing password data MUST NOT
+            be passed plaintext.
+             </summary>
+        </member>
+        <member name="P:Goedel.Device.NetworkConnectWiFi._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Device.NetworkConnectWiFi._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Device.NetworkConnectWiFi._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Device.NetworkConnectWiFi._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Device.NetworkConnectWiFi._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Device.NetworkConnectWiFi.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Device.NetworkConnectWiFi._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Device.OnboardingService">
+             <summary>
+            
+             An onboarding service that MAY be reached through one or more local
+             network connections.
+             </summary>
+        </member>
+        <member name="P:Goedel.Device.OnboardingService.Id">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Device.OnboardingService.Protocol">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Device.OnboardingService.Endpoint">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Device.OnboardingService._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Device.OnboardingService._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Device.OnboardingService._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Device.OnboardingService._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Device.OnboardingService._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Device.OnboardingService.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Device.OnboardingService._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="P:Goedel.Device.DeviceConnectClient.DeviceConnectServer">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Device.DeviceConnectClient.RequestConnectAsync(System.String,Goedel.Contacts.JsDevice)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Device.DeviceConnectServer">
+            <summary>
+            Stub for device connection server.
+            </summary>
+        </member>
+        <member name="P:Goedel.Device.DeviceConnectServer.Instance">
+            <summary>The test instance.</summary>
+        </member>
+        <member name="P:Goedel.Device.DeviceConnectServer.Endpoint">
+            <summary>The HTTP endpoint</summary>
+        </member>
+        <member name="M:Goedel.Device.DeviceConnectServer.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="instance"></param>
+        </member>
+        <member name="M:Goedel.Device.DeviceConnectServer.GetBootstrapAsync">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Device.DeviceException">
+            <summary>
+            Base class for device exceptions.
+            </summary>
+        </member>
+        <member name="P:Goedel.Device.DeviceException.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Device.DeviceException.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Device.DeviceException.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Device.DeviceException._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Device.DeviceException.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Device.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Device.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Device.IDeviceConnectClient">
+            <summary>
+            Device connection client, requests a connection to a device by means of an 
+            EARL
+            </summary>
+        </member>
+        <member name="M:Goedel.Device.IDeviceConnectClient.RequestConnectAsync(System.String,Goedel.Contacts.JsDevice)">
+            <summary>
+            Make a connection request.
+            </summary>
+            <param name="earl">The EARL to which the request is posted.</param>
+            <param name="device">The JsDevice data (if available).</param>
+            <returns>The connection description.</returns>
+        </member>
+        <member name="M:Goedel.Device.IDeviceConnectServer.GetBootstrapAsync">
+            <summary>
+            Wait to receive a bootstrap connection request.
+            </summary>
+            <returns>The bootstrap data payload.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.NamespaceDoc">
+            <summary>
+            Core class for cryptographic algorithm handling. Although .NET provides classes
+            to do some of this, the implementations are inconsistent across algorithm types
+            and do not support many of the algorithms that we wish to use. 
+            </summary>
+        </member>
+    </members>
+</doc>

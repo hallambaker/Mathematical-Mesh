@@ -26,12 +26,9 @@ namespace Goedel.XUnit;
 
 
 
-public partial class TestSequences {
+public partial class TestSequences : MeshTestSet {
 
     public static TestSequences Test() => new();
-
-
-    DeterministicSeed Seed;
 
 
     [Theory]
@@ -84,14 +81,16 @@ public partial class TestSequences {
         int randomChecks = 0,
                 int additionalChunks = 0) {
 
-        var seed = DeterministicSeed.Create(sequenceType, records, size, randomsize, randomChecks, additionalChunks);
-        var context = new TestContext(seed);
+
+
+        StartTest(sequenceType, records, size, randomsize, randomChecks, additionalChunks);
+        var context = new TestContext(Seed);
         var sequence = new TestSequence(context, sequenceType, records, size, randomsize, additionalChunks);
 
         sequence.ValidatePayload();
 
         for (var i = 0; i < randomChecks; i++) {
-            var frame = 1 + seed.GetRandomInt(sequence.Records, i, "randomAccess");
+            var frame = 1 + Seed.GetRandomInt(sequence.Records, i, "randomAccess");
             sequence.RandomCheck(frame);
             }
 
@@ -121,9 +120,9 @@ public partial class TestSequences {
             bool randomsize = true,
             int randomChecks = 10) {
 
-        var seed = DeterministicSeed.Create(sequenceType, records, size, randomsize,
+        StartTest(sequenceType, records, size, randomsize,
                     randomChecks, encrypt, corruption);
-        var TestContext = new TestContext(seed, encrypt: encrypt);
+        var TestContext = new TestContext(Seed, encrypt: encrypt);
         var sequence = new TestSequence(TestContext, sequenceType, records, size, randomsize);
 
         sequence.ValidateCiphertext(); // Check we did encrypt!
@@ -152,9 +151,9 @@ public partial class TestSequences {
         bool randomsize = true,
         int randomChecks = 10) {
 
-        var seed = DeterministicSeed.Create(sequenceType, records, size, randomsize,
+        StartTest(sequenceType, records, size, randomsize,
                     randomChecks, sign, corruption);
-        var TestContext = new TestContext(seed, sign: sign);
+        var TestContext = new TestContext(Seed, sign: sign);
         var sequence = new TestSequence(TestContext, sequenceType, records, size, randomsize,
                     checkSignatures: true);
 
@@ -189,9 +188,9 @@ public partial class TestSequences {
                 bool randomsize = true,
                 int randomChecks = 10) {
 
-        var seed = DeterministicSeed.Create(sequenceType, records, size, randomsize,
+        StartTest(sequenceType, records, size, randomsize,
                     randomChecks, sign, corruption);
-        var TestContext = new TestContext(seed, sign: sign, encrypt: encrypt);
+        var TestContext = new TestContext(Seed, sign: sign, encrypt: encrypt);
         var sequence = new TestSequence(TestContext, sequenceType, records, size, randomsize,
                     checkSignatures: true);
 
@@ -229,9 +228,9 @@ public partial class TestSequences {
                 int randomChecks = 10,
                 int additionalChunks = 1) {
 
-        var seed = DeterministicSeed.Create(sign, encrypt, corruption, records, size, randomsize,
+        StartTest(sign, encrypt, corruption, records, size, randomsize,
                     randomChecks, additionalChunks);
-        var TestContext = new TestContext(seed, sign: sign, encrypt: encrypt, corruption: corruption);
+        var TestContext = new TestContext(Seed, sign: sign, encrypt: encrypt, corruption: corruption);
         var sequence = new TestSequence(TestContext, SequenceType.Merkle, records, size, randomsize,
             additionalChunks, checkSignatures: true);
 
@@ -265,9 +264,9 @@ public partial class TestSequences {
                 int proofChecks = 10,
                 int additionalChunks = 1) {
 
-        var seed = DeterministicSeed.Create(sign, encrypt, corruption, records, size, randomsize,
+        StartTest(sign, encrypt, corruption, records, size, randomsize,
                     proofChecks, additionalChunks);
-        var TestContext = new TestContext(seed, sign: sign, encrypt: encrypt);
+        var TestContext = new TestContext(Seed, sign: sign, encrypt: encrypt);
         var sequence = new TestSequence(TestContext, SequenceType.Merkle, records, size, randomsize,
             additionalChunks, checkSignatures: true);
 
@@ -466,7 +465,7 @@ public partial class TestSequences {
     public void ZTestSequence(SequenceType containerType,
     int records = 1, int maxSize = 0, int reOpen = 0, int moveStep = 0) {
 
-        Seed = DeterministicSeed.Auto(containerType, records, maxSize, reOpen, moveStep);
+        StartTest(containerType, records, maxSize, reOpen, moveStep);
 
         var filename = $"{containerType}-{records}-{maxSize}";
         ZTestContainer(filename, containerType, records, maxSize, reOpen, moveStep);
@@ -486,7 +485,7 @@ public partial class TestSequences {
                 CryptoParameters cryptoParametersEntry = null,
                 IKeyLocate keyLocate = null) {
 
-        Seed = DeterministicSeed.Auto(testLabel, records);
+        StartTest(testLabel, records);
         var fileName = Seed.GetFilename(testLabel);
 
         var keyCollection = keyLocate ?? policy?.KeyLocation;

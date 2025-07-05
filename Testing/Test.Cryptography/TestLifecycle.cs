@@ -22,25 +22,10 @@
 
 namespace Goedel.XUnit;
 
-public class TestLifecycle {
+public class TestLifecycle : MeshTestSet {
 
 
-    public DeterministicSeed Seed => DeterministicSeed.Auto().CacheValue(out seed);
-    DeterministicSeed seed;
-
-
-    public TestEnvironmentCommon TestEnvironmentCommon => testEnvironmentCommon ??
-        new TestEnvironmentCommon(Seed).CacheValue(out testEnvironmentCommon);
-    TestEnvironmentCommon testEnvironmentCommon;
-
-
-    KeyCollection KeyCollection => TestEnvironmentCommon.MakeKeyCollection(Seed);
-
-
-    //public MeshMachineTest MeshMachine => meshMachine ?? 
-    //        new MeshMachineTest(TestEnvironmentCommon).CacheValue(out meshMachine); 
-
-    //MeshMachineTest meshMachine;
+    KeyCollection KeyCollection => TestEnvironment.MakeKeyCollection(Seed);
 
 
     public static TestLifecycle Test() => new();
@@ -55,8 +40,10 @@ public class TestLifecycle {
     [InlineData(CryptoAlgorithmId.Ed448)]
     [InlineData(CryptoAlgorithmId.X25519)]
     [InlineData(CryptoAlgorithmId.X448)]
-    public void Test_LifecycleMaster(CryptoAlgorithmId CryptoAlgorithmID, int KeySize = 2048) =>
-        Crypto.Test_LifecycleMaster(CryptoAlgorithmID, KeyCollection, KeySize);
+    public void Test_LifecycleMaster(CryptoAlgorithmId CryptoAlgorithmID, int KeySize = 2048) {
+            Seed = DeterministicSeed.Create(CryptoAlgorithmID, KeySize);
+            Crypto.Test_LifecycleMaster(CryptoAlgorithmID, KeyCollection, KeySize);
+            }
 
     [Theory]
     [InlineData(CryptoAlgorithmId.RSAExch)]
@@ -66,8 +53,10 @@ public class TestLifecycle {
     [InlineData(CryptoAlgorithmId.Ed448)]
     [InlineData(CryptoAlgorithmId.X25519)]
     [InlineData(CryptoAlgorithmId.X448)]
-    public void Test_LifecycleAdmin(CryptoAlgorithmId CryptoAlgorithmID, int KeySize = 2048) =>
-        Crypto.Test_LifecycleAdmin(CryptoAlgorithmID, KeyCollection, KeySize);
+    public void Test_LifecycleAdmin(CryptoAlgorithmId CryptoAlgorithmID, int KeySize = 2048) {
+            Seed = DeterministicSeed.Create(CryptoAlgorithmID, KeySize);
+            Crypto.Test_LifecycleAdmin(CryptoAlgorithmID, KeyCollection, KeySize);
+            }
 
     [Theory]
     [InlineData(CryptoAlgorithmId.RSAExch)]
@@ -77,20 +66,10 @@ public class TestLifecycle {
     [InlineData(CryptoAlgorithmId.Ed448)]
     [InlineData(CryptoAlgorithmId.X25519)]
     [InlineData(CryptoAlgorithmId.X448)]
-    public void Test_LifecycleDevice(CryptoAlgorithmId CryptoAlgorithmID, int KeySize = 2048) =>
-Crypto.Test_LifecycleDevice(CryptoAlgorithmID, KeyCollection, KeySize);
-
-
-    [Theory]
-    [InlineData(CryptoAlgorithmId.RSAExch)]
-    [InlineData(CryptoAlgorithmId.RSASign)]
-    [InlineData(CryptoAlgorithmId.DH)]
-    [InlineData(CryptoAlgorithmId.Ed25519)]
-    [InlineData(CryptoAlgorithmId.Ed448)]
-    [InlineData(CryptoAlgorithmId.X25519)]
-    [InlineData(CryptoAlgorithmId.X448)]
-    public void Test_LifecycleEphemeral(CryptoAlgorithmId CryptoAlgorithmID, int KeySize = 2048) =>
-        Crypto.Test_LifecycleEphemeral(CryptoAlgorithmID, KeyCollection, KeySize);
+    public void Test_LifecycleDevice(CryptoAlgorithmId CryptoAlgorithmID, int KeySize = 2048) {
+                Seed = DeterministicSeed.Create(CryptoAlgorithmID, KeySize);
+                Crypto.Test_LifecycleDevice(CryptoAlgorithmID, KeyCollection, KeySize);
+                }
 
     [Theory]
     [InlineData(CryptoAlgorithmId.RSAExch)]
@@ -100,8 +79,22 @@ Crypto.Test_LifecycleDevice(CryptoAlgorithmID, KeyCollection, KeySize);
     [InlineData(CryptoAlgorithmId.Ed448)]
     [InlineData(CryptoAlgorithmId.X25519)]
     [InlineData(CryptoAlgorithmId.X448)]
-    public void Test_LifecycleExportable(CryptoAlgorithmId CryptoAlgorithmID, int KeySize = 2048) =>
-        Crypto.Test_LifecycleExportable(CryptoAlgorithmID, KeyCollection, KeySize);
+    public void Test_LifecycleEphemeral(CryptoAlgorithmId CryptoAlgorithmID, int KeySize = 2048) {
+                Seed = DeterministicSeed.Create(CryptoAlgorithmID, KeySize);
+                Crypto.Test_LifecycleEphemeral(CryptoAlgorithmID, KeyCollection, KeySize);
+                }
+    [Theory]
+    [InlineData(CryptoAlgorithmId.RSAExch)]
+    [InlineData(CryptoAlgorithmId.RSASign)]
+    [InlineData(CryptoAlgorithmId.DH)]
+    [InlineData(CryptoAlgorithmId.Ed25519)]
+    [InlineData(CryptoAlgorithmId.Ed448)]
+    [InlineData(CryptoAlgorithmId.X25519)]
+    [InlineData(CryptoAlgorithmId.X448)]
+    public void Test_LifecycleExportable(CryptoAlgorithmId CryptoAlgorithmID, int KeySize = 2048) {
+                Seed = DeterministicSeed.Create(CryptoAlgorithmID, KeySize);
+                Crypto.Test_LifecycleExportable(CryptoAlgorithmID, KeyCollection, KeySize);
+                }
 
 
     }

@@ -42,14 +42,13 @@ public partial class TestPresence : ShellTestBase {
     //public int BobSkip = 0;
     //public int BobStride = 0;
 
-    public override TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) =>
-            new TestEnvironmentRdpShell(seed) {
+
+    public override TestEnvironmentBase GetTestEnvironment() =>
+            new TestEnvironmentRdpShell(this) {
                 InitializeResolver = true,
                 InitializePresence = true
                 //CommunicationConditions = CommunicationConditions
                 };
-
-
 
     bool CreateAliceBob(
             out TestCLI aliceCLI,

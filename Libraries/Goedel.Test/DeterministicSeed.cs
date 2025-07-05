@@ -30,49 +30,6 @@ using System.Text;
 
 namespace Goedel.Test;
 
-public class UnitTestSet : Disposable {
-    public static readonly string AccountAlice = "alice@example.com";
-    public static readonly string HandleAlice = "@alice.alt";
-    public static readonly string HandleBob = "@bob.alt";
-
-    public static readonly string ServiceName = "example.com";
-    public static readonly string AccountBob = "bob@example.com";
-    public static readonly string AccountQ = "q@example.com";
-    public static readonly string AccountMallet = "mallet@example.com";
-    public static readonly string AccountRegistryAdmin = "registryadmin@example.com";
-    public static readonly string AccountAdminCarnet = "carnetadmin@example.com";
-    public static readonly string AccountRegistry = "callsign@example.com";
-    public static readonly string AccountResolver = "resolver@example.com";
-    public static readonly string AccountCarnet = "carnet@example.com";
-
-    public static readonly string AccountServiceAdmin = "admin@example.com";
-
-
-    public string DeviceAliceAdmin = "Alice Admin";
-    public string DeviceAlice2 = "Alice Device 2";
-    public string DeviceAlice3 = "Alice Device 3";
-    public string DeviceBobAdmin = "Bob Admin";
-    public string DeviceQ = "DeviceQ";
-    public string DeviceMallet = "DeviceMallet";
-
-
-
-    public string CallsignAlice => "@alice";
-    public string CallsignBob => "@bob";
-    public string CallsignMallet => "@mallet";
-    public string CallsignRegistry => "@registry";
-
-    ///<summary>The deterministic seed to be used by the test, may be set explictly
-    ///or generated automatically through use in a test method.</summary> 
-    public virtual DeterministicSeed Seed {
-        get => seed ?? DeterministicSeed.AutoClean().CacheValue(out seed);
-        set => seed = value;
-        }
-
-    DeterministicSeed seed;
-
-    }
-
 
 public class DeterministicSeed {
     public static readonly string TestPath = "TestPath";
@@ -109,17 +66,24 @@ public class DeterministicSeed {
         System.IO.Directory.SetCurrentDirectory(Directory);
         }
 
+    int fileCount = 0;
+    public string GetUniqueFilepath(string extension = "txt") => Path.Combine(Directory, $"TempFile-{fileCount++}.{extension}");
+
+
     public string GetTempFilePath() => Path.Combine(Directory, GetTempFileName());
 
     public string GetTempDir() {
         var result = GetTempFilePath();
         System.IO.Directory.CreateDirectory(result);
-
         return result;
         }
 
 
     public string GetTempFileName() => $"Temp{TempCount++}";
+
+
+
+
 
     public static DeterministicSeed AutoClean(params object[] parameters) {
         var stack = new StackTrace();
@@ -157,6 +121,7 @@ public class DeterministicSeed {
         //parameter = "";
         if (method is MethodInfo methodInfo) {
 
+            var name = method.Name;
             var attributes = methodInfo.GetCustomAttributes();
 
             foreach (var attribute in attributes) {
@@ -272,6 +237,8 @@ public class DeterministicSeed {
 
     public byte[] GetTestBytes(int length, string info) =>
         GetTestBytes(Seed, length, info);
+
+
 
 
 

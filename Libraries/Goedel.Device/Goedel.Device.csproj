@@ -15,6 +15,7 @@
 		<ProjectReference Include="..\Goedel.Contacts\Goedel.Contacts.csproj" />
 		<ProjectReference Include="..\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
 		<ProjectReference Include="..\Goedel.Cryptography.Identifiers\Goedel.Cryptography.Identifiers.csproj" />
+		<ProjectReference Include="..\Goedel.Cryptography\Goedel.Cryptography.csproj" />
 		<ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />
 		<ProjectReference Include="..\Goedel.Protocol\Goedel.Protocol.csproj" />
 		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
@@ -22,6 +23,7 @@
 
 	<ItemGroup>
 		<Compile Update="ConnectScehma.cs">
+			<DependentUpon>ConnectScehma.Protocol</DependentUpon>
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>

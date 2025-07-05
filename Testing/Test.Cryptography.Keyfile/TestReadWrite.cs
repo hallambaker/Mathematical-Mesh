@@ -25,7 +25,7 @@ using Goedel.Cryptography.KeyFile;
 namespace Goedel.XUnit;
 
 
-public partial class KeyFileTest {
+public partial class KeyFileTest : UnitTestSet {
     public static KeyFileTest Test() => new();
 
 

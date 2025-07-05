@@ -6,9 +6,7 @@ public partial class TestService {
 
     [Fact(Skip = "Carnet not yet implemented")]
     public void MeshCarnet() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-
-        var contextAccountCarnet = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        var contextAccountCarnet = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceServiceCarnet, AccountAdminCarnet, "main");
         //var contextRegistry = contextAccountRegistry.CreateRegistry(AccountRegistry);
         ////var resolverServer = new ResolverServer(AccountCallsign);
@@ -23,9 +21,9 @@ public partial class TestService {
         var carnetServer = new CarnetServer();
 
 
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
         DeviceAliceAdmin, AccountAlice, "main");
-        var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        var contextAccountBob = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceBobAdmin, AccountBob, "main");
 
 
@@ -52,13 +50,10 @@ public partial class TestService {
 
     [Fact(Skip = "Test Mesh Presence")]
     public void MeshPresence() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-
-
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main");
 
-        var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        var contextAccountBob = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceBobAdmin, AccountBob, "main");
 
 
@@ -75,12 +70,11 @@ public partial class TestService {
 
     [Fact(Skip = "Test the use of the Mesh Repository")]
     public void MeshRepository() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
         var plaintext = Platform.GetRandomBytes(1000);
 
         var repositoryServer = new RepositoryServer();
 
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main");
 
         //var contextRepository = contextAccountAlice.Register(repositoryServer);

@@ -134,8 +134,9 @@ public class PublicMeshService : MeshService {
             GenericHostConfiguration hostConfiguration,
             MeshServiceConfiguration meshServiceConfiguration,
             LogService logService,
-            IPresenceProvider presenceServiceProvider = null) {
-        EarlDispatch = new EarlDispatchCached("example.com",
+            IPresenceProvider presenceServiceProvider = null,
+            EarlDispatch earlDispatch=null) {
+        EarlDispatch = earlDispatch ?? new EarlDispatchCached("example.com",
                         meshMachine.Instance);
 
 

@@ -21,12 +21,13 @@
 #endregion
 
 using Goedel.Cryptography.PKIX;
+using Goedel.Test;
 
 using System.Numerics;
 
 namespace Goedel.XUnit;
 
-public class BufferTests {
+public class BufferTests : UnitTestSet {
     public static BufferTests Test() => new();
 
 

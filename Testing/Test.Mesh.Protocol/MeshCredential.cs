@@ -79,8 +79,8 @@ public partial class TestService {
 
     [Fact]
     public void TestCredentialAccount() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main", HandleAlice);
         var credentialTempPrivate = contextAccountAlice.GetMeshCredentialPrivate();
         var credentialTemp = GetMeshCredentialPublic(credentialTempPrivate);
@@ -106,8 +106,8 @@ public partial class TestService {
 
     [Fact]
     public void TestCredentialAccountApps() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main", HandleAlice);
 
         var roles = new List<string> { Rights.IdRolesWeb };
@@ -175,8 +175,8 @@ public partial class TestService {
 
     [Fact]
     public void TestCredentialAccountThing() {
-        var testEnvironmentCommon = GetTestEnvironmentCommon();
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main", HandleAlice);
 
         var roles = new List<string> { Rights.IdRolesWeb };
@@ -314,17 +314,17 @@ public partial class TestService {
     [InlineData(DataValidity.CorruptPayload)]
     [InlineData(DataValidity.CorruptMissing)]
     public void TestCredentialAccountFails(DataValidity dataValidity) {
-        Seed = DeterministicSeed.Auto(dataValidity);
+        StartTest(dataValidity);
 
-        var testEnvironmentCommon = GetTestEnvironmentCommon(Seed);
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main");
         var credentialTempPrivate = contextAccountAlice.GetMeshCredentialPrivate();
         var credentialTemp = GetMeshCredentialPublic(credentialTempPrivate);
 
         Enveloped alternative = null;
         if (dataValidity == DataValidity.CorruptSigner) {
-            var mallet = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+            var mallet = MeshMachineTest.GenerateAccountUser(TestEnvironment,
             DeviceMallet, AccountMallet, "main");
             alternative = mallet.ConnectionAccount.DareEnvelope;
             }
@@ -348,16 +348,16 @@ public partial class TestService {
     [InlineData(DataValidity.CorruptPayload)]
     [InlineData(DataValidity.CorruptMissing)]
     public void TestProfileFails(DataValidity dataValidity) {
-        Seed = DeterministicSeed.Auto(dataValidity);
+        StartTest(dataValidity);
 
-        var testEnvironmentCommon = GetTestEnvironmentCommon(Seed);
-        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+
+        var contextAccountAlice = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                 DeviceAliceAdmin, AccountAlice, "main");
         var credentialTemp = contextAccountAlice.GetMeshCredentialPrivate();
 
         Enveloped alternative = null;
         if (dataValidity == DataValidity.CorruptSigner) {
-            var mallet = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+            var mallet = MeshMachineTest.GenerateAccountUser(TestEnvironment,
                     DeviceMallet, AccountMallet, "main");
             alternative = mallet.ConnectionAccount.DareEnvelope;
             }

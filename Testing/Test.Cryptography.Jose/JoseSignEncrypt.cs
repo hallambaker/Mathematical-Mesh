@@ -28,7 +28,6 @@ namespace Goedel.XUnit;
 
 public partial class TestCryptographyJose {
 
-    public static TestCryptographyJose Test() => new();
 
 
     static readonly string TestString = "This is a test";

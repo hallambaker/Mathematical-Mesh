@@ -104,10 +104,10 @@ public partial class CreateExamples {
     StringWriter consoleWriter;
 
 
-    public void PlatformDare(TestEnvironmentCommon testEnvironmentCommon = null) {
+    public void PlatformDare() {
 
         GoContainer();
-        GenerateKeys(testEnvironmentCommon);
+        GenerateKeys();
         GoDareEnvelope();
         GoDareSequence();
         //GoAdvanced();
@@ -275,10 +275,10 @@ public partial class CreateExamples {
 
         }
 
-    void GenerateKeys(TestEnvironmentCommon testEnvironmentCommon = null) {
+    void GenerateKeys() {
         // Encryption Key Set.
-        testEnvironmentCommon ??= new TestEnvironmentCommon();
-        var machine1 = new MeshMachineTest(testEnvironmentCommon, name: "Machine1");
+
+        var machine1 = new MeshMachineTest(TestEnvironment, name: "Machine1");
 
 
         var dareMessageAlicePrivateKeyPair = KeyPairEd25519.Generate(

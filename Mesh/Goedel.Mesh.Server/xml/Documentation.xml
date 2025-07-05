@@ -1416,7 +1416,7 @@
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Protocol.GenericHostConfiguration,Goedel.Mesh.Server.MeshServiceConfiguration,Goedel.Protocol.Service.LogService,Goedel.Mesh.Server.IPresenceProvider)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Protocol.GenericHostConfiguration,Goedel.Mesh.Server.MeshServiceConfiguration,Goedel.Protocol.Service.LogService,Goedel.Mesh.Server.IPresenceProvider,Goedel.Mesh.Server.EarlDispatch)">
             <summary>
             A Mesh service provider.
             </summary>

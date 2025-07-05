@@ -33,7 +33,7 @@ using System.Threading.Tasks;
 
 namespace Goedel.XUnit;
 
-public partial class ServiceAnything {
+public partial class ServiceAnything : UnitTestSet {
     public static ServiceAnything Test() => new();
 
 

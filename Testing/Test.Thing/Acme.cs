@@ -20,19 +20,21 @@
 //  THE SOFTWARE.
 #endregion
 
-using Goedel.Acme;
-
-using System.Net;
-using System.Threading.Tasks;
-using Certes.Acme;
 using Certes;
+using Certes.Acme;
+
+using Goedel.Acme;
+using Goedel.Thing;
+
+using Org.BouncyCastle.Bcpg;
+
 using System;
 using System.Linq;
-using Goedel.Thing;
-using Org.BouncyCastle.Bcpg;
+using System.Net;
+using System.Threading.Tasks;
 namespace Goedel.XUnit;
 
-public class Acme {
+public class Acme : UnitTestSet {
     public static Acme Test() => new();
 
     public string AcmeAccountAddress = "admin@hallambaker.com";

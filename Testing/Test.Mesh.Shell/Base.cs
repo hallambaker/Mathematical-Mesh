@@ -21,6 +21,8 @@
 #endregion
 
 using Goedel.Mesh.Shell;
+
+using static System.Runtime.InteropServices.JavaScript.JSType;
 //using Goedel.Mesh.Shell.ServiceAdmin;
 
 
@@ -34,7 +36,7 @@ namespace Goedel.XUnit;
 
 
 
-public partial class ShellTestBase : Disposable {
+public partial class ShellTestBase : MeshTestSet {
 
     public virtual string Mode => "";
 
@@ -52,46 +54,27 @@ public partial class ShellTestBase : Disposable {
 
     public string AccountC => $"carol@{ServiceDns}";
 
-    public string AccountQ => $"quartermaster@{ServiceDns}";
 
-    public static string DeviceQName => "DeviceQ";
 
-    public static string DeviceAdminName => "DeviceAdmin";
-
-    public static string DeviceConnect1Name => "DeviceConnect1";
 
 
 
     #region // The test environment specific calls
 
-    public DeterministicSeed Seed {
-        get => seed ?? DeterministicSeed.AutoClean(Mode).CacheValue(out seed);
-        set => seed = value;
-        }
-    DeterministicSeed seed;
 
-    ///<summary>The test environment, base for all </summary>
-    public TestEnvironmentBase TestEnvironment => testEnvironment ??
-        GetTestEnvironment(Seed).CacheValue(out testEnvironment);
-    TestEnvironmentBase testEnvironment;
+    /////<summary>The test environment, base for all </summary>
+    //public TestEnvironmentBase TestEnvironment => testEnvironment ??
+    //    GetTestEnvironment(Seed).CacheValue(out testEnvironment);
+    //TestEnvironmentBase testEnvironment;
 
-    public virtual TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) =>
-                new TestEnvironmentCommon(seed, true);
+    //public virtual TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) =>
+    //            new TestEnvironmentCommon(seed, true);
 
     public virtual TestCLI GetTestCLI(string machineName = null) =>
     TestEnvironment.GetTestCLI(machineName);
 
 
-    public virtual void StartTest(params object[] parameters) {
-        Seed = DeterministicSeed.AutoClean(parameters);
-        testEnvironment = GetTestEnvironment(Seed);
-        }
 
-
-    protected virtual void EndTest() {
-        testEnvironment?.Dispose();
-        testEnvironment = null;
-        }
 
 
     #endregion
@@ -113,14 +96,19 @@ public partial class ShellTestsAdmin : ShellTests {
         base.Disposing();
         }
 
+    public override TestEnvironmentBase GetTestEnvironment() =>
+            new TestEnvironmentRdpShell(this) {
+                JpcConnection = Protocol.JpcConnection.Http
+                };
 
-    // Use the new test environment (when defined.)
-    public override TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) {
-        testEnvironmentCommon = new TestEnvironmentRdpShell(seed) {
-            JpcConnection = Protocol.JpcConnection.Http
-            };
-        return testEnvironmentCommon;
-        }
+
+    //// Use the new test environment (when defined.)
+    //public override TestEnvironmentBase GetTestEnvironment(DeterministicSeed seed) {
+    //    testEnvironmentCommon = new TestEnvironmentRdpShell(seed) {
+    //        JpcConnection = Protocol.JpcConnection.Http
+    //        };
+    //    return testEnvironmentCommon;
+    //    }
 
     public static new ShellTestsAdmin Test() => new();
 

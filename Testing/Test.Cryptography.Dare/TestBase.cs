@@ -24,8 +24,8 @@ using Goedel.Mesh;
 
 namespace Goedel.XUnit;
 
-public abstract record TestBase {
-    public DeterministicSeed Seed => TestContext.Seed;
+public abstract class TestBase : UnitTestSet {
+
     public TestContext TestContext { get; }
 
     public TestBase(TestContext context) {
@@ -35,7 +35,7 @@ public abstract record TestBase {
 
 
 
-public abstract record TestBaseStore : TestBase {
+public abstract class TestBaseStore : TestBase {
 
 
     public TestStoreParams TestParams { get; }
@@ -80,7 +80,7 @@ public abstract record TestBaseStore : TestBase {
     }
 
 
-public record TestSpool : TestBaseStore {
+public class TestSpool : TestBaseStore {
 
     string StoreName => "TestSpool";
 
@@ -204,7 +204,7 @@ public record TestSpool : TestBaseStore {
     }
 
 
-public record TestCatalog : TestBaseStore {
+public class TestCatalog : TestBaseStore {
 
 
     string StoreName => "TestCatalog";

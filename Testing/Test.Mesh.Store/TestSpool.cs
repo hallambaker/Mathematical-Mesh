@@ -25,11 +25,7 @@ using Goedel.Mesh;
 
 namespace Goedel.XUnit;
 
-public partial class StoreTests {
-    ///<summary>The test environment, base for all </summary>
-    public TestEnvironmentCommon TestEnvironment => testEnvironment ??
-        new TestEnvironmentCommon().CacheValue(out testEnvironment);
-    TestEnvironmentCommon testEnvironment;
+public partial class StoreTests : MeshTestSet {
 
     public MeshMachineTest MeshMachineTest => meshMachineTest ??
             new MeshMachineTest(TestEnvironment, "SpoolTest").CacheValue(out meshMachineTest);

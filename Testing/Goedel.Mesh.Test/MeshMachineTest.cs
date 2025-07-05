@@ -137,7 +137,7 @@ public class MeshMachineTest : MeshMachineCore {
 
 
     public static ContextMeshPending Connect(
-        TestEnvironmentCommon testEnvironmentCommon,
+        TestEnvironmentBase testEnvironmentCommon,
         string machineName,
         string accountId,
         string localName = null,
@@ -202,17 +202,17 @@ public class MeshMachineTest : MeshMachineCore {
         }
 
 
-    ///<inheritdoc/>
-    public override IResolver GetResolver(ICredentialPrivate credential) {
-        var resolver = TestEnvironmentCommon.Resolver;
-        var client = resolver.GetClient();
-        return new ResolveClient(client);
-        }
+    /////<inheritdoc/>
+    //public override IResolver GetResolver(ICredentialPrivate credential) {
+    //    var resolver = TestEnvironmentCommon.Resolver;
+    //    var client = resolver.GetClient();
+    //    return new ResolveClient(client);
+    //    }
 
-    ///<inheritdoc/>
-    public override ICarnet GetCarnet(ICredentialPrivate credential) {
-        throw new NotImplementedException();
-        }
+    /////<inheritdoc/>
+    //public override ICarnet GetCarnet(ICredentialPrivate credential) {
+    //    throw new NotImplementedException();
+    //    }
 
 
 

@@ -12,7 +12,7 @@ namespace Goedel.XUnit;
 /// <summary>
 /// Test library for PQC algorithms.
 /// </summary>
-public class TestNist : Disposable {
+public class TestNist : UnitTestSet {
 
     public string ACVP_Root => Path.Combine(TestEnvironmentBase.CommonData,
                 "NIST.Test.Vectors");
