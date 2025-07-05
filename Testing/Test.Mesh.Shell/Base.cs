@@ -85,7 +85,7 @@ public partial class ShellTestBase : MeshTestSet {
 
 public partial class ShellTestsAdmin : ShellTests {
 
-
+    public override string SeedSuffix => "-Admin";
     public override string Mode => "Shell";
 
     TestEnvironmentBase testEnvironmentCommon;
