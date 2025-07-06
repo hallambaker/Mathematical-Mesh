@@ -134,11 +134,11 @@ public record EarlSet {
 
 public record EarlEnvelopeContext {
 
+    public DateTime? Expire { get; set; } = null;
 
+    public string? Pin { get; set; } = null;
 
-    public string? Pin { get; init; } = null;
-
-    public IEnumerable<string>? SigningKeys { get; init; } = null;
+    public IEnumerable<string>? SigningKeys { get; set; } = null;
 
 
 

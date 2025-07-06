@@ -73,10 +73,10 @@ partial class Program {
         //Goedel.XUnit.MakeSiteDocs.Test().GroupTests();
         //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
-        ShellTestsAdmin.Test().TestCreateSuper();
+        //ShellTestsAdmin.Test().TestCreateSuper();
         // This depends on fixing the 'onboard device' thing
 
-        ShellTests.Test().TestHandleThing();
+        ShellTests.Test().TestAccountHandle();
 
 
         // These depend on fixing the 'connect from contact URI' scheme
@@ -87,14 +87,14 @@ partial class Program {
         ShellTests.Test().NewFileTestOnce(true, false, false);
 
 
-        ShellTests.Test().TestAccountHandle();
+
         ShellTests.Test().TestHandleContactAliceBob();
 
         ShellTests.Test().TestMessageConfirmationAccept();
         ShellTests.Test().TestMessageConfirmationReject();
         ShellTests.Test().TestMessageGroup();
 
-
+        ShellTests.Test().TestHandleThing();
 
         //ShellTests.Test().TestLog();
         //ShellTests.Test().NewArchiveTestOnce(true, false, false, false);

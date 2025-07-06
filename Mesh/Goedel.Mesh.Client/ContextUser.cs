@@ -1660,10 +1660,36 @@ public partial class ContextUser : ContextAccount {
     /// </summary>
     /// <param name="localName">Local name for the contact</param>
     /// <param name="expire">Expiry time for the corresponding PIN</param>
-    /// <param name="automatic">If true, presentation of the pin code is sufficient
-    /// to authenticate and authorize the action.</param>
-    public async Task<string> ContactUri(bool automatic, System.DateTime? expire, string localName = null) {
+    /// <param name="authenticator">If true, insert authenticator to allow automatic acceptance
+    /// of the response.</param>
+    public async Task<string> ContactUri(bool authenticator, System.DateTime? expire, string localName = null) {
         var cataloged = GetSelf(localName);
+        var jsContact = cataloged.JsContact;
+
+
+        // wrap the contact in an envelope
+
+        EarlEnvelopeContext context = new() {
+            Expire = expire
+            };
+       
+
+
+        if (authenticator) {
+            var pin = await GetRegisteredPin();
+            context.Pin = pin;
+            }
+
+
+        // publish the JsContact as an EARL
+
+
+        var earl = PublishEarl(jsContact, context);
+        return earl;
+
+        // return the EARL.
+
+
 
         // The new dynamic URI scheme
 
@@ -1681,9 +1707,9 @@ public partial class ContextUser : ContextAccount {
 
 
 
-        
+
         // This mechanism needs to be redone using the EARL scheme
-        
+
         throw new NYI();
 
 
@@ -1718,6 +1744,13 @@ public partial class ContextUser : ContextAccount {
 
         //// return the contact address
         //return MeshUri.ConnectUriDevice(ServiceAddress, pin);
+        }
+
+
+    public async Task<string> GetRegisteredPin() {
+
+
+        return null;
         }
 
 

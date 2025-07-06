@@ -43,3 +43,59 @@ Add host1.example.com
    Node A
 Add _mmm._tcp.example.com
    Node SRV
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.alice.example.net
+   Node TXT
+Resolve handle alice.example.com, _jscontact
+Get prefixed alice.example.com, _jscontact
+GetPrefixedTXT _jscontact.alice.example.com
+Dummy querry record _jscontact.alice.example.com, TXT
+Request _jscontact.alice.example.com TXT -> False
+Resolve handle alice.example.net, _jscontact
+Get prefixed alice.example.net, _jscontact
+GetPrefixedTXT _jscontact.alice.example.net
+Dummy querry record _jscontact.alice.example.net, TXT
+Request _jscontact.alice.example.net TXT -> True
+ TXT prefixed alice.example.net, _jscontact -> uri=jscontact://example.com/eikt-lncr-nnbz-zctn-opxb-zig5-gde6
+Resolve earl jscontact://example.com/eikt-lncr-nnbz-zctn-opxb-zig5-gde6
+Success earl jscontact://example.com/eikt-lncr-nnbz-zctn-opxb-zig5-gde6
+Finished handle alice.example.net, _jscontact
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.alice.example.com
+   Node TXT
+Add _jscontact.bob.example.com
+   Node TXT
+Resolve handle bob.example.com, _jscontact
+Get prefixed bob.example.com, _jscontact
+GetPrefixedTXT _jscontact.bob.example.com
+Dummy querry record _jscontact.bob.example.com, TXT
+Request _jscontact.bob.example.com TXT -> True
+ TXT prefixed bob.example.com, _jscontact -> uri=jscontact://example.com/ejx5-qltd-h7e7-jfis-tutc-mm2b-qnqg
+Resolve earl jscontact://example.com/ejx5-qltd-h7e7-jfis-tutc-mm2b-qnqg
+Success earl jscontact://example.com/ejx5-qltd-h7e7-jfis-tutc-mm2b-qnqg
+Finished handle bob.example.com, _jscontact
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
