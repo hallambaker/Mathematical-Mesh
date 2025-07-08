@@ -192,6 +192,17 @@ public partial class Shell {
         }
 
 
+    
+
+
+    public async Task<ShellResult> DeviceOnboardAsync(
+                    string configFile) {
+
+
+        throw new NYI();
+        }
+
+
 
 
     /// <summary>

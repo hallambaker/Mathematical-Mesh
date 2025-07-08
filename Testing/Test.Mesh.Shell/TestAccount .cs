@@ -76,35 +76,59 @@ public partial class ShellTests {
 
     [Fact]
     public void TestHandleThing() {
+
+        // Manufacturer
+        var maker = GetTestCLI(Manufacturer);
+        var m1 = maker.Example($"account create {ManufacturerAccount} /local=alice /handle={ManufacturerHandle}");
+
+        var devicefile = GetUniqueFilepath();
+        var jsdevicefile = GetUniqueFilepath();
+
+        // Initialize device
+        var m2 = maker.Dispatch($"device init {devicefile}");
+        var deviceData = JsonObject.StreamParse<DeviceConfiguration>(devicefile);
+        
+
+        var jsdevice = deviceData.JsDevice;
+        jsdevice.Manufacturer = "Acme widgest Inc.";
+        jsdevice.ModelName = "Widgetron";
+        jsdevice.ModelId = "Wev";
+        jsdevice.DeviceId = "007";
+        // Here we could update the configuration if we wanted to
+
+        // Publish EARL
+        var m3 = maker.Dispatch($"device earl {jsdevicefile}");
+        var m3Earl = m3 as ResultPublish;
+        var earl = m3Earl.Uri;
+
+
+        var device = GetTestCLI(DeviceDevice);
+        // put the device into wait to be onboarded state
+        var d1 = device.Dispatch($"device onboard {devicefile}");
+        var pendingOnboard = maker.Shell.DeviceOnboardAsync(devicefile);
+
+        // This should not complete yet.
+        pendingOnboard.IsCompleted.TestFalse();
+
+
+        // Now Alice onboards the device 
         var admin = GetTestCLI(AliceDevice1);
-        var webserver = GetTestCLI(AliceDevice2);
-        var nas = GetTestCLI(AliceDevice2);
+        var a1 = admin.Example($"account create {AliceAccount} /local=alice /handle={HandleAlice}");
+        var a2 = admin.Example($"account device connect {earl} /local=mydevice");
 
-        var c1 = admin.Example($"account create {AliceAccount} /local=alice /handle=@alice.example.net") ;
-        Dispatch($"self anywhere");
-        Dispatch($"self anyone");
-        Dispatch($"self anything");
-        Dispatch($"self publish");
+        // wait for the device to be fully initialized 
+        pendingOnboard.Wait();
+        var deviceContext = pendingOnboard.Result;
 
-        // Create a new DNS zone for domain.example
-        Dispatch($"dns zone domain.example /group=iot");
-
-        // create a handle @alice.domain.example and publish the default contact information there
-        Dispatch($"dns handle alice.domain.example");
-
-        // Connect the device webserver with local name and give it the DNS name www.domain.example 
-        ConnectDevice(admin, webserver, "webserver");
-        webserver.Example($"device service webserver http /dns=www.domain.example");
-
-        // Set the default service for the domain to www
-        Dispatch($"dns wildcard iot webserver");
+        // Request configuration for a Web server from the device
+        device.Dispatch($"device service http /local=myweb /dns=www.domain.example");
 
         // The Web server can now pull its TLS credentials
-        webserver.Example($"device credential webserver /public=fullchain.pem /private=privkey.pem");
+        device.Example($"device credential myweb /public=fullchain.pem /private=privkey.pem");
 
-        ConnectDevice(admin, nas, "nas");
-        nas.Example($"device service nas http /dns=nas.www.domain.example");
-        nas.Example($"device credential nas /public=fullchain.pem /private=privkey.pem");
+        // Configure the NAS connection from the admin device
+        admin.Dispatch($"device service http /on=mydevice /local=mynas /dns=nas.domain.example");
+
 
         }
 
@@ -218,6 +242,13 @@ public partial class ShellTests {
         TestEnvironment.Dispose();
         EndTest();
         }
+
+    public string Manufacturer= "Maker";
+    public string ManufacturerAccount = "maker@example.com";
+    public string ManufacturerHandle = "@maker.example.com";
+
+
+    public string DeviceDevice = "TheDevice";
 
     public string AliceDevice1 = "Alice";
     public string AliceDevice2 = "Alice2";

@@ -14192,6 +14192,51 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
+        <member name="T:Goedel.Mesh.DeviceConfiguration">
+             <summary>
+            
+             Configuration file used to initialize a device.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceConfiguration.JsDevice">
+             <summary>
+            The device description. This contains all the information the device
+            requires that isn't private.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceConfiguration.PrivateKey">
+             <summary>
+            The device private key seed.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.DeviceConfiguration._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.DeviceConfiguration._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.DeviceConfiguration._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.DeviceConfiguration._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.DeviceConfiguration._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.DeviceConfiguration.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.DeviceConfiguration._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
         <member name="T:Goedel.Mesh.DevicePreconfigurationPublic">
             <summary>
             </summary>

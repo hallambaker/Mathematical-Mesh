@@ -867,3 +867,12 @@ Request _mmm._tcp.example.com SRV -> True
 Request _mmm._tcp.example.com TXT -> False
 Request _mmm._tcp.example.com SRV -> True
 Request _mmm._tcp.example.com TXT -> False
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV

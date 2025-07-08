@@ -65,22 +65,12 @@ partial class Program {
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
 
-        // Probably just DNS things...
-        ShellTestsAdmin.Test().TestHandleContactAliceBob();
-        ShellTestsAdmin.Test().TestMessageConfirmationAccept();
-        ShellTestsAdmin.Test().TestMessageConfirmationReject();
-        ShellTestsAdmin.Test().TestMessageGroup();
 
-        ShellTestsAdmin.Test().TestAccountHandle();
-        ShellTestsAdmin.Test().NewFileTestAll();
-        ShellTestsAdmin.Test().NewArchiveTestOnce(true, false, false, false);
-        ShellTestsAdmin.Test().NewArchiveTestOnce(true, true, false, false);
-        ShellTestsAdmin.Test().NewFileTestOnce(true, false, false);
 
         // Not completed
         ShellTests.Test().TestHandleThing();
 
-
+        ShellTestsAdmin.Test().TestHandleThing();
 
 
         // ---------- Problematic still

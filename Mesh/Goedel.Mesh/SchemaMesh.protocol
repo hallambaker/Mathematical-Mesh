@@ -1141,6 +1141,21 @@
 
 	Section 2 "Publications"
 
+
+	Structure DeviceConfiguration
+		Description
+			|Configuration file used to initialize a device.
+		Struct JsDevice JsDevice
+			Description
+				|The device description. This contains all the information the device
+				|requires that isn't private.
+		TStruct Key PrivateKey
+			Description
+				|The device private key seed.
+
+
+
+
 	Structure DevicePreconfigurationPublic
 		GStruct Enveloped ProfileDevice ProfileDevice
 			//Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
