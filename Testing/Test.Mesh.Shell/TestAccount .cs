@@ -97,7 +97,7 @@ public partial class ShellTests {
         // Here we could update the configuration if we wanted to
 
         // Publish EARL
-        var m3 = maker.Dispatch($"device earl {jsdevicefile}");
+        var m3 = maker.Dispatch($"device jsdevice {jsdevicefile}");
         var m3Earl = m3 as ResultPublish;
         var earl = m3Earl.Uri;
 
@@ -114,7 +114,7 @@ public partial class ShellTests {
         // Now Alice onboards the device 
         var admin = GetTestCLI(AliceDevice1);
         var a1 = admin.Example($"account create {AliceAccount} /local=alice /handle={HandleAlice}");
-        var a2 = admin.Example($"account device connect {earl} /local=mydevice");
+        var a2 = admin.Example($"account device earl {earl} /local=mydevice");
 
         // wait for the device to be fully initialized 
         pendingOnboard.Wait();

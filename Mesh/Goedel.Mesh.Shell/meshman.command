@@ -353,6 +353,51 @@
 			Include DeviceProfileInfo
 			Include DeviceAuthOptions
 
+		Command DeviceInitialize "init"
+			Brief "Initialize a device configuration"
+			Include AccountOptions
+			Include Reporting
+			Parameter File "file" NewFile
+				Brief "File to which the description is to be written"	
+			Option File "jsdevice" ExistingFile
+				Brief "File containing a JSDevice template."
+
+		Command DeviceJsDevice "jsdevice"
+			Brief "Publish the specified JSDevice file as an EARL."
+			Include AccountOptions
+			Include Reporting
+			Option File "jsdevice" ExistingFile
+				Brief "File containing a JSDevice template."
+
+		Command DeviceOnboard "onboard"
+			Brief "Wait for a Mesh onboarding request"
+			Include AccountOptions
+			Include Reporting
+			Parameter File "file" NewFile
+				Brief "Device configuration file."	
+
+		Command DeviceEarl "earl"
+			Brief "Request connection by means of an EARL"
+			Include AccountOptions
+			Include Reporting
+			Parameter Uri "uri" String
+				Brief "Contact description EARL"
+
+		Command DeviceService "service"
+			Brief ""
+			Include AccountOptions
+			Include Reporting
+			Parameter Name "name" String
+				Brief "The device name"
+			Parameter Protocol "protocol" String
+				Brief "The protocol to serve"
+			Option Dns "dns" String
+				Brief "The DNS or group"
+			Option On "on" String
+				Brief "The remote device to deploy the service on."
+
+
+
 		Command DevicePending "pending"
 			Brief "Get list of pending connection requests"
 			Include AccountOptions
@@ -428,16 +473,7 @@
 				Default "24"
 
 
-		Command DeviceService "service"
-			Brief ""
-			Include AccountOptions
-			Include Reporting
-			Parameter Name "name" String
-				Brief "The device name"
-			Parameter Protocol "protocol" String
-				Brief "The protocol to serve"
-			Option Dns "dns" String
-				Brief "The DNS or group"
+
 
 		Command DeviceCredential "credential"
 			Brief ""

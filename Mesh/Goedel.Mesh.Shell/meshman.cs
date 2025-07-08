@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 7/8/2025 6:12:21 PM
+//  This file was automatically generated at 7/8/2025 6:37:56 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -168,6 +168,11 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Brief = "Device management commands.",
 		Entries = new  () {
 			{"request", _DeviceRequestConnect._DescribeCommand },
+			{"init", _DeviceInitialize._DescribeCommand },
+			{"jsdevice", _DeviceJsDevice._DescribeCommand },
+			{"onboard", _DeviceOnboard._DescribeCommand },
+			{"earl", _DeviceEarl._DescribeCommand },
+			{"service", _DeviceService._DescribeCommand },
 			{"pending", _DevicePending._DescribeCommand },
 			{"complete", _DeviceComplete._DescribeCommand },
 			{"accept", _DeviceAccept._DescribeCommand },
@@ -178,7 +183,6 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 			{"join", _DeviceJoin._DescribeCommand },
 			{"install", _DeviceInstall._DescribeCommand },
 			{"preconfig", _DevicePreconfigure._DescribeCommand },
-			{"service", _DeviceService._DescribeCommand },
 			{"credential", _DeviceCredential._DescribeCommand }
 			} // End Entries
 		};
@@ -643,6 +647,56 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		Dispatch._PostProcess (result);
 		}
 
+	public static void Handle_DeviceInitialize (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		DeviceInitialize		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.DeviceInitialize (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_DeviceJsDevice (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		DeviceJsDevice		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.DeviceJsDevice (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_DeviceOnboard (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		DeviceOnboard		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.DeviceOnboard (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_DeviceEarl (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		DeviceEarl		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.DeviceEarl (Options);
+		Dispatch._PostProcess (result);
+		}
+
+	public static void Handle_DeviceService (
+				DispatchShell  DispatchIn, string[] Args, int Index) {
+		Shell Dispatch =	DispatchIn as Shell;
+		DeviceService		Options = new ();
+		ProcessOptions (Args, Index, Options);
+		Dispatch._PreProcess (Options);
+		var result = Dispatch.DeviceService (Options);
+		Dispatch._PostProcess (result);
+		}
+
 	public static void Handle_DevicePending (
 				DispatchShell  DispatchIn, string[] Args, int Index) {
 		Shell Dispatch =	DispatchIn as Shell;
@@ -740,16 +794,6 @@ public partial class CommandLineInterpreter : CommandLineInterpreterBase {
 		ProcessOptions (Args, Index, Options);
 		Dispatch._PreProcess (Options);
 		var result = Dispatch.DevicePreconfigure (Options);
-		Dispatch._PostProcess (result);
-		}
-
-	public static void Handle_DeviceService (
-				DispatchShell  DispatchIn, string[] Args, int Index) {
-		Shell Dispatch =	DispatchIn as Shell;
-		DeviceService		Options = new ();
-		ProcessOptions (Args, Index, Options);
-		Dispatch._PreProcess (Options);
-		var result = Dispatch.DeviceService (Options);
 		Dispatch._PostProcess (result);
 		}
 
@@ -4836,6 +4880,799 @@ public class _DeviceRequestConnect : Goedel.Command.Dispatch ,
 public partial class DeviceRequestConnect : _DeviceRequestConnect {
     } // class DeviceRequestConnect
 
+public class _DeviceInitialize : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new NewFile (),
+		new ExistingFile ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
+		get => _Data[1] as Flag;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _AutoSync {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
+		get => _Data[2] as Flag;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _AutoApprove {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual NewFile File {
+		get => _Data[6] as NewFile;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _File {
+		set => _Data[6].Parameter (value);
+		}
+	/// <summary>Field accessor for option [jsdevice]</summary>
+	public virtual ExistingFile File {
+		get => _Data[7] as ExistingFile;
+		set => _Data[7]  = value;
+		}
+
+	public virtual string _File {
+		set => _Data[7].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "init",
+		Brief =  "Initialize a device configuration",
+		HandleDelegate =  CommandLineInterpreter.Handle_DeviceInitialize,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 0,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoSync", 
+				Default = "true", // null if null
+				Brief = "If true, attempt to synchronize the account to the service before operation",
+				Index = 1,
+				Key = "sync"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoApprove", 
+				Default = "true", // null if null
+				Brief = "If true, automatically approve pending requests with prior authorization.",
+				Index = 2,
+				Key = "auto"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "false", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 3,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 4,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 5,
+				Key = "json"
+				},
+			new DescribeEntryParameter () {
+				Identifier = "File", 
+				Default = null, // null if null
+				Brief = "File to which the description is to be written",
+				Index = 6,
+				Key = ""
+				},
+			new DescribeEntryOption () {
+				Identifier = "File", 
+				Default = null, // null if null
+				Brief = "File containing a JSDevice template.",
+				Index = 7,
+				Key = "jsdevice"
+				}
+			}
+		};
+
+	}
+
+public partial class DeviceInitialize : _DeviceInitialize {
+    } // class DeviceInitialize
+
+public class _DeviceJsDevice : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new ExistingFile ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
+		get => _Data[1] as Flag;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _AutoSync {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
+		get => _Data[2] as Flag;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _AutoApprove {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for option [jsdevice]</summary>
+	public virtual ExistingFile File {
+		get => _Data[6] as ExistingFile;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _File {
+		set => _Data[6].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "jsdevice",
+		Brief =  "Publish the specified JSDevice file as an EARL.",
+		HandleDelegate =  CommandLineInterpreter.Handle_DeviceJsDevice,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 0,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoSync", 
+				Default = "true", // null if null
+				Brief = "If true, attempt to synchronize the account to the service before operation",
+				Index = 1,
+				Key = "sync"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoApprove", 
+				Default = "true", // null if null
+				Brief = "If true, automatically approve pending requests with prior authorization.",
+				Index = 2,
+				Key = "auto"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "false", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 3,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 4,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 5,
+				Key = "json"
+				},
+			new DescribeEntryOption () {
+				Identifier = "File", 
+				Default = null, // null if null
+				Brief = "File containing a JSDevice template.",
+				Index = 6,
+				Key = "jsdevice"
+				}
+			}
+		};
+
+	}
+
+public partial class DeviceJsDevice : _DeviceJsDevice {
+    } // class DeviceJsDevice
+
+public class _DeviceOnboard : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new NewFile ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
+		get => _Data[1] as Flag;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _AutoSync {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
+		get => _Data[2] as Flag;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _AutoApprove {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual NewFile File {
+		get => _Data[6] as NewFile;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _File {
+		set => _Data[6].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "onboard",
+		Brief =  "Wait for a Mesh onboarding request",
+		HandleDelegate =  CommandLineInterpreter.Handle_DeviceOnboard,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 0,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoSync", 
+				Default = "true", // null if null
+				Brief = "If true, attempt to synchronize the account to the service before operation",
+				Index = 1,
+				Key = "sync"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoApprove", 
+				Default = "true", // null if null
+				Brief = "If true, automatically approve pending requests with prior authorization.",
+				Index = 2,
+				Key = "auto"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "false", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 3,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 4,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 5,
+				Key = "json"
+				},
+			new DescribeEntryParameter () {
+				Identifier = "File", 
+				Default = null, // null if null
+				Brief = "Device configuration file.",
+				Index = 6,
+				Key = ""
+				}
+			}
+		};
+
+	}
+
+public partial class DeviceOnboard : _DeviceOnboard {
+    } // class DeviceOnboard
+
+public class _DeviceEarl : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new String ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
+		get => _Data[1] as Flag;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _AutoSync {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
+		get => _Data[2] as Flag;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _AutoApprove {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String Uri {
+		get => _Data[6] as String;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _Uri {
+		set => _Data[6].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "earl",
+		Brief =  "Request connection by means of an EARL",
+		HandleDelegate =  CommandLineInterpreter.Handle_DeviceEarl,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 0,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoSync", 
+				Default = "true", // null if null
+				Brief = "If true, attempt to synchronize the account to the service before operation",
+				Index = 1,
+				Key = "sync"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoApprove", 
+				Default = "true", // null if null
+				Brief = "If true, automatically approve pending requests with prior authorization.",
+				Index = 2,
+				Key = "auto"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "false", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 3,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 4,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 5,
+				Key = "json"
+				},
+			new DescribeEntryParameter () {
+				Identifier = "Uri", 
+				Default = null, // null if null
+				Brief = "Contact description EARL",
+				Index = 6,
+				Key = ""
+				}
+			}
+		};
+
+	}
+
+public partial class DeviceEarl : _DeviceEarl {
+    } // class DeviceEarl
+
+public class _DeviceService : Goedel.Command.Dispatch ,
+						IAccountOptions,
+						IReporting{
+
+	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
+		new String (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new Flag (),
+		new String (),
+		new String (),
+		new String (),
+		new String ()		} ;
+
+
+
+
+
+	/// <summary>Field accessor for option [account]</summary>
+	public virtual String AccountAddress {
+		get => _Data[0] as String;
+		set => _Data[0]  = value;
+		}
+
+	public virtual string _AccountAddress {
+		set => _Data[0].Parameter (value);
+		}
+	/// <summary>Field accessor for option [sync]</summary>
+	public virtual Flag AutoSync {
+		get => _Data[1] as Flag;
+		set => _Data[1]  = value;
+		}
+
+	public virtual string _AutoSync {
+		set => _Data[1].Parameter (value);
+		}
+	/// <summary>Field accessor for option [auto]</summary>
+	public virtual Flag AutoApprove {
+		get => _Data[2] as Flag;
+		set => _Data[2]  = value;
+		}
+
+	public virtual string _AutoApprove {
+		set => _Data[2].Parameter (value);
+		}
+	/// <summary>Field accessor for option [verbose]</summary>
+	public virtual Flag Verbose {
+		get => _Data[3] as Flag;
+		set => _Data[3]  = value;
+		}
+
+	public virtual string _Verbose {
+		set => _Data[3].Parameter (value);
+		}
+	/// <summary>Field accessor for option [report]</summary>
+	public virtual Flag Report {
+		get => _Data[4] as Flag;
+		set => _Data[4]  = value;
+		}
+
+	public virtual string _Report {
+		set => _Data[4].Parameter (value);
+		}
+	/// <summary>Field accessor for option [json]</summary>
+	public virtual Flag Json {
+		get => _Data[5] as Flag;
+		set => _Data[5]  = value;
+		}
+
+	public virtual string _Json {
+		set => _Data[5].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String Name {
+		get => _Data[6] as String;
+		set => _Data[6]  = value;
+		}
+
+	public virtual string _Name {
+		set => _Data[6].Parameter (value);
+		}
+	/// <summary>Field accessor for parameter []</summary>
+	public virtual String Protocol {
+		get => _Data[7] as String;
+		set => _Data[7]  = value;
+		}
+
+	public virtual string _Protocol {
+		set => _Data[7].Parameter (value);
+		}
+	/// <summary>Field accessor for option [dns]</summary>
+	public virtual String Dns {
+		get => _Data[8] as String;
+		set => _Data[8]  = value;
+		}
+
+	public virtual string _Dns {
+		set => _Data[8].Parameter (value);
+		}
+	/// <summary>Field accessor for option [on]</summary>
+	public virtual String On {
+		get => _Data[9] as String;
+		set => _Data[9]  = value;
+		}
+
+	public virtual string _On {
+		set => _Data[9].Parameter (value);
+		}
+	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
+		Identifier = "service",
+		Brief =  "",
+		HandleDelegate =  CommandLineInterpreter.Handle_DeviceService,
+		Lazy =  false,
+		Entries = new List<DescribeEntry> () {
+			new DescribeEntryOption () {
+				Identifier = "AccountAddress", 
+				Default = null, // null if null
+				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+				Index = 0,
+				Key = "account"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoSync", 
+				Default = "true", // null if null
+				Brief = "If true, attempt to synchronize the account to the service before operation",
+				Index = 1,
+				Key = "sync"
+				},
+			new DescribeEntryOption () {
+				Identifier = "AutoApprove", 
+				Default = "true", // null if null
+				Brief = "If true, automatically approve pending requests with prior authorization.",
+				Index = 2,
+				Key = "auto"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Verbose", 
+				Default = "false", // null if null
+				Brief = "Verbose reports (default)",
+				Index = 3,
+				Key = "verbose"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Report", 
+				Default = "true", // null if null
+				Brief = "Report output (default)",
+				Index = 4,
+				Key = "report"
+				},
+			new DescribeEntryOption () {
+				Identifier = "Json", 
+				Default = "false", // null if null
+				Brief = "Report output in JSON format",
+				Index = 5,
+				Key = "json"
+				},
+			new DescribeEntryParameter () {
+				Identifier = "Name", 
+				Default = null, // null if null
+				Brief = "The device name",
+				Index = 6,
+				Key = ""
+				},
+			new DescribeEntryParameter () {
+				Identifier = "Protocol", 
+				Default = null, // null if null
+				Brief = "The protocol to serve",
+				Index = 7,
+				Key = ""
+				},
+			new DescribeEntryOption () {
+				Identifier = "Dns", 
+				Default = null, // null if null
+				Brief = "The DNS or group",
+				Index = 8,
+				Key = "dns"
+				},
+			new DescribeEntryOption () {
+				Identifier = "On", 
+				Default = null, // null if null
+				Brief = "The remote device to deploy the service on.",
+				Index = 9,
+				Key = "on"
+				}
+			}
+		};
+
+	}
+
+public partial class DeviceService : _DeviceService {
+    } // class DeviceService
+
 public class _DevicePending : Goedel.Command.Dispatch ,
 						IAccountOptions,
 						IReporting{
@@ -6678,185 +7515,6 @@ public class _DevicePreconfigure : Goedel.Command.Dispatch ,
 
 public partial class DevicePreconfigure : _DevicePreconfigure {
     } // class DevicePreconfigure
-
-public class _DeviceService : Goedel.Command.Dispatch ,
-						IAccountOptions,
-						IReporting{
-
-	public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type[] {
-		new String (),
-		new Flag (),
-		new Flag (),
-		new Flag (),
-		new Flag (),
-		new Flag (),
-		new String (),
-		new String (),
-		new String ()		} ;
-
-
-
-
-
-	/// <summary>Field accessor for option [account]</summary>
-	public virtual String AccountAddress {
-		get => _Data[0] as String;
-		set => _Data[0]  = value;
-		}
-
-	public virtual string _AccountAddress {
-		set => _Data[0].Parameter (value);
-		}
-	/// <summary>Field accessor for option [sync]</summary>
-	public virtual Flag AutoSync {
-		get => _Data[1] as Flag;
-		set => _Data[1]  = value;
-		}
-
-	public virtual string _AutoSync {
-		set => _Data[1].Parameter (value);
-		}
-	/// <summary>Field accessor for option [auto]</summary>
-	public virtual Flag AutoApprove {
-		get => _Data[2] as Flag;
-		set => _Data[2]  = value;
-		}
-
-	public virtual string _AutoApprove {
-		set => _Data[2].Parameter (value);
-		}
-	/// <summary>Field accessor for option [verbose]</summary>
-	public virtual Flag Verbose {
-		get => _Data[3] as Flag;
-		set => _Data[3]  = value;
-		}
-
-	public virtual string _Verbose {
-		set => _Data[3].Parameter (value);
-		}
-	/// <summary>Field accessor for option [report]</summary>
-	public virtual Flag Report {
-		get => _Data[4] as Flag;
-		set => _Data[4]  = value;
-		}
-
-	public virtual string _Report {
-		set => _Data[4].Parameter (value);
-		}
-	/// <summary>Field accessor for option [json]</summary>
-	public virtual Flag Json {
-		get => _Data[5] as Flag;
-		set => _Data[5]  = value;
-		}
-
-	public virtual string _Json {
-		set => _Data[5].Parameter (value);
-		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual String Name {
-		get => _Data[6] as String;
-		set => _Data[6]  = value;
-		}
-
-	public virtual string _Name {
-		set => _Data[6].Parameter (value);
-		}
-	/// <summary>Field accessor for parameter []</summary>
-	public virtual String Protocol {
-		get => _Data[7] as String;
-		set => _Data[7]  = value;
-		}
-
-	public virtual string _Protocol {
-		set => _Data[7].Parameter (value);
-		}
-	/// <summary>Field accessor for option [dns]</summary>
-	public virtual String Dns {
-		get => _Data[8] as String;
-		set => _Data[8]  = value;
-		}
-
-	public virtual string _Dns {
-		set => _Data[8].Parameter (value);
-		}
-	public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-	public readonly static DescribeCommandEntry _DescribeCommand = new   () {
-		Identifier = "service",
-		Brief =  "",
-		HandleDelegate =  CommandLineInterpreter.Handle_DeviceService,
-		Lazy =  false,
-		Entries = new List<DescribeEntry> () {
-			new DescribeEntryOption () {
-				Identifier = "AccountAddress", 
-				Default = null, // null if null
-				Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-				Index = 0,
-				Key = "account"
-				},
-			new DescribeEntryOption () {
-				Identifier = "AutoSync", 
-				Default = "true", // null if null
-				Brief = "If true, attempt to synchronize the account to the service before operation",
-				Index = 1,
-				Key = "sync"
-				},
-			new DescribeEntryOption () {
-				Identifier = "AutoApprove", 
-				Default = "true", // null if null
-				Brief = "If true, automatically approve pending requests with prior authorization.",
-				Index = 2,
-				Key = "auto"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Verbose", 
-				Default = "false", // null if null
-				Brief = "Verbose reports (default)",
-				Index = 3,
-				Key = "verbose"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Report", 
-				Default = "true", // null if null
-				Brief = "Report output (default)",
-				Index = 4,
-				Key = "report"
-				},
-			new DescribeEntryOption () {
-				Identifier = "Json", 
-				Default = "false", // null if null
-				Brief = "Report output in JSON format",
-				Index = 5,
-				Key = "json"
-				},
-			new DescribeEntryParameter () {
-				Identifier = "Name", 
-				Default = null, // null if null
-				Brief = "The device name",
-				Index = 6,
-				Key = ""
-				},
-			new DescribeEntryParameter () {
-				Identifier = "Protocol", 
-				Default = null, // null if null
-				Brief = "The protocol to serve",
-				Index = 7,
-				Key = ""
-				},
-			new DescribeEntryOption () {
-				Identifier = "Dns", 
-				Default = null, // null if null
-				Brief = "The DNS or group",
-				Index = 8,
-				Key = "dns"
-				}
-			}
-		};
-
-	}
-
-public partial class DeviceService : _DeviceService {
-    } // class DeviceService
 
 public class _DeviceCredential : Goedel.Command.Dispatch ,
 						IAccountOptions,
@@ -23203,6 +23861,31 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		return null;
 		}
 
+	public virtual ShellResult DeviceInitialize ( DeviceInitialize Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult DeviceJsDevice ( DeviceJsDevice Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult DeviceOnboard ( DeviceOnboard Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult DeviceEarl ( DeviceEarl Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
+	public virtual ShellResult DeviceService ( DeviceService Options) {
+		CommandLineInterpreter.DescribeValues (Options);
+		return null;
+		}
+
 	public virtual ShellResult DevicePending ( DevicePending Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
@@ -23249,11 +23932,6 @@ public class _Shell : global::Goedel.Command.DispatchShell {
 		}
 
 	public virtual ShellResult DevicePreconfigure ( DevicePreconfigure Options) {
-		CommandLineInterpreter.DescribeValues (Options);
-		return null;
-		}
-
-	public virtual ShellResult DeviceService ( DeviceService Options) {
 		CommandLineInterpreter.DescribeValues (Options);
 		return null;
 		}

@@ -25,6 +25,64 @@ namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
 
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult DeviceInitialize(DeviceInitialize options) {
+
+
+        throw new NYI();
+        }
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult DeviceJsDevice(DeviceJsDevice options) {
+
+
+        throw new NYI();
+        }
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult DeviceOnboard(DeviceOnboard options) {
+
+
+        throw new NYI();
+        }
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult DeviceEarl(DeviceEarl options) {
+
+
+        throw new NYI();
+        }
+
+    /// <summary>
+    /// Dispatch method
+    /// </summary>
+    /// <param name="options">The command line options.</param>
+    /// <returns>Mesh result instance</returns>
+    public override ShellResult DeviceService(DeviceService options) {
+
+
+        throw new NYI();
+        }
+
+
+
+
+
+
+
 
     /// <summary>
     /// Dispatch method
@@ -36,14 +94,7 @@ public partial class Shell {
         }
 
 
-    /// <summary>
-    /// Dispatch method
-    /// </summary>
-    /// <param name="options">The command line options.</param>
-    /// <returns>Mesh result instance</returns>
-    public override ShellResult DeviceService(DeviceService options) {
-        return base.DeviceService(options);
-        }
+
 
     /// <summary>
     /// Dispatch method
