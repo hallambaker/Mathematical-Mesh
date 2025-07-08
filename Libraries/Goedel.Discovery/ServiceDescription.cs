@@ -21,6 +21,8 @@
 #endregion
 
 
+using Microsoft.Extensions.Logging;
+
 namespace Goedel.Discovery;
 
 /// <summary>
@@ -197,4 +199,48 @@ public class ServiceDescription {
         (Entries.Count > 0 ? Entries[0].HTTPEndpoint : Default.HTTPEndpoint) + (instance ?? "");
 
 
+
+    /// <summary>
+    /// Add information from the received record iff it is within the baliwick.
+    /// </summary>
+    /// <param name="serviceDescription">The service description to add to</param>
+    /// <param name="record">DNS record to add data from</param>
+    public void Add(DNSRecord record) {
+        var domain = record.Domain.Name.ToLower();
+
+        if (record.Code == DNSTypeCode.SRV) {
+            var recordSRV = record as DNSRecord_SRV;
+
+            //Console.WriteLine(String.Format("SRV {0} -> {1}",
+            //        Domain, RecordSRV.Target.Name));
+
+            if (domain == ServiceAddress) {
+                var entry = new ServiceEntry() {
+                    Address = recordSRV.Target.Name,
+                    Port = recordSRV.Port,
+                    Priority = recordSRV.Priority,
+                    Weight = recordSRV.Weight
+                    };
+                Add(entry);
+                }
+            }
+        else if (record.Code == DNSTypeCode.TXT) {
+
+            var RecordTXT = record as DNSRecord_TXT;
+            if (domain == ServiceAddress) {
+                foreach (var txt in RecordTXT.Text) {
+                    TXT.Add(txt);
+                    }
+                }
+            }
+        else if (record.Code == DNSTypeCode.A) {
+
+
+            }
+        else if (record.Code == DNSTypeCode.AAAA) {
+
+
+            }
+
+        }
     }

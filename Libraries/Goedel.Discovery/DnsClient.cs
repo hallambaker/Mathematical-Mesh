@@ -469,7 +469,7 @@ public abstract class DNSContext : Disposable {
     /// <param name="port">The default port number to use if no SRV record is found</param>
     /// <param name="fallback">Fallback mode for if no SRV record is found</param>
     /// <returns>Description of the discovered services.</returns>
-    public async Task<ServiceDescription> QueryServiceAsync(string address,
+    public virtual async Task<ServiceDescription> QueryServiceAsync(string address,
                     string service = null, int? port = null,
                     DNSFallback fallback = DNSFallback.Prefix) {
 

@@ -26,7 +26,11 @@ using Xunit;
 
 namespace Goedel.Mesh.Test;
 
-
+public static partial class Extensions {
+    public static IHostBuilder AddDummyDns(this IHostBuilder host) {
+        throw new NYI();
+        }
+    }
 
 
 public class DummyDnsService : IDnsPublisher {
@@ -191,7 +195,18 @@ public class DummyDnsContext : DNSContext {
         return Task.FromResult(x);
         }
 
+    public override Task<ServiceDescription> QueryServiceAsync(string address,
+                string service = null, int? port = null,
+                DNSFallback fallback = DNSFallback.Prefix) {
+        var serviceDescription = new ServiceDescription(address, service, port, fallback);
+        var recordsSRV = DnsService.QueryRecord(serviceDescription.ServiceAddress, DNSTypeCode.SRV);
+        var recordsTXT = DnsService.QueryRecord(serviceDescription.ServiceAddress, DNSTypeCode.TXT);
 
+        foreach (var record in recordsSRV) {
+            serviceDescription.Add(record);
+            }
+        return Task.FromResult(serviceDescription);
+        }
 
     }
 

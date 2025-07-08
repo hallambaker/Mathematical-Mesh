@@ -55,7 +55,7 @@ public class MeshTestSet : UnitTestSet {
     public string DirectoryPath => Seed.Directory;
 
 
-    public IDnsPublisher dnsPublisher { get; }
+    public IDnsPublisher DnsPublisher { get; }
     public DnsClient DnsClient { get;}
 
 
@@ -117,7 +117,7 @@ public class MeshTestSet : UnitTestSet {
         if (TestServiceStubs.Dns) {
             var dummyDns = new DummyDnsService();
             DnsClient = dummyDns.DnsClient;
-            dnsPublisher = dummyDns;
+            DnsPublisher = dummyDns;
             InitializeDNS(dummyDns);
             }
         else {
@@ -191,7 +191,7 @@ public class MeshTestSet : UnitTestSet {
                 Domain = new ("_mmm._tcp.example.com"),
                 Priority = 1,
                 Weight = 1,
-                Port = Truncate(150999),
+                Port = 15099,
                 Target = new ("host1.example.com")
                 }
             };

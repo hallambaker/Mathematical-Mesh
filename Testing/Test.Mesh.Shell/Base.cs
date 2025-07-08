@@ -53,7 +53,7 @@ public partial class ShellTestBase : MeshTestSet {
 public partial class ShellTestsAdmin : ShellTests {
 
     public static TestServiceStubs TestServiceStubsAdmin =
-            new(Dns: false);
+            new(Dns: true);
 
     public override string SeedSuffix => "-Admin";
     public override string Mode => "Shell";

@@ -4590,6 +4590,13 @@
             <param name="instance">Optional instance specifier.</param>
             <returns>The URI value.</returns>
         </member>
+        <member name="M:Goedel.Discovery.ServiceDescription.Add(Goedel.Discovery.DNSRecord)">
+            <summary>
+            Add information from the received record iff it is within the baliwick.
+            </summary>
+            <param name="serviceDescription">The service description to add to</param>
+            <param name="record">DNS record to add data from</param>
+        </member>
         <member name="T:Goedel.Discovery.ServiceEntry">
             <summary>
             Represents an Internet destination, this may be a single IPv4 or IPv6 

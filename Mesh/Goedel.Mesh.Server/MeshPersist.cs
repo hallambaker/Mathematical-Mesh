@@ -98,11 +98,10 @@ public class MeshPersist : Disposable {
     static int counter = 0;
     IPresence PresenceService { get; }
 
+    PublicMeshService PublicMeshService { get; }
+    public EarlDispatch? EarlDispatch => PublicMeshService.EarlDispatch;
 
-    public EarlDispatch? EarlDispatch { get; set; }
     #endregion
-
-
     #region // Disposing
     ///<inheritdoc/>
     protected override void Disposing() {
@@ -125,11 +124,13 @@ public class MeshPersist : Disposable {
     /// <param name="logger">Output logger.</param>
     /// <param name="presenceService">Optional presence service.</param>
     public MeshPersist(
+                PublicMeshService publicMeshService,
                 IKeyCollection keyCollection,
                 string directory,
                 FileStatus fileStatus,
                 ILogger logger,
                 IPresence presenceService = null) {
+        PublicMeshService = publicMeshService;
         Logger = logger;
         PresenceService = presenceService;
 

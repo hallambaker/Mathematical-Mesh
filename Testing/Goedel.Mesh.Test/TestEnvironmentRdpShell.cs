@@ -113,6 +113,7 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
 
     //CancellationToken CancellationToken;
 
+
     public IHostBuilder DependencyInjectionHostMesh(MeshMachineTest hostMachine) {
 
         var settings = hostMachine.GetService(PublicMeshService.DefaultConfiguration);
@@ -203,7 +204,12 @@ public class TestEnvironmentRdpShell : TestEnvironmentBase {
             }
 
         HostMachineMesh.MeshHost.ReloadContexts();
-
+        foreach (var provider in Providers) {
+            if (provider is MeshConfiguredService meshProvider) {
+                meshProvider.PublicMeshService.IDnsPublisher = TestSet.DnsPublisher;
+                meshProvider.PublicMeshService.EarlDispatch = TestSet.EarlPublisher;
+                }
+            }
         }
 
     MeshConfiguredService MeshConfiguredService { get; set; }

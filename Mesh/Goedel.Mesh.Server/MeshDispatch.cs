@@ -103,7 +103,7 @@ public class PublicMeshService : MeshService {
     public ProfileAccount CallsignServiceProfile { get; set; }
 
     ///<summary>Earl dispatch service</summary>
-    public EarlDispatch EarlDispatch { get; }
+    public EarlDispatch EarlDispatch { get; set; }
 
     ///<summary>DNS Publication hook.</summary>
     public IDnsPublisher IDnsPublisher { get; set; }
@@ -136,9 +136,9 @@ public class PublicMeshService : MeshService {
             LogService logService,
             IPresenceProvider presenceServiceProvider = null,
             EarlDispatch earlDispatch=null) {
-        EarlDispatch = earlDispatch ?? new EarlDispatchCached("example.com",
-                        meshMachine.Instance);
-
+        //EarlDispatch = earlDispatch ?? new EarlDispatchCached("example.com",
+        //                meshMachine.Instance);
+        EarlDispatch = earlDispatch;
 
         LogService = logService;
         MeshMachine = meshMachine;
@@ -152,9 +152,7 @@ public class PublicMeshService : MeshService {
 
         // Load the Mesh persistence base
         var path = MeshHostConfiguration.HostPath ?? meshMachine.DirectoryAccounts;
-        MeshPersist = new MeshPersist(KeyCollection, path, FileStatus.OpenOrCreate, Logger, PresenceService) {
-            EarlDispatch = EarlDispatch
-            };
+        MeshPersist = new MeshPersist(this, KeyCollection, path, FileStatus.OpenOrCreate, Logger, PresenceService);
 
         if (!meshServiceConfiguration.ProfileRegistryCallsign.IsBlank()) {
             var envelope = JsonObject.StreamParse<Enveloped>(meshServiceConfiguration.ProfileRegistryCallsign);

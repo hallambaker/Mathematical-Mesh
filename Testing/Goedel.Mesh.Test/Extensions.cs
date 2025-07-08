@@ -24,7 +24,7 @@ using Goedel.Mesh.Shell;
 
 namespace Goedel.Mesh.Test;
 
-public static class Extensions {
+public static partial class Extensions {
 
     public static ResultPending GetResultPending(
                 this List<ExampleResult> Results,

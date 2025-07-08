@@ -1635,7 +1635,7 @@
         <member name="M:Goedel.Mesh.Server.MeshPersist.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.#ctor(Goedel.Cryptography.Dare.IKeyCollection,System.String,Goedel.IO.FileStatus,Microsoft.Extensions.Logging.ILogger,Goedel.Mesh.Server.IPresence)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.#ctor(Goedel.Mesh.Server.PublicMeshService,Goedel.Cryptography.Dare.IKeyCollection,System.String,Goedel.IO.FileStatus,Microsoft.Extensions.Logging.ILogger,Goedel.Mesh.Server.IPresence)">
             <summary>
             Open or create the accounts persistence container.
             </summary>

@@ -86,7 +86,7 @@ public class TestEnvironmentCommon : TestEnvironmentBase {
 
         var service =  new PublicMeshService(MeshMachineHost,
             Configuration.GenericHost, Configuration.MeshService, Logger, earlDispatch: EarlDispatch);
-        service.IDnsPublisher = TestSet.dnsPublisher;
+        service.IDnsPublisher = TestSet.DnsPublisher;
 
         return service;
         }

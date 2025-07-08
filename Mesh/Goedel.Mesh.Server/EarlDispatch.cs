@@ -38,6 +38,8 @@ public class EarlDispatchCached: EarlDispatch {
     string PathPrefix { get; }
 
     public EarlDispatchCached(string domain, string? instance = null) {
+
+
         Domain = domain;
         Instance = instance;
         PathPrefix = EarlClient.GetPrefix(Instance);
