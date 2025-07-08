@@ -64,6 +64,25 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
+
+        // Probably just DNS things...
+        ShellTestsAdmin.Test().TestHandleContactAliceBob();
+        ShellTestsAdmin.Test().TestMessageConfirmationAccept();
+        ShellTestsAdmin.Test().TestMessageConfirmationReject();
+        ShellTestsAdmin.Test().TestMessageGroup();
+
+        ShellTestsAdmin.Test().TestAccountHandle();
+        ShellTestsAdmin.Test().NewFileTestAll();
+        ShellTestsAdmin.Test().NewArchiveTestOnce(true, false, false, false);
+        ShellTestsAdmin.Test().NewArchiveTestOnce(true, true, false, false);
+        ShellTestsAdmin.Test().NewFileTestOnce(true, false, false);
+
+        // Not completed
+        ShellTests.Test().TestHandleThing();
+
+
+
+
         // ---------- Problematic still
         //TestContact.Test().ContactHandle();
         //TestService.Test().MeshServiceFull();
@@ -76,25 +95,24 @@ partial class Program {
         //ShellTestsAdmin.Test().TestCreateSuper();
         // This depends on fixing the 'onboard device' thing
 
-        ShellTests.Test().TestAccountHandle();
-
+        //ShellTests.Test().TestHandleContactAliceBob();
 
         // These depend on fixing the 'connect from contact URI' scheme
 
-        ShellTests.Test().NewArchiveTestOnce(true, false, false, false);
-        ShellTests.Test().NewArchiveTestOnce(true, true, false, false);
-        ShellTests.Test().NewFileTestAll();
-        ShellTests.Test().NewFileTestOnce(true, false, false);
+        //ShellTests.Test().NewArchiveTestOnce(true, false, false, false);
+        //ShellTests.Test().NewArchiveTestOnce(true, true, false, false);
+        //ShellTests.Test().NewFileTestAll();
+        //ShellTests.Test().NewFileTestOnce(true, false, false);
 
 
 
-        ShellTests.Test().TestHandleContactAliceBob();
+        //ShellTests.Test().TestHandleContactAliceBob();
 
-        ShellTests.Test().TestMessageConfirmationAccept();
-        ShellTests.Test().TestMessageConfirmationReject();
-        ShellTests.Test().TestMessageGroup();
+        //ShellTests.Test().TestMessageConfirmationAccept();
+        //ShellTests.Test().TestMessageConfirmationReject();
 
-        ShellTests.Test().TestHandleThing();
+
+
 
         //ShellTests.Test().TestLog();
         //ShellTests.Test().NewArchiveTestOnce(true, false, false, false);

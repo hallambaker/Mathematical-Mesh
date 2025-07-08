@@ -807,7 +807,22 @@
 			Multiple
 			Description
 				|Mesh profiles
-	
+		Struct CryptoKeyIndex KeyShares
+			Multiple
+			Description
+				|Private key shares
+
+	Structure CryptoKeyIndex	
+		String AccountId
+			Description
+				|The public key id
+		String PublicKeyId
+			Description
+				|The public key id
+		String KeyShareId
+			Description
+				|The key share id
+
 	Structure MeshContact
 		String Verification
 		String DirectAddress

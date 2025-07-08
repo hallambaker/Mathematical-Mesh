@@ -26,6 +26,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.Discovery;
 
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Text;
 
 namespace Goedel.Mesh.Client;
@@ -1235,6 +1236,14 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             ContentType = contentType,
             Created = DateTime.UtcNow
             };
+        if (context != null) {
+            var proof = new ReceiptProof() {
+                PIN = context.Pin,
+                Expiry = context.Expire
+                };
+            contentMeta.ReceiptProof = proof;
+            }
+
 
         var enveloped = EarlEnvelopeWriter.GetBytes(contentMeta, data);
 

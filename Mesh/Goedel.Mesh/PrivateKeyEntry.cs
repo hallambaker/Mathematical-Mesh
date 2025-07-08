@@ -22,8 +22,61 @@
 
 
 using Goedel.Contacts;
+using Goedel.Cryptography;
 
 namespace Goedel.Mesh;
+
+
+public partial class CryptoKeyIndex {
+
+
+    public CatalogedContact CatalogedContact { get; set; }
+
+    public CryptoKeyIndex() {
+        }
+
+    public CryptoKeyIndex(OnlineService service, string shareId) {
+        KeyShareId = shareId;
+        foreach (var cryptoId in service.CryptoKeyIds.IfEnumerable()) {
+            switch (cryptoId.Value) {
+                case ContactConstant.OnlineServiceGroup: {
+                    AccountId = cryptoId.Key;
+                    break;
+                    }
+                case ContactConstant.CryptoKeyEncrypt: {
+                    PublicKeyId = cryptoId.Key;
+                    break;
+                    }
+                }
+            }
+        }
+
+    public KeyPair GetKeyPair(IKeyCollection keyCollection) {
+        var contact = CatalogedContact.JsContact;
+        if (contact.OnlineServices == null | contact.CryptoKeys == null) {
+            return null;
+            }
+
+        if (!contact.CryptoKeys.TryGetValue(KeyShareId, out var keyShare)) {
+            return null;
+            }
+        var jsonWebKeySet = keyShare as JsonWebKeySet;
+
+        Console.WriteLine(jsonWebKeySet.Data.ToUTF8());
+        var enveloped = StreamParse<Enveloped>(jsonWebKeySet.Data);
+
+        var keyData = enveloped.StreamParseTag<KeyData>(keyCollection);
+        Console.WriteLine(jsonWebKeySet.Data.ToUTF8());
+        return keyData.GetKeyPair(KeySecurity.Bound, keyCollection);
+
+
+
+        throw new NYI();
+        }
+
+    }
+
+
 
 public record PrivateKeyEntry  {
 

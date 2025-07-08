@@ -21,10 +21,13 @@
 #endregion
 
 
+using Goedel.Contacts;
+using Goedel.Cryptography.Jose;
 using Goedel.Discovery;
 using Goedel.Registry;
 
 using System.Linq;
+using System.Net.NetworkInformation;
 
 namespace Goedel.Mesh.Client;
 
@@ -1662,95 +1665,49 @@ public partial class ContextUser : ContextAccount {
     /// <param name="expire">Expiry time for the corresponding PIN</param>
     /// <param name="authenticator">If true, insert authenticator to allow automatic acceptance
     /// of the response.</param>
-    public async Task<string> ContactUri(bool authenticator, System.DateTime? expire, string localName = null) {
+    public async Task<string> ContactUri(
+                    bool authenticator, 
+                    DateTime? expire=null, 
+                    string localName = null,
+                    bool automatic =true) {
         var cataloged = GetSelf(localName);
         var jsContact = cataloged.JsContact;
 
 
-        // wrap the contact in an envelope
-
+        // Configure the envelope properties - expiry, PIN.
         EarlEnvelopeContext context = new() {
             Expire = expire
             };
-       
-
 
         if (authenticator) {
-            var pin = await GetRegisteredPin();
+            var pin = await GetRegisteredPin(expire, automatic);
             context.Pin = pin;
             }
 
-
-        // publish the JsContact as an EARL
-
-
-        var earl = PublishEarl(jsContact, context);
+        // wrap the contact in an envelope
+        var earl = await PublishEarl(jsContact, context);
         return earl;
-
-        // return the EARL.
-
-
-
-        // The new dynamic URI scheme
-
-        // First create a regular enveloped JSContact for self.
-        // Then add an unauthenticated header with a response coupon
-
-
-        // Wrap and return as an EARL
-
-
-        // When EARL is resolved, use coupon PIN to authenticate regular Mesh Contact request.
-
-
-
-
-
-
-
-        // This mechanism needs to be redone using the EARL scheme
-
-        throw new NYI();
-
-
-
-        //var contact = cataloged.JsContact;
-        //var envelope = contact.Envelope;
-
-        //var combinedKey = new CryptoKeySymmetricSigner();
-
-        //var pin = combinedKey.SecretKey;
-
-        //// Add a signature under the signature key.
-        //var encryptedContact = Enveloped.Encode(envelope.GetBytes(),
-        //        signingKey: combinedKey, encryptionKey: combinedKey);
-
-        //// publish the enveloped contact to the service.
-        //var catalogedPublication = new CatalogedPublication(pin) {
-        //    EnvelopedData = encryptedContact,
-        //    NotOnOrAfter = expire
-        //    };
-
-        //// Register the pin
-        //var messageConnectionPIN = new MessagePin(
-        //    pin, automatic, expire, ServiceAddress, MeshConstants.MessagePINActionContact);
-
-        //using (var transaction = TransactBegin()) {
-        //    transaction.LocalMessage(messageConnectionPIN, KeyCommonEncryption);
-        //    var catalogPublication = transaction.GetCatalogPublication();
-        //    transaction.CatalogUpdate(catalogPublication, catalogedPublication);
-        //    await transaction.TransactAsync();
-        //    }
-
-        //// return the contact address
-        //return MeshUri.ConnectUriDevice(ServiceAddress, pin);
         }
 
 
-    public async Task<string> GetRegisteredPin() {
+    public async Task<string> GetRegisteredPin(
+                    DateTime? expire = null,
+                    bool automatic = true) {
+
+        var combinedKey = new CryptoKeySymmetricSigner();
+        var pin = combinedKey.SecretKey;
+
+        var messageConnectionPIN = new MessagePin(
+                pin, automatic, expire, ServiceAddress, MeshConstants.MessagePINActionContact);
+
+        using (var transaction = TransactBegin()) {
+            transaction.LocalMessage(messageConnectionPIN, KeyCommonEncryption);
+            await transaction.TransactAsync();
+            }
+
+        return pin;
 
 
-        return null;
         }
 
 
@@ -1868,27 +1825,27 @@ public partial class ContextUser : ContextAccount {
                 bool reciprocate,
                 string localname = null) {
         // Fetch, verify and decrypt the corresponding data.
+        var contact = await EarlClient.ResolveContactEarl(uri);
+        var enveloped = contact.Envelope as Enveloped;
+        var contentMeta = enveloped?.Header?.ContentMeta;
+        var pin = contentMeta?.ReceiptProof?.PIN;
 
-        var envelope = ClaimPublication(uri, out var _);
+        var cataloged = new CatalogedContact(contact);
+        var transaction = TransactBegin();
+        var catalog = transaction.GetCatalogContact();
+        transaction.CatalogUpdate(catalog, cataloged);
+        await transaction.TransactAsync();
 
-        // Add to the catalog
+        // Create the wrapper.
+        if (reciprocate) {
 
-        throw new NYI();
-        //var contact = MeshItem.Decode(envelope) as Contact;
-        //var cataloged = contact.CatalogedContact();
+            var service = contact.GetMesh();
+            var recipient = service?.User;
+            var message = await ContactRequestAsync(recipient, pin, localname) as Message;
+            cataloged.Message = message;
+            }
 
-        //var transaction = TransactBegin();
-        //var catalog = transaction.GetCatalogContact();
-        //transaction.CatalogUpdate(catalog, cataloged);
-        //await transaction.TransactAsync();
-
-        //if (reciprocate) {
-        //    (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
-        //    cataloged.Message = await ContactRequestAsync(targetAccountAddress, pin, localname) as Message;
-        //    }
-
-
-        //return cataloged;
+        return cataloged;
         }
     #endregion
     #region // Confirmation Processing

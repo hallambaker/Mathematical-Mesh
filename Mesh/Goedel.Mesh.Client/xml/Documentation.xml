@@ -1564,14 +1564,14 @@
             <param name="localName">Local name for the contact</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.ContactUri(System.Boolean,System.Nullable{System.DateTime},System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.ContactUri(System.Boolean,System.Nullable{System.DateTime},System.String,System.Boolean)">
             <summary>
             Construct a contact fetch URI.
             </summary>
             <param name="localName">Local name for the contact</param>
             <param name="expire">Expiry time for the corresponding PIN</param>
-            <param name="automatic">If true, presentation of the pin code is sufficient
-            to authenticate and authorize the action.</param>
+            <param name="authenticator">If true, insert authenticator to allow automatic acceptance
+            of the response.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.ContactRequestAsync(System.String,System.String,System.String,System.Boolean,System.String)">
             <summary>

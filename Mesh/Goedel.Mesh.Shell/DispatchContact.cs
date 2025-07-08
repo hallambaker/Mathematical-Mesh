@@ -130,29 +130,6 @@ public partial class Shell {
             };
         }
 
-    ///// <summary>
-    ///// Dispatch method
-    ///// </summary>
-    ///// <param name="options">The command line options.</param>
-    ///// <returns>Mesh result instance</returns>
-    //public override ShellResult ContactFetch(ContactFetch options) {
-    //    var recipient = options.Handle.Value;
-    //    // pull the 
-
-    //    var jsContact = ParsedHandle.ResolveMeshService();
-
-    //    var contextUser = GetContextUser(options);
-
-
-    //    var entry = contextUser.ContactExchange(recipient, false).Sync();
-
-    //    return new ResultEntry() {
-    //        Success = true,
-    //        CatalogEntry = entry
-    //        };
-
-    //    }
-
     /// <summary>
     /// Dispatch method
     /// </summary>

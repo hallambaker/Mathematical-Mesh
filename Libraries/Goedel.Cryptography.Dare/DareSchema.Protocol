@@ -238,7 +238,6 @@
 			LengthBits 64
 			Description
 				|Frame number of the first object instance value.
-
 		Integer Previous
 			LengthBits 64
 			Description
@@ -246,7 +245,18 @@
 		Struct FileEntry FileEntry
 			Description
 				|Information describing the file entry on disk.
+		Struct ReceiptProof ReceiptProof
+			Description
+				|Provides a means by which another party can demonstrate they could read the message.
 
+
+	Structure ReceiptProof
+		String PIN
+			Description
+				|
+		DateTime Expiry
+			Description
+				|
 
 	Section 2 "Cryptographic Data"
 		Description

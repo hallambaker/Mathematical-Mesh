@@ -12,6 +12,7 @@
 	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
 	<ItemGroup>
+		<ProjectReference Include="..\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
 		<ProjectReference Include="..\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
 		<ProjectReference Include="..\Goedel.Discovery\Goedel.Discovery.csproj" />
 		<ProjectReference Include="..\Goedel.IO\Goedel.IO.csproj" />

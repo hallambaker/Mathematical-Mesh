@@ -99,3 +99,324 @@ Add host1.example.com
    Node A
 Add _mmm._tcp.example.com
    Node SRV
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.alice.example.net
+   Node TXT
+Resolve handle alice.example.com, _jscontact
+Get prefixed alice.example.com, _jscontact
+GetPrefixedTXT _jscontact.alice.example.com
+Dummy querry record _jscontact.alice.example.com, TXT
+Request _jscontact.alice.example.com TXT -> False
+Resolve handle alice.example.net, _jscontact
+Get prefixed alice.example.net, _jscontact
+GetPrefixedTXT _jscontact.alice.example.net
+Dummy querry record _jscontact.alice.example.net, TXT
+Request _jscontact.alice.example.net TXT -> True
+ TXT prefixed alice.example.net, _jscontact -> uri=jscontact://example.com/ekdo-6vwf-jqqj-ukps-bxdm-ykgy-az2f
+Resolve earl jscontact://example.com/ekdo-6vwf-jqqj-ukps-bxdm-ykgy-az2f
+Success earl jscontact://example.com/ekdo-6vwf-jqqj-ukps-bxdm-ykgy-az2f
+Finished handle alice.example.net, _jscontact
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.alice.example.com
+   Node TXT
+Add _jscontact.bob.example.com
+   Node TXT
+Resolve handle bob.example.com, _jscontact
+Get prefixed bob.example.com, _jscontact
+GetPrefixedTXT _jscontact.bob.example.com
+Dummy querry record _jscontact.bob.example.com, TXT
+Request _jscontact.bob.example.com TXT -> True
+ TXT prefixed bob.example.com, _jscontact -> uri=jscontact://example.com/ekpv-lqli-7ej5-cogh-d7uj-y4qj-5naj
+Resolve earl jscontact://example.com/ekpv-lqli-7ej5-cogh-d7uj-y4qj-5naj
+Success earl jscontact://example.com/ekpv-lqli-7ej5-cogh-d7uj-y4qj-5naj
+Finished handle bob.example.com, _jscontact
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.alice.example.com
+   Node TXT
+Add _jscontact.bob.example.com
+   Node TXT
+Resolve handle bob.example.com, _jscontact
+Get prefixed bob.example.com, _jscontact
+GetPrefixedTXT _jscontact.bob.example.com
+Dummy querry record _jscontact.bob.example.com, TXT
+Request _jscontact.bob.example.com TXT -> True
+ TXT prefixed bob.example.com, _jscontact -> uri=jscontact://example.com/ekaf-a7l6-yata-ssc3-r7jv-imcu-sci4
+Resolve earl jscontact://example.com/ekaf-a7l6-yata-ssc3-r7jv-imcu-sci4
+Success earl jscontact://example.com/ekaf-a7l6-yata-ssc3-r7jv-imcu-sci4
+Finished handle bob.example.com, _jscontact
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ekrw-bozg-3tj7-6isc-2ieb-a4jo-ivea
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ejk5-w474-4yhb-tjh7-s574-m2hc-yhrw
+Success earl jscontact://example.com/ejk5-w474-4yhb-tjh7-s574-m2hc-yhrw
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ekzw-jrgv-naru-s7no-agmy-yuoc-53zn
+Success earl jscontact://example.com/ekzw-jrgv-naru-s7no-agmy-yuoc-53zn
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ekbb-mqlf-5ivb-a6c2-lojz-wddm-oikq
+Success earl jscontact://example.com/ekbb-mqlf-5ivb-a6c2-lojz-wddm-oikq
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ejn4-fj6z-crp2-athp-jpq6-y4vp-phqv
+Success earl jscontact://example.com/ejn4-fj6z-crp2-athp-jpq6-y4vp-phqv
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ejn4-3t6b-cfep-u35j-xdf7-7ged-titb
+Success earl jscontact://example.com/ejn4-3t6b-cfep-u35j-xdf7-7ged-titb
+Resolve earl jscontact://example.com/ejn4-3t6b-cfep-u35j-xdf7-7ged-titb
+Success earl jscontact://example.com/ejn4-3t6b-cfep-u35j-xdf7-7ged-titb
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/elth-cysn-f6yx-sd3r-xr32-2giq-3n6q
+Success earl jscontact://example.com/elth-cysn-f6yx-sd3r-xr32-2giq-3n6q
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/eiou-3yed-ih6c-fumn-kr2j-5ukn-nwl3
+Success earl jscontact://example.com/eiou-3yed-ih6c-fumn-kr2j-5ukn-nwl3
+Resolve earl jscontact://example.com/eiou-3yed-ih6c-fumn-kr2j-5ukn-nwl3
+Success earl jscontact://example.com/eiou-3yed-ih6c-fumn-kr2j-5ukn-nwl3
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ejl7-42ev-lhgc-mahm-p4dj-4ukh-ouuf
+Success earl jscontact://example.com/ejl7-42ev-lhgc-mahm-p4dj-4ukh-ouuf
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ejug-w4dc-hckf-qjas-wjgz-vvhh-uioi
+Success earl jscontact://example.com/ejug-w4dc-hckf-qjas-wjgz-vvhh-uioi
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ejha-ypts-oryd-mj62-2b23-y3x3-ufc2
+Success earl jscontact://example.com/ejha-ypts-oryd-mj62-2b23-y3x3-ufc2
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ekfh-lj6n-w6zi-j65v-z7yt-4p27-br5w
+Success earl jscontact://example.com/ekfh-lj6n-w6zi-j65v-z7yt-4p27-br5w
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ejhd-q3pj-ktjx-c4l2-vqsa-hswx-vc7m
+Success earl jscontact://example.com/ejhd-q3pj-ktjx-c4l2-vqsa-hswx-vc7m
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/eksl-5o4a-3pp6-c7sp-hvdv-mmd6-xf7k
+Success earl jscontact://example.com/eksl-5o4a-3pp6-c7sp-hvdv-mmd6-xf7k
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ejp5-qfts-w3fp-z6se-qfew-q5gs-nnk7
+Success earl jscontact://example.com/ejp5-qfts-w3fp-z6se-qfew-q5gs-nnk7
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ek53-foex-yqzc-xlt4-57yx-2jzp-qo5b
+Success earl jscontact://example.com/ek53-foex-yqzc-xlt4-57yx-2jzp-qo5b
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ek4k-vo7j-w6le-6ui7-xwoj-fytd-5gwi
+Success earl jscontact://example.com/ek4k-vo7j-w6le-6ui7-xwoj-fytd-5gwi
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ei7z-g54j-bnrb-yry7-yxwu-5jrg-t5ky
+Success earl jscontact://example.com/ei7z-g54j-bnrb-yry7-yxwu-5jrg-t5ky
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/elk6-hwlt-n27r-iqw7-wbe4-nqi6-t7jg
+Success earl jscontact://example.com/elk6-hwlt-n27r-iqw7-wbe4-nqi6-t7jg
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/elhg-zxye-uo45-mokl-di4t-27iz-6anr
+Success earl jscontact://example.com/elhg-zxye-uo45-mokl-di4t-27iz-6anr
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Resolve earl jscontact://example.com/ejg3-vnef-dkfl-so55-zttf-v324-gwpm
+Success earl jscontact://example.com/ejg3-vnef-dkfl-so55-zttf-v324-gwpm

@@ -2038,6 +2038,11 @@
             Information describing the file entry on disk.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.ContentMeta.ReceiptProof">
+             <summary>
+            Provides a means by which another party can demonstrate they could read the message.
+             </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.ContentMeta._Properties">
             <summary>Implement IBinding</summary> 
         </member>
@@ -2763,6 +2768,48 @@
             </summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareSignatureHeader._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.ReceiptProof">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.ReceiptProof.PIN">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.ReceiptProof.Expiry">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.ReceiptProof._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.ReceiptProof._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.ReceiptProof._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.ReceiptProof._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.ReceiptProof._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.ReceiptProof.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.ReceiptProof._Factory">
             <summary>
             Factory method
             </summary>

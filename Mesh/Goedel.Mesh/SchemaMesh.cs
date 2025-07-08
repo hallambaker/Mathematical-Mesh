@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 7/6/2025 2:56:17 PM
+//  This file was automatically generated at 7/8/2025 11:11:29 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -131,6 +131,7 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {typeof(CatalogedCredential), CatalogedCredential._binding},
 	    {typeof(CatalogedNetwork), CatalogedNetwork._binding},
 	    {typeof(CatalogedContact), CatalogedContact._binding},
+	    {typeof(CryptoKeyIndex), CryptoKeyIndex._binding},
 	    {typeof(MeshContact), MeshContact._binding},
 	    {typeof(CatalogedAccess), CatalogedAccess._binding},
 	    {typeof(Capability), Capability._binding},
@@ -4158,6 +4159,12 @@ public partial class CatalogedContact : CatalogedEntry {
 
 	[JsonPropertyName("VerifiedContacts")]
 	public virtual List<MeshContact>?					VerifiedContacts  {get; set;}
+    /// <summary>
+    ///Private key shares
+    /// </summary>
+
+	[JsonPropertyName("KeyShares")]
+	public virtual List<CryptoKeyIndex>?					KeyShares  {get; set;}
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -4179,7 +4186,11 @@ public partial class CatalogedContact : CatalogedEntry {
 		new PropertyListStruct ("VerifiedContacts", typeof (MeshContact),
 					(IBinding data, object? value) => {(data as CatalogedContact).VerifiedContacts = value as List<MeshContact>;}, 
 					(IBinding data) => (data as CatalogedContact).VerifiedContacts,
-					false, ()=>new  List<MeshContact>(), ()=>new MeshContact())
+					false, ()=>new  List<MeshContact>(), ()=>new MeshContact()),
+		new PropertyListStruct ("KeyShares", typeof (CryptoKeyIndex),
+					(IBinding data, object? value) => {(data as CatalogedContact).KeyShares = value as List<CryptoKeyIndex>;}, 
+					(IBinding data) => (data as CatalogedContact).KeyShares,
+					false, ()=>new  List<CryptoKeyIndex>(), ()=>new CryptoKeyIndex())
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -4191,7 +4202,8 @@ public partial class CatalogedContact : CatalogedEntry {
 			{ "Key", _properties [0]},
 			{ "Self", _properties [1]},
 			{ "EnvelopedJsContact", _properties [2]},
-			{ "VerifiedContacts", _properties [3]}}, __Tag,
+			{ "VerifiedContacts", _properties [3]},
+			{ "KeyShares", _properties [4]}}, __Tag,
 		() => new CatalogedContact(), () => [], () => [], CatalogedEntry._binding, Generic: false);
 
 
@@ -4210,6 +4222,78 @@ public partial class CatalogedContact : CatalogedEntry {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedContact();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class CryptoKeyIndex : MeshItem {
+    /// <summary>
+    ///The public key id
+    /// </summary>
+
+	[JsonPropertyName("AccountId")]
+	public virtual string?					AccountId  {get; set;} //
+
+    /// <summary>
+    ///The public key id
+    /// </summary>
+
+	[JsonPropertyName("PublicKeyId")]
+	public virtual string?					PublicKeyId  {get; set;} //
+
+    /// <summary>
+    ///The key share id
+    /// </summary>
+
+	[JsonPropertyName("KeyShareId")]
+	public virtual string?					KeyShareId  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyString ("AccountId", 
+					(IBinding data, string? value) => {(data as CryptoKeyIndex).AccountId = value;}, 
+					(IBinding data) => (data as CryptoKeyIndex).AccountId ),
+		new PropertyString ("PublicKeyId", 
+					(IBinding data, string? value) => {(data as CryptoKeyIndex).PublicKeyId = value;}, 
+					(IBinding data) => (data as CryptoKeyIndex).PublicKeyId ),
+		new PropertyString ("KeyShareId", 
+					(IBinding data, string? value) => {(data as CryptoKeyIndex).KeyShareId = value;}, 
+					(IBinding data) => (data as CryptoKeyIndex).KeyShareId )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<CryptoKeyIndex> _binding = new (
+			new() {
+			{ "AccountId", _properties [0]},
+			{ "PublicKeyId", _properties [1]},
+			{ "KeyShareId", _properties [2]}}, __Tag,
+		() => new CryptoKeyIndex(), () => [], () => [], null, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "CryptoKeyIndex";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new CryptoKeyIndex();
 
 	}
 

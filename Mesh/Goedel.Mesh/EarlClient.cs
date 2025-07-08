@@ -53,11 +53,14 @@ public abstract class EarlClient {
 
         var plaintext = Udf.GetDecryptedData(ciphertext, earl);
 
-        var (contentMeta, enveloped) = EarlEnvelopeReader.Parse(plaintext);
+        var enveloped = EarlEnvelopeReader.GetEnveloped(plaintext);
 
-        Console.WriteLine(enveloped.ToUTF8());
+        Console.WriteLine(enveloped.Body.ToUTF8());
         LogFile.WriteLine($"Success earl {uriString}");
-        return JsonObject.StreamParse<T>(enveloped);
+
+        var result =  JsonObject.StreamParse<T>(enveloped.Body);
+        result.Envelope = enveloped;
+        return result;
         }
 
     public async Task<T> TryResolveHandle<T>(string handle, string prefix) where T : JsonObject {

@@ -2867,6 +2867,11 @@
             Mesh profiles
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedContact.KeyShares">
+             <summary>
+            Private key shares
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedContact._Properties">
             <summary>Implement IBinding</summary> 
         </member>
@@ -8258,6 +8263,53 @@
         </member>
         <member name="M:Goedel.Mesh.Component.Terminate">
             <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Mesh.CryptoKeyIndex">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CryptoKeyIndex.AccountId">
+             <summary>
+            The public key id
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CryptoKeyIndex.PublicKeyId">
+             <summary>
+            The public key id
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CryptoKeyIndex.KeyShareId">
+             <summary>
+            The key share id
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CryptoKeyIndex._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CryptoKeyIndex._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CryptoKeyIndex._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.CryptoKeyIndex._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Mesh.CryptoKeyIndex._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CryptoKeyIndex.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CryptoKeyIndex._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
         </member>
         <member name="T:Goedel.Mesh.ProcessingResult">
             <summary>

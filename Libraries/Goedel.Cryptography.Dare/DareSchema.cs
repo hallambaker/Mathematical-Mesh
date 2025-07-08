@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 7/6/2025 2:56:03 PM
+//  This file was automatically generated at 7/8/2025 11:11:18 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -82,6 +82,7 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 	    {typeof(DareTrailer), DareTrailer._binding},
 	    {typeof(DareHeader), DareHeader._binding},
 	    {typeof(ContentMeta), ContentMeta._binding},
+	    {typeof(ReceiptProof), ReceiptProof._binding},
 	    {typeof(DareSignature), DareSignature._binding},
 	    {typeof(IntervalSignature), IntervalSignature._binding},
 	    {typeof(SignedEnvelope), SignedEnvelope._binding},
@@ -749,6 +750,13 @@ public partial class ContentMeta : Dare {
 	[JsonPropertyName("FileEntry")]
 	public virtual FileEntry?					FileEntry  {get; set;} //
 
+    /// <summary>
+    ///Provides a means by which another party can demonstrate they could read the message.
+    /// </summary>
+
+	[JsonPropertyName("ReceiptProof")]
+	public virtual ReceiptProof?					ReceiptProof  {get; set;} //
+
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -801,7 +809,11 @@ public partial class ContentMeta : Dare {
 		new PropertyStruct ("FileEntry", typeof (FileEntry),
 					(IBinding data, object? value) => {(data as ContentMeta).FileEntry = value as FileEntry;}, 
 					(IBinding data) => (data as ContentMeta).FileEntry,
-					false, ()=>new  FileEntry(), ()=>new FileEntry())
+					false, ()=>new  FileEntry(), ()=>new FileEntry()),
+		new PropertyStruct ("ReceiptProof", typeof (ReceiptProof),
+					(IBinding data, object? value) => {(data as ContentMeta).ReceiptProof = value as ReceiptProof;}, 
+					(IBinding data) => (data as ContentMeta).ReceiptProof,
+					false, ()=>new  ReceiptProof(), ()=>new ReceiptProof())
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -824,7 +836,8 @@ public partial class ContentMeta : Dare {
 			{ "Expire", _properties [11]},
 			{ "First", _properties [12]},
 			{ "Previous", _properties [13]},
-			{ "FileEntry", _properties [14]}}, __Tag,
+			{ "FileEntry", _properties [14]},
+			{ "ReceiptProof", _properties [15]}}, __Tag,
 		() => new ContentMeta(), () => [], () => [], null, Generic: false);
 
 
@@ -843,6 +856,67 @@ public partial class ContentMeta : Dare {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new ContentMeta();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class ReceiptProof : Dare {
+    /// <summary>
+    ///
+    /// </summary>
+
+	[JsonPropertyName("PIN")]
+	public virtual string?					PIN  {get; set;} //
+
+    /// <summary>
+    ///
+    /// </summary>
+
+	[JsonPropertyName("Expiry")]
+	public virtual DateTime?					Expiry  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyString ("PIN", 
+					(IBinding data, string? value) => {(data as ReceiptProof).PIN = value;}, 
+					(IBinding data) => (data as ReceiptProof).PIN ),
+		new PropertyDateTime ("Expiry", 
+					(IBinding data, DateTime? value) => {(data as ReceiptProof).Expiry = value;}, 
+					(IBinding data) => (data as ReceiptProof).Expiry )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<ReceiptProof> _binding = new (
+			new() {
+			{ "PIN", _properties [0]},
+			{ "Expiry", _properties [1]}}, __Tag,
+		() => new ReceiptProof(), () => [], () => [], null, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "ReceiptProof";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new ReceiptProof();
 
 	}
 

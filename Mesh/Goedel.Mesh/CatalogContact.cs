@@ -22,6 +22,8 @@
 
 
 using Goedel.Contacts;
+using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
 using Goedel.Discovery;
 
 using System.Security.Principal;
@@ -58,7 +60,7 @@ public class CatalogContact : Catalog<CatalogedContact> {
     public override string SequenceDefault => Label;
 
     ///<summary>Dictionary for locating capabilities for use.</summary>
-    public Dictionary<string, PrivateKeyEntry> DictionaryDecryptByKeyId =
+    public Dictionary<string, CryptoKeyIndex> DictionaryDecryptByKeyId =
             new();
 
     #endregion
@@ -155,14 +157,21 @@ public class CatalogContact : Catalog<CatalogedContact> {
 
                 }
             }
+        foreach (var keyShare in catalogedEntry.KeyShares.IfEnumerable()) {
+            keyShare.CatalogedContact = catalogedEntry;
+            DictionaryDecryptByKeyId.Remove(keyShare.PublicKeyId.ToLower());
+            DictionaryDecryptByKeyId.Add(keyShare.PublicKeyId.ToLower(), keyShare);
+            }
+
+
 
         foreach (var publicKey in catalogedEntry.PublicKeys.IfEnumerable()) {
 
             }
         foreach (var privateKey in catalogedEntry.PrivateKeys.IfEnumerable()) {
 
-            DictionaryDecryptByKeyId.Remove(privateKey.KeyId.ToLower());
-            DictionaryDecryptByKeyId.Add(privateKey.KeyId.ToLower(), privateKey);
+            //DictionaryDecryptByKeyId.Remove(privateKey.KeyId.ToLower());
+            //DictionaryDecryptByKeyId.Add(privateKey.KeyId.ToLower(), privateKey);
 
             }
         }
@@ -409,10 +418,11 @@ public partial class CatalogedContact {
                         case ContactConstant.CryptoKeyDecryptShare: 
                         case ContactConstant.CryptoKeyAuthenticate: 
                         case ContactConstant.CryptoKeySign: {
+                            KeyShares ??= new();
+                            KeyShares.Add(new CryptoKeyIndex(service, id.Key));
 
-                            var privateKeyEntry = new PrivateKeyEntry(contact, service, jsonWebKeySet);
-
-                            PrivateKeys.Add(privateKeyEntry);
+                            //var privateKeyEntry = new PrivateKeyEntry(contact, service, jsonWebKeySet);
+                            //PrivateKeys.Add(privateKeyEntry);
                             break;
                             }
                         case ContactConstant.OnlineServiceMesh:

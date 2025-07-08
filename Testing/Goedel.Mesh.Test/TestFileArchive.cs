@@ -228,7 +228,7 @@ public record TestArchiveShell : TestArchive {
                     TestArchiveEntry entry,
                     string directory = null) {
 
-        var file = entry.Filename;
+        var file = entry.FullFilename;
 
         if (!entry.Deleted) {
             var outFile = Seed.GetTempFilePath();

@@ -19,6 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using Goedel.Protocol;
+
 namespace Goedel.Cryptography.Dare;
 
 /// <summary>
@@ -60,6 +62,46 @@ public partial class EarlEnvelopeReader {
     /// <param name="bytes">The data to read.</param>
     public EarlEnvelopeReader(byte[] bytes) : this(new MemoryStream(bytes)) {
 
+        }
+
+
+    public static Enveloped GetEnveloped(byte[] bytes,
+            KeyCollection? keyCollection = null) {
+
+
+        var reader = new EarlEnvelopeReader(bytes);
+        return reader.GetEnveloped();
+        }
+
+    public Enveloped GetEnveloped() {
+
+
+        var contentMetaBytes = ReadBlock(Stream);
+        var buffer = new MemoryStream();
+        while (CopyPayload(buffer)) {
+            }
+
+        var enveloped = new Enveloped() {
+            Header = new DareHeader() {
+                // Hack, should actually populate ContentMetaBytes here
+                ContentMeta = JsonObject.StreamParseTag<ContentMeta>(contentMetaBytes, false),
+                ContentMetaData = contentMetaBytes
+                },
+            Body = buffer.ToArray()
+            };
+
+        if (Version == 1) {
+            var trailer = ReadBlock(Stream);
+            // Hack: We are chopping off the signatures here because DARE signatures currently
+            // use a different format.
+            
+            // enveloped.Trailer = JsonObject.StreamParseTag<Unprotected>(trailer, false);
+            }
+
+
+
+
+        return enveloped;
         }
 
     /// <summary>
