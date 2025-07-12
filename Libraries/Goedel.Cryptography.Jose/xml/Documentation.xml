@@ -1067,30 +1067,6 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Jose.JWK.Curve">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JWK.X">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JWK.Y">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JWK.D">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JWK.N">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Jose.JWK.E">
-            <summary>
-            </summary>
-        </member>
         <member name="P:Goedel.Cryptography.Jose.JWK._Properties">
             <summary>Implement IBinding</summary> 
         </member>
@@ -1154,6 +1130,291 @@
             <param name="keyPairECDH">The key pair</param>
             <returns>The curve identifier.</returns>
             <exception cref="T:Goedel.Utilities.NYI">The key is not of a known curve.</exception>
+        </member>
+        <member name="T:Goedel.Cryptography.Jose.JwkEllipticCurve">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkEllipticCurve.Curve">
+             <summary>
+            The "crv" (curve) parameter identifies the cryptographic curve used
+            with the key
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkEllipticCurve.X">
+             <summary>
+            The "x" (x coordinate) parameter contains the x coordinate for the
+            Elliptic Curve point.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkEllipticCurve.Y">
+             <summary>
+            The "y" (y coordinate) parameter contains the y coordinate for the
+            Elliptic Curve point.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkEllipticCurve.D">
+             <summary>
+            The "d" (ECC private key) parameter contains the Elliptic Curve
+            private key value.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkEllipticCurve._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkEllipticCurve._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkEllipticCurve._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkEllipticCurve._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkEllipticCurve._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkEllipticCurve.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JwkEllipticCurve._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Jose.JwkRsa">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkRsa.N">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkRsa.E">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkRsa._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkRsa._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkRsa._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkRsa._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkRsa._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkRsa.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JwkRsa._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Jose.JwkRsaPrivate">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkRsaPrivate.D">
+             <summary>
+            The parameter d
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkRsaPrivate.P">
+             <summary>
+            The parameter p
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkRsaPrivate.Q">
+             <summary>
+            The parameter q
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkRsaPrivate.DP">
+             <summary>
+            The parameter dp
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkRsaPrivate.DQ">
+             <summary>
+            The parameter dq
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkRsaPrivate.QI">
+             <summary>
+            The parameter QInverse
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkRsaPrivate._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkRsaPrivate._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkRsaPrivate._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkRsaPrivate._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkRsaPrivate._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkRsaPrivate.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JwkRsaPrivate._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Jose.JwkUdfSeed">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkUdfSeed.Seed">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkUdfSeed.Roots">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkUdfSeed._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkUdfSeed._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkUdfSeed._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkUdfSeed._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkUdfSeed._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkUdfSeed.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JwkUdfSeed._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Jose.JwkOctet">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkOctet._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkOctet._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkOctet._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkOctet._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkOctet._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkOctet.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JwkOctet._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Jose.JwkOctetKeyPairs">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkOctetKeyPairs.Curve">
+             <summary>
+            MUST be present and contain the subtype of the key 
+            (from the "JSON Web Elliptic Curve" registry)
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkOctetKeyPairs.X">
+             <summary>
+            MUST be present and contain the public key
+            encoded using the base64url [RFC4648] encoding.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkOctetKeyPairs.D">
+             <summary>
+            MUST be present for private keys and contain the
+            private key encoded using the base64url encoding.  This parameter
+            MUST NOT be present for public keys.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkOctetKeyPairs._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkOctetKeyPairs._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkOctetKeyPairs._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkOctetKeyPairs._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Jose.JwkOctetKeyPairs._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Jose.JwkOctetKeyPairs.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JwkOctetKeyPairs._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
         </member>
         <member name="T:Goedel.Cryptography.Jose.JwtHeader">
             <summary>

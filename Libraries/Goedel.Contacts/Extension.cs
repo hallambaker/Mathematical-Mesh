@@ -23,6 +23,8 @@
 using Goedel.Cryptography;
 using Goedel.Discovery;
 
+using System.Runtime.CompilerServices;
+
 namespace Goedel.Contacts;
 
 /// <summary>
@@ -30,5 +32,21 @@ namespace Goedel.Contacts;
 /// </summary>
 public static partial class Extension {
 
+
+
+    public static bool TryGetKey (
+                this Dictionary<string, string> keyValuePairs, 
+                string value, 
+                out string? key) {
+        foreach (var pair in keyValuePairs) {
+            if (pair.Value == value) {
+                key = pair.Key;
+                return true;
+                }
+            }
+        key = null;
+        return false;
+
+        }
 
     }

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 7/8/2025 6:34:06 PM
+//  This file was automatically generated at 7/12/2025 5:51:46 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -161,7 +161,6 @@ public abstract partial class MeshItem : global::Goedel.Protocol.JsonObject {
 	    {typeof(MessageInvoice), MessageInvoice._binding},
 	    {typeof(CatalogedReceipt), CatalogedReceipt._binding},
 	    {typeof(CatalogedTicket), CatalogedTicket._binding},
-	    {typeof(DeviceConfiguration), DeviceConfiguration._binding},
 	    {typeof(DevicePreconfigurationPublic), DevicePreconfigurationPublic._binding},
 	    {typeof(DevicePreconfigurationPrivate), DevicePreconfigurationPrivate._binding},
 	    {typeof(Message), Message._binding},
@@ -6246,72 +6245,6 @@ public partial class CatalogedTicket : CatalogedEntry {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new CatalogedTicket();
-
-	}
-
-
-	/// <summary>
-	///
-	/// Configuration file used to initialize a device.
-	/// </summary>
-public partial class DeviceConfiguration : MeshItem {
-    /// <summary>
-    ///The device description. This contains all the information the device
-    ///requires that isn't private.
-    /// </summary>
-
-	[JsonPropertyName("JsDevice")]
-	public virtual JsDevice?					JsDevice  {get; set;} //
-
-    /// <summary>
-    ///The device private key seed.
-    /// </summary>
-
-	[JsonPropertyName("PrivateKey")]
-	public virtual Key?					PrivateKey  {get; set;} //
-
-
-    ///<summary>Implement IBinding</summary> 
-	public override Property[] _Properties => _properties;
-
-	///<summary>Binding</summary> 
-	static readonly Property[] _properties = [
-		new PropertyStruct ("JsDevice", typeof (JsDevice),
-					(IBinding data, object? value) => {(data as DeviceConfiguration).JsDevice = value as JsDevice;}, 
-					(IBinding data) => (data as DeviceConfiguration).JsDevice,
-					false, ()=>new  JsDevice(), ()=>new JsDevice()),
-		new PropertyStruct ("PrivateKey", typeof (Key), 
-					(IBinding data, object? value) => {(data as DeviceConfiguration).PrivateKey = value as Key;}, 
-					(IBinding data) => (data as DeviceConfiguration).PrivateKey,
-					true) 
-		];
-
-    ///<summary>Implement IBinding</summary> 
-	public override Binding _Binding => _binding;
-
-	///<summary>Binding</summary> 
-	public static readonly new Binding<DeviceConfiguration> _binding = new (
-			new() {
-			{ "JsDevice", _properties [0]},
-			{ "PrivateKey", _properties [1]}}, __Tag,
-		() => new DeviceConfiguration(), () => [], () => [], null, Generic: false);
-
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public override string _Tag => __Tag;
-
-	/// <summary>
-    /// Tag identifying this class
-    /// </summary>
-	public new const string __Tag = "DeviceConfiguration";
-
-	/// <summary>
-    /// Factory method
-    /// </summary>
-    /// <returns>Object of this type</returns>
-	public static new JsonObject _Factory () => new DeviceConfiguration();
 
 	}
 

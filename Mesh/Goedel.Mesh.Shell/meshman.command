@@ -359,14 +359,31 @@
 			Include Reporting
 			Parameter File "file" NewFile
 				Brief "File to which the description is to be written"	
-			Option File "jsdevice" ExistingFile
+			Option Template "jsdevice" ExistingFile
 				Brief "File containing a JSDevice template."
+			Option DeviceId "deviceId" String
+				Brief "Unique device identifier"
+			Option Present "present" Flag
+				Brief "If true, publish an EARL for device present"
+				Default "true"
+
+			Option WiFi "wifi" String
+				Brief "Add wifi network with specified EUI-48"
+			Option Ethernet "ethernet" String
+				Brief "Add wired network with specified EUI-48"
+
+			Option NotPresent "notpresent" Flag
+				Brief "If true, publish an EARL for device not present"
+				Default "false"
+			Option MeshOnboard "mesh" Flag
+				Brief "If true, add credentials for Mesh Onboard"
+				Default "true"
 
 		Command DeviceJsDevice "jsdevice"
 			Brief "Publish the specified JSDevice file as an EARL."
 			Include AccountOptions
 			Include Reporting
-			Option File "jsdevice" ExistingFile
+			Parameter File "jsdevice" ExistingFile
 				Brief "File containing a JSDevice template."
 
 		Command DeviceOnboard "onboard"
@@ -382,6 +399,9 @@
 			Include Reporting
 			Parameter Uri "uri" String
 				Brief "Contact description EARL"
+			Option Localname "local" String
+				Brief "Device friendly name"
+			Include DeviceAuthOptions
 
 		Command DeviceService "service"
 			Brief ""

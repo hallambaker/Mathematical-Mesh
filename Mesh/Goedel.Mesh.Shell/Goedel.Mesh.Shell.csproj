@@ -14,6 +14,7 @@
 		<ProjectReference Include="..\..\Callsign\Goedel.Callsign.Registry\Goedel.Callsign.Registry.csproj" />
 		<ProjectReference Include="..\..\Callsign\Goedel.Callsign.Resolver\Goedel.Callsign.Resolver.csproj" />
 		<ProjectReference Include="..\..\Callsign\Goedel.Callsign\Goedel.Callsign.csproj" />
+		<ProjectReference Include="..\..\Device\Goedel.Device\Goedel.Device.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Command.Json\Goedel.Command.Json.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Command\Goedel.Command.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />

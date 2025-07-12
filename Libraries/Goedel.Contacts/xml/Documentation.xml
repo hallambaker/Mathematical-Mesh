@@ -1527,6 +1527,30 @@
             <summary>
             </summary>
         </member>
+        <member name="F:Goedel.Contacts.ContactConstant.CryptoKeySeed">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.KindOnboarding">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.KindInternet">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.OnlineServiceOnboard">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.PhysicalWiFi">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.PhysicalEthernet">
+            <summary>
+            </summary>
+        </member>
         <member name="T:Goedel.Contacts.Contacts">
             <summary>
             </summary>
@@ -3550,9 +3574,14 @@
             For example, ink cartridges, parts likely to wear etc.
              </summary>
         </member>
+        <member name="P:Goedel.Contacts.JsDevice.Services">
+            <summary>
+            The network services supported.
+            </summary>
+        </member>
         <member name="P:Goedel.Contacts.JsDevice.Network">
             <summary>
-            The network protocol connections supported.
+            The physical network connections supported.
             </summary>
         </member>
         <member name="P:Goedel.Contacts.JsDevice.CryptoKeys">
@@ -3591,6 +3620,10 @@
             <returns>Object of this type</returns>
         </member>
         <member name="T:Goedel.Contacts.Network">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.Network.Type">
             <summary>
             </summary>
         </member>
@@ -3653,6 +3686,122 @@
             </summary>
         </member>
         <member name="M:Goedel.Contacts.Network._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Contacts.NetworkPhysical">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NetworkPhysical.EUI">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NetworkPhysical.Speed">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NetworkPhysical._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NetworkPhysical._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.NetworkPhysical._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NetworkPhysical._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.NetworkPhysical._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.NetworkPhysical.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.NetworkPhysical._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Contacts.NetworkEthernet">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NetworkEthernet._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NetworkEthernet._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.NetworkEthernet._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NetworkEthernet._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.NetworkEthernet._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.NetworkEthernet.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.NetworkEthernet._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Contacts.NetworkWiFi">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NetworkWiFi.SSID">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NetworkWiFi.Username">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NetworkWiFi.Password">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Contacts.NetworkWiFi._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NetworkWiFi._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.NetworkWiFi._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.NetworkWiFi._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.NetworkWiFi._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.NetworkWiFi.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.NetworkWiFi._Factory">
             <summary>
             Factory method
             </summary>
@@ -3900,6 +4049,70 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Contacts.JsProvision">
+             <summary>
+            
+             Configuration file used to initialize a device. It is simply a JSDevice configuration 
+             with an additional seed.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsProvision.JsDevice">
+             <summary>
+            The device description. This contains all the information the device
+            requires that isn't private.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsProvision.PrivateKeys">
+             <summary>
+            The device private key seed.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsProvision.DeviceNotPresentEarl">
+             <summary>
+            Public EARL value that can be sent to the device owner in advance of the device
+            itself being available, thus enabling the owner to configure network infrastructure
+            to pre-authorize onboarding.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsProvision.DevicePresentEarl">
+             <summary>
+            Private EARL value providing proof of holdership of the physical device itself.
+            This would typically be printed on the device or its packaging as a QR code.
+             </summary>
+        </member>
+        <member name="P:Goedel.Contacts.JsProvision._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.JsProvision._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.JsProvision._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Contacts.JsProvision._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.JsProvision._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.JsProvision.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Contacts.JsProvision._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsProvision.AddCredential(Goedel.Cryptography.Jose.JWK,System.Byte[],System.String)">
+            <summary>
+            Add credentials to support onboarding via MeshOnboard
+            </summary>
         </member>
         <member name="T:Goedel.Contacts.EventExtensions">
             <summary>

@@ -174,7 +174,7 @@ public partial class Shell {
                 bool privateKey,
                 KeyFileFormat keyFileFormatDefault) {
 
-        var length = (int)keyPair.ToKeyFile(fileName, keyFileFormatDefault);
+        var length = keyPair.ToKeyFile(fileName, keyFileFormatDefault);
 
         return new ResultKeyFile() {
             Success = true,

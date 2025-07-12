@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Contacts;
 using Goedel.Discovery;
 
 namespace Goedel.Mesh.Test;
@@ -43,6 +44,10 @@ public class MeshTestSetSerialized : MeshTestSet {
     }
 
 public class MeshTestSet : UnitTestSet {
+
+
+
+
 
     public static TestServiceStubs TestServiceStubsDefault = new();
 
@@ -100,6 +105,11 @@ public class MeshTestSet : UnitTestSet {
             }
         }
     DeviceConnectServer deviceConnectServer;
+
+
+    static MeshTestSet() {
+        Devices._Initialized.TestTrue();
+        }
 
     protected override void Disposing() {
         testEnvironment?.Dispose();

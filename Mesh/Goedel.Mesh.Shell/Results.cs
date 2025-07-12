@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 7/8/2025 6:34:40 PM
+//  This file was automatically generated at 7/12/2025 5:52:00 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -670,7 +670,7 @@ public partial class ResultFile : Result {
     /// </summary>
 
 	[JsonPropertyName("TotalBytes")]
-	public virtual int?					TotalBytes  {get; set;} //
+	public virtual long?					TotalBytes  {get; set;} //
 
     /// <summary>
     /// </summary>
@@ -687,8 +687,8 @@ public partial class ResultFile : Result {
 		new PropertyString ("Filename", 
 					(IBinding data, string? value) => {(data as ResultFile).Filename = value;}, 
 					(IBinding data) => (data as ResultFile).Filename ),
-		new PropertyInteger32 ("TotalBytes", 
-					(IBinding data, int? value) => {(data as ResultFile).TotalBytes = value;}, 
+		new PropertyInteger64 ("TotalBytes", 
+					(IBinding data, long? value) => {(data as ResultFile).TotalBytes = value;}, 
 					(IBinding data) => (data as ResultFile).TotalBytes ),
 		new PropertyBoolean ("Verified", 
 					(IBinding data, bool? value) => {(data as ResultFile).Verified = value;}, 
@@ -1054,6 +1054,12 @@ public partial class ResultFileEARL : Result {
     /// <summary>
     /// </summary>
 
+	[JsonPropertyName("Wrapper")]
+	public virtual string?					Wrapper  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
 	[JsonPropertyName("Created")]
 	public virtual string?					Created  {get; set;} //
 
@@ -1062,6 +1068,12 @@ public partial class ResultFileEARL : Result {
 
 	[JsonPropertyName("URI")]
 	public virtual string?					URI  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("NotPresent")]
+	public virtual string?					NotPresent  {get; set;} //
 
 
     ///<summary>Implement IBinding</summary> 
@@ -1072,12 +1084,18 @@ public partial class ResultFileEARL : Result {
 		new PropertyString ("Source", 
 					(IBinding data, string? value) => {(data as ResultFileEARL).Source = value;}, 
 					(IBinding data) => (data as ResultFileEARL).Source ),
+		new PropertyString ("Wrapper", 
+					(IBinding data, string? value) => {(data as ResultFileEARL).Wrapper = value;}, 
+					(IBinding data) => (data as ResultFileEARL).Wrapper ),
 		new PropertyString ("Created", 
 					(IBinding data, string? value) => {(data as ResultFileEARL).Created = value;}, 
 					(IBinding data) => (data as ResultFileEARL).Created ),
 		new PropertyString ("URI", 
 					(IBinding data, string? value) => {(data as ResultFileEARL).URI = value;}, 
-					(IBinding data) => (data as ResultFileEARL).URI )
+					(IBinding data) => (data as ResultFileEARL).URI ),
+		new PropertyString ("NotPresent", 
+					(IBinding data, string? value) => {(data as ResultFileEARL).NotPresent = value;}, 
+					(IBinding data) => (data as ResultFileEARL).NotPresent )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1087,8 +1105,10 @@ public partial class ResultFileEARL : Result {
 	public static readonly new Binding<ResultFileEARL> _binding = new (
 			new() {
 			{ "Source", _properties [0]},
-			{ "Created", _properties [1]},
-			{ "URI", _properties [2]}}, __Tag,
+			{ "Wrapper", _properties [1]},
+			{ "Created", _properties [2]},
+			{ "URI", _properties [3]},
+			{ "NotPresent", _properties [4]}}, __Tag,
 		() => new ResultFileEARL(), () => [], () => [], Result._binding, Generic: false);
 
 

@@ -211,7 +211,7 @@ public class JsDeviceResults {
                         }
                 ],
 
-            Network = new() {
+            Services = new() {
                 {"boot1", new Network () {
                         Kind="bootstrap",
                         Identifier = "mmm-connect",

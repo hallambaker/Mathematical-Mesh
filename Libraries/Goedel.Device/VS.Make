@@ -21,6 +21,7 @@ LinkFiles = \
     Goedel.Contacts.dll\
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.Identifiers.dll\
+    Goedel.Cryptography.dll\
     Goedel.IO.dll\
     Goedel.Protocol.dll\
     Goedel.Utilities.dll

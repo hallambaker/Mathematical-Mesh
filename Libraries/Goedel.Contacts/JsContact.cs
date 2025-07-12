@@ -8,9 +8,6 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Contacts;
 
-
-
-
 public partial class JsContact {
 
     ///<summary>Used during analysis to track services claiming to be part 

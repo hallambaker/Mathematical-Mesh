@@ -213,7 +213,7 @@ public partial class Jmap {
             //        }
             //    ],
 
-            Network = new() {
+            Services = new() {
                 {"boot1", new Network () {
                         Identifier = "dns"
                             }

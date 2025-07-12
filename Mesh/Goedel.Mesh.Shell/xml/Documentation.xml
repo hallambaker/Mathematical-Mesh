@@ -374,7 +374,28 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.DeviceCredential(Goedel.Mesh.Shell.DeviceCredential)">
+        <member name="M:Goedel.Mesh.Shell.Shell.DeviceInitialize(Goedel.Mesh.Shell.DeviceInitialize)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DeviceJsDevice(Goedel.Mesh.Shell.DeviceJsDevice)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DeviceOnboard(Goedel.Mesh.Shell.DeviceOnboard)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DeviceEarl(Goedel.Mesh.Shell.DeviceEarl)">
             <summary>
             Dispatch method
             </summary>
@@ -382,6 +403,13 @@
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.DeviceService(Goedel.Mesh.Shell.DeviceService)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DeviceCredential(Goedel.Mesh.Shell.DeviceCredential)">
             <summary>
             Dispatch method
             </summary>
@@ -2166,6 +2194,180 @@
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AuthNone">
             <summary>Field accessor for option [null]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInitialize.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInitialize.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInitialize.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInitialize.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInitialize.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInitialize.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInitialize.File">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInitialize.Template">
+            <summary>Field accessor for option [jsdevice]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInitialize.DeviceId">
+            <summary>Field accessor for option [deviceId]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInitialize.Present">
+            <summary>Field accessor for option [present]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInitialize.WiFi">
+            <summary>Field accessor for option [wifi]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInitialize.Ethernet">
+            <summary>Field accessor for option [ethernet]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInitialize.NotPresent">
+            <summary>Field accessor for option [notpresent]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceInitialize.MeshOnboard">
+            <summary>Field accessor for option [mesh]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceJsDevice.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceJsDevice.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceJsDevice.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceJsDevice.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceJsDevice.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceJsDevice.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceJsDevice.File">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceOnboard.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceOnboard.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceOnboard.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceOnboard.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceOnboard.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceOnboard.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceOnboard.File">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.Uri">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.Localname">
+            <summary>Field accessor for option [local]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.Auth">
+            <summary>Field accessor for option [auth]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthSuper">
+            <summary>Field accessor for option [root]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthAdmin">
+            <summary>Field accessor for option [admin]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthMessage">
+            <summary>Field accessor for option [message]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthWeb">
+            <summary>Field accessor for option [web]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthDevice">
+            <summary>Field accessor for option [device]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthThreshold">
+            <summary>Field accessor for option [threshold]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthSSH">
+            <summary>Field accessor for option [ssh]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthEmail">
+            <summary>Field accessor for option [email]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthGroupMember">
+            <summary>Field accessor for option [member]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthGroupAdmin">
+            <summary>Field accessor for option [group]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthNone">
+            <summary>Field accessor for option [null]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.AutoSync">
+            <summary>Field accessor for option [sync]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.Name">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.Protocol">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.Dns">
+            <summary>Field accessor for option [dns]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DeviceService.On">
+            <summary>Field accessor for option [on]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DevicePending.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
@@ -2444,33 +2646,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.Length">
             <summary>Field accessor for option [length]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceService.AccountAddress">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceService.AutoSync">
-            <summary>Field accessor for option [sync]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceService.AutoApprove">
-            <summary>Field accessor for option [auto]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceService.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceService.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceService.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceService.Name">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceService.Protocol">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceService.Dns">
-            <summary>Field accessor for option [dns]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceCredential.AccountAddress">
             <summary>Field accessor for option [account]</summary>
@@ -5759,11 +5934,19 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFileEARL.Wrapper">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultFileEARL.Created">
             <summary>
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultFileEARL.URI">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFileEARL.NotPresent">
             <summary>
             </summary>
         </member>

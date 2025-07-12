@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 7/8/2025 6:34:00 PM
+//  This file was automatically generated at 7/12/2025 5:51:44 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -85,6 +85,30 @@ public static partial class ContactConstant {
     ///<summary>
     ///</summary>
     public const string CryptoKeySign = "sign";
+
+    ///<summary>
+    ///</summary>
+    public const string CryptoKeySeed = "seed";
+
+    ///<summary>
+    ///</summary>
+    public const string KindOnboarding = "onboard";
+
+    ///<summary>
+    ///</summary>
+    public const string KindInternet = "internet";
+
+    ///<summary>
+    ///</summary>
+    public const string OnlineServiceOnboard = "mmm_onboard";
+
+    ///<summary>
+    ///</summary>
+    public const string PhysicalWiFi = "wifi";
+
+    ///<summary>
+    ///</summary>
+    public const string PhysicalEthernet = "ethernet";
 
     }
 

@@ -1473,6 +1473,14 @@
             <param name="request">Connection request to be processed.</param>
             <returns>The result of requesting the connection.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.AddDevice(Goedel.Mesh.ProfileDevice,System.Collections.Generic.List{System.String})">
+            <summary>
+            Add the device <paramref name="profileDevice"/> with rights <paramref name="rights"/>
+            </summary>
+            <param name="profileDevice">The device to add.</param>
+            <param name="rights">The rights to assign.</param>
+            <returns>The transaction result</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAsync(Goedel.Mesh.AcknowledgeConnection,System.Boolean,Goedel.Mesh.MessagePin,System.Collections.Generic.List{System.String})">
             <summary>
             Accept or reject a connection request.

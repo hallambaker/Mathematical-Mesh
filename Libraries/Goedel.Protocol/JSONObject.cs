@@ -811,10 +811,15 @@ public abstract partial class JsonObject : IBinding {
     /// <param name="fileName">Name of the file to create.</param>
     /// <param name="dataEncoding">The encoding to use</param>
     /// <param name="tagged">If true, tag the output with the object type</param>
-    public void ToFile(string fileName, DataEncoding dataEncoding = DataEncoding.JSON, bool tagged = false) {
+    public long ToFile(string fileName, DataEncoding dataEncoding = DataEncoding.JSON, bool tagged = false) {
         using var outputStream = fileName.OpenFileNew();
         using var writer = dataEncoding.GetWriter(outputStream);
         Serialize(writer, tagged);
+        outputStream.Flush();
+        var length = outputStream.Length;
+        outputStream.Close();
+        return length;
+
         }
 
 

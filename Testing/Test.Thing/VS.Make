@@ -19,6 +19,7 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.ASN.dll\
+    Goedel.Test.dll\
     Goedel.Utilities.dll\
     Goedel.Test.Core.dll\
     Certes.dll\

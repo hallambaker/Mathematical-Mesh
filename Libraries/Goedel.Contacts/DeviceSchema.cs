@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 7/8/2025 6:34:00 PM
+//  This file was automatically generated at 7/12/2025 5:51:43 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -76,11 +76,15 @@ public abstract partial class Devices : global::Goedel.Protocol.JsonObject {
 
 	    {typeof(JsDevice), JsDevice._binding},
 	    {typeof(Network), Network._binding},
+	    {typeof(NetworkPhysical), NetworkPhysical._binding},
+	    {typeof(NetworkEthernet), NetworkEthernet._binding},
+	    {typeof(NetworkWiFi), NetworkWiFi._binding},
 	    {typeof(Maintenance), Maintenance._binding},
 	    {typeof(Supplier), Supplier._binding},
 	    {typeof(RelatedItem), RelatedItem._binding},
 	    {typeof(Component), Component._binding},
-	    {typeof(Dimensions), Dimensions._binding}
+	    {typeof(Dimensions), Dimensions._binding},
+	    {typeof(JsProvision), JsProvision._binding}
 		};
 
 	///<summary>Variable used to force static initialization</summary> 
@@ -237,11 +241,18 @@ public partial class JsDevice : JmapBase {
 	public virtual Dictionary<string,RelatedItem>?					RelatedItems  {get; set;} //
 
     /// <summary>
-    /// The network protocol connections supported.
+    /// The network services supported.
+    /// </summary>
+
+	[JsonPropertyName("services")]
+	public virtual Dictionary<string,Network>?					Services  {get; set;} //
+
+    /// <summary>
+    /// The physical network connections supported.
     /// </summary>
 
 	[JsonPropertyName("network")]
-	public virtual Dictionary<string,Network>?					Network  {get; set;} //
+	public virtual Dictionary<string,NetworkPhysical>?					Network  {get; set;} //
 
     /// <summary>
     /// The cryptographic resources such as public keys and certificates associated 
@@ -328,13 +339,20 @@ public partial class JsDevice : JmapBase {
 					(IBinding data) => (data as JsDevice).RelatedItems.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,RelatedItem>).Add (key as string,value as RelatedItem);}),
-		new PropertyDictionaryStruct ("network", typeof (Network),
-					(IBinding data, object? value) => {(data as JsDevice).Network = value as Dictionary<string,Network>;}, 
-					(IBinding data) => (data as JsDevice).Network,
+		new PropertyDictionaryStruct ("services", typeof (Network),
+					(IBinding data, object? value) => {(data as JsDevice).Services = value as Dictionary<string,Network>;}, 
+					(IBinding data) => (data as JsDevice).Services,
 					false, ()=>new  Dictionary<string,Network>(), ()=>new Network(),
-					(IBinding data) => (data as JsDevice).Network.GetEnumerable(),
+					(IBinding data) => (data as JsDevice).Services.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Network>).Add (key as string,value as Network);}),
+		new PropertyDictionaryStruct ("network", typeof (NetworkPhysical),
+					(IBinding data, object? value) => {(data as JsDevice).Network = value as Dictionary<string,NetworkPhysical>;}, 
+					(IBinding data) => (data as JsDevice).Network,
+					false, ()=>new  Dictionary<string,NetworkPhysical>(), ()=>new NetworkPhysical(),
+					(IBinding data) => (data as JsDevice).Network.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,NetworkPhysical>).Add (key as string,value as NetworkPhysical);}),
 		new PropertyDictionaryStruct ("cryptoKeys", typeof (CryptoKey),
 					(IBinding data, object? value) => {(data as JsDevice).CryptoKeys = value as Dictionary<string,CryptoKey>;}, 
 					(IBinding data) => (data as JsDevice).CryptoKeys,
@@ -367,8 +385,9 @@ public partial class JsDevice : JmapBase {
 			{ "suppliers", _properties [14]},
 			{ "maintenance", _properties [15]},
 			{ "relatedItems", _properties [16]},
-			{ "network", _properties [17]},
-			{ "cryptoKeys", _properties [18]}}, __Tag,
+			{ "services", _properties [17]},
+			{ "network", _properties [18]},
+			{ "cryptoKeys", _properties [19]}}, __Tag,
 		() => new JsDevice(), () => [], () => [], JmapBase._binding, Generic: false);
 
 
@@ -394,6 +413,12 @@ public partial class JsDevice : JmapBase {
 	/// <summary>
 	/// </summary>
 public partial class Network : Devices {
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("@type")]
+	public virtual string?					Type  {get; set;} //
+
     /// <summary>
     /// The network connection kind
     /// </summary>
@@ -446,6 +471,9 @@ public partial class Network : Devices {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
+		new PropertyStringTag ("@type", 
+					(IBinding data, string? value) => {(data as Network).Type = value;}, 
+					(IBinding data) => (data as Network).Type ),
 		new PropertyString ("kind", 
 					(IBinding data, string? value) => {(data as Network).Kind = value;}, 
 					(IBinding data) => (data as Network).Kind ),
@@ -475,14 +503,16 @@ public partial class Network : Devices {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<Network> _binding = new (
 			new() {
-			{ "kind", _properties [0]},
-			{ "address", _properties [1]},
-			{ "identifier", _properties [2]},
-			{ "ports", _properties [3]},
-			{ "endpoints", _properties [4]},
-			{ "keys", _properties [5]},
-			{ "permissions", _properties [6]}}, __Tag,
-		() => new Network(), () => [], () => [], null, Generic: false);
+			{ "@type", _properties [0]},
+			{ "kind", _properties [1]},
+			{ "address", _properties [2]},
+			{ "identifier", _properties [3]},
+			{ "ports", _properties [4]},
+			{ "endpoints", _properties [5]},
+			{ "keys", _properties [6]},
+			{ "permissions", _properties [7]}}, __Tag,
+		() => new Network(), () => [], () => [], null, 
+		TypeTag:"@type" , Generic: false);
 
 
 	/// <summary>
@@ -493,13 +523,183 @@ public partial class Network : Devices {
 	/// <summary>
     /// Tag identifying this class
     /// </summary>
-	public new const string __Tag = "Network";
+	public new const string __Tag = "network";
 
 	/// <summary>
     /// Factory method
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Network();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class NetworkPhysical : Network {
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("eUI")]
+	public virtual string?					EUI  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("speed")]
+	public virtual string?					Speed  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyString ("eUI", 
+					(IBinding data, string? value) => {(data as NetworkPhysical).EUI = value;}, 
+					(IBinding data) => (data as NetworkPhysical).EUI ),
+		new PropertyString ("speed", 
+					(IBinding data, string? value) => {(data as NetworkPhysical).Speed = value;}, 
+					(IBinding data) => (data as NetworkPhysical).Speed )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<NetworkPhysical> _binding = new (
+			new() {
+			{ "eUI", _properties [0]},
+			{ "speed", _properties [1]}}, __Tag,
+		() => new NetworkPhysical(), () => [], () => [], Network._binding, 
+		TypeTag:"@type" , Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "network";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new NetworkPhysical();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class NetworkEthernet : NetworkPhysical {
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<NetworkEthernet> _binding = new (
+			new() {}, __Tag,
+		() => new NetworkEthernet(), () => [], () => [], NetworkPhysical._binding, 
+		TypeTag:"@type" , Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "networkEthernet";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new NetworkEthernet();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class NetworkWiFi : NetworkPhysical {
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("sSID")]
+	public virtual string?					SSID  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("username")]
+	public virtual string?					Username  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("password")]
+	public virtual string?					Password  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyString ("sSID", 
+					(IBinding data, string? value) => {(data as NetworkWiFi).SSID = value;}, 
+					(IBinding data) => (data as NetworkWiFi).SSID ),
+		new PropertyString ("username", 
+					(IBinding data, string? value) => {(data as NetworkWiFi).Username = value;}, 
+					(IBinding data) => (data as NetworkWiFi).Username ),
+		new PropertyString ("password", 
+					(IBinding data, string? value) => {(data as NetworkWiFi).Password = value;}, 
+					(IBinding data) => (data as NetworkWiFi).Password )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<NetworkWiFi> _binding = new (
+			new() {
+			{ "sSID", _properties [0]},
+			{ "username", _properties [1]},
+			{ "password", _properties [2]}}, __Tag,
+		() => new NetworkWiFi(), () => [], () => [], NetworkPhysical._binding, 
+		TypeTag:"@type" , Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "networkWiFi";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new NetworkWiFi();
 
 	}
 
@@ -859,6 +1059,101 @@ public partial class Dimensions : Devices {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new Dimensions();
+
+	}
+
+
+	/// <summary>
+	///
+	/// Configuration file used to initialize a device. It is simply a JSDevice configuration 
+	/// with an additional seed.
+	/// </summary>
+public partial class JsProvision : Devices {
+    /// <summary>
+    ///The device description. This contains all the information the device
+    ///requires that isn't private.
+    /// </summary>
+
+	[JsonPropertyName("jsDevice")]
+	public virtual JsDevice?					JsDevice  {get; set;} //
+
+    /// <summary>
+    ///The device private key seed.
+    /// </summary>
+
+	[JsonPropertyName("privateKeys")]
+	public virtual Dictionary<string,CryptoKey>?					PrivateKeys  {get; set;} //
+
+    /// <summary>
+    ///Public EARL value that can be sent to the device owner in advance of the device
+    ///itself being available, thus enabling the owner to configure network infrastructure
+    ///to pre-authorize onboarding.
+    /// </summary>
+
+	[JsonPropertyName("deviceNotPresentEarl")]
+	public virtual string?					DeviceNotPresentEarl  {get; set;} //
+
+    /// <summary>
+    ///Private EARL value providing proof of holdership of the physical device itself.
+    ///This would typically be printed on the device or its packaging as a QR code.
+    /// </summary>
+
+	[JsonPropertyName("devicePresentEarl")]
+	public virtual string?					DevicePresentEarl  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyStruct ("jsDevice", typeof (JsDevice),
+					(IBinding data, object? value) => {(data as JsProvision).JsDevice = value as JsDevice;}, 
+					(IBinding data) => (data as JsProvision).JsDevice,
+					false, ()=>new  JsDevice(), ()=>new JsDevice()),
+		new PropertyDictionaryStruct ("privateKeys", typeof (CryptoKey),
+					(IBinding data, object? value) => {(data as JsProvision).PrivateKeys = value as Dictionary<string,CryptoKey>;}, 
+					(IBinding data) => (data as JsProvision).PrivateKeys,
+					false, ()=>new  Dictionary<string,CryptoKey>(), ()=>new CryptoKey(),
+					(IBinding data) => (data as JsProvision).PrivateKeys.GetEnumerable(),
+					(object dictionary, object key, object value) =>
+						 {(dictionary as Dictionary<string,CryptoKey>).Add (key as string,value as CryptoKey);}),
+		new PropertyString ("deviceNotPresentEarl", 
+					(IBinding data, string? value) => {(data as JsProvision).DeviceNotPresentEarl = value;}, 
+					(IBinding data) => (data as JsProvision).DeviceNotPresentEarl ),
+		new PropertyString ("devicePresentEarl", 
+					(IBinding data, string? value) => {(data as JsProvision).DevicePresentEarl = value;}, 
+					(IBinding data) => (data as JsProvision).DevicePresentEarl )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<JsProvision> _binding = new (
+			new() {
+			{ "jsDevice", _properties [0]},
+			{ "privateKeys", _properties [1]},
+			{ "deviceNotPresentEarl", _properties [2]},
+			{ "devicePresentEarl", _properties [3]}}, __Tag,
+		() => new JsProvision(), () => [], () => [], null, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "JsProvision";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new JsProvision();
 
 	}
 

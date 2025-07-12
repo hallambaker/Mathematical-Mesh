@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 7/8/2025 6:33:45 PM
+//  This file was automatically generated at 7/12/2025 5:51:39 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -80,6 +80,12 @@ public abstract partial class Jose : global::Goedel.Protocol.JsonObject {
 	    {typeof(JoseWebEncryption), JoseWebEncryption._binding},
 	    {typeof(JWKS), JWKS._binding},
 	    {typeof(JWK), JWK._binding},
+	    {typeof(JwkEllipticCurve), JwkEllipticCurve._binding},
+	    {typeof(JwkRsa), JwkRsa._binding},
+	    {typeof(JwkRsaPrivate), JwkRsaPrivate._binding},
+	    {typeof(JwkUdfSeed), JwkUdfSeed._binding},
+	    {typeof(JwkOctet), JwkOctet._binding},
+	    {typeof(JwkOctetKeyPairs), JwkOctetKeyPairs._binding},
 	    {typeof(JwtHeader), JwtHeader._binding},
 	    {typeof(Signed), Signed._binding},
 	    {typeof(Encrypted), Encrypted._binding},
@@ -419,49 +425,13 @@ public partial class JWK : Jose {
 	[JsonPropertyName("x5t#S256")]
 	public virtual byte[]?					X5T256  {get; set;} //
 
-    /// <summary>
-    /// </summary>
-
-	[JsonPropertyName("crv")]
-	public virtual string?					Curve  {get; set;} //
-
-    /// <summary>
-    /// </summary>
-
-	[JsonPropertyName("x")]
-	public virtual string?					X  {get; set;} //
-
-    /// <summary>
-    /// </summary>
-
-	[JsonPropertyName("y")]
-	public virtual string?					Y  {get; set;} //
-
-    /// <summary>
-    /// </summary>
-
-	[JsonPropertyName("d")]
-	public virtual string?					D  {get; set;} //
-
-    /// <summary>
-    /// </summary>
-
-	[JsonPropertyName("n")]
-	public virtual string?					N  {get; set;} //
-
-    /// <summary>
-    /// </summary>
-
-	[JsonPropertyName("e")]
-	public virtual string?					E  {get; set;} //
-
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyString ("kty", 
+		new PropertyStringTag ("kty", 
 					(IBinding data, string? value) => {(data as JWK).KeyType = value;}, 
 					(IBinding data) => (data as JWK).KeyType ),
 		new PropertyString ("use", 
@@ -484,25 +454,7 @@ public partial class JWK : Jose {
 					(IBinding data) => (data as JWK).X5T ),
 		new PropertyBinary ("x5t#S256", 
 					(IBinding data, byte[]? value) => {(data as JWK).X5T256 = value;}, 
-					(IBinding data) => (data as JWK).X5T256 ),
-		new PropertyString ("crv", 
-					(IBinding data, string? value) => {(data as JWK).Curve = value;}, 
-					(IBinding data) => (data as JWK).Curve ),
-		new PropertyString ("x", 
-					(IBinding data, string? value) => {(data as JWK).X = value;}, 
-					(IBinding data) => (data as JWK).X ),
-		new PropertyString ("y", 
-					(IBinding data, string? value) => {(data as JWK).Y = value;}, 
-					(IBinding data) => (data as JWK).Y ),
-		new PropertyString ("d", 
-					(IBinding data, string? value) => {(data as JWK).D = value;}, 
-					(IBinding data) => (data as JWK).D ),
-		new PropertyString ("n", 
-					(IBinding data, string? value) => {(data as JWK).N = value;}, 
-					(IBinding data) => (data as JWK).N ),
-		new PropertyString ("e", 
-					(IBinding data, string? value) => {(data as JWK).E = value;}, 
-					(IBinding data) => (data as JWK).E )
+					(IBinding data) => (data as JWK).X5T256 )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -518,14 +470,9 @@ public partial class JWK : Jose {
 			{ "kid", _properties [4]},
 			{ "x5u", _properties [5]},
 			{ "x5t", _properties [6]},
-			{ "x5t#S256", _properties [7]},
-			{ "crv", _properties [8]},
-			{ "x", _properties [9]},
-			{ "y", _properties [10]},
-			{ "d", _properties [11]},
-			{ "n", _properties [12]},
-			{ "e", _properties [13]}}, __Tag,
-		() => new JWK(), () => [], () => [], null, Generic: false);
+			{ "x5t#S256", _properties [7]}}, __Tag,
+		() => new JWK(), () => [], () => [], null, 
+		TypeTag:"kty" , Generic: false);
 
 
 	/// <summary>
@@ -543,6 +490,439 @@ public partial class JWK : Jose {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new JWK();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class JwkEllipticCurve : JWK {
+    /// <summary>
+    ///The "crv" (curve) parameter identifies the cryptographic curve used
+    ///with the key
+    /// </summary>
+
+	[JsonPropertyName("crv")]
+	public virtual string?					Curve  {get; set;} //
+
+    /// <summary>
+    ///The "x" (x coordinate) parameter contains the x coordinate for the
+    ///Elliptic Curve point.
+    /// </summary>
+
+	[JsonPropertyName("x")]
+	public virtual string?					X  {get; set;} //
+
+    /// <summary>
+    ///The "y" (y coordinate) parameter contains the y coordinate for the
+    ///Elliptic Curve point.
+    /// </summary>
+
+	[JsonPropertyName("y")]
+	public virtual string?					Y  {get; set;} //
+
+    /// <summary>
+    ///The "d" (ECC private key) parameter contains the Elliptic Curve
+    ///private key value.
+    /// </summary>
+
+	[JsonPropertyName("d")]
+	public virtual string?					D  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyString ("crv", 
+					(IBinding data, string? value) => {(data as JwkEllipticCurve).Curve = value;}, 
+					(IBinding data) => (data as JwkEllipticCurve).Curve ),
+		new PropertyString ("x", 
+					(IBinding data, string? value) => {(data as JwkEllipticCurve).X = value;}, 
+					(IBinding data) => (data as JwkEllipticCurve).X ),
+		new PropertyString ("y", 
+					(IBinding data, string? value) => {(data as JwkEllipticCurve).Y = value;}, 
+					(IBinding data) => (data as JwkEllipticCurve).Y ),
+		new PropertyString ("d", 
+					(IBinding data, string? value) => {(data as JwkEllipticCurve).D = value;}, 
+					(IBinding data) => (data as JwkEllipticCurve).D )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<JwkEllipticCurve> _binding = new (
+			new() {
+			{ "crv", _properties [0]},
+			{ "x", _properties [1]},
+			{ "y", _properties [2]},
+			{ "d", _properties [3]}}, __Tag,
+		() => new JwkEllipticCurve(), () => [], () => [], JWK._binding, 
+		TypeTag:"kty" , Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "EC";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new JwkEllipticCurve();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class JwkRsa : JWK {
+    /// <summary>
+    ///
+    /// </summary>
+
+	[JsonPropertyName("n")]
+	public virtual string?					N  {get; set;} //
+
+    /// <summary>
+    ///
+    /// </summary>
+
+	[JsonPropertyName("e")]
+	public virtual string?					E  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyString ("n", 
+					(IBinding data, string? value) => {(data as JwkRsa).N = value;}, 
+					(IBinding data) => (data as JwkRsa).N ),
+		new PropertyString ("e", 
+					(IBinding data, string? value) => {(data as JwkRsa).E = value;}, 
+					(IBinding data) => (data as JwkRsa).E )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<JwkRsa> _binding = new (
+			new() {
+			{ "n", _properties [0]},
+			{ "e", _properties [1]}}, __Tag,
+		() => new JwkRsa(), () => [], () => [], JWK._binding, 
+		TypeTag:"kty" , Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "RSA";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new JwkRsa();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class JwkRsaPrivate : PublicKeyRSA {
+    /// <summary>
+    ///The parameter d
+    /// </summary>
+
+	[JsonPropertyName("d")]
+	public virtual byte[]?					D  {get; set;} //
+
+    /// <summary>
+    ///The parameter p
+    /// </summary>
+
+	[JsonPropertyName("p")]
+	public virtual byte[]?					P  {get; set;} //
+
+    /// <summary>
+    ///The parameter q
+    /// </summary>
+
+	[JsonPropertyName("q")]
+	public virtual byte[]?					Q  {get; set;} //
+
+    /// <summary>
+    ///The parameter dp
+    /// </summary>
+
+	[JsonPropertyName("dp")]
+	public virtual byte[]?					DP  {get; set;} //
+
+    /// <summary>
+    ///The parameter dq
+    /// </summary>
+
+	[JsonPropertyName("dq")]
+	public virtual byte[]?					DQ  {get; set;} //
+
+    /// <summary>
+    ///The parameter QInverse
+    /// </summary>
+
+	[JsonPropertyName("qi")]
+	public virtual byte[]?					QI  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyBinary ("d", 
+					(IBinding data, byte[]? value) => {(data as JwkRsaPrivate).D = value;}, 
+					(IBinding data) => (data as JwkRsaPrivate).D ),
+		new PropertyBinary ("p", 
+					(IBinding data, byte[]? value) => {(data as JwkRsaPrivate).P = value;}, 
+					(IBinding data) => (data as JwkRsaPrivate).P ),
+		new PropertyBinary ("q", 
+					(IBinding data, byte[]? value) => {(data as JwkRsaPrivate).Q = value;}, 
+					(IBinding data) => (data as JwkRsaPrivate).Q ),
+		new PropertyBinary ("dp", 
+					(IBinding data, byte[]? value) => {(data as JwkRsaPrivate).DP = value;}, 
+					(IBinding data) => (data as JwkRsaPrivate).DP ),
+		new PropertyBinary ("dq", 
+					(IBinding data, byte[]? value) => {(data as JwkRsaPrivate).DQ = value;}, 
+					(IBinding data) => (data as JwkRsaPrivate).DQ ),
+		new PropertyBinary ("qi", 
+					(IBinding data, byte[]? value) => {(data as JwkRsaPrivate).QI = value;}, 
+					(IBinding data) => (data as JwkRsaPrivate).QI )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<JwkRsaPrivate> _binding = new (
+			new() {
+			{ "d", _properties [0]},
+			{ "p", _properties [1]},
+			{ "q", _properties [2]},
+			{ "dp", _properties [3]},
+			{ "dq", _properties [4]},
+			{ "qi", _properties [5]}}, __Tag,
+		() => new JwkRsaPrivate(), () => [], () => [], PublicKeyRSA._binding, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "JwkRsaPrivate";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new JwkRsaPrivate();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class JwkUdfSeed : JWK {
+    /// <summary>
+    ///
+    /// </summary>
+
+	[JsonPropertyName("seed")]
+	public virtual string?					Seed  {get; set;} //
+
+    /// <summary>
+    ///
+    /// </summary>
+
+	[JsonPropertyName("roots")]
+	public virtual List<string>?					Roots  {get; set;}
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyString ("seed", 
+					(IBinding data, string? value) => {(data as JwkUdfSeed).Seed = value;}, 
+					(IBinding data) => (data as JwkUdfSeed).Seed ),
+		new PropertyListString ("roots", 
+					(IBinding data, List<string>? value) => {(data as JwkUdfSeed).Roots = value;}, 
+					(IBinding data) => (data as JwkUdfSeed).Roots )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<JwkUdfSeed> _binding = new (
+			new() {
+			{ "seed", _properties [0]},
+			{ "roots", _properties [1]}}, __Tag,
+		() => new JwkUdfSeed(), () => [], () => [], JWK._binding, 
+		TypeTag:"kty" , Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "UDFS";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new JwkUdfSeed();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class JwkOctet : JWK {
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<JwkOctet> _binding = new (
+			new() {}, __Tag,
+		() => new JwkOctet(), () => [], () => [], JWK._binding, 
+		TypeTag:"kty" , Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "oct";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new JwkOctet();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class JwkOctetKeyPairs : JWK {
+    /// <summary>
+    ///MUST be present and contain the subtype of the key 
+    ///(from the "JSON Web Elliptic Curve" registry)
+    /// </summary>
+
+	[JsonPropertyName("crv")]
+	public virtual string?					Curve  {get; set;} //
+
+    /// <summary>
+    ///MUST be present and contain the public key
+    ///encoded using the base64url [RFC4648] encoding.
+    /// </summary>
+
+	[JsonPropertyName("x")]
+	public virtual string?					X  {get; set;} //
+
+    /// <summary>
+    ///MUST be present for private keys and contain the
+    ///private key encoded using the base64url encoding.  This parameter
+    ///MUST NOT be present for public keys.
+    /// </summary>
+
+	[JsonPropertyName("d")]
+	public virtual string?					D  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyString ("crv", 
+					(IBinding data, string? value) => {(data as JwkOctetKeyPairs).Curve = value;}, 
+					(IBinding data) => (data as JwkOctetKeyPairs).Curve ),
+		new PropertyString ("x", 
+					(IBinding data, string? value) => {(data as JwkOctetKeyPairs).X = value;}, 
+					(IBinding data) => (data as JwkOctetKeyPairs).X ),
+		new PropertyString ("d", 
+					(IBinding data, string? value) => {(data as JwkOctetKeyPairs).D = value;}, 
+					(IBinding data) => (data as JwkOctetKeyPairs).D )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<JwkOctetKeyPairs> _binding = new (
+			new() {
+			{ "crv", _properties [0]},
+			{ "x", _properties [1]},
+			{ "d", _properties [2]}}, __Tag,
+		() => new JwkOctetKeyPairs(), () => [], () => [], JWK._binding, 
+		TypeTag:"kty" , Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "OKP";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new JwkOctetKeyPairs();
 
 	}
 

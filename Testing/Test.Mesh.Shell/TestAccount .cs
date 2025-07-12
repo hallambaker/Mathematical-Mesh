@@ -77,34 +77,38 @@ public partial class ShellTests {
     [Fact]
     public void TestHandleThing() {
 
+
+
         // Manufacturer
         var maker = GetTestCLI(Manufacturer);
         var m1 = maker.Example($"account create {ManufacturerAccount} /local=alice /handle={ManufacturerHandle}");
 
-        var devicefile = GetUniqueFilepath();
+
+        // Set up the device template (this would typically cover multiple devices)
         var jsdevicefile = GetUniqueFilepath();
+        var jsdevice = new JsDevice() {
+            Manufacturer = "Acme widgest Inc.",
+            ModelName = "Widgetron",
+            ModelId = "Wev2000",
+            };
+        var length = jsdevice.ToFile(jsdevicefile);
+
+        var devicefile = GetUniqueFilepath();
+
+        var wifi = "00‑00‑5E‑00‑53‑86";
+        var ethernet = "00‑00‑5E‑00‑53‑69";
 
         // Initialize device
-        var m2 = maker.Dispatch($"device init {devicefile}");
-        var deviceData = JsonObject.StreamParse<DeviceConfiguration>(devicefile);
-        
+        var m2 = maker.Dispatch($"device init {devicefile} /jsdevice={jsdevicefile} /deviceid=007" +
+            $" /wifi={wifi} /ethernet={ethernet}");
 
-        var jsdevice = deviceData.JsDevice;
-        jsdevice.Manufacturer = "Acme widgest Inc.";
-        jsdevice.ModelName = "Widgetron";
-        jsdevice.ModelId = "Wev";
-        jsdevice.DeviceId = "007";
-        // Here we could update the configuration if we wanted to
-
-        // Publish EARL
-        var m3 = maker.Dispatch($"device jsdevice {jsdevicefile}");
-        var m3Earl = m3 as ResultPublish;
-        var earl = m3Earl.Uri;
+        var m3Earl = m2 as ResultFileEARL;
+        var earl = m3Earl.URI;
 
 
         var device = GetTestCLI(DeviceDevice);
         // put the device into wait to be onboarded state
-        var d1 = device.Dispatch($"device onboard {devicefile}");
+        //var d1 = device.Dispatch($"device onboard {devicefile}");
         var pendingOnboard = maker.Shell.DeviceOnboardAsync(devicefile);
 
         // This should not complete yet.
@@ -114,7 +118,7 @@ public partial class ShellTests {
         // Now Alice onboards the device 
         var admin = GetTestCLI(AliceDevice1);
         var a1 = admin.Example($"account create {AliceAccount} /local=alice /handle={HandleAlice}");
-        var a2 = admin.Example($"account device earl {earl} /local=mydevice");
+        var a2 = admin.Example($"device earl {earl} /local=mydevice /device");
 
         // wait for the device to be fully initialized 
         pendingOnboard.Wait();

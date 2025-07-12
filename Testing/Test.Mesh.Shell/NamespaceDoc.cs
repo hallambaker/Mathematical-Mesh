@@ -24,6 +24,7 @@ global using Goedel.Command.Json;
 global using Goedel.Cryptography;
 global using Goedel.Cryptography.Dare;
 global using Goedel.IO;
+global using Goedel.Contacts;
 global using Goedel.Mesh;
 global using Goedel.Mesh.Test;
 global using Goedel.Test;

@@ -21,6 +21,12 @@
 #endregion
 
 
+using Goedel.Mesh.Client;
+
+using Microsoft.Extensions.Options;
+
+using System.Net.WebSockets;
+
 namespace Goedel.Mesh.Shell;
 
 public partial class Shell {
@@ -31,9 +37,60 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult DeviceInitialize(DeviceInitialize options) {
+        var outputFile = options.File.Value;
+        var templateFile = options.Template.Value;
+        var template = (templateFile == null) ? new() : JsonObject.StreamParse<JsDevice>(templateFile, false);
+
+        template.Version = "1.0";
+        template.Kind = "Network";
+        // set the date of manufacture
+        template.DateManufacture ??= DateTime.Now;
+        // override the device id specified in the file with the one specified here.
+        template.DeviceId = options.DeviceId.Value ?? template.DeviceId;
+
+        var description = new JsProvision(template);
 
 
-        throw new NYI();
+        if (options.MeshOnboard.Value) {
+            // Add an entry for Mesh onboarding
+            var deviceProfile = ProfileDevice.Generate();
+            var enveloped = deviceProfile.Envelope as Enveloped;
+            var profileBytes = enveloped.ToBytes();
+
+
+            var seed = deviceProfile.SecretSeed.GetJWK();
+
+            var endpoint = $"http://+:15099/.well-known/mmm_onboard/{deviceProfile.UdfString}/";
+
+            description.AddOnboarding("meshonboard", [endpoint],
+                seed, profileBytes, "application/mmmdevice");
+            }
+
+        if (!options.WiFi.ByDefault) {
+            var ssid = template.ModelId ?? options.WiFi.Value;
+            description.AddPhysicalWiFi(ssid, options.WiFi.Value);
+            }
+        if (!options.Ethernet.ByDefault) {
+            description.AddPhysicalEthernet(options.Ethernet.Value);
+            }
+
+        var contextAccount = GetContextUser(options);
+        if (options.Present.Value) {
+            description.DevicePresentEarl = contextAccount.PublishEarl(description.JsDevice).Sync();
+            }
+        if (options.NotPresent.Value) {
+            description.DeviceNotPresentEarl = contextAccount.PublishEarl(description.JsDevice).Sync();
+            }
+
+        var length = description.ToFile(outputFile);
+
+        return new ResultFileEARL() {
+            Wrapper = outputFile,
+            Source = templateFile,
+            URI = description.DevicePresentEarl,
+            NotPresent = description.DeviceNotPresentEarl
+            };
+
         }
     /// <summary>
     /// Dispatch method
@@ -41,9 +98,24 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult DeviceJsDevice(DeviceJsDevice options) {
+        var outputFile = options.File.Value;
 
+        // read in the description file;
+        var description = JsonObject.StreamParse<JsProvision>(outputFile);
 
-        throw new NYI();
+        var contextAccount = GetContextUser(options);
+
+        // publish the device description twice, once to 
+        description.DevicePresentEarl = contextAccount.PublishEarl(description.JsDevice).Sync();
+        description.DeviceNotPresentEarl = contextAccount.PublishEarl(description.JsDevice).Sync();
+
+        var length = description.ToFile(outputFile);
+
+        return new ResultFileEARL() {
+            Source = outputFile,
+            URI = description.DevicePresentEarl,
+            NotPresent = description.DeviceNotPresentEarl
+            };
         }
     /// <summary>
     /// Dispatch method
@@ -51,19 +123,49 @@ public partial class Shell {
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult DeviceOnboard(DeviceOnboard options) {
-
-
-        throw new NYI();
+        return DeviceOnboardAsync(options.File.Value).Sync();
         }
+
+
+    public async Task<ShellResult> DeviceOnboardAsync(
+                string configFile) {
+
+
+        var onboarding = new OnboardingServer(MeshHost);
+        var profile = await onboarding.WaitOnboardingAsync(configFile);
+
+        //var result = new ResultConnect() {
+        //    CatalogedMachine = contextUser.CatalogedMachine,
+        //    Profile = contextUser.Profile,
+
+        //    ActivationAccount = contextUser.ActivationAccount,
+        //    RequestConnection = contextUser.RequestConnection,
+        //    ActivationCommon = contextUser.ActivationCommon,
+        //    RespondConnection = contextUser.RespondConnection
+        //    };
+        return null;
+
+        }
+
+
+
     /// <summary>
     /// Dispatch method
     /// </summary>
     /// <param name="options">The command line options.</param>
     /// <returns>Mesh result instance</returns>
     public override ShellResult DeviceEarl(DeviceEarl options) {
+        var earl = options.Uri.Value;
+        var contextAccount = GetContextUser(options);
+        var rights = GetRights(options);
 
+        // ToDo: have to assign the rights!
+        var processResult = contextAccount.AcceptOnboardAsync(earl, rights).Sync();
 
-        throw new NYI();
+        var result = new ResultProcess() {
+            ProcessResult = processResult as Message
+            };
+        return result;
         }
 
     /// <summary>
@@ -246,12 +348,7 @@ public partial class Shell {
     
 
 
-    public async Task<ShellResult> DeviceOnboardAsync(
-                    string configFile) {
 
-
-        throw new NYI();
-        }
 
 
 

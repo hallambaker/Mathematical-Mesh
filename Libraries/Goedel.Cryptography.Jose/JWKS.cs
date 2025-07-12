@@ -40,8 +40,8 @@ public partial class JWK {
     /// </summary>
     /// <param name="keyPairECDHNist">The key to return the JWK for.</param>
     /// <returns>The created instance.</returns>
-    public static JWK Factory(KeyPairECDHNist keyPairECDHNist) => new() {
-        KeyType = "EC",
+    public static JWK Factory(KeyPairECDHNist keyPairECDHNist) => new JwkEllipticCurve() {
+        //KeyType = "EC",
         Curve = "P-256",
         Use = keyPairECDHNist.KeyUses.HasFlag(KeyUses.Sign) ? "sig" : "enc",
         X = keyPairECDHNist.PublicKey.PublicKey.X.ToByteArrayBigEndian(32).ToStringBase64url(),
@@ -54,8 +54,8 @@ public partial class JWK {
     /// </summary>
     /// <param name="keyPairECDH">The key to return the JWK for.</param>
     /// <returns>The created instance.</returns>
-    public static JWK Factory(KeyPairECDH keyPairECDH) => new(){
-        KeyType = "OKP",
+    public static JWK Factory(KeyPairECDH keyPairECDH) => new JwkOctetKeyPairs(){
+        //KeyType = "OKP",
         Curve = GetCurve(keyPairECDH),
         X = keyPairECDH.PublicData.ToStringBase64url(),
         Kid = keyPairECDH.KeyIdentifier
@@ -67,8 +67,8 @@ public partial class JWK {
     /// </summary>
     /// <param name="keyPairRsa">The key to return the JWK for.</param>
     /// <returns>The created instance.</returns>
-    public static JWK Factory(KeyPairBaseRSA keyPairRsa) => new() {
-        KeyType = "RSA",
+    public static JWK Factory(KeyPairBaseRSA keyPairRsa) => new JwkRsa() {
+        //KeyType = "RSA",
         N = keyPairRsa.PkixPublicKeyRsa.Modulus.ToStringBase64url(),
         E = keyPairRsa.PkixPublicKeyRsa.PublicExponent.ToStringBase64url()
         };
@@ -86,5 +86,14 @@ public partial class JWK {
         KeyPairX448 => "X448",
         _ =>throw new NYI()
         };
+
+    }
+
+
+
+public partial class JwkUdfSeed {
+
+    public PrivateKeyUDF GetPrivateKeyUDF() => new(Seed);
+
 
     }

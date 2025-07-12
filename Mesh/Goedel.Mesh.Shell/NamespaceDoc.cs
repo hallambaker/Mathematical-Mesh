@@ -31,7 +31,7 @@ global using Goedel.Contacts;
 global using Goedel.Mesh.Client;
 global using Goedel.Protocol;
 global using Goedel.Utilities;
-
+global using Goedel.Device;
 global using System;
 global using System.Collections.Generic;
 global using System.IO;

@@ -231,6 +231,16 @@ public class ContextMeshPending : ContextAccount {
         //// OK so here we need to unpack the profile etc.
         var respondConnection = completeResponse.EnvelopedRespondConnection.Decode(KeyCollection);
 
+        return await MeshHost.ProcessCompletion(profileDevice, respondConnection);
+        }
+
+
+
+
+
+    private async Task<ContextUser> ProcessCompletion(
+                ProfileDevice profileDevice, 
+                RespondConnection respondConnection) {
         respondConnection.Validate(profileDevice, KeyCollection);
 
         switch (respondConnection.Result) {
@@ -268,6 +278,4 @@ public class ContextMeshPending : ContextAccount {
         await contextUser.SynchronizeAsync();
         return contextUser;
         }
-
-
     }

@@ -1,0 +1,3 @@
+﻿Protocol Goedel.Device OnboardService OnboardService
+	Description 
+		|Onboarding Service for Mesh Device using JsProvisioning protocol

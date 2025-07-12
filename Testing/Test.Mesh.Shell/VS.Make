@@ -19,6 +19,8 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Command.Json.dll\
+    Goedel.Contacts.dll\
+    Goedel.Protocol.dll\
     Goedel.Utilities.dll\
     Goedel.Cryptography.Core.dll\
     Goedel.Test.Core.dll\

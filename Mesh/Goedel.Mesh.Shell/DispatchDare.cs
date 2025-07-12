@@ -55,7 +55,7 @@ public partial class Shell {
 
         return new ResultFile() {
             Filename = outputFile,
-            TotalBytes = (int)Length
+            TotalBytes = Length
             };
 
         }
@@ -74,7 +74,7 @@ public partial class Shell {
         var Length = Enveloped.Decode(inputFile, outputFile, keyCollection: keyLocate, verify: verify);
 
         return new ResultFile() {
-            TotalBytes = (int)Length
+            TotalBytes = Length
             };
         }
 
@@ -93,7 +93,7 @@ public partial class Shell {
 
         return new ResultFileDare() {
             Verified = true, // Hack: Should test here!!!!
-            TotalBytes = (int)result.PayloadLength,
+            TotalBytes = result.PayloadLength,
             Filename = inputFile,
             Envelope = result
             };

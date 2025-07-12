@@ -700,4 +700,50 @@ public class MeshHost : Disposable {
 
         }
 
+
+
+    public async Task<ContextUser> ProcessCompletion(
+                ProfileDevice profileDevice,
+                RespondConnection respondConnection) {
+        respondConnection.Validate(profileDevice, KeyCollection);
+
+        switch (respondConnection.Result) {
+            case MeshConstants.TransactionResultReject: throw new ConnectionRefusedException();
+            case MeshConstants.TransactionResultPending: throw new ConnectionPendingException();
+            case MeshConstants.TransactionResultExpired: throw new ConnectionExpiredException();
+            case MeshConstants.TransactionResultAccountUnknown: throw new ConnectionAccountUnknownException();
+            case MeshConstants.TransactionResultPinInvalid: throw new RefusedPinInvalidException();
+            }
+
+        // Check the return result here!
+        respondConnection.Result.AssertEqual(MeshConstants.TransactionResultAccept,
+                ConnectionException.Throw);
+
+
+        var catalogedEntry = respondConnection.CatalogedDevice;
+        var profileUser = catalogedEntry.ProfileUser;
+
+        // create the host catalog entry
+        var catalogedStandard = new CatalogedStandard() {
+            Id = profileDevice.UdfString,
+            CatalogedDevice = catalogedEntry,
+            EnvelopedProfileAccount = profileUser.GetEnvelopedProfileAccount()
+            };
+
+        // create the context mesh
+        var contextUser = new ContextUser(this, catalogedStandard) {
+            RespondConnection = respondConnection
+            };
+
+        Register(catalogedStandard, contextUser);
+
+        // create the account context for the account we asked to connect to and initialize
+        Directory.CreateDirectory(contextUser.StoresDirectory);
+        await contextUser.SynchronizeAsync();
+        return contextUser;
+        }
+
+
+
+
     }

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Device</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Device.JsDeviceException">
+            <summary>
+            Generic Mesh Service Error
+            </summary>
+        </member>
+        <member name="P:Goedel.Device.JsDeviceException.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Device.JsDeviceException.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Device.JsDeviceException.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Device.JsDeviceException._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Device.JsDeviceException.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Device.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Device.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+        <member name="T:Goedel.Device.OnboardService">
+             <summary>
+            
+             Onboarding Service for Mesh Device using JsProvisioning protocol
+             </summary>
+        </member>
+        <member name="P:Goedel.Device.OnboardService._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Device.OnboardService.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="P:Goedel.Device.OnboardService._BindingDictionary">
+            <summary>
+            Dictionary mapping types to bindings
+            </summary>
+        </member>
+        <member name="P:Goedel.Device.OnboardService._Initialized">
+            <summary>Variable used to force static initialization</summary> 
+        </member>
+        <member name="T:Goedel.Device.NamespaceDoc">
+            <summary>
+            Mesh client implementation.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -35,6 +35,11 @@ public static class Enumerable {
         new SafeEnumerable<T>(item);
 
 
+    public static bool IsEmpty<T>(this List<T>? item) =>
+        (item == null) || (item.Count == 0);
+
+    public static bool IsEmpty<T>(this T[]? item) =>
+            (item == null) || (item.Length == 0);
     }
 
 public class SafeEnumerable<T> : IEnumerable<T> {

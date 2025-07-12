@@ -3,6 +3,10 @@
 	Extern Resource
 	CamelCase
 
+
+
+
+
 	// 2. Device
 	Structure JsDevice
 		Inherits JmapBase
@@ -121,10 +125,16 @@
 			Description
 				|Information related to device netowrking (if supported)
 
-		Struct Network			Network
+
+		Struct Network			Services
 			Dictionary
 			Description
-				| The network protocol connections supported.
+				| The network services supported.
+
+		Struct NetworkPhysical	Network
+			Dictionary
+			Description
+				| The physical network connections supported.
 
 		// JsonWebKeys
 		Struct CryptoKey		CryptoKeys
@@ -136,6 +146,10 @@
 				| The CryptoKey object is defined in JSContact and JSContact Cryptographic Extensions.
 
 	Structure Network
+		Tag "network" 
+		String					Type
+			Tag "@type" 
+			TypeTag		
 		String		Kind
 			Description
 				| The network connection kind
@@ -163,6 +177,22 @@
 				|Permission identifiers used to assign access rights to control of the
 				|device.
 
+
+	Structure NetworkPhysical
+		Inherits Network
+		String EUI
+		String Speed
+
+	Structure NetworkEthernet
+		Inherits NetworkPhysical
+		Tag "networkEthernet" 
+
+	Structure NetworkWiFi
+		Inherits NetworkPhysical
+		Tag "networkWiFi" 
+		String SSID
+		String Username
+		String Password
 
 	Structure Maintenance
 		Description
@@ -214,7 +244,6 @@
 			Description
 				|The dimension specifications
 
-
 	Structure Dimensions
 		Description
 			|The physical properties of the component parts of the device.
@@ -241,3 +270,25 @@
 		Float TemperatureMax
 			Description
 				|The maximum temperature for the device
+
+	Structure JsProvision
+		Description
+			|Configuration file used to initialize a device. It is simply a JSDevice configuration 
+			|with an additional seed.
+		Struct JsDevice JsDevice
+			Description
+				|The device description. This contains all the information the device
+				|requires that isn't private.
+		Struct CryptoKey PrivateKeys
+			Dictionary
+			Description
+				|The device private key seed.
+		String DeviceNotPresentEarl
+			Description
+				|Public EARL value that can be sent to the device owner in advance of the device
+				|itself being available, thus enabling the owner to configure network infrastructure
+				|to pre-authorize onboarding.
+		String DevicePresentEarl
+			Description
+				|Private EARL value providing proof of holdership of the physical device itself.
+				|This would typically be printed on the device or its packaging as a QR code.

@@ -73,6 +73,7 @@
 		CamelCase
 		String KeyType
 			Tag "kty"
+			TypeTag
 		String Use 
 			Tag "use"
 		String KeyOps
@@ -86,16 +87,117 @@
 		Binary X5T256
 			Tag "x5t#S256"
 
+		//String Curve
+		//	Tag "crv"
+		//String X 
+		//String Y 
+		//String D 
+
+		//String N
+		//String E 
+
+
+	Structure JwkEllipticCurve
+		CamelCase
+		Tag "EC"
+		Inherits JWK
 		String Curve
 			Tag "crv"
+			Description
+				|The "crv" (curve) parameter identifies the cryptographic curve used
+				|with the key
 		String X 
-		String Y 
+			Description
+				|The "x" (x coordinate) parameter contains the x coordinate for the
+				|Elliptic Curve point.
+		String Y 		
+			Description
+				|The "y" (y coordinate) parameter contains the y coordinate for the
+				|Elliptic Curve point.
+		String D 	
+			Description
+				|The "d" (ECC private key) parameter contains the Elliptic Curve
+				|private key value.
+
+	Structure JwkRsa
+		CamelCase
+		Tag "RSA"
+		Inherits JWK
+
+		String N	
+			Description
+				|
+		String E 	
+			Description
+				|
+
+	Structure JwkRsaPrivate
+		CamelCase
+		Inherits PublicKeyRSA
+		Binary D
+			Tag "d"
+			Description
+				|The parameter d
+		Binary P
+			Tag "p"
+			Description
+				|The parameter p
+		Binary Q
+			Tag "q"
+			Description
+				|The parameter q
+		Binary DP
+			Tag "dp"
+			Description
+				|The parameter dp
+		Binary DQ
+			Tag "dq"
+			Description
+				|The parameter dq
+		Binary QI
+			Tag "qi"
+			Description
+				|The parameter QInverse
+
+	Structure JwkUdfSeed
+		CamelCase
+		Tag "UDFS"
+		Inherits JWK
+
+		String Seed
+			Tag "seed"
+			Description
+				|
+		String Roots
+			Tag "roots"
+			Multiple
+			Description
+				|
+
+	Structure JwkOctet
+		CamelCase
+		Tag "oct"
+		Inherits JWK
+
+	Structure JwkOctetKeyPairs
+		CamelCase
+		Tag "OKP"
+		Inherits JWK
+
+		String Curve
+			Tag "crv"
+			Description
+				|MUST be present and contain the subtype of the key 
+				|(from the "JSON Web Elliptic Curve" registry)
+		String X 
+			Description
+				|MUST be present and contain the public key
+				|encoded using the base64url [RFC4648] encoding.
 		String D 
-
-		String N
-		String E 
-
-
+			Description
+				|MUST be present for private keys and contain the
+				|private key encoded using the base64url encoding.  This parameter
+				|MUST NOT be present for public keys.
 
 	Structure JwtHeader
 		String Typ

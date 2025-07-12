@@ -876,3 +876,537 @@ Add host1.example.com
    Node A
 Add _mmm._tcp.example.com
    Node SRV
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/eif5-6y6e-6wfs-6krp-cq72-6q55-tt4b
+Success earl jsdevice://example.com/eif5-6y6e-6wfs-6krp-cq72-6q55-tt4b
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/ejdm-n7m5-xppm-5iuq-2onf-cmrg-v6n4
+Success earl jsdevice://example.com/ejdm-n7m5-xppm-5iuq-2onf-cmrg-v6n4
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/elsr-k34s-xlpr-jiiu-nniw-slr4-oohi
+Success earl jsdevice://example.com/elsr-k34s-xlpr-jiiu-nniw-slr4-oohi
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/el2s-5hhf-hinj-7mh5-nmkw-77e5-fk5i
+Success earl jsdevice://example.com/el2s-5hhf-hinj-7mh5-nmkw-77e5-fk5i
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/eiyr-juwa-rkyv-k7p6-vsjh-yf4i-hpvy
+Success earl jsdevice://example.com/eiyr-juwa-rkyv-k7p6-vsjh-yf4i-hpvy
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/eiyy-ujtq-li3f-aus4-lese-5ucr-ir66
+Success earl jsdevice://example.com/eiyy-ujtq-li3f-aus4-lese-5ucr-ir66
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/ejq7-5wlz-3u3a-oipf-b2ud-cvvv-jtwk
+Success earl jsdevice://example.com/ejq7-5wlz-3u3a-oipf-b2ud-cvvv-jtwk
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/ekls-bbat-qvlb-lbpo-tvs4-whwd-gn27
+Success earl jsdevice://example.com/ekls-bbat-qvlb-lbpo-tvs4-whwd-gn27
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/ej2e-hyqo-q7nf-njc7-2vvk-ziet-poi7
+Success earl jsdevice://example.com/ej2e-hyqo-q7nf-njc7-2vvk-ziet-poi7
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/ejsg-jgv2-oqv4-bpli-3i4g-mjqu-lblt
+Success earl jsdevice://example.com/ejsg-jgv2-oqv4-bpli-3i4g-mjqu-lblt

@@ -1327,6 +1327,81 @@ public partial class ContextUser : ContextAccount {
         return await ProcessAsync(request, true, messagePin);
         }
 
+
+    /// <summary>
+    /// Add the device <paramref name="profileDevice"/> with rights <paramref name="rights"/>
+    /// </summary>
+    /// <param name="profileDevice">The device to add.</param>
+    /// <param name="rights">The rights to assign.</param>
+    /// <returns>The transaction result</returns>
+    public async Task<TransactResponse> AddDevice (
+                ProfileDevice profileDevice,
+                List<string> rights = null) {
+
+        var transaction = TransactBegin();
+        var respondConnection = new RespondConnection() ;
+
+        AddDevice(profileDevice, rights, transaction, respondConnection);
+        var responseTransaction = await transaction.TransactAsync();
+        return responseTransaction;
+        }
+
+    public async Task<Message> AcceptOnboardAsync(
+            string earl,
+                List<string> rights = null) {
+
+        // decode the EARL to obtain the JSDevice description.
+        var jsDevice = await EarlClient.ResolveDeviceEarl(earl);
+        var meshOnboardData = jsDevice.GetMeshOnboard();
+
+        var domain = "example.com";
+
+        // Create the connection data for the device
+        if (meshOnboardData.Network.Endpoints.IsEmpty()) {
+            return null;
+            }
+
+        var response = await AddDevice(meshOnboardData.ProfileDevice, rights);
+
+
+
+        var data = new byte[2];
+        byte[] respons2;
+
+        // Tell the device its connection information.
+
+        bool pending = true;
+        for (var i = 0; pending & i < meshOnboardData.Network.Endpoints.Count; i++) {
+            var endpoint = meshOnboardData.Network.Endpoints[i];
+
+            var prefix = endpoint.Replace("+", domain);
+
+            respons2 = await TrySendEndpointAsync(prefix, data);
+            pending = response is not null;
+            }
+
+        // unpack the response
+        return null;
+
+        }
+
+
+    async Task<byte[]> TrySendEndpointAsync(string endpoint, byte[] data) {
+
+        try {
+            var result = await endpoint.UploadDataTaskAsync(data);
+            return result;
+            }
+        catch {
+
+            return null;
+            }
+        }
+
+
+
+
+
     /// <summary>
     /// Accept or reject a connection request.
     /// </summary>
@@ -1349,7 +1424,7 @@ public partial class ContextUser : ContextAccount {
             };
         if (accept) {
             // Connect the device to the Mesh
-            AddDevice(request, rights, transaction, respondConnection);
+            AddDevice(request.MessageConnectionRequest.ProfileDevice, rights, transaction, respondConnection);
 
             }
         else {
@@ -1375,10 +1450,10 @@ public partial class ContextUser : ContextAccount {
         return new ResultAcknowledgeConnection(request, messagePin, responseTransaction);
         }
 
-    private void AddDevice(AcknowledgeConnection request, List<string> rights, TransactUser transact, RespondConnection respondConnection) {
+    private void AddDevice(ProfileDevice profileDevice, List<string> rights, TransactUser transact, RespondConnection respondConnection) {
 
         var device = ActivationCommon.MakeCatalogedDevice(
-                request.MessageConnectionRequest.ProfileDevice, ProfileUser, roles: rights, transactContextAccount: transact);
+                profileDevice, ProfileUser, roles: rights, transactContextAccount: transact);
 
         device.ApplicationEntries = MakeApplicationEntries(rights, transact, device);
         respondConnection.CatalogedDevice = device;

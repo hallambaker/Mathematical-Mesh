@@ -1,0 +1,8 @@
+﻿
+Namespace Goedel.Device
+
+	Exception JsDeviceException
+        Console "Unknown error occured."
+		Description
+			|Generic Mesh Service Error
+

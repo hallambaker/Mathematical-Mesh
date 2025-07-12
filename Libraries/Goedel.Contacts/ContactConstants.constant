@@ -18,8 +18,12 @@ File MiscUnsorted
 	String CryptoKeyEncryptShare "shareEncrypt"
 	String CryptoKeyAuthenticate "authenticate"
 	String CryptoKeySign "sign"
+	String CryptoKeySeed "seed"
 
+	String KindOnboarding "onboard"
+	String KindInternet "internet"
 
+	String OnlineServiceOnboard "mmm_onboard"
 
-
-	
+	String PhysicalWiFi "wifi"
+	String PhysicalEthernet "ethernet"

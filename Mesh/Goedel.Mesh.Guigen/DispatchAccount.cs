@@ -9,8 +9,6 @@ public partial class EverythingMaui {
 
 
 
-    HttpClient httpClient = new();
-
 
 
 

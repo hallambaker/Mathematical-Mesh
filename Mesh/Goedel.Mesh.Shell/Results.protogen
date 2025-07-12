@@ -57,6 +57,7 @@
 		Inherits		Result
 		String			Filename
 		Integer			TotalBytes
+			LengthBits 64
 		Boolean			Verified
 
 	Structure ResultKeyFile
@@ -92,9 +93,10 @@
 	Structure ResultFileEARL
 		Inherits		Result
 		String			Source
+		String			Wrapper
 		String			Created
 		String			URI
-
+		String			NotPresent
 
 
 	Structure ResultDump

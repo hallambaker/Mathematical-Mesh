@@ -43,6 +43,29 @@ namespace Goedel.Mesh;
 /// </summary>
 public static partial class Extensions {
 
+    public static MeshOnboardData? GetMeshOnboard(this JsDevice jsDevice) {
+
+
+        var network = jsDevice.GetNetworkType(ContactConstant.OnlineServiceOnboard);
+        if (!network.Keys.TryGetKey(ContactConstant.CryptoKeySeed, out var keyId)) {
+            return null;
+            }
+        if (!jsDevice.CryptoKeys.TryGetValue(keyId, out var publicKey)) {
+            return null;
+            }
+
+        var publicJWK = publicKey as JsonWebKeySet;
+
+        var envelope = JsonObject.StreamParse<Enveloped>(publicJWK.Data);
+        var profileDevice = ProfileDevice.Decode(envelope);
+
+        //throw new NYI();
+        return new MeshOnboardData(network, profileDevice, keyId);
+
+        }
+
+
+
     //delegate void ToBuilderDelegate (StringBuilder builder, int indent);
 
     /// <summary>

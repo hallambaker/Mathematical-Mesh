@@ -162,7 +162,10 @@ public partial class Profile {
         Generate();
         }
 
-
+    public void Activate(PrivateKeyUDF seed) {
+        SecretSeed = seed;
+        Generate();
+        }
 
     /// <summary>
     /// Generate profile specific keys, is overriden in child classes.
