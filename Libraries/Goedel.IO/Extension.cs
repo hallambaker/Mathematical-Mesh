@@ -20,6 +20,9 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Diagnostics.Metrics;
+using System.Net;
+
 namespace Goedel.IO;
 
 /// <summary>Specify the file status</summary>
@@ -431,4 +434,35 @@ public static partial class Extension {
         using var outputStream = fileName.OpenFileWrite();
         input.CopyTo(outputStream);
         }
+
+
+    public static byte[] ReadBody(
+                this HttpListenerRequest request, 
+                long maxRequest = -1) {
+        maxRequest = maxRequest <0 ? Int64.MaxValue : maxRequest;
+
+        // if we are not using chunked encoding, we can reject a too
+        // long request immediately.
+        if (request.ContentLength64 > maxRequest) {
+            throw new NYI();
+            }
+
+        // Copy the stream
+
+        var read = 1;
+        
+        var buffer = new byte[8192];
+        var output = new MemoryStream();
+
+
+        while (output.Length < maxRequest & read > 0) {
+            read = request.InputStream.Read(buffer, 0, buffer.Length);
+            output.Write(buffer, 0, read);
+            }
+        return output.ToArray();
+        }
+
+
+
+
     }

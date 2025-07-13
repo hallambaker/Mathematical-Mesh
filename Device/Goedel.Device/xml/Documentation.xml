@@ -75,5 +75,10 @@
             Mesh client implementation.
             </summary>
         </member>
+        <member name="P:Goedel.Device.OnboardingServer.MaxOnboardingRequest">
+            <summary>
+            The maximum onboarding request size.
+            </summary>
+        </member>
     </members>
 </doc>

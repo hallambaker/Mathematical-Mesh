@@ -94,15 +94,7 @@ public partial class Message {
 
 
 
-    /////<inheritdoc/>
-    //public override DareEnvelope Envelope(
-    //            CryptographicKey signingKey = null,
-    //            CryptographicKey encryptionKey = null,
-    //            ObjectEncoding objectEncoding = ObjectEncoding.JSON) {
 
-    //    MessageId ??= Udf.Nonce(); // Add a message ID unless one is already defined.
-    //    return base.Envelope(signingKey, encryptionKey, objectEncoding);
-    //    }
 
     /// <summary>
     /// Decode <paramref name="envelope"/> and return the inner <see cref="Message"/>

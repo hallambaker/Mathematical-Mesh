@@ -1349,8 +1349,31 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         }
 
     #endregion
+    #region // Sign messages
 
 
+    public Enveloped<Message> SignAndEncryptMessage(
+                Message message,
+                ProfileDevice profileDevice) => SignAndEncryptMessage(
+                    message, profileDevice.Encryption.CryptoKey);
+
+
+    public Enveloped<Message> SignAndEncryptMessage(
+                    Message message,
+                    CryptographicKey encryptionKey) {
+        var result = message.Envelope(
+                        signingKey: KeyAdministratorSign, encryptionKey: encryptionKey);
+
+        result.Header.Encrypt.AssertTrue(NYI.Throw);
+
+        return result;
+        }
+
+
+
+
+
+    #endregion
 
 
     }

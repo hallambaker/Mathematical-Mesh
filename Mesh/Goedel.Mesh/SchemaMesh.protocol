@@ -663,10 +663,9 @@
 			Description
 				|UDF of the account online signature key
 		GStruct Enveloped ProfileUser ProfileUser
-			//Struct Enveloped<ProfileAccount> EnvelopedProfileUser
 			Description
-				|The Mesh profile. Why is this still here? This is not 
-				|specific to the device.
+				|The Mesh profile. This is here because it is used in provisioning devices
+				|Should probably be removed to RespondConnection.
 		GStruct Enveloped ProfileDevice ProfileDevice
 			//Struct Enveloped<ProfileDevice> EnvelopedProfileDevice
 			Description
@@ -1268,7 +1267,9 @@
 		String Result 
 			Description
 				|The response to the request. One of "Accept", "Reject" or "Pending".
-				
+		GStruct Enveloped ProfileUser ProfileUser
+			Description
+				|The Mesh profile.			
 		Struct CatalogedDevice CatalogedDevice
 			Description
 				|The device information. MUST be present if the value of Result is

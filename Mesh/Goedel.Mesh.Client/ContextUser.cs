@@ -1334,7 +1334,7 @@ public partial class ContextUser : ContextAccount {
     /// <param name="profileDevice">The device to add.</param>
     /// <param name="rights">The rights to assign.</param>
     /// <returns>The transaction result</returns>
-    public async Task<TransactResponse> AddDevice (
+    public async Task<RespondConnection> AddDevice (
                 ProfileDevice profileDevice,
                 List<string> rights = null) {
 
@@ -1343,7 +1343,7 @@ public partial class ContextUser : ContextAccount {
 
         AddDevice(profileDevice, rights, transaction, respondConnection);
         var responseTransaction = await transaction.TransactAsync();
-        return responseTransaction;
+        return respondConnection;
         }
 
     public async Task<Message> AcceptOnboardAsync(
@@ -1353,6 +1353,7 @@ public partial class ContextUser : ContextAccount {
         // decode the EARL to obtain the JSDevice description.
         var jsDevice = await EarlClient.ResolveDeviceEarl(earl);
         var meshOnboardData = jsDevice.GetMeshOnboard();
+        var profileDevice = meshOnboardData.ProfileDevice;
 
         var domain = "example.com";
 
@@ -1361,11 +1362,12 @@ public partial class ContextUser : ContextAccount {
             return null;
             }
 
-        var response = await AddDevice(meshOnboardData.ProfileDevice, rights);
+        var connectionResponse = await AddDevice(profileDevice, rights);
+
+        var encryptedResponse = SignAndEncryptMessage(connectionResponse, profileDevice);
+        var data = encryptedResponse.ToBytes();
 
 
-
-        var data = new byte[2];
         byte[] respons2;
 
         // Tell the device its connection information.
@@ -1377,7 +1379,7 @@ public partial class ContextUser : ContextAccount {
             var prefix = endpoint.Replace("+", domain);
 
             respons2 = await TrySendEndpointAsync(prefix, data);
-            pending = response is not null;
+            pending = connectionResponse is not null;
             }
 
         // unpack the response
@@ -1450,7 +1452,11 @@ public partial class ContextUser : ContextAccount {
         return new ResultAcknowledgeConnection(request, messagePin, responseTransaction);
         }
 
-    private void AddDevice(ProfileDevice profileDevice, List<string> rights, TransactUser transact, RespondConnection respondConnection) {
+    private void AddDevice(
+            ProfileDevice profileDevice, 
+            List<string> rights, 
+            TransactUser transact, 
+            RespondConnection respondConnection) {
 
         var device = ActivationCommon.MakeCatalogedDevice(
                 profileDevice, ProfileUser, roles: rights, transactContextAccount: transact);

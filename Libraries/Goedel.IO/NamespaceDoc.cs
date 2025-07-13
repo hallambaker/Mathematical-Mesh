@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+global using Goedel.Utilities;
 global using System;
 global using System.IO;
 global using System.Net.Http;

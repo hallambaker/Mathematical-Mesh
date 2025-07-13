@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 7/12/2025 5:51:46 PM
+//  This file was automatically generated at 7/13/2025 3:45:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -6908,6 +6908,13 @@ public partial class RespondConnection : Message {
 	[JsonPropertyName("Result")]
 	public virtual string?					Result  {get; set;} //
 
+	[JsonPropertyName("EnvelopedProfileUser")]
+	public virtual Enveloped<ProfileUser>?					EnvelopedProfileUser  {get; set;} 
+
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
+	public virtual ProfileUser?				ProfileUser  => EnvelopedProfileUser.Decode();
     /// <summary>
     ///The device information. MUST be present if the value of Result is
     ///"Accept". MUST be absent or null otherwise.
@@ -6925,6 +6932,12 @@ public partial class RespondConnection : Message {
 		new PropertyString ("Result", 
 					(IBinding data, string? value) => {(data as RespondConnection).Result = value;}, 
 					(IBinding data) => (data as RespondConnection).Result ),
+		new PropertyGStruct ("EnvelopedProfileUser", /*typeof (ProfileUser<>),*/typeof (Enveloped),
+					(IBinding data, object? value) => {(data as RespondConnection).EnvelopedProfileUser = value as Enveloped<ProfileUser>;},
+					(IBinding data) => (data as RespondConnection).EnvelopedProfileUser,
+					/*(IBinding data, object? value) => {(data as RespondConnection).ProfileUser = value as ProfileUser;},
+					(IBinding data) => (data as RespondConnection).ProfileUser,*/
+					()=>new  Enveloped<ProfileUser>(), ()=>new Enveloped<ProfileUser>()),
 		new PropertyStruct ("CatalogedDevice", typeof (CatalogedDevice),
 					(IBinding data, object? value) => {(data as RespondConnection).CatalogedDevice = value as CatalogedDevice;}, 
 					(IBinding data) => (data as RespondConnection).CatalogedDevice,
@@ -6938,7 +6951,8 @@ public partial class RespondConnection : Message {
 	public static readonly new Binding<RespondConnection> _binding = new (
 			new() {
 			{ "Result", _properties [0]},
-			{ "CatalogedDevice", _properties [1]}}, __Tag,
+			{ "EnvelopedProfileUser", _properties [1]},
+			{ "CatalogedDevice", _properties [2]}}, __Tag,
 		() => new RespondConnection(), () => [], () => [], Message._binding, Generic: false);
 
 

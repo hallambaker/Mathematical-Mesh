@@ -131,8 +131,8 @@ public partial class Shell {
                 string configFile) {
 
 
-        var onboarding = new OnboardingServer(MeshHost);
-        var profile = await onboarding.WaitOnboardingAsync(configFile);
+        var onboarding = new OnboardingServer(MeshHost, configFile);
+        var contextDevice = await onboarding.WaitOnboardingAsync();
 
         //var result = new ResultConnect() {
         //    CatalogedMachine = contextUser.CatalogedMachine,

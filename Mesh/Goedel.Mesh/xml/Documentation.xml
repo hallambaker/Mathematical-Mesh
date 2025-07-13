@@ -7815,6 +7815,11 @@
             The response to the request. One of "Accept", "Reject" or "Pending".
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.RespondConnection.ProfileUser">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.RespondConnection.CatalogedDevice">
              <summary>
             The device information. MUST be present if the value of Result is

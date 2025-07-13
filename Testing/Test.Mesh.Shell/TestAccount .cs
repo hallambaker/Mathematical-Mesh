@@ -109,7 +109,7 @@ public partial class ShellTests {
         var device = GetTestCLI(DeviceDevice);
         // put the device into wait to be onboarded state
         //var d1 = device.Dispatch($"device onboard {devicefile}");
-        var pendingOnboard = maker.Shell.DeviceOnboardAsync(devicefile);
+        var pendingOnboard = device.Shell.DeviceOnboardAsync(devicefile);
 
         // This should not complete yet.
         pendingOnboard.IsCompleted.TestFalse();
@@ -123,6 +123,8 @@ public partial class ShellTests {
         // wait for the device to be fully initialized 
         pendingOnboard.Wait();
         var deviceContext = pendingOnboard.Result;
+
+        device.Dispatch($"account sync");
 
         // Request configuration for a Web server from the device
         device.Dispatch($"device service http /local=myweb /dns=www.domain.example");

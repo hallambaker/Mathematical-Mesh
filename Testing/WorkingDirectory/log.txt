@@ -1410,3 +1410,194 @@ Add _jscontact.alice.alt
    Node TXT
 Resolve earl jsdevice://example.com/ejsg-jgv2-oqv4-bpli-3i4g-mjqu-lblt
 Success earl jsdevice://example.com/ejsg-jgv2-oqv4-bpli-3i4g-mjqu-lblt
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/ejyk-cnkl-gxdf-yhn5-lskn-22v7-2oqu
+Success earl jsdevice://example.com/ejyk-cnkl-gxdf-yhn5-lskn-22v7-2oqu
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/ejdc-dqzh-w2gf-6wbe-7oe3-2e6m-nvab
+Success earl jsdevice://example.com/ejdc-dqzh-w2gf-6wbe-7oe3-2e6m-nvab
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/elvc-vcks-bkar-nfyy-4wqw-jcjc-7cff
+Success earl jsdevice://example.com/elvc-vcks-bkar-nfyy-4wqw-jcjc-7cff
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/ekoe-3xjw-sept-6aue-ifqn-5qo4-nyqa
+Success earl jsdevice://example.com/ekoe-3xjw-sept-6aue-ifqn-5qo4-nyqa
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/ekai-dwns-ftlm-jsot-3bvq-x4ir-p7e5
+Success earl jsdevice://example.com/ekai-dwns-ftlm-jsot-3bvq-x4ir-p7e5
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/eldj-k4ua-miex-sqwd-5kdm-daqb-3vp6
+Success earl jsdevice://example.com/eldj-k4ua-miex-sqwd-5kdm-daqb-3vp6
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/ela4-3k2x-glvp-e5nv-pcih-i4k6-ln6j
+Success earl jsdevice://example.com/ela4-3k2x-glvp-e5nv-pcih-i4k6-ln6j
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/ekk6-dkku-fpbu-2nxw-4oj5-qyjb-5umv
+Success earl jsdevice://example.com/ekk6-dkku-fpbu-2nxw-4oj5-qyjb-5umv
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/ekla-ddoe-54om-c3xt-4pci-jpqq-l6zy
+Success earl jsdevice://example.com/ekla-ddoe-54om-c3xt-4pci-jpqq-l6zy
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/eikq-uok6-swmx-f5fa-bnz2-r6cr-q3n4
+Success earl jsdevice://example.com/eikq-uok6-swmx-f5fa-bnz2-r6cr-q3n4
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/ej2t-s3m5-xmmk-pz6r-fbco-kuxs-x4qh
+Success earl jsdevice://example.com/ej2t-s3m5-xmmk-pz6r-fbco-kuxs-x4qh
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Add _jscontact.maker.example.com
+   Node TXT
+Add _jscontact.alice.alt
+   Node TXT
+Resolve earl jsdevice://example.com/ei3o-ocwe-gjag-bdcs-4r26-qcqo-447c
+Success earl jsdevice://example.com/ei3o-ocwe-gjag-bdcs-4r26-qcqo-447c
