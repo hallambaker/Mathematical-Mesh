@@ -127,13 +127,13 @@ public partial class ShellTests {
         device.Dispatch($"account sync");
 
         // Request configuration for a Web server from the device
-        device.Dispatch($"device service http /local=myweb /dns=www.domain.example");
+        //device.Dispatch($"device service http /local=myweb /dns=www.domain.example");
 
-        // The Web server can now pull its TLS credentials
-        device.Example($"device credential myweb /public=fullchain.pem /private=privkey.pem");
+        //// The Web server can now pull its TLS credentials
+        //device.Example($"device credential myweb /public=fullchain.pem /private=privkey.pem");
 
-        // Configure the NAS connection from the admin device
-        admin.Dispatch($"device service http /on=mydevice /local=mynas /dns=nas.domain.example");
+        //// Configure the NAS connection from the admin device
+        //admin.Dispatch($"device service http /on=mydevice /local=mynas /dns=nas.domain.example");
 
 
         }
