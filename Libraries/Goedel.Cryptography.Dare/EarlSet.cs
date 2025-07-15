@@ -123,7 +123,7 @@ public record EarlSet {
     /// <returns></returns>
     public static string GetWellKnown(
                 string authority,
-                string locator) => $"https://{authority}/.well-known/earl/{locator}";
+                string locator) => $"https://{authority}/.well-known/earl/{locator}.earl";
 
 
 

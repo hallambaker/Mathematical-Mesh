@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 7/13/2025 3:56:03 PM
+//  This file was automatically generated at 7/15/2025 12:37:54 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -57,6 +57,18 @@ public static partial class ContactConstant {
     ///<summary>
     ///</summary>
     public const string OnlineServiceMail = "mail";
+
+    ///<summary>
+    ///</summary>
+    public const string OnlineServiceWeb = "www";
+
+    ///<summary>
+    ///</summary>
+    public const string OnlineServiceMoqPresence = "moq-presence";
+
+    ///<summary>
+    ///</summary>
+    public const string OnlineServiceGit = "git";
 
     ///<summary>
     ///</summary>

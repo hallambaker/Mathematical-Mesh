@@ -2,11 +2,29 @@
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Nist;
 
+using System.Globalization;
 using System.Net.WebSockets;
+using System.Runtime.InteropServices;
 
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Contacts;
+
+
+public partial class NameComponent {
+
+
+    public NameComponent() {
+        }
+
+    public NameComponent(
+                string kind, 
+                string value) {
+        Kind = kind;
+        Value = value;
+        }
+
+    }
 
 public partial class JsContact {
 
@@ -122,6 +140,204 @@ public partial class JsContact {
     #endregion
 
 
+    int count = 0;
+    string GetId() => $"id-{count++}";
+
+
+    public EmailAddress AddEmail(
+                string emailAddress,
+                byte[] openPgp=null,
+                byte[] smime = null,
+                string id = null) {
+        id ??= GetId();
+
+        var result = new EmailAddress() {
+            Address = emailAddress
+            };
+        if (openPgp != null) {
+            result.CryptoKeyIds ??= [];
+            AddCryptoKey (result.CryptoKeyIds, ContactConstant.OnlineServiceOpenPgp,
+                credential:openPgp);
+            }
+        if (smime != null) {
+            result.CryptoKeyIds ??= [];
+            AddCryptoKey(result.CryptoKeyIds, ContactConstant.OnlineServiceSmime,
+                credential:smime);
+            }
+
+        Emails ??= [];
+        Emails.Add(id, result);
+
+        return result;
+        }
+
+    public OnlineService AddWeb(
+            string uri,
+            List<string> contexts=null,
+            string id = null) {
+        id ??= GetId();
+
+        var result = new OnlineService() {
+            Service = ContactConstant.OnlineServiceWeb,
+            Uri = uri,
+            Contexts=GetContexts(contexts)
+            };
+
+        OnlineServices ??= [];
+        OnlineServices.Add(id, result);
+
+        return result;
+        }
+
+
+    public OnlineService AddSsh(
+            List<KeyPair> authenticate = null,
+            List<string> contexts = null,
+            string id = null) {
+        id ??= GetId();
+        var result = new OnlineService() {
+            Service = ContactConstant.OnlineServiceSsh,
+            Contexts = GetContexts(contexts)
+            };
+
+        result.CryptoKeyIds ??= [];
+        AddCryptoKeys(result.CryptoKeyIds, authenticate, ContactConstant.CryptoKeySign);
+
+        OnlineServices ??= [];
+        OnlineServices.Add(id, result);
+
+        return result;
+        }
+
+    public OnlineService AddMesh(
+            byte[] profile,
+            List<string> contexts = null,
+            string id = null) {
+        id ??= GetId();
+        var result = new OnlineService() {
+            Service = ContactConstant.OnlineServiceMesh,
+            Contexts = GetContexts(contexts)
+            };
+        result.CryptoKeyIds ??= [];
+        AddCryptoKey(result.CryptoKeyIds, ContactConstant.OnlineServiceMesh,
+            credential: profile);
+
+        OnlineServices ??= [];
+        OnlineServices.Add(id, result);
+
+        return result;
+        }
+
+    public OnlineService AddGit(
+            List<KeyPair> signing=null,
+            List<string> contexts = null,
+
+            string id = null) {
+        id ??= GetId();
+        var result = new OnlineService() {
+            Service = ContactConstant.OnlineServiceGit,
+            Contexts = GetContexts(contexts)
+            };
+
+        result.CryptoKeyIds ??= [];
+        AddCryptoKeys(result.CryptoKeyIds, signing, ContactConstant.CryptoKeySign);
+
+        OnlineServices ??= [];
+        OnlineServices.Add(id, result);
+
+        return result;
+        }
+
+
+    public Update AddUpdate(
+            string protocol,
+            string uri,
+            List<KeyPair> verification,
+            List<string> contexts = null,
+            string id = null) {
+
+        id ??= GetId();
+        var result = new Update() {
+            Protocol = protocol,
+            Uri = uri,
+            Contexts = GetContexts(contexts)
+            };
+
+        result.CryptoKeyIds ??= [];
+        AddCryptoKeys(result.CryptoKeyIds, verification, ContactConstant.CryptoKeySign);
+
+        Updates ??= [];
+        Updates.Add(id, result);
+
+        return result;
+        }
+
+    public OnlineService AddService(
+            string protocol,
+            List<string> contexts = null,
+            string id = null) {
+
+        id ??= GetId();
+        var result = new OnlineService() {
+
+            Contexts = GetContexts(contexts)
+            };
+
+        OnlineServices ??= [];
+        OnlineServices.Add(id, result);
+
+        return result;
+        }
+
+    public void AddCryptoKeys(
+            Dictionary<string,string> cryptoKeyIds,
+            List<KeyPair> keys,
+            string use) {
+        foreach (var key in keys.IfEnumerable()) {
+            AddCryptoKey(cryptoKeyIds, use, key);
+            }
+        }
+
+    public CryptoKey AddCryptoKey(
+            Dictionary<string, string> cryptoKeyIds,
+            string use,
+            KeyPair key=null,
+            byte[] credential=null,
+            string mediaType = null) {
+
+        var id = GetId();
+        var jwks = new JsonWebKeySet() {
+            Data=credential,
+            MediaType = mediaType
+            };
+
+        if (key != null) {
+            // make sure we only have the public component.
+            var keyPublic = key.PublicOnly ? key : key.KeyPairPublic();
+            var jwk = JWK.Factory(keyPublic);
+            jwks.JsonWebKeys = [jwk];
+            }
+
+        cryptoKeyIds.Add(id, use);
+        CryptoKeys ??= [];
+        CryptoKeys.Add(id, jwks);
+
+        return null;
+        }
+
+
+
+
+    Dictionary<string, bool>? GetContexts(List<string> contexts) {
+        if (contexts.IsEmpty()) {
+            return null;
+            }
+        var result = new Dictionary<string, bool>();
+        foreach (var context in contexts) {
+            result.Add(context, true);
+            }
+        return result;
+        }
 
     public void Add(
                 OnlineService service,
@@ -301,7 +517,13 @@ public partial class JsContact {
         }
 
 
-
+    public EarlSet GetEarlSet() {
+        var contentMeta = new ContentMeta() {
+            ContentType = MediaTypes.JSContact
+            };
+        return new EarlSet(contentMeta, ToBytes());
+        
+        }
 
     }
 

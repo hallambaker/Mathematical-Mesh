@@ -1499,6 +1499,18 @@
             <summary>
             </summary>
         </member>
+        <member name="F:Goedel.Contacts.ContactConstant.OnlineServiceWeb">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.OnlineServiceMoqPresence">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Contacts.ContactConstant.OnlineServiceGit">
+            <summary>
+            </summary>
+        </member>
         <member name="F:Goedel.Contacts.ContactConstant.CryptoKeyEncrypt">
             <summary>
             </summary>
@@ -3336,7 +3348,7 @@
             The IANA update protocol identifier
             </summary>
         </member>
-        <member name="P:Goedel.Contacts.Update.Keys">
+        <member name="P:Goedel.Contacts.Update.CryptoKeyIds">
             <summary>
             The identifiers of the set of cryptographic keys to be used to 
             authenticate the updated contact information and their use.

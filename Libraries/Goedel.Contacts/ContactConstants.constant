@@ -9,7 +9,9 @@ File MiscUnsorted
 	String OnlineServiceSsh "ssh"
 	String OnlineServiceCredential "credential"
 	String OnlineServiceMail "mail"
-
+	String OnlineServiceWeb "www"
+	String OnlineServiceMoqPresence "moq-presence"
+	String OnlineServiceGit "git"
 
 	String CryptoKeyEncrypt "encrypt"
 	String CryptoKeyVerify "verify"

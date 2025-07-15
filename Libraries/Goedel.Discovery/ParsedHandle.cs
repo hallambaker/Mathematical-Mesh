@@ -239,45 +239,10 @@ public class ParsedHandle {
         }
 
 
-
-
-
-    ///// <summary>
-    ///// Return the Mesh service provider associated with the handle.
-    ///// </summary>
-    ///// <returns>The service provider.</returns>
-    ///// <exception cref="NYI"></exception>
-    //public async Task<string> ResolveMeshService() {
-    //    switch (HandleType) {
-    //        // Just return the service component
-    //        case HandleType.Domain: 
-    //        case HandleType.AccountServiceAddress:
-    //        case HandleType.DirectServiceAddress:
-    //        case HandleType.DirectAccountServiceAddress: {
-    //            return Service;
-    //            }
-
-    //        // For a DNS handle, we have to first resolve to get the DirectServiceAddress
-    //        case HandleType.DnsHandle:
-    //        case HandleType.DirectDnsHandle: {
-    //            var handle = await ResolveDnsHandle();
-    //            return handle?.Service;
-    //            }
-
-    //        // These all fail because there isn't enough information to resolve a service
-    //        case HandleType.LocalName:
-    //        case HandleType.Invalid:
-    //        case HandleType.Fingerprint: {
-    //            throw new NYI();
-    //            }
-    //        }
-
-    //    throw new NYI();
-    //    }
-
-
-
-
+    public static async Task<byte[]> ResolveContact(string handle) {
+        byte[] result = null;
+        return result;
+        }
 
     /// <summary>
     /// Return the Account Service handle associated with the handle.

@@ -166,7 +166,7 @@ public class KeyPairEd448 : KeyPairEdwards, IAgreementData {
                 KeyUses keyUses = KeyUses.Any) {
         CryptoAlgorithmId = cryptoAlgorithmID == CryptoAlgorithmId.Default ?
             CryptoAlgorithmId.Ed448 : cryptoAlgorithmID;
-        this.PublicKey = publicKey as CurveEdwards448Public;
+        PublicKey = publicKey as CurveEdwards448Public;
         PKIXPublicKeyECDH = new PKIXPublicKeyECDH(CryptoAlgorithmId.Ed448, PublicKey.EncodingPublicKey);
         KeyUses = keyUses;
         }

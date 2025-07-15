@@ -34,7 +34,8 @@ public static class Enumerable {
     public static IEnumerable<T> IfEnumerable<T>(this IEnumerable<T>? item) =>
         new SafeEnumerable<T>(item);
 
-
+    public static bool IsEmpty<T,S>(this Dictionary<T,S>? item) =>
+        (item == null) || (item.Count == 0);
     public static bool IsEmpty<T>(this List<T>? item) =>
         (item == null) || (item.Count == 0);
 

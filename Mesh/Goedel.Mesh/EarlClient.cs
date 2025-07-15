@@ -194,7 +194,7 @@ public class EarlClientHttp(DnsClient dnsClient, string? Instance = null) : Earl
             string authority,
             string locator) {
 
-        var path = $"http://{authority}/{GetPrefix(Instance)}{locator}";
+        var path = $"http://{authority}/{GetPrefix(Instance)}{locator}.earl";
         var data = await path.DownloadByteArrayAsync();
 
 

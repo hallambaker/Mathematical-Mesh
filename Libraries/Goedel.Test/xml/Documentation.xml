@@ -225,6 +225,15 @@
             Condition is true</param>
             <param name="args">Reason arguments to be passed to the throw delegate.</param>
         </member>
+        <member name="M:Goedel.Test.AssertTest.TestIsEqual``1(``0,``0,Goedel.Utilities.ThrowDelegate,System.Object[])">
+            <summary>Test to see if two values are equal.
+            </summary>
+            <param name="test1">First test value</param>
+            <param name="test2">Second test value</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            Condition is true</param>
+            <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        </member>
         <member name="M:Goedel.Test.AssertTest.TestEqual``1(``0,``0,Goedel.Utilities.ThrowDelegate,System.Object[])">
             <summary>Test to see if two values are equal.
             </summary>
@@ -316,10 +325,6 @@
             <param name="MasterKey">The master key</param>
             <param name="PublicKey">The recipient public key.</param>
             <returns>The recipient informatin object.</returns>
-        </member>
-        <member name="P:Goedel.Test.UnitTestSet.Seed">
-            <summary>The deterministic seed to be used by the test, may be set explictly
-            or generated automatically through use in a test method.</summary> 
         </member>
         <member name="T:Goedel.Test.TestNotImplemented">
             <summary>
@@ -735,6 +740,10 @@
             </summary>
             <returns></returns>
             <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
+        <member name="P:Goedel.Test.UnitTestSet.Seed">
+            <summary>The deterministic seed to be used by the test, may be set explictly
+            or generated automatically through use in a test method.</summary> 
         </member>
     </members>
 </doc>

@@ -2,7 +2,16 @@
 
 
 
+using Goedel.Contacts;
+using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.Discovery;
+using Goedel.IO;
+using Goedel.Mesh;
+
+using System.Collections.Generic;
+using System.Net.Mime;
 
 namespace Goedel.XUnit;
 public class TestOauth : UnitTestSet {
@@ -85,5 +94,90 @@ public class TestOauth : UnitTestSet {
 
         test.TestEqual(plaintext);
         }
+
+
+    [Fact]
+    public void TestJsContact() {
+
+        var name = new Name() {
+            Components = [
+                new ("title", "Dr.") ,
+            new ("given", "Phillip"),
+            new ("given2", "Martin"),
+            new ("surname", "Hallam-Baker"),
+            new ("credential", "BEng.(Soton)"),
+            new ("credential", "DPhil.(Oxon)")],
+            IsOrdered = true,
+            Full = "Phillip Hallam-Baker"
+
+            };
+
+        var contact = new JsContact() {
+            Version = "1.0",
+            Kind="individual",
+            Language ="en",
+            Name = name,
+            Organizations = new() {
+                    { "1", new() { Name="Mplace2.Social"} }
+                },
+            SpeakToAs = new SpeakToAs() {
+                GrammaticalGender= "masculine",
+                Pronouns = new() {
+                        { "a", new() {Values="he/him/his" } }
+                    }
+                },
+            PreferredLanguages=new() {
+                    { "b", new() { Language="en"} }
+                },
+            Titles=null,
+            Emails=[],
+            OnlineServices=[],
+            Media=[],
+            Updates=[]
+            };
+
+        var openPgp = new byte[166];
+        var smime = new byte[1166];
+        // Add Email
+        contact.AddEmail("phill@hallambaker.com", openPgp: openPgp, smime: smime);
+
+        // Add Website - Mplace2.social
+        contact.AddWeb("https://www.hallambaker.com/", ["personal"]);
+        contact.AddWeb("https://phill.hallambaker.com/", ["social"]);
+        contact.AddWeb("https://mplace2.social/", ["social"]);
+
+        // Add MoqPresence
+
+        contact.AddService(ContactConstant.OnlineServiceMoqPresence, ["personal"]);
+
+        // Add SSH key
+        var sshKey = KeyPairX25519.Generate();
+        contact.AddSsh([sshKey]);
+
+        var gitKey = KeyPairEd25519.Generate(KeySecurity.Ephemeral);
+        contact.AddGit([gitKey]);
+
+        // Add Mesh Profile
+        var meshProfile = new byte[1166];
+        contact.AddMesh(meshProfile);
+
+
+        // Add update mechanism
+        var updateKey = KeyPairEd448.Generate(KeySecurity.Ephemeral);
+        contact.AddUpdate("dns", "handle:phill.hallambaker.com", [updateKey]);
+
+        // write to a file as an EARL.
+
+
+        var earlset = contact.GetEarlSet();
+
+        var file1 = earlset.Earl + ".earl";
+        var file2 = earlset.Locator + ".earl";
+
+        file1.WriteFileNew(earlset.Ciphertext);
+        file2.WriteFileNew(earlset.Ciphertext);
+        }
+
+    
 
     }

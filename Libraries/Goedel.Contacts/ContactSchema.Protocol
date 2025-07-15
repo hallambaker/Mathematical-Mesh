@@ -820,7 +820,7 @@
 		String					Protocol
 			Description
 				| The IANA update protocol identifier
-		String					Keys
+		String					CryptoKeyIds
 			Dictionary
 			Description
 				| The identifiers of the set of cryptographic keys to be used to 

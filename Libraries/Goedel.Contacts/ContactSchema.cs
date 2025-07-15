@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 7/13/2025 3:56:03 PM
+//  This file was automatically generated at 7/15/2025 12:37:54 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -2988,8 +2988,8 @@ public partial class Update : Resource {
     /// authenticate the updated contact information and their use.
     /// </summary>
 
-	[JsonPropertyName("keys")]
-	public virtual Dictionary<string,string>?					Keys  {get; set;} //
+	[JsonPropertyName("cryptoKeyIds")]
+	public virtual Dictionary<string,string>?					CryptoKeyIds  {get; set;} //
 
 
     ///<summary>Implement IBinding</summary> 
@@ -3000,9 +3000,9 @@ public partial class Update : Resource {
 		new PropertyString ("protocol", 
 					(IBinding data, string? value) => {(data as Update).Protocol = value;}, 
 					(IBinding data) => (data as Update).Protocol ),
-		new PropertyDictionaryString ("keys", 
-					(IBinding data, Dictionary<string,string>? value) => {(data as Update).Keys = value;}, 
-					(IBinding data) => (data as Update).Keys )
+		new PropertyDictionaryString ("cryptoKeyIds", 
+					(IBinding data, Dictionary<string,string>? value) => {(data as Update).CryptoKeyIds = value;}, 
+					(IBinding data) => (data as Update).CryptoKeyIds )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -3012,7 +3012,7 @@ public partial class Update : Resource {
 	public static readonly new Binding<Update> _binding = new (
 			new() {
 			{ "protocol", _properties [0]},
-			{ "keys", _properties [1]}}, __Tag,
+			{ "cryptoKeyIds", _properties [1]}}, __Tag,
 		() => new Update(), () => [], () => [], Resource._binding, 
 		TypeTag:"@type" , Generic: false);
 

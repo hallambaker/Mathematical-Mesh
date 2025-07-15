@@ -1,0 +1,57 @@
+﻿#% var analysis  = contact?.Analysis;
+#if analysis is not null
+    <table>
+#foreach (var item in analysis.Emails)
+        <tr>
+        <td>Email:</td>
+        <td>#{item.User}</td>
+        <td>#{item.Label}</td>
+        </tr>
+#call SumarizeChildren item.Analysis
+#end foreach
+#foreach (var item in analysis.Webs)
+        <tr>
+        <td>Web:</td>
+        <td><a href="#{item.Uri}">#{item.Uri}</a></td>
+        <td>#{item.Label}</td>
+        </tr>
+#end foreach
+#foreach (var item in analysis.Mesh)
+        <tr>
+        <td>Mesh:</td>
+        <td>#{item.User}</td>
+        <td>#{item.Label}</td>
+        </tr>
+        <tr>
+        <td></td>
+        <td colspan="2">#{item.Key}</td>
+        </tr>
+#end foreach
+#foreach (var item in analysis.Ssh)
+        <tr>
+        <td>Ssh:</td>
+        <td><a href="">Download</a></td>
+        <td>#{item.Label}</td>
+        </tr>
+#end foreach
+#foreach (var item in analysis.Credentials)
+        <tr>
+        <td>Code:</td>
+        <td>#{item.Key}</td>
+        <td>#{item.Label}</td>
+        </tr>
+#end foreach
+#foreach (var item in analysis.Other)
+        <tr>
+        <td>#{item.Service}</td>
+        <td>#{item.Uri}</td>
+        <td>#{item.Label}</td>
+        </tr>
+#end foreach
+#foreach (var item in analysis.Groups)
+        <tr>
+        <td>Group:</td>
+        <td colspan="2">#{item.Label}</td>
+        </tr>
+#call SumarizeChildren item.Analysis
+#end foreach
