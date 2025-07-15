@@ -177,11 +177,13 @@ public class JsContactResults {
 
 
         var update1 = new Update() {
-            Keys = [],
+            CryptoKeyIds = [],
             Uri = $"https://contacts.example.com/{Contact.Uid}"
             };
 
-        update1.Keys.Add(SignatureEd448.KeyIdentifier, "sign");
+
+        
+        update1.CryptoKeyIds.Add(SignatureEd448.KeyIdentifier, "sign");
 
 
         Contact.Updates = new() {
@@ -247,7 +249,7 @@ public class JsContactResults {
 
         foreach (var update in Contact.Updates) {
             Update = update.Value;
-            CollectKeys(Update.Keys, UpdateKeys);
+            CollectKeys(Update.CryptoKeyIds, UpdateKeys);
             }
 
 

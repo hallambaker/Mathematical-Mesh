@@ -138,7 +138,7 @@ public class ParsedMultipart {
                 }
 
 
-            Console.WriteLine($"{fieldData.Name}: {fieldData.Filename} {fieldData.ContentType}");
+            //Console.WriteLine($"{fieldData.Name}: {fieldData.Filename} {fieldData.ContentType}");
             }
 
         return true;

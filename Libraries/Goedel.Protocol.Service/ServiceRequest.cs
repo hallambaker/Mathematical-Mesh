@@ -223,10 +223,10 @@ public abstract class ServiceRequest {
         packetClient = Listener.ParseInitiatorHello(Buffer, offset,
             Count - offset);
 
-        foreach (var extension in packetClient.PlaintextExtensions) {
-            Console.WriteLine($"Hello {extension.Tag} length {extension.Value.Length}");
+        //foreach (var extension in packetClient.PlaintextExtensions) {
+        //    Console.WriteLine($"Hello {extension.Tag} length {extension.Value.Length}");
 
-            }
+        //    }
 
 
         return Listener.GetTemporaryResponder(packetClient); ;
@@ -394,7 +394,7 @@ public class ServiceRequestHttp : ServiceRequest {
     ///<inheritdoc/>
     protected override void ReturnResponse(byte[] chunk) {
         var response = ListenerContext.Response;
-        Console.WriteLine($"About to send Reply");
+        //Console.WriteLine($"About to send Reply");
         response.StatusCode = (int)HttpStatusCode.OK;
         response.StatusDescription = "OK";
         response.KeepAlive = true;
@@ -402,7 +402,7 @@ public class ServiceRequestHttp : ServiceRequest {
 
 
         response.Close();
-        Console.WriteLine($"Reply complete");
+        //Console.WriteLine($"Reply complete");
         Service.Monitor.EndDispatch(Slot);
         }
 

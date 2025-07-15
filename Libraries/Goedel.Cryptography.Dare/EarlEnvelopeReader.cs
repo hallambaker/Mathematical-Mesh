@@ -210,10 +210,10 @@ public partial class EarlEnvelopeReader {
         (Digest is not null).AssertTrue(NYI.Throw);
 
         var value = Digest.GetValue();
-        Console.WriteLine($"Digest Value = {value.ToStringBase16FormatHex()}");
+        //Console.WriteLine($"Digest Value = {value.ToStringBase16FormatHex()}");
 
         var manifest = EarlEnvelopeWriter.GetManifest(DigestId, MetadataDigest, value);
-        Console.WriteLine($"Manifest Value = {manifest.ToStringBase16FormatHex()}");
+        //Console.WriteLine($"Manifest Value = {manifest.ToStringBase16FormatHex()}");
 
         ContentMeta.VerifiedSignatures = [];
         foreach (var signature in signatures) {

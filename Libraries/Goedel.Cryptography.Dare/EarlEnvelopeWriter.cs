@@ -214,10 +214,10 @@ public partial class EarlEnvelopeWriter {
                 };
 
             PayloadDigest = Digest.GetValue();
-            Console.WriteLine($"Digest Value = {PayloadDigest.ToStringBase16FormatHex()}");
+            //Console.WriteLine($"Digest Value = {PayloadDigest.ToStringBase16FormatHex()}");
 
             Manifest = GetManifest(DigestId, MetadataDigest, PayloadDigest);
-            Console.WriteLine($"Manifest Value = {Manifest.ToStringBase16FormatHex()}");
+            //Console.WriteLine($"Manifest Value = {Manifest.ToStringBase16FormatHex()}");
 
 
             foreach (var key in signers) {

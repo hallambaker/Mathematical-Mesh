@@ -1601,3 +1601,14 @@ Add _jscontact.alice.alt
    Node TXT
 Resolve earl jsdevice://example.com/ei3o-ocwe-gjag-bdcs-4r26-qcqo-447c
 Success earl jsdevice://example.com/ei3o-ocwe-gjag-bdcs-4r26-qcqo-447c
+Use DummyDnsService
+Add example.com
+   Node A
+Add mmm.example.com
+   Node A
+Add host1.example.com
+   Node A
+Add _mmm._tcp.example.com
+   Node SRV
+Request _mmm._tcp.example.com SRV -> True
+Request _mmm._tcp.example.com TXT -> False

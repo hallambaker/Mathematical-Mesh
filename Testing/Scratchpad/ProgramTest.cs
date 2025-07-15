@@ -68,9 +68,9 @@ partial class Program {
 
 
         // Not completed
-        ShellTests.Test().TestHandleThing();
+        //ShellTests.Test().TestHandleThing();
 
-        ShellTestsAdmin.Test().TestHandleThing();
+        ShellTestsAdmin.Test().TestHello();
 
 
         // ---------- Problematic still

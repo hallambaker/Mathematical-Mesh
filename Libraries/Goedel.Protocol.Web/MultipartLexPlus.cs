@@ -64,7 +64,7 @@ public partial class MultipartLex {
     /// <returns>True if the data parsed correctly, otherwise false.</returns>
     public bool Process(int data) {
         if (state < 0 | data < 0 | data >255) {
-            Console.WriteLine("Error");
+            //Console.WriteLine("Error");
             return false;
             }
         var mapping = Character_Mapping[data];

@@ -62,11 +62,11 @@ public partial class CryptoKeyIndex {
             }
         var jsonWebKeySet = keyShare as JsonWebKeySet;
 
-        Console.WriteLine(jsonWebKeySet.Data.ToUTF8());
+        //Console.WriteLine(jsonWebKeySet.Data.ToUTF8());
         var enveloped = StreamParse<Enveloped>(jsonWebKeySet.Data);
 
         var keyData = enveloped.StreamParseTag<KeyData>(keyCollection);
-        Console.WriteLine(jsonWebKeySet.Data.ToUTF8());
+        //Console.WriteLine(jsonWebKeySet.Data.ToUTF8());
         return keyData.GetKeyPair(KeySecurity.Bound, keyCollection);
 
 
@@ -128,11 +128,11 @@ public record PrivateKeyEntry  {
 
 
     public KeyPair GetKeyPair(IKeyCollection keyLocate) {
-        Console.WriteLine(JsonWebKeySet.Data.ToUTF8());
+        //Console.WriteLine(JsonWebKeySet.Data.ToUTF8());
         var enveloped = JsonObject.StreamParse<Enveloped>(JsonWebKeySet.Data);
 
         var keyData = enveloped.StreamParseTag<KeyData>(keyLocate);
-        Console.WriteLine(JsonWebKeySet.Data.ToUTF8());
+        //Console.WriteLine(JsonWebKeySet.Data.ToUTF8());
         return keyData.GetKeyPair(KeySecurity.Bound, keyLocate);
         }
 

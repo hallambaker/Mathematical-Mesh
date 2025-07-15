@@ -418,7 +418,7 @@ public class RudService : Disposable {
             var connection = httpListener.GetContextAsync();
             await connection;
 
-            Console.WriteLine("Got connection!");
+            //Console.WriteLine("Got connection!");
 
 
             // prepare the result for dispatch to a processing queue.

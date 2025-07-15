@@ -1609,7 +1609,7 @@ public partial class ContextUser : ContextAccount {
 
         //Add the requestContact.Self contact to the catalog
         if (requestContact.AuthenticatedData != null) {
-            Console.WriteLine(requestContact.AuthenticatedData.Body.ToUTF8());
+            //Console.WriteLine(requestContact.AuthenticatedData.Body.ToUTF8());
             var contact = requestContact.AuthenticatedData.StreamParseTag<JsContact>();
 
 

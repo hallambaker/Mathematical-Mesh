@@ -2,6 +2,8 @@
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Nist;
 
+using Microsoft.Extensions.Hosting;
+
 using System.Globalization;
 using System.Net.WebSockets;
 using System.Runtime.InteropServices;
@@ -325,7 +327,24 @@ public partial class JsContact {
         return null;
         }
 
+    public Media AddMedia(
+                string uri,
+                string mediaType=null,
+                string kind="photo") {
+        var id = GetId();
+        var media = new Media() {
+            Uri = uri,
+            MediaType = mediaType,
+            Kind = kind
+            };
 
+        Media ??= [];
+        Media.Add(id, media);
+
+        // here attempt to resolve the uri and extract the metadata
+
+        return media;
+        }
 
 
     Dictionary<string, bool>? GetContexts(List<string> contexts) {

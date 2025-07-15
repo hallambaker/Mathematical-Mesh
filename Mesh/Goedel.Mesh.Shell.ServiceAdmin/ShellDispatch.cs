@@ -159,7 +159,7 @@ public partial class Shell : _Shell {
 
         var configuration = new Configuration();
         configuration.Initialize(MeshMachine, serviceDns, hostIp, hostDns, runAs);
-        Console.WriteLine($" Description is {configuration.GenericHost.Description}");
+        //Console.WriteLine($" Description is {configuration.GenericHost.Description}");
         if (true) {
             configuration.Add(
                 MeshServiceConfiguration.Create(
@@ -204,7 +204,7 @@ public partial class Shell : _Shell {
 
         // Perform the actual initialization of everything
         MeshMachine.BuildConfiguration(configuration, admin);
-        Console.WriteLine($" DeviceUdf is {configuration.GenericHost.DeviceUdf}");
+        //Console.WriteLine($" DeviceUdf is {configuration.GenericHost.DeviceUdf}");
 
         multiConfig.MakePath();
         (configuration as IServiceConfiguration).ToFile(multiConfig);

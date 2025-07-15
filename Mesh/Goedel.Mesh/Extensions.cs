@@ -601,7 +601,7 @@ public static partial class Extensions {
         var enveloped = JsonObject.StreamParseTag<Enveloped>(webKeySet.Data);
 
         var profile = JsonObject.StreamParseTag<ProfileAccount>(enveloped.Body);
-        Console.WriteLine(webKeySet.Data.ToUTF8());
+        //Console.WriteLine(webKeySet.Data.ToUTF8());
 
 
         return profile;

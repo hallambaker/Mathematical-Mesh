@@ -205,7 +205,7 @@ public partial class JbcdStream  {
             if (StreamWrite.Position == 0) {
                 StreamWrite.WriteByte (SequenceTypeJson);
                 }
-            Console.WriteLine($"{StreamWrite.Position}: Start frame {Length}");
+            //Console.WriteLine($"{StreamWrite.Position}: Start frame {Length}");
             StreamWrite.WriteVarint (Length);
             }
         else {
@@ -220,7 +220,7 @@ public partial class JbcdStream  {
     /// <param name="Length"></param>
     public virtual void WriteTagStartRecord(long Length) {
         if (IsVersion4) {
-            Console.WriteLine($"{StreamWrite.Position}: Start record {Length}");
+            //Console.WriteLine($"{StreamWrite.Position}: Start record {Length}");
             StreamWrite.WriteVarint(Length);
 
             //throw new NYI();
@@ -237,7 +237,7 @@ public partial class JbcdStream  {
     /// match.</param>
     public virtual void WriteTagEndFrame(long Length) {
         if (IsVersion4) {
-            Console.WriteLine($"{StreamWrite.Position}: End frame {Length}");
+            //Console.WriteLine($"{StreamWrite.Position}: End frame {Length}");
             StreamWrite.WriteTnirav(Length);
             //throw new NYI();
             }

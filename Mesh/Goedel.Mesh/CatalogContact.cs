@@ -455,7 +455,7 @@ public partial class CatalogedContact {
 
         var envelope = JsonObject.StreamParse<Enveloped>(data);
 
-        Console.WriteLine(envelope.Body.ToUTF8());
+        //Console.WriteLine(envelope.Body.ToUTF8());
         var profile = envelope.StreamParseTag<ProfileAccount>();
         profile.Validate();
 
@@ -525,37 +525,37 @@ public partial class CatalogedContact {
 #endregion
 #region // Mesh Profile
 
-public record ContactEntryMesh {
-    OnlineService OnlineService;
-    JsonWebKeySet JsonWebKeySet;
-    public Enveloped EnvelopedProfileAccount => envelopedProfileAccount ??
-        JsonObject.StreamParse<Enveloped> (JsonWebKeySet.Data);
-    Enveloped envelopedProfileAccount;
-    public ContactEntryMesh(
-            OnlineService onlineService) {
-        OnlineService = onlineService;
-        if (onlineService.CryptoKey?.Count == 1) {
-            JsonWebKeySet = onlineService.CryptoKey[0] as JsonWebKeySet;
+//public record ContactEntryMesh {
+//    OnlineService OnlineService;
+//    JsonWebKeySet JsonWebKeySet;
+//    public Enveloped EnvelopedProfileAccount => envelopedProfileAccount ??
+//        JsonObject.StreamParse<Enveloped> (JsonWebKeySet.Data);
+//    Enveloped envelopedProfileAccount;
+//    public ContactEntryMesh(
+//            OnlineService onlineService) {
+//        OnlineService = onlineService;
+//        if (onlineService.CryptoKey?.Count == 1) {
+//            JsonWebKeySet = onlineService.CryptoKey[0] as JsonWebKeySet;
 
 
-            Console.WriteLine(JsonWebKeySet.Data.ToUTF8());
-            }
+//            //Console.WriteLine(JsonWebKeySet.Data.ToUTF8());
+//            }
 
 
 
-        var x = EnvelopedProfileAccount;
+//        //var x = EnvelopedProfileAccount;
 
-        }
-
-
-    public CryptographicKey GetMeshKeyEncryption() {
+//        }
 
 
-        throw new NotImplementedException();
-        }
+//    public CryptographicKey GetMeshKeyEncryption() {
 
 
-    }
+//        throw new NotImplementedException();
+//        }
+
+
+//    }
 
 
 #endregion

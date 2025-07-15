@@ -474,7 +474,7 @@ public abstract class DNSContext : Disposable {
                     DNSFallback fallback = DNSFallback.Prefix) {
 
         Logger.Resolution(address, service);
-        Console.WriteLine("Try resolve");
+        //Console.WriteLine("Try resolve");
         var serviceDescription = new ServiceDescription(address, service, port, fallback);
 
         if (service == null) {
@@ -485,16 +485,16 @@ public abstract class DNSContext : Disposable {
 
         var taskTimeout = Task.Delay(0);
         var taskRetry = Task.Delay(0);
-        Console.WriteLine($"Timeouts {timeout} {retry}");
+        //Console.WriteLine($"Timeouts {timeout} {retry}");
 
         await taskRetry;
-        Console.WriteLine("Retry complete");
+        //Console.WriteLine("Retry complete");
 
         QueueRequest(serviceDescription.ServiceAddress, DNSTypeCode.SRV);
         QueueRequest(serviceDescription.ServiceAddress, DNSTypeCode.TXT);
 
         while (Pending) {
-            Console.WriteLine("Pending");
+            //Console.WriteLine("Pending");
 
             var result = await NextAsync(taskTimeout, taskRetry);
             if (result != null) {
@@ -506,7 +506,7 @@ public abstract class DNSContext : Disposable {
                     }
                 }
             else {
-                Console.WriteLine("timed out");
+                //Console.WriteLine("timed out");
                 }
             }
         //Console.WriteLine("abort");

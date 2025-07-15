@@ -42,7 +42,7 @@ public abstract class EarlClient {
 
 
     public async Task<T> TryResolveEarl<T>(string uriString) where T : JsonObject{
-        LogFile.WriteLine($"Resolve earl {uriString}");
+        //LogFile.WriteLine($"Resolve earl {uriString}");
 
 
         var uri = new Uri(uriString);
@@ -55,8 +55,8 @@ public abstract class EarlClient {
 
         var enveloped = EarlEnvelopeReader.GetEnveloped(plaintext);
 
-        Console.WriteLine(enveloped.Body.ToUTF8());
-        LogFile.WriteLine($"Success earl {uriString}");
+        //Console.WriteLine(enveloped.Body.ToUTF8());
+        //LogFile.WriteLine($"Success earl {uriString}");
 
         var result =  JsonObject.StreamParse<T>(enveloped.Body);
         result.Envelope = enveloped;
@@ -64,14 +64,14 @@ public abstract class EarlClient {
         }
 
     public async Task<T> TryResolveHandle<T>(string handle, string prefix) where T : JsonObject {
-        LogFile.WriteLine($"Resolve handle {handle}, {prefix}");
+        //LogFile.WriteLine($"Resolve handle {handle}, {prefix}");
 
         // need to reduce handle here to a domain.
 
         var domain = ParsedHandle.GetDomain(handle);
 
 
-        LogFile.WriteLine($"Get prefixed {domain}, {prefix}");
+        //LogFile.WriteLine($"Get prefixed {domain}, {prefix}");
         var txt = await DnsClient.GetPrefixedTXT(domain, prefix);
 
         if (txt is null) {
@@ -80,14 +80,14 @@ public abstract class EarlClient {
 
 
         var text = txt.FullText();
-        LogFile.WriteLine($" TXT prefixed {domain}, {prefix} -> {text}");
+        //LogFile.WriteLine($" TXT prefixed {domain}, {prefix} -> {text}");
 
 
         var earl = GetTag(text, MediaTypes.EarlTag);
 
         var result = await ResolveEarl<T>(earl);
 
-        LogFile.WriteLine($"Finished handle {handle}, {prefix}");
+        //LogFile.WriteLine($"Finished handle {handle}, {prefix}");
         return result;
         }
 

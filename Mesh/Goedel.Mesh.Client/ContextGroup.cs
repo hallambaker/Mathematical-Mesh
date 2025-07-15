@@ -260,7 +260,7 @@ public partial class ContextGroup : ContextAccount {
             }
 
 
-        Console.WriteLine(contact.ToString());
+        //Console.WriteLine(contact.ToString());
         return contact;
 
         }

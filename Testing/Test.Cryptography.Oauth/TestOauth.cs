@@ -126,7 +126,9 @@ public class TestOauth : UnitTestSet {
                         { "a", new() {Values="he/him/his" } }
                     }
                 },
-            PreferredLanguages=new() {
+            //Media 
+            //https://www.hallambaker.com/Images/PHBInDalek.png
+            PreferredLanguages =new() {
                     { "b", new() { Language="en"} }
                 },
             Titles=null,
@@ -135,6 +137,8 @@ public class TestOauth : UnitTestSet {
             Media=[],
             Updates=[]
             };
+
+        contact.AddMedia("https://www.hallambaker.com/Images/PHBavatar.png", "image/png");
 
         var openPgp = new byte[166];
         var smime = new byte[1166];
@@ -161,6 +165,7 @@ public class TestOauth : UnitTestSet {
         var meshProfile = new byte[1166];
         contact.AddMesh(meshProfile);
 
+        
 
         // Add update mechanism
         var updateKey = KeyPairEd448.Generate(KeySecurity.Ephemeral);
