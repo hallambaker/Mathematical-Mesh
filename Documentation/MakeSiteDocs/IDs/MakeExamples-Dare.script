@@ -1,0 +1,228 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Protocol
+#using Goedel.Utilities
+#using Goedel.Cryptography
+#using Goedel.Cryptography.Dare
+#% #pragma warning disable IDE0022
+#% #pragma warning disable IDE0060
+#% #pragma warning disable IDE1006
+#xclass ExampleGenerator CreateExamples
+
+
+#method MakeDare3Examples CreateExamples Example
+#% DareEnvelopeJsonMini(Example);
+#% DareSequenceJsonMini(Example);
+#% DareEnvelopeBinaryMini(Example);
+#% DareSequenceBinaryMini(Example);
+#% Dare3JsonEnvelope(Example);
+#% Dare3JsonSequence(Example);
+#% Dare3BinaryEnvelope(Example);
+#% Dare3BinarySequence(Example);
+#% DareExchangedKeyGeneration(Example);
+#% DareRecipientData(Example);
+#% DareSaltConstruction(Example);
+#% DarePayloadEncryption(Example);
+#% DareEncryptionComplete(Example);
+#% DareSignaturePreamble(Example);
+#% DareSignatureTrailer(Example);
+#% DareSignatureValue(Example);
+#% DareSignatureInSequence(Example);
+#% DareKeyDefinitions(Example);
+#% DareEnvelopeTestVectors(Example);
+#% DareSequenceTestVectors(Example);
+#end method
+
+
+
+
+
+
+#zfile CreateExamples DareEnvelopeJsonMini "Examples\\DareEnvelopeJsonMini.md" Example
+~~~~
+#% FormatData("Minimal DARE Envelope", Dare3.EnvelopeMini);
+~~~~
+#end zfile
+
+
+#zfile CreateExamples DareSequenceJsonMini "Examples\\DareSequenceJsonMini.md" Example
+~~~~
+#% FormatData("Minimal DARE Sequence", Dare3.SequenceMini);
+~~~~
+#end zfile
+
+
+#zfile CreateExamples DareEnvelopeBinaryMini "Examples\\DareEnvelopeBinaryMini.md" Example
+~~~~
+#% FormatData("Minimal DARE Envelope", Dare3.EnvelopeMini, binary:true);
+~~~~
+#end zfile
+
+#zfile CreateExamples DareSequenceBinaryMini "Examples\\DareSequenceBinaryMini.md" Example
+~~~~
+#% FormatData("Minimal DARE Sequence", Dare3.SequenceMini, binary:true);
+~~~~
+#end zfile
+
+#zfile CreateExamples Dare3JsonEnvelope "Examples\\Dare3JsonEnvelope.md" Example
+For example, the following envelope contains a payload containing the text 
+'#{DareResults.TestPayload2}' and a header specifying that the content type is 
+#{DareResults.TestPayloadMedia}:
+
+~~~~
+#% FormatData(null, Dare3.Envelope2, true);
+~~~~
+#end zfile
+
+#zfile CreateExamples Dare3JsonSequence "Examples\\Dare3JsonSequence.md" Example
+For example, the following sequence contains the envelopes presented in the previous
+two examples:
+
+~~~~
+#% FormatData(null, Dare3.Sequence2);
+~~~~
+#end zfile
+
+#zfile CreateExamples Dare3BinaryEnvelope "Examples\\Dare3BinaryEnvelope.md" Example
+For example, the binary encoding of the envelope shown in the previous example is:
+
+~~~~
+#% FormatData(null,Dare3.Envelope2, binary:true);
+~~~~
+#end zfile
+
+#zfile CreateExamples Dare3BinarySequence "Examples\\Dare3BinarySequence.md" Example
+For example, the binary encoding of the sequence shown in the previous example is:
+
+~~~~
+#% FormatData("DARE Sequence in Binary Serialization", Dare3.Sequence2, binary:true);
+~~~~
+#end zfile
+
+#zfile CreateExamples DareExchangedKeyGeneration "Examples\\DareExchangedKeyGeneration.md" Example
+~~~~
+#% FormatData("Exchanged Key", Dare3.ExchangedKey);
+#% FormatData("Exchanged Key Identifier", Dare3.ExchangedKeyId);
+~~~~
+#end zfile
+
+#zfile CreateExamples DareRecipientData "Examples\\DareRecipientData.md" Example
+~~~~
+#% FormatData("Recipient Public Key ", Dare3.Recipient.KeyIdentifier);
+#% FormatData("Ephemeral Key Pair", Dare3.Recipient.Epk);
+#% FormatData("SharedSecret", Dare3.SharedSecret);
+#% FormatData("Wrapped Exchanged Key", Dare3.Recipient.WrappedBaseSeed);
+#% FormatData("Recipient Information", Dare3.Recipient);
+~~~~
+#end zfile
+
+#zfile CreateExamples DareSaltConstruction "Examples\\DareSaltConstruction.md" Example
+~~~~
+#% FormatData("Salt", Dare3.Salt);
+~~~~
+#end zfile
+
+#zfile CreateExamples DarePayloadEncryption "Examples\\DarePayloadEncryption.md" Example
+The input to the KDF is the concatenation of the Salt value and the Exchanged Key:
+
+~~~~
+#% FormatData("KDF Input", Dare3.KDFIn);
+~~~~
+
+Since we require a 256 bit key and 96 bit nonce, 352 bits of KDF output are required:
+
+~~~~
+#% FormatData("KDF Output = SHAKE256(KDF Input,352)", Dare3.KDFOut);
+~~~~
+
+The first 96 bits of the output provide the nonce, the following 256 bits provide the key:
+
+~~~~
+#% FormatData("Encryption Nonce", Dare3.EncryptionIV);
+#% FormatData("Encryption Key", Dare3.EncryptionKey);
+~~~~
+
+The plaintext payload is the string '#{DareResults.TestPayload2}'.
+The ciphertext is obtained by applying AES-GCM to the plaintext payload using the key and 
+nonce derrived using the KDF and the Signed header as Associated Data.
+
+~~~~
+#% FormatData("Associated Data", Dare3.SignedContentMeta);
+#% FormatData("Ciphertext", Dare3.EncryptedPayload);
+~~~~
+#end zfile
+
+#zfile CreateExamples DareEncryptionComplete "Examples\\DareEncryptionComplete.md" Example
+The complete encryption envelope is:
+
+~~~~
+#% FormatData("DARE Envelope With Encrypted Payload", Dare3.EnvelopedEncryption);
+~~~~
+#end zfile
+
+#zfile CreateExamples DareSignaturePreamble "Examples\\DareSignaturePreamble.md" Example
+~~~~
+#% FormatData("Signature Preamble", Dare3.Preamble);
+~~~~
+#end zfile
+
+#zfile CreateExamples DareSignatureValue "Examples\\DareSignatureValue.md" Example
+~~~~
+#% FormatData("Signed Header Digest", Dare3.SignedHeaderDigest);
+#% FormatData("Payload Digest", Dare3.PayloadDigest);
+#% FormatData("Signature Manifest", Dare3.Manifest);
+#% FormatData("ContextString", Dare3.ContextString);
+#% FormatData("Signature Key Id", Dare3.PreambleSignature.KeyIdentifier);
+#% FormatData("Signature Value", Dare3.SignatureValue);
+~~~~
+#end zfile
+
+#zfile CreateExamples DareSignatureTrailer "Examples\\DareSignatureTrailer.md" Example
+~~~~
+#% FormatData("Signature Trailer", Dare3.Trailer);
+~~~~
+
+The complete envelope is thus:
+
+~~~~
+#% FormatData(null, Dare3.EnvelopedSigned);
+~~~~
+#end zfile
+
+#zfile CreateExamples DareSignatureInSequence "Examples\\DareSignatureInSequence.md" Example
+~~~~
+#% FormatData("Signature In Sequence", Dare3.SignatureInSequence);
+~~~~
+
+#end zfile
+
+#zfile CreateExamples DareKeyDefinitions "Examples\\DareKeyDefinitions.md" Example
+~~~~
+#% FormatData("Recipient Public Key ", Dare3.RecipientPublicKey);
+#% FormatData("Signature Key", Dare3.SignatureKey);
+~~~~
+#end zfile
+
+#zfile CreateExamples DareEnvelopeTestVectors "Examples\\DareEnvelopeTestVectors.md" Example
+#foreach (var test in Dare3.EnvelopeTests)
+#%  TestVector (test);
+#end foreach
+#end zfile
+
+#zfile CreateExamples DareSequenceTestVectors "Examples\\DareSequenceTestVectors.md" Example
+#foreach (var test in Dare3.SequenceTests)
+#%  TestVector (test);
+#end foreach
+#end zfile
+
+#method TestVector TestVector test
+
+#### #{test.Title}
+
+* Encryption Algorithm: #{test.EncryptionAlgorithm}
+* Encryption Algorithm: #{test.SignatureAlgorithm}
+
+
+#end method
+
+#end xclass

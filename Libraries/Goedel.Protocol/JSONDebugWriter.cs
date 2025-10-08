@@ -162,20 +162,26 @@ public class JSONDebugWriter : JsonWriter {
     /// <summary>
     /// Convert a JSONObject to redacted form.
     /// </summary>
-    /// <param name="JSONObject">The object to convert</param>
-    /// <param name="Tagged">If true, the object is wrapped with its type tag.</param>
+    /// <param name="json">The object to convert</param>
+    /// <param name="tagged">If true, the object is wrapped with its type tag.</param>
     /// <returns>The input as a redacted JSON encoded string.</returns>
-    public static string Write(JsonObject JSONObject, bool Tagged = true) {
+    public static string Write(JsonObject json, bool tagged = true) {
 
-        if (JSONObject == null) {
+        if (json == null) {
             return "$$$$ Empty $$$$";
             }
 
         var Buffer = new MemoryStream();
         var JSONWriter = new JSONDebugWriter(Buffer);
-        JSONObject.Serialize(JSONWriter, Tagged);
+        json.Serialize(JSONWriter, tagged);
         return Buffer.ToArray().ToUTF8();
         }
+
+    public static void WriteLine(TextWriter output, JsonObject json, bool tagged = false) {
+        output.WriteLine(Write(json, tagged));
+        }
+
+
 
     /// <summary>Mark end of array element</summary>
     public override void WriteArrayEnd() {

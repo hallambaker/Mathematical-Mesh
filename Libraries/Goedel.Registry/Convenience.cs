@@ -20,6 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Runtime.CompilerServices;
+
 namespace Goedel.Registry;
 
 /// <summary>
@@ -72,6 +74,12 @@ public static partial class ExtensionMethods {
     /// <returns>Character safe label.</returns>
     public static string CS(this object text) => text.ToString();
 
+
+    public static string Uniqueify(this string text) {
+        var result = text.ToLower();
+        return result == text ? result + "_" : result;
+        
+        }
 
 
     /// <summary>
@@ -160,8 +168,8 @@ public class Separator {
     /// <param name="first">String to return on the first call to ToString()</param>
     /// <param name="next">String to return after the first call to ToString()</param>
     public Separator(string first, string next) {
-        this.First = first;
-        this.Next = next;
+        First = first;
+        Next = next;
         }
 
     /// <summary>
@@ -191,4 +199,22 @@ public class Separator {
     /// </summary>
     public void Reset() => IsFirst = true;
 
+    }
+
+public class Separator2 : Separator {
+
+    public Separator2(string first, string next) :base(first,next) {
+        }
+    public Separator2(string next) : this("", next) {
+        }
+
+    public override string ToString() => "TBS";
+
+    public string To() {
+        if (IsFirst) {
+            IsFirst = false;
+            return First;
+            }
+        return Next;
+        }
     }

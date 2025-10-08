@@ -2561,8 +2561,8 @@
             <summary>
             Convert a JSONObject to redacted form.
             </summary>
-            <param name="JSONObject">The object to convert</param>
-            <param name="Tagged">If true, the object is wrapped with its type tag.</param>
+            <param name="json">The object to convert</param>
+            <param name="tagged">If true, the object is wrapped with its type tag.</param>
             <returns>The input as a redacted JSON encoded string.</returns>
         </member>
         <member name="M:Goedel.Protocol.JSONDebugWriter.WriteArrayEnd">

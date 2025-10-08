@@ -639,6 +639,14 @@
             <param name="second">Second array</param>
             <returns>result</returns>
         </member>
+        <member name="M:Goedel.Utilities.ArrayUtilities.Concat(System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Concatenate the two arrays
+            </summary>
+            <param name="first">First array</param>
+            <param name="second">Second array</param>
+            <returns>result</returns>
+        </member>
         <member name="M:Goedel.Utilities.ArrayUtilities.SafeIndex``1(System.Collections.Generic.List{``0},System.Int32)">
             <summary>
             Return element number <paramref name="index"/> from <paramref name="list"/>

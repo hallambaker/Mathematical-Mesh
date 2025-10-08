@@ -50,9 +50,16 @@ public class DeterministicSeed {
         }
 
 
-    DeterministicSeed(string name, bool delete = false) {
+
+
+
+
+    DeterministicSeed(string name, bool delete = false, bool directory = true) {
         Seed = name;
         SeedBytes = Seed.ToBytes();
+        if (!directory) {
+            return;
+            }
 
         TestRoot.AssertNotNull(EnvironmentVariableRequired.Throw, TestPath);
 
@@ -82,7 +89,10 @@ public class DeterministicSeed {
     public string GetTempFileName() => $"Temp{TempCount++}";
 
 
+    public static DeterministicSeed Documentation(params object[] parameters) {
+        return new DeterministicSeed(Format("Documentation", parameters), false);
 
+        }
 
 
     public static DeterministicSeed AutoClean(params object[] parameters) {

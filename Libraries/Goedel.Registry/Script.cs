@@ -347,4 +347,16 @@ public partial class Script {
         return Builder.ToString();
         }
 
+    public string Indent(int count) {
+        var save = _Indent;
+        _Indent = _Indent + new string(' ', count);
+
+        return save;
+        }
+
+    public void RestoreIndent(string indent) {
+        _Indent = indent;
+        }
+
+
     }

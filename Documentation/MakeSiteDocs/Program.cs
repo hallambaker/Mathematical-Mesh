@@ -219,23 +219,25 @@ public partial class CreateExamples {
 
 
     public CreateExamples() {
+
+        WorkingDirectory = Directory.GetCurrentDirectory();
+        SourceDirectory = Path.Combine(WorkingDirectory, "..");
+        Directory.SetCurrentDirectory("..\\Outputs\\Documents");
+        DraftsDirectory = Directory.GetCurrentDirectory();
+
         MeshTestSet = new();
+        MeshTestSet.Seed =  DeterministicSeed.Documentation("_Mesh");
         }
 
 
 
     public void Examples() {
         var output = Console.Out;
-        WorkingDirectory = Directory.GetCurrentDirectory();
-        SourceDirectory = Path.Combine(WorkingDirectory, "..");
 
-
-        Directory.SetCurrentDirectory("..\\Outputs\\Documents");
-        DraftsDirectory = Directory.GetCurrentDirectory();
 
         All = false;
 
-
+        Directory.SetCurrentDirectory(DraftsDirectory);
 
         Directory.CreateDirectory(TestDir1);
         TestFile1.WriteFileNew(TestFile1Text.ToString());
@@ -245,9 +247,11 @@ public partial class CreateExamples {
         TestFile5.WriteFileNew(TestText5.ToString());
         GitHub = true;
 
-        MakeJSDevice();
-        MakeEarl();
-        MakeJSContact();
+
+        MakeDare();
+        //MakeJSDevice();
+        //MakeEarl();
+        //MakeJSContact();
 
 
         if (false) {
@@ -321,15 +325,23 @@ public partial class CreateExamples {
         }
 
 
+    public void MakeDare(
+            ) {
+        SetWorkingDirectory();
+        Dare3 = new DareResults(this);
+
+        SetOutputDirectory();
+        MakeDare3Examples(this);
+        }
+
+
     public void MakeEarl(
                 ) {
         SetWorkingDirectory();
         Earl = new EarlResults(this);
 
-
         SetOutputDirectory();
         MakeEarlExamples(this);
-
         }
 
     public void MakeJSContact(

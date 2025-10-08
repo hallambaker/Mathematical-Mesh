@@ -98,6 +98,7 @@ public partial class CreateExamples {
 
 
     public ExampleDare Dare = new();
+    public DareResults Dare3;
     public EarlResults Earl;
     public JsContactResults JSContact;
     public JsDeviceResults JSDevice;

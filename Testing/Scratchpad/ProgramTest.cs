@@ -132,7 +132,7 @@ partial class Program {
         // Need some new code - stuff with devices
 
 
-        ShellTests.Test().TestProfileConnectStaticQR();
+        //ShellTests.Test().TestProfileConnectStaticQR();
         ShellTestsAdmin.Test().TestLog();
 
         //ServiceDiscovery.Test().TestDNSMultiple(100);

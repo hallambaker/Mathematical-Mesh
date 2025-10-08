@@ -82,7 +82,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
-
+		<Compile Update="IDs\MakeExamples-Dare.cs">
+			<DependentUpon>MakeExamples-Dare.script</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="IDs\MakeExamples-3-Dare.cs">
 			<DependentUpon>MakeExamples-3-Dare.script</DependentUpon>
 			<DesignTime>True</DesignTime>
@@ -225,6 +229,11 @@
 		<None Update="IDs\MakeExamples-2-UDF.script">
 			<LastGenOutput>MakeExamples-2-UDF.cs</LastGenOutput>
 			<Generator>gscript</Generator>
+		</None>
+
+		<None Update="IDs\MakeExamples-Dare.script">
+		  <LastGenOutput>MakeExamples-Earl - Copy.cs</LastGenOutput>
+		  <Generator>gscript</Generator>
 		</None>
 
 		<None Update="IDs\MakeExamples-Earl.script">

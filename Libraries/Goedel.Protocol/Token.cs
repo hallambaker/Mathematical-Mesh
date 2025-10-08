@@ -160,6 +160,8 @@ public record PropertyString(
             Func<IBinding, string?> Get) : Property(Tag, false) {
 
 
+
+
     ///<inheritdoc/>
     public override void Serialize(IBinding data, Writer writer) {
         var value = Get(data);

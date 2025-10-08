@@ -320,6 +320,21 @@ public static class ArrayUtilities {
         return Buffer;
         }
 
+    /// <summary>
+    /// Concatenate the two arrays
+    /// </summary>
+    /// <param name="first">First array</param>
+    /// <param name="second">Second array</param>
+    /// <returns>result</returns>
+    public static byte[] Concat(this byte[] first, byte[] second, byte[] third) {
+        var Buffer = new byte[first.Length + second.Length+ third.Length];
+        Array.Copy(first, Buffer, first.Length);
+        Array.Copy(second, 0, Buffer, first.Length, second.Length);
+        Array.Copy(second, 0, Buffer, first.Length + second.Length, third.Length);
+        return Buffer;
+        }
+
+
 
     /// <summary>
     /// Return element number <paramref name="index"/> from <paramref name="list"/>

@@ -23,7 +23,9 @@ LinkFiles = \
     Goedel.Protocol.GenericHost.dll\
     Goedel.Protocol.Presentation.dll\
     Goedel.Protocol.Service.dll\
-    Goedel.Protocol.dll
+    Goedel.Protocol.dll\
+    Goedel.Mesh.Client.dll\
+    Goedel.Mesh.dll
 
 ToolTargets = \
 	Exceptions.cs\
@@ -49,5 +51,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.JsDevice.dll
+	powershell publishtarget Goedel.Device.dll
 

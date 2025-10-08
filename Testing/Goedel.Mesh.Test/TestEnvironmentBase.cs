@@ -112,7 +112,9 @@ public abstract class TestEnvironmentBase : Disposable {
     public TestEnvironmentBase(MeshTestSet testSet) {
         TestSet = testSet;
         //seed ??= DeterministicSeed.Auto();
-
+        if (DirectoryPath is null) {
+            return;
+            }
 
         DirectoryPath.DirectoryDelete();
 

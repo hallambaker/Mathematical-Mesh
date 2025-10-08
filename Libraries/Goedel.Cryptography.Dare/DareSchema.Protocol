@@ -160,6 +160,7 @@
 			Description
 				|A list of recipient key exchange information blocks.
 
+
 		Struct DarePolicy Policy
 			Tag "policy"
 			Description
@@ -492,4 +493,19 @@
 
 		Binary Value
 			Tag "val"
+
+	Structure DareSequence
+		Struct DareEnvelope Envelopes
+			Multiple
+
+	Structure DareEnvelope
+		Generic
+		Struct DareHeader Unsigned
+			Tag "unsigned"
+		Binary Signed
+			Tag "signed"
+		Binary Payload
+			Tag "payload"
+		Struct DareTrailer Trailer
+			Tag "trailer"
 

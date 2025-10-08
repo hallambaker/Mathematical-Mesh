@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 7/15/2025 6:07:54 PM
+//  This file was automatically generated at 10/8/2025 5:09:44 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -93,7 +93,9 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 	    {typeof(Witness), Witness._binding},
 	    {typeof(Proof), Proof._binding},
 	    {typeof(Unprotected), Unprotected._binding},
-	    {typeof(EarlSignature), EarlSignature._binding}
+	    {typeof(EarlSignature), EarlSignature._binding},
+	    {typeof(DareSequence), DareSequence._binding},
+	    {typeof(DareEnvelope), DareEnvelope._binding}
 		};
 
 	///<summary>Variable used to force static initialization</summary> 
@@ -1884,6 +1886,136 @@ public partial class EarlSignature : Dare {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new EarlSignature();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class DareSequence : Dare {
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("Envelopes")]
+	public virtual List<DareEnvelope>?					Envelopes  {get; set;}
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyListStruct ("Envelopes", typeof (DareEnvelope),
+					(IBinding data, object? value) => {(data as DareSequence).Envelopes = value as List<DareEnvelope>;}, 
+					(IBinding data) => (data as DareSequence).Envelopes,
+					false, ()=>new  List<DareEnvelope>(), ()=>new DareEnvelope())
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<DareSequence> _binding = new (
+			new() {
+			{ "Envelopes", _properties [0]}}, __Tag,
+		() => new DareSequence(), () => [], () => [], null, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DareSequence";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DareSequence();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class DareEnvelope : Dare {
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("unsigned")]
+	public virtual DareHeader?					Unsigned  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("signed")]
+	public virtual byte[]?					Signed  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("payload")]
+	public virtual byte[]?					Payload  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("trailer")]
+	public virtual DareTrailer?					Trailer  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyStruct ("unsigned", typeof (DareHeader),
+					(IBinding data, object? value) => {(data as DareEnvelope).Unsigned = value as DareHeader;}, 
+					(IBinding data) => (data as DareEnvelope).Unsigned,
+					false, ()=>new  DareHeader(), ()=>new DareHeader()),
+		new PropertyBinary ("signed", 
+					(IBinding data, byte[]? value) => {(data as DareEnvelope).Signed = value;}, 
+					(IBinding data) => (data as DareEnvelope).Signed ),
+		new PropertyBinary ("payload", 
+					(IBinding data, byte[]? value) => {(data as DareEnvelope).Payload = value;}, 
+					(IBinding data) => (data as DareEnvelope).Payload ),
+		new PropertyStruct ("trailer", typeof (DareTrailer),
+					(IBinding data, object? value) => {(data as DareEnvelope).Trailer = value as DareTrailer;}, 
+					(IBinding data) => (data as DareEnvelope).Trailer,
+					false, ()=>new  DareTrailer(), ()=>new DareTrailer())
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<DareEnvelope> _binding = new (
+			new() {
+			{ "unsigned", _properties [0]},
+			{ "signed", _properties [1]},
+			{ "payload", _properties [2]},
+			{ "trailer", _properties [3]}}, __Tag,
+		() => new DareEnvelope(), () => [], () => [], null, Generic: true);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "DareEnvelope";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new DareEnvelope();
 
 	}
 

@@ -50,5 +50,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Device.dll
+	powershell publishtarget Goedel.DeviceConnect.dll
 

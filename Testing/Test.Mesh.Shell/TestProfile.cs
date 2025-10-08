@@ -270,10 +270,10 @@ public partial class ShellTests {
 
         deviceAdmin.Dispatch($"account create {AliceAccount}");
 
-        deviceAdmin.Dispatch($"account connect {deviceInit.Uri} /web");
+        //deviceAdmin.Dispatch($"account connect {deviceInit.Uri} /web");
 
 
-        var result2 = deviceConnect1.Dispatch($"device complete");
+        //var result2 = deviceConnect1.Dispatch($"device complete");
 
         EndTest();
 

@@ -20,7 +20,7 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.Carnet.dll\
     Goedel.Command.Json.dll\
-    Goedel.Device.dll\
+    Goedel.DeviceConnect.dll\
     Goedel.Utilities.dll\
     Goedel.Cryptography.Core.dll\
     Goedel.Cryptography.Dare.dll\

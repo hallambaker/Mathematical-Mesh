@@ -207,7 +207,7 @@ public class JsContactResults {
             scheme: "jscontact", authority: CreateExamples.AliceService);
         // create an EARL for the contact here.
 
-        foreach (var servicePair in Contact.Emails) {
+        foreach (var servicePair in Contact.Emails.IfEnumerable()) {
             //var service = servicePair.Value;
             //if (service.Pr
 
@@ -215,57 +215,61 @@ public class JsContactResults {
             }
 
         // email address
-        foreach (var key in EmailAddress.CryptoKeyIds) {
-            if (key.Value == "smime") {
-                if (Contact.CryptoKeys.TryGetValue(key.Key, out var jsonWebKey)) {
-                    JSContactSmime.Add(key.Key, jsonWebKey);
+        if (EmailAddress?.CryptoKeyIds is not null) {
+            foreach (var key in EmailAddress.CryptoKeyIds) {
+                if (key.Value == "smime") {
+                    if (Contact.CryptoKeys.TryGetValue(key.Key, out var jsonWebKey)) {
+                        JSContactSmime.Add(key.Key, jsonWebKey);
+                        }
+                    }
+                else if (key.Value == "openpgp") {
+                    if (Contact.CryptoKeys.TryGetValue(key.Key, out var jsonWebKey)) {
+                        JSContactOpenpgp.Add(key.Key, jsonWebKey);
+                        }
                     }
                 }
-            else if (key.Value == "openpgp") {
-                if (Contact.CryptoKeys.TryGetValue(key.Key, out var jsonWebKey)) {
-                    JSContactOpenpgp.Add(key.Key, jsonWebKey);
+            }
+        if (Contact?.OnlineServices is not null) {
+            foreach (var servicePair in Contact.OnlineServices.IfEnumerable()) {
+                var service = servicePair.Value;
+                if (service.Service == "ssh") {
+                    Ssh.Add(servicePair.Key, servicePair.Value);
+                    OnlineServiceWithKeys = TryGetAny(Ssh);
+
+                    CollectKeys(service.CryptoKeyIds, SshKeys);
+                    CryptoKeyWithJwk = TryGetAny(SshKeys);
+                    }
+                if (service.Service == "code") {
+                    CodeSign.Add(servicePair.Key, servicePair.Value);
+                    CollectKeys(service.CryptoKeyIds, CodeSignKeys);
+                    }
+                if (service.Service == "commit") {
+                    Commit.Add(servicePair.Key, servicePair.Value);
+                    CollectKeys(service.CryptoKeyIds, CommitKeys);
                     }
                 }
             }
 
-        foreach (var servicePair in Contact.OnlineServices) {
-            var service = servicePair.Value;
-            if (service.Service == "ssh") {
-                Ssh.Add(servicePair.Key, servicePair.Value);
-                OnlineServiceWithKeys = TryGetAny(Ssh);
-
-                CollectKeys(service.CryptoKeyIds, SshKeys);
-                CryptoKeyWithJwk = TryGetAny(SshKeys);
-                }
-            if (service.Service == "code") {
-                CodeSign.Add(servicePair.Key, servicePair.Value);
-                CollectKeys(service.CryptoKeyIds, CodeSignKeys);
-                }
-            if (service.Service == "commit") {
-                Commit.Add(servicePair.Key, servicePair.Value);
-                CollectKeys(service.CryptoKeyIds, CommitKeys);
-                }
-            }
-
-        foreach (var update in Contact.Updates) {
+        foreach (var update in Contact.Updates.IfEnumerable()) {
             Update = update.Value;
             CollectKeys(Update.CryptoKeyIds, UpdateKeys);
             }
 
 
-        foreach (var key in Contact.ServiceGroups) {
+        foreach (var key in Contact.ServiceGroups.IfEnumerable()) {
             Group = key.Value;
 
             }
 
         int count = 0;
 
-        foreach (var key in Group.Members) {
-            if (count < 3 & Contact.OnlineServices.TryGetValue(key.Key, out var member)) {
-                GroupMembers.Add(key.Key, member);
-                count++;
+        if (Group?.Members is not null) {
+            foreach (var key in Group?.Members) {
+                if (count < 3 & Contact.OnlineServices.TryGetValue(key.Key, out var member)) {
+                    GroupMembers.Add(key.Key, member);
+                    count++;
+                    }
                 }
-
             }
         }
 
