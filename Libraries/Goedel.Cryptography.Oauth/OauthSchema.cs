@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/8/2025 1:32:05 PM
+//  This file was automatically generated at 10/20/2025 6:33:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -154,20 +155,20 @@ public partial class ResourceServerMetadata : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("resource", 
-					(IBinding data, string? value) => {(data as ResourceServerMetadata).Resource = value;}, 
-					(IBinding data) => (data as ResourceServerMetadata).Resource ),
+					(data, value) => {(data as ResourceServerMetadata).Resource = value;}, 
+					data => (data as ResourceServerMetadata).Resource ),
 		new PropertyListString ("authorization_servers", 
-					(IBinding data, List<string>? value) => {(data as ResourceServerMetadata).AuthorizationServers = value;}, 
-					(IBinding data) => (data as ResourceServerMetadata).AuthorizationServers ),
+					(data, value) => {(data as ResourceServerMetadata).AuthorizationServers = value;}, 
+					data => (data as ResourceServerMetadata).AuthorizationServers ),
 		new PropertyListString ("scopes_supported", 
-					(IBinding data, List<string>? value) => {(data as ResourceServerMetadata).ScopesSupported = value;}, 
-					(IBinding data) => (data as ResourceServerMetadata).ScopesSupported ),
+					(data, value) => {(data as ResourceServerMetadata).ScopesSupported = value;}, 
+					data => (data as ResourceServerMetadata).ScopesSupported ),
 		new PropertyListString ("bearer_methods_supported", 
-					(IBinding data, List<string>? value) => {(data as ResourceServerMetadata).BearerMethodsSupported = value;}, 
-					(IBinding data) => (data as ResourceServerMetadata).BearerMethodsSupported ),
+					(data, value) => {(data as ResourceServerMetadata).BearerMethodsSupported = value;}, 
+					data => (data as ResourceServerMetadata).BearerMethodsSupported ),
 		new PropertyString ("resource_documentation", 
-					(IBinding data, string? value) => {(data as ResourceServerMetadata).ResourceDocumentation = value;}, 
-					(IBinding data) => (data as ResourceServerMetadata).ResourceDocumentation )
+					(data, value) => {(data as ResourceServerMetadata).ResourceDocumentation = value;}, 
+					data => (data as ResourceServerMetadata).ResourceDocumentation )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -363,86 +364,86 @@ public partial class AuthorizationServerMetadata : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("issuer", 
-					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).Issuer = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).Issuer ),
+					(data, value) => {(data as AuthorizationServerMetadata).Issuer = value;}, 
+					data => (data as AuthorizationServerMetadata).Issuer ),
 		new PropertyListString ("scopes_supported", 
-					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).ScopesSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).ScopesSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).ScopesSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).ScopesSupported ),
 		new PropertyListString ("subject_types_supported", 
-					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).SubjectTypesSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).SubjectTypesSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).SubjectTypesSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).SubjectTypesSupported ),
 		new PropertyListString ("response_types_supported", 
-					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).ResponseTypesSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).ResponseTypesSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).ResponseTypesSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).ResponseTypesSupported ),
 		new PropertyListString ("response_modes_supported", 
-					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).ResponseModesSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).ResponseModesSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).ResponseModesSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).ResponseModesSupported ),
 		new PropertyListString ("grant_types_supported", 
-					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).GrantTypesSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).GrantTypesSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).GrantTypesSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).GrantTypesSupported ),
 		new PropertyListString ("code_challenge_methods_supported", 
-					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).CodeChallengeMethodsSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).CodeChallengeMethodsSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).CodeChallengeMethodsSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).CodeChallengeMethodsSupported ),
 		new PropertyListString ("ui_locales_supported", 
-					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).UiLocalesSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).UiLocalesSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).UiLocalesSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).UiLocalesSupported ),
 		new PropertyListString ("display_values_supported", 
-					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).DisplayValuesSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).DisplayValuesSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).DisplayValuesSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).DisplayValuesSupported ),
 		new PropertyBoolean ("authorization_response_iss_parameter_supported", 
-					(IBinding data, bool? value) => {(data as AuthorizationServerMetadata).AuthorizationResponseIssParameterSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).AuthorizationResponseIssParameterSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).AuthorizationResponseIssParameterSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).AuthorizationResponseIssParameterSupported ),
 		new PropertyListString ("request_object_signing_alg_values_supported", 
-					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).RequestObjectSigningAlgValuesSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).RequestObjectSigningAlgValuesSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).RequestObjectSigningAlgValuesSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).RequestObjectSigningAlgValuesSupported ),
 		new PropertyListString ("request_object_encryption_alg_values_supported", 
-					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).RequestObjectEncryptionAlgValuesSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).RequestObjectEncryptionAlgValuesSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).RequestObjectEncryptionAlgValuesSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).RequestObjectEncryptionAlgValuesSupported ),
 		new PropertyListString ("request_object_encryption_enc_values_supported", 
-					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).RequestObjectEncryptionEncValuesSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).RequestObjectEncryptionEncValuesSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).RequestObjectEncryptionEncValuesSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).RequestObjectEncryptionEncValuesSupported ),
 		new PropertyBoolean ("request_parameter_supported", 
-					(IBinding data, bool? value) => {(data as AuthorizationServerMetadata).RequestParameterSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).RequestParameterSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).RequestParameterSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).RequestParameterSupported ),
 		new PropertyBoolean ("request_uri_parameter_supported", 
-					(IBinding data, bool? value) => {(data as AuthorizationServerMetadata).RequestUriParameterSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).RequestUriParameterSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).RequestUriParameterSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).RequestUriParameterSupported ),
 		new PropertyBoolean ("require_request_uri_registration", 
-					(IBinding data, bool? value) => {(data as AuthorizationServerMetadata).RequireRequestUriRegistration = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).RequireRequestUriRegistration ),
+					(data, value) => {(data as AuthorizationServerMetadata).RequireRequestUriRegistration = value;}, 
+					data => (data as AuthorizationServerMetadata).RequireRequestUriRegistration ),
 		new PropertyString ("jwks_uri", 
-					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).JwksUri = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).JwksUri ),
+					(data, value) => {(data as AuthorizationServerMetadata).JwksUri = value;}, 
+					data => (data as AuthorizationServerMetadata).JwksUri ),
 		new PropertyString ("authorization_endpoint", 
-					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).AuthorizationEndpoint = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).AuthorizationEndpoint ),
+					(data, value) => {(data as AuthorizationServerMetadata).AuthorizationEndpoint = value;}, 
+					data => (data as AuthorizationServerMetadata).AuthorizationEndpoint ),
 		new PropertyString ("token_endpoint", 
-					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).TokenEndpoint = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).TokenEndpoint ),
+					(data, value) => {(data as AuthorizationServerMetadata).TokenEndpoint = value;}, 
+					data => (data as AuthorizationServerMetadata).TokenEndpoint ),
 		new PropertyListString ("token_endpoint_auth_methods_supported", 
-					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).TokenEndpointAuthMethodsSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).TokenEndpointAuthMethodsSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).TokenEndpointAuthMethodsSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).TokenEndpointAuthMethodsSupported ),
 		new PropertyListString ("token_endpoint_auth_signing_alg_values_supported", 
-					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).TokenEndpointAuthSigningAlgValuesSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).TokenEndpointAuthSigningAlgValuesSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).TokenEndpointAuthSigningAlgValuesSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).TokenEndpointAuthSigningAlgValuesSupported ),
 		new PropertyString ("revocation_endpoint", 
-					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).RevocationEndpoint = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).RevocationEndpoint ),
+					(data, value) => {(data as AuthorizationServerMetadata).RevocationEndpoint = value;}, 
+					data => (data as AuthorizationServerMetadata).RevocationEndpoint ),
 		new PropertyString ("introspection_endpoint", 
-					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).IntrospectionEndpoint = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).IntrospectionEndpoint ),
+					(data, value) => {(data as AuthorizationServerMetadata).IntrospectionEndpoint = value;}, 
+					data => (data as AuthorizationServerMetadata).IntrospectionEndpoint ),
 		new PropertyString ("pushed_authorization_request_endpoint", 
-					(IBinding data, string? value) => {(data as AuthorizationServerMetadata).PushedAuthorizationRequestEndpoint = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).PushedAuthorizationRequestEndpoint ),
+					(data, value) => {(data as AuthorizationServerMetadata).PushedAuthorizationRequestEndpoint = value;}, 
+					data => (data as AuthorizationServerMetadata).PushedAuthorizationRequestEndpoint ),
 		new PropertyBoolean ("require_pushed_authorization_requests", 
-					(IBinding data, bool? value) => {(data as AuthorizationServerMetadata).RequirePushedAuthorizationRequests = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).RequirePushedAuthorizationRequests ),
+					(data, value) => {(data as AuthorizationServerMetadata).RequirePushedAuthorizationRequests = value;}, 
+					data => (data as AuthorizationServerMetadata).RequirePushedAuthorizationRequests ),
 		new PropertyListString ("dpop_signing_alg_values_supported", 
-					(IBinding data, List<string>? value) => {(data as AuthorizationServerMetadata).DpopSigningAlgValuesSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).DpopSigningAlgValuesSupported ),
+					(data, value) => {(data as AuthorizationServerMetadata).DpopSigningAlgValuesSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).DpopSigningAlgValuesSupported ),
 		new PropertyBoolean ("client_id_metadata_document_supported", 
-					(IBinding data, bool? value) => {(data as AuthorizationServerMetadata).ClientIdMetadataDocumentSupported = value;}, 
-					(IBinding data) => (data as AuthorizationServerMetadata).ClientIdMetadataDocumentSupported )
+					(data, value) => {(data as AuthorizationServerMetadata).ClientIdMetadataDocumentSupported = value;}, 
+					data => (data as AuthorizationServerMetadata).ClientIdMetadataDocumentSupported )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -583,35 +584,35 @@ public partial class AuthorizationRequest : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("client_id", 
-					(IBinding data, string? value) => {(data as AuthorizationRequest).ClientId = value;}, 
-					(IBinding data) => (data as AuthorizationRequest).ClientId ),
+					(data, value) => {(data as AuthorizationRequest).ClientId = value;}, 
+					data => (data as AuthorizationRequest).ClientId ),
 		new PropertyString ("response_type", 
-					(IBinding data, string? value) => {(data as AuthorizationRequest).ResponseType = value;}, 
-					(IBinding data) => (data as AuthorizationRequest).ResponseType ),
+					(data, value) => {(data as AuthorizationRequest).ResponseType = value;}, 
+					data => (data as AuthorizationRequest).ResponseType ),
 		new PropertyString ("code_challenge", 
-					(IBinding data, string? value) => {(data as AuthorizationRequest).CodeChallenge = value;}, 
-					(IBinding data) => (data as AuthorizationRequest).CodeChallenge ),
+					(data, value) => {(data as AuthorizationRequest).CodeChallenge = value;}, 
+					data => (data as AuthorizationRequest).CodeChallenge ),
 		new PropertyString ("code_challenge_method", 
-					(IBinding data, string? value) => {(data as AuthorizationRequest).CodeChallengeMethod = value;}, 
-					(IBinding data) => (data as AuthorizationRequest).CodeChallengeMethod ),
+					(data, value) => {(data as AuthorizationRequest).CodeChallengeMethod = value;}, 
+					data => (data as AuthorizationRequest).CodeChallengeMethod ),
 		new PropertyString ("state", 
-					(IBinding data, string? value) => {(data as AuthorizationRequest).State = value;}, 
-					(IBinding data) => (data as AuthorizationRequest).State ),
+					(data, value) => {(data as AuthorizationRequest).State = value;}, 
+					data => (data as AuthorizationRequest).State ),
 		new PropertyString ("redirect_uri", 
-					(IBinding data, string? value) => {(data as AuthorizationRequest).RedirectUri = value;}, 
-					(IBinding data) => (data as AuthorizationRequest).RedirectUri ),
+					(data, value) => {(data as AuthorizationRequest).RedirectUri = value;}, 
+					data => (data as AuthorizationRequest).RedirectUri ),
 		new PropertyString ("scope", 
-					(IBinding data, string? value) => {(data as AuthorizationRequest).Scope = value;}, 
-					(IBinding data) => (data as AuthorizationRequest).Scope ),
+					(data, value) => {(data as AuthorizationRequest).Scope = value;}, 
+					data => (data as AuthorizationRequest).Scope ),
 		new PropertyString ("client_assertion_type", 
-					(IBinding data, string? value) => {(data as AuthorizationRequest).ClientAssertionType = value;}, 
-					(IBinding data) => (data as AuthorizationRequest).ClientAssertionType ),
+					(data, value) => {(data as AuthorizationRequest).ClientAssertionType = value;}, 
+					data => (data as AuthorizationRequest).ClientAssertionType ),
 		new PropertyString ("client_assertion", 
-					(IBinding data, string? value) => {(data as AuthorizationRequest).ClientAssertion = value;}, 
-					(IBinding data) => (data as AuthorizationRequest).ClientAssertion ),
+					(data, value) => {(data as AuthorizationRequest).ClientAssertion = value;}, 
+					data => (data as AuthorizationRequest).ClientAssertion ),
 		new PropertyString ("login_hint", 
-					(IBinding data, string? value) => {(data as AuthorizationRequest).LoginHint = value;}, 
-					(IBinding data) => (data as AuthorizationRequest).LoginHint )
+					(data, value) => {(data as AuthorizationRequest).LoginHint = value;}, 
+					data => (data as AuthorizationRequest).LoginHint )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -676,11 +677,11 @@ public partial class AuthorizationRequest2 : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("client_id", 
-					(IBinding data, string? value) => {(data as AuthorizationRequest2).ClientId = value;}, 
-					(IBinding data) => (data as AuthorizationRequest2).ClientId ),
+					(data, value) => {(data as AuthorizationRequest2).ClientId = value;}, 
+					data => (data as AuthorizationRequest2).ClientId ),
 		new PropertyString ("request_uri", 
-					(IBinding data, string? value) => {(data as AuthorizationRequest2).RequestUri = value;}, 
-					(IBinding data) => (data as AuthorizationRequest2).RequestUri )
+					(data, value) => {(data as AuthorizationRequest2).RequestUri = value;}, 
+					data => (data as AuthorizationRequest2).RequestUri )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -745,11 +746,11 @@ public partial class PushedAuthorizationResponse : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger32 ("expires_in", 
-					(IBinding data, int? value) => {(data as PushedAuthorizationResponse).ExpiresIn = value;}, 
-					(IBinding data) => (data as PushedAuthorizationResponse).ExpiresIn ),
+					(data, value) => {(data as PushedAuthorizationResponse).ExpiresIn = value;}, 
+					data => (data as PushedAuthorizationResponse).ExpiresIn ),
 		new PropertyString ("request_uri", 
-					(IBinding data, string? value) => {(data as PushedAuthorizationResponse).RequestUri = value;}, 
-					(IBinding data) => (data as PushedAuthorizationResponse).RequestUri )
+					(data, value) => {(data as PushedAuthorizationResponse).RequestUri = value;}, 
+					data => (data as PushedAuthorizationResponse).RequestUri )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -821,14 +822,14 @@ public partial class AuthorizationResponse : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("code", 
-					(IBinding data, string? value) => {(data as AuthorizationResponse).Code = value;}, 
-					(IBinding data) => (data as AuthorizationResponse).Code ),
+					(data, value) => {(data as AuthorizationResponse).Code = value;}, 
+					data => (data as AuthorizationResponse).Code ),
 		new PropertyString ("state", 
-					(IBinding data, string? value) => {(data as AuthorizationResponse).State = value;}, 
-					(IBinding data) => (data as AuthorizationResponse).State ),
+					(data, value) => {(data as AuthorizationResponse).State = value;}, 
+					data => (data as AuthorizationResponse).State ),
 		new PropertyString ("iss", 
-					(IBinding data, string? value) => {(data as AuthorizationResponse).Iss = value;}, 
-					(IBinding data) => (data as AuthorizationResponse).Iss )
+					(data, value) => {(data as AuthorizationResponse).Iss = value;}, 
+					data => (data as AuthorizationResponse).Iss )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -930,20 +931,20 @@ public partial class ErrorResponse : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("error", 
-					(IBinding data, string? value) => {(data as ErrorResponse).Error = value;}, 
-					(IBinding data) => (data as ErrorResponse).Error ),
+					(data, value) => {(data as ErrorResponse).Error = value;}, 
+					data => (data as ErrorResponse).Error ),
 		new PropertyString ("errorDescription", 
-					(IBinding data, string? value) => {(data as ErrorResponse).ErrorDescription = value;}, 
-					(IBinding data) => (data as ErrorResponse).ErrorDescription ),
+					(data, value) => {(data as ErrorResponse).ErrorDescription = value;}, 
+					data => (data as ErrorResponse).ErrorDescription ),
 		new PropertyString ("errorUri", 
-					(IBinding data, string? value) => {(data as ErrorResponse).ErrorUri = value;}, 
-					(IBinding data) => (data as ErrorResponse).ErrorUri ),
+					(data, value) => {(data as ErrorResponse).ErrorUri = value;}, 
+					data => (data as ErrorResponse).ErrorUri ),
 		new PropertyString ("state", 
-					(IBinding data, string? value) => {(data as ErrorResponse).State = value;}, 
-					(IBinding data) => (data as ErrorResponse).State ),
+					(data, value) => {(data as ErrorResponse).State = value;}, 
+					data => (data as ErrorResponse).State ),
 		new PropertyString ("iss", 
-					(IBinding data, string? value) => {(data as ErrorResponse).Iss = value;}, 
-					(IBinding data) => (data as ErrorResponse).Iss )
+					(data, value) => {(data as ErrorResponse).Iss = value;}, 
+					data => (data as ErrorResponse).Iss )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1076,51 +1077,51 @@ public partial class ClientMetadata : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("client_id", 
-					(IBinding data, string? value) => {(data as ClientMetadata).ClientId = value;}, 
-					(IBinding data) => (data as ClientMetadata).ClientId ),
+					(data, value) => {(data as ClientMetadata).ClientId = value;}, 
+					data => (data as ClientMetadata).ClientId ),
 		new PropertyString ("application_type", 
-					(IBinding data, string? value) => {(data as ClientMetadata).ApplicationType = value;}, 
-					(IBinding data) => (data as ClientMetadata).ApplicationType ),
+					(data, value) => {(data as ClientMetadata).ApplicationType = value;}, 
+					data => (data as ClientMetadata).ApplicationType ),
 		new PropertyListString ("grant_types", 
-					(IBinding data, List<string>? value) => {(data as ClientMetadata).GrantTypes = value;}, 
-					(IBinding data) => (data as ClientMetadata).GrantTypes ),
+					(data, value) => {(data as ClientMetadata).GrantTypes = value;}, 
+					data => (data as ClientMetadata).GrantTypes ),
 		new PropertyString ("scope", 
-					(IBinding data, string? value) => {(data as ClientMetadata).Scope = value;}, 
-					(IBinding data) => (data as ClientMetadata).Scope ),
+					(data, value) => {(data as ClientMetadata).Scope = value;}, 
+					data => (data as ClientMetadata).Scope ),
 		new PropertyListString ("response_types", 
-					(IBinding data, List<string>? value) => {(data as ClientMetadata).ResponseTypes = value;}, 
-					(IBinding data) => (data as ClientMetadata).ResponseTypes ),
+					(data, value) => {(data as ClientMetadata).ResponseTypes = value;}, 
+					data => (data as ClientMetadata).ResponseTypes ),
 		new PropertyListString ("redirect_uris", 
-					(IBinding data, List<string>? value) => {(data as ClientMetadata).RedirectUris = value;}, 
-					(IBinding data) => (data as ClientMetadata).RedirectUris ),
+					(data, value) => {(data as ClientMetadata).RedirectUris = value;}, 
+					data => (data as ClientMetadata).RedirectUris ),
 		new PropertyBoolean ("dpop_bound_access_tokens", 
-					(IBinding data, bool? value) => {(data as ClientMetadata).DpopBoundAccessTokens = value;}, 
-					(IBinding data) => (data as ClientMetadata).DpopBoundAccessTokens ),
+					(data, value) => {(data as ClientMetadata).DpopBoundAccessTokens = value;}, 
+					data => (data as ClientMetadata).DpopBoundAccessTokens ),
 		new PropertyString ("token_endpoint_auth_method", 
-					(IBinding data, string? value) => {(data as ClientMetadata).TokenEndpointAuthMethod = value;}, 
-					(IBinding data) => (data as ClientMetadata).TokenEndpointAuthMethod ),
+					(data, value) => {(data as ClientMetadata).TokenEndpointAuthMethod = value;}, 
+					data => (data as ClientMetadata).TokenEndpointAuthMethod ),
 		new PropertyString ("token_endpoint_auth_signing_alg", 
-					(IBinding data, string? value) => {(data as ClientMetadata).TokenEndpointAuthSigningAlg = value;}, 
-					(IBinding data) => (data as ClientMetadata).TokenEndpointAuthSigningAlg ),
+					(data, value) => {(data as ClientMetadata).TokenEndpointAuthSigningAlg = value;}, 
+					data => (data as ClientMetadata).TokenEndpointAuthSigningAlg ),
 		new PropertyStruct ("jwks", typeof (JWKS),
-					(IBinding data, object? value) => {(data as ClientMetadata).Jwks = value as JWKS;}, 
-					(IBinding data) => (data as ClientMetadata).Jwks,
+					(data, value) => {(data as ClientMetadata).Jwks = value as JWKS;}, 
+					data => (data as ClientMetadata).Jwks,
 					false, ()=>new  JWKS(), ()=>new JWKS()),
 		new PropertyString ("client_name", 
-					(IBinding data, string? value) => {(data as ClientMetadata).ClientName = value;}, 
-					(IBinding data) => (data as ClientMetadata).ClientName ),
+					(data, value) => {(data as ClientMetadata).ClientName = value;}, 
+					data => (data as ClientMetadata).ClientName ),
 		new PropertyString ("client_uri", 
-					(IBinding data, string? value) => {(data as ClientMetadata).ClientUri = value;}, 
-					(IBinding data) => (data as ClientMetadata).ClientUri ),
+					(data, value) => {(data as ClientMetadata).ClientUri = value;}, 
+					data => (data as ClientMetadata).ClientUri ),
 		new PropertyString ("logo_uri", 
-					(IBinding data, string? value) => {(data as ClientMetadata).LogoUri = value;}, 
-					(IBinding data) => (data as ClientMetadata).LogoUri ),
+					(data, value) => {(data as ClientMetadata).LogoUri = value;}, 
+					data => (data as ClientMetadata).LogoUri ),
 		new PropertyString ("tos_uri", 
-					(IBinding data, string? value) => {(data as ClientMetadata).TosUri = value;}, 
-					(IBinding data) => (data as ClientMetadata).TosUri ),
+					(data, value) => {(data as ClientMetadata).TosUri = value;}, 
+					data => (data as ClientMetadata).TosUri ),
 		new PropertyString ("policy_uri", 
-					(IBinding data, string? value) => {(data as ClientMetadata).PolicyUri = value;}, 
-					(IBinding data) => (data as ClientMetadata).PolicyUri )
+					(data, value) => {(data as ClientMetadata).PolicyUri = value;}, 
+					data => (data as ClientMetadata).PolicyUri )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1202,21 +1203,21 @@ public partial class DidDocument : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListString ("@context", 
-					(IBinding data, List<string>? value) => {(data as DidDocument).Contexts = value;}, 
-					(IBinding data) => (data as DidDocument).Contexts ),
+					(data, value) => {(data as DidDocument).Contexts = value;}, 
+					data => (data as DidDocument).Contexts ),
 		new PropertyString ("id", 
-					(IBinding data, string? value) => {(data as DidDocument).Id = value;}, 
-					(IBinding data) => (data as DidDocument).Id ),
+					(data, value) => {(data as DidDocument).Id = value;}, 
+					data => (data as DidDocument).Id ),
 		new PropertyListString ("alsoKnownAs", 
-					(IBinding data, List<string>? value) => {(data as DidDocument).AlsoKnownAs = value;}, 
-					(IBinding data) => (data as DidDocument).AlsoKnownAs ),
+					(data, value) => {(data as DidDocument).AlsoKnownAs = value;}, 
+					data => (data as DidDocument).AlsoKnownAs ),
 		new PropertyListStruct ("verificationMethod", typeof (DidVerificationMethod),
-					(IBinding data, object? value) => {(data as DidDocument).VerificationMethod = value as List<DidVerificationMethod>;}, 
-					(IBinding data) => (data as DidDocument).VerificationMethod,
+					(data, value) => {(data as DidDocument).VerificationMethod = value as List<DidVerificationMethod>;}, 
+					data => (data as DidDocument).VerificationMethod,
 					false, ()=>new  List<DidVerificationMethod>(), ()=>new DidVerificationMethod()),
 		new PropertyListStruct ("service", typeof (DidService),
-					(IBinding data, object? value) => {(data as DidDocument).Service = value as List<DidService>;}, 
-					(IBinding data) => (data as DidDocument).Service,
+					(data, value) => {(data as DidDocument).Service = value as List<DidService>;}, 
+					data => (data as DidDocument).Service,
 					false, ()=>new  List<DidService>(), ()=>new DidService())
 		];
 
@@ -1293,17 +1294,17 @@ public partial class AuthorizationCodeGrant : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("grant_type", 
-					(IBinding data, string? value) => {(data as AuthorizationCodeGrant).GrantType = value;}, 
-					(IBinding data) => (data as AuthorizationCodeGrant).GrantType ),
+					(data, value) => {(data as AuthorizationCodeGrant).GrantType = value;}, 
+					data => (data as AuthorizationCodeGrant).GrantType ),
 		new PropertyString ("code", 
-					(IBinding data, string? value) => {(data as AuthorizationCodeGrant).Code = value;}, 
-					(IBinding data) => (data as AuthorizationCodeGrant).Code ),
+					(data, value) => {(data as AuthorizationCodeGrant).Code = value;}, 
+					data => (data as AuthorizationCodeGrant).Code ),
 		new PropertyString ("code_verifier", 
-					(IBinding data, string? value) => {(data as AuthorizationCodeGrant).CodeVerifier = value;}, 
-					(IBinding data) => (data as AuthorizationCodeGrant).CodeVerifier ),
+					(data, value) => {(data as AuthorizationCodeGrant).CodeVerifier = value;}, 
+					data => (data as AuthorizationCodeGrant).CodeVerifier ),
 		new PropertyString ("client_id", 
-					(IBinding data, string? value) => {(data as AuthorizationCodeGrant).ClientId = value;}, 
-					(IBinding data) => (data as AuthorizationCodeGrant).ClientId )
+					(data, value) => {(data as AuthorizationCodeGrant).ClientId = value;}, 
+					data => (data as AuthorizationCodeGrant).ClientId )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1355,8 +1356,8 @@ public partial class ClientCredentialsGrant : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("grant_type", 
-					(IBinding data, string? value) => {(data as ClientCredentialsGrant).GrantType = value;}, 
-					(IBinding data) => (data as ClientCredentialsGrant).GrantType )
+					(data, value) => {(data as ClientCredentialsGrant).GrantType = value;}, 
+					data => (data as ClientCredentialsGrant).GrantType )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1419,14 +1420,14 @@ public partial class RefreshTokenGrant : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("grant_type", 
-					(IBinding data, string? value) => {(data as RefreshTokenGrant).GrantType = value;}, 
-					(IBinding data) => (data as RefreshTokenGrant).GrantType ),
+					(data, value) => {(data as RefreshTokenGrant).GrantType = value;}, 
+					data => (data as RefreshTokenGrant).GrantType ),
 		new PropertyString ("refresh_token", 
-					(IBinding data, string? value) => {(data as RefreshTokenGrant).refresh_token = value;}, 
-					(IBinding data) => (data as RefreshTokenGrant).refresh_token ),
+					(data, value) => {(data as RefreshTokenGrant).refresh_token = value;}, 
+					data => (data as RefreshTokenGrant).refresh_token ),
 		new PropertyString ("scope", 
-					(IBinding data, string? value) => {(data as RefreshTokenGrant).Scope = value;}, 
-					(IBinding data) => (data as RefreshTokenGrant).Scope )
+					(data, value) => {(data as RefreshTokenGrant).Scope = value;}, 
+					data => (data as RefreshTokenGrant).Scope )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1494,17 +1495,17 @@ public partial class DidVerificationMethod : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("id", 
-					(IBinding data, string? value) => {(data as DidVerificationMethod).Id = value;}, 
-					(IBinding data) => (data as DidVerificationMethod).Id ),
+					(data, value) => {(data as DidVerificationMethod).Id = value;}, 
+					data => (data as DidVerificationMethod).Id ),
 		new PropertyString ("type", 
-					(IBinding data, string? value) => {(data as DidVerificationMethod).Type = value;}, 
-					(IBinding data) => (data as DidVerificationMethod).Type ),
+					(data, value) => {(data as DidVerificationMethod).Type = value;}, 
+					data => (data as DidVerificationMethod).Type ),
 		new PropertyString ("controller", 
-					(IBinding data, string? value) => {(data as DidVerificationMethod).Controller = value;}, 
-					(IBinding data) => (data as DidVerificationMethod).Controller ),
+					(data, value) => {(data as DidVerificationMethod).Controller = value;}, 
+					data => (data as DidVerificationMethod).Controller ),
 		new PropertyString ("publicKeyMultibase", 
-					(IBinding data, string? value) => {(data as DidVerificationMethod).PublicKeyMultibase = value;}, 
-					(IBinding data) => (data as DidVerificationMethod).PublicKeyMultibase )
+					(data, value) => {(data as DidVerificationMethod).PublicKeyMultibase = value;}, 
+					data => (data as DidVerificationMethod).PublicKeyMultibase )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1567,14 +1568,14 @@ public partial class DidService : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("id", 
-					(IBinding data, string? value) => {(data as DidService).Id = value;}, 
-					(IBinding data) => (data as DidService).Id ),
+					(data, value) => {(data as DidService).Id = value;}, 
+					data => (data as DidService).Id ),
 		new PropertyString ("type", 
-					(IBinding data, string? value) => {(data as DidService).Type = value;}, 
-					(IBinding data) => (data as DidService).Type ),
+					(data, value) => {(data as DidService).Type = value;}, 
+					data => (data as DidService).Type ),
 		new PropertyString ("serviceEndpoint", 
-					(IBinding data, string? value) => {(data as DidService).ServiceEndpoint = value;}, 
-					(IBinding data) => (data as DidService).ServiceEndpoint )
+					(data, value) => {(data as DidService).ServiceEndpoint = value;}, 
+					data => (data as DidService).ServiceEndpoint )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1636,14 +1637,14 @@ public partial class AuthenticationResponse : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("iss", 
-					(IBinding data, string? value) => {(data as AuthenticationResponse).Iss = value;}, 
-					(IBinding data) => (data as AuthenticationResponse).Iss ),
+					(data, value) => {(data as AuthenticationResponse).Iss = value;}, 
+					data => (data as AuthenticationResponse).Iss ),
 		new PropertyString ("state", 
-					(IBinding data, string? value) => {(data as AuthenticationResponse).State = value;}, 
-					(IBinding data) => (data as AuthenticationResponse).State ),
+					(data, value) => {(data as AuthenticationResponse).State = value;}, 
+					data => (data as AuthenticationResponse).State ),
 		new PropertyString ("code", 
-					(IBinding data, string? value) => {(data as AuthenticationResponse).Code = value;}, 
-					(IBinding data) => (data as AuthenticationResponse).Code )
+					(data, value) => {(data as AuthenticationResponse).Code = value;}, 
+					data => (data as AuthenticationResponse).Code )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1747,26 +1748,26 @@ public partial class DpopPayload : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("jti", 
-					(IBinding data, string? value) => {(data as DpopPayload).JTI = value;}, 
-					(IBinding data) => (data as DpopPayload).JTI ),
+					(data, value) => {(data as DpopPayload).JTI = value;}, 
+					data => (data as DpopPayload).JTI ),
 		new PropertyString ("htm", 
-					(IBinding data, string? value) => {(data as DpopPayload).HTM = value;}, 
-					(IBinding data) => (data as DpopPayload).HTM ),
+					(data, value) => {(data as DpopPayload).HTM = value;}, 
+					data => (data as DpopPayload).HTM ),
 		new PropertyString ("htu", 
-					(IBinding data, string? value) => {(data as DpopPayload).HTU = value;}, 
-					(IBinding data) => (data as DpopPayload).HTU ),
+					(data, value) => {(data as DpopPayload).HTU = value;}, 
+					data => (data as DpopPayload).HTU ),
 		new PropertyString ("iat", 
-					(IBinding data, string? value) => {(data as DpopPayload).IAT = value;}, 
-					(IBinding data) => (data as DpopPayload).IAT ),
+					(data, value) => {(data as DpopPayload).IAT = value;}, 
+					data => (data as DpopPayload).IAT ),
 		new PropertyString ("ath", 
-					(IBinding data, string? value) => {(data as DpopPayload).ATH = value;}, 
-					(IBinding data) => (data as DpopPayload).ATH ),
+					(data, value) => {(data as DpopPayload).ATH = value;}, 
+					data => (data as DpopPayload).ATH ),
 		new PropertyString ("nonce", 
-					(IBinding data, string? value) => {(data as DpopPayload).Nonce = value;}, 
-					(IBinding data) => (data as DpopPayload).Nonce ),
+					(data, value) => {(data as DpopPayload).Nonce = value;}, 
+					data => (data as DpopPayload).Nonce ),
 		new PropertyStruct ("cnf", typeof (DpopConfirmation),
-					(IBinding data, object? value) => {(data as DpopPayload).Confirm = value as DpopConfirmation;}, 
-					(IBinding data) => (data as DpopPayload).Confirm,
+					(data, value) => {(data as DpopPayload).Confirm = value as DpopConfirmation;}, 
+					data => (data as DpopPayload).Confirm,
 					false, ()=>new  DpopConfirmation(), ()=>new DpopConfirmation())
 		];
 
@@ -1825,8 +1826,8 @@ public partial class DpopConfirmation : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("jkt", 
-					(IBinding data, string? value) => {(data as DpopConfirmation).JKT = value;}, 
-					(IBinding data) => (data as DpopConfirmation).JKT )
+					(data, value) => {(data as DpopConfirmation).JKT = value;}, 
+					data => (data as DpopConfirmation).JKT )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1886,16 +1887,16 @@ public partial class JwtDpop : Oauth {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("header", typeof (JwtHeader),
-					(IBinding data, object? value) => {(data as JwtDpop).Header = value as JwtHeader;}, 
-					(IBinding data) => (data as JwtDpop).Header,
+					(data, value) => {(data as JwtDpop).Header = value as JwtHeader;}, 
+					data => (data as JwtDpop).Header,
 					false, ()=>new  JwtHeader(), ()=>new JwtHeader()),
 		new PropertyStruct ("payload", typeof (DpopPayload),
-					(IBinding data, object? value) => {(data as JwtDpop).Payload = value as DpopPayload;}, 
-					(IBinding data) => (data as JwtDpop).Payload,
+					(data, value) => {(data as JwtDpop).Payload = value as DpopPayload;}, 
+					data => (data as JwtDpop).Payload,
 					false, ()=>new  DpopPayload(), ()=>new DpopPayload()),
 		new PropertyBinary ("signature", 
-					(IBinding data, byte[]? value) => {(data as JwtDpop).Signature = value;}, 
-					(IBinding data) => (data as JwtDpop).Signature )
+					(data, value) => {(data as JwtDpop).Signature = value;}, 
+					data => (data as JwtDpop).Signature )
 		];
 
     ///<summary>Implement IBinding</summary> 

@@ -14,6 +14,7 @@
             <param name="Tag">JSON tag for this object.</param>
             <param name="Parent">Parent the object inherits from.</param>
             <param name="TypeTag">Specifies the property name for the property specifying the type.</param>
+            <param name="Generic">If true, the binding is generic.</param>
         </member>
         <member name="M:Goedel.Protocol.Binding.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,Goedel.Protocol.Binding,System.String,System.Boolean)">
             <summary>
@@ -25,6 +26,7 @@
             <param name="Tag">JSON tag for this object.</param>
             <param name="Parent">Parent the object inherits from.</param>
             <param name="TypeTag">Specifies the property name for the property specifying the type.</param>
+            <param name="Generic">If true, the binding is generic.</param>
         </member>
         <member name="P:Goedel.Protocol.Binding.Properties">
             <summary>Dictionary mapping the property tag to the field specification.</summary>
@@ -37,6 +39,9 @@
         </member>
         <member name="P:Goedel.Protocol.Binding.TypeTag">
             <summary>Specifies the property name for the property specifying the type.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Binding.Generic">
+            <summary>If true, the binding is generic.</summary>
         </member>
         <member name="F:Goedel.Protocol.Binding.TypeDictionary">
             <summary>Dictionary mapping child type tags to type definitions.</summary> 
@@ -82,6 +87,30 @@
             returned instance.</param>
             <returns>The parsed object.</returns>
         </member>
+        <member name="M:Goedel.Protocol.Binding.Parse(Goedel.Protocol.JsonElementArray,Goedel.Protocol.Binding,Goedel.Protocol.JsonObject,System.Boolean)">
+            <summary>
+            Parse the array <paramref name="array"/> as an order sensitive structure 
+            described by <paramref name="binding"/> writing the results to 
+            <paramref name="template"/>.
+            </summary>
+            <param name="array">The array to parse</param>
+            <param name="binding">The binding mapping array items to properties.</param>
+            <param name="template">The object to collect the results.</param>
+            <param name="collectUparsed">If true, collect undefined elements.</param>
+            <returns>The parsed template.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Binding.ParseTagged(Goedel.Protocol.JsonElementObject,Goedel.Protocol.Binding,System.Boolean,Goedel.Protocol.JpcInterface)">
+            <summary>
+            Deserialize the element <paramref name="element"/> as a tagged JSON object
+            described by <paramref name="binding"/>.
+            </summary>
+            <param name="element">The parse structure to deserialize.</param>
+            <param name="binding">The binding.</param>
+            <param name="collectUparsed">If true, collect undefined elements.</param>
+            <param name="service">Additional names used to identify service methods</param>
+            <returns>The result of the deserialization.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
         <member name="M:Goedel.Protocol.Binding.MapProperty(Goedel.Protocol.JsonObject,Goedel.Protocol.JsonElement2,Goedel.Protocol.Property)">
             <summary>
             Map the JSON element <paramref name="element"/> onto the object <paramref name="target"/>
@@ -103,6 +132,7 @@
             <param name="LFactory">List instance factory.</param>
             <param name="DFactory">Dictionary instance factory type.</param>
             <param name="TypeTag">The type tag used to distinguish objects of this type.</param>
+            <param name="Generic">If true, the binding is for a generic type.</param>
         </member>
         <member name="M:Goedel.Protocol.Binding`1.#ctor(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.Property},System.String,System.Func{`0},System.Func{System.Collections.Generic.List{`0}},System.Func{System.Collections.Generic.Dictionary{System.String,`0}},Goedel.Protocol.Binding,System.String,System.Boolean)">
             <summary>
@@ -115,6 +145,7 @@
             <param name="LFactory">List instance factory.</param>
             <param name="DFactory">Dictionary instance factory type.</param>
             <param name="TypeTag">The type tag used to distinguish objects of this type.</param>
+            <param name="Generic">If true, the binding is for a generic type.</param>
         </member>
         <member name="P:Goedel.Protocol.Binding`1.OFactory">
             <summary>Object instance factory.</summary>
@@ -5638,7 +5669,6 @@
             <param name="Factory">Factory returning an instance of the object.</param>
             <param name="IFactory">For a collection object, factory returning an instance of an
             object in the collection.</param>
-            <param name="Tagged">If true, the property should be tagged.</param>
         </member>
         <member name="M:Goedel.Protocol.PropertyGStruct.#ctor(System.String,System.Type,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Func{System.Object},System.Func{System.Object})">
             <summary>
@@ -5651,7 +5681,6 @@
             <param name="Factory">Factory returning an instance of the object.</param>
             <param name="IFactory">For a collection object, factory returning an instance of an
             object in the collection.</param>
-            <param name="Tagged">If true, the property should be tagged.</param>
         </member>
         <member name="P:Goedel.Protocol.PropertyGStruct.Type">
             <summary>The type of the struct object.</summary>
@@ -5686,7 +5715,7 @@
             <param name="Factory">Factory returning an instance of the object.</param>
             <param name="IFactory">For a collection object, factory returning an instance of an
             object in the collection.</param>
-            <param name="Tagged">If true, the property should be tagged.</param>
+            <param name="ListAdd">Method to add an item to a list of the target type.</param>
         </member>
         <member name="M:Goedel.Protocol.PropertyListGStruct.#ctor(System.String,System.Type,System.Action{Goedel.Protocol.IBinding,System.Object},System.Func{Goedel.Protocol.IBinding,System.Object},System.Func{System.Object},System.Func{System.Object},System.Action{System.Object,System.Object})">
             <summary>
@@ -5699,7 +5728,7 @@
             <param name="Factory">Factory returning an instance of the object.</param>
             <param name="IFactory">For a collection object, factory returning an instance of an
             object in the collection.</param>
-            <param name="Tagged">If true, the property should be tagged.</param>
+            <param name="ListAdd">Method to add an item to a list of the target type.</param>
         </member>
         <member name="P:Goedel.Protocol.PropertyListGStruct.Type">
             <summary>The base type of the list object.</summary>
@@ -5716,6 +5745,9 @@
         <member name="P:Goedel.Protocol.PropertyListGStruct.IFactory">
             <summary>For a collection object, factory returning an instance of an
             object in the collection.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.PropertyListGStruct.ListAdd">
+            <summary>Method to add an item to a list of the target type.</summary>
         </member>
         <member name="M:Goedel.Protocol.PropertyListGStruct.Serialize(Goedel.Protocol.IBinding,Goedel.Protocol.Writer)">
             <inheritdoc/>
@@ -5734,7 +5766,6 @@
             <param name="Factory">Factory returning an instance of the object.</param>
             <param name="IFactory">For a collection object, factory returning an instance of an
             object in the collection.</param>
-            <param name="Tagged">If true, the property should be tagged.</param>
             <param name="Add">Add struct to dictionary</param>
             <param name="Enumerator">Returns an enumerator</param>
         </member>
@@ -5749,7 +5780,6 @@
             <param name="Factory">Factory returning an instance of the object.</param>
             <param name="IFactory">For a collection object, factory returning an instance of an
             object in the collection.</param>
-            <param name="Tagged">If true, the property should be tagged.</param>
             <param name="Add">Add struct to dictionary</param>
             <param name="Enumerator">Returns an enumerator</param>
         </member>

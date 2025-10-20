@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/8/2025 5:09:44 PM
+//  This file was automatically generated at 10/20/2025 6:33:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -164,15 +165,15 @@ public partial class JoseWebSignature : Jose {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("unprotected", typeof (Header),
-					(IBinding data, object? value) => {(data as JoseWebSignature).Unprotected = value as Header;}, 
-					(IBinding data) => (data as JoseWebSignature).Unprotected,
+					(data, value) => {(data as JoseWebSignature).Unprotected = value as Header;}, 
+					data => (data as JoseWebSignature).Unprotected,
 					false, ()=>new  Header(), ()=>new Header()),
 		new PropertyBinary ("payload", 
-					(IBinding data, byte[]? value) => {(data as JoseWebSignature).Payload = value;}, 
-					(IBinding data) => (data as JoseWebSignature).Payload ),
+					(data, value) => {(data as JoseWebSignature).Payload = value;}, 
+					data => (data as JoseWebSignature).Payload ),
 		new PropertyListStruct ("signatures", typeof (Signature),
-					(IBinding data, object? value) => {(data as JoseWebSignature).Signatures = value as List<Signature>;}, 
-					(IBinding data) => (data as JoseWebSignature).Signatures,
+					(data, value) => {(data as JoseWebSignature).Signatures = value as List<Signature>;}, 
+					data => (data as JoseWebSignature).Signatures,
 					false, ()=>new  List<Signature>(), ()=>new Signature())
 		];
 
@@ -267,27 +268,27 @@ public partial class JoseWebEncryption : JoseWebSignature {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("protected", 
-					(IBinding data, byte[]? value) => {(data as JoseWebEncryption).Protected = value;}, 
-					(IBinding data) => (data as JoseWebEncryption).Protected ),
+					(data, value) => {(data as JoseWebEncryption).Protected = value;}, 
+					data => (data as JoseWebEncryption).Protected ),
 		new PropertyBinary ("iv", 
-					(IBinding data, byte[]? value) => {(data as JoseWebEncryption).IV = value;}, 
-					(IBinding data) => (data as JoseWebEncryption).IV ),
+					(data, value) => {(data as JoseWebEncryption).IV = value;}, 
+					data => (data as JoseWebEncryption).IV ),
 		new PropertyListStruct ("recipients", typeof (Recipient),
-					(IBinding data, object? value) => {(data as JoseWebEncryption).Recipients = value as List<Recipient>;}, 
-					(IBinding data) => (data as JoseWebEncryption).Recipients,
+					(data, value) => {(data as JoseWebEncryption).Recipients = value as List<Recipient>;}, 
+					data => (data as JoseWebEncryption).Recipients,
 					false, ()=>new  List<Recipient>(), ()=>new Recipient()),
 		new PropertyBinary ("encrypted_key", 
-					(IBinding data, byte[]? value) => {(data as JoseWebEncryption).EncryptedKey = value;}, 
-					(IBinding data) => (data as JoseWebEncryption).EncryptedKey ),
+					(data, value) => {(data as JoseWebEncryption).EncryptedKey = value;}, 
+					data => (data as JoseWebEncryption).EncryptedKey ),
 		new PropertyBinary ("aad", 
-					(IBinding data, byte[]? value) => {(data as JoseWebEncryption).AdditionalAuthenticatedData = value;}, 
-					(IBinding data) => (data as JoseWebEncryption).AdditionalAuthenticatedData ),
+					(data, value) => {(data as JoseWebEncryption).AdditionalAuthenticatedData = value;}, 
+					data => (data as JoseWebEncryption).AdditionalAuthenticatedData ),
 		new PropertyBinary ("ciphertext", 
-					(IBinding data, byte[]? value) => {(data as JoseWebEncryption).CipherText = value;}, 
-					(IBinding data) => (data as JoseWebEncryption).CipherText ),
+					(data, value) => {(data as JoseWebEncryption).CipherText = value;}, 
+					data => (data as JoseWebEncryption).CipherText ),
 		new PropertyBinary ("tag", 
-					(IBinding data, byte[]? value) => {(data as JoseWebEncryption).JTag = value;}, 
-					(IBinding data) => (data as JoseWebEncryption).JTag )
+					(data, value) => {(data as JoseWebEncryption).JTag = value;}, 
+					data => (data as JoseWebEncryption).JTag )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -340,8 +341,8 @@ public partial class JWKS : Jose {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("keys", typeof (JWK),
-					(IBinding data, object? value) => {(data as JWKS).Keys = value as List<JWK>;}, 
-					(IBinding data) => (data as JWKS).Keys,
+					(data, value) => {(data as JWKS).Keys = value as List<JWK>;}, 
+					data => (data as JWKS).Keys,
 					false, ()=>new  List<JWK>(), ()=>new JWK())
 		];
 
@@ -432,29 +433,29 @@ public partial class JWK : Jose {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStringTag ("kty", 
-					(IBinding data, string? value) => {(data as JWK).KeyType = value;}, 
-					(IBinding data) => (data as JWK).KeyType ),
+					(data, value) => {(data as JWK).KeyType = value;}, 
+					data => (data as JWK).KeyType ),
 		new PropertyString ("use", 
-					(IBinding data, string? value) => {(data as JWK).Use = value;}, 
-					(IBinding data) => (data as JWK).Use ),
+					(data, value) => {(data as JWK).Use = value;}, 
+					data => (data as JWK).Use ),
 		new PropertyString ("key_ops", 
-					(IBinding data, string? value) => {(data as JWK).KeyOps = value;}, 
-					(IBinding data) => (data as JWK).KeyOps ),
+					(data, value) => {(data as JWK).KeyOps = value;}, 
+					data => (data as JWK).KeyOps ),
 		new PropertyString ("alg", 
-					(IBinding data, string? value) => {(data as JWK).Alg = value;}, 
-					(IBinding data) => (data as JWK).Alg ),
+					(data, value) => {(data as JWK).Alg = value;}, 
+					data => (data as JWK).Alg ),
 		new PropertyString ("kid", 
-					(IBinding data, string? value) => {(data as JWK).Kid = value;}, 
-					(IBinding data) => (data as JWK).Kid ),
+					(data, value) => {(data as JWK).Kid = value;}, 
+					data => (data as JWK).Kid ),
 		new PropertyBinary ("x5u", 
-					(IBinding data, byte[]? value) => {(data as JWK).X5u = value;}, 
-					(IBinding data) => (data as JWK).X5u ),
+					(data, value) => {(data as JWK).X5u = value;}, 
+					data => (data as JWK).X5u ),
 		new PropertyBinary ("x5t", 
-					(IBinding data, byte[]? value) => {(data as JWK).X5T = value;}, 
-					(IBinding data) => (data as JWK).X5T ),
+					(data, value) => {(data as JWK).X5T = value;}, 
+					data => (data as JWK).X5T ),
 		new PropertyBinary ("x5t#S256", 
-					(IBinding data, byte[]? value) => {(data as JWK).X5T256 = value;}, 
-					(IBinding data) => (data as JWK).X5T256 )
+					(data, value) => {(data as JWK).X5T256 = value;}, 
+					data => (data as JWK).X5T256 )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -536,17 +537,17 @@ public partial class JwkEllipticCurve : JWK {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("crv", 
-					(IBinding data, string? value) => {(data as JwkEllipticCurve).Curve = value;}, 
-					(IBinding data) => (data as JwkEllipticCurve).Curve ),
+					(data, value) => {(data as JwkEllipticCurve).Curve = value;}, 
+					data => (data as JwkEllipticCurve).Curve ),
 		new PropertyString ("x", 
-					(IBinding data, string? value) => {(data as JwkEllipticCurve).X = value;}, 
-					(IBinding data) => (data as JwkEllipticCurve).X ),
+					(data, value) => {(data as JwkEllipticCurve).X = value;}, 
+					data => (data as JwkEllipticCurve).X ),
 		new PropertyString ("y", 
-					(IBinding data, string? value) => {(data as JwkEllipticCurve).Y = value;}, 
-					(IBinding data) => (data as JwkEllipticCurve).Y ),
+					(data, value) => {(data as JwkEllipticCurve).Y = value;}, 
+					data => (data as JwkEllipticCurve).Y ),
 		new PropertyString ("d", 
-					(IBinding data, string? value) => {(data as JwkEllipticCurve).D = value;}, 
-					(IBinding data) => (data as JwkEllipticCurve).D )
+					(data, value) => {(data as JwkEllipticCurve).D = value;}, 
+					data => (data as JwkEllipticCurve).D )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -606,11 +607,11 @@ public partial class JwkRsa : JWK {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("n", 
-					(IBinding data, string? value) => {(data as JwkRsa).N = value;}, 
-					(IBinding data) => (data as JwkRsa).N ),
+					(data, value) => {(data as JwkRsa).N = value;}, 
+					data => (data as JwkRsa).N ),
 		new PropertyString ("e", 
-					(IBinding data, string? value) => {(data as JwkRsa).E = value;}, 
-					(IBinding data) => (data as JwkRsa).E )
+					(data, value) => {(data as JwkRsa).E = value;}, 
+					data => (data as JwkRsa).E )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -696,23 +697,23 @@ public partial class JwkRsaPrivate : PublicKeyRSA {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("d", 
-					(IBinding data, byte[]? value) => {(data as JwkRsaPrivate).D = value;}, 
-					(IBinding data) => (data as JwkRsaPrivate).D ),
+					(data, value) => {(data as JwkRsaPrivate).D = value;}, 
+					data => (data as JwkRsaPrivate).D ),
 		new PropertyBinary ("p", 
-					(IBinding data, byte[]? value) => {(data as JwkRsaPrivate).P = value;}, 
-					(IBinding data) => (data as JwkRsaPrivate).P ),
+					(data, value) => {(data as JwkRsaPrivate).P = value;}, 
+					data => (data as JwkRsaPrivate).P ),
 		new PropertyBinary ("q", 
-					(IBinding data, byte[]? value) => {(data as JwkRsaPrivate).Q = value;}, 
-					(IBinding data) => (data as JwkRsaPrivate).Q ),
+					(data, value) => {(data as JwkRsaPrivate).Q = value;}, 
+					data => (data as JwkRsaPrivate).Q ),
 		new PropertyBinary ("dp", 
-					(IBinding data, byte[]? value) => {(data as JwkRsaPrivate).DP = value;}, 
-					(IBinding data) => (data as JwkRsaPrivate).DP ),
+					(data, value) => {(data as JwkRsaPrivate).DP = value;}, 
+					data => (data as JwkRsaPrivate).DP ),
 		new PropertyBinary ("dq", 
-					(IBinding data, byte[]? value) => {(data as JwkRsaPrivate).DQ = value;}, 
-					(IBinding data) => (data as JwkRsaPrivate).DQ ),
+					(data, value) => {(data as JwkRsaPrivate).DQ = value;}, 
+					data => (data as JwkRsaPrivate).DQ ),
 		new PropertyBinary ("qi", 
-					(IBinding data, byte[]? value) => {(data as JwkRsaPrivate).QI = value;}, 
-					(IBinding data) => (data as JwkRsaPrivate).QI )
+					(data, value) => {(data as JwkRsaPrivate).QI = value;}, 
+					data => (data as JwkRsaPrivate).QI )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -772,11 +773,11 @@ public partial class JwkUdfSeed : JWK {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("seed", 
-					(IBinding data, string? value) => {(data as JwkUdfSeed).Seed = value;}, 
-					(IBinding data) => (data as JwkUdfSeed).Seed ),
+					(data, value) => {(data as JwkUdfSeed).Seed = value;}, 
+					data => (data as JwkUdfSeed).Seed ),
 		new PropertyListString ("roots", 
-					(IBinding data, List<string>? value) => {(data as JwkUdfSeed).Roots = value;}, 
-					(IBinding data) => (data as JwkUdfSeed).Roots )
+					(data, value) => {(data as JwkUdfSeed).Roots = value;}, 
+					data => (data as JwkUdfSeed).Roots )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -885,14 +886,14 @@ public partial class JwkOctetKeyPairs : JWK {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("crv", 
-					(IBinding data, string? value) => {(data as JwkOctetKeyPairs).Curve = value;}, 
-					(IBinding data) => (data as JwkOctetKeyPairs).Curve ),
+					(data, value) => {(data as JwkOctetKeyPairs).Curve = value;}, 
+					data => (data as JwkOctetKeyPairs).Curve ),
 		new PropertyString ("x", 
-					(IBinding data, string? value) => {(data as JwkOctetKeyPairs).X = value;}, 
-					(IBinding data) => (data as JwkOctetKeyPairs).X ),
+					(data, value) => {(data as JwkOctetKeyPairs).X = value;}, 
+					data => (data as JwkOctetKeyPairs).X ),
 		new PropertyString ("d", 
-					(IBinding data, string? value) => {(data as JwkOctetKeyPairs).D = value;}, 
-					(IBinding data) => (data as JwkOctetKeyPairs).D )
+					(data, value) => {(data as JwkOctetKeyPairs).D = value;}, 
+					data => (data as JwkOctetKeyPairs).D )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -958,14 +959,14 @@ public partial class JwtHeader : Jose {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("typ", 
-					(IBinding data, string? value) => {(data as JwtHeader).Typ = value;}, 
-					(IBinding data) => (data as JwtHeader).Typ ),
+					(data, value) => {(data as JwtHeader).Typ = value;}, 
+					data => (data as JwtHeader).Typ ),
 		new PropertyString ("alg", 
-					(IBinding data, string? value) => {(data as JwtHeader).Alg = value;}, 
-					(IBinding data) => (data as JwtHeader).Alg ),
+					(data, value) => {(data as JwtHeader).Alg = value;}, 
+					data => (data as JwtHeader).Alg ),
 		new PropertyStruct ("jwk", typeof (JWK),
-					(IBinding data, object? value) => {(data as JwtHeader).Jwk = value as JWK;}, 
-					(IBinding data) => (data as JwtHeader).Jwk,
+					(data, value) => {(data as JwtHeader).Jwk = value as JWK;}, 
+					data => (data as JwtHeader).Jwk,
 					false, ()=>new  JWK(), ()=>new JWK())
 		];
 
@@ -1033,14 +1034,14 @@ public partial class Signed : Jose {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("protected", 
-					(IBinding data, byte[]? value) => {(data as Signed).Protected = value;}, 
-					(IBinding data) => (data as Signed).Protected ),
+					(data, value) => {(data as Signed).Protected = value;}, 
+					data => (data as Signed).Protected ),
 		new PropertyBinary ("payload", 
-					(IBinding data, byte[]? value) => {(data as Signed).Payload = value;}, 
-					(IBinding data) => (data as Signed).Payload ),
+					(data, value) => {(data as Signed).Payload = value;}, 
+					data => (data as Signed).Payload ),
 		new PropertyBinary ("signature", 
-					(IBinding data, byte[]? value) => {(data as Signed).Signature = value;}, 
-					(IBinding data) => (data as Signed).Signature )
+					(data, value) => {(data as Signed).Signature = value;}, 
+					data => (data as Signed).Signature )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1114,18 +1115,18 @@ public partial class Encrypted : Jose {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("header", typeof (Header),
-					(IBinding data, object? value) => {(data as Encrypted).Header = value as Header;}, 
-					(IBinding data) => (data as Encrypted).Header,
+					(data, value) => {(data as Encrypted).Header = value as Header;}, 
+					data => (data as Encrypted).Header,
 					false, ()=>new  Header(), ()=>new Header()),
 		new PropertyBinary ("iv", 
-					(IBinding data, byte[]? value) => {(data as Encrypted).IV = value;}, 
-					(IBinding data) => (data as Encrypted).IV ),
+					(data, value) => {(data as Encrypted).IV = value;}, 
+					data => (data as Encrypted).IV ),
 		new PropertyBinary ("ciphertext", 
-					(IBinding data, byte[]? value) => {(data as Encrypted).CipherText = value;}, 
-					(IBinding data) => (data as Encrypted).CipherText ),
+					(data, value) => {(data as Encrypted).CipherText = value;}, 
+					data => (data as Encrypted).CipherText ),
 		new PropertyBinary ("signature", 
-					(IBinding data, byte[]? value) => {(data as Encrypted).Signature = value;}, 
-					(IBinding data) => (data as Encrypted).Signature )
+					(data, value) => {(data as Encrypted).Signature = value;}, 
+					data => (data as Encrypted).Signature )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1175,8 +1176,8 @@ public partial class JsonWebKeys : Jose {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("keys", typeof (KeyCore),
-					(IBinding data, object? value) => {(data as JsonWebKeys).Keys = value as List<KeyCore>;}, 
-					(IBinding data) => (data as JsonWebKeys).Keys,
+					(data, value) => {(data as JsonWebKeys).Keys = value as List<KeyCore>;}, 
+					data => (data as JsonWebKeys).Keys,
 					false, ()=>new  List<KeyCore>(), ()=>new KeyCore())
 		];
 
@@ -1278,29 +1279,29 @@ public partial class KeyCore : Jose {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("enc", 
-					(IBinding data, string? value) => {(data as KeyCore).Enc = value;}, 
-					(IBinding data) => (data as KeyCore).Enc ),
+					(data, value) => {(data as KeyCore).Enc = value;}, 
+					data => (data as KeyCore).Enc ),
 		new PropertyString ("dig", 
-					(IBinding data, string? value) => {(data as KeyCore).Dig = value;}, 
-					(IBinding data) => (data as KeyCore).Dig ),
+					(data, value) => {(data as KeyCore).Dig = value;}, 
+					data => (data as KeyCore).Dig ),
 		new PropertyString ("alg", 
-					(IBinding data, string? value) => {(data as KeyCore).Alg = value;}, 
-					(IBinding data) => (data as KeyCore).Alg ),
+					(data, value) => {(data as KeyCore).Alg = value;}, 
+					data => (data as KeyCore).Alg ),
 		new PropertyString ("kid", 
-					(IBinding data, string? value) => {(data as KeyCore).Kid = value;}, 
-					(IBinding data) => (data as KeyCore).Kid ),
+					(data, value) => {(data as KeyCore).Kid = value;}, 
+					data => (data as KeyCore).Kid ),
 		new PropertyString ("x5u", 
-					(IBinding data, string? value) => {(data as KeyCore).X5u = value;}, 
-					(IBinding data) => (data as KeyCore).X5u ),
+					(data, value) => {(data as KeyCore).X5u = value;}, 
+					data => (data as KeyCore).X5u ),
 		new PropertyBinary ("x5c", 
-					(IBinding data, byte[]? value) => {(data as KeyCore).X5c = value;}, 
-					(IBinding data) => (data as KeyCore).X5c ),
+					(data, value) => {(data as KeyCore).X5c = value;}, 
+					data => (data as KeyCore).X5c ),
 		new PropertyBinary ("x5t", 
-					(IBinding data, byte[]? value) => {(data as KeyCore).X5t = value;}, 
-					(IBinding data) => (data as KeyCore).X5t ),
+					(data, value) => {(data as KeyCore).X5t = value;}, 
+					data => (data as KeyCore).X5t ),
 		new PropertyBinary ("x5t#S256", 
-					(IBinding data, byte[]? value) => {(data as KeyCore).X5tS256 = value;}, 
-					(IBinding data) => (data as KeyCore).X5tS256 )
+					(data, value) => {(data as KeyCore).X5tS256 = value;}, 
+					data => (data as KeyCore).X5tS256 )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1407,31 +1408,31 @@ public partial class Header : KeyCore {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("jku", 
-					(IBinding data, string? value) => {(data as Header).Jku = value;}, 
-					(IBinding data) => (data as Header).Jku ),
+					(data, value) => {(data as Header).Jku = value;}, 
+					data => (data as Header).Jku ),
 		new PropertyStruct ("jwk", typeof (Key), 
-					(IBinding data, object? value) => {(data as Header).Jwk = value as Key;}, 
-					(IBinding data) => (data as Header).Jwk,
+					(data, value) => {(data as Header).Jwk = value as Key;}, 
+					data => (data as Header).Jwk,
 					true) ,
 		new PropertyStruct ("epk", typeof (Key), 
-					(IBinding data, object? value) => {(data as Header).Epk = value as Key;}, 
-					(IBinding data) => (data as Header).Epk,
+					(data, value) => {(data as Header).Epk = value as Key;}, 
+					data => (data as Header).Epk,
 					true) ,
 		new PropertyBinary ("ek", 
-					(IBinding data, byte[]? value) => {(data as Header).Ek = value;}, 
-					(IBinding data) => (data as Header).Ek ),
+					(data, value) => {(data as Header).Ek = value;}, 
+					data => (data as Header).Ek ),
 		new PropertyString ("typ", 
-					(IBinding data, string? value) => {(data as Header).Typ = value;}, 
-					(IBinding data) => (data as Header).Typ ),
+					(data, value) => {(data as Header).Typ = value;}, 
+					data => (data as Header).Typ ),
 		new PropertyString ("cty", 
-					(IBinding data, string? value) => {(data as Header).Cty = value;}, 
-					(IBinding data) => (data as Header).Cty ),
+					(data, value) => {(data as Header).Cty = value;}, 
+					data => (data as Header).Cty ),
 		new PropertyListString ("crit", 
-					(IBinding data, List<string>? value) => {(data as Header).Crit = value;}, 
-					(IBinding data) => (data as Header).Crit ),
+					(data, value) => {(data as Header).Crit = value;}, 
+					data => (data as Header).Crit ),
 		new PropertyBinary ("val", 
-					(IBinding data, byte[]? value) => {(data as Header).Val = value;}, 
-					(IBinding data) => (data as Header).Val )
+					(data, value) => {(data as Header).Val = value;}, 
+					data => (data as Header).Val )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1503,15 +1504,15 @@ public partial class Signature : Jose {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("header", typeof (Header),
-					(IBinding data, object? value) => {(data as Signature).Header = value as Header;}, 
-					(IBinding data) => (data as Signature).Header,
+					(data, value) => {(data as Signature).Header = value as Header;}, 
+					data => (data as Signature).Header,
 					false, ()=>new  Header(), ()=>new Header()),
 		new PropertyBinary ("protected", 
-					(IBinding data, byte[]? value) => {(data as Signature).Protected = value;}, 
-					(IBinding data) => (data as Signature).Protected ),
+					(data, value) => {(data as Signature).Protected = value;}, 
+					data => (data as Signature).Protected ),
 		new PropertyBinary ("signature", 
-					(IBinding data, byte[]? value) => {(data as Signature).SignatureValue = value;}, 
-					(IBinding data) => (data as Signature).SignatureValue )
+					(data, value) => {(data as Signature).SignatureValue = value;}, 
+					data => (data as Signature).SignatureValue )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1571,11 +1572,11 @@ public partial class KeyContainer : Jose {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBoolean ("Exportable", 
-					(IBinding data, bool? value) => {(data as KeyContainer).Exportable = value;}, 
-					(IBinding data) => (data as KeyContainer).Exportable ),
+					(data, value) => {(data as KeyContainer).Exportable = value;}, 
+					data => (data as KeyContainer).Exportable ),
 		new PropertyBinary ("KeyCore", 
-					(IBinding data, byte[]? value) => {(data as KeyContainer).KeyCore = value;}, 
-					(IBinding data) => (data as KeyContainer).KeyCore )
+					(data, value) => {(data as KeyContainer).KeyCore = value;}, 
+					data => (data as KeyContainer).KeyCore )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1656,20 +1657,20 @@ public partial class Key : KeyCore {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBoolean ("Exportable", 
-					(IBinding data, bool? value) => {(data as Key).Exportable = value;}, 
-					(IBinding data) => (data as Key).Exportable ),
+					(data, value) => {(data as Key).Exportable = value;}, 
+					data => (data as Key).Exportable ),
 		new PropertyString ("kty", 
-					(IBinding data, string? value) => {(data as Key).Kty = value;}, 
-					(IBinding data) => (data as Key).Kty ),
+					(data, value) => {(data as Key).Kty = value;}, 
+					data => (data as Key).Kty ),
 		new PropertyString ("use", 
-					(IBinding data, string? value) => {(data as Key).Use = value;}, 
-					(IBinding data) => (data as Key).Use ),
+					(data, value) => {(data as Key).Use = value;}, 
+					data => (data as Key).Use ),
 		new PropertyListString ("key_ops", 
-					(IBinding data, List<string>? value) => {(data as Key).Key_ops = value;}, 
-					(IBinding data) => (data as Key).Key_ops ),
+					(data, value) => {(data as Key).Key_ops = value;}, 
+					data => (data as Key).Key_ops ),
 		new PropertyBinary ("k", 
-					(IBinding data, byte[]? value) => {(data as Key).K = value;}, 
-					(IBinding data) => (data as Key).K )
+					(data, value) => {(data as Key).K = value;}, 
+					data => (data as Key).K )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1731,12 +1732,12 @@ public partial class Recipient : Jose {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("Header", typeof (Header),
-					(IBinding data, object? value) => {(data as Recipient).Header = value as Header;}, 
-					(IBinding data) => (data as Recipient).Header,
+					(data, value) => {(data as Recipient).Header = value as Header;}, 
+					data => (data as Recipient).Header,
 					false, ()=>new  Header(), ()=>new Header()),
 		new PropertyBinary ("encrypted_key", 
-					(IBinding data, byte[]? value) => {(data as Recipient).EncryptedKey = value;}, 
-					(IBinding data) => (data as Recipient).EncryptedKey )
+					(data, value) => {(data as Recipient).EncryptedKey = value;}, 
+					data => (data as Recipient).EncryptedKey )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1795,11 +1796,11 @@ public partial class PublicKeyRSA : Key {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("n", 
-					(IBinding data, byte[]? value) => {(data as PublicKeyRSA).N = value;}, 
-					(IBinding data) => (data as PublicKeyRSA).N ),
+					(data, value) => {(data as PublicKeyRSA).N = value;}, 
+					data => (data as PublicKeyRSA).N ),
 		new PropertyBinary ("e", 
-					(IBinding data, byte[]? value) => {(data as PublicKeyRSA).E = value;}, 
-					(IBinding data) => (data as PublicKeyRSA).E )
+					(data, value) => {(data as PublicKeyRSA).E = value;}, 
+					data => (data as PublicKeyRSA).E )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1886,23 +1887,23 @@ public partial class PrivateKeyRSA : PublicKeyRSA {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("d", 
-					(IBinding data, byte[]? value) => {(data as PrivateKeyRSA).D = value;}, 
-					(IBinding data) => (data as PrivateKeyRSA).D ),
+					(data, value) => {(data as PrivateKeyRSA).D = value;}, 
+					data => (data as PrivateKeyRSA).D ),
 		new PropertyBinary ("p", 
-					(IBinding data, byte[]? value) => {(data as PrivateKeyRSA).P = value;}, 
-					(IBinding data) => (data as PrivateKeyRSA).P ),
+					(data, value) => {(data as PrivateKeyRSA).P = value;}, 
+					data => (data as PrivateKeyRSA).P ),
 		new PropertyBinary ("q", 
-					(IBinding data, byte[]? value) => {(data as PrivateKeyRSA).Q = value;}, 
-					(IBinding data) => (data as PrivateKeyRSA).Q ),
+					(data, value) => {(data as PrivateKeyRSA).Q = value;}, 
+					data => (data as PrivateKeyRSA).Q ),
 		new PropertyBinary ("dp", 
-					(IBinding data, byte[]? value) => {(data as PrivateKeyRSA).DP = value;}, 
-					(IBinding data) => (data as PrivateKeyRSA).DP ),
+					(data, value) => {(data as PrivateKeyRSA).DP = value;}, 
+					data => (data as PrivateKeyRSA).DP ),
 		new PropertyBinary ("dq", 
-					(IBinding data, byte[]? value) => {(data as PrivateKeyRSA).DQ = value;}, 
-					(IBinding data) => (data as PrivateKeyRSA).DQ ),
+					(data, value) => {(data as PrivateKeyRSA).DQ = value;}, 
+					data => (data as PrivateKeyRSA).DQ ),
 		new PropertyBinary ("qi", 
-					(IBinding data, byte[]? value) => {(data as PrivateKeyRSA).QI = value;}, 
-					(IBinding data) => (data as PrivateKeyRSA).QI )
+					(data, value) => {(data as PrivateKeyRSA).QI = value;}, 
+					data => (data as PrivateKeyRSA).QI )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1965,11 +1966,11 @@ public partial class PublicKeyDH : Key {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("Domain", 
-					(IBinding data, byte[]? value) => {(data as PublicKeyDH).Domain = value;}, 
-					(IBinding data) => (data as PublicKeyDH).Domain ),
+					(data, value) => {(data as PublicKeyDH).Domain = value;}, 
+					data => (data as PublicKeyDH).Domain ),
 		new PropertyBinary ("Public", 
-					(IBinding data, byte[]? value) => {(data as PublicKeyDH).Public = value;}, 
-					(IBinding data) => (data as PublicKeyDH).Public )
+					(data, value) => {(data as PublicKeyDH).Public = value;}, 
+					data => (data as PublicKeyDH).Public )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2021,8 +2022,8 @@ public partial class PrivateKeyDH : PublicKeyDH {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("Private", 
-					(IBinding data, byte[]? value) => {(data as PrivateKeyDH).Private = value;}, 
-					(IBinding data) => (data as PrivateKeyDH).Private )
+					(data, value) => {(data as PrivateKeyDH).Private = value;}, 
+					data => (data as PrivateKeyDH).Private )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2080,11 +2081,11 @@ public partial class PublicKeyECDH : Key {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("crv", 
-					(IBinding data, string? value) => {(data as PublicKeyECDH).Curve = value;}, 
-					(IBinding data) => (data as PublicKeyECDH).Curve ),
+					(data, value) => {(data as PublicKeyECDH).Curve = value;}, 
+					data => (data as PublicKeyECDH).Curve ),
 		new PropertyBinary ("Public", 
-					(IBinding data, byte[]? value) => {(data as PublicKeyECDH).Public = value;}, 
-					(IBinding data) => (data as PublicKeyECDH).Public )
+					(data, value) => {(data as PublicKeyECDH).Public = value;}, 
+					data => (data as PublicKeyECDH).Public )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2136,8 +2137,8 @@ public partial class PrivateKeyECDH : PublicKeyECDH {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("Private", 
-					(IBinding data, byte[]? value) => {(data as PrivateKeyECDH).Private = value;}, 
-					(IBinding data) => (data as PrivateKeyECDH).Private )
+					(data, value) => {(data as PrivateKeyECDH).Private = value;}, 
+					data => (data as PrivateKeyECDH).Private )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2222,23 +2223,23 @@ public partial class PrivateKeyUDF : Key {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("PrivateValue", 
-					(IBinding data, string? value) => {(data as PrivateKeyUDF).PrivateValue = value;}, 
-					(IBinding data) => (data as PrivateKeyUDF).PrivateValue ),
+					(data, value) => {(data as PrivateKeyUDF).PrivateValue = value;}, 
+					data => (data as PrivateKeyUDF).PrivateValue ),
 		new PropertyString ("KeyType", 
-					(IBinding data, string? value) => {(data as PrivateKeyUDF).KeyType = value;}, 
-					(IBinding data) => (data as PrivateKeyUDF).KeyType ),
+					(data, value) => {(data as PrivateKeyUDF).KeyType = value;}, 
+					data => (data as PrivateKeyUDF).KeyType ),
 		new PropertyListString ("RootSignAlgorithms", 
-					(IBinding data, List<string>? value) => {(data as PrivateKeyUDF).RootSignAlgorithms = value;}, 
-					(IBinding data) => (data as PrivateKeyUDF).RootSignAlgorithms ),
+					(data, value) => {(data as PrivateKeyUDF).RootSignAlgorithms = value;}, 
+					data => (data as PrivateKeyUDF).RootSignAlgorithms ),
 		new PropertyString ("AlgorithmEncrypt", 
-					(IBinding data, string? value) => {(data as PrivateKeyUDF).AlgorithmEncrypt = value;}, 
-					(IBinding data) => (data as PrivateKeyUDF).AlgorithmEncrypt ),
+					(data, value) => {(data as PrivateKeyUDF).AlgorithmEncrypt = value;}, 
+					data => (data as PrivateKeyUDF).AlgorithmEncrypt ),
 		new PropertyString ("AlgorithmSign", 
-					(IBinding data, string? value) => {(data as PrivateKeyUDF).AlgorithmSign = value;}, 
-					(IBinding data) => (data as PrivateKeyUDF).AlgorithmSign ),
+					(data, value) => {(data as PrivateKeyUDF).AlgorithmSign = value;}, 
+					data => (data as PrivateKeyUDF).AlgorithmSign ),
 		new PropertyString ("AlgorithmAuthenticate", 
-					(IBinding data, string? value) => {(data as PrivateKeyUDF).AlgorithmAuthenticate = value;}, 
-					(IBinding data) => (data as PrivateKeyUDF).AlgorithmAuthenticate )
+					(data, value) => {(data as PrivateKeyUDF).AlgorithmAuthenticate = value;}, 
+					data => (data as PrivateKeyUDF).AlgorithmAuthenticate )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2335,8 +2336,8 @@ public partial class KeyAgreementDH : KeyAgreement {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("Result", 
-					(IBinding data, byte[]? value) => {(data as KeyAgreementDH).Result = value;}, 
-					(IBinding data) => (data as KeyAgreementDH).Result )
+					(data, value) => {(data as KeyAgreementDH).Result = value;}, 
+					data => (data as KeyAgreementDH).Result )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2394,11 +2395,11 @@ public partial class KeyAgreementECDH : KeyAgreement {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Curve", 
-					(IBinding data, string? value) => {(data as KeyAgreementECDH).Curve = value;}, 
-					(IBinding data) => (data as KeyAgreementECDH).Curve ),
+					(data, value) => {(data as KeyAgreementECDH).Curve = value;}, 
+					data => (data as KeyAgreementECDH).Curve ),
 		new PropertyBinary ("Result", 
-					(IBinding data, byte[]? value) => {(data as KeyAgreementECDH).Result = value;}, 
-					(IBinding data) => (data as KeyAgreementECDH).Result )
+					(data, value) => {(data as KeyAgreementECDH).Result = value;}, 
+					data => (data as KeyAgreementECDH).Result )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2451,8 +2452,8 @@ public partial class PublicKeyBinary : Key {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("Public", 
-					(IBinding data, byte[]? value) => {(data as PublicKeyBinary).Public = value;}, 
-					(IBinding data) => (data as PublicKeyBinary).Public )
+					(data, value) => {(data as PublicKeyBinary).Public = value;}, 
+					data => (data as PublicKeyBinary).Public )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2504,8 +2505,8 @@ public partial class PrivateKeyBinary : Key {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("Public", 
-					(IBinding data, byte[]? value) => {(data as PrivateKeyBinary).Public = value;}, 
-					(IBinding data) => (data as PrivateKeyBinary).Public )
+					(data, value) => {(data as PrivateKeyBinary).Public = value;}, 
+					data => (data as PrivateKeyBinary).Public )
 		];
 
     ///<summary>Implement IBinding</summary> 

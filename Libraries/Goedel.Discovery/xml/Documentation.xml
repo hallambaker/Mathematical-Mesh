@@ -586,6 +586,14 @@
             </summary>
             <returns>The first valid response received.</returns>
         </member>
+        <member name="M:Goedel.Discovery.DNSContext.PublishRecords(System.Collections.Generic.IEnumerable{Goedel.Discovery.DNSRecord})">
+            <summary>
+            Publish the record set <paramref name="records"/>
+            </summary>
+            <param name="records">The records to publish.</param>
+            <returns>The DNS service response.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
         <member name="M:Goedel.Discovery.DNSContext.Close">
             <summary>
             Close the context.
@@ -890,6 +898,11 @@
         <member name="M:Goedel.Discovery.DnsConfigWriter.WriteTag(System.String)">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Discovery.DNSItem">
+            <summary>
+            Base class for DNS records, queries and updates.
+            </summary>
+        </member>
         <member name="F:Goedel.Discovery.DNSItem.Domain">
             <summary>The domain name</summary>
         </member>
@@ -908,6 +921,42 @@
         <member name="M:Goedel.Discovery.DNSItem.Encode(Goedel.Discovery.DNSBufferIndex)">
             <summary>Convert to wire form</summary>
             <param name="Index">Output buffer</param>
+        </member>
+        <member name="M:Goedel.Discovery.DNSItem.GetBytes">
+            <summary>
+            Convert the item to a byte array.
+            </summary>
+            <returns>The byte array.</returns>
+        </member>
+        <member name="T:Goedel.Discovery.DnsRecordDefinition">
+            <summary>
+            Parsed DNS record.
+            </summary>
+            <param name="Code">The DNS type code</param>
+            <param name="Tag">The tag for use in text output.</param>
+            <param name="Decode">The decoder function.</param>
+            <param name="Parse">The parser function.</param>
+        </member>
+        <member name="M:Goedel.Discovery.DnsRecordDefinition.#ctor(Goedel.Discovery.DNSTypeCode,System.String,System.Func{Goedel.Discovery.DNSBufferIndex,System.Int32,Goedel.Discovery.DNSRecord},System.Func{Goedel.Discovery.Parse,Goedel.Discovery.DNSRecord})">
+            <summary>
+            Parsed DNS record.
+            </summary>
+            <param name="Code">The DNS type code</param>
+            <param name="Tag">The tag for use in text output.</param>
+            <param name="Decode">The decoder function.</param>
+            <param name="Parse">The parser function.</param>
+        </member>
+        <member name="P:Goedel.Discovery.DnsRecordDefinition.Code">
+            <summary>The DNS type code</summary>
+        </member>
+        <member name="P:Goedel.Discovery.DnsRecordDefinition.Tag">
+            <summary>The tag for use in text output.</summary>
+        </member>
+        <member name="P:Goedel.Discovery.DnsRecordDefinition.Decode">
+            <summary>The decoder function.</summary>
+        </member>
+        <member name="P:Goedel.Discovery.DnsRecordDefinition.Parse">
+            <summary>The parser function.</summary>
         </member>
         <member name="T:Goedel.Discovery.DNSRecord">
             <summary>
@@ -930,6 +979,18 @@
             <summary>Decode record or query from buffer</summary>	
             <param name="Index">Input data</param>
             <returns>Parsed record.</returns>
+        </member>
+        <member name="M:Goedel.Discovery.DNSRecord.DecodeRData(System.String,Goedel.Discovery.DNSTypeCode,System.Byte[])">
+            <summary>
+            Decode the record data <paramref name="data"/> as a record of type 
+            <paramref name="typeCode"/> and return the corresponding parsed record
+            with label <paramref name="label"/>.
+            </summary>
+            <param name="label">The record label.</param>
+            <param name="typeCode">The type code.</param>
+            <param name="data">The record data.</param>
+            <returns>The parsed record.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
         <member name="M:Goedel.Discovery.DNSRecord.Canonical">
             <summary>Convert to canonical form</summary>
@@ -966,6 +1027,90 @@
         <member name="M:Goedel.Discovery.DNSRecord_Unknown.Canonical">
             <summary>Convert to canonical form</summary>
             <returns>Canonical form of record data contents</returns>
+        </member>
+        <member name="T:Goedel.Discovery.DNSRecord_Update">
+            <summary>
+            DNS update records.
+            </summary>
+        </member>
+        <member name="T:Goedel.Discovery.DNSRecord_PreNameInUse">
+            <summary>
+            Precondition, name is in use or not in use.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.DNSRecord_PreNameInUse.Negate">
+            <summary>If true, condition is the name must NOT be in use.</summary>
+        </member>
+        <member name="T:Goedel.Discovery.DNSRecord_PreRRSetExists">
+            <summary>
+            Precondition, record set exists or does not exist..
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.DNSRecord_PreRRSetExists.Negate">
+            <summary>If true, condition is the record set must NOT exist.</summary>
+        </member>
+        <member name="P:Goedel.Discovery.DNSRecord_PreRRSetExists.Value">
+            <summary>The record set to test.</summary>
+        </member>
+        <member name="T:Goedel.Discovery.DNSRecord_Add">
+            <summary>
+            Add a record.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.DNSRecord_Add.Add">
+            <summary>The record to add.</summary>
+        </member>
+        <member name="M:Goedel.Discovery.DNSRecord_Add.#ctor(System.String,Goedel.Discovery.DNSTypeCode,System.Byte[])">
+            <summary>
+            Constructor, create an add update record for a record with label
+            <paramref name="label"/>, type <paramref name="typeCode"/> and
+            data <paramref name="data"/>.
+            </summary>
+            <param name="label">The record label.</param>
+            <param name="typeCode">The record typecode</param>
+            <param name="data">The record data.</param>
+        </member>
+        <member name="T:Goedel.Discovery.DNSRecord_DeleteAll">
+            <summary>
+            DNS Update, delete all records.
+            </summary>
+        </member>
+        <member name="M:Goedel.Discovery.DNSRecord_DeleteAll.#ctor(System.String)">
+            <summary>
+            Constructor, delete all records.
+            </summary>
+            <param name="label">The record label to delete.</param>
+        </member>
+        <member name="T:Goedel.Discovery.DNSRecord_DeleteRRset">
+            <summary>
+            DNS Update, delete all records of a specified type
+            </summary>
+        </member>
+        <member name="M:Goedel.Discovery.DNSRecord_DeleteRRset.#ctor(System.String,Goedel.Discovery.DNSTypeCode)">
+            <summary>
+            Constructor, delete all records of type <paramref name="type"/>.
+            </summary>
+            <param name="label">The record label to delete.</param>
+            <param name="type">The type of label to delete.</param>
+        </member>
+        <member name="T:Goedel.Discovery.DNSRecord_DeleteRR">
+            <summary>
+            DNS Update, delete a specified resource record.
+            </summary>
+        </member>
+        <member name="P:Goedel.Discovery.DNSRecord_DeleteRR.Delete">
+            <summary>
+            The record to delete.
+            </summary>
+        </member>
+        <member name="M:Goedel.Discovery.DNSRecord_DeleteRR.#ctor(System.String,Goedel.Discovery.DNSTypeCode,System.Byte[])">
+            <summary>
+            Constructor, the record of with label <paramref name="label"/>,
+            type <paramref name="type"/> and value <paramref name="data"/>.
+            </summary>
+            <param name="label">The record label to delete.</param>
+            <param name="type">The type of label to delete.</param>
+            <param name="data"></param>
         </member>
         <member name="T:Goedel.Discovery.DNSOption">
             <summary>Describe DNS Option</summary>
@@ -4594,7 +4739,6 @@
             <summary>
             Add information from the received record iff it is within the baliwick.
             </summary>
-            <param name="serviceDescription">The service description to add to</param>
             <param name="record">DNS record to add data from</param>
         </member>
         <member name="T:Goedel.Discovery.ServiceEntry">

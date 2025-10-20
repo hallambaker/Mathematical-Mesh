@@ -645,6 +645,7 @@
             </summary>
             <param name="first">First array</param>
             <param name="second">Second array</param>
+            <param name="third">Third array</param>
             <returns>result</returns>
         </member>
         <member name="M:Goedel.Utilities.ArrayUtilities.SafeIndex``1(System.Collections.Generic.List{``0},System.Int32)">

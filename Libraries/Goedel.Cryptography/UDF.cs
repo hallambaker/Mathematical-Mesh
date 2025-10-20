@@ -913,7 +913,7 @@ public record Udf(
 
 
     /// <summary>
-    /// Create the locator path for the EARL <paramref name="earl"/>
+    /// Create the locator path for the EARL <paramref name="prelocator"/>
     /// </summary>
     /// <param name="prelocator">The EARL to construct the locator path for.</param>
     /// <returns>The locator.</returns>

@@ -163,7 +163,17 @@
         <member name="M:Goedel.Mesh.Server.AccountUser.Verify(Goedel.Mesh.MeshVerifiedAccount)">
             <inheritdoc/>
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountUser.EnvelopedProfileUser">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Server.AccountUser.ProfileUser">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountUser.EnvelopedAccountHostAssignment">
             <summary>
             Wrapped property
             </summary>

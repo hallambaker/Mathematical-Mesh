@@ -203,7 +203,6 @@ public class ServiceDescription {
     /// <summary>
     /// Add information from the received record iff it is within the baliwick.
     /// </summary>
-    /// <param name="serviceDescription">The service description to add to</param>
     /// <param name="record">DNS record to add data from</param>
     public void Add(DNSRecord record) {
         var domain = record.Domain.Name.ToLower();

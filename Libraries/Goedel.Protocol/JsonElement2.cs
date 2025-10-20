@@ -77,8 +77,6 @@ public abstract record JsonElement2 {
                     return null;
                     }
                 return new JsonElementObject(jsonReader);
-
-                break;
                 }
             case Token.StartArray: {
                 jsonReader.PeekToken();
@@ -87,7 +85,6 @@ public abstract record JsonElement2 {
                     return null;
                     }
                 return new JsonElementArray(jsonReader);
-
                 }
 
             }

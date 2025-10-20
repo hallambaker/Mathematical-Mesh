@@ -367,7 +367,10 @@ public partial class CatalogedContact {
     public Enveloped<CatalogedContact> GetEnvelopedCatalogedContact() =>
         new(DareEnvelope);
 
+    ///<summary>List of public keys</summary>
     public List<CryptoKey> PublicKeys = [];
+
+    ///<summary>List of private keys</summary>
     public List<PrivateKeyEntry> PrivateKeys = [];
 
     #endregion

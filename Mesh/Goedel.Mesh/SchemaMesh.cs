@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/8/2025 5:09:46 PM
+//  This file was automatically generated at 10/20/2025 6:33:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -274,30 +275,30 @@ public partial class KeyData : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Udf", 
-					(IBinding data, string? value) => {(data as KeyData).Udf = value;}, 
-					(IBinding data) => (data as KeyData).Udf ),
+					(data, value) => {(data as KeyData).Udf = value;}, 
+					data => (data as KeyData).Udf ),
 		new PropertyBinary ("X509Certificate", 
-					(IBinding data, byte[]? value) => {(data as KeyData).X509Certificate = value;}, 
-					(IBinding data) => (data as KeyData).X509Certificate ),
+					(data, value) => {(data as KeyData).X509Certificate = value;}, 
+					data => (data as KeyData).X509Certificate ),
 		new PropertyListBinary ("X509Chain", 
-					(IBinding data, List<byte[]>? value) => {(data as KeyData).X509Chain = value;}, 
-					(IBinding data) => (data as KeyData).X509Chain ),
+					(data, value) => {(data as KeyData).X509Chain = value;}, 
+					data => (data as KeyData).X509Chain ),
 		new PropertyBinary ("X509CSR", 
-					(IBinding data, byte[]? value) => {(data as KeyData).X509CSR = value;}, 
-					(IBinding data) => (data as KeyData).X509CSR ),
+					(data, value) => {(data as KeyData).X509CSR = value;}, 
+					data => (data as KeyData).X509CSR ),
 		new PropertyDateTime ("NotBefore", 
-					(IBinding data, DateTime? value) => {(data as KeyData).NotBefore = value;}, 
-					(IBinding data) => (data as KeyData).NotBefore ),
+					(data, value) => {(data as KeyData).NotBefore = value;}, 
+					data => (data as KeyData).NotBefore ),
 		new PropertyDateTime ("NotOnOrAfter", 
-					(IBinding data, DateTime? value) => {(data as KeyData).NotOnOrAfter = value;}, 
-					(IBinding data) => (data as KeyData).NotOnOrAfter ),
+					(data, value) => {(data as KeyData).NotOnOrAfter = value;}, 
+					data => (data as KeyData).NotOnOrAfter ),
 		new PropertyStruct ("PublicParameters", typeof (Key), 
-					(IBinding data, object? value) => {(data as KeyData).PublicParameters = value as Key;}, 
-					(IBinding data) => (data as KeyData).PublicParameters,
+					(data, value) => {(data as KeyData).PublicParameters = value as Key;}, 
+					data => (data as KeyData).PublicParameters,
 					true) ,
 		new PropertyStruct ("PrivateParameters", typeof (Key), 
-					(IBinding data, object? value) => {(data as KeyData).PrivateParameters = value as Key;}, 
-					(IBinding data) => (data as KeyData).PrivateParameters,
+					(data, value) => {(data as KeyData).PrivateParameters = value as Key;}, 
+					data => (data as KeyData).PrivateParameters,
 					true) 
 		];
 
@@ -377,19 +378,19 @@ public partial class KeyShare : Key {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("PublicPrimary", typeof (Key), 
-					(IBinding data, object? value) => {(data as KeyShare).PublicPrimary = value as Key;}, 
-					(IBinding data) => (data as KeyShare).PublicPrimary,
+					(data, value) => {(data as KeyShare).PublicPrimary = value as Key;}, 
+					data => (data as KeyShare).PublicPrimary,
 					true) ,
 		new PropertyStruct ("Share", typeof (Key), 
-					(IBinding data, object? value) => {(data as KeyShare).Share = value as Key;}, 
-					(IBinding data) => (data as KeyShare).Share,
+					(data, value) => {(data as KeyShare).Share = value as Key;}, 
+					data => (data as KeyShare).Share,
 					true) ,
 		new PropertyString ("ServiceId", 
-					(IBinding data, string? value) => {(data as KeyShare).ServiceId = value;}, 
-					(IBinding data) => (data as KeyShare).ServiceId ),
+					(data, value) => {(data as KeyShare).ServiceId = value;}, 
+					data => (data as KeyShare).ServiceId ),
 		new PropertyString ("ServiceAddress", 
-					(IBinding data, string? value) => {(data as KeyShare).ServiceAddress = value;}, 
-					(IBinding data) => (data as KeyShare).ServiceAddress )
+					(data, value) => {(data as KeyShare).ServiceAddress = value;}, 
+					data => (data as KeyShare).ServiceAddress )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -455,15 +456,15 @@ public partial class CompositePrivate : Key {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("DeviceKeyUdf", 
-					(IBinding data, string? value) => {(data as CompositePrivate).DeviceKeyUdf = value;}, 
-					(IBinding data) => (data as CompositePrivate).DeviceKeyUdf ),
+					(data, value) => {(data as CompositePrivate).DeviceKeyUdf = value;}, 
+					data => (data as CompositePrivate).DeviceKeyUdf ),
 		new PropertyStruct ("PrivateSalt", typeof (Key), 
-					(IBinding data, object? value) => {(data as CompositePrivate).PrivateSalt = value as Key;}, 
-					(IBinding data) => (data as CompositePrivate).PrivateSalt,
+					(data, value) => {(data as CompositePrivate).PrivateSalt = value as Key;}, 
+					data => (data as CompositePrivate).PrivateSalt,
 					true) ,
 		new PropertyStruct ("ServiceShare", typeof (Key), 
-					(IBinding data, object? value) => {(data as CompositePrivate).ServiceShare = value as Key;}, 
-					(IBinding data) => (data as CompositePrivate).ServiceShare,
+					(data, value) => {(data as CompositePrivate).ServiceShare = value as Key;}, 
+					data => (data as CompositePrivate).ServiceShare,
 					true) 
 		];
 
@@ -541,17 +542,17 @@ abstract public partial class Assertion : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListString ("Names", 
-					(IBinding data, List<string>? value) => {(data as Assertion).Names = value;}, 
-					(IBinding data) => (data as Assertion).Names ),
+					(data, value) => {(data as Assertion).Names = value;}, 
+					data => (data as Assertion).Names ),
 		new PropertyDateTime ("Updated", 
-					(IBinding data, DateTime? value) => {(data as Assertion).Updated = value;}, 
-					(IBinding data) => (data as Assertion).Updated ),
+					(data, value) => {(data as Assertion).Updated = value;}, 
+					data => (data as Assertion).Updated ),
 		new PropertyString ("NotaryToken", 
-					(IBinding data, string? value) => {(data as Assertion).NotaryToken = value;}, 
-					(IBinding data) => (data as Assertion).NotaryToken ),
+					(data, value) => {(data as Assertion).NotaryToken = value;}, 
+					data => (data as Assertion).NotaryToken ),
 		new PropertyStruct ("Conditions", typeof (Condition), 
-					(IBinding data, object? value) => {(data as Assertion).Conditions = value as Condition;}, 
-					(IBinding data) => (data as Assertion).Conditions,
+					(data, value) => {(data as Assertion).Conditions = value as Condition;}, 
+					data => (data as Assertion).Conditions,
 					true) 
 		];
 
@@ -655,11 +656,11 @@ public partial class Activation : Assertion {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("ActivationKey", 
-					(IBinding data, string? value) => {(data as Activation).ActivationKey = value;}, 
-					(IBinding data) => (data as Activation).ActivationKey ),
+					(data, value) => {(data as Activation).ActivationKey = value;}, 
+					data => (data as Activation).ActivationKey ),
 		new PropertyListStruct ("Entries", typeof (ActivationEntry),
-					(IBinding data, object? value) => {(data as Activation).Entries = value as List<ActivationEntry>;}, 
-					(IBinding data) => (data as Activation).Entries,
+					(data, value) => {(data as Activation).Entries = value as List<ActivationEntry>;}, 
+					data => (data as Activation).Entries,
 					false, ()=>new  List<ActivationEntry>(), ()=>new ActivationEntry())
 		];
 
@@ -733,18 +734,18 @@ public partial class ActivationEntry : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Resource", 
-					(IBinding data, string? value) => {(data as ActivationEntry).Resource = value;}, 
-					(IBinding data) => (data as ActivationEntry).Resource ),
+					(data, value) => {(data as ActivationEntry).Resource = value;}, 
+					data => (data as ActivationEntry).Resource ),
 		new PropertyStruct ("Key", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationEntry).Key = value as KeyData;}, 
-					(IBinding data) => (data as ActivationEntry).Key,
+					(data, value) => {(data as ActivationEntry).Key = value as KeyData;}, 
+					data => (data as ActivationEntry).Key,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyString ("ServiceId", 
-					(IBinding data, string? value) => {(data as ActivationEntry).ServiceId = value;}, 
-					(IBinding data) => (data as ActivationEntry).ServiceId ),
+					(data, value) => {(data as ActivationEntry).ServiceId = value;}, 
+					data => (data as ActivationEntry).ServiceId ),
 		new PropertyString ("ServiceAddress", 
-					(IBinding data, string? value) => {(data as ActivationEntry).ServiceAddress = value;}, 
-					(IBinding data) => (data as ActivationEntry).ServiceAddress )
+					(data, value) => {(data as ActivationEntry).ServiceAddress = value;}, 
+					data => (data as ActivationEntry).ServiceAddress )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -806,11 +807,11 @@ abstract public partial class Profile : Assertion {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Description", 
-					(IBinding data, string? value) => {(data as Profile).Description = value;}, 
-					(IBinding data) => (data as Profile).Description ),
+					(data, value) => {(data as Profile).Description = value;}, 
+					data => (data as Profile).Description ),
 		new PropertyListBinary ("RootUdfs", 
-					(IBinding data, List<byte[]>? value) => {(data as Profile).RootUdfs = value;}, 
-					(IBinding data) => (data as Profile).RootUdfs )
+					(data, value) => {(data as Profile).RootUdfs = value;}, 
+					data => (data as Profile).RootUdfs )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -880,16 +881,16 @@ public partial class ProfileDevice : Profile {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("Encryption", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ProfileDevice).Encryption = value as KeyData;}, 
-					(IBinding data) => (data as ProfileDevice).Encryption,
+					(data, value) => {(data as ProfileDevice).Encryption = value as KeyData;}, 
+					data => (data as ProfileDevice).Encryption,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("Signature", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ProfileDevice).Signature = value as KeyData;}, 
-					(IBinding data) => (data as ProfileDevice).Signature,
+					(data, value) => {(data as ProfileDevice).Signature = value as KeyData;}, 
+					data => (data as ProfileDevice).Signature,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("Authentication", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ProfileDevice).Authentication = value as KeyData;}, 
-					(IBinding data) => (data as ProfileDevice).Authentication,
+					(data, value) => {(data as ProfileDevice).Authentication = value as KeyData;}, 
+					data => (data as ProfileDevice).Authentication,
 					false, ()=>new  KeyData(), ()=>new KeyData())
 		];
 
@@ -990,29 +991,29 @@ public partial class ProfileAccount : Profile {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as ProfileAccount).AccountAddress = value;}, 
-					(IBinding data) => (data as ProfileAccount).AccountAddress ),
+					(data, value) => {(data as ProfileAccount).AccountAddress = value;}, 
+					data => (data as ProfileAccount).AccountAddress ),
 		new PropertyString ("AccountHandle", 
-					(IBinding data, string? value) => {(data as ProfileAccount).AccountHandle = value;}, 
-					(IBinding data) => (data as ProfileAccount).AccountHandle ),
+					(data, value) => {(data as ProfileAccount).AccountHandle = value;}, 
+					data => (data as ProfileAccount).AccountHandle ),
 		new PropertyString ("ServiceUdf", 
-					(IBinding data, string? value) => {(data as ProfileAccount).ServiceUdf = value;}, 
-					(IBinding data) => (data as ProfileAccount).ServiceUdf ),
+					(data, value) => {(data as ProfileAccount).ServiceUdf = value;}, 
+					data => (data as ProfileAccount).ServiceUdf ),
 		new PropertyStruct ("EscrowEncryption", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ProfileAccount).EscrowEncryption = value as KeyData;}, 
-					(IBinding data) => (data as ProfileAccount).EscrowEncryption,
+					(data, value) => {(data as ProfileAccount).EscrowEncryption = value as KeyData;}, 
+					data => (data as ProfileAccount).EscrowEncryption,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("AdministratorSignature", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ProfileAccount).AdministratorSignature = value as KeyData;}, 
-					(IBinding data) => (data as ProfileAccount).AdministratorSignature,
+					(data, value) => {(data as ProfileAccount).AdministratorSignature = value as KeyData;}, 
+					data => (data as ProfileAccount).AdministratorSignature,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("CommonEncryption", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ProfileAccount).CommonEncryption = value as KeyData;}, 
-					(IBinding data) => (data as ProfileAccount).CommonEncryption,
+					(data, value) => {(data as ProfileAccount).CommonEncryption = value as KeyData;}, 
+					data => (data as ProfileAccount).CommonEncryption,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("CommonAuthentication", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ProfileAccount).CommonAuthentication = value as KeyData;}, 
-					(IBinding data) => (data as ProfileAccount).CommonAuthentication,
+					(data, value) => {(data as ProfileAccount).CommonAuthentication = value as KeyData;}, 
+					data => (data as ProfileAccount).CommonAuthentication,
 					false, ()=>new  KeyData(), ()=>new KeyData())
 		];
 
@@ -1070,8 +1071,8 @@ public partial class ProfileUser : ProfileAccount {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("CommonSignature", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ProfileUser).CommonSignature = value as KeyData;}, 
-					(IBinding data) => (data as ProfileUser).CommonSignature,
+					(data, value) => {(data as ProfileUser).CommonSignature = value as KeyData;}, 
+					data => (data as ProfileUser).CommonSignature,
 					false, ()=>new  KeyData(), ()=>new KeyData())
 		];
 
@@ -1126,8 +1127,8 @@ public partial class ProfileGroup : ProfileAccount {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("Cover", 
-					(IBinding data, byte[]? value) => {(data as ProfileGroup).Cover = value;}, 
-					(IBinding data) => (data as ProfileGroup).Cover )
+					(data, value) => {(data as ProfileGroup).Cover = value;}, 
+					data => (data as ProfileGroup).Cover )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1192,16 +1193,16 @@ public partial class ProfileService : Profile {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("ServiceAuthentication", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ProfileService).ServiceAuthentication = value as KeyData;}, 
-					(IBinding data) => (data as ProfileService).ServiceAuthentication,
+					(data, value) => {(data as ProfileService).ServiceAuthentication = value as KeyData;}, 
+					data => (data as ProfileService).ServiceAuthentication,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("ServiceEncryption", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ProfileService).ServiceEncryption = value as KeyData;}, 
-					(IBinding data) => (data as ProfileService).ServiceEncryption,
+					(data, value) => {(data as ProfileService).ServiceEncryption = value as KeyData;}, 
+					data => (data as ProfileService).ServiceEncryption,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("ServiceSignature", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ProfileService).ServiceSignature = value as KeyData;}, 
-					(IBinding data) => (data as ProfileService).ServiceSignature,
+					(data, value) => {(data as ProfileService).ServiceSignature = value as KeyData;}, 
+					data => (data as ProfileService).ServiceSignature,
 					false, ()=>new  KeyData(), ()=>new KeyData())
 		];
 
@@ -1349,14 +1350,14 @@ public partial class Connection : Assertion {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Subject", 
-					(IBinding data, string? value) => {(data as Connection).Subject = value;}, 
-					(IBinding data) => (data as Connection).Subject ),
+					(data, value) => {(data as Connection).Subject = value;}, 
+					data => (data as Connection).Subject ),
 		new PropertyString ("Authority", 
-					(IBinding data, string? value) => {(data as Connection).Authority = value;}, 
-					(IBinding data) => (data as Connection).Authority ),
+					(data, value) => {(data as Connection).Authority = value;}, 
+					data => (data as Connection).Authority ),
 		new PropertyStruct ("Authentication", typeof (KeyData),
-					(IBinding data, object? value) => {(data as Connection).Authentication = value as KeyData;}, 
-					(IBinding data) => (data as Connection).Authentication,
+					(data, value) => {(data as Connection).Authentication = value as KeyData;}, 
+					data => (data as Connection).Authentication,
 					false, ()=>new  KeyData(), ()=>new KeyData())
 		];
 
@@ -1466,34 +1467,34 @@ public partial class CallsignBinding : Assertion {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Canonical", 
-					(IBinding data, string? value) => {(data as CallsignBinding).Canonical = value;}, 
-					(IBinding data) => (data as CallsignBinding).Canonical ),
+					(data, value) => {(data as CallsignBinding).Canonical = value;}, 
+					data => (data as CallsignBinding).Canonical ),
 		new PropertyString ("Display", 
-					(IBinding data, string? value) => {(data as CallsignBinding).Display = value;}, 
-					(IBinding data) => (data as CallsignBinding).Display ),
+					(data, value) => {(data as CallsignBinding).Display = value;}, 
+					data => (data as CallsignBinding).Display ),
 		new PropertyString ("CharacterPage", 
-					(IBinding data, string? value) => {(data as CallsignBinding).CharacterPage = value;}, 
-					(IBinding data) => (data as CallsignBinding).CharacterPage ),
+					(data, value) => {(data as CallsignBinding).CharacterPage = value;}, 
+					data => (data as CallsignBinding).CharacterPage ),
 		new PropertyString ("ProfileUdf", 
-					(IBinding data, string? value) => {(data as CallsignBinding).ProfileUdf = value;}, 
-					(IBinding data) => (data as CallsignBinding).ProfileUdf ),
+					(data, value) => {(data as CallsignBinding).ProfileUdf = value;}, 
+					data => (data as CallsignBinding).ProfileUdf ),
 		new PropertyString ("TransferUdf", 
-					(IBinding data, string? value) => {(data as CallsignBinding).TransferUdf = value;}, 
-					(IBinding data) => (data as CallsignBinding).TransferUdf ),
+					(data, value) => {(data as CallsignBinding).TransferUdf = value;}, 
+					data => (data as CallsignBinding).TransferUdf ),
 		new PropertyListStruct ("Services", typeof (NamedService),
-					(IBinding data, object? value) => {(data as CallsignBinding).Services = value as List<NamedService>;}, 
-					(IBinding data) => (data as CallsignBinding).Services,
+					(data, value) => {(data as CallsignBinding).Services = value as List<NamedService>;}, 
+					data => (data as CallsignBinding).Services,
 					false, ()=>new  List<NamedService>(), ()=>new NamedService()),
 		new PropertyString ("ServiceAddress", 
-					(IBinding data, string? value) => {(data as CallsignBinding).ServiceAddress = value;}, 
-					(IBinding data) => (data as CallsignBinding).ServiceAddress ),
+					(data, value) => {(data as CallsignBinding).ServiceAddress = value;}, 
+					data => (data as CallsignBinding).ServiceAddress ),
 		new PropertyStruct ("CommonEncryption", typeof (KeyData),
-					(IBinding data, object? value) => {(data as CallsignBinding).CommonEncryption = value as KeyData;}, 
-					(IBinding data) => (data as CallsignBinding).CommonEncryption,
+					(data, value) => {(data as CallsignBinding).CommonEncryption = value as KeyData;}, 
+					data => (data as CallsignBinding).CommonEncryption,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyBinary ("PkixRoot", 
-					(IBinding data, byte[]? value) => {(data as CallsignBinding).PkixRoot = value;}, 
-					(IBinding data) => (data as CallsignBinding).PkixRoot )
+					(data, value) => {(data as CallsignBinding).PkixRoot = value;}, 
+					data => (data as CallsignBinding).PkixRoot )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1600,29 +1601,29 @@ public partial class Accreditation : Assertion {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Callsign", 
-					(IBinding data, string? value) => {(data as Accreditation).Callsign = value;}, 
-					(IBinding data) => (data as Accreditation).Callsign ),
+					(data, value) => {(data as Accreditation).Callsign = value;}, 
+					data => (data as Accreditation).Callsign ),
 		new PropertyString ("ProfileUdf", 
-					(IBinding data, string? value) => {(data as Accreditation).ProfileUdf = value;}, 
-					(IBinding data) => (data as Accreditation).ProfileUdf ),
+					(data, value) => {(data as Accreditation).ProfileUdf = value;}, 
+					data => (data as Accreditation).ProfileUdf ),
 		new PropertyListString ("SubjectNames", 
-					(IBinding data, List<string>? value) => {(data as Accreditation).SubjectNames = value;}, 
-					(IBinding data) => (data as Accreditation).SubjectNames ),
+					(data, value) => {(data as Accreditation).SubjectNames = value;}, 
+					data => (data as Accreditation).SubjectNames ),
 		new PropertyListString ("SubjectLogos", 
-					(IBinding data, List<string>? value) => {(data as Accreditation).SubjectLogos = value;}, 
-					(IBinding data) => (data as Accreditation).SubjectLogos ),
+					(data, value) => {(data as Accreditation).SubjectLogos = value;}, 
+					data => (data as Accreditation).SubjectLogos ),
 		new PropertyDateTime ("Issued", 
-					(IBinding data, DateTime? value) => {(data as Accreditation).Issued = value;}, 
-					(IBinding data) => (data as Accreditation).Issued ),
+					(data, value) => {(data as Accreditation).Issued = value;}, 
+					data => (data as Accreditation).Issued ),
 		new PropertyDateTime ("Expires", 
-					(IBinding data, DateTime? value) => {(data as Accreditation).Expires = value;}, 
-					(IBinding data) => (data as Accreditation).Expires ),
+					(data, value) => {(data as Accreditation).Expires = value;}, 
+					data => (data as Accreditation).Expires ),
 		new PropertyString ("Policy", 
-					(IBinding data, string? value) => {(data as Accreditation).Policy = value;}, 
-					(IBinding data) => (data as Accreditation).Policy ),
+					(data, value) => {(data as Accreditation).Policy = value;}, 
+					data => (data as Accreditation).Policy ),
 		new PropertyString ("Practice", 
-					(IBinding data, string? value) => {(data as Accreditation).Practice = value;}, 
-					(IBinding data) => (data as Accreditation).Practice )
+					(data, value) => {(data as Accreditation).Practice = value;}, 
+					data => (data as Accreditation).Practice )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1681,8 +1682,8 @@ public partial class ConnectionStripped : Connection {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Account", 
-					(IBinding data, string? value) => {(data as ConnectionStripped).Account = value;}, 
-					(IBinding data) => (data as ConnectionStripped).Account )
+					(data, value) => {(data as ConnectionStripped).Account = value;}, 
+					data => (data as ConnectionStripped).Account )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1733,8 +1734,8 @@ public partial class ConnectionService : Connection {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("ProfileUdf", 
-					(IBinding data, string? value) => {(data as ConnectionService).ProfileUdf = value;}, 
-					(IBinding data) => (data as ConnectionService).ProfileUdf )
+					(data, value) => {(data as ConnectionService).ProfileUdf = value;}, 
+					data => (data as ConnectionService).ProfileUdf )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1797,15 +1798,15 @@ public partial class ConnectionDevice : ConnectionService {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListString ("Roles", 
-					(IBinding data, List<string>? value) => {(data as ConnectionDevice).Roles = value;}, 
-					(IBinding data) => (data as ConnectionDevice).Roles ),
+					(data, value) => {(data as ConnectionDevice).Roles = value;}, 
+					data => (data as ConnectionDevice).Roles ),
 		new PropertyStruct ("Signature", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ConnectionDevice).Signature = value as KeyData;}, 
-					(IBinding data) => (data as ConnectionDevice).Signature,
+					(data, value) => {(data as ConnectionDevice).Signature = value as KeyData;}, 
+					data => (data as ConnectionDevice).Signature,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("Encryption", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ConnectionDevice).Encryption = value as KeyData;}, 
-					(IBinding data) => (data as ConnectionDevice).Encryption,
+					(data, value) => {(data as ConnectionDevice).Encryption = value as KeyData;}, 
+					data => (data as ConnectionDevice).Encryption,
 					false, ()=>new  KeyData(), ()=>new KeyData())
 		];
 
@@ -1952,6 +1953,9 @@ public partial class AccountHostAssignment : Assertion {
 	[JsonPropertyName("CallsignServiceProfile")]
 	public virtual ProfileAccount?					CallsignServiceProfile  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileService")]
 	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;} 
 
@@ -1966,24 +1970,22 @@ public partial class AccountHostAssignment : Assertion {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountAddess", 
-					(IBinding data, string? value) => {(data as AccountHostAssignment).AccountAddess = value;}, 
-					(IBinding data) => (data as AccountHostAssignment).AccountAddess ),
+					(data, value) => {(data as AccountHostAssignment).AccountAddess = value;}, 
+					data => (data as AccountHostAssignment).AccountAddess ),
 		new PropertyListString ("HostAddresses", 
-					(IBinding data, List<string>? value) => {(data as AccountHostAssignment).HostAddresses = value;}, 
-					(IBinding data) => (data as AccountHostAssignment).HostAddresses ),
+					(data, value) => {(data as AccountHostAssignment).HostAddresses = value;}, 
+					data => (data as AccountHostAssignment).HostAddresses ),
 		new PropertyStruct ("AccessEncrypt", typeof (KeyData),
-					(IBinding data, object? value) => {(data as AccountHostAssignment).AccessEncrypt = value as KeyData;}, 
-					(IBinding data) => (data as AccountHostAssignment).AccessEncrypt,
+					(data, value) => {(data as AccountHostAssignment).AccessEncrypt = value as KeyData;}, 
+					data => (data as AccountHostAssignment).AccessEncrypt,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("CallsignServiceProfile", typeof (ProfileAccount),
-					(IBinding data, object? value) => {(data as AccountHostAssignment).CallsignServiceProfile = value as ProfileAccount;}, 
-					(IBinding data) => (data as AccountHostAssignment).CallsignServiceProfile,
+					(data, value) => {(data as AccountHostAssignment).CallsignServiceProfile = value as ProfileAccount;}, 
+					data => (data as AccountHostAssignment).CallsignServiceProfile,
 					false, ()=>new  ProfileAccount(), ()=>new ProfileAccount()),
-		new PropertyGStruct ("EnvelopedProfileService", /*typeof (ProfileService<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as AccountHostAssignment).EnvelopedProfileService = value as Enveloped<ProfileService>;},
-					(IBinding data) => (data as AccountHostAssignment).EnvelopedProfileService,
-					/*(IBinding data, object? value) => {(data as AccountHostAssignment).ProfileService = value as ProfileService;},
-					(IBinding data) => (data as AccountHostAssignment).ProfileService,*/
+		new PropertyGStruct ("EnvelopedProfileService", typeof (Enveloped),
+					(data, value) => {(data as AccountHostAssignment).EnvelopedProfileService = value as Enveloped<ProfileService>;},
+					data => (data as AccountHostAssignment).EnvelopedProfileService,
 					()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())
 		];
 
@@ -2079,8 +2081,8 @@ public partial class ActivationAccount : Activation {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountUdf", 
-					(IBinding data, string? value) => {(data as ActivationAccount).AccountUdf = value;}, 
-					(IBinding data) => (data as ActivationAccount).AccountUdf )
+					(data, value) => {(data as ActivationAccount).AccountUdf = value;}, 
+					data => (data as ActivationAccount).AccountUdf )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2200,24 +2202,24 @@ public partial class ActivationCommon : Activation {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("ProfileSignatures", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationCommon).ProfileSignatures = value as List<KeyData>;}, 
-					(IBinding data) => (data as ActivationCommon).ProfileSignatures,
+					(data, value) => {(data as ActivationCommon).ProfileSignatures = value as List<KeyData>;}, 
+					data => (data as ActivationCommon).ProfileSignatures,
 					false, ()=>new  List<KeyData>(), ()=>new KeyData()),
 		new PropertyStruct ("AdministratorSignature", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationCommon).AdministratorSignature = value as KeyData;}, 
-					(IBinding data) => (data as ActivationCommon).AdministratorSignature,
+					(data, value) => {(data as ActivationCommon).AdministratorSignature = value as KeyData;}, 
+					data => (data as ActivationCommon).AdministratorSignature,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("Encryption", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationCommon).Encryption = value as KeyData;}, 
-					(IBinding data) => (data as ActivationCommon).Encryption,
+					(data, value) => {(data as ActivationCommon).Encryption = value as KeyData;}, 
+					data => (data as ActivationCommon).Encryption,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("Authentication", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationCommon).Authentication = value as KeyData;}, 
-					(IBinding data) => (data as ActivationCommon).Authentication,
+					(data, value) => {(data as ActivationCommon).Authentication = value as KeyData;}, 
+					data => (data as ActivationCommon).Authentication,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("Signature", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationCommon).Signature = value as KeyData;}, 
-					(IBinding data) => (data as ActivationCommon).Signature,
+					(data, value) => {(data as ActivationCommon).Signature = value as KeyData;}, 
+					data => (data as ActivationCommon).Signature,
 					false, ()=>new  KeyData(), ()=>new KeyData())
 		];
 
@@ -2310,8 +2312,8 @@ public partial class ActivationApplicationSsh : ActivationApplication {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("ClientKey", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationSsh).ClientKey = value as KeyData;}, 
-					(IBinding data) => (data as ActivationApplicationSsh).ClientKey,
+					(data, value) => {(data as ActivationApplicationSsh).ClientKey = value as KeyData;}, 
+					data => (data as ActivationApplicationSsh).ClientKey,
 					false, ()=>new  KeyData(), ()=>new KeyData())
 		];
 
@@ -2382,20 +2384,20 @@ public partial class ActivationApplicationMail : ActivationApplication {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("SmimeSign", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationMail).SmimeSign = value as KeyData;}, 
-					(IBinding data) => (data as ActivationApplicationMail).SmimeSign,
+					(data, value) => {(data as ActivationApplicationMail).SmimeSign = value as KeyData;}, 
+					data => (data as ActivationApplicationMail).SmimeSign,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("SmimeEncrypt", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationMail).SmimeEncrypt = value as KeyData;}, 
-					(IBinding data) => (data as ActivationApplicationMail).SmimeEncrypt,
+					(data, value) => {(data as ActivationApplicationMail).SmimeEncrypt = value as KeyData;}, 
+					data => (data as ActivationApplicationMail).SmimeEncrypt,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("OpenpgpSign", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationMail).OpenpgpSign = value as KeyData;}, 
-					(IBinding data) => (data as ActivationApplicationMail).OpenpgpSign,
+					(data, value) => {(data as ActivationApplicationMail).OpenpgpSign = value as KeyData;}, 
+					data => (data as ActivationApplicationMail).OpenpgpSign,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("OpenpgpEncrypt", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationMail).OpenpgpEncrypt = value as KeyData;}, 
-					(IBinding data) => (data as ActivationApplicationMail).OpenpgpEncrypt,
+					(data, value) => {(data as ActivationApplicationMail).OpenpgpEncrypt = value as KeyData;}, 
+					data => (data as ActivationApplicationMail).OpenpgpEncrypt,
 					false, ()=>new  KeyData(), ()=>new KeyData())
 		];
 
@@ -2457,6 +2459,9 @@ public partial class ActivationApplicationGroup : ActivationApplication {
 	[JsonPropertyName("AccountAuthentication")]
 	public virtual KeyData?					AccountAuthentication  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedConnectionService")]
 	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} 
 
@@ -2471,22 +2476,20 @@ public partial class ActivationApplicationGroup : ActivationApplication {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("AccountEncryption", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationGroup).AccountEncryption = value as KeyData;}, 
-					(IBinding data) => (data as ActivationApplicationGroup).AccountEncryption,
+					(data, value) => {(data as ActivationApplicationGroup).AccountEncryption = value as KeyData;}, 
+					data => (data as ActivationApplicationGroup).AccountEncryption,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("AdministratorSignature", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationGroup).AdministratorSignature = value as KeyData;}, 
-					(IBinding data) => (data as ActivationApplicationGroup).AdministratorSignature,
+					(data, value) => {(data as ActivationApplicationGroup).AdministratorSignature = value as KeyData;}, 
+					data => (data as ActivationApplicationGroup).AdministratorSignature,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("AccountAuthentication", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationGroup).AccountAuthentication = value as KeyData;}, 
-					(IBinding data) => (data as ActivationApplicationGroup).AccountAuthentication,
+					(data, value) => {(data as ActivationApplicationGroup).AccountAuthentication = value as KeyData;}, 
+					data => (data as ActivationApplicationGroup).AccountAuthentication,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
-		new PropertyGStruct ("EnvelopedConnectionService", /*typeof (ConnectionService<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as ActivationApplicationGroup).EnvelopedConnectionService = value as Enveloped<ConnectionService>;},
-					(IBinding data) => (data as ActivationApplicationGroup).EnvelopedConnectionService,
-					/*(IBinding data, object? value) => {(data as ActivationApplicationGroup).ConnectionService = value as ConnectionService;},
-					(IBinding data) => (data as ActivationApplicationGroup).ConnectionService,*/
+		new PropertyGStruct ("EnvelopedConnectionService", typeof (Enveloped),
+					(data, value) => {(data as ActivationApplicationGroup).EnvelopedConnectionService = value as Enveloped<ConnectionService>;},
+					data => (data as ActivationApplicationGroup).EnvelopedConnectionService,
 					()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())
 		];
 
@@ -2616,8 +2619,8 @@ abstract public partial class ApplicationEntry : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Identifier", 
-					(IBinding data, string? value) => {(data as ApplicationEntry).Identifier = value;}, 
-					(IBinding data) => (data as ApplicationEntry).Identifier )
+					(data, value) => {(data as ApplicationEntry).Identifier = value;}, 
+					data => (data as ApplicationEntry).Identifier )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2652,6 +2655,9 @@ abstract public partial class ApplicationEntry : MeshItem {
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntrySsh : ApplicationEntry {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedActivationSsh")]
 	public virtual Enveloped<ActivationApplicationSsh>?					EnvelopedActivationSsh  {get; set;} 
 
@@ -2665,11 +2671,9 @@ public partial class ApplicationEntrySsh : ApplicationEntry {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedActivationSsh", /*typeof (ActivationApplicationSsh<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as ApplicationEntrySsh).EnvelopedActivationSsh = value as Enveloped<ActivationApplicationSsh>;},
-					(IBinding data) => (data as ApplicationEntrySsh).EnvelopedActivationSsh,
-					/*(IBinding data, object? value) => {(data as ApplicationEntrySsh).ActivationSsh = value as ActivationApplicationSsh;},
-					(IBinding data) => (data as ApplicationEntrySsh).ActivationSsh,*/
+		new PropertyGStruct ("EnvelopedActivationSsh", typeof (Enveloped),
+					(data, value) => {(data as ApplicationEntrySsh).EnvelopedActivationSsh = value as Enveloped<ActivationApplicationSsh>;},
+					data => (data as ApplicationEntrySsh).EnvelopedActivationSsh,
 					()=>new  Enveloped<ActivationApplicationSsh>(), ()=>new Enveloped<ActivationApplicationSsh>())
 		];
 
@@ -2705,6 +2709,9 @@ public partial class ApplicationEntrySsh : ApplicationEntry {
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntryGroup : ApplicationEntry {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedActivationGroup")]
 	public virtual Enveloped<ActivationApplicationGroup>?					EnvelopedActivationGroup  {get; set;} 
 
@@ -2718,11 +2725,9 @@ public partial class ApplicationEntryGroup : ApplicationEntry {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedActivationGroup", /*typeof (ActivationApplicationGroup<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as ApplicationEntryGroup).EnvelopedActivationGroup = value as Enveloped<ActivationApplicationGroup>;},
-					(IBinding data) => (data as ApplicationEntryGroup).EnvelopedActivationGroup,
-					/*(IBinding data, object? value) => {(data as ApplicationEntryGroup).ActivationGroup = value as ActivationApplicationGroup;},
-					(IBinding data) => (data as ApplicationEntryGroup).ActivationGroup,*/
+		new PropertyGStruct ("EnvelopedActivationGroup", typeof (Enveloped),
+					(data, value) => {(data as ApplicationEntryGroup).EnvelopedActivationGroup = value as Enveloped<ActivationApplicationGroup>;},
+					data => (data as ApplicationEntryGroup).EnvelopedActivationGroup,
 					()=>new  Enveloped<ActivationApplicationGroup>(), ()=>new Enveloped<ActivationApplicationGroup>())
 		];
 
@@ -2758,6 +2763,9 @@ public partial class ApplicationEntryGroup : ApplicationEntry {
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntryMail : ApplicationEntry {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedActivationMail")]
 	public virtual Enveloped<ActivationApplicationMail>?					EnvelopedActivationMail  {get; set;} 
 
@@ -2771,11 +2779,9 @@ public partial class ApplicationEntryMail : ApplicationEntry {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedActivationMail", /*typeof (ActivationApplicationMail<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as ApplicationEntryMail).EnvelopedActivationMail = value as Enveloped<ActivationApplicationMail>;},
-					(IBinding data) => (data as ApplicationEntryMail).EnvelopedActivationMail,
-					/*(IBinding data, object? value) => {(data as ApplicationEntryMail).ActivationMail = value as ActivationApplicationMail;},
-					(IBinding data) => (data as ApplicationEntryMail).ActivationMail,*/
+		new PropertyGStruct ("EnvelopedActivationMail", typeof (Enveloped),
+					(data, value) => {(data as ApplicationEntryMail).EnvelopedActivationMail = value as Enveloped<ActivationApplicationMail>;},
+					data => (data as ApplicationEntryMail).EnvelopedActivationMail,
 					()=>new  Enveloped<ActivationApplicationMail>(), ()=>new Enveloped<ActivationApplicationMail>())
 		];
 
@@ -2811,6 +2817,9 @@ public partial class ApplicationEntryMail : ApplicationEntry {
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntryDeveloper : ApplicationEntry {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedActivationDeveloper")]
 	public virtual Enveloped<ActivationApplicationDeveloper>?					EnvelopedActivationDeveloper  {get; set;} 
 
@@ -2824,11 +2833,9 @@ public partial class ApplicationEntryDeveloper : ApplicationEntry {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedActivationDeveloper", /*typeof (ActivationApplicationDeveloper<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as ApplicationEntryDeveloper).EnvelopedActivationDeveloper = value as Enveloped<ActivationApplicationDeveloper>;},
-					(IBinding data) => (data as ApplicationEntryDeveloper).EnvelopedActivationDeveloper,
-					/*(IBinding data, object? value) => {(data as ApplicationEntryDeveloper).ActivationDeveloper = value as ActivationApplicationDeveloper;},
-					(IBinding data) => (data as ApplicationEntryDeveloper).ActivationDeveloper,*/
+		new PropertyGStruct ("EnvelopedActivationDeveloper", typeof (Enveloped),
+					(data, value) => {(data as ApplicationEntryDeveloper).EnvelopedActivationDeveloper = value as Enveloped<ActivationApplicationDeveloper>;},
+					data => (data as ApplicationEntryDeveloper).EnvelopedActivationDeveloper,
 					()=>new  Enveloped<ActivationApplicationDeveloper>(), ()=>new Enveloped<ActivationApplicationDeveloper>())
 		];
 
@@ -2864,6 +2871,9 @@ public partial class ApplicationEntryDeveloper : ApplicationEntry {
 	/// <summary>
 	/// </summary>
 public partial class ApplicationEntryCredential : ApplicationEntry {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedActivationCredential")]
 	public virtual Enveloped<ActivationApplicationCredential>?					EnvelopedActivationCredential  {get; set;} 
 
@@ -2877,11 +2887,9 @@ public partial class ApplicationEntryCredential : ApplicationEntry {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedActivationCredential", /*typeof (ActivationApplicationCredential<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as ApplicationEntryCredential).EnvelopedActivationCredential = value as Enveloped<ActivationApplicationCredential>;},
-					(IBinding data) => (data as ApplicationEntryCredential).EnvelopedActivationCredential,
-					/*(IBinding data, object? value) => {(data as ApplicationEntryCredential).ActivationCredential = value as ActivationApplicationCredential;},
-					(IBinding data) => (data as ApplicationEntryCredential).ActivationCredential,*/
+		new PropertyGStruct ("EnvelopedActivationCredential", typeof (Enveloped),
+					(data, value) => {(data as ApplicationEntryCredential).EnvelopedActivationCredential = value as Enveloped<ActivationApplicationCredential>;},
+					data => (data as ApplicationEntryCredential).EnvelopedActivationCredential,
 					()=>new  Enveloped<ActivationApplicationCredential>(), ()=>new Enveloped<ActivationApplicationCredential>())
 		];
 
@@ -2941,14 +2949,14 @@ public partial class Bookmark : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Uri", 
-					(IBinding data, string? value) => {(data as Bookmark).Uri = value;}, 
-					(IBinding data) => (data as Bookmark).Uri ),
+					(data, value) => {(data as Bookmark).Uri = value;}, 
+					data => (data as Bookmark).Uri ),
 		new PropertyString ("Title", 
-					(IBinding data, string? value) => {(data as Bookmark).Title = value;}, 
-					(IBinding data) => (data as Bookmark).Title ),
+					(data, value) => {(data as Bookmark).Title = value;}, 
+					data => (data as Bookmark).Title ),
 		new PropertyListString ("Role", 
-					(IBinding data, List<string>? value) => {(data as Bookmark).Role = value;}, 
-					(IBinding data) => (data as Bookmark).Role )
+					(data, value) => {(data as Bookmark).Role = value;}, 
+					data => (data as Bookmark).Role )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -3013,14 +3021,14 @@ public partial class Reference : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("MessageId", 
-					(IBinding data, string? value) => {(data as Reference).MessageId = value;}, 
-					(IBinding data) => (data as Reference).MessageId ),
+					(data, value) => {(data as Reference).MessageId = value;}, 
+					data => (data as Reference).MessageId ),
 		new PropertyString ("ResponseId", 
-					(IBinding data, string? value) => {(data as Reference).ResponseId = value;}, 
-					(IBinding data) => (data as Reference).ResponseId ),
+					(data, value) => {(data as Reference).ResponseId = value;}, 
+					data => (data as Reference).ResponseId ),
 		new PropertyString ("Relationship", 
-					(IBinding data, string? value) => {(data as Reference).Relationship = value;}, 
-					(IBinding data) => (data as Reference).Relationship )
+					(data, value) => {(data as Reference).Relationship = value;}, 
+					data => (data as Reference).Relationship )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -3141,44 +3149,44 @@ public partial class Engagement : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as Engagement).Key = value;}, 
-					(IBinding data) => (data as Engagement).Key ),
+					(data, value) => {(data as Engagement).Key = value;}, 
+					data => (data as Engagement).Key ),
 		new PropertyDateTime ("Start", 
-					(IBinding data, DateTime? value) => {(data as Engagement).Start = value;}, 
-					(IBinding data) => (data as Engagement).Start ),
+					(data, value) => {(data as Engagement).Start = value;}, 
+					data => (data as Engagement).Start ),
 		new PropertyDateTime ("Finish", 
-					(IBinding data, DateTime? value) => {(data as Engagement).Finish = value;}, 
-					(IBinding data) => (data as Engagement).Finish ),
+					(data, value) => {(data as Engagement).Finish = value;}, 
+					data => (data as Engagement).Finish ),
 		new PropertyString ("StartTravel", 
-					(IBinding data, string? value) => {(data as Engagement).StartTravel = value;}, 
-					(IBinding data) => (data as Engagement).StartTravel ),
+					(data, value) => {(data as Engagement).StartTravel = value;}, 
+					data => (data as Engagement).StartTravel ),
 		new PropertyString ("FinishTravel", 
-					(IBinding data, string? value) => {(data as Engagement).FinishTravel = value;}, 
-					(IBinding data) => (data as Engagement).FinishTravel ),
+					(data, value) => {(data as Engagement).FinishTravel = value;}, 
+					data => (data as Engagement).FinishTravel ),
 		new PropertyString ("TimeZone", 
-					(IBinding data, string? value) => {(data as Engagement).TimeZone = value;}, 
-					(IBinding data) => (data as Engagement).TimeZone ),
+					(data, value) => {(data as Engagement).TimeZone = value;}, 
+					data => (data as Engagement).TimeZone ),
 		new PropertyString ("Title", 
-					(IBinding data, string? value) => {(data as Engagement).Title = value;}, 
-					(IBinding data) => (data as Engagement).Title ),
+					(data, value) => {(data as Engagement).Title = value;}, 
+					data => (data as Engagement).Title ),
 		new PropertyString ("Description", 
-					(IBinding data, string? value) => {(data as Engagement).Description = value;}, 
-					(IBinding data) => (data as Engagement).Description ),
+					(data, value) => {(data as Engagement).Description = value;}, 
+					data => (data as Engagement).Description ),
 		new PropertyString ("Location", 
-					(IBinding data, string? value) => {(data as Engagement).Location = value;}, 
-					(IBinding data) => (data as Engagement).Location ),
+					(data, value) => {(data as Engagement).Location = value;}, 
+					data => (data as Engagement).Location ),
 		new PropertyListString ("Trigger", 
-					(IBinding data, List<string>? value) => {(data as Engagement).Trigger = value;}, 
-					(IBinding data) => (data as Engagement).Trigger ),
+					(data, value) => {(data as Engagement).Trigger = value;}, 
+					data => (data as Engagement).Trigger ),
 		new PropertyListString ("Conference", 
-					(IBinding data, List<string>? value) => {(data as Engagement).Conference = value;}, 
-					(IBinding data) => (data as Engagement).Conference ),
+					(data, value) => {(data as Engagement).Conference = value;}, 
+					data => (data as Engagement).Conference ),
 		new PropertyString ("Repeat", 
-					(IBinding data, string? value) => {(data as Engagement).Repeat = value;}, 
-					(IBinding data) => (data as Engagement).Repeat ),
+					(data, value) => {(data as Engagement).Repeat = value;}, 
+					data => (data as Engagement).Repeat ),
 		new PropertyBoolean ("Busy", 
-					(IBinding data, bool? value) => {(data as Engagement).Busy = value;}, 
-					(IBinding data) => (data as Engagement).Busy )
+					(data, value) => {(data as Engagement).Busy = value;}, 
+					data => (data as Engagement).Busy )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -3237,8 +3245,8 @@ public partial class WorkTask : Engagement {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListString ("Dependency", 
-					(IBinding data, List<string>? value) => {(data as WorkTask).Dependency = value;}, 
-					(IBinding data) => (data as WorkTask).Dependency )
+					(data, value) => {(data as WorkTask).Dependency = value;}, 
+					data => (data as WorkTask).Dependency )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -3310,17 +3318,17 @@ abstract public partial class CatalogedEntry : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Uid", 
-					(IBinding data, string? value) => {(data as CatalogedEntry).Uid = value;}, 
-					(IBinding data) => (data as CatalogedEntry).Uid ),
+					(data, value) => {(data as CatalogedEntry).Uid = value;}, 
+					data => (data as CatalogedEntry).Uid ),
 		new PropertyString ("LocalName", 
-					(IBinding data, string? value) => {(data as CatalogedEntry).LocalName = value;}, 
-					(IBinding data) => (data as CatalogedEntry).LocalName ),
+					(data, value) => {(data as CatalogedEntry).LocalName = value;}, 
+					data => (data as CatalogedEntry).LocalName ),
 		new PropertyString ("Path", 
-					(IBinding data, string? value) => {(data as CatalogedEntry).Path = value;}, 
-					(IBinding data) => (data as CatalogedEntry).Path ),
+					(data, value) => {(data as CatalogedEntry).Path = value;}, 
+					data => (data as CatalogedEntry).Path ),
 		new PropertyString ("Description", 
-					(IBinding data, string? value) => {(data as CatalogedEntry).Description = value;}, 
-					(IBinding data) => (data as CatalogedEntry).Description )
+					(data, value) => {(data as CatalogedEntry).Description = value;}, 
+					data => (data as CatalogedEntry).Description )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -3395,6 +3403,9 @@ public partial class CatalogedDevice : CatalogedEntry {
 	[JsonPropertyName("SignatureUdf")]
 	public virtual string?					SignatureUdf  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileUser")]
 	public virtual Enveloped<ProfileUser>?					EnvelopedProfileUser  {get; set;} 
 
@@ -3402,6 +3413,9 @@ public partial class CatalogedDevice : CatalogedEntry {
 	/// Wrapped property
     /// </summary>
 	public virtual ProfileUser?				ProfileUser  => EnvelopedProfileUser.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileDevice")]
 	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;} 
 
@@ -3416,6 +3430,9 @@ public partial class CatalogedDevice : CatalogedEntry {
 	[JsonPropertyName("DeviceDescription")]
 	public virtual DeviceDescription?					DeviceDescription  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedConnectionService")]
 	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} 
 
@@ -3423,6 +3440,9 @@ public partial class CatalogedDevice : CatalogedEntry {
 	/// Wrapped property
     /// </summary>
 	public virtual ConnectionService?				ConnectionService  => EnvelopedConnectionService.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedConnectionDevice")]
 	public virtual Enveloped<ConnectionDevice>?					EnvelopedConnectionDevice  {get; set;} 
 
@@ -3430,6 +3450,9 @@ public partial class CatalogedDevice : CatalogedEntry {
 	/// Wrapped property
     /// </summary>
 	public virtual ConnectionDevice?				ConnectionDevice  => EnvelopedConnectionDevice.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedActivationAccount")]
 	public virtual Enveloped<ActivationAccount>?					EnvelopedActivationAccount  {get; set;} 
 
@@ -3437,6 +3460,9 @@ public partial class CatalogedDevice : CatalogedEntry {
 	/// Wrapped property
     /// </summary>
 	public virtual ActivationAccount?				ActivationAccount  => EnvelopedActivationAccount.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedActivationCommon")]
 	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} 
 
@@ -3457,63 +3483,51 @@ public partial class CatalogedDevice : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyDateTime ("Updated", 
-					(IBinding data, DateTime? value) => {(data as CatalogedDevice).Updated = value;}, 
-					(IBinding data) => (data as CatalogedDevice).Updated ),
+					(data, value) => {(data as CatalogedDevice).Updated = value;}, 
+					data => (data as CatalogedDevice).Updated ),
 		new PropertyString ("Udf", 
-					(IBinding data, string? value) => {(data as CatalogedDevice).Udf = value;}, 
-					(IBinding data) => (data as CatalogedDevice).Udf ),
+					(data, value) => {(data as CatalogedDevice).Udf = value;}, 
+					data => (data as CatalogedDevice).Udf ),
 		new PropertyString ("Platform", 
-					(IBinding data, string? value) => {(data as CatalogedDevice).Platform = value;}, 
-					(IBinding data) => (data as CatalogedDevice).Platform ),
+					(data, value) => {(data as CatalogedDevice).Platform = value;}, 
+					data => (data as CatalogedDevice).Platform ),
 		new PropertyString ("DeviceUdf", 
-					(IBinding data, string? value) => {(data as CatalogedDevice).DeviceUdf = value;}, 
-					(IBinding data) => (data as CatalogedDevice).DeviceUdf ),
+					(data, value) => {(data as CatalogedDevice).DeviceUdf = value;}, 
+					data => (data as CatalogedDevice).DeviceUdf ),
 		new PropertyString ("SignatureUdf", 
-					(IBinding data, string? value) => {(data as CatalogedDevice).SignatureUdf = value;}, 
-					(IBinding data) => (data as CatalogedDevice).SignatureUdf ),
-		new PropertyGStruct ("EnvelopedProfileUser", /*typeof (ProfileUser<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedProfileUser = value as Enveloped<ProfileUser>;},
-					(IBinding data) => (data as CatalogedDevice).EnvelopedProfileUser,
-					/*(IBinding data, object? value) => {(data as CatalogedDevice).ProfileUser = value as ProfileUser;},
-					(IBinding data) => (data as CatalogedDevice).ProfileUser,*/
+					(data, value) => {(data as CatalogedDevice).SignatureUdf = value;}, 
+					data => (data as CatalogedDevice).SignatureUdf ),
+		new PropertyGStruct ("EnvelopedProfileUser", typeof (Enveloped),
+					(data, value) => {(data as CatalogedDevice).EnvelopedProfileUser = value as Enveloped<ProfileUser>;},
+					data => (data as CatalogedDevice).EnvelopedProfileUser,
 					()=>new  Enveloped<ProfileUser>(), ()=>new Enveloped<ProfileUser>()),
-		new PropertyGStruct ("EnvelopedProfileDevice", /*typeof (ProfileDevice<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;},
-					(IBinding data) => (data as CatalogedDevice).EnvelopedProfileDevice,
-					/*(IBinding data, object? value) => {(data as CatalogedDevice).ProfileDevice = value as ProfileDevice;},
-					(IBinding data) => (data as CatalogedDevice).ProfileDevice,*/
+		new PropertyGStruct ("EnvelopedProfileDevice", typeof (Enveloped),
+					(data, value) => {(data as CatalogedDevice).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;},
+					data => (data as CatalogedDevice).EnvelopedProfileDevice,
 					()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>()),
 		new PropertyStruct ("DeviceDescription", typeof (DeviceDescription),
-					(IBinding data, object? value) => {(data as CatalogedDevice).DeviceDescription = value as DeviceDescription;}, 
-					(IBinding data) => (data as CatalogedDevice).DeviceDescription,
+					(data, value) => {(data as CatalogedDevice).DeviceDescription = value as DeviceDescription;}, 
+					data => (data as CatalogedDevice).DeviceDescription,
 					false, ()=>new  DeviceDescription(), ()=>new DeviceDescription()),
-		new PropertyGStruct ("EnvelopedConnectionService", /*typeof (ConnectionService<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedConnectionService = value as Enveloped<ConnectionService>;},
-					(IBinding data) => (data as CatalogedDevice).EnvelopedConnectionService,
-					/*(IBinding data, object? value) => {(data as CatalogedDevice).ConnectionService = value as ConnectionService;},
-					(IBinding data) => (data as CatalogedDevice).ConnectionService,*/
+		new PropertyGStruct ("EnvelopedConnectionService", typeof (Enveloped),
+					(data, value) => {(data as CatalogedDevice).EnvelopedConnectionService = value as Enveloped<ConnectionService>;},
+					data => (data as CatalogedDevice).EnvelopedConnectionService,
 					()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>()),
-		new PropertyGStruct ("EnvelopedConnectionDevice", /*typeof (ConnectionDevice<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;},
-					(IBinding data) => (data as CatalogedDevice).EnvelopedConnectionDevice,
-					/*(IBinding data, object? value) => {(data as CatalogedDevice).ConnectionDevice = value as ConnectionDevice;},
-					(IBinding data) => (data as CatalogedDevice).ConnectionDevice,*/
+		new PropertyGStruct ("EnvelopedConnectionDevice", typeof (Enveloped),
+					(data, value) => {(data as CatalogedDevice).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;},
+					data => (data as CatalogedDevice).EnvelopedConnectionDevice,
 					()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>()),
-		new PropertyGStruct ("EnvelopedActivationAccount", /*typeof (ActivationAccount<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedActivationAccount = value as Enveloped<ActivationAccount>;},
-					(IBinding data) => (data as CatalogedDevice).EnvelopedActivationAccount,
-					/*(IBinding data, object? value) => {(data as CatalogedDevice).ActivationAccount = value as ActivationAccount;},
-					(IBinding data) => (data as CatalogedDevice).ActivationAccount,*/
+		new PropertyGStruct ("EnvelopedActivationAccount", typeof (Enveloped),
+					(data, value) => {(data as CatalogedDevice).EnvelopedActivationAccount = value as Enveloped<ActivationAccount>;},
+					data => (data as CatalogedDevice).EnvelopedActivationAccount,
 					()=>new  Enveloped<ActivationAccount>(), ()=>new Enveloped<ActivationAccount>()),
-		new PropertyGStruct ("EnvelopedActivationCommon", /*typeof (ActivationCommon<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedDevice).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;},
-					(IBinding data) => (data as CatalogedDevice).EnvelopedActivationCommon,
-					/*(IBinding data, object? value) => {(data as CatalogedDevice).ActivationCommon = value as ActivationCommon;},
-					(IBinding data) => (data as CatalogedDevice).ActivationCommon,*/
+		new PropertyGStruct ("EnvelopedActivationCommon", typeof (Enveloped),
+					(data, value) => {(data as CatalogedDevice).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;},
+					data => (data as CatalogedDevice).EnvelopedActivationCommon,
 					()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>()),
 		new PropertyListStruct ("ApplicationEntries", typeof (ApplicationEntry), 
-					(IBinding data, object? value) => {(data as CatalogedDevice).ApplicationEntries = value as List<ApplicationEntry>;}, 
-					(IBinding data) => (data as CatalogedDevice).ApplicationEntries,
+					(data, value) => {(data as CatalogedDevice).ApplicationEntries = value as List<ApplicationEntry>;}, 
+					data => (data as CatalogedDevice).ApplicationEntries,
 					true, ()=>new List<ApplicationEntry>()
 ) 
 		];
@@ -3618,26 +3632,26 @@ public partial class DeviceDescription : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Idiom", 
-					(IBinding data, string? value) => {(data as DeviceDescription).Idiom = value;}, 
-					(IBinding data) => (data as DeviceDescription).Idiom ),
+					(data, value) => {(data as DeviceDescription).Idiom = value;}, 
+					data => (data as DeviceDescription).Idiom ),
 		new PropertyString ("Manufacturer", 
-					(IBinding data, string? value) => {(data as DeviceDescription).Manufacturer = value;}, 
-					(IBinding data) => (data as DeviceDescription).Manufacturer ),
+					(data, value) => {(data as DeviceDescription).Manufacturer = value;}, 
+					data => (data as DeviceDescription).Manufacturer ),
 		new PropertyString ("Model", 
-					(IBinding data, string? value) => {(data as DeviceDescription).Model = value;}, 
-					(IBinding data) => (data as DeviceDescription).Model ),
+					(data, value) => {(data as DeviceDescription).Model = value;}, 
+					data => (data as DeviceDescription).Model ),
 		new PropertyString ("Name", 
-					(IBinding data, string? value) => {(data as DeviceDescription).Name = value;}, 
-					(IBinding data) => (data as DeviceDescription).Name ),
+					(data, value) => {(data as DeviceDescription).Name = value;}, 
+					data => (data as DeviceDescription).Name ),
 		new PropertyString ("Platform", 
-					(IBinding data, string? value) => {(data as DeviceDescription).Platform = value;}, 
-					(IBinding data) => (data as DeviceDescription).Platform ),
+					(data, value) => {(data as DeviceDescription).Platform = value;}, 
+					data => (data as DeviceDescription).Platform ),
 		new PropertyString ("Version", 
-					(IBinding data, string? value) => {(data as DeviceDescription).Version = value;}, 
-					(IBinding data) => (data as DeviceDescription).Version ),
+					(data, value) => {(data as DeviceDescription).Version = value;}, 
+					data => (data as DeviceDescription).Version ),
 		new PropertyString ("ImageLocator", 
-					(IBinding data, string? value) => {(data as DeviceDescription).ImageLocator = value;}, 
-					(IBinding data) => (data as DeviceDescription).ImageLocator )
+					(data, value) => {(data as DeviceDescription).ImageLocator = value;}, 
+					data => (data as DeviceDescription).ImageLocator )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -3793,35 +3807,35 @@ public partial class CatalogedDocument : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Udf", 
-					(IBinding data, string? value) => {(data as CatalogedDocument).Udf = value;}, 
-					(IBinding data) => (data as CatalogedDocument).Udf ),
+					(data, value) => {(data as CatalogedDocument).Udf = value;}, 
+					data => (data as CatalogedDocument).Udf ),
 		new PropertyString ("Filename", 
-					(IBinding data, string? value) => {(data as CatalogedDocument).Filename = value;}, 
-					(IBinding data) => (data as CatalogedDocument).Filename ),
+					(data, value) => {(data as CatalogedDocument).Filename = value;}, 
+					data => (data as CatalogedDocument).Filename ),
 		new PropertyString ("Title", 
-					(IBinding data, string? value) => {(data as CatalogedDocument).Title = value;}, 
-					(IBinding data) => (data as CatalogedDocument).Title ),
+					(data, value) => {(data as CatalogedDocument).Title = value;}, 
+					data => (data as CatalogedDocument).Title ),
 		new PropertyString ("Version", 
-					(IBinding data, string? value) => {(data as CatalogedDocument).Version = value;}, 
-					(IBinding data) => (data as CatalogedDocument).Version ),
+					(data, value) => {(data as CatalogedDocument).Version = value;}, 
+					data => (data as CatalogedDocument).Version ),
 		new PropertyString ("URI", 
-					(IBinding data, string? value) => {(data as CatalogedDocument).URI = value;}, 
-					(IBinding data) => (data as CatalogedDocument).URI ),
+					(data, value) => {(data as CatalogedDocument).URI = value;}, 
+					data => (data as CatalogedDocument).URI ),
 		new PropertyString ("ContentType", 
-					(IBinding data, string? value) => {(data as CatalogedDocument).ContentType = value;}, 
-					(IBinding data) => (data as CatalogedDocument).ContentType ),
+					(data, value) => {(data as CatalogedDocument).ContentType = value;}, 
+					data => (data as CatalogedDocument).ContentType ),
 		new PropertyString ("Encoding", 
-					(IBinding data, string? value) => {(data as CatalogedDocument).Encoding = value;}, 
-					(IBinding data) => (data as CatalogedDocument).Encoding ),
+					(data, value) => {(data as CatalogedDocument).Encoding = value;}, 
+					data => (data as CatalogedDocument).Encoding ),
 		new PropertyDateTime ("Created", 
-					(IBinding data, DateTime? value) => {(data as CatalogedDocument).Created = value;}, 
-					(IBinding data) => (data as CatalogedDocument).Created ),
+					(data, value) => {(data as CatalogedDocument).Created = value;}, 
+					data => (data as CatalogedDocument).Created ),
 		new PropertyDateTime ("Updated", 
-					(IBinding data, DateTime? value) => {(data as CatalogedDocument).Updated = value;}, 
-					(IBinding data) => (data as CatalogedDocument).Updated ),
+					(data, value) => {(data as CatalogedDocument).Updated = value;}, 
+					data => (data as CatalogedDocument).Updated ),
 		new PropertyInteger32 ("Length", 
-					(IBinding data, int? value) => {(data as CatalogedDocument).Length = value;}, 
-					(IBinding data) => (data as CatalogedDocument).Length )
+					(data, value) => {(data as CatalogedDocument).Length = value;}, 
+					data => (data as CatalogedDocument).Length )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -3903,18 +3917,18 @@ public partial class CatalogedPublication : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Id", 
-					(IBinding data, string? value) => {(data as CatalogedPublication).Id = value;}, 
-					(IBinding data) => (data as CatalogedPublication).Id ),
+					(data, value) => {(data as CatalogedPublication).Id = value;}, 
+					data => (data as CatalogedPublication).Id ),
 		new PropertyString ("Authenticator", 
-					(IBinding data, string? value) => {(data as CatalogedPublication).Authenticator = value;}, 
-					(IBinding data) => (data as CatalogedPublication).Authenticator ),
+					(data, value) => {(data as CatalogedPublication).Authenticator = value;}, 
+					data => (data as CatalogedPublication).Authenticator ),
 		new PropertyStruct ("EnvelopedData", typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedPublication).EnvelopedData = value as Enveloped;}, 
-					(IBinding data) => (data as CatalogedPublication).EnvelopedData,
+					(data, value) => {(data as CatalogedPublication).EnvelopedData = value as Enveloped;}, 
+					data => (data as CatalogedPublication).EnvelopedData,
 					false, ()=>new  Enveloped(), ()=>new Enveloped()),
 		new PropertyDateTime ("NotOnOrAfter", 
-					(IBinding data, DateTime? value) => {(data as CatalogedPublication).NotOnOrAfter = value;}, 
-					(IBinding data) => (data as CatalogedPublication).NotOnOrAfter )
+					(data, value) => {(data as CatalogedPublication).NotOnOrAfter = value;}, 
+					data => (data as CatalogedPublication).NotOnOrAfter )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -3995,24 +4009,24 @@ public partial class CatalogedCredential : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Protocol", 
-					(IBinding data, string? value) => {(data as CatalogedCredential).Protocol = value;}, 
-					(IBinding data) => (data as CatalogedCredential).Protocol ),
+					(data, value) => {(data as CatalogedCredential).Protocol = value;}, 
+					data => (data as CatalogedCredential).Protocol ),
 		new PropertyString ("Service", 
-					(IBinding data, string? value) => {(data as CatalogedCredential).Service = value;}, 
-					(IBinding data) => (data as CatalogedCredential).Service ),
+					(data, value) => {(data as CatalogedCredential).Service = value;}, 
+					data => (data as CatalogedCredential).Service ),
 		new PropertyString ("Username", 
-					(IBinding data, string? value) => {(data as CatalogedCredential).Username = value;}, 
-					(IBinding data) => (data as CatalogedCredential).Username ),
+					(data, value) => {(data as CatalogedCredential).Username = value;}, 
+					data => (data as CatalogedCredential).Username ),
 		new PropertyString ("Password", 
-					(IBinding data, string? value) => {(data as CatalogedCredential).Password = value;}, 
-					(IBinding data) => (data as CatalogedCredential).Password ),
+					(data, value) => {(data as CatalogedCredential).Password = value;}, 
+					data => (data as CatalogedCredential).Password ),
 		new PropertyListStruct ("ClientAuthentication", typeof (KeyData),
-					(IBinding data, object? value) => {(data as CatalogedCredential).ClientAuthentication = value as List<KeyData>;}, 
-					(IBinding data) => (data as CatalogedCredential).ClientAuthentication,
+					(data, value) => {(data as CatalogedCredential).ClientAuthentication = value as List<KeyData>;}, 
+					data => (data as CatalogedCredential).ClientAuthentication,
 					false, ()=>new  List<KeyData>(), ()=>new KeyData()),
 		new PropertyListStruct ("HostAuthentication", typeof (KeyData),
-					(IBinding data, object? value) => {(data as CatalogedCredential).HostAuthentication = value as List<KeyData>;}, 
-					(IBinding data) => (data as CatalogedCredential).HostAuthentication,
+					(data, value) => {(data as CatalogedCredential).HostAuthentication = value as List<KeyData>;}, 
+					data => (data as CatalogedCredential).HostAuthentication,
 					false, ()=>new  List<KeyData>(), ()=>new KeyData())
 		];
 
@@ -4084,17 +4098,17 @@ public partial class CatalogedNetwork : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Protocol", 
-					(IBinding data, string? value) => {(data as CatalogedNetwork).Protocol = value;}, 
-					(IBinding data) => (data as CatalogedNetwork).Protocol ),
+					(data, value) => {(data as CatalogedNetwork).Protocol = value;}, 
+					data => (data as CatalogedNetwork).Protocol ),
 		new PropertyString ("Service", 
-					(IBinding data, string? value) => {(data as CatalogedNetwork).Service = value;}, 
-					(IBinding data) => (data as CatalogedNetwork).Service ),
+					(data, value) => {(data as CatalogedNetwork).Service = value;}, 
+					data => (data as CatalogedNetwork).Service ),
 		new PropertyString ("Username", 
-					(IBinding data, string? value) => {(data as CatalogedNetwork).Username = value;}, 
-					(IBinding data) => (data as CatalogedNetwork).Username ),
+					(data, value) => {(data as CatalogedNetwork).Username = value;}, 
+					data => (data as CatalogedNetwork).Username ),
 		new PropertyString ("Password", 
-					(IBinding data, string? value) => {(data as CatalogedNetwork).Password = value;}, 
-					(IBinding data) => (data as CatalogedNetwork).Password )
+					(data, value) => {(data as CatalogedNetwork).Password = value;}, 
+					data => (data as CatalogedNetwork).Password )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -4146,6 +4160,9 @@ public partial class CatalogedContact : CatalogedEntry {
 	[JsonPropertyName("Self")]
 	public virtual bool?					Self  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedJsContact")]
 	public virtual Enveloped<JsContact>?					EnvelopedJsContact  {get; set;} 
 
@@ -4172,24 +4189,22 @@ public partial class CatalogedContact : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as CatalogedContact).Key = value;}, 
-					(IBinding data) => (data as CatalogedContact).Key ),
+					(data, value) => {(data as CatalogedContact).Key = value;}, 
+					data => (data as CatalogedContact).Key ),
 		new PropertyBoolean ("Self", 
-					(IBinding data, bool? value) => {(data as CatalogedContact).Self = value;}, 
-					(IBinding data) => (data as CatalogedContact).Self ),
-		new PropertyGStruct ("EnvelopedJsContact", /*typeof (JsContact<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedContact).EnvelopedJsContact = value as Enveloped<JsContact>;},
-					(IBinding data) => (data as CatalogedContact).EnvelopedJsContact,
-					/*(IBinding data, object? value) => {(data as CatalogedContact).JsContact = value as JsContact;},
-					(IBinding data) => (data as CatalogedContact).JsContact,*/
+					(data, value) => {(data as CatalogedContact).Self = value;}, 
+					data => (data as CatalogedContact).Self ),
+		new PropertyGStruct ("EnvelopedJsContact", typeof (Enveloped),
+					(data, value) => {(data as CatalogedContact).EnvelopedJsContact = value as Enveloped<JsContact>;},
+					data => (data as CatalogedContact).EnvelopedJsContact,
 					()=>new  Enveloped<JsContact>(), ()=>new Enveloped<JsContact>()),
 		new PropertyListStruct ("VerifiedContacts", typeof (MeshContact),
-					(IBinding data, object? value) => {(data as CatalogedContact).VerifiedContacts = value as List<MeshContact>;}, 
-					(IBinding data) => (data as CatalogedContact).VerifiedContacts,
+					(data, value) => {(data as CatalogedContact).VerifiedContacts = value as List<MeshContact>;}, 
+					data => (data as CatalogedContact).VerifiedContacts,
 					false, ()=>new  List<MeshContact>(), ()=>new MeshContact()),
 		new PropertyListStruct ("KeyShares", typeof (CryptoKeyIndex),
-					(IBinding data, object? value) => {(data as CatalogedContact).KeyShares = value as List<CryptoKeyIndex>;}, 
-					(IBinding data) => (data as CatalogedContact).KeyShares,
+					(data, value) => {(data as CatalogedContact).KeyShares = value as List<CryptoKeyIndex>;}, 
+					data => (data as CatalogedContact).KeyShares,
 					false, ()=>new  List<CryptoKeyIndex>(), ()=>new CryptoKeyIndex())
 		];
 
@@ -4257,14 +4272,14 @@ public partial class CryptoKeyIndex : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountId", 
-					(IBinding data, string? value) => {(data as CryptoKeyIndex).AccountId = value;}, 
-					(IBinding data) => (data as CryptoKeyIndex).AccountId ),
+					(data, value) => {(data as CryptoKeyIndex).AccountId = value;}, 
+					data => (data as CryptoKeyIndex).AccountId ),
 		new PropertyString ("PublicKeyId", 
-					(IBinding data, string? value) => {(data as CryptoKeyIndex).PublicKeyId = value;}, 
-					(IBinding data) => (data as CryptoKeyIndex).PublicKeyId ),
+					(data, value) => {(data as CryptoKeyIndex).PublicKeyId = value;}, 
+					data => (data as CryptoKeyIndex).PublicKeyId ),
 		new PropertyString ("KeyShareId", 
-					(IBinding data, string? value) => {(data as CryptoKeyIndex).KeyShareId = value;}, 
-					(IBinding data) => (data as CryptoKeyIndex).KeyShareId )
+					(data, value) => {(data as CryptoKeyIndex).KeyShareId = value;}, 
+					data => (data as CryptoKeyIndex).KeyShareId )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -4355,31 +4370,31 @@ public partial class MeshContact : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Verification", 
-					(IBinding data, string? value) => {(data as MeshContact).Verification = value;}, 
-					(IBinding data) => (data as MeshContact).Verification ),
+					(data, value) => {(data as MeshContact).Verification = value;}, 
+					data => (data as MeshContact).Verification ),
 		new PropertyString ("DirectAddress", 
-					(IBinding data, string? value) => {(data as MeshContact).DirectAddress = value;}, 
-					(IBinding data) => (data as MeshContact).DirectAddress ),
+					(data, value) => {(data as MeshContact).DirectAddress = value;}, 
+					data => (data as MeshContact).DirectAddress ),
 		new PropertyListString ("AccountAddresses", 
-					(IBinding data, List<string>? value) => {(data as MeshContact).AccountAddresses = value;}, 
-					(IBinding data) => (data as MeshContact).AccountAddresses ),
+					(data, value) => {(data as MeshContact).AccountAddresses = value;}, 
+					data => (data as MeshContact).AccountAddresses ),
 		new PropertyString ("ProfileUdf", 
-					(IBinding data, string? value) => {(data as MeshContact).ProfileUdf = value;}, 
-					(IBinding data) => (data as MeshContact).ProfileUdf ),
+					(data, value) => {(data as MeshContact).ProfileUdf = value;}, 
+					data => (data as MeshContact).ProfileUdf ),
 		new PropertyString ("ProfileType", 
-					(IBinding data, string? value) => {(data as MeshContact).ProfileType = value;}, 
-					(IBinding data) => (data as MeshContact).ProfileType ),
+					(data, value) => {(data as MeshContact).ProfileType = value;}, 
+					data => (data as MeshContact).ProfileType ),
 		new PropertyStruct ("CommonEncryption", typeof (KeyData),
-					(IBinding data, object? value) => {(data as MeshContact).CommonEncryption = value as KeyData;}, 
-					(IBinding data) => (data as MeshContact).CommonEncryption,
+					(data, value) => {(data as MeshContact).CommonEncryption = value as KeyData;}, 
+					data => (data as MeshContact).CommonEncryption,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("AdministratorSignature", typeof (KeyData),
-					(IBinding data, object? value) => {(data as MeshContact).AdministratorSignature = value as KeyData;}, 
-					(IBinding data) => (data as MeshContact).AdministratorSignature,
+					(data, value) => {(data as MeshContact).AdministratorSignature = value as KeyData;}, 
+					data => (data as MeshContact).AdministratorSignature,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("Profile", typeof (ProfileAccount), 
-					(IBinding data, object? value) => {(data as MeshContact).Profile = value as ProfileAccount;}, 
-					(IBinding data) => (data as MeshContact).Profile,
+					(data, value) => {(data as MeshContact).Profile = value as ProfileAccount;}, 
+					data => (data as MeshContact).Profile,
 					true) 
 		];
 
@@ -4438,8 +4453,8 @@ public partial class CatalogedAccess : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("Capability", typeof (Capability), 
-					(IBinding data, object? value) => {(data as CatalogedAccess).Capability = value as Capability;}, 
-					(IBinding data) => (data as CatalogedAccess).Capability,
+					(data, value) => {(data as CatalogedAccess).Capability = value as Capability;}, 
+					data => (data as CatalogedAccess).Capability,
 					true) 
 		];
 
@@ -4526,23 +4541,23 @@ abstract public partial class Capability : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Id", 
-					(IBinding data, string? value) => {(data as Capability).Id = value;}, 
-					(IBinding data) => (data as Capability).Id ),
+					(data, value) => {(data as Capability).Id = value;}, 
+					data => (data as Capability).Id ),
 		new PropertyBoolean ("Active", 
-					(IBinding data, bool? value) => {(data as Capability).Active = value;}, 
-					(IBinding data) => (data as Capability).Active ),
+					(data, value) => {(data as Capability).Active = value;}, 
+					data => (data as Capability).Active ),
 		new PropertyInteger32 ("Issued", 
-					(IBinding data, int? value) => {(data as Capability).Issued = value;}, 
-					(IBinding data) => (data as Capability).Issued ),
+					(data, value) => {(data as Capability).Issued = value;}, 
+					data => (data as Capability).Issued ),
 		new PropertyString ("Mode", 
-					(IBinding data, string? value) => {(data as Capability).Mode = value;}, 
-					(IBinding data) => (data as Capability).Mode ),
+					(data, value) => {(data as Capability).Mode = value;}, 
+					data => (data as Capability).Mode ),
 		new PropertyString ("Udf", 
-					(IBinding data, string? value) => {(data as Capability).Udf = value;}, 
-					(IBinding data) => (data as Capability).Udf ),
+					(data, value) => {(data as Capability).Udf = value;}, 
+					data => (data as Capability).Udf ),
 		new PropertyString ("Witness", 
-					(IBinding data, string? value) => {(data as Capability).Witness = value;}, 
-					(IBinding data) => (data as Capability).Witness )
+					(data, value) => {(data as Capability).Witness = value;}, 
+					data => (data as Capability).Witness )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -4627,6 +4642,9 @@ public partial class AccessCapability : Capability {
 
 	[JsonPropertyName("Rights")]
 	public virtual List<string>?					Rights  {get; set;}
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedCatalogedDevice")]
 	public virtual Enveloped<CatalogedDevice>?					EnvelopedCatalogedDevice  {get; set;} 
 
@@ -4648,17 +4666,15 @@ public partial class AccessCapability : Capability {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListString ("Rights", 
-					(IBinding data, List<string>? value) => {(data as AccessCapability).Rights = value;}, 
-					(IBinding data) => (data as AccessCapability).Rights ),
-		new PropertyGStruct ("EnvelopedCatalogedDevice", /*typeof (CatalogedDevice<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as AccessCapability).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;},
-					(IBinding data) => (data as AccessCapability).EnvelopedCatalogedDevice,
-					/*(IBinding data, object? value) => {(data as AccessCapability).CatalogedDevice = value as CatalogedDevice;},
-					(IBinding data) => (data as AccessCapability).CatalogedDevice,*/
+					(data, value) => {(data as AccessCapability).Rights = value;}, 
+					data => (data as AccessCapability).Rights ),
+		new PropertyGStruct ("EnvelopedCatalogedDevice", typeof (Enveloped),
+					(data, value) => {(data as AccessCapability).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;},
+					data => (data as AccessCapability).EnvelopedCatalogedDevice,
 					()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>()),
 		new PropertyString ("CatalogedDeviceDigest", 
-					(IBinding data, string? value) => {(data as AccessCapability).CatalogedDeviceDigest = value;}, 
-					(IBinding data) => (data as AccessCapability).CatalogedDeviceDigest )
+					(data, value) => {(data as AccessCapability).CatalogedDeviceDigest = value;}, 
+					data => (data as AccessCapability).CatalogedDeviceDigest )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -4727,14 +4743,14 @@ public partial class PublicationCapability : Capability {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Identifier", 
-					(IBinding data, string? value) => {(data as PublicationCapability).Identifier = value;}, 
-					(IBinding data) => (data as PublicationCapability).Identifier ),
+					(data, value) => {(data as PublicationCapability).Identifier = value;}, 
+					data => (data as PublicationCapability).Identifier ),
 		new PropertyString ("Digest", 
-					(IBinding data, string? value) => {(data as PublicationCapability).Digest = value;}, 
-					(IBinding data) => (data as PublicationCapability).Digest ),
+					(data, value) => {(data as PublicationCapability).Digest = value;}, 
+					data => (data as PublicationCapability).Digest ),
 		new PropertyBinary ("Data", 
-					(IBinding data, byte[]? value) => {(data as PublicationCapability).Data = value;}, 
-					(IBinding data) => (data as PublicationCapability).Data )
+					(data, value) => {(data as PublicationCapability).Data = value;}, 
+					data => (data as PublicationCapability).Data )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -4790,6 +4806,9 @@ abstract public partial class CryptographicCapability : Capability {
 	[JsonPropertyName("GranteeUdf")]
 	public virtual string?					GranteeUdf  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedKeyShare")]
 	public virtual Enveloped<KeyData>?					EnvelopedKeyShare  {get; set;} 
 
@@ -4804,20 +4823,18 @@ abstract public partial class CryptographicCapability : Capability {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("KeyData", typeof (KeyData),
-					(IBinding data, object? value) => {(data as CryptographicCapability).KeyData = value as KeyData;}, 
-					(IBinding data) => (data as CryptographicCapability).KeyData,
+					(data, value) => {(data as CryptographicCapability).KeyData = value as KeyData;}, 
+					data => (data as CryptographicCapability).KeyData,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyString ("GranteeAccount", 
-					(IBinding data, string? value) => {(data as CryptographicCapability).GranteeAccount = value;}, 
-					(IBinding data) => (data as CryptographicCapability).GranteeAccount ),
+					(data, value) => {(data as CryptographicCapability).GranteeAccount = value;}, 
+					data => (data as CryptographicCapability).GranteeAccount ),
 		new PropertyString ("GranteeUdf", 
-					(IBinding data, string? value) => {(data as CryptographicCapability).GranteeUdf = value;}, 
-					(IBinding data) => (data as CryptographicCapability).GranteeUdf ),
-		new PropertyGStruct ("EnvelopedKeyShare", /*typeof (KeyData<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CryptographicCapability).EnvelopedKeyShare = value as Enveloped<KeyData>;},
-					(IBinding data) => (data as CryptographicCapability).EnvelopedKeyShare,
-					/*(IBinding data, object? value) => {(data as CryptographicCapability).KeyShare = value as KeyData;},
-					(IBinding data) => (data as CryptographicCapability).KeyShare,*/
+					(data, value) => {(data as CryptographicCapability).GranteeUdf = value;}, 
+					data => (data as CryptographicCapability).GranteeUdf ),
+		new PropertyGStruct ("EnvelopedKeyShare", typeof (Enveloped),
+					(data, value) => {(data as CryptographicCapability).EnvelopedKeyShare = value as Enveloped<KeyData>;},
+					data => (data as CryptographicCapability).EnvelopedKeyShare,
 					()=>new  Enveloped<KeyData>(), ()=>new Enveloped<KeyData>())
 		];
 
@@ -4955,8 +4972,8 @@ public partial class CapabilityDecryptServiced : CapabilityDecrypt {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AuthenticationId", 
-					(IBinding data, string? value) => {(data as CapabilityDecryptServiced).AuthenticationId = value;}, 
-					(IBinding data) => (data as CapabilityDecryptServiced).AuthenticationId )
+					(data, value) => {(data as CapabilityDecryptServiced).AuthenticationId = value;}, 
+					data => (data as CapabilityDecryptServiced).AuthenticationId )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -5145,14 +5162,14 @@ public partial class NamedService : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Prefix", 
-					(IBinding data, string? value) => {(data as NamedService).Prefix = value;}, 
-					(IBinding data) => (data as NamedService).Prefix ),
+					(data, value) => {(data as NamedService).Prefix = value;}, 
+					data => (data as NamedService).Prefix ),
 		new PropertyString ("Mapping", 
-					(IBinding data, string? value) => {(data as NamedService).Mapping = value;}, 
-					(IBinding data) => (data as NamedService).Mapping ),
+					(data, value) => {(data as NamedService).Mapping = value;}, 
+					data => (data as NamedService).Mapping ),
 		new PropertyListString ("Endpoints", 
-					(IBinding data, List<string>? value) => {(data as NamedService).Endpoints = value;}, 
-					(IBinding data) => (data as NamedService).Endpoints )
+					(data, value) => {(data as NamedService).Endpoints = value;}, 
+					data => (data as NamedService).Endpoints )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -5210,11 +5227,11 @@ public partial class ServiceAccessToken : NamedService {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("Token", 
-					(IBinding data, byte[]? value) => {(data as ServiceAccessToken).Token = value;}, 
-					(IBinding data) => (data as ServiceAccessToken).Token ),
+					(data, value) => {(data as ServiceAccessToken).Token = value;}, 
+					data => (data as ServiceAccessToken).Token ),
 		new PropertyBinary ("SharedSecret", 
-					(IBinding data, byte[]? value) => {(data as ServiceAccessToken).SharedSecret = value;}, 
-					(IBinding data) => (data as ServiceAccessToken).SharedSecret )
+					(data, value) => {(data as ServiceAccessToken).SharedSecret = value;}, 
+					data => (data as ServiceAccessToken).SharedSecret )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -5275,14 +5292,14 @@ public partial class CatalogedBookmark : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Uri", 
-					(IBinding data, string? value) => {(data as CatalogedBookmark).Uri = value;}, 
-					(IBinding data) => (data as CatalogedBookmark).Uri ),
+					(data, value) => {(data as CatalogedBookmark).Uri = value;}, 
+					data => (data as CatalogedBookmark).Uri ),
 		new PropertyString ("Title", 
-					(IBinding data, string? value) => {(data as CatalogedBookmark).Title = value;}, 
-					(IBinding data) => (data as CatalogedBookmark).Title ),
+					(data, value) => {(data as CatalogedBookmark).Title = value;}, 
+					data => (data as CatalogedBookmark).Title ),
 		new PropertyListString ("Comments", 
-					(IBinding data, List<string>? value) => {(data as CatalogedBookmark).Comments = value;}, 
-					(IBinding data) => (data as CatalogedBookmark).Comments )
+					(data, value) => {(data as CatalogedBookmark).Comments = value;}, 
+					data => (data as CatalogedBookmark).Comments )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -5325,6 +5342,9 @@ public partial class CatalogedTask : CatalogedEntry {
 	[JsonPropertyName("Title")]
 	public virtual string?					Title  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedTask")]
 	public virtual Enveloped<Engagement>?					EnvelopedTask  {get; set;} 
 
@@ -5339,13 +5359,11 @@ public partial class CatalogedTask : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Title", 
-					(IBinding data, string? value) => {(data as CatalogedTask).Title = value;}, 
-					(IBinding data) => (data as CatalogedTask).Title ),
-		new PropertyGStruct ("EnvelopedTask", /*typeof (Engagement<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedTask).EnvelopedTask = value as Enveloped<Engagement>;},
-					(IBinding data) => (data as CatalogedTask).EnvelopedTask,
-					/*(IBinding data, object? value) => {(data as CatalogedTask).Task = value as Engagement;},
-					(IBinding data) => (data as CatalogedTask).Task,*/
+					(data, value) => {(data as CatalogedTask).Title = value;}, 
+					data => (data as CatalogedTask).Title ),
+		new PropertyGStruct ("EnvelopedTask", typeof (Enveloped),
+					(data, value) => {(data as CatalogedTask).EnvelopedTask = value as Enveloped<Engagement>;},
+					data => (data as CatalogedTask).EnvelopedTask,
 					()=>new  Enveloped<Engagement>(), ()=>new Enveloped<Engagement>())
 		];
 
@@ -5410,6 +5428,9 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
 
 	[JsonPropertyName("EnvelopedCapabilities")]
 	public virtual List<Enveloped>?					EnvelopedCapabilities  {get; set;}
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedEscrow")]
 	public virtual List<Enveloped<KeyData>>?					EnvelopedEscrow  {get; set;} 
 
@@ -5424,28 +5445,26 @@ abstract public partial class CatalogedApplication : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger32 ("Default", 
-					(IBinding data, int? value) => {(data as CatalogedApplication).Default = value;}, 
-					(IBinding data) => (data as CatalogedApplication).Default ),
+					(data, value) => {(data as CatalogedApplication).Default = value;}, 
+					data => (data as CatalogedApplication).Default ),
 		new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as CatalogedApplication).Key = value;}, 
-					(IBinding data) => (data as CatalogedApplication).Key ),
+					(data, value) => {(data as CatalogedApplication).Key = value;}, 
+					data => (data as CatalogedApplication).Key ),
 		new PropertyListString ("Grant", 
-					(IBinding data, List<string>? value) => {(data as CatalogedApplication).Grant = value;}, 
-					(IBinding data) => (data as CatalogedApplication).Grant ),
+					(data, value) => {(data as CatalogedApplication).Grant = value;}, 
+					data => (data as CatalogedApplication).Grant ),
 		new PropertyListString ("Deny", 
-					(IBinding data, List<string>? value) => {(data as CatalogedApplication).Deny = value;}, 
-					(IBinding data) => (data as CatalogedApplication).Deny ),
+					(data, value) => {(data as CatalogedApplication).Deny = value;}, 
+					data => (data as CatalogedApplication).Deny ),
 		new PropertyListStruct ("EnvelopedCapabilities", typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedApplication).EnvelopedCapabilities = value as List<Enveloped>;}, 
-					(IBinding data) => (data as CatalogedApplication).EnvelopedCapabilities,
+					(data, value) => {(data as CatalogedApplication).EnvelopedCapabilities = value as List<Enveloped>;}, 
+					data => (data as CatalogedApplication).EnvelopedCapabilities,
 					false, ()=>new  List<Enveloped>(), ()=>new Enveloped()),
-		new PropertyListGStruct ("EnvelopedEscrow", /*typeof (KeyData<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedApplication).EnvelopedEscrow = value as List<Enveloped<KeyData>>;},
-					(IBinding data) => (data as CatalogedApplication).EnvelopedEscrow,
-					/*(IBinding data, object? value) => {(data as CatalogedApplication).Escrow = value as List<KeyData>;},
-					(IBinding data) => (data as CatalogedApplication).Escrow,*/
+		new PropertyListGStruct ("EnvelopedEscrow", typeof (Enveloped),
+					(data, value) => {(data as CatalogedApplication).EnvelopedEscrow = value as List<Enveloped<KeyData>>;},
+					data => (data as CatalogedApplication).EnvelopedEscrow,
 					()=>new  List<Enveloped<KeyData>>(), ()=>new Enveloped<KeyData>(),
-					(object list,object item)=>(list as List<Enveloped<KeyData>>).Add (item as Enveloped<KeyData>)
+					(list,item)=>(list as List<Enveloped<KeyData>>).Add (item as Enveloped<KeyData>)
 )
 		];
 
@@ -5511,14 +5530,14 @@ public partial class CatalogedMember : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("ContactAddress", 
-					(IBinding data, string? value) => {(data as CatalogedMember).ContactAddress = value;}, 
-					(IBinding data) => (data as CatalogedMember).ContactAddress ),
+					(data, value) => {(data as CatalogedMember).ContactAddress = value;}, 
+					data => (data as CatalogedMember).ContactAddress ),
 		new PropertyString ("MemberCapabilityId", 
-					(IBinding data, string? value) => {(data as CatalogedMember).MemberCapabilityId = value;}, 
-					(IBinding data) => (data as CatalogedMember).MemberCapabilityId ),
+					(data, value) => {(data as CatalogedMember).MemberCapabilityId = value;}, 
+					data => (data as CatalogedMember).MemberCapabilityId ),
 		new PropertyString ("ServiceCapabilityId", 
-					(IBinding data, string? value) => {(data as CatalogedMember).ServiceCapabilityId = value;}, 
-					(IBinding data) => (data as CatalogedMember).ServiceCapabilityId )
+					(data, value) => {(data as CatalogedMember).ServiceCapabilityId = value;}, 
+					data => (data as CatalogedMember).ServiceCapabilityId )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -5555,6 +5574,9 @@ public partial class CatalogedMember : CatalogedEntry {
 	/// <summary>
 	/// </summary>
 public partial class CatalogedGroup : CatalogedApplication {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedConnectionAddress")]
 	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;} 
 
@@ -5562,6 +5584,9 @@ public partial class CatalogedGroup : CatalogedApplication {
 	/// Wrapped property
     /// </summary>
 	public virtual ConnectionStripped?				ConnectionAddress  => EnvelopedConnectionAddress.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileGroup")]
 	public virtual Enveloped<ProfileGroup>?					EnvelopedProfileGroup  {get; set;} 
 
@@ -5569,6 +5594,9 @@ public partial class CatalogedGroup : CatalogedApplication {
 	/// Wrapped property
     /// </summary>
 	public virtual ProfileGroup?				ProfileGroup  => EnvelopedProfileGroup.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedActivationCommon")]
 	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} 
 
@@ -5582,23 +5610,17 @@ public partial class CatalogedGroup : CatalogedApplication {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedConnectionAddress", /*typeof (ConnectionStripped<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;},
-					(IBinding data) => (data as CatalogedGroup).EnvelopedConnectionAddress,
-					/*(IBinding data, object? value) => {(data as CatalogedGroup).ConnectionAddress = value as ConnectionStripped;},
-					(IBinding data) => (data as CatalogedGroup).ConnectionAddress,*/
+		new PropertyGStruct ("EnvelopedConnectionAddress", typeof (Enveloped),
+					(data, value) => {(data as CatalogedGroup).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;},
+					data => (data as CatalogedGroup).EnvelopedConnectionAddress,
 					()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>()),
-		new PropertyGStruct ("EnvelopedProfileGroup", /*typeof (ProfileGroup<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedProfileGroup = value as Enveloped<ProfileGroup>;},
-					(IBinding data) => (data as CatalogedGroup).EnvelopedProfileGroup,
-					/*(IBinding data, object? value) => {(data as CatalogedGroup).ProfileGroup = value as ProfileGroup;},
-					(IBinding data) => (data as CatalogedGroup).ProfileGroup,*/
+		new PropertyGStruct ("EnvelopedProfileGroup", typeof (Enveloped),
+					(data, value) => {(data as CatalogedGroup).EnvelopedProfileGroup = value as Enveloped<ProfileGroup>;},
+					data => (data as CatalogedGroup).EnvelopedProfileGroup,
 					()=>new  Enveloped<ProfileGroup>(), ()=>new Enveloped<ProfileGroup>()),
-		new PropertyGStruct ("EnvelopedActivationCommon", /*typeof (ActivationCommon<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedGroup).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;},
-					(IBinding data) => (data as CatalogedGroup).EnvelopedActivationCommon,
-					/*(IBinding data, object? value) => {(data as CatalogedGroup).ActivationCommon = value as ActivationCommon;},
-					(IBinding data) => (data as CatalogedGroup).ActivationCommon,*/
+		new PropertyGStruct ("EnvelopedActivationCommon", typeof (Enveloped),
+					(data, value) => {(data as CatalogedGroup).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;},
+					data => (data as CatalogedGroup).EnvelopedActivationCommon,
 					()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())
 		];
 
@@ -5649,8 +5671,8 @@ public partial class CatalogedFeed : CatalogedBookmark {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Protocol", 
-					(IBinding data, string? value) => {(data as CatalogedFeed).Protocol = value;}, 
-					(IBinding data) => (data as CatalogedFeed).Protocol )
+					(data, value) => {(data as CatalogedFeed).Protocol = value;}, 
+					data => (data as CatalogedFeed).Protocol )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -5738,29 +5760,29 @@ public partial class CatalogedApplicationMail : CatalogedApplication {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationMail).AccountAddress = value;}, 
-					(IBinding data) => (data as CatalogedApplicationMail).AccountAddress ),
+					(data, value) => {(data as CatalogedApplicationMail).AccountAddress = value;}, 
+					data => (data as CatalogedApplicationMail).AccountAddress ),
 		new PropertyString ("InboundConnect", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationMail).InboundConnect = value;}, 
-					(IBinding data) => (data as CatalogedApplicationMail).InboundConnect ),
+					(data, value) => {(data as CatalogedApplicationMail).InboundConnect = value;}, 
+					data => (data as CatalogedApplicationMail).InboundConnect ),
 		new PropertyString ("OutboundConnect", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationMail).OutboundConnect = value;}, 
-					(IBinding data) => (data as CatalogedApplicationMail).OutboundConnect ),
+					(data, value) => {(data as CatalogedApplicationMail).OutboundConnect = value;}, 
+					data => (data as CatalogedApplicationMail).OutboundConnect ),
 		new PropertyStruct ("SmimeSign", typeof (KeyData),
-					(IBinding data, object? value) => {(data as CatalogedApplicationMail).SmimeSign = value as KeyData;}, 
-					(IBinding data) => (data as CatalogedApplicationMail).SmimeSign,
+					(data, value) => {(data as CatalogedApplicationMail).SmimeSign = value as KeyData;}, 
+					data => (data as CatalogedApplicationMail).SmimeSign,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("SmimeEncrypt", typeof (KeyData),
-					(IBinding data, object? value) => {(data as CatalogedApplicationMail).SmimeEncrypt = value as KeyData;}, 
-					(IBinding data) => (data as CatalogedApplicationMail).SmimeEncrypt,
+					(data, value) => {(data as CatalogedApplicationMail).SmimeEncrypt = value as KeyData;}, 
+					data => (data as CatalogedApplicationMail).SmimeEncrypt,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("OpenpgpSign", typeof (KeyData),
-					(IBinding data, object? value) => {(data as CatalogedApplicationMail).OpenpgpSign = value as KeyData;}, 
-					(IBinding data) => (data as CatalogedApplicationMail).OpenpgpSign,
+					(data, value) => {(data as CatalogedApplicationMail).OpenpgpSign = value as KeyData;}, 
+					data => (data as CatalogedApplicationMail).OpenpgpSign,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("OpenpgpEncrypt", typeof (KeyData),
-					(IBinding data, object? value) => {(data as CatalogedApplicationMail).OpenpgpEncrypt = value as KeyData;}, 
-					(IBinding data) => (data as CatalogedApplicationMail).OpenpgpEncrypt,
+					(data, value) => {(data as CatalogedApplicationMail).OpenpgpEncrypt = value as KeyData;}, 
+					data => (data as CatalogedApplicationMail).OpenpgpEncrypt,
 					false, ()=>new  KeyData(), ()=>new KeyData())
 		];
 
@@ -5822,11 +5844,11 @@ public partial class CatalogedApplicationSsh : CatalogedApplication {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationSsh).AccountAddress = value;}, 
-					(IBinding data) => (data as CatalogedApplicationSsh).AccountAddress ),
+					(data, value) => {(data as CatalogedApplicationSsh).AccountAddress = value;}, 
+					data => (data as CatalogedApplicationSsh).AccountAddress ),
 		new PropertyStruct ("ClientKey", typeof (KeyData),
-					(IBinding data, object? value) => {(data as CatalogedApplicationSsh).ClientKey = value as KeyData;}, 
-					(IBinding data) => (data as CatalogedApplicationSsh).ClientKey,
+					(data, value) => {(data as CatalogedApplicationSsh).ClientKey = value as KeyData;}, 
+					data => (data as CatalogedApplicationSsh).ClientKey,
 					false, ()=>new  KeyData(), ()=>new KeyData())
 		];
 
@@ -5901,21 +5923,21 @@ public partial class CatalogedApplicationCredential : CatalogedApplication {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationCredential).AccountAddress = value;}, 
-					(IBinding data) => (data as CatalogedApplicationCredential).AccountAddress ),
+					(data, value) => {(data as CatalogedApplicationCredential).AccountAddress = value;}, 
+					data => (data as CatalogedApplicationCredential).AccountAddress ),
 		new PropertyString ("Kind", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationCredential).Kind = value;}, 
-					(IBinding data) => (data as CatalogedApplicationCredential).Kind ),
+					(data, value) => {(data as CatalogedApplicationCredential).Kind = value;}, 
+					data => (data as CatalogedApplicationCredential).Kind ),
 		new PropertyListString ("Contexts", 
-					(IBinding data, List<string>? value) => {(data as CatalogedApplicationCredential).Contexts = value;}, 
-					(IBinding data) => (data as CatalogedApplicationCredential).Contexts ),
+					(data, value) => {(data as CatalogedApplicationCredential).Contexts = value;}, 
+					data => (data as CatalogedApplicationCredential).Contexts ),
 		new PropertyStruct ("Primary", typeof (KeyData),
-					(IBinding data, object? value) => {(data as CatalogedApplicationCredential).Primary = value as KeyData;}, 
-					(IBinding data) => (data as CatalogedApplicationCredential).Primary,
+					(data, value) => {(data as CatalogedApplicationCredential).Primary = value as KeyData;}, 
+					data => (data as CatalogedApplicationCredential).Primary,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyListStruct ("Secondary", typeof (KeyData),
-					(IBinding data, object? value) => {(data as CatalogedApplicationCredential).Secondary = value as List<KeyData>;}, 
-					(IBinding data) => (data as CatalogedApplicationCredential).Secondary,
+					(data, value) => {(data as CatalogedApplicationCredential).Secondary = value as List<KeyData>;}, 
+					data => (data as CatalogedApplicationCredential).Secondary,
 					false, ()=>new  List<KeyData>(), ()=>new KeyData())
 		];
 
@@ -5986,17 +6008,17 @@ public partial class CatalogedApplicationService : CatalogedApplication {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationService).AccountAddress = value;}, 
-					(IBinding data) => (data as CatalogedApplicationService).AccountAddress ),
+					(data, value) => {(data as CatalogedApplicationService).AccountAddress = value;}, 
+					data => (data as CatalogedApplicationService).AccountAddress ),
 		new PropertyString ("Address", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationService).Address = value;}, 
-					(IBinding data) => (data as CatalogedApplicationService).Address ),
+					(data, value) => {(data as CatalogedApplicationService).Address = value;}, 
+					data => (data as CatalogedApplicationService).Address ),
 		new PropertyString ("AdministrationAddress", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationService).AdministrationAddress = value;}, 
-					(IBinding data) => (data as CatalogedApplicationService).AdministrationAddress ),
+					(data, value) => {(data as CatalogedApplicationService).AdministrationAddress = value;}, 
+					data => (data as CatalogedApplicationService).AdministrationAddress ),
 		new PropertyString ("Protocol", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationService).Protocol = value;}, 
-					(IBinding data) => (data as CatalogedApplicationService).Protocol )
+					(data, value) => {(data as CatalogedApplicationService).Protocol = value;}, 
+					data => (data as CatalogedApplicationService).Protocol )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -6079,23 +6101,23 @@ public partial class CatalogedApplicationDeveloper : CatalogedApplication {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationDeveloper).AccountAddress = value;}, 
-					(IBinding data) => (data as CatalogedApplicationDeveloper).AccountAddress ),
+					(data, value) => {(data as CatalogedApplicationDeveloper).AccountAddress = value;}, 
+					data => (data as CatalogedApplicationDeveloper).AccountAddress ),
 		new PropertyString ("Kind", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationDeveloper).Kind = value;}, 
-					(IBinding data) => (data as CatalogedApplicationDeveloper).Kind ),
+					(data, value) => {(data as CatalogedApplicationDeveloper).Kind = value;}, 
+					data => (data as CatalogedApplicationDeveloper).Kind ),
 		new PropertyListString ("Contexts", 
-					(IBinding data, List<string>? value) => {(data as CatalogedApplicationDeveloper).Contexts = value;}, 
-					(IBinding data) => (data as CatalogedApplicationDeveloper).Contexts ),
+					(data, value) => {(data as CatalogedApplicationDeveloper).Contexts = value;}, 
+					data => (data as CatalogedApplicationDeveloper).Contexts ),
 		new PropertyListString ("Ssh", 
-					(IBinding data, List<string>? value) => {(data as CatalogedApplicationDeveloper).Ssh = value;}, 
-					(IBinding data) => (data as CatalogedApplicationDeveloper).Ssh ),
+					(data, value) => {(data as CatalogedApplicationDeveloper).Ssh = value;}, 
+					data => (data as CatalogedApplicationDeveloper).Ssh ),
 		new PropertyListString ("Commit", 
-					(IBinding data, List<string>? value) => {(data as CatalogedApplicationDeveloper).Commit = value;}, 
-					(IBinding data) => (data as CatalogedApplicationDeveloper).Commit ),
+					(data, value) => {(data as CatalogedApplicationDeveloper).Commit = value;}, 
+					data => (data as CatalogedApplicationDeveloper).Commit ),
 		new PropertyListString ("Code", 
-					(IBinding data, List<string>? value) => {(data as CatalogedApplicationDeveloper).Code = value;}, 
-					(IBinding data) => (data as CatalogedApplicationDeveloper).Code )
+					(data, value) => {(data as CatalogedApplicationDeveloper).Code = value;}, 
+					data => (data as CatalogedApplicationDeveloper).Code )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -6252,6 +6274,9 @@ public partial class CatalogedTicket : CatalogedEntry {
 	/// <summary>
 	/// </summary>
 public partial class DevicePreconfigurationPublic : MeshItem {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileDevice")]
 	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;} 
 
@@ -6274,15 +6299,13 @@ public partial class DevicePreconfigurationPublic : MeshItem {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedProfileDevice", /*typeof (ProfileDevice<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as DevicePreconfigurationPublic).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;},
-					(IBinding data) => (data as DevicePreconfigurationPublic).EnvelopedProfileDevice,
-					/*(IBinding data, object? value) => {(data as DevicePreconfigurationPublic).ProfileDevice = value as ProfileDevice;},
-					(IBinding data) => (data as DevicePreconfigurationPublic).ProfileDevice,*/
+		new PropertyGStruct ("EnvelopedProfileDevice", typeof (Enveloped),
+					(data, value) => {(data as DevicePreconfigurationPublic).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;},
+					data => (data as DevicePreconfigurationPublic).EnvelopedProfileDevice,
 					()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>()),
 		new PropertyListString ("Hailing", 
-					(IBinding data, List<string>? value) => {(data as DevicePreconfigurationPublic).Hailing = value;}, 
-					(IBinding data) => (data as DevicePreconfigurationPublic).Hailing )
+					(data, value) => {(data as DevicePreconfigurationPublic).Hailing = value;}, 
+					data => (data as DevicePreconfigurationPublic).Hailing )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -6320,6 +6343,9 @@ public partial class DevicePreconfigurationPublic : MeshItem {
 	/// A data structure that is passed 
 	/// </summary>
 public partial class DevicePreconfigurationPrivate : DevicePreconfigurationPublic {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedConnectionDevice")]
 	public virtual Enveloped<ConnectionDevice>?					EnvelopedConnectionDevice  {get; set;} 
 
@@ -6327,6 +6353,9 @@ public partial class DevicePreconfigurationPrivate : DevicePreconfigurationPubli
 	/// Wrapped property
     /// </summary>
 	public virtual ConnectionDevice?				ConnectionDevice  => EnvelopedConnectionDevice.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedConnectionService")]
 	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} 
 
@@ -6355,25 +6384,21 @@ public partial class DevicePreconfigurationPrivate : DevicePreconfigurationPubli
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedConnectionDevice", /*typeof (ConnectionDevice<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;},
-					(IBinding data) => (data as DevicePreconfigurationPrivate).EnvelopedConnectionDevice,
-					/*(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).ConnectionDevice = value as ConnectionDevice;},
-					(IBinding data) => (data as DevicePreconfigurationPrivate).ConnectionDevice,*/
+		new PropertyGStruct ("EnvelopedConnectionDevice", typeof (Enveloped),
+					(data, value) => {(data as DevicePreconfigurationPrivate).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;},
+					data => (data as DevicePreconfigurationPrivate).EnvelopedConnectionDevice,
 					()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>()),
-		new PropertyGStruct ("EnvelopedConnectionService", /*typeof (ConnectionService<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).EnvelopedConnectionService = value as Enveloped<ConnectionService>;},
-					(IBinding data) => (data as DevicePreconfigurationPrivate).EnvelopedConnectionService,
-					/*(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).ConnectionService = value as ConnectionService;},
-					(IBinding data) => (data as DevicePreconfigurationPrivate).ConnectionService,*/
+		new PropertyGStruct ("EnvelopedConnectionService", typeof (Enveloped),
+					(data, value) => {(data as DevicePreconfigurationPrivate).EnvelopedConnectionService = value as Enveloped<ConnectionService>;},
+					data => (data as DevicePreconfigurationPrivate).EnvelopedConnectionService,
 					()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>()),
 		new PropertyStruct ("PrivateKey", typeof (Key), 
-					(IBinding data, object? value) => {(data as DevicePreconfigurationPrivate).PrivateKey = value as Key;}, 
-					(IBinding data) => (data as DevicePreconfigurationPrivate).PrivateKey,
+					(data, value) => {(data as DevicePreconfigurationPrivate).PrivateKey = value as Key;}, 
+					data => (data as DevicePreconfigurationPrivate).PrivateKey,
 					true) ,
 		new PropertyString ("ConnectUri", 
-					(IBinding data, string? value) => {(data as DevicePreconfigurationPrivate).ConnectUri = value;}, 
-					(IBinding data) => (data as DevicePreconfigurationPrivate).ConnectUri )
+					(data, value) => {(data as DevicePreconfigurationPrivate).ConnectUri = value;}, 
+					data => (data as DevicePreconfigurationPrivate).ConnectUri )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -6439,14 +6464,14 @@ public partial class Message : MeshItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("MessageId", 
-					(IBinding data, string? value) => {(data as Message).MessageId = value;}, 
-					(IBinding data) => (data as Message).MessageId ),
+					(data, value) => {(data as Message).MessageId = value;}, 
+					data => (data as Message).MessageId ),
 		new PropertyString ("Sender", 
-					(IBinding data, string? value) => {(data as Message).Sender = value;}, 
-					(IBinding data) => (data as Message).Sender ),
+					(data, value) => {(data as Message).Sender = value;}, 
+					data => (data as Message).Sender ),
 		new PropertyString ("Recipient", 
-					(IBinding data, string? value) => {(data as Message).Recipient = value;}, 
-					(IBinding data) => (data as Message).Recipient )
+					(data, value) => {(data as Message).Recipient = value;}, 
+					data => (data as Message).Recipient )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -6496,8 +6521,8 @@ public partial class MessageError : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("ErrorCode", 
-					(IBinding data, string? value) => {(data as MessageError).ErrorCode = value;}, 
-					(IBinding data) => (data as MessageError).ErrorCode )
+					(data, value) => {(data as MessageError).ErrorCode = value;}, 
+					data => (data as MessageError).ErrorCode )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -6544,8 +6569,8 @@ public partial class MessageComplete : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("References", typeof (Reference),
-					(IBinding data, object? value) => {(data as MessageComplete).References = value as List<Reference>;}, 
-					(IBinding data) => (data as MessageComplete).References,
+					(data, value) => {(data as MessageComplete).References = value as List<Reference>;}, 
+					data => (data as MessageComplete).References,
 					false, ()=>new  List<Reference>(), ()=>new Reference())
 		];
 
@@ -6616,18 +6641,18 @@ public partial class MessageValidated : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("AuthenticatedData", typeof (Enveloped),
-					(IBinding data, object? value) => {(data as MessageValidated).AuthenticatedData = value as Enveloped;}, 
-					(IBinding data) => (data as MessageValidated).AuthenticatedData,
+					(data, value) => {(data as MessageValidated).AuthenticatedData = value as Enveloped;}, 
+					data => (data as MessageValidated).AuthenticatedData,
 					false, ()=>new  Enveloped(), ()=>new Enveloped()),
 		new PropertyBinary ("ClientNonce", 
-					(IBinding data, byte[]? value) => {(data as MessageValidated).ClientNonce = value;}, 
-					(IBinding data) => (data as MessageValidated).ClientNonce ),
+					(data, value) => {(data as MessageValidated).ClientNonce = value;}, 
+					data => (data as MessageValidated).ClientNonce ),
 		new PropertyString ("PinId", 
-					(IBinding data, string? value) => {(data as MessageValidated).PinId = value;}, 
-					(IBinding data) => (data as MessageValidated).PinId ),
+					(data, value) => {(data as MessageValidated).PinId = value;}, 
+					data => (data as MessageValidated).PinId ),
 		new PropertyBinary ("PinWitness", 
-					(IBinding data, byte[]? value) => {(data as MessageValidated).PinWitness = value;}, 
-					(IBinding data) => (data as MessageValidated).PinWitness )
+					(data, value) => {(data as MessageValidated).PinWitness = value;}, 
+					data => (data as MessageValidated).PinWitness )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -6712,23 +6737,23 @@ public partial class MessagePin : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Account", 
-					(IBinding data, string? value) => {(data as MessagePin).Account = value;}, 
-					(IBinding data) => (data as MessagePin).Account ),
+					(data, value) => {(data as MessagePin).Account = value;}, 
+					data => (data as MessagePin).Account ),
 		new PropertyDateTime ("Expires", 
-					(IBinding data, DateTime? value) => {(data as MessagePin).Expires = value;}, 
-					(IBinding data) => (data as MessagePin).Expires ),
+					(data, value) => {(data as MessagePin).Expires = value;}, 
+					data => (data as MessagePin).Expires ),
 		new PropertyBoolean ("Automatic", 
-					(IBinding data, bool? value) => {(data as MessagePin).Automatic = value;}, 
-					(IBinding data) => (data as MessagePin).Automatic ),
+					(data, value) => {(data as MessagePin).Automatic = value;}, 
+					data => (data as MessagePin).Automatic ),
 		new PropertyString ("SaltedPin", 
-					(IBinding data, string? value) => {(data as MessagePin).SaltedPin = value;}, 
-					(IBinding data) => (data as MessagePin).SaltedPin ),
+					(data, value) => {(data as MessagePin).SaltedPin = value;}, 
+					data => (data as MessagePin).SaltedPin ),
 		new PropertyString ("Action", 
-					(IBinding data, string? value) => {(data as MessagePin).Action = value;}, 
-					(IBinding data) => (data as MessagePin).Action ),
+					(data, value) => {(data as MessagePin).Action = value;}, 
+					data => (data as MessagePin).Action ),
 		new PropertyListString ("Roles", 
-					(IBinding data, List<string>? value) => {(data as MessagePin).Roles = value;}, 
-					(IBinding data) => (data as MessagePin).Roles )
+					(data, value) => {(data as MessagePin).Roles = value;}, 
+					data => (data as MessagePin).Roles )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -6784,8 +6809,8 @@ public partial class RequestConnection : MessageValidated {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as RequestConnection).AccountAddress = value;}, 
-					(IBinding data) => (data as RequestConnection).AccountAddress )
+					(data, value) => {(data as RequestConnection).AccountAddress = value;}, 
+					data => (data as RequestConnection).AccountAddress )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -6823,6 +6848,9 @@ public partial class RequestConnection : MessageValidated {
 	/// MessageConnectionRequestClient
 	/// </summary>
 public partial class AcknowledgeConnection : Message {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedRequestConnection")]
 	public virtual Enveloped<RequestConnection>?					EnvelopedRequestConnection  {get; set;} 
 
@@ -6850,18 +6878,16 @@ public partial class AcknowledgeConnection : Message {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedRequestConnection", /*typeof (RequestConnection<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as AcknowledgeConnection).EnvelopedRequestConnection = value as Enveloped<RequestConnection>;},
-					(IBinding data) => (data as AcknowledgeConnection).EnvelopedRequestConnection,
-					/*(IBinding data, object? value) => {(data as AcknowledgeConnection).RequestConnection = value as RequestConnection;},
-					(IBinding data) => (data as AcknowledgeConnection).RequestConnection,*/
+		new PropertyGStruct ("EnvelopedRequestConnection", typeof (Enveloped),
+					(data, value) => {(data as AcknowledgeConnection).EnvelopedRequestConnection = value as Enveloped<RequestConnection>;},
+					data => (data as AcknowledgeConnection).EnvelopedRequestConnection,
 					()=>new  Enveloped<RequestConnection>(), ()=>new Enveloped<RequestConnection>()),
 		new PropertyBinary ("ServerNonce", 
-					(IBinding data, byte[]? value) => {(data as AcknowledgeConnection).ServerNonce = value;}, 
-					(IBinding data) => (data as AcknowledgeConnection).ServerNonce ),
+					(data, value) => {(data as AcknowledgeConnection).ServerNonce = value;}, 
+					data => (data as AcknowledgeConnection).ServerNonce ),
 		new PropertyString ("Witness", 
-					(IBinding data, string? value) => {(data as AcknowledgeConnection).Witness = value;}, 
-					(IBinding data) => (data as AcknowledgeConnection).Witness )
+					(data, value) => {(data as AcknowledgeConnection).Witness = value;}, 
+					data => (data as AcknowledgeConnection).Witness )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -6908,6 +6934,9 @@ public partial class RespondConnection : Message {
 	[JsonPropertyName("Result")]
 	public virtual string?					Result  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileUser")]
 	public virtual Enveloped<ProfileUser>?					EnvelopedProfileUser  {get; set;} 
 
@@ -6930,17 +6959,15 @@ public partial class RespondConnection : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Result", 
-					(IBinding data, string? value) => {(data as RespondConnection).Result = value;}, 
-					(IBinding data) => (data as RespondConnection).Result ),
-		new PropertyGStruct ("EnvelopedProfileUser", /*typeof (ProfileUser<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as RespondConnection).EnvelopedProfileUser = value as Enveloped<ProfileUser>;},
-					(IBinding data) => (data as RespondConnection).EnvelopedProfileUser,
-					/*(IBinding data, object? value) => {(data as RespondConnection).ProfileUser = value as ProfileUser;},
-					(IBinding data) => (data as RespondConnection).ProfileUser,*/
+					(data, value) => {(data as RespondConnection).Result = value;}, 
+					data => (data as RespondConnection).Result ),
+		new PropertyGStruct ("EnvelopedProfileUser", typeof (Enveloped),
+					(data, value) => {(data as RespondConnection).EnvelopedProfileUser = value as Enveloped<ProfileUser>;},
+					data => (data as RespondConnection).EnvelopedProfileUser,
 					()=>new  Enveloped<ProfileUser>(), ()=>new Enveloped<ProfileUser>()),
 		new PropertyStruct ("CatalogedDevice", typeof (CatalogedDevice),
-					(IBinding data, object? value) => {(data as RespondConnection).CatalogedDevice = value as CatalogedDevice;}, 
-					(IBinding data) => (data as RespondConnection).CatalogedDevice,
+					(data, value) => {(data as RespondConnection).CatalogedDevice = value as CatalogedDevice;}, 
+					data => (data as RespondConnection).CatalogedDevice,
 					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())
 		];
 
@@ -7008,14 +7035,14 @@ public partial class MessageContact : MessageValidated {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBoolean ("Reply", 
-					(IBinding data, bool? value) => {(data as MessageContact).Reply = value;}, 
-					(IBinding data) => (data as MessageContact).Reply ),
+					(data, value) => {(data as MessageContact).Reply = value;}, 
+					data => (data as MessageContact).Reply ),
 		new PropertyString ("Subject", 
-					(IBinding data, string? value) => {(data as MessageContact).Subject = value;}, 
-					(IBinding data) => (data as MessageContact).Subject ),
+					(data, value) => {(data as MessageContact).Subject = value;}, 
+					data => (data as MessageContact).Subject ),
 		new PropertyString ("PIN", 
-					(IBinding data, string? value) => {(data as MessageContact).PIN = value;}, 
-					(IBinding data) => (data as MessageContact).PIN )
+					(data, value) => {(data as MessageContact).PIN = value;}, 
+					data => (data as MessageContact).PIN )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -7072,11 +7099,11 @@ public partial class GroupInvitation : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Text", 
-					(IBinding data, string? value) => {(data as GroupInvitation).Text = value;}, 
-					(IBinding data) => (data as GroupInvitation).Text ),
+					(data, value) => {(data as GroupInvitation).Text = value;}, 
+					data => (data as GroupInvitation).Text ),
 		new PropertyStruct ("Contact", typeof (JsContact),
-					(IBinding data, object? value) => {(data as GroupInvitation).Contact = value as JsContact;}, 
-					(IBinding data) => (data as GroupInvitation).Contact,
+					(data, value) => {(data as GroupInvitation).Contact = value as JsContact;}, 
+					data => (data as GroupInvitation).Contact,
 					false, ()=>new  JsContact(), ()=>new JsContact())
 		];
 
@@ -7126,8 +7153,8 @@ public partial class MessageMail : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Text", 
-					(IBinding data, string? value) => {(data as MessageMail).Text = value;}, 
-					(IBinding data) => (data as MessageMail).Text )
+					(data, value) => {(data as MessageMail).Text = value;}, 
+					data => (data as MessageMail).Text )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -7175,8 +7202,8 @@ public partial class RequestConfirmation : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Text", 
-					(IBinding data, string? value) => {(data as RequestConfirmation).Text = value;}, 
-					(IBinding data) => (data as RequestConfirmation).Text )
+					(data, value) => {(data as RequestConfirmation).Text = value;}, 
+					data => (data as RequestConfirmation).Text )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -7211,6 +7238,9 @@ public partial class RequestConfirmation : Message {
 	/// <summary>
 	/// </summary>
 public partial class ResponseConfirmation : Message {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedRequest")]
 	public virtual Enveloped<RequestConfirmation>?					EnvelopedRequest  {get; set;} 
 
@@ -7230,15 +7260,13 @@ public partial class ResponseConfirmation : Message {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedRequest", /*typeof (RequestConfirmation<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as ResponseConfirmation).EnvelopedRequest = value as Enveloped<RequestConfirmation>;},
-					(IBinding data) => (data as ResponseConfirmation).EnvelopedRequest,
-					/*(IBinding data, object? value) => {(data as ResponseConfirmation).Request = value as RequestConfirmation;},
-					(IBinding data) => (data as ResponseConfirmation).Request,*/
+		new PropertyGStruct ("EnvelopedRequest", typeof (Enveloped),
+					(data, value) => {(data as ResponseConfirmation).EnvelopedRequest = value as Enveloped<RequestConfirmation>;},
+					data => (data as ResponseConfirmation).EnvelopedRequest,
 					()=>new  Enveloped<RequestConfirmation>(), ()=>new Enveloped<RequestConfirmation>()),
 		new PropertyBoolean ("Accept", 
-					(IBinding data, bool? value) => {(data as ResponseConfirmation).Accept = value;}, 
-					(IBinding data) => (data as ResponseConfirmation).Accept )
+					(data, value) => {(data as ResponseConfirmation).Accept = value;}, 
+					data => (data as ResponseConfirmation).Accept )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -7344,17 +7372,17 @@ public partial class MessageClaim : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("PublicationId", 
-					(IBinding data, string? value) => {(data as MessageClaim).PublicationId = value;}, 
-					(IBinding data) => (data as MessageClaim).PublicationId ),
+					(data, value) => {(data as MessageClaim).PublicationId = value;}, 
+					data => (data as MessageClaim).PublicationId ),
 		new PropertyString ("ServiceAuthenticate", 
-					(IBinding data, string? value) => {(data as MessageClaim).ServiceAuthenticate = value;}, 
-					(IBinding data) => (data as MessageClaim).ServiceAuthenticate ),
+					(data, value) => {(data as MessageClaim).ServiceAuthenticate = value;}, 
+					data => (data as MessageClaim).ServiceAuthenticate ),
 		new PropertyString ("DeviceAuthenticate", 
-					(IBinding data, string? value) => {(data as MessageClaim).DeviceAuthenticate = value;}, 
-					(IBinding data) => (data as MessageClaim).DeviceAuthenticate ),
+					(data, value) => {(data as MessageClaim).DeviceAuthenticate = value;}, 
+					data => (data as MessageClaim).DeviceAuthenticate ),
 		new PropertyDateTime ("Expires", 
-					(IBinding data, DateTime? value) => {(data as MessageClaim).Expires = value;}, 
-					(IBinding data) => (data as MessageClaim).Expires )
+					(data, value) => {(data as MessageClaim).Expires = value;}, 
+					data => (data as MessageClaim).Expires )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -7414,11 +7442,11 @@ public partial class ProcessResult : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBoolean ("Success", 
-					(IBinding data, bool? value) => {(data as ProcessResult).Success = value;}, 
-					(IBinding data) => (data as ProcessResult).Success ),
+					(data, value) => {(data as ProcessResult).Success = value;}, 
+					data => (data as ProcessResult).Success ),
 		new PropertyString ("ErrorReport", 
-					(IBinding data, string? value) => {(data as ProcessResult).ErrorReport = value;}, 
-					(IBinding data) => (data as ProcessResult).ErrorReport )
+					(data, value) => {(data as ProcessResult).ErrorReport = value;}, 
+					data => (data as ProcessResult).ErrorReport )
 		];
 
     ///<summary>Implement IBinding</summary> 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/8/2025 5:09:44 PM
+//  This file was automatically generated at 10/20/2025 6:33:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -183,29 +184,29 @@ public partial class SequenceInfo : SequenceData {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("DataEncoding", 
-					(IBinding data, string? value) => {(data as SequenceInfo).DataEncoding = value;}, 
-					(IBinding data) => (data as SequenceInfo).DataEncoding ),
+					(data, value) => {(data as SequenceInfo).DataEncoding = value;}, 
+					data => (data as SequenceInfo).DataEncoding ),
 		new PropertyString ("ContainerType", 
-					(IBinding data, string? value) => {(data as SequenceInfo).ContainerType = value;}, 
-					(IBinding data) => (data as SequenceInfo).ContainerType ),
+					(data, value) => {(data as SequenceInfo).ContainerType = value;}, 
+					data => (data as SequenceInfo).ContainerType ),
 		new PropertyInteger64 ("Index", 
-					(IBinding data, long? value) => {(data as SequenceInfo).Index = value;}, 
-					(IBinding data) => (data as SequenceInfo).Index ),
+					(data, value) => {(data as SequenceInfo).Index = value;}, 
+					data => (data as SequenceInfo).Index ),
 		new PropertyBoolean ("IsMeta", 
-					(IBinding data, bool? value) => {(data as SequenceInfo).IsMeta = value;}, 
-					(IBinding data) => (data as SequenceInfo).IsMeta ),
+					(data, value) => {(data as SequenceInfo).IsMeta = value;}, 
+					data => (data as SequenceInfo).IsMeta ),
 		new PropertyBoolean ("Default", 
-					(IBinding data, bool? value) => {(data as SequenceInfo).Default = value;}, 
-					(IBinding data) => (data as SequenceInfo).Default ),
+					(data, value) => {(data as SequenceInfo).Default = value;}, 
+					data => (data as SequenceInfo).Default ),
 		new PropertyInteger64 ("TreePosition", 
-					(IBinding data, long? value) => {(data as SequenceInfo).TreePosition = value;}, 
-					(IBinding data) => (data as SequenceInfo).TreePosition ),
+					(data, value) => {(data as SequenceInfo).TreePosition = value;}, 
+					data => (data as SequenceInfo).TreePosition ),
 		new PropertyInteger64 ("IndexPosition", 
-					(IBinding data, long? value) => {(data as SequenceInfo).IndexPosition = value;}, 
-					(IBinding data) => (data as SequenceInfo).IndexPosition ),
+					(data, value) => {(data as SequenceInfo).IndexPosition = value;}, 
+					data => (data as SequenceInfo).IndexPosition ),
 		new PropertyInteger64 ("ExchangePosition", 
-					(IBinding data, long? value) => {(data as SequenceInfo).ExchangePosition = value;}, 
-					(IBinding data) => (data as SequenceInfo).ExchangePosition )
+					(data, value) => {(data as SequenceInfo).ExchangePosition = value;}, 
+					data => (data as SequenceInfo).ExchangePosition )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -272,11 +273,11 @@ public partial class SequenceIndex : SequenceData {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBoolean ("Full", 
-					(IBinding data, bool? value) => {(data as SequenceIndex).Full = value;}, 
-					(IBinding data) => (data as SequenceIndex).Full ),
+					(data, value) => {(data as SequenceIndex).Full = value;}, 
+					data => (data as SequenceIndex).Full ),
 		new PropertyListStruct ("Positions", typeof (IndexPosition),
-					(IBinding data, object? value) => {(data as SequenceIndex).Positions = value as List<IndexPosition>;}, 
-					(IBinding data) => (data as SequenceIndex).Positions,
+					(data, value) => {(data as SequenceIndex).Positions = value as List<IndexPosition>;}, 
+					data => (data as SequenceIndex).Positions,
 					false, ()=>new  List<IndexPosition>(), ()=>new IndexPosition())
 		];
 
@@ -343,14 +344,14 @@ public partial class IndexPosition : SequenceData {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger64 ("Index", 
-					(IBinding data, long? value) => {(data as IndexPosition).Index = value;}, 
-					(IBinding data) => (data as IndexPosition).Index ),
+					(data, value) => {(data as IndexPosition).Index = value;}, 
+					data => (data as IndexPosition).Index ),
 		new PropertyInteger64 ("Position", 
-					(IBinding data, long? value) => {(data as IndexPosition).Position = value;}, 
-					(IBinding data) => (data as IndexPosition).Position ),
+					(data, value) => {(data as IndexPosition).Position = value;}, 
+					data => (data as IndexPosition).Position ),
 		new PropertyString ("UniqueId", 
-					(IBinding data, string? value) => {(data as IndexPosition).UniqueId = value;}, 
-					(IBinding data) => (data as IndexPosition).UniqueId )
+					(data, value) => {(data as IndexPosition).UniqueId = value;}, 
+					data => (data as IndexPosition).UniqueId )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -410,11 +411,11 @@ public partial class KeyValue : SequenceData {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as KeyValue).Key = value;}, 
-					(IBinding data) => (data as KeyValue).Key ),
+					(data, value) => {(data as KeyValue).Key = value;}, 
+					data => (data as KeyValue).Key ),
 		new PropertyString ("Value", 
-					(IBinding data, string? value) => {(data as KeyValue).Value = value;}, 
-					(IBinding data) => (data as KeyValue).Value )
+					(data, value) => {(data as KeyValue).Value = value;}, 
+					data => (data as KeyValue).Value )
 		];
 
     ///<summary>Implement IBinding</summary> 

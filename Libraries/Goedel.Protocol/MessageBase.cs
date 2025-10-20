@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/8/2025 5:09:43 PM
+//  This file was automatically generated at 10/20/2025 6:33:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -132,11 +133,11 @@ abstract public partial class Request : BaseMessage {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Service", 
-					(IBinding data, string? value) => {(data as Request).Service = value;}, 
-					(IBinding data) => (data as Request).Service ),
+					(data, value) => {(data as Request).Service = value;}, 
+					data => (data as Request).Service ),
 		new PropertyBinary ("ID", 
-					(IBinding data, byte[]? value) => {(data as Request).ID = value;}, 
-					(IBinding data) => (data as Request).ID )
+					(data, value) => {(data as Request).ID = value;}, 
+					data => (data as Request).ID )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -216,17 +217,17 @@ abstract public partial class Response : BaseMessage {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger32 ("Status", 
-					(IBinding data, int? value) => {(data as Response).Status = value;}, 
-					(IBinding data) => (data as Response).Status ),
+					(data, value) => {(data as Response).Status = value;}, 
+					data => (data as Response).Status ),
 		new PropertyInteger32 ("StatusExtended", 
-					(IBinding data, int? value) => {(data as Response).StatusExtended = value;}, 
-					(IBinding data) => (data as Response).StatusExtended ),
+					(data, value) => {(data as Response).StatusExtended = value;}, 
+					data => (data as Response).StatusExtended ),
 		new PropertyString ("StatusDescription", 
-					(IBinding data, string? value) => {(data as Response).StatusDescription = value;}, 
-					(IBinding data) => (data as Response).StatusDescription ),
+					(data, value) => {(data as Response).StatusDescription = value;}, 
+					data => (data as Response).StatusDescription ),
 		new PropertyBinary ("ID", 
-					(IBinding data, byte[]? value) => {(data as Response).ID = value;}, 
-					(IBinding data) => (data as Response).ID )
+					(data, value) => {(data as Response).ID = value;}, 
+					data => (data as Response).ID )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -302,18 +303,18 @@ public partial class Version : BaseMessage {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger32 ("Major", 
-					(IBinding data, int? value) => {(data as Version).Major = value;}, 
-					(IBinding data) => (data as Version).Major ),
+					(data, value) => {(data as Version).Major = value;}, 
+					data => (data as Version).Major ),
 		new PropertyInteger32 ("Minor", 
-					(IBinding data, int? value) => {(data as Version).Minor = value;}, 
-					(IBinding data) => (data as Version).Minor ),
+					(data, value) => {(data as Version).Minor = value;}, 
+					data => (data as Version).Minor ),
 		new PropertyListStruct ("Encodings", typeof (Encoding),
-					(IBinding data, object? value) => {(data as Version).Encodings = value as List<Encoding>;}, 
-					(IBinding data) => (data as Version).Encodings,
+					(data, value) => {(data as Version).Encodings = value as List<Encoding>;}, 
+					data => (data as Version).Encodings,
 					false, ()=>new  List<Encoding>(), ()=>new Encoding()),
 		new PropertyListString ("URI", 
-					(IBinding data, List<string>? value) => {(data as Version).URI = value;}, 
-					(IBinding data) => (data as Version).URI )
+					(data, value) => {(data as Version).URI = value;}, 
+					data => (data as Version).URI )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -374,11 +375,11 @@ public partial class Encoding : BaseMessage {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListString ("ID", 
-					(IBinding data, List<string>? value) => {(data as Encoding).ID = value;}, 
-					(IBinding data) => (data as Encoding).ID ),
+					(data, value) => {(data as Encoding).ID = value;}, 
+					data => (data as Encoding).ID ),
 		new PropertyListString ("Dictionary", 
-					(IBinding data, List<string>? value) => {(data as Encoding).Dictionary = value;}, 
-					(IBinding data) => (data as Encoding).Dictionary )
+					(data, value) => {(data as Encoding).Dictionary = value;}, 
+					data => (data as Encoding).Dictionary )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -477,12 +478,12 @@ public partial class HelloResponse : Response {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("Version", typeof (Version),
-					(IBinding data, object? value) => {(data as HelloResponse).Version = value as Version;}, 
-					(IBinding data) => (data as HelloResponse).Version,
+					(data, value) => {(data as HelloResponse).Version = value as Version;}, 
+					data => (data as HelloResponse).Version,
 					false, ()=>new  Version(), ()=>new Version()),
 		new PropertyListStruct ("Alternates", typeof (Version),
-					(IBinding data, object? value) => {(data as HelloResponse).Alternates = value as List<Version>;}, 
-					(IBinding data) => (data as HelloResponse).Alternates,
+					(data, value) => {(data as HelloResponse).Alternates = value as List<Version>;}, 
+					data => (data as HelloResponse).Alternates,
 					false, ()=>new  List<Version>(), ()=>new Version())
 		];
 

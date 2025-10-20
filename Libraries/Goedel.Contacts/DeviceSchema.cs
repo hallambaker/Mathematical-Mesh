@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/8/2025 5:09:45 PM
+//  This file was automatically generated at 10/20/2025 6:33:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -270,94 +271,94 @@ public partial class JsDevice : JmapBase {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("version", 
-					(IBinding data, string? value) => {(data as JsDevice).Version = value;}, 
-					(IBinding data) => (data as JsDevice).Version ),
+					(data, value) => {(data as JsDevice).Version = value;}, 
+					data => (data as JsDevice).Version ),
 		new PropertyString ("kind", 
-					(IBinding data, string? value) => {(data as JsDevice).Kind = value;}, 
-					(IBinding data) => (data as JsDevice).Kind ),
+					(data, value) => {(data as JsDevice).Kind = value;}, 
+					data => (data as JsDevice).Kind ),
 		new PropertyString ("language", 
-					(IBinding data, string? value) => {(data as JsDevice).Language = value;}, 
-					(IBinding data) => (data as JsDevice).Language ),
+					(data, value) => {(data as JsDevice).Language = value;}, 
+					data => (data as JsDevice).Language ),
 		new PropertyDictionaryStruct ("localizations", typeof (JsDevice),
-					(IBinding data, object? value) => {(data as JsDevice).Localizations = value as Dictionary<string,JsDevice>;}, 
-					(IBinding data) => (data as JsDevice).Localizations,
+					(data, value) => {(data as JsDevice).Localizations = value as Dictionary<string,JsDevice>;}, 
+					data => (data as JsDevice).Localizations,
 					false, ()=>new  Dictionary<string,JsDevice>(), ()=>new JsDevice(),
-					(IBinding data) => (data as JsDevice).Localizations.GetEnumerable(),
+					data => (data as JsDevice).Localizations.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,JsDevice>).Add (key as string,value as JsDevice);}),
 		new PropertyString ("deviceId", 
-					(IBinding data, string? value) => {(data as JsDevice).DeviceId = value;}, 
-					(IBinding data) => (data as JsDevice).DeviceId ),
+					(data, value) => {(data as JsDevice).DeviceId = value;}, 
+					data => (data as JsDevice).DeviceId ),
 		new PropertyString ("modelId", 
-					(IBinding data, string? value) => {(data as JsDevice).ModelId = value;}, 
-					(IBinding data) => (data as JsDevice).ModelId ),
+					(data, value) => {(data as JsDevice).ModelId = value;}, 
+					data => (data as JsDevice).ModelId ),
 		new PropertyString ("modelName", 
-					(IBinding data, string? value) => {(data as JsDevice).ModelName = value;}, 
-					(IBinding data) => (data as JsDevice).ModelName ),
+					(data, value) => {(data as JsDevice).ModelName = value;}, 
+					data => (data as JsDevice).ModelName ),
 		new PropertyString ("manufacturer", 
-					(IBinding data, string? value) => {(data as JsDevice).Manufacturer = value;}, 
-					(IBinding data) => (data as JsDevice).Manufacturer ),
+					(data, value) => {(data as JsDevice).Manufacturer = value;}, 
+					data => (data as JsDevice).Manufacturer ),
 		new PropertyDateTime ("dateManufacture", 
-					(IBinding data, DateTime? value) => {(data as JsDevice).DateManufacture = value;}, 
-					(IBinding data) => (data as JsDevice).DateManufacture ),
+					(data, value) => {(data as JsDevice).DateManufacture = value;}, 
+					data => (data as JsDevice).DateManufacture ),
 		new PropertyDateTime ("endSupport", 
-					(IBinding data, DateTime? value) => {(data as JsDevice).EndSupport = value;}, 
-					(IBinding data) => (data as JsDevice).EndSupport ),
+					(data, value) => {(data as JsDevice).EndSupport = value;}, 
+					data => (data as JsDevice).EndSupport ),
 		new PropertyDateTime ("endLife", 
-					(IBinding data, DateTime? value) => {(data as JsDevice).EndLife = value;}, 
-					(IBinding data) => (data as JsDevice).EndLife ),
+					(data, value) => {(data as JsDevice).EndLife = value;}, 
+					data => (data as JsDevice).EndLife ),
 		new PropertyDictionaryStruct ("components", typeof (Component),
-					(IBinding data, object? value) => {(data as JsDevice).Components = value as Dictionary<string,Component>;}, 
-					(IBinding data) => (data as JsDevice).Components,
+					(data, value) => {(data as JsDevice).Components = value as Dictionary<string,Component>;}, 
+					data => (data as JsDevice).Components,
 					false, ()=>new  Dictionary<string,Component>(), ()=>new Component(),
-					(IBinding data) => (data as JsDevice).Components.GetEnumerable(),
+					data => (data as JsDevice).Components.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Component>).Add (key as string,value as Component);}),
 		new PropertyListStruct ("images", typeof (Media),
-					(IBinding data, object? value) => {(data as JsDevice).Images = value as List<Media>;}, 
-					(IBinding data) => (data as JsDevice).Images,
+					(data, value) => {(data as JsDevice).Images = value as List<Media>;}, 
+					data => (data as JsDevice).Images,
 					false, ()=>new  List<Media>(), ()=>new Media()),
 		new PropertyListStruct ("documentation", typeof (Media),
-					(IBinding data, object? value) => {(data as JsDevice).Documentation = value as List<Media>;}, 
-					(IBinding data) => (data as JsDevice).Documentation,
+					(data, value) => {(data as JsDevice).Documentation = value as List<Media>;}, 
+					data => (data as JsDevice).Documentation,
 					false, ()=>new  List<Media>(), ()=>new Media()),
 		new PropertyListStruct ("suppliers", typeof (Supplier),
-					(IBinding data, object? value) => {(data as JsDevice).Suppliers = value as List<Supplier>;}, 
-					(IBinding data) => (data as JsDevice).Suppliers,
+					(data, value) => {(data as JsDevice).Suppliers = value as List<Supplier>;}, 
+					data => (data as JsDevice).Suppliers,
 					false, ()=>new  List<Supplier>(), ()=>new Supplier()),
 		new PropertyDictionaryStruct ("maintenance", typeof (Maintenance),
-					(IBinding data, object? value) => {(data as JsDevice).Maintenance = value as Dictionary<string,Maintenance>;}, 
-					(IBinding data) => (data as JsDevice).Maintenance,
+					(data, value) => {(data as JsDevice).Maintenance = value as Dictionary<string,Maintenance>;}, 
+					data => (data as JsDevice).Maintenance,
 					false, ()=>new  Dictionary<string,Maintenance>(), ()=>new Maintenance(),
-					(IBinding data) => (data as JsDevice).Maintenance.GetEnumerable(),
+					data => (data as JsDevice).Maintenance.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Maintenance>).Add (key as string,value as Maintenance);}),
 		new PropertyDictionaryStruct ("relatedItems", typeof (RelatedItem),
-					(IBinding data, object? value) => {(data as JsDevice).RelatedItems = value as Dictionary<string,RelatedItem>;}, 
-					(IBinding data) => (data as JsDevice).RelatedItems,
+					(data, value) => {(data as JsDevice).RelatedItems = value as Dictionary<string,RelatedItem>;}, 
+					data => (data as JsDevice).RelatedItems,
 					false, ()=>new  Dictionary<string,RelatedItem>(), ()=>new RelatedItem(),
-					(IBinding data) => (data as JsDevice).RelatedItems.GetEnumerable(),
+					data => (data as JsDevice).RelatedItems.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,RelatedItem>).Add (key as string,value as RelatedItem);}),
 		new PropertyDictionaryStruct ("services", typeof (Network),
-					(IBinding data, object? value) => {(data as JsDevice).Services = value as Dictionary<string,Network>;}, 
-					(IBinding data) => (data as JsDevice).Services,
+					(data, value) => {(data as JsDevice).Services = value as Dictionary<string,Network>;}, 
+					data => (data as JsDevice).Services,
 					false, ()=>new  Dictionary<string,Network>(), ()=>new Network(),
-					(IBinding data) => (data as JsDevice).Services.GetEnumerable(),
+					data => (data as JsDevice).Services.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Network>).Add (key as string,value as Network);}),
 		new PropertyDictionaryStruct ("network", typeof (NetworkPhysical),
-					(IBinding data, object? value) => {(data as JsDevice).Network = value as Dictionary<string,NetworkPhysical>;}, 
-					(IBinding data) => (data as JsDevice).Network,
+					(data, value) => {(data as JsDevice).Network = value as Dictionary<string,NetworkPhysical>;}, 
+					data => (data as JsDevice).Network,
 					false, ()=>new  Dictionary<string,NetworkPhysical>(), ()=>new NetworkPhysical(),
-					(IBinding data) => (data as JsDevice).Network.GetEnumerable(),
+					data => (data as JsDevice).Network.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,NetworkPhysical>).Add (key as string,value as NetworkPhysical);}),
 		new PropertyDictionaryStruct ("cryptoKeys", typeof (CryptoKey),
-					(IBinding data, object? value) => {(data as JsDevice).CryptoKeys = value as Dictionary<string,CryptoKey>;}, 
-					(IBinding data) => (data as JsDevice).CryptoKeys,
+					(data, value) => {(data as JsDevice).CryptoKeys = value as Dictionary<string,CryptoKey>;}, 
+					data => (data as JsDevice).CryptoKeys,
 					false, ()=>new  Dictionary<string,CryptoKey>(), ()=>new CryptoKey(),
-					(IBinding data) => (data as JsDevice).CryptoKeys.GetEnumerable(),
+					data => (data as JsDevice).CryptoKeys.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,CryptoKey>).Add (key as string,value as CryptoKey);})
 		];
@@ -472,29 +473,29 @@ public partial class Network : Devices {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStringTag ("@type", 
-					(IBinding data, string? value) => {(data as Network).Type = value;}, 
-					(IBinding data) => (data as Network).Type ),
+					(data, value) => {(data as Network).Type = value;}, 
+					data => (data as Network).Type ),
 		new PropertyString ("kind", 
-					(IBinding data, string? value) => {(data as Network).Kind = value;}, 
-					(IBinding data) => (data as Network).Kind ),
+					(data, value) => {(data as Network).Kind = value;}, 
+					data => (data as Network).Kind ),
 		new PropertyListString ("address", 
-					(IBinding data, List<string>? value) => {(data as Network).Address = value;}, 
-					(IBinding data) => (data as Network).Address ),
+					(data, value) => {(data as Network).Address = value;}, 
+					data => (data as Network).Address ),
 		new PropertyString ("identifier", 
-					(IBinding data, string? value) => {(data as Network).Identifier = value;}, 
-					(IBinding data) => (data as Network).Identifier ),
+					(data, value) => {(data as Network).Identifier = value;}, 
+					data => (data as Network).Identifier ),
 		new PropertyListInteger32 ("ports", 
-					(IBinding data, List<int>? value) => {(data as Network).Ports = value;}, 
-					(IBinding data) => (data as Network).Ports ),
+					(data, value) => {(data as Network).Ports = value;}, 
+					data => (data as Network).Ports ),
 		new PropertyListString ("endpoints", 
-					(IBinding data, List<string>? value) => {(data as Network).Endpoints = value;}, 
-					(IBinding data) => (data as Network).Endpoints ),
+					(data, value) => {(data as Network).Endpoints = value;}, 
+					data => (data as Network).Endpoints ),
 		new PropertyDictionaryString ("keys", 
-					(IBinding data, Dictionary<string,string>? value) => {(data as Network).Keys = value;}, 
-					(IBinding data) => (data as Network).Keys ),
+					(data, value) => {(data as Network).Keys = value;}, 
+					data => (data as Network).Keys ),
 		new PropertyListString ("permissions", 
-					(IBinding data, List<string>? value) => {(data as Network).Permissions = value;}, 
-					(IBinding data) => (data as Network).Permissions )
+					(data, value) => {(data as Network).Permissions = value;}, 
+					data => (data as Network).Permissions )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -556,11 +557,11 @@ public partial class NetworkPhysical : Network {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("eUI", 
-					(IBinding data, string? value) => {(data as NetworkPhysical).EUI = value;}, 
-					(IBinding data) => (data as NetworkPhysical).EUI ),
+					(data, value) => {(data as NetworkPhysical).EUI = value;}, 
+					data => (data as NetworkPhysical).EUI ),
 		new PropertyString ("speed", 
-					(IBinding data, string? value) => {(data as NetworkPhysical).Speed = value;}, 
-					(IBinding data) => (data as NetworkPhysical).Speed )
+					(data, value) => {(data as NetworkPhysical).Speed = value;}, 
+					data => (data as NetworkPhysical).Speed )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -662,14 +663,14 @@ public partial class NetworkWiFi : NetworkPhysical {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("sSID", 
-					(IBinding data, string? value) => {(data as NetworkWiFi).SSID = value;}, 
-					(IBinding data) => (data as NetworkWiFi).SSID ),
+					(data, value) => {(data as NetworkWiFi).SSID = value;}, 
+					data => (data as NetworkWiFi).SSID ),
 		new PropertyString ("username", 
-					(IBinding data, string? value) => {(data as NetworkWiFi).Username = value;}, 
-					(IBinding data) => (data as NetworkWiFi).Username ),
+					(data, value) => {(data as NetworkWiFi).Username = value;}, 
+					data => (data as NetworkWiFi).Username ),
 		new PropertyString ("password", 
-					(IBinding data, string? value) => {(data as NetworkWiFi).Password = value;}, 
-					(IBinding data) => (data as NetworkWiFi).Password )
+					(data, value) => {(data as NetworkWiFi).Password = value;}, 
+					data => (data as NetworkWiFi).Password )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -739,14 +740,14 @@ public partial class Maintenance : Resource {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBoolean ("recurring", 
-					(IBinding data, bool? value) => {(data as Maintenance).Recurring = value;}, 
-					(IBinding data) => (data as Maintenance).Recurring ),
+					(data, value) => {(data as Maintenance).Recurring = value;}, 
+					data => (data as Maintenance).Recurring ),
 		new PropertyInteger32 ("days", 
-					(IBinding data, int? value) => {(data as Maintenance).Days = value;}, 
-					(IBinding data) => (data as Maintenance).Days ),
+					(data, value) => {(data as Maintenance).Days = value;}, 
+					data => (data as Maintenance).Days ),
 		new PropertyInteger32 ("months", 
-					(IBinding data, int? value) => {(data as Maintenance).Months = value;}, 
-					(IBinding data) => (data as Maintenance).Months )
+					(data, value) => {(data as Maintenance).Months = value;}, 
+					data => (data as Maintenance).Months )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -847,11 +848,11 @@ public partial class RelatedItem : Resource {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListString ("modelId", 
-					(IBinding data, List<string>? value) => {(data as RelatedItem).ModelId = value;}, 
-					(IBinding data) => (data as RelatedItem).ModelId ),
+					(data, value) => {(data as RelatedItem).ModelId = value;}, 
+					data => (data as RelatedItem).ModelId ),
 		new PropertyListStruct ("suppliers", typeof (Supplier),
-					(IBinding data, object? value) => {(data as RelatedItem).Suppliers = value as List<Supplier>;}, 
-					(IBinding data) => (data as RelatedItem).Suppliers,
+					(data, value) => {(data as RelatedItem).Suppliers = value as List<Supplier>;}, 
+					data => (data as RelatedItem).Suppliers,
 					false, ()=>new  List<Supplier>(), ()=>new Supplier())
 		];
 
@@ -906,10 +907,10 @@ public partial class Component : Resource {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyDictionaryStruct ("dimensions", typeof (Dimensions),
-					(IBinding data, object? value) => {(data as Component).Dimensions = value as Dictionary<string,Dimensions>;}, 
-					(IBinding data) => (data as Component).Dimensions,
+					(data, value) => {(data as Component).Dimensions = value as Dictionary<string,Dimensions>;}, 
+					data => (data as Component).Dimensions,
 					false, ()=>new  Dictionary<string,Dimensions>(), ()=>new Dimensions(),
-					(IBinding data) => (data as Component).Dimensions.GetEnumerable(),
+					data => (data as Component).Dimensions.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,Dimensions>).Add (key as string,value as Dimensions);})
 		];
@@ -1006,26 +1007,26 @@ public partial class Dimensions : Devices {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("kind", 
-					(IBinding data, string? value) => {(data as Dimensions).Kind = value;}, 
-					(IBinding data) => (data as Dimensions).Kind ),
+					(data, value) => {(data as Dimensions).Kind = value;}, 
+					data => (data as Dimensions).Kind ),
 		new PropertyReal64 ("weight", 
-					(IBinding data, double? value) => {(data as Dimensions).Weight = value;}, 
-					(IBinding data) => (data as Dimensions).Weight ),
+					(data, value) => {(data as Dimensions).Weight = value;}, 
+					data => (data as Dimensions).Weight ),
 		new PropertyReal64 ("width", 
-					(IBinding data, double? value) => {(data as Dimensions).Width = value;}, 
-					(IBinding data) => (data as Dimensions).Width ),
+					(data, value) => {(data as Dimensions).Width = value;}, 
+					data => (data as Dimensions).Width ),
 		new PropertyReal64 ("depth", 
-					(IBinding data, double? value) => {(data as Dimensions).Depth = value;}, 
-					(IBinding data) => (data as Dimensions).Depth ),
+					(data, value) => {(data as Dimensions).Depth = value;}, 
+					data => (data as Dimensions).Depth ),
 		new PropertyReal64 ("height", 
-					(IBinding data, double? value) => {(data as Dimensions).Height = value;}, 
-					(IBinding data) => (data as Dimensions).Height ),
+					(data, value) => {(data as Dimensions).Height = value;}, 
+					data => (data as Dimensions).Height ),
 		new PropertyReal64 ("temperatureMin", 
-					(IBinding data, double? value) => {(data as Dimensions).TemperatureMin = value;}, 
-					(IBinding data) => (data as Dimensions).TemperatureMin ),
+					(data, value) => {(data as Dimensions).TemperatureMin = value;}, 
+					data => (data as Dimensions).TemperatureMin ),
 		new PropertyReal64 ("temperatureMax", 
-					(IBinding data, double? value) => {(data as Dimensions).TemperatureMax = value;}, 
-					(IBinding data) => (data as Dimensions).TemperatureMax )
+					(data, value) => {(data as Dimensions).TemperatureMax = value;}, 
+					data => (data as Dimensions).TemperatureMax )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1108,22 +1109,22 @@ public partial class JsProvision : Devices {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("jsDevice", typeof (JsDevice),
-					(IBinding data, object? value) => {(data as JsProvision).JsDevice = value as JsDevice;}, 
-					(IBinding data) => (data as JsProvision).JsDevice,
+					(data, value) => {(data as JsProvision).JsDevice = value as JsDevice;}, 
+					data => (data as JsProvision).JsDevice,
 					false, ()=>new  JsDevice(), ()=>new JsDevice()),
 		new PropertyDictionaryStruct ("privateKeys", typeof (CryptoKey),
-					(IBinding data, object? value) => {(data as JsProvision).PrivateKeys = value as Dictionary<string,CryptoKey>;}, 
-					(IBinding data) => (data as JsProvision).PrivateKeys,
+					(data, value) => {(data as JsProvision).PrivateKeys = value as Dictionary<string,CryptoKey>;}, 
+					data => (data as JsProvision).PrivateKeys,
 					false, ()=>new  Dictionary<string,CryptoKey>(), ()=>new CryptoKey(),
-					(IBinding data) => (data as JsProvision).PrivateKeys.GetEnumerable(),
+					data => (data as JsProvision).PrivateKeys.GetEnumerable(),
 					(object dictionary, object key, object value) =>
 						 {(dictionary as Dictionary<string,CryptoKey>).Add (key as string,value as CryptoKey);}),
 		new PropertyString ("deviceNotPresentEarl", 
-					(IBinding data, string? value) => {(data as JsProvision).DeviceNotPresentEarl = value;}, 
-					(IBinding data) => (data as JsProvision).DeviceNotPresentEarl ),
+					(data, value) => {(data as JsProvision).DeviceNotPresentEarl = value;}, 
+					data => (data as JsProvision).DeviceNotPresentEarl ),
 		new PropertyString ("devicePresentEarl", 
-					(IBinding data, string? value) => {(data as JsProvision).DevicePresentEarl = value;}, 
-					(IBinding data) => (data as JsProvision).DevicePresentEarl )
+					(data, value) => {(data as JsProvision).DevicePresentEarl = value;}, 
+					data => (data as JsProvision).DevicePresentEarl )
 		];
 
     ///<summary>Implement IBinding</summary> 

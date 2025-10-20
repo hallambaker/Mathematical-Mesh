@@ -55,6 +55,11 @@
             If true, this is the default for the profile type (master, account)
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedMachine.EnvelopedProfileAccount">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedMachine.ProfileAccount">
             <summary>
             Wrapped property
@@ -69,6 +74,11 @@
              <summary>
             The digest of the cataloged device.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedMachine.EnvelopedAccountHostAssignment">
+            <summary>
+            Wrapped property
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedMachine.AccountHostAssignment">
             <summary>
@@ -160,7 +170,17 @@
             UDF of the connected device
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPending.EnvelopedProfileDevice">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPending.ProfileDevice">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPending.EnvelopedAcknowledgeConnection">
             <summary>
             Wrapped property
             </summary>
@@ -210,12 +230,27 @@
              manufacturer profile.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.EnvelopedProfileDevice">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.ProfileDevice">
             <summary>
             Wrapped property
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.EnvelopedConnectionService">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.ConnectionService">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.EnvelopedConnectionDevice">
             <summary>
             Wrapped property
             </summary>
@@ -2979,7 +3014,17 @@
              Describes an ordinary device connected to a Mesh
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedService.EnvelopedProfileService">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedService.ProfileService">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedService.EnvelopedProfileHost">
             <summary>
             Wrapped property
             </summary>
@@ -2989,12 +3034,27 @@
             Wrapped property
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedService.EnvelopedActivationCommon">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedService.ActivationCommon">
             <summary>
             Wrapped property
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedService.EnvelopedActivationHost">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedService.ActivationHost">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedService.EnvelopedConnectionService">
             <summary>
             Wrapped property
             </summary>

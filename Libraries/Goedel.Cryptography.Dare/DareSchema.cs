@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/8/2025 5:09:44 PM
+//  This file was automatically generated at 10/20/2025 6:33:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -159,15 +160,15 @@ public partial class Enveloped : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("Header", typeof (DareHeader),
-					(IBinding data, object? value) => {(data as Enveloped).Header = value as DareHeader;}, 
-					(IBinding data) => (data as Enveloped).Header,
+					(data, value) => {(data as Enveloped).Header = value as DareHeader;}, 
+					data => (data as Enveloped).Header,
 					false, ()=>new  DareHeader(), ()=>new DareHeader()),
 		new PropertyBinary ("Body", 
-					(IBinding data, byte[]? value) => {(data as Enveloped).Body = value;}, 
-					(IBinding data) => (data as Enveloped).Body ),
+					(data, value) => {(data as Enveloped).Body = value;}, 
+					data => (data as Enveloped).Body ),
 		new PropertyStruct ("Trailer", typeof (DareTrailer),
-					(IBinding data, object? value) => {(data as Enveloped).Trailer = value as DareTrailer;}, 
-					(IBinding data) => (data as Enveloped).Trailer,
+					(data, value) => {(data as Enveloped).Trailer = value as DareTrailer;}, 
+					data => (data as Enveloped).Trailer,
 					false, ()=>new  DareTrailer(), ()=>new DareTrailer())
 		];
 
@@ -257,23 +258,23 @@ public partial class DareSignatureHeader : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("WitnessValue", 
-					(IBinding data, byte[]? value) => {(data as DareSignatureHeader).WitnessValue = value;}, 
-					(IBinding data) => (data as DareSignatureHeader).WitnessValue ),
+					(data, value) => {(data as DareSignatureHeader).WitnessValue = value;}, 
+					data => (data as DareSignatureHeader).WitnessValue ),
 		new PropertyBinary ("PayloadTag", 
-					(IBinding data, byte[]? value) => {(data as DareSignatureHeader).PayloadTag = value;}, 
-					(IBinding data) => (data as DareSignatureHeader).PayloadTag ),
+					(data, value) => {(data as DareSignatureHeader).PayloadTag = value;}, 
+					data => (data as DareSignatureHeader).PayloadTag ),
 		new PropertyBinary ("PayloadDigest", 
-					(IBinding data, byte[]? value) => {(data as DareSignatureHeader).PayloadDigest = value;}, 
-					(IBinding data) => (data as DareSignatureHeader).PayloadDigest ),
+					(data, value) => {(data as DareSignatureHeader).PayloadDigest = value;}, 
+					data => (data as DareSignatureHeader).PayloadDigest ),
 		new PropertyBinary ("ChainDigest", 
-					(IBinding data, byte[]? value) => {(data as DareSignatureHeader).ChainDigest = value;}, 
-					(IBinding data) => (data as DareSignatureHeader).ChainDigest ),
+					(data, value) => {(data as DareSignatureHeader).ChainDigest = value;}, 
+					data => (data as DareSignatureHeader).ChainDigest ),
 		new PropertyBinary ("ApexDigest", 
-					(IBinding data, byte[]? value) => {(data as DareSignatureHeader).ApexDigest = value;}, 
-					(IBinding data) => (data as DareSignatureHeader).ApexDigest ),
+					(data, value) => {(data as DareSignatureHeader).ApexDigest = value;}, 
+					data => (data as DareSignatureHeader).ApexDigest ),
 		new PropertyString ("dig", 
-					(IBinding data, string? value) => {(data as DareSignatureHeader).DigestAlgorithm = value;}, 
-					(IBinding data) => (data as DareSignatureHeader).DigestAlgorithm )
+					(data, value) => {(data as DareSignatureHeader).DigestAlgorithm = value;}, 
+					data => (data as DareSignatureHeader).DigestAlgorithm )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -360,22 +361,22 @@ public partial class DareTrailer : DareSignatureHeader {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("signatures", typeof (DareSignature),
-					(IBinding data, object? value) => {(data as DareTrailer).Signatures = value as List<DareSignature>;}, 
-					(IBinding data) => (data as DareTrailer).Signatures,
+					(data, value) => {(data as DareTrailer).Signatures = value as List<DareSignature>;}, 
+					data => (data as DareTrailer).Signatures,
 					false, ()=>new  List<DareSignature>(), ()=>new DareSignature()),
 		new PropertyListStruct ("seqsignatures", typeof (DareSignature),
-					(IBinding data, object? value) => {(data as DareTrailer).SequenceSignatures = value as List<DareSignature>;}, 
-					(IBinding data) => (data as DareTrailer).SequenceSignatures,
+					(data, value) => {(data as DareTrailer).SequenceSignatures = value as List<DareSignature>;}, 
+					data => (data as DareTrailer).SequenceSignatures,
 					false, ()=>new  List<DareSignature>(), ()=>new DareSignature()),
 		new PropertyBinary ("ApplicationContextValue", 
-					(IBinding data, byte[]? value) => {(data as DareTrailer).ApplicationContextValue = value;}, 
-					(IBinding data) => (data as DareTrailer).ApplicationContextValue ),
+					(data, value) => {(data as DareTrailer).ApplicationContextValue = value;}, 
+					data => (data as DareTrailer).ApplicationContextValue ),
 		new PropertyBinary ("SignedData", 
-					(IBinding data, byte[]? value) => {(data as DareTrailer).SignedData = value;}, 
-					(IBinding data) => (data as DareTrailer).SignedData ),
+					(data, value) => {(data as DareTrailer).SignedData = value;}, 
+					data => (data as DareTrailer).SignedData ),
 		new PropertyBinary ("SequenceSignedData", 
-					(IBinding data, byte[]? value) => {(data as DareTrailer).SequenceSignedData = value;}, 
-					(IBinding data) => (data as DareTrailer).SequenceSignedData )
+					(data, value) => {(data as DareTrailer).SequenceSignedData = value;}, 
+					data => (data as DareTrailer).SequenceSignedData )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -549,57 +550,57 @@ public partial class DareHeader : DareTrailer {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("EnvelopeId", 
-					(IBinding data, string? value) => {(data as DareHeader).EnvelopeId = value;}, 
-					(IBinding data) => (data as DareHeader).EnvelopeId ),
+					(data, value) => {(data as DareHeader).EnvelopeId = value;}, 
+					data => (data as DareHeader).EnvelopeId ),
 		new PropertyString ("enc", 
-					(IBinding data, string? value) => {(data as DareHeader).EncryptionAlgorithm = value;}, 
-					(IBinding data) => (data as DareHeader).EncryptionAlgorithm ),
+					(data, value) => {(data as DareHeader).EncryptionAlgorithm = value;}, 
+					data => (data as DareHeader).EncryptionAlgorithm ),
 		new PropertyString ("kid", 
-					(IBinding data, string? value) => {(data as DareHeader).KeyIdentifier = value;}, 
-					(IBinding data) => (data as DareHeader).KeyIdentifier ),
+					(data, value) => {(data as DareHeader).KeyIdentifier = value;}, 
+					data => (data as DareHeader).KeyIdentifier ),
 		new PropertyBinary ("Salt", 
-					(IBinding data, byte[]? value) => {(data as DareHeader).Salt = value;}, 
-					(IBinding data) => (data as DareHeader).Salt ),
+					(data, value) => {(data as DareHeader).Salt = value;}, 
+					data => (data as DareHeader).Salt ),
 		new PropertyBinary ("Malt", 
-					(IBinding data, byte[]? value) => {(data as DareHeader).Malt = value;}, 
-					(IBinding data) => (data as DareHeader).Malt ),
+					(data, value) => {(data as DareHeader).Malt = value;}, 
+					data => (data as DareHeader).Malt ),
 		new PropertyBinary ("cloaked", 
-					(IBinding data, byte[]? value) => {(data as DareHeader).Cloaked = value;}, 
-					(IBinding data) => (data as DareHeader).Cloaked ),
+					(data, value) => {(data as DareHeader).Cloaked = value;}, 
+					data => (data as DareHeader).Cloaked ),
 		new PropertyListBinary ("annotations", 
-					(IBinding data, List<byte[]>? value) => {(data as DareHeader).EDSS = value;}, 
-					(IBinding data) => (data as DareHeader).EDSS ),
+					(data, value) => {(data as DareHeader).EDSS = value;}, 
+					data => (data as DareHeader).EDSS ),
 		new PropertyListStruct ("recipients", typeof (DareRecipient),
-					(IBinding data, object? value) => {(data as DareHeader).Recipients = value as List<DareRecipient>;}, 
-					(IBinding data) => (data as DareHeader).Recipients,
+					(data, value) => {(data as DareHeader).Recipients = value as List<DareRecipient>;}, 
+					data => (data as DareHeader).Recipients,
 					false, ()=>new  List<DareRecipient>(), ()=>new DareRecipient()),
 		new PropertyStruct ("policy", typeof (DarePolicy),
-					(IBinding data, object? value) => {(data as DareHeader).Policy = value as DarePolicy;}, 
-					(IBinding data) => (data as DareHeader).Policy,
+					(data, value) => {(data as DareHeader).Policy = value as DarePolicy;}, 
+					data => (data as DareHeader).Policy,
 					false, ()=>new  DarePolicy(), ()=>new DarePolicy()),
 		new PropertyBinary ("ContentMetaData", 
-					(IBinding data, byte[]? value) => {(data as DareHeader).ContentMetaData = value;}, 
-					(IBinding data) => (data as DareHeader).ContentMetaData ),
+					(data, value) => {(data as DareHeader).ContentMetaData = value;}, 
+					data => (data as DareHeader).ContentMetaData ),
 		new PropertyStruct ("SequenceInfo", typeof (SequenceInfo),
-					(IBinding data, object? value) => {(data as DareHeader).SequenceInfo = value as SequenceInfo;}, 
-					(IBinding data) => (data as DareHeader).SequenceInfo,
+					(data, value) => {(data as DareHeader).SequenceInfo = value as SequenceInfo;}, 
+					data => (data as DareHeader).SequenceInfo,
 					false, ()=>new  SequenceInfo(), ()=>new SequenceInfo()),
 		new PropertyStruct ("SequenceIndex", typeof (SequenceIndex),
-					(IBinding data, object? value) => {(data as DareHeader).SequenceIndex = value as SequenceIndex;}, 
-					(IBinding data) => (data as DareHeader).SequenceIndex,
+					(data, value) => {(data as DareHeader).SequenceIndex = value as SequenceIndex;}, 
+					data => (data as DareHeader).SequenceIndex,
 					false, ()=>new  SequenceIndex(), ()=>new SequenceIndex()),
 		new PropertyDateTime ("Received", 
-					(IBinding data, DateTime? value) => {(data as DareHeader).Received = value;}, 
-					(IBinding data) => (data as DareHeader).Received ),
+					(data, value) => {(data as DareHeader).Received = value;}, 
+					data => (data as DareHeader).Received ),
 		new PropertyBinary ("Cover", 
-					(IBinding data, byte[]? value) => {(data as DareHeader).Cover = value;}, 
-					(IBinding data) => (data as DareHeader).Cover ),
+					(data, value) => {(data as DareHeader).Cover = value;}, 
+					data => (data as DareHeader).Cover ),
 		new PropertyBinary ("Bitmask", 
-					(IBinding data, byte[]? value) => {(data as DareHeader).Bitmask = value;}, 
-					(IBinding data) => (data as DareHeader).Bitmask ),
+					(data, value) => {(data as DareHeader).Bitmask = value;}, 
+					data => (data as DareHeader).Bitmask ),
 		new PropertyString ("Debug", 
-					(IBinding data, string? value) => {(data as DareHeader).Debug = value;}, 
-					(IBinding data) => (data as DareHeader).Debug )
+					(data, value) => {(data as DareHeader).Debug = value;}, 
+					data => (data as DareHeader).Debug )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -766,55 +767,55 @@ public partial class ContentMeta : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("UniqueId", 
-					(IBinding data, string? value) => {(data as ContentMeta).UniqueId = value;}, 
-					(IBinding data) => (data as ContentMeta).UniqueId ),
+					(data, value) => {(data as ContentMeta).UniqueId = value;}, 
+					data => (data as ContentMeta).UniqueId ),
 		new PropertyString ("Nonce", 
-					(IBinding data, string? value) => {(data as ContentMeta).Nonce = value;}, 
-					(IBinding data) => (data as ContentMeta).Nonce ),
+					(data, value) => {(data as ContentMeta).Nonce = value;}, 
+					data => (data as ContentMeta).Nonce ),
 		new PropertyListString ("Labels", 
-					(IBinding data, List<string>? value) => {(data as ContentMeta).Labels = value;}, 
-					(IBinding data) => (data as ContentMeta).Labels ),
+					(data, value) => {(data as ContentMeta).Labels = value;}, 
+					data => (data as ContentMeta).Labels ),
 		new PropertyListStruct ("KeyValues", typeof (KeyValue),
-					(IBinding data, object? value) => {(data as ContentMeta).KeyValues = value as List<KeyValue>;}, 
-					(IBinding data) => (data as ContentMeta).KeyValues,
+					(data, value) => {(data as ContentMeta).KeyValues = value as List<KeyValue>;}, 
+					data => (data as ContentMeta).KeyValues,
 					false, ()=>new  List<KeyValue>(), ()=>new KeyValue()),
 		new PropertyString ("MessageType", 
-					(IBinding data, string? value) => {(data as ContentMeta).MessageType = value;}, 
-					(IBinding data) => (data as ContentMeta).MessageType ),
+					(data, value) => {(data as ContentMeta).MessageType = value;}, 
+					data => (data as ContentMeta).MessageType ),
 		new PropertyString ("cty", 
-					(IBinding data, string? value) => {(data as ContentMeta).ContentType = value;}, 
-					(IBinding data) => (data as ContentMeta).ContentType ),
+					(data, value) => {(data as ContentMeta).ContentType = value;}, 
+					data => (data as ContentMeta).ContentType ),
 		new PropertyListString ("Paths", 
-					(IBinding data, List<string>? value) => {(data as ContentMeta).Paths = value;}, 
-					(IBinding data) => (data as ContentMeta).Paths ),
+					(data, value) => {(data as ContentMeta).Paths = value;}, 
+					data => (data as ContentMeta).Paths ),
 		new PropertyString ("Filename", 
-					(IBinding data, string? value) => {(data as ContentMeta).Filename = value;}, 
-					(IBinding data) => (data as ContentMeta).Filename ),
+					(data, value) => {(data as ContentMeta).Filename = value;}, 
+					data => (data as ContentMeta).Filename ),
 		new PropertyString ("Event", 
-					(IBinding data, string? value) => {(data as ContentMeta).Event = value;}, 
-					(IBinding data) => (data as ContentMeta).Event ),
+					(data, value) => {(data as ContentMeta).Event = value;}, 
+					data => (data as ContentMeta).Event ),
 		new PropertyDateTime ("Created", 
-					(IBinding data, DateTime? value) => {(data as ContentMeta).Created = value;}, 
-					(IBinding data) => (data as ContentMeta).Created ),
+					(data, value) => {(data as ContentMeta).Created = value;}, 
+					data => (data as ContentMeta).Created ),
 		new PropertyDateTime ("Modified", 
-					(IBinding data, DateTime? value) => {(data as ContentMeta).Modified = value;}, 
-					(IBinding data) => (data as ContentMeta).Modified ),
+					(data, value) => {(data as ContentMeta).Modified = value;}, 
+					data => (data as ContentMeta).Modified ),
 		new PropertyDateTime ("Expire", 
-					(IBinding data, DateTime? value) => {(data as ContentMeta).Expire = value;}, 
-					(IBinding data) => (data as ContentMeta).Expire ),
+					(data, value) => {(data as ContentMeta).Expire = value;}, 
+					data => (data as ContentMeta).Expire ),
 		new PropertyInteger64 ("First", 
-					(IBinding data, long? value) => {(data as ContentMeta).First = value;}, 
-					(IBinding data) => (data as ContentMeta).First ),
+					(data, value) => {(data as ContentMeta).First = value;}, 
+					data => (data as ContentMeta).First ),
 		new PropertyInteger64 ("Previous", 
-					(IBinding data, long? value) => {(data as ContentMeta).Previous = value;}, 
-					(IBinding data) => (data as ContentMeta).Previous ),
+					(data, value) => {(data as ContentMeta).Previous = value;}, 
+					data => (data as ContentMeta).Previous ),
 		new PropertyStruct ("FileEntry", typeof (FileEntry),
-					(IBinding data, object? value) => {(data as ContentMeta).FileEntry = value as FileEntry;}, 
-					(IBinding data) => (data as ContentMeta).FileEntry,
+					(data, value) => {(data as ContentMeta).FileEntry = value as FileEntry;}, 
+					data => (data as ContentMeta).FileEntry,
 					false, ()=>new  FileEntry(), ()=>new FileEntry()),
 		new PropertyStruct ("ReceiptProof", typeof (ReceiptProof),
-					(IBinding data, object? value) => {(data as ContentMeta).ReceiptProof = value as ReceiptProof;}, 
-					(IBinding data) => (data as ContentMeta).ReceiptProof,
+					(data, value) => {(data as ContentMeta).ReceiptProof = value as ReceiptProof;}, 
+					data => (data as ContentMeta).ReceiptProof,
 					false, ()=>new  ReceiptProof(), ()=>new ReceiptProof())
 		];
 
@@ -886,11 +887,11 @@ public partial class ReceiptProof : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("PIN", 
-					(IBinding data, string? value) => {(data as ReceiptProof).PIN = value;}, 
-					(IBinding data) => (data as ReceiptProof).PIN ),
+					(data, value) => {(data as ReceiptProof).PIN = value;}, 
+					data => (data as ReceiptProof).PIN ),
 		new PropertyDateTime ("Expiry", 
-					(IBinding data, DateTime? value) => {(data as ReceiptProof).Expiry = value;}, 
-					(IBinding data) => (data as ReceiptProof).Expiry )
+					(data, value) => {(data as ReceiptProof).Expiry = value;}, 
+					data => (data as ReceiptProof).Expiry )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -992,32 +993,32 @@ public partial class DareSignature : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("dig", 
-					(IBinding data, string? value) => {(data as DareSignature).Dig = value;}, 
-					(IBinding data) => (data as DareSignature).Dig ),
+					(data, value) => {(data as DareSignature).Dig = value;}, 
+					data => (data as DareSignature).Dig ),
 		new PropertyString ("alg", 
-					(IBinding data, string? value) => {(data as DareSignature).Alg = value;}, 
-					(IBinding data) => (data as DareSignature).Alg ),
+					(data, value) => {(data as DareSignature).Alg = value;}, 
+					data => (data as DareSignature).Alg ),
 		new PropertyString ("kid", 
-					(IBinding data, string? value) => {(data as DareSignature).KeyIdentifier = value;}, 
-					(IBinding data) => (data as DareSignature).KeyIdentifier ),
+					(data, value) => {(data as DareSignature).KeyIdentifier = value;}, 
+					data => (data as DareSignature).KeyIdentifier ),
 		new PropertyStruct ("cert", typeof (X509Certificate),
-					(IBinding data, object? value) => {(data as DareSignature).Certificate = value as X509Certificate;}, 
-					(IBinding data) => (data as DareSignature).Certificate,
+					(data, value) => {(data as DareSignature).Certificate = value as X509Certificate;}, 
+					data => (data as DareSignature).Certificate,
 					false, ()=>new  X509Certificate(), ()=>new X509Certificate()),
 		new PropertyStruct ("path", typeof (X509Certificate),
-					(IBinding data, object? value) => {(data as DareSignature).Path = value as X509Certificate;}, 
-					(IBinding data) => (data as DareSignature).Path,
+					(data, value) => {(data as DareSignature).Path = value as X509Certificate;}, 
+					data => (data as DareSignature).Path,
 					false, ()=>new  X509Certificate(), ()=>new X509Certificate()),
 		new PropertyBinary ("Manifest", 
-					(IBinding data, byte[]? value) => {(data as DareSignature).Manifest = value;}, 
-					(IBinding data) => (data as DareSignature).Manifest ),
+					(data, value) => {(data as DareSignature).Manifest = value;}, 
+					data => (data as DareSignature).Manifest ),
 		new PropertyStruct ("SignatureKey", typeof (Key), 
-					(IBinding data, object? value) => {(data as DareSignature).SignatureKey = value as Key;}, 
-					(IBinding data) => (data as DareSignature).SignatureKey,
+					(data, value) => {(data as DareSignature).SignatureKey = value as Key;}, 
+					data => (data as DareSignature).SignatureKey,
 					true) ,
 		new PropertyBinary ("signature", 
-					(IBinding data, byte[]? value) => {(data as DareSignature).SignatureValue = value;}, 
-					(IBinding data) => (data as DareSignature).SignatureValue )
+					(data, value) => {(data as DareSignature).SignatureValue = value;}, 
+					data => (data as DareSignature).SignatureValue )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1082,11 +1083,11 @@ public partial class IntervalSignature : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger64 ("Index", 
-					(IBinding data, long? value) => {(data as IntervalSignature).Index = value;}, 
-					(IBinding data) => (data as IntervalSignature).Index ),
+					(data, value) => {(data as IntervalSignature).Index = value;}, 
+					data => (data as IntervalSignature).Index ),
 		new PropertyStruct ("Envelopes", typeof (SignedEnvelope),
-					(IBinding data, object? value) => {(data as IntervalSignature).Envelopes = value as SignedEnvelope;}, 
-					(IBinding data) => (data as IntervalSignature).Envelopes,
+					(data, value) => {(data as IntervalSignature).Envelopes = value as SignedEnvelope;}, 
+					data => (data as IntervalSignature).Envelopes,
 					false, ()=>new  SignedEnvelope(), ()=>new SignedEnvelope())
 		];
 
@@ -1145,11 +1146,11 @@ public partial class SignedEnvelope : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger64 ("Index", 
-					(IBinding data, long? value) => {(data as SignedEnvelope).Index = value;}, 
-					(IBinding data) => (data as SignedEnvelope).Index ),
+					(data, value) => {(data as SignedEnvelope).Index = value;}, 
+					data => (data as SignedEnvelope).Index ),
 		new PropertyListBinary ("Digest", 
-					(IBinding data, List<byte[]>? value) => {(data as SignedEnvelope).Digest = value;}, 
-					(IBinding data) => (data as SignedEnvelope).Digest )
+					(data, value) => {(data as SignedEnvelope).Digest = value;}, 
+					data => (data as SignedEnvelope).Digest )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1206,11 +1207,11 @@ public partial class X509Certificate : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("x5u", 
-					(IBinding data, string? value) => {(data as X509Certificate).X5u = value;}, 
-					(IBinding data) => (data as X509Certificate).X5u ),
+					(data, value) => {(data as X509Certificate).X5u = value;}, 
+					data => (data as X509Certificate).X5u ),
 		new PropertyBinary ("x5c", 
-					(IBinding data, byte[]? value) => {(data as X509Certificate).X5 = value;}, 
-					(IBinding data) => (data as X509Certificate).X5 )
+					(data, value) => {(data as X509Certificate).X5 = value;}, 
+					data => (data as X509Certificate).X5 )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1291,21 +1292,21 @@ public partial class DareRecipient : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("kid", 
-					(IBinding data, string? value) => {(data as DareRecipient).KeyIdentifier = value;}, 
-					(IBinding data) => (data as DareRecipient).KeyIdentifier ),
+					(data, value) => {(data as DareRecipient).KeyIdentifier = value;}, 
+					data => (data as DareRecipient).KeyIdentifier ),
 		new PropertyString ("kwd", 
-					(IBinding data, string? value) => {(data as DareRecipient).KeyWrapDerivation = value;}, 
-					(IBinding data) => (data as DareRecipient).KeyWrapDerivation ),
+					(data, value) => {(data as DareRecipient).KeyWrapDerivation = value;}, 
+					data => (data as DareRecipient).KeyWrapDerivation ),
 		new PropertyStruct ("epk", typeof (Key), 
-					(IBinding data, object? value) => {(data as DareRecipient).Epk = value as Key;}, 
-					(IBinding data) => (data as DareRecipient).Epk,
+					(data, value) => {(data as DareRecipient).Epk = value as Key;}, 
+					data => (data as DareRecipient).Epk,
 					true) ,
 		new PropertyBinary ("ek", 
-					(IBinding data, byte[]? value) => {(data as DareRecipient).Ek = value;}, 
-					(IBinding data) => (data as DareRecipient).Ek ),
+					(data, value) => {(data as DareRecipient).Ek = value;}, 
+					data => (data as DareRecipient).Ek ),
 		new PropertyBinary ("wmk", 
-					(IBinding data, byte[]? value) => {(data as DareRecipient).WrappedBaseSeed = value;}, 
-					(IBinding data) => (data as DareRecipient).WrappedBaseSeed )
+					(data, value) => {(data as DareRecipient).WrappedBaseSeed = value;}, 
+					data => (data as DareRecipient).WrappedBaseSeed )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1417,33 +1418,33 @@ public partial class DarePolicy : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBoolean ("Public", 
-					(IBinding data, bool? value) => {(data as DarePolicy).Public = value;}, 
-					(IBinding data) => (data as DarePolicy).Public ),
+					(data, value) => {(data as DarePolicy).Public = value;}, 
+					data => (data as DarePolicy).Public ),
 		new PropertyString ("enc", 
-					(IBinding data, string? value) => {(data as DarePolicy).EncryptionAlgorithm = value;}, 
-					(IBinding data) => (data as DarePolicy).EncryptionAlgorithm ),
+					(data, value) => {(data as DarePolicy).EncryptionAlgorithm = value;}, 
+					data => (data as DarePolicy).EncryptionAlgorithm ),
 		new PropertyString ("dig", 
-					(IBinding data, string? value) => {(data as DarePolicy).DigestAlgorithm = value;}, 
-					(IBinding data) => (data as DarePolicy).DigestAlgorithm ),
+					(data, value) => {(data as DarePolicy).DigestAlgorithm = value;}, 
+					data => (data as DarePolicy).DigestAlgorithm ),
 		new PropertyString ("Encryption", 
-					(IBinding data, string? value) => {(data as DarePolicy).Encryption = value;}, 
-					(IBinding data) => (data as DarePolicy).Encryption ),
+					(data, value) => {(data as DarePolicy).Encryption = value;}, 
+					data => (data as DarePolicy).Encryption ),
 		new PropertyString ("Signature", 
-					(IBinding data, string? value) => {(data as DarePolicy).Signature = value;}, 
-					(IBinding data) => (data as DarePolicy).Signature ),
+					(data, value) => {(data as DarePolicy).Signature = value;}, 
+					data => (data as DarePolicy).Signature ),
 		new PropertyListStruct ("EncryptKeys", typeof (Key), 
-					(IBinding data, object? value) => {(data as DarePolicy).EncryptKeys = value as List<Key>;}, 
-					(IBinding data) => (data as DarePolicy).EncryptKeys,
+					(data, value) => {(data as DarePolicy).EncryptKeys = value as List<Key>;}, 
+					data => (data as DarePolicy).EncryptKeys,
 					true, ()=>new List<Key>()
 ) ,
 		new PropertyListStruct ("SignKeys", typeof (Key), 
-					(IBinding data, object? value) => {(data as DarePolicy).SignKeys = value as List<Key>;}, 
-					(IBinding data) => (data as DarePolicy).SignKeys,
+					(data, value) => {(data as DarePolicy).SignKeys = value as List<Key>;}, 
+					data => (data as DarePolicy).SignKeys,
 					true, ()=>new List<Key>()
 ) ,
 		new PropertyBoolean ("Sealed", 
-					(IBinding data, bool? value) => {(data as DarePolicy).Sealed = value;}, 
-					(IBinding data) => (data as DarePolicy).Sealed )
+					(data, value) => {(data as DarePolicy).Sealed = value;}, 
+					data => (data as DarePolicy).Sealed )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1527,20 +1528,20 @@ public partial class FileEntry : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Path", 
-					(IBinding data, string? value) => {(data as FileEntry).Path = value;}, 
-					(IBinding data) => (data as FileEntry).Path ),
+					(data, value) => {(data as FileEntry).Path = value;}, 
+					data => (data as FileEntry).Path ),
 		new PropertyDateTime ("CreationTime", 
-					(IBinding data, DateTime? value) => {(data as FileEntry).CreationTime = value;}, 
-					(IBinding data) => (data as FileEntry).CreationTime ),
+					(data, value) => {(data as FileEntry).CreationTime = value;}, 
+					data => (data as FileEntry).CreationTime ),
 		new PropertyDateTime ("LastAccessTime", 
-					(IBinding data, DateTime? value) => {(data as FileEntry).LastAccessTime = value;}, 
-					(IBinding data) => (data as FileEntry).LastAccessTime ),
+					(data, value) => {(data as FileEntry).LastAccessTime = value;}, 
+					data => (data as FileEntry).LastAccessTime ),
 		new PropertyDateTime ("LastWriteTime", 
-					(IBinding data, DateTime? value) => {(data as FileEntry).LastWriteTime = value;}, 
-					(IBinding data) => (data as FileEntry).LastWriteTime ),
+					(data, value) => {(data as FileEntry).LastWriteTime = value;}, 
+					data => (data as FileEntry).LastWriteTime ),
 		new PropertyInteger32 ("Attributes", 
-					(IBinding data, int? value) => {(data as FileEntry).Attributes = value;}, 
-					(IBinding data) => (data as FileEntry).Attributes )
+					(data, value) => {(data as FileEntry).Attributes = value;}, 
+					data => (data as FileEntry).Attributes )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1616,17 +1617,17 @@ public partial class Witness : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Id", 
-					(IBinding data, string? value) => {(data as Witness).Id = value;}, 
-					(IBinding data) => (data as Witness).Id ),
+					(data, value) => {(data as Witness).Id = value;}, 
+					data => (data as Witness).Id ),
 		new PropertyString ("Issuer", 
-					(IBinding data, string? value) => {(data as Witness).Issuer = value;}, 
-					(IBinding data) => (data as Witness).Issuer ),
+					(data, value) => {(data as Witness).Issuer = value;}, 
+					data => (data as Witness).Issuer ),
 		new PropertyBinary ("Apex", 
-					(IBinding data, byte[]? value) => {(data as Witness).Apex = value;}, 
-					(IBinding data) => (data as Witness).Apex ),
+					(data, value) => {(data as Witness).Apex = value;}, 
+					data => (data as Witness).Apex ),
 		new PropertyInteger64 ("Index", 
-					(IBinding data, long? value) => {(data as Witness).Index = value;}, 
-					(IBinding data) => (data as Witness).Index )
+					(data, value) => {(data as Witness).Index = value;}, 
+					data => (data as Witness).Index )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1667,6 +1668,9 @@ public partial class Witness : Dare {
 	/// SignedWitness occurs at the index [Index]
 	/// </summary>
 public partial class Proof : Dare {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedWitness")]
 	public virtual Enveloped<Witness>?					EnvelopedWitness  {get; set;} 
 
@@ -1700,21 +1704,19 @@ public partial class Proof : Dare {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedWitness", /*typeof (Witness<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as Proof).EnvelopedWitness = value as Enveloped<Witness>;},
-					(IBinding data) => (data as Proof).EnvelopedWitness,
-					/*(IBinding data, object? value) => {(data as Proof).Witness = value as Witness;},
-					(IBinding data) => (data as Proof).Witness,*/
+		new PropertyGStruct ("EnvelopedWitness", typeof (Enveloped),
+					(data, value) => {(data as Proof).EnvelopedWitness = value as Enveloped<Witness>;},
+					data => (data as Proof).EnvelopedWitness,
 					()=>new  Enveloped<Witness>(), ()=>new Enveloped<Witness>()),
 		new PropertyBinary ("Hash", 
-					(IBinding data, byte[]? value) => {(data as Proof).Hash = value;}, 
-					(IBinding data) => (data as Proof).Hash ),
+					(data, value) => {(data as Proof).Hash = value;}, 
+					data => (data as Proof).Hash ),
 		new PropertyInteger64 ("Index", 
-					(IBinding data, long? value) => {(data as Proof).Index = value;}, 
-					(IBinding data) => (data as Proof).Index ),
+					(data, value) => {(data as Proof).Index = value;}, 
+					data => (data as Proof).Index ),
 		new PropertyListBinary ("Path", 
-					(IBinding data, List<byte[]>? value) => {(data as Proof).Path = value;}, 
-					(IBinding data) => (data as Proof).Path )
+					(data, value) => {(data as Proof).Path = value;}, 
+					data => (data as Proof).Path )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1776,15 +1778,15 @@ public partial class Unprotected : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("dig", 
-					(IBinding data, string? value) => {(data as Unprotected).DigestAlgorithm = value;}, 
-					(IBinding data) => (data as Unprotected).DigestAlgorithm ),
+					(data, value) => {(data as Unprotected).DigestAlgorithm = value;}, 
+					data => (data as Unprotected).DigestAlgorithm ),
 		new PropertyListStruct ("signs", typeof (EarlSignature),
-					(IBinding data, object? value) => {(data as Unprotected).Signers = value as List<EarlSignature>;}, 
-					(IBinding data) => (data as Unprotected).Signers,
+					(data, value) => {(data as Unprotected).Signers = value as List<EarlSignature>;}, 
+					data => (data as Unprotected).Signers,
 					false, ()=>new  List<EarlSignature>(), ()=>new EarlSignature()),
 		new PropertyListStruct ("sigs", typeof (EarlSignature),
-					(IBinding data, object? value) => {(data as Unprotected).Signatures = value as List<EarlSignature>;}, 
-					(IBinding data) => (data as Unprotected).Signatures,
+					(data, value) => {(data as Unprotected).Signatures = value as List<EarlSignature>;}, 
+					data => (data as Unprotected).Signatures,
 					false, ()=>new  List<EarlSignature>(), ()=>new EarlSignature())
 		];
 
@@ -1849,14 +1851,14 @@ public partial class EarlSignature : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("alg", 
-					(IBinding data, string? value) => {(data as EarlSignature).Alg = value;}, 
-					(IBinding data) => (data as EarlSignature).Alg ),
+					(data, value) => {(data as EarlSignature).Alg = value;}, 
+					data => (data as EarlSignature).Alg ),
 		new PropertyString ("kid", 
-					(IBinding data, string? value) => {(data as EarlSignature).KeyIdentifier = value;}, 
-					(IBinding data) => (data as EarlSignature).KeyIdentifier ),
+					(data, value) => {(data as EarlSignature).KeyIdentifier = value;}, 
+					data => (data as EarlSignature).KeyIdentifier ),
 		new PropertyBinary ("val", 
-					(IBinding data, byte[]? value) => {(data as EarlSignature).Value = value;}, 
-					(IBinding data) => (data as EarlSignature).Value )
+					(data, value) => {(data as EarlSignature).Value = value;}, 
+					data => (data as EarlSignature).Value )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1905,8 +1907,8 @@ public partial class DareSequence : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("Envelopes", typeof (DareEnvelope),
-					(IBinding data, object? value) => {(data as DareSequence).Envelopes = value as List<DareEnvelope>;}, 
-					(IBinding data) => (data as DareSequence).Envelopes,
+					(data, value) => {(data as DareSequence).Envelopes = value as List<DareEnvelope>;}, 
+					data => (data as DareSequence).Envelopes,
 					false, ()=>new  List<DareEnvelope>(), ()=>new DareEnvelope())
 		];
 
@@ -1973,18 +1975,18 @@ public partial class DareEnvelope : Dare {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("unsigned", typeof (DareHeader),
-					(IBinding data, object? value) => {(data as DareEnvelope).Unsigned = value as DareHeader;}, 
-					(IBinding data) => (data as DareEnvelope).Unsigned,
+					(data, value) => {(data as DareEnvelope).Unsigned = value as DareHeader;}, 
+					data => (data as DareEnvelope).Unsigned,
 					false, ()=>new  DareHeader(), ()=>new DareHeader()),
 		new PropertyBinary ("signed", 
-					(IBinding data, byte[]? value) => {(data as DareEnvelope).Signed = value;}, 
-					(IBinding data) => (data as DareEnvelope).Signed ),
+					(data, value) => {(data as DareEnvelope).Signed = value;}, 
+					data => (data as DareEnvelope).Signed ),
 		new PropertyBinary ("payload", 
-					(IBinding data, byte[]? value) => {(data as DareEnvelope).Payload = value;}, 
-					(IBinding data) => (data as DareEnvelope).Payload ),
+					(data, value) => {(data as DareEnvelope).Payload = value;}, 
+					data => (data as DareEnvelope).Payload ),
 		new PropertyStruct ("trailer", typeof (DareTrailer),
-					(IBinding data, object? value) => {(data as DareEnvelope).Trailer = value as DareTrailer;}, 
-					(IBinding data) => (data as DareEnvelope).Trailer,
+					(data, value) => {(data as DareEnvelope).Trailer = value as DareTrailer;}, 
+					data => (data as DareEnvelope).Trailer,
 					false, ()=>new  DareTrailer(), ()=>new DareTrailer())
 		];
 

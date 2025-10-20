@@ -3289,6 +3289,11 @@
              SignedWitness occurs at the index [Index]
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Proof.EnvelopedWitness">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.Proof.Witness">
             <summary>
             Wrapped property

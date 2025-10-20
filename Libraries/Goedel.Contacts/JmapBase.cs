@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/8/2025 5:09:45 PM
+//  This file was automatically generated at 10/20/2025 6:33:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -149,20 +150,20 @@ public partial class JmapBase : JmapBaseSchema {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStringTag ("@type", 
-					(IBinding data, string? value) => {(data as JmapBase).Type = value;}, 
-					(IBinding data) => (data as JmapBase).Type ),
+					(data, value) => {(data as JmapBase).Type = value;}, 
+					data => (data as JmapBase).Type ),
 		new PropertyString ("uid", 
-					(IBinding data, string? value) => {(data as JmapBase).Uid = value;}, 
-					(IBinding data) => (data as JmapBase).Uid ),
+					(data, value) => {(data as JmapBase).Uid = value;}, 
+					data => (data as JmapBase).Uid ),
 		new PropertyString ("prodId", 
-					(IBinding data, string? value) => {(data as JmapBase).ProdId = value;}, 
-					(IBinding data) => (data as JmapBase).ProdId ),
+					(data, value) => {(data as JmapBase).ProdId = value;}, 
+					data => (data as JmapBase).ProdId ),
 		new PropertyDateTime ("created", 
-					(IBinding data, DateTime? value) => {(data as JmapBase).Created = value;}, 
-					(IBinding data) => (data as JmapBase).Created ),
+					(data, value) => {(data as JmapBase).Created = value;}, 
+					data => (data as JmapBase).Created ),
 		new PropertyDateTime ("updated", 
-					(IBinding data, DateTime? value) => {(data as JmapBase).Updated = value;}, 
-					(IBinding data) => (data as JmapBase).Updated )
+					(data, value) => {(data as JmapBase).Updated = value;}, 
+					data => (data as JmapBase).Updated )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -216,8 +217,8 @@ public partial class Relation : JmapBaseSchema {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyDictionaryBoolean ("relationships", 
-					(IBinding data, Dictionary<string,bool>? value) => {(data as Relation).Relationships = value;}, 
-					(IBinding data) => (data as Relation).Relationships )
+					(data, value) => {(data as Relation).Relationships = value;}, 
+					data => (data as Relation).Relationships )
 		];
 
     ///<summary>Implement IBinding</summary> 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/8/2025 1:32:10 PM
+//  This file was automatically generated at 10/20/2025 6:33:55 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -134,6 +135,9 @@ public partial class CatalogedMachine : HostCatalogItem {
 	[JsonPropertyName("Default")]
 	public virtual bool?					Default  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileAccount")]
 	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;} 
 
@@ -155,6 +159,9 @@ public partial class CatalogedMachine : HostCatalogItem {
 	[JsonPropertyName("CatalogedDeviceDigest")]
 	public virtual string?					CatalogedDeviceDigest  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedAccountHostAssignment")]
 	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} 
 
@@ -169,32 +176,28 @@ public partial class CatalogedMachine : HostCatalogItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Id", 
-					(IBinding data, string? value) => {(data as CatalogedMachine).Id = value;}, 
-					(IBinding data) => (data as CatalogedMachine).Id ),
+					(data, value) => {(data as CatalogedMachine).Id = value;}, 
+					data => (data as CatalogedMachine).Id ),
 		new PropertyString ("Local", 
-					(IBinding data, string? value) => {(data as CatalogedMachine).Local = value;}, 
-					(IBinding data) => (data as CatalogedMachine).Local ),
+					(data, value) => {(data as CatalogedMachine).Local = value;}, 
+					data => (data as CatalogedMachine).Local ),
 		new PropertyBoolean ("Default", 
-					(IBinding data, bool? value) => {(data as CatalogedMachine).Default = value;}, 
-					(IBinding data) => (data as CatalogedMachine).Default ),
-		new PropertyGStruct ("EnvelopedProfileAccount", /*typeof (ProfileAccount<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedMachine).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;},
-					(IBinding data) => (data as CatalogedMachine).EnvelopedProfileAccount,
-					/*(IBinding data, object? value) => {(data as CatalogedMachine).ProfileAccount = value as ProfileAccount;},
-					(IBinding data) => (data as CatalogedMachine).ProfileAccount,*/
+					(data, value) => {(data as CatalogedMachine).Default = value;}, 
+					data => (data as CatalogedMachine).Default ),
+		new PropertyGStruct ("EnvelopedProfileAccount", typeof (Enveloped),
+					(data, value) => {(data as CatalogedMachine).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;},
+					data => (data as CatalogedMachine).EnvelopedProfileAccount,
 					()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
 		new PropertyStruct ("CatalogedDevice", typeof (CatalogedDevice),
-					(IBinding data, object? value) => {(data as CatalogedMachine).CatalogedDevice = value as CatalogedDevice;}, 
-					(IBinding data) => (data as CatalogedMachine).CatalogedDevice,
+					(data, value) => {(data as CatalogedMachine).CatalogedDevice = value as CatalogedDevice;}, 
+					data => (data as CatalogedMachine).CatalogedDevice,
 					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice()),
 		new PropertyString ("CatalogedDeviceDigest", 
-					(IBinding data, string? value) => {(data as CatalogedMachine).CatalogedDeviceDigest = value;}, 
-					(IBinding data) => (data as CatalogedMachine).CatalogedDeviceDigest ),
-		new PropertyGStruct ("EnvelopedAccountHostAssignment", /*typeof (AccountHostAssignment<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedMachine).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
-					(IBinding data) => (data as CatalogedMachine).EnvelopedAccountHostAssignment,
-					/*(IBinding data, object? value) => {(data as CatalogedMachine).AccountHostAssignment = value as AccountHostAssignment;},
-					(IBinding data) => (data as CatalogedMachine).AccountHostAssignment,*/
+					(data, value) => {(data as CatalogedMachine).CatalogedDeviceDigest = value;}, 
+					data => (data as CatalogedMachine).CatalogedDeviceDigest ),
+		new PropertyGStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped),
+					(data, value) => {(data as CatalogedMachine).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
+					data => (data as CatalogedMachine).EnvelopedAccountHostAssignment,
 					()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())
 		];
 
@@ -238,6 +241,9 @@ public partial class CatalogedMachine : HostCatalogItem {
 	/// Describes an ordinary device connected to a Mesh
 	/// </summary>
 public partial class CatalogedService : CatalogedMachine {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileService")]
 	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;} 
 
@@ -245,6 +251,9 @@ public partial class CatalogedService : CatalogedMachine {
 	/// Wrapped property
     /// </summary>
 	public virtual ProfileService?				ProfileService  => EnvelopedProfileService.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileHost")]
 	public virtual Enveloped<ProfileHost>?					EnvelopedProfileHost  {get; set;} 
 
@@ -252,6 +261,9 @@ public partial class CatalogedService : CatalogedMachine {
 	/// Wrapped property
     /// </summary>
 	public virtual ProfileHost?				ProfileHost  => EnvelopedProfileHost.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedActivationCommon")]
 	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} 
 
@@ -259,6 +271,9 @@ public partial class CatalogedService : CatalogedMachine {
 	/// Wrapped property
     /// </summary>
 	public virtual ActivationCommon?				ActivationCommon  => EnvelopedActivationCommon.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedActivationHost")]
 	public virtual Enveloped<ActivationHost>?					EnvelopedActivationHost  {get; set;} 
 
@@ -266,6 +281,9 @@ public partial class CatalogedService : CatalogedMachine {
 	/// Wrapped property
     /// </summary>
 	public virtual ActivationHost?				ActivationHost  => EnvelopedActivationHost.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedConnectionService")]
 	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} 
 
@@ -286,39 +304,29 @@ public partial class CatalogedService : CatalogedMachine {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedProfileService", /*typeof (ProfileService<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedProfileService = value as Enveloped<ProfileService>;},
-					(IBinding data) => (data as CatalogedService).EnvelopedProfileService,
-					/*(IBinding data, object? value) => {(data as CatalogedService).ProfileService = value as ProfileService;},
-					(IBinding data) => (data as CatalogedService).ProfileService,*/
+		new PropertyGStruct ("EnvelopedProfileService", typeof (Enveloped),
+					(data, value) => {(data as CatalogedService).EnvelopedProfileService = value as Enveloped<ProfileService>;},
+					data => (data as CatalogedService).EnvelopedProfileService,
 					()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>()),
-		new PropertyGStruct ("EnvelopedProfileHost", /*typeof (ProfileHost<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedProfileHost = value as Enveloped<ProfileHost>;},
-					(IBinding data) => (data as CatalogedService).EnvelopedProfileHost,
-					/*(IBinding data, object? value) => {(data as CatalogedService).ProfileHost = value as ProfileHost;},
-					(IBinding data) => (data as CatalogedService).ProfileHost,*/
+		new PropertyGStruct ("EnvelopedProfileHost", typeof (Enveloped),
+					(data, value) => {(data as CatalogedService).EnvelopedProfileHost = value as Enveloped<ProfileHost>;},
+					data => (data as CatalogedService).EnvelopedProfileHost,
 					()=>new  Enveloped<ProfileHost>(), ()=>new Enveloped<ProfileHost>()),
-		new PropertyGStruct ("EnvelopedActivationCommon", /*typeof (ActivationCommon<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;},
-					(IBinding data) => (data as CatalogedService).EnvelopedActivationCommon,
-					/*(IBinding data, object? value) => {(data as CatalogedService).ActivationCommon = value as ActivationCommon;},
-					(IBinding data) => (data as CatalogedService).ActivationCommon,*/
+		new PropertyGStruct ("EnvelopedActivationCommon", typeof (Enveloped),
+					(data, value) => {(data as CatalogedService).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;},
+					data => (data as CatalogedService).EnvelopedActivationCommon,
 					()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>()),
-		new PropertyGStruct ("EnvelopedActivationHost", /*typeof (ActivationHost<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedActivationHost = value as Enveloped<ActivationHost>;},
-					(IBinding data) => (data as CatalogedService).EnvelopedActivationHost,
-					/*(IBinding data, object? value) => {(data as CatalogedService).ActivationHost = value as ActivationHost;},
-					(IBinding data) => (data as CatalogedService).ActivationHost,*/
+		new PropertyGStruct ("EnvelopedActivationHost", typeof (Enveloped),
+					(data, value) => {(data as CatalogedService).EnvelopedActivationHost = value as Enveloped<ActivationHost>;},
+					data => (data as CatalogedService).EnvelopedActivationHost,
 					()=>new  Enveloped<ActivationHost>(), ()=>new Enveloped<ActivationHost>()),
-		new PropertyGStruct ("EnvelopedConnectionService", /*typeof (ConnectionService<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedService).EnvelopedConnectionService = value as Enveloped<ConnectionService>;},
-					(IBinding data) => (data as CatalogedService).EnvelopedConnectionService,
-					/*(IBinding data, object? value) => {(data as CatalogedService).ConnectionService = value as ConnectionService;},
-					(IBinding data) => (data as CatalogedService).ConnectionService,*/
+		new PropertyGStruct ("EnvelopedConnectionService", typeof (Enveloped),
+					(data, value) => {(data as CatalogedService).EnvelopedConnectionService = value as Enveloped<ConnectionService>;},
+					data => (data as CatalogedService).EnvelopedConnectionService,
 					()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>()),
 		new PropertyString ("ServiceIdentifier", 
-					(IBinding data, string? value) => {(data as CatalogedService).ServiceIdentifier = value;}, 
-					(IBinding data) => (data as CatalogedService).ServiceIdentifier )
+					(data, value) => {(data as CatalogedService).ServiceIdentifier = value;}, 
+					data => (data as CatalogedService).ServiceIdentifier )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -409,6 +417,9 @@ public partial class CatalogedPending : CatalogedMachine {
 	[JsonPropertyName("DeviceUDF")]
 	public virtual string?					DeviceUDF  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileDevice")]
 	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;} 
 
@@ -416,6 +427,9 @@ public partial class CatalogedPending : CatalogedMachine {
 	/// Wrapped property
     /// </summary>
 	public virtual ProfileDevice?				ProfileDevice  => EnvelopedProfileDevice.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedAcknowledgeConnection")]
 	public virtual Enveloped<AcknowledgeConnection>?					EnvelopedAcknowledgeConnection  {get; set;} 
 
@@ -437,23 +451,19 @@ public partial class CatalogedPending : CatalogedMachine {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("DeviceUDF", 
-					(IBinding data, string? value) => {(data as CatalogedPending).DeviceUDF = value;}, 
-					(IBinding data) => (data as CatalogedPending).DeviceUDF ),
-		new PropertyGStruct ("EnvelopedProfileDevice", /*typeof (ProfileDevice<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedPending).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;},
-					(IBinding data) => (data as CatalogedPending).EnvelopedProfileDevice,
-					/*(IBinding data, object? value) => {(data as CatalogedPending).ProfileDevice = value as ProfileDevice;},
-					(IBinding data) => (data as CatalogedPending).ProfileDevice,*/
+					(data, value) => {(data as CatalogedPending).DeviceUDF = value;}, 
+					data => (data as CatalogedPending).DeviceUDF ),
+		new PropertyGStruct ("EnvelopedProfileDevice", typeof (Enveloped),
+					(data, value) => {(data as CatalogedPending).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;},
+					data => (data as CatalogedPending).EnvelopedProfileDevice,
 					()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>()),
-		new PropertyGStruct ("EnvelopedAcknowledgeConnection", /*typeof (AcknowledgeConnection<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedPending).EnvelopedAcknowledgeConnection = value as Enveloped<AcknowledgeConnection>;},
-					(IBinding data) => (data as CatalogedPending).EnvelopedAcknowledgeConnection,
-					/*(IBinding data, object? value) => {(data as CatalogedPending).AcknowledgeConnection = value as AcknowledgeConnection;},
-					(IBinding data) => (data as CatalogedPending).AcknowledgeConnection,*/
+		new PropertyGStruct ("EnvelopedAcknowledgeConnection", typeof (Enveloped),
+					(data, value) => {(data as CatalogedPending).EnvelopedAcknowledgeConnection = value as Enveloped<AcknowledgeConnection>;},
+					data => (data as CatalogedPending).EnvelopedAcknowledgeConnection,
 					()=>new  Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>()),
 		new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as CatalogedPending).AccountAddress = value;}, 
-					(IBinding data) => (data as CatalogedPending).AccountAddress )
+					(data, value) => {(data as CatalogedPending).AccountAddress = value;}, 
+					data => (data as CatalogedPending).AccountAddress )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -494,6 +504,9 @@ public partial class CatalogedPending : CatalogedMachine {
 	/// manufacturer profile.
 	/// </summary>
 public partial class CatalogedPreconfigured : CatalogedMachine {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileDevice")]
 	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;} 
 
@@ -501,6 +514,9 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 	/// Wrapped property
     /// </summary>
 	public virtual ProfileDevice?				ProfileDevice  => EnvelopedProfileDevice.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedConnectionService")]
 	public virtual Enveloped<ConnectionService>?					EnvelopedConnectionService  {get; set;} 
 
@@ -508,6 +524,9 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 	/// Wrapped property
     /// </summary>
 	public virtual ConnectionService?				ConnectionService  => EnvelopedConnectionService.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedConnectionDevice")]
 	public virtual Enveloped<ConnectionDevice>?					EnvelopedConnectionDevice  {get; set;} 
 
@@ -549,36 +568,30 @@ public partial class CatalogedPreconfigured : CatalogedMachine {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedProfileDevice", /*typeof (ProfileDevice<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;},
-					(IBinding data) => (data as CatalogedPreconfigured).EnvelopedProfileDevice,
-					/*(IBinding data, object? value) => {(data as CatalogedPreconfigured).ProfileDevice = value as ProfileDevice;},
-					(IBinding data) => (data as CatalogedPreconfigured).ProfileDevice,*/
+		new PropertyGStruct ("EnvelopedProfileDevice", typeof (Enveloped),
+					(data, value) => {(data as CatalogedPreconfigured).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;},
+					data => (data as CatalogedPreconfigured).EnvelopedProfileDevice,
 					()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>()),
-		new PropertyGStruct ("EnvelopedConnectionService", /*typeof (ConnectionService<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedConnectionService = value as Enveloped<ConnectionService>;},
-					(IBinding data) => (data as CatalogedPreconfigured).EnvelopedConnectionService,
-					/*(IBinding data, object? value) => {(data as CatalogedPreconfigured).ConnectionService = value as ConnectionService;},
-					(IBinding data) => (data as CatalogedPreconfigured).ConnectionService,*/
+		new PropertyGStruct ("EnvelopedConnectionService", typeof (Enveloped),
+					(data, value) => {(data as CatalogedPreconfigured).EnvelopedConnectionService = value as Enveloped<ConnectionService>;},
+					data => (data as CatalogedPreconfigured).EnvelopedConnectionService,
 					()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>()),
-		new PropertyGStruct ("EnvelopedConnectionDevice", /*typeof (ConnectionDevice<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedPreconfigured).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;},
-					(IBinding data) => (data as CatalogedPreconfigured).EnvelopedConnectionDevice,
-					/*(IBinding data, object? value) => {(data as CatalogedPreconfigured).ConnectionDevice = value as ConnectionDevice;},
-					(IBinding data) => (data as CatalogedPreconfigured).ConnectionDevice,*/
+		new PropertyGStruct ("EnvelopedConnectionDevice", typeof (Enveloped),
+					(data, value) => {(data as CatalogedPreconfigured).EnvelopedConnectionDevice = value as Enveloped<ConnectionDevice>;},
+					data => (data as CatalogedPreconfigured).EnvelopedConnectionDevice,
 					()=>new  Enveloped<ConnectionDevice>(), ()=>new Enveloped<ConnectionDevice>()),
 		new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as CatalogedPreconfigured).AccountAddress = value;}, 
-					(IBinding data) => (data as CatalogedPreconfigured).AccountAddress ),
+					(data, value) => {(data as CatalogedPreconfigured).AccountAddress = value;}, 
+					data => (data as CatalogedPreconfigured).AccountAddress ),
 		new PropertyString ("PublicationId", 
-					(IBinding data, string? value) => {(data as CatalogedPreconfigured).PublicationId = value;}, 
-					(IBinding data) => (data as CatalogedPreconfigured).PublicationId ),
+					(data, value) => {(data as CatalogedPreconfigured).PublicationId = value;}, 
+					data => (data as CatalogedPreconfigured).PublicationId ),
 		new PropertyString ("ServiceAuthenticator", 
-					(IBinding data, string? value) => {(data as CatalogedPreconfigured).ServiceAuthenticator = value;}, 
-					(IBinding data) => (data as CatalogedPreconfigured).ServiceAuthenticator ),
+					(data, value) => {(data as CatalogedPreconfigured).ServiceAuthenticator = value;}, 
+					data => (data as CatalogedPreconfigured).ServiceAuthenticator ),
 		new PropertyString ("DeviceAuthenticator", 
-					(IBinding data, string? value) => {(data as CatalogedPreconfigured).DeviceAuthenticator = value;}, 
-					(IBinding data) => (data as CatalogedPreconfigured).DeviceAuthenticator )
+					(data, value) => {(data as CatalogedPreconfigured).DeviceAuthenticator = value;}, 
+					data => (data as CatalogedPreconfigured).DeviceAuthenticator )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -646,14 +659,14 @@ public partial class ShellDispatch : HostCatalogItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Protocol", 
-					(IBinding data, string? value) => {(data as ShellDispatch).Protocol = value;}, 
-					(IBinding data) => (data as ShellDispatch).Protocol ),
+					(data, value) => {(data as ShellDispatch).Protocol = value;}, 
+					data => (data as ShellDispatch).Protocol ),
 		new PropertyString ("Icon", 
-					(IBinding data, string? value) => {(data as ShellDispatch).Icon = value;}, 
-					(IBinding data) => (data as ShellDispatch).Icon ),
+					(data, value) => {(data as ShellDispatch).Icon = value;}, 
+					data => (data as ShellDispatch).Icon ),
 		new PropertyListStruct ("Actions", typeof (ShellAction),
-					(IBinding data, object? value) => {(data as ShellDispatch).Actions = value as List<ShellAction>;}, 
-					(IBinding data) => (data as ShellDispatch).Actions,
+					(data, value) => {(data as ShellDispatch).Actions = value as List<ShellAction>;}, 
+					data => (data as ShellDispatch).Actions,
 					false, ()=>new  List<ShellAction>(), ()=>new ShellAction())
 		];
 
@@ -726,17 +739,17 @@ public partial class ShellAction : HostCatalogItem {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Id", 
-					(IBinding data, string? value) => {(data as ShellAction).Id = value;}, 
-					(IBinding data) => (data as ShellAction).Id ),
+					(data, value) => {(data as ShellAction).Id = value;}, 
+					data => (data as ShellAction).Id ),
 		new PropertyString ("Icon", 
-					(IBinding data, string? value) => {(data as ShellAction).Icon = value;}, 
-					(IBinding data) => (data as ShellAction).Icon ),
+					(data, value) => {(data as ShellAction).Icon = value;}, 
+					data => (data as ShellAction).Icon ),
 		new PropertyString ("Mode", 
-					(IBinding data, string? value) => {(data as ShellAction).Mode = value;}, 
-					(IBinding data) => (data as ShellAction).Mode ),
+					(data, value) => {(data as ShellAction).Mode = value;}, 
+					data => (data as ShellAction).Mode ),
 		new PropertyString ("Parameter", 
-					(IBinding data, string? value) => {(data as ShellAction).Parameter = value;}, 
-					(IBinding data) => (data as ShellAction).Parameter )
+					(data, value) => {(data as ShellAction).Parameter = value;}, 
+					data => (data as ShellAction).Parameter )
 		];
 
     ///<summary>Implement IBinding</summary> 

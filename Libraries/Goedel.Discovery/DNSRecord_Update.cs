@@ -24,41 +24,77 @@ using Goedel.Discovery;
 namespace Goedel.Discovery;
 
 
-
+/// <summary>
+/// DNS update records.
+/// </summary>
 public abstract class DNSRecord_Update : DNSItem {
 
 
     }
 
+
+/// <summary>
+/// Precondition, name is in use or not in use.
+/// </summary>
 public class DNSRecord_PreNameInUse : DNSRecord_Update {
+
+    ///<summary>If true, condition is the name must NOT be in use.</summary>
     public bool Negate { get; set; }
     }
 
+
+/// <summary>
+/// Precondition, record set exists or does not exist..
+/// </summary>
 public class DNSRecord_PreRRSetExists : DNSRecord_Update {
+
+    ///<summary>If true, condition is the record set must NOT exist.</summary>
     public bool Negate { get; set; }
+
+    ///<summary>The record set to test.</summary>
     public DNSRecord Value { get; set; }
     }
 
-
+/// <summary>
+/// Add a record.
+/// </summary>
 public class DNSRecord_Add : DNSRecord_Update {
+
+    ///<summary>The record to add.</summary>
     public DNSRecord Add { get; set; }
 
+
+    /// <summary>
+    /// Constructor, create an add update record for a record with label
+    /// <paramref name="label"/>, type <paramref name="typeCode"/> and
+    /// data <paramref name="data"/>.
+    /// </summary>
+    /// <param name="label">The record label.</param>
+    /// <param name="typeCode">The record typecode</param>
+    /// <param name="data">The record data.</param>
     public DNSRecord_Add(
-                string name,
+                string label,
                 DNSTypeCode typeCode,
-                byte[] add) {
+                byte[] data) {
         
-        Add = DNSRecord.DecodeRData(name, typeCode, add);
-        Add.Domain = new Domain(name);
+        Add = DNSRecord.DecodeRData(label, typeCode, data);
+        Add.Domain = new Domain(label);
         }
 
 
     }
 
+/// <summary>
+/// DNS Update, delete all records.
+/// </summary>
 public class DNSRecord_DeleteAll : DNSRecord_Update {
 
+    /// <summary>
+    /// Constructor, delete all records.
+    /// </summary>
+    /// <param name="label">The record label to delete.</param>
     public DNSRecord_DeleteAll(
-                string name) {
+                string label) {
         }
 
 
@@ -67,10 +103,18 @@ public class DNSRecord_DeleteAll : DNSRecord_Update {
 
 
 
-
+/// <summary>
+/// DNS Update, delete all records of a specified type
+/// </summary>
 public class DNSRecord_DeleteRRset : DNSRecord_Update {
+
+    /// <summary>
+    /// Constructor, delete all records of type <paramref name="type"/>.
+    /// </summary>
+    /// <param name="label">The record label to delete.</param>
+    /// <param name="type">The type of label to delete.</param>
     public DNSRecord_DeleteRRset(
-                string name,
+                string label,
                 DNSTypeCode type) {
         }
 
@@ -78,15 +122,28 @@ public class DNSRecord_DeleteRRset : DNSRecord_Update {
 
     }
 
+
+/// <summary>
+/// DNS Update, delete a specified resource record.
+/// </summary>
 public class DNSRecord_DeleteRR : DNSRecord_Update {
 
+    /// <summary>
+    /// The record to delete.
+    /// </summary>
     public DNSRecord Delete { get; set; }
 
-
+    /// <summary>
+    /// Constructor, the record of with label <paramref name="label"/>,
+    /// type <paramref name="type"/> and value <paramref name="data"/>.
+    /// </summary>
+    /// <param name="label">The record label to delete.</param>
+    /// <param name="type">The type of label to delete.</param>
+    /// <param name="data"></param>
     public DNSRecord_DeleteRR(
-            string name,
-                DNSTypeCode typeCode,
-                byte[] add) {
+            string label,
+                DNSTypeCode type,
+                byte[] data) {
         //Delete = delete;
         }
 

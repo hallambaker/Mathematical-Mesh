@@ -38,6 +38,7 @@ namespace Goedel.Protocol;
 /// <param name="Tag">JSON tag for this object.</param>
 /// <param name="Parent">Parent the object inherits from.</param>
 /// <param name="TypeTag">Specifies the property name for the property specifying the type.</param>
+/// <param name="Generic">If true, the binding is generic.</param>
 public abstract record Binding(
             Dictionary<string, Property> Properties,
             string Tag,
@@ -140,15 +141,25 @@ public abstract record Binding(
         return template;
         }
 
+    /// <summary>
+    /// Parse the array <paramref name="array"/> as an order sensitive structure 
+    /// described by <paramref name="binding"/> writing the results to 
+    /// <paramref name="template"/>.
+    /// </summary>
+    /// <param name="array">The array to parse</param>
+    /// <param name="binding">The binding mapping array items to properties.</param>
+    /// <param name="template">The object to collect the results.</param>
+    /// <param name="collectUparsed">If true, collect undefined elements.</param>
+    /// <returns>The parsed template.</returns>
     public static JsonObject Parse(
-                JsonElementArray element,
+                JsonElementArray array,
                 Binding binding,
                 JsonObject template,
                 bool collectUparsed = false) {
         //var template = (JsonObject)binding.Factory();
 
-        for (var i = 0; i < element.Items.Count & i < binding.AllProperties.Count; i++) {
-            var propertyData = element.Items[i];
+        for (var i = 0; i < array.Items.Count & i < binding.AllProperties.Count; i++) {
+            var propertyData = array.Items[i];
             var propertyDescription = template._Properties[i];
 
             MapProperty(template, propertyData, propertyDescription);
@@ -160,11 +171,21 @@ public abstract record Binding(
 
 
 
-
+    /// <summary>
+    /// Deserialize the element <paramref name="element"/> as a tagged JSON object
+    /// described by <paramref name="binding"/>.
+    /// </summary>
+    /// <param name="element">The parse structure to deserialize.</param>
+    /// <param name="binding">The binding.</param>
+    /// <param name="collectUparsed">If true, collect undefined elements.</param>
+    /// <param name="service">Additional names used to identify service methods</param>
+    /// <returns>The result of the deserialization.</returns>
+    /// <exception cref="NYI"></exception>
     public static JsonObject ParseTagged(
                 JsonElementObject element,
                 Binding binding,
-                bool collectUparsed = false, JpcInterface service = null) {
+                bool collectUparsed = false, 
+                JpcInterface service = null) {
         (element.Properties.Count == 1).AssertTrue(NYI.Throw);
         foreach (var member in element.Properties) {
             if (binding.TypeDictionary.TryGetValue(member.Key, out var subBinding)) {
@@ -764,6 +785,7 @@ public abstract record Binding(
 /// <param name="LFactory">List instance factory.</param>
 /// <param name="DFactory">Dictionary instance factory type.</param>
 /// <param name="TypeTag">The type tag used to distinguish objects of this type.</param>
+/// <param name="Generic">If true, the binding is for a generic type.</param>
 public record Binding<T>(
             Dictionary<string, Property> Properties,
             string Tag,

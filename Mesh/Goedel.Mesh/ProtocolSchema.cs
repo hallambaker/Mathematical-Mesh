@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/8/2025 5:09:46 PM
+//  This file was automatically generated at 10/20/2025 6:33:54 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -963,6 +964,9 @@ public partial class MeshRequestUser : MeshRequest {
 	[JsonPropertyName("Capability")]
 	public virtual string?					Capability  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileDevice")]
 	public virtual Enveloped<ProfileDevice>?					EnvelopedProfileDevice  {get; set;} 
 
@@ -977,16 +981,14 @@ public partial class MeshRequestUser : MeshRequest {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Account", 
-					(IBinding data, string? value) => {(data as MeshRequestUser).Account = value;}, 
-					(IBinding data) => (data as MeshRequestUser).Account ),
+					(data, value) => {(data as MeshRequestUser).Account = value;}, 
+					data => (data as MeshRequestUser).Account ),
 		new PropertyString ("Capability", 
-					(IBinding data, string? value) => {(data as MeshRequestUser).Capability = value;}, 
-					(IBinding data) => (data as MeshRequestUser).Capability ),
-		new PropertyGStruct ("EnvelopedProfileDevice", /*typeof (ProfileDevice<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as MeshRequestUser).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;},
-					(IBinding data) => (data as MeshRequestUser).EnvelopedProfileDevice,
-					/*(IBinding data, object? value) => {(data as MeshRequestUser).ProfileDevice = value as ProfileDevice;},
-					(IBinding data) => (data as MeshRequestUser).ProfileDevice,*/
+					(data, value) => {(data as MeshRequestUser).Capability = value;}, 
+					data => (data as MeshRequestUser).Capability ),
+		new PropertyGStruct ("EnvelopedProfileDevice", typeof (Enveloped),
+					(data, value) => {(data as MeshRequestUser).EnvelopedProfileDevice = value as Enveloped<ProfileDevice>;},
+					data => (data as MeshRequestUser).EnvelopedProfileDevice,
 					()=>new  Enveloped<ProfileDevice>(), ()=>new Enveloped<ProfileDevice>())
 		];
 
@@ -1090,11 +1092,11 @@ public partial class KeyValue : MeshProtocol {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as KeyValue).Key = value;}, 
-					(IBinding data) => (data as KeyValue).Key ),
+					(data, value) => {(data as KeyValue).Key = value;}, 
+					data => (data as KeyValue).Key ),
 		new PropertyString ("Value", 
-					(IBinding data, string? value) => {(data as KeyValue).Value = value;}, 
-					(IBinding data) => (data as KeyValue).Value )
+					(data, value) => {(data as KeyValue).Value = value;}, 
+					data => (data as KeyValue).Value )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1191,23 +1193,23 @@ public partial class ConstraintsSelect : MeshProtocol {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Store", 
-					(IBinding data, string? value) => {(data as ConstraintsSelect).Store = value;}, 
-					(IBinding data) => (data as ConstraintsSelect).Store ),
+					(data, value) => {(data as ConstraintsSelect).Store = value;}, 
+					data => (data as ConstraintsSelect).Store ),
 		new PropertyInteger64 ("IndexMin", 
-					(IBinding data, long? value) => {(data as ConstraintsSelect).IndexMin = value;}, 
-					(IBinding data) => (data as ConstraintsSelect).IndexMin ),
+					(data, value) => {(data as ConstraintsSelect).IndexMin = value;}, 
+					data => (data as ConstraintsSelect).IndexMin ),
 		new PropertyInteger64 ("IndexMax", 
-					(IBinding data, long? value) => {(data as ConstraintsSelect).IndexMax = value;}, 
-					(IBinding data) => (data as ConstraintsSelect).IndexMax ),
+					(data, value) => {(data as ConstraintsSelect).IndexMax = value;}, 
+					data => (data as ConstraintsSelect).IndexMax ),
 		new PropertyDateTime ("NotBefore", 
-					(IBinding data, DateTime? value) => {(data as ConstraintsSelect).NotBefore = value;}, 
-					(IBinding data) => (data as ConstraintsSelect).NotBefore ),
+					(data, value) => {(data as ConstraintsSelect).NotBefore = value;}, 
+					data => (data as ConstraintsSelect).NotBefore ),
 		new PropertyDateTime ("Before", 
-					(IBinding data, DateTime? value) => {(data as ConstraintsSelect).Before = value;}, 
-					(IBinding data) => (data as ConstraintsSelect).Before ),
+					(data, value) => {(data as ConstraintsSelect).Before = value;}, 
+					data => (data as ConstraintsSelect).Before ),
 		new PropertyString ("PageKey", 
-					(IBinding data, string? value) => {(data as ConstraintsSelect).PageKey = value;}, 
-					(IBinding data) => (data as ConstraintsSelect).PageKey )
+					(data, value) => {(data as ConstraintsSelect).PageKey = value;}, 
+					data => (data as ConstraintsSelect).PageKey )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1299,23 +1301,23 @@ public partial class ConstraintsData : MeshProtocol {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger64 ("MaxEntries", 
-					(IBinding data, long? value) => {(data as ConstraintsData).MaxEntries = value;}, 
-					(IBinding data) => (data as ConstraintsData).MaxEntries ),
+					(data, value) => {(data as ConstraintsData).MaxEntries = value;}, 
+					data => (data as ConstraintsData).MaxEntries ),
 		new PropertyInteger64 ("BytesOffset", 
-					(IBinding data, long? value) => {(data as ConstraintsData).BytesOffset = value;}, 
-					(IBinding data) => (data as ConstraintsData).BytesOffset ),
+					(data, value) => {(data as ConstraintsData).BytesOffset = value;}, 
+					data => (data as ConstraintsData).BytesOffset ),
 		new PropertyInteger64 ("BytesMax", 
-					(IBinding data, long? value) => {(data as ConstraintsData).BytesMax = value;}, 
-					(IBinding data) => (data as ConstraintsData).BytesMax ),
+					(data, value) => {(data as ConstraintsData).BytesMax = value;}, 
+					data => (data as ConstraintsData).BytesMax ),
 		new PropertyBoolean ("Header", 
-					(IBinding data, bool? value) => {(data as ConstraintsData).Header = value;}, 
-					(IBinding data) => (data as ConstraintsData).Header ),
+					(data, value) => {(data as ConstraintsData).Header = value;}, 
+					data => (data as ConstraintsData).Header ),
 		new PropertyBoolean ("Payload", 
-					(IBinding data, bool? value) => {(data as ConstraintsData).Payload = value;}, 
-					(IBinding data) => (data as ConstraintsData).Payload ),
+					(data, value) => {(data as ConstraintsData).Payload = value;}, 
+					data => (data as ConstraintsData).Payload ),
 		new PropertyBoolean ("Trailer", 
-					(IBinding data, bool? value) => {(data as ConstraintsData).Trailer = value;}, 
-					(IBinding data) => (data as ConstraintsData).Trailer )
+					(data, value) => {(data as ConstraintsData).Trailer = value;}, 
+					data => (data as ConstraintsData).Trailer )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1389,14 +1391,14 @@ public partial class PolicyAccount : MeshProtocol {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger32 ("Minimum", 
-					(IBinding data, int? value) => {(data as PolicyAccount).Minimum = value;}, 
-					(IBinding data) => (data as PolicyAccount).Minimum ),
+					(data, value) => {(data as PolicyAccount).Minimum = value;}, 
+					data => (data as PolicyAccount).Minimum ),
 		new PropertyInteger32 ("Maximum", 
-					(IBinding data, int? value) => {(data as PolicyAccount).Maximum = value;}, 
-					(IBinding data) => (data as PolicyAccount).Maximum ),
+					(data, value) => {(data as PolicyAccount).Maximum = value;}, 
+					data => (data as PolicyAccount).Maximum ),
 		new PropertyString ("InvalidCharacters", 
-					(IBinding data, string? value) => {(data as PolicyAccount).InvalidCharacters = value;}, 
-					(IBinding data) => (data as PolicyAccount).InvalidCharacters )
+					(data, value) => {(data as PolicyAccount).InvalidCharacters = value;}, 
+					data => (data as PolicyAccount).InvalidCharacters )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1460,14 +1462,14 @@ public partial class StoreStatus : MeshProtocol {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Store", 
-					(IBinding data, string? value) => {(data as StoreStatus).Store = value;}, 
-					(IBinding data) => (data as StoreStatus).Store ),
+					(data, value) => {(data as StoreStatus).Store = value;}, 
+					data => (data as StoreStatus).Store ),
 		new PropertyInteger64 ("Index", 
-					(IBinding data, long? value) => {(data as StoreStatus).Index = value;}, 
-					(IBinding data) => (data as StoreStatus).Index ),
+					(data, value) => {(data as StoreStatus).Index = value;}, 
+					data => (data as StoreStatus).Index ),
 		new PropertyBinary ("Digest", 
-					(IBinding data, byte[]? value) => {(data as StoreStatus).Digest = value;}, 
-					(IBinding data) => (data as StoreStatus).Digest )
+					(data, value) => {(data as StoreStatus).Digest = value;}, 
+					data => (data as StoreStatus).Digest )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1533,15 +1535,15 @@ public partial class StoreUpdate : StoreStatus {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("Envelopes", typeof (Enveloped),
-					(IBinding data, object? value) => {(data as StoreUpdate).Envelopes = value as List<Enveloped>;}, 
-					(IBinding data) => (data as StoreUpdate).Envelopes,
+					(data, value) => {(data as StoreUpdate).Envelopes = value as List<Enveloped>;}, 
+					data => (data as StoreUpdate).Envelopes,
 					false, ()=>new  List<Enveloped>(), ()=>new Enveloped()),
 		new PropertyBoolean ("Partial", 
-					(IBinding data, bool? value) => {(data as StoreUpdate).Partial = value;}, 
-					(IBinding data) => (data as StoreUpdate).Partial ),
+					(data, value) => {(data as StoreUpdate).Partial = value;}, 
+					data => (data as StoreUpdate).Partial ),
 		new PropertyInteger64 ("FinalIndex", 
-					(IBinding data, long? value) => {(data as StoreUpdate).FinalIndex = value;}, 
-					(IBinding data) => (data as StoreUpdate).FinalIndex )
+					(data, value) => {(data as StoreUpdate).FinalIndex = value;}, 
+					data => (data as StoreUpdate).FinalIndex )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1592,8 +1594,8 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("CallsignBinding", typeof (CallsignBinding),
-					(IBinding data, object? value) => {(data as MeshHelloRequest).CallsignBinding = value as CallsignBinding;}, 
-					(IBinding data) => (data as MeshHelloRequest).CallsignBinding,
+					(data, value) => {(data as MeshHelloRequest).CallsignBinding = value as CallsignBinding;}, 
+					data => (data as MeshHelloRequest).CallsignBinding,
 					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())
 		];
 
@@ -1650,6 +1652,9 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 	[JsonPropertyName("PolicyAccount")]
 	public virtual PolicyAccount?					PolicyAccount  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileService")]
 	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;} 
 
@@ -1672,26 +1677,24 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("ConstraintsUpdate", typeof (ConstraintsData),
-					(IBinding data, object? value) => {(data as MeshHelloResponse).ConstraintsUpdate = value as ConstraintsData;}, 
-					(IBinding data) => (data as MeshHelloResponse).ConstraintsUpdate,
+					(data, value) => {(data as MeshHelloResponse).ConstraintsUpdate = value as ConstraintsData;}, 
+					data => (data as MeshHelloResponse).ConstraintsUpdate,
 					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData()),
 		new PropertyStruct ("ConstraintsPost", typeof (ConstraintsData),
-					(IBinding data, object? value) => {(data as MeshHelloResponse).ConstraintsPost = value as ConstraintsData;}, 
-					(IBinding data) => (data as MeshHelloResponse).ConstraintsPost,
+					(data, value) => {(data as MeshHelloResponse).ConstraintsPost = value as ConstraintsData;}, 
+					data => (data as MeshHelloResponse).ConstraintsPost,
 					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData()),
 		new PropertyStruct ("PolicyAccount", typeof (PolicyAccount),
-					(IBinding data, object? value) => {(data as MeshHelloResponse).PolicyAccount = value as PolicyAccount;}, 
-					(IBinding data) => (data as MeshHelloResponse).PolicyAccount,
+					(data, value) => {(data as MeshHelloResponse).PolicyAccount = value as PolicyAccount;}, 
+					data => (data as MeshHelloResponse).PolicyAccount,
 					false, ()=>new  PolicyAccount(), ()=>new PolicyAccount()),
-		new PropertyGStruct ("EnvelopedProfileService", /*typeof (ProfileService<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as MeshHelloResponse).EnvelopedProfileService = value as Enveloped<ProfileService>;},
-					(IBinding data) => (data as MeshHelloResponse).EnvelopedProfileService,
-					/*(IBinding data, object? value) => {(data as MeshHelloResponse).ProfileService = value as ProfileService;},
-					(IBinding data) => (data as MeshHelloResponse).ProfileService,*/
+		new PropertyGStruct ("EnvelopedProfileService", typeof (Enveloped),
+					(data, value) => {(data as MeshHelloResponse).EnvelopedProfileService = value as Enveloped<ProfileService>;},
+					data => (data as MeshHelloResponse).EnvelopedProfileService,
 					()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>()),
 		new PropertyStruct ("CallsignBinding", typeof (CallsignBinding),
-					(IBinding data, object? value) => {(data as MeshHelloResponse).CallsignBinding = value as CallsignBinding;}, 
-					(IBinding data) => (data as MeshHelloResponse).CallsignBinding,
+					(data, value) => {(data as MeshHelloResponse).CallsignBinding = value as CallsignBinding;}, 
+					data => (data as MeshHelloResponse).CallsignBinding,
 					false, ()=>new  CallsignBinding(), ()=>new CallsignBinding())
 		];
 
@@ -1740,6 +1743,9 @@ public partial class BindRequest : MeshRequest {
 	[JsonPropertyName("AccountAddress")]
 	public virtual string?					AccountAddress  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileAccount")]
 	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;} 
 
@@ -1747,6 +1753,9 @@ public partial class BindRequest : MeshRequest {
 	/// Wrapped property
     /// </summary>
 	public virtual ProfileAccount?				ProfileAccount  => EnvelopedProfileAccount.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedCallsignBinding")]
 	public virtual List<Enveloped<CallsignBinding>>?					EnvelopedCallsignBinding  {get; set;} 
 
@@ -1761,21 +1770,17 @@ public partial class BindRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as BindRequest).AccountAddress = value;}, 
-					(IBinding data) => (data as BindRequest).AccountAddress ),
-		new PropertyGStruct ("EnvelopedProfileAccount", /*typeof (ProfileAccount<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as BindRequest).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;},
-					(IBinding data) => (data as BindRequest).EnvelopedProfileAccount,
-					/*(IBinding data, object? value) => {(data as BindRequest).ProfileAccount = value as ProfileAccount;},
-					(IBinding data) => (data as BindRequest).ProfileAccount,*/
+					(data, value) => {(data as BindRequest).AccountAddress = value;}, 
+					data => (data as BindRequest).AccountAddress ),
+		new PropertyGStruct ("EnvelopedProfileAccount", typeof (Enveloped),
+					(data, value) => {(data as BindRequest).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;},
+					data => (data as BindRequest).EnvelopedProfileAccount,
 					()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
-		new PropertyListGStruct ("EnvelopedCallsignBinding", /*typeof (CallsignBinding<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as BindRequest).EnvelopedCallsignBinding = value as List<Enveloped<CallsignBinding>>;},
-					(IBinding data) => (data as BindRequest).EnvelopedCallsignBinding,
-					/*(IBinding data, object? value) => {(data as BindRequest).CallsignBinding = value as List<CallsignBinding>;},
-					(IBinding data) => (data as BindRequest).CallsignBinding,*/
+		new PropertyListGStruct ("EnvelopedCallsignBinding", typeof (Enveloped),
+					(data, value) => {(data as BindRequest).EnvelopedCallsignBinding = value as List<Enveloped<CallsignBinding>>;},
+					data => (data as BindRequest).EnvelopedCallsignBinding,
 					()=>new  List<Enveloped<CallsignBinding>>(), ()=>new Enveloped<CallsignBinding>(),
-					(object list,object item)=>(list as List<Enveloped<CallsignBinding>>).Add (item as Enveloped<CallsignBinding>)
+					(list,item)=>(list as List<Enveloped<CallsignBinding>>).Add (item as Enveloped<CallsignBinding>)
 )
 		];
 
@@ -1830,6 +1835,9 @@ public partial class BindResponse : MeshResponse {
 	[JsonPropertyName("URL")]
 	public virtual string?					URL  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedAccountHostAssignment")]
 	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} 
 
@@ -1844,16 +1852,14 @@ public partial class BindResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Reason", 
-					(IBinding data, string? value) => {(data as BindResponse).Reason = value;}, 
-					(IBinding data) => (data as BindResponse).Reason ),
+					(data, value) => {(data as BindResponse).Reason = value;}, 
+					data => (data as BindResponse).Reason ),
 		new PropertyString ("URL", 
-					(IBinding data, string? value) => {(data as BindResponse).URL = value;}, 
-					(IBinding data) => (data as BindResponse).URL ),
-		new PropertyGStruct ("EnvelopedAccountHostAssignment", /*typeof (AccountHostAssignment<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as BindResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
-					(IBinding data) => (data as BindResponse).EnvelopedAccountHostAssignment,
-					/*(IBinding data, object? value) => {(data as BindResponse).AccountHostAssignment = value as AccountHostAssignment;},
-					(IBinding data) => (data as BindResponse).AccountHostAssignment,*/
+					(data, value) => {(data as BindResponse).URL = value;}, 
+					data => (data as BindResponse).URL ),
+		new PropertyGStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped),
+					(data, value) => {(data as BindResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
+					data => (data as BindResponse).EnvelopedAccountHostAssignment,
 					()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())
 		];
 
@@ -1975,6 +1981,9 @@ public partial class UnbindResponse : MeshResponse {
 	/// <summary>
 	/// </summary>
 public partial class ConnectRequest : MeshRequest {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedRequestConnection")]
 	public virtual Enveloped<RequestConnection>?					EnvelopedRequestConnection  {get; set;} 
 
@@ -1994,15 +2003,13 @@ public partial class ConnectRequest : MeshRequest {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedRequestConnection", /*typeof (RequestConnection<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as ConnectRequest).EnvelopedRequestConnection = value as Enveloped<RequestConnection>;},
-					(IBinding data) => (data as ConnectRequest).EnvelopedRequestConnection,
-					/*(IBinding data, object? value) => {(data as ConnectRequest).RequestConnection = value as RequestConnection;},
-					(IBinding data) => (data as ConnectRequest).RequestConnection,*/
+		new PropertyGStruct ("EnvelopedRequestConnection", typeof (Enveloped),
+					(data, value) => {(data as ConnectRequest).EnvelopedRequestConnection = value as Enveloped<RequestConnection>;},
+					data => (data as ConnectRequest).EnvelopedRequestConnection,
 					()=>new  Enveloped<RequestConnection>(), ()=>new Enveloped<RequestConnection>()),
 		new PropertyListString ("Rights", 
-					(IBinding data, List<string>? value) => {(data as ConnectRequest).Rights = value;}, 
-					(IBinding data) => (data as ConnectRequest).Rights )
+					(data, value) => {(data as ConnectRequest).Rights = value;}, 
+					data => (data as ConnectRequest).Rights )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2038,6 +2045,9 @@ public partial class ConnectRequest : MeshRequest {
 	/// <summary>
 	/// </summary>
 public partial class ConnectResponse : MeshResponse {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedAcknowledgeConnection")]
 	public virtual Enveloped<AcknowledgeConnection>?					EnvelopedAcknowledgeConnection  {get; set;} 
 
@@ -2045,6 +2055,9 @@ public partial class ConnectResponse : MeshResponse {
 	/// Wrapped property
     /// </summary>
 	public virtual AcknowledgeConnection?				AcknowledgeConnection  => EnvelopedAcknowledgeConnection.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileAccount")]
 	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;} 
 
@@ -2058,17 +2071,13 @@ public partial class ConnectResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedAcknowledgeConnection", /*typeof (AcknowledgeConnection<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as ConnectResponse).EnvelopedAcknowledgeConnection = value as Enveloped<AcknowledgeConnection>;},
-					(IBinding data) => (data as ConnectResponse).EnvelopedAcknowledgeConnection,
-					/*(IBinding data, object? value) => {(data as ConnectResponse).AcknowledgeConnection = value as AcknowledgeConnection;},
-					(IBinding data) => (data as ConnectResponse).AcknowledgeConnection,*/
+		new PropertyGStruct ("EnvelopedAcknowledgeConnection", typeof (Enveloped),
+					(data, value) => {(data as ConnectResponse).EnvelopedAcknowledgeConnection = value as Enveloped<AcknowledgeConnection>;},
+					data => (data as ConnectResponse).EnvelopedAcknowledgeConnection,
 					()=>new  Enveloped<AcknowledgeConnection>(), ()=>new Enveloped<AcknowledgeConnection>()),
-		new PropertyGStruct ("EnvelopedProfileAccount", /*typeof (ProfileAccount<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as ConnectResponse).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;},
-					(IBinding data) => (data as ConnectResponse).EnvelopedProfileAccount,
-					/*(IBinding data, object? value) => {(data as ConnectResponse).ProfileAccount = value as ProfileAccount;},
-					(IBinding data) => (data as ConnectResponse).ProfileAccount,*/
+		new PropertyGStruct ("EnvelopedProfileAccount", typeof (Enveloped),
+					(data, value) => {(data as ConnectResponse).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;},
+					data => (data as ConnectResponse).EnvelopedProfileAccount,
 					()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())
 		];
 
@@ -2124,11 +2133,11 @@ public partial class CompleteRequest : StatusRequest {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as CompleteRequest).AccountAddress = value;}, 
-					(IBinding data) => (data as CompleteRequest).AccountAddress ),
+					(data, value) => {(data as CompleteRequest).AccountAddress = value;}, 
+					data => (data as CompleteRequest).AccountAddress ),
 		new PropertyString ("ResponseID", 
-					(IBinding data, string? value) => {(data as CompleteRequest).ResponseID = value;}, 
-					(IBinding data) => (data as CompleteRequest).ResponseID )
+					(data, value) => {(data as CompleteRequest).ResponseID = value;}, 
+					data => (data as CompleteRequest).ResponseID )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2164,6 +2173,9 @@ public partial class CompleteRequest : StatusRequest {
 	/// <summary>
 	/// </summary>
 public partial class CompleteResponse : MeshResponse {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedRespondConnection")]
 	public virtual Enveloped<RespondConnection>?					EnvelopedRespondConnection  {get; set;} 
 
@@ -2171,6 +2183,9 @@ public partial class CompleteResponse : MeshResponse {
 	/// Wrapped property
     /// </summary>
 	public virtual RespondConnection?				RespondConnection  => EnvelopedRespondConnection.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedAccountHostAssignment")]
 	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} 
 
@@ -2184,17 +2199,13 @@ public partial class CompleteResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedRespondConnection", /*typeof (RespondConnection<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CompleteResponse).EnvelopedRespondConnection = value as Enveloped<RespondConnection>;},
-					(IBinding data) => (data as CompleteResponse).EnvelopedRespondConnection,
-					/*(IBinding data, object? value) => {(data as CompleteResponse).RespondConnection = value as RespondConnection;},
-					(IBinding data) => (data as CompleteResponse).RespondConnection,*/
+		new PropertyGStruct ("EnvelopedRespondConnection", typeof (Enveloped),
+					(data, value) => {(data as CompleteResponse).EnvelopedRespondConnection = value as Enveloped<RespondConnection>;},
+					data => (data as CompleteResponse).EnvelopedRespondConnection,
 					()=>new  Enveloped<RespondConnection>(), ()=>new Enveloped<RespondConnection>()),
-		new PropertyGStruct ("EnvelopedAccountHostAssignment", /*typeof (AccountHostAssignment<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CompleteResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
-					(IBinding data) => (data as CompleteResponse).EnvelopedAccountHostAssignment,
-					/*(IBinding data, object? value) => {(data as CompleteResponse).AccountHostAssignment = value as AccountHostAssignment;},
-					(IBinding data) => (data as CompleteResponse).AccountHostAssignment,*/
+		new PropertyGStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped),
+					(data, value) => {(data as CompleteResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
+					data => (data as CompleteResponse).EnvelopedAccountHostAssignment,
 					()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())
 		];
 
@@ -2271,23 +2282,23 @@ public partial class StatusRequest : MeshRequestUser {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("DeviceUDF", 
-					(IBinding data, string? value) => {(data as StatusRequest).DeviceUDF = value;}, 
-					(IBinding data) => (data as StatusRequest).DeviceUDF ),
+					(data, value) => {(data as StatusRequest).DeviceUDF = value;}, 
+					data => (data as StatusRequest).DeviceUDF ),
 		new PropertyString ("CatalogedDeviceDigest", 
-					(IBinding data, string? value) => {(data as StatusRequest).CatalogedDeviceDigest = value;}, 
-					(IBinding data) => (data as StatusRequest).CatalogedDeviceDigest ),
+					(data, value) => {(data as StatusRequest).CatalogedDeviceDigest = value;}, 
+					data => (data as StatusRequest).CatalogedDeviceDigest ),
 		new PropertyListString ("Catalogs", 
-					(IBinding data, List<string>? value) => {(data as StatusRequest).Catalogs = value;}, 
-					(IBinding data) => (data as StatusRequest).Catalogs ),
+					(data, value) => {(data as StatusRequest).Catalogs = value;}, 
+					data => (data as StatusRequest).Catalogs ),
 		new PropertyListString ("Spools", 
-					(IBinding data, List<string>? value) => {(data as StatusRequest).Spools = value;}, 
-					(IBinding data) => (data as StatusRequest).Spools ),
+					(data, value) => {(data as StatusRequest).Spools = value;}, 
+					data => (data as StatusRequest).Spools ),
 		new PropertyListString ("Services", 
-					(IBinding data, List<string>? value) => {(data as StatusRequest).Services = value;}, 
-					(IBinding data) => (data as StatusRequest).Services ),
+					(data, value) => {(data as StatusRequest).Services = value;}, 
+					data => (data as StatusRequest).Services ),
 		new PropertyBoolean ("DeviceStatus", 
-					(IBinding data, bool? value) => {(data as StatusRequest).DeviceStatus = value;}, 
-					(IBinding data) => (data as StatusRequest).DeviceStatus )
+					(data, value) => {(data as StatusRequest).DeviceStatus = value;}, 
+					data => (data as StatusRequest).DeviceStatus )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2333,6 +2344,9 @@ public partial class StatusResponse : MeshResponse {
 	[JsonPropertyName("Bitmask")]
 	public virtual byte[]?					Bitmask  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileAccount")]
 	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileAccount  {get; set;} 
 
@@ -2340,6 +2354,9 @@ public partial class StatusResponse : MeshResponse {
 	/// Wrapped property
     /// </summary>
 	public virtual ProfileAccount?				ProfileAccount  => EnvelopedProfileAccount.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedCatalogedDevice")]
 	public virtual Enveloped<CatalogedDevice>?					EnvelopedCatalogedDevice  {get; set;} 
 
@@ -2358,6 +2375,9 @@ public partial class StatusResponse : MeshResponse {
 
 	[JsonPropertyName("StoreStatus")]
 	public virtual List<StoreStatus>?					StoreStatus  {get; set;}
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedAccountHostAssignment")]
 	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} 
 
@@ -2383,40 +2403,34 @@ public partial class StatusResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("Bitmask", 
-					(IBinding data, byte[]? value) => {(data as StatusResponse).Bitmask = value;}, 
-					(IBinding data) => (data as StatusResponse).Bitmask ),
-		new PropertyGStruct ("EnvelopedProfileAccount", /*typeof (ProfileAccount<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;},
-					(IBinding data) => (data as StatusResponse).EnvelopedProfileAccount,
-					/*(IBinding data, object? value) => {(data as StatusResponse).ProfileAccount = value as ProfileAccount;},
-					(IBinding data) => (data as StatusResponse).ProfileAccount,*/
+					(data, value) => {(data as StatusResponse).Bitmask = value;}, 
+					data => (data as StatusResponse).Bitmask ),
+		new PropertyGStruct ("EnvelopedProfileAccount", typeof (Enveloped),
+					(data, value) => {(data as StatusResponse).EnvelopedProfileAccount = value as Enveloped<ProfileAccount>;},
+					data => (data as StatusResponse).EnvelopedProfileAccount,
 					()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
-		new PropertyGStruct ("EnvelopedCatalogedDevice", /*typeof (CatalogedDevice<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;},
-					(IBinding data) => (data as StatusResponse).EnvelopedCatalogedDevice,
-					/*(IBinding data, object? value) => {(data as StatusResponse).CatalogedDevice = value as CatalogedDevice;},
-					(IBinding data) => (data as StatusResponse).CatalogedDevice,*/
+		new PropertyGStruct ("EnvelopedCatalogedDevice", typeof (Enveloped),
+					(data, value) => {(data as StatusResponse).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;},
+					data => (data as StatusResponse).EnvelopedCatalogedDevice,
 					()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>()),
 		new PropertyString ("CatalogedDeviceDigest", 
-					(IBinding data, string? value) => {(data as StatusResponse).CatalogedDeviceDigest = value;}, 
-					(IBinding data) => (data as StatusResponse).CatalogedDeviceDigest ),
+					(data, value) => {(data as StatusResponse).CatalogedDeviceDigest = value;}, 
+					data => (data as StatusResponse).CatalogedDeviceDigest ),
 		new PropertyListStruct ("StoreStatus", typeof (StoreStatus),
-					(IBinding data, object? value) => {(data as StatusResponse).StoreStatus = value as List<StoreStatus>;}, 
-					(IBinding data) => (data as StatusResponse).StoreStatus,
+					(data, value) => {(data as StatusResponse).StoreStatus = value as List<StoreStatus>;}, 
+					data => (data as StatusResponse).StoreStatus,
 					false, ()=>new  List<StoreStatus>(), ()=>new StoreStatus()),
-		new PropertyGStruct ("EnvelopedAccountHostAssignment", /*typeof (AccountHostAssignment<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as StatusResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
-					(IBinding data) => (data as StatusResponse).EnvelopedAccountHostAssignment,
-					/*(IBinding data, object? value) => {(data as StatusResponse).AccountHostAssignment = value as AccountHostAssignment;},
-					(IBinding data) => (data as StatusResponse).AccountHostAssignment,*/
+		new PropertyGStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped),
+					(data, value) => {(data as StatusResponse).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
+					data => (data as StatusResponse).EnvelopedAccountHostAssignment,
 					()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>()),
 		new PropertyListStruct ("Services", typeof (ServiceAccessToken),
-					(IBinding data, object? value) => {(data as StatusResponse).Services = value as List<ServiceAccessToken>;}, 
-					(IBinding data) => (data as StatusResponse).Services,
+					(data, value) => {(data as StatusResponse).Services = value as List<ServiceAccessToken>;}, 
+					data => (data as StatusResponse).Services,
 					false, ()=>new  List<ServiceAccessToken>(), ()=>new ServiceAccessToken()),
 		new PropertyListStruct ("DeviceStatuses", typeof (DeviceStatus),
-					(IBinding data, object? value) => {(data as StatusResponse).DeviceStatuses = value as List<DeviceStatus>;}, 
-					(IBinding data) => (data as StatusResponse).DeviceStatuses,
+					(data, value) => {(data as StatusResponse).DeviceStatuses = value as List<DeviceStatus>;}, 
+					data => (data as StatusResponse).DeviceStatuses,
 					false, ()=>new  List<DeviceStatus>(), ()=>new DeviceStatus())
 		];
 
@@ -2490,17 +2504,17 @@ public partial class DeviceStatus : MeshProtocol {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Id", 
-					(IBinding data, string? value) => {(data as DeviceStatus).Id = value;}, 
-					(IBinding data) => (data as DeviceStatus).Id ),
+					(data, value) => {(data as DeviceStatus).Id = value;}, 
+					data => (data as DeviceStatus).Id ),
 		new PropertyString ("Status", 
-					(IBinding data, string? value) => {(data as DeviceStatus).Status = value;}, 
-					(IBinding data) => (data as DeviceStatus).Status ),
+					(data, value) => {(data as DeviceStatus).Status = value;}, 
+					data => (data as DeviceStatus).Status ),
 		new PropertyString ("Comment", 
-					(IBinding data, string? value) => {(data as DeviceStatus).Comment = value;}, 
-					(IBinding data) => (data as DeviceStatus).Comment ),
+					(data, value) => {(data as DeviceStatus).Comment = value;}, 
+					data => (data as DeviceStatus).Comment ),
 		new PropertyDateTime ("LastConnected", 
-					(IBinding data, DateTime? value) => {(data as DeviceStatus).LastConnected = value;}, 
-					(IBinding data) => (data as DeviceStatus).LastConnected )
+					(data, value) => {(data as DeviceStatus).LastConnected = value;}, 
+					data => (data as DeviceStatus).LastConnected )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2584,21 +2598,21 @@ public partial class DownloadRequest : MeshRequestUser {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger32 ("MaxResults", 
-					(IBinding data, int? value) => {(data as DownloadRequest).MaxResults = value;}, 
-					(IBinding data) => (data as DownloadRequest).MaxResults ),
+					(data, value) => {(data as DownloadRequest).MaxResults = value;}, 
+					data => (data as DownloadRequest).MaxResults ),
 		new PropertyString ("DeviceUDF", 
-					(IBinding data, string? value) => {(data as DownloadRequest).DeviceUDF = value;}, 
-					(IBinding data) => (data as DownloadRequest).DeviceUDF ),
+					(data, value) => {(data as DownloadRequest).DeviceUDF = value;}, 
+					data => (data as DownloadRequest).DeviceUDF ),
 		new PropertyString ("CatalogedDeviceDigest", 
-					(IBinding data, string? value) => {(data as DownloadRequest).CatalogedDeviceDigest = value;}, 
-					(IBinding data) => (data as DownloadRequest).CatalogedDeviceDigest ),
+					(data, value) => {(data as DownloadRequest).CatalogedDeviceDigest = value;}, 
+					data => (data as DownloadRequest).CatalogedDeviceDigest ),
 		new PropertyListStruct ("Select", typeof (ConstraintsSelect),
-					(IBinding data, object? value) => {(data as DownloadRequest).Select = value as List<ConstraintsSelect>;}, 
-					(IBinding data) => (data as DownloadRequest).Select,
+					(data, value) => {(data as DownloadRequest).Select = value as List<ConstraintsSelect>;}, 
+					data => (data as DownloadRequest).Select,
 					false, ()=>new  List<ConstraintsSelect>(), ()=>new ConstraintsSelect()),
 		new PropertyStruct ("ConstraintsPost", typeof (ConstraintsData),
-					(IBinding data, object? value) => {(data as DownloadRequest).ConstraintsPost = value as ConstraintsData;}, 
-					(IBinding data) => (data as DownloadRequest).ConstraintsPost,
+					(data, value) => {(data as DownloadRequest).ConstraintsPost = value as ConstraintsData;}, 
+					data => (data as DownloadRequest).ConstraintsPost,
 					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())
 		];
 
@@ -2656,6 +2670,9 @@ public partial class DownloadResponse : MeshResponse {
 	[JsonPropertyName("CatalogedDeviceDigest")]
 	public virtual string?					CatalogedDeviceDigest  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedCatalogedDevice")]
 	public virtual Enveloped<CatalogedDevice>?					EnvelopedCatalogedDevice  {get; set;} 
 
@@ -2670,17 +2687,15 @@ public partial class DownloadResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("Updates", typeof (StoreUpdate),
-					(IBinding data, object? value) => {(data as DownloadResponse).Updates = value as List<StoreUpdate>;}, 
-					(IBinding data) => (data as DownloadResponse).Updates,
+					(data, value) => {(data as DownloadResponse).Updates = value as List<StoreUpdate>;}, 
+					data => (data as DownloadResponse).Updates,
 					false, ()=>new  List<StoreUpdate>(), ()=>new StoreUpdate()),
 		new PropertyString ("CatalogedDeviceDigest", 
-					(IBinding data, string? value) => {(data as DownloadResponse).CatalogedDeviceDigest = value;}, 
-					(IBinding data) => (data as DownloadResponse).CatalogedDeviceDigest ),
-		new PropertyGStruct ("EnvelopedCatalogedDevice", /*typeof (CatalogedDevice<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as DownloadResponse).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;},
-					(IBinding data) => (data as DownloadResponse).EnvelopedCatalogedDevice,
-					/*(IBinding data, object? value) => {(data as DownloadResponse).CatalogedDevice = value as CatalogedDevice;},
-					(IBinding data) => (data as DownloadResponse).CatalogedDevice,*/
+					(data, value) => {(data as DownloadResponse).CatalogedDeviceDigest = value;}, 
+					data => (data as DownloadResponse).CatalogedDeviceDigest ),
+		new PropertyGStruct ("EnvelopedCatalogedDevice", typeof (Enveloped),
+					(data, value) => {(data as DownloadResponse).EnvelopedCatalogedDevice = value as Enveloped<CatalogedDevice>;},
+					data => (data as DownloadResponse).EnvelopedCatalogedDevice,
 					()=>new  Enveloped<CatalogedDevice>(), ()=>new Enveloped<CatalogedDevice>())
 		];
 
@@ -2741,11 +2756,11 @@ public partial class UploadRequest : MeshRequestUser {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("DocumentId", 
-					(IBinding data, string? value) => {(data as UploadRequest).DocumentId = value;}, 
-					(IBinding data) => (data as UploadRequest).DocumentId ),
+					(data, value) => {(data as UploadRequest).DocumentId = value;}, 
+					data => (data as UploadRequest).DocumentId ),
 		new PropertyBinary ("Data", 
-					(IBinding data, byte[]? value) => {(data as UploadRequest).Data = value;}, 
-					(IBinding data) => (data as UploadRequest).Data )
+					(data, value) => {(data as UploadRequest).Data = value;}, 
+					data => (data as UploadRequest).Data )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2838,8 +2853,8 @@ public partial class GetDataRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("DocumentId", 
-					(IBinding data, string? value) => {(data as GetDataRequest).DocumentId = value;}, 
-					(IBinding data) => (data as GetDataRequest).DocumentId )
+					(data, value) => {(data as GetDataRequest).DocumentId = value;}, 
+					data => (data as GetDataRequest).DocumentId )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2890,8 +2905,8 @@ public partial class GetDataResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("Data", 
-					(IBinding data, byte[]? value) => {(data as GetDataResponse).Data = value;}, 
-					(IBinding data) => (data as GetDataResponse).Data )
+					(data, value) => {(data as GetDataResponse).Data = value;}, 
+					data => (data as GetDataResponse).Data )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2941,6 +2956,9 @@ public partial class TransactRequest : MeshRequestUser {
 
 	[JsonPropertyName("Accounts")]
 	public virtual List<string>?					Accounts  {get; set;}
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedOutbound")]
 	public virtual List<Enveloped<Message>>?					EnvelopedOutbound  {get; set;} 
 
@@ -2948,6 +2966,9 @@ public partial class TransactRequest : MeshRequestUser {
 	/// Wrapped property
     /// </summary>
 	public virtual List<Message>?				Outbound  => EnvelopedOutbound.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedInbound")]
 	public virtual List<Enveloped<Message>>?					EnvelopedInbound  {get; set;} 
 
@@ -2955,6 +2976,9 @@ public partial class TransactRequest : MeshRequestUser {
 	/// Wrapped property
     /// </summary>
 	public virtual List<Message>?				Inbound  => EnvelopedInbound.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedLocal")]
 	public virtual List<Enveloped<Message>>?					EnvelopedLocal  {get; set;} 
 
@@ -2969,35 +2993,29 @@ public partial class TransactRequest : MeshRequestUser {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("Updates", typeof (StoreUpdate),
-					(IBinding data, object? value) => {(data as TransactRequest).Updates = value as List<StoreUpdate>;}, 
-					(IBinding data) => (data as TransactRequest).Updates,
+					(data, value) => {(data as TransactRequest).Updates = value as List<StoreUpdate>;}, 
+					data => (data as TransactRequest).Updates,
 					false, ()=>new  List<StoreUpdate>(), ()=>new StoreUpdate()),
 		new PropertyListString ("Accounts", 
-					(IBinding data, List<string>? value) => {(data as TransactRequest).Accounts = value;}, 
-					(IBinding data) => (data as TransactRequest).Accounts ),
-		new PropertyListGStruct ("EnvelopedOutbound", /*typeof (Message<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as TransactRequest).EnvelopedOutbound = value as List<Enveloped<Message>>;},
-					(IBinding data) => (data as TransactRequest).EnvelopedOutbound,
-					/*(IBinding data, object? value) => {(data as TransactRequest).Outbound = value as List<Message>;},
-					(IBinding data) => (data as TransactRequest).Outbound,*/
+					(data, value) => {(data as TransactRequest).Accounts = value;}, 
+					data => (data as TransactRequest).Accounts ),
+		new PropertyListGStruct ("EnvelopedOutbound", typeof (Enveloped),
+					(data, value) => {(data as TransactRequest).EnvelopedOutbound = value as List<Enveloped<Message>>;},
+					data => (data as TransactRequest).EnvelopedOutbound,
 					()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>(),
-					(object list,object item)=>(list as List<Enveloped<Message>>).Add (item as Enveloped<Message>)
+					(list,item)=>(list as List<Enveloped<Message>>).Add (item as Enveloped<Message>)
 ),
-		new PropertyListGStruct ("EnvelopedInbound", /*typeof (Message<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as TransactRequest).EnvelopedInbound = value as List<Enveloped<Message>>;},
-					(IBinding data) => (data as TransactRequest).EnvelopedInbound,
-					/*(IBinding data, object? value) => {(data as TransactRequest).Inbound = value as List<Message>;},
-					(IBinding data) => (data as TransactRequest).Inbound,*/
+		new PropertyListGStruct ("EnvelopedInbound", typeof (Enveloped),
+					(data, value) => {(data as TransactRequest).EnvelopedInbound = value as List<Enveloped<Message>>;},
+					data => (data as TransactRequest).EnvelopedInbound,
 					()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>(),
-					(object list,object item)=>(list as List<Enveloped<Message>>).Add (item as Enveloped<Message>)
+					(list,item)=>(list as List<Enveloped<Message>>).Add (item as Enveloped<Message>)
 ),
-		new PropertyListGStruct ("EnvelopedLocal", /*typeof (Message<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as TransactRequest).EnvelopedLocal = value as List<Enveloped<Message>>;},
-					(IBinding data) => (data as TransactRequest).EnvelopedLocal,
-					/*(IBinding data, object? value) => {(data as TransactRequest).Local = value as List<Message>;},
-					(IBinding data) => (data as TransactRequest).Local,*/
+		new PropertyListGStruct ("EnvelopedLocal", typeof (Enveloped),
+					(data, value) => {(data as TransactRequest).EnvelopedLocal = value as List<Enveloped<Message>>;},
+					data => (data as TransactRequest).EnvelopedLocal,
 					()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>(),
-					(object list,object item)=>(list as List<Enveloped<Message>>).Add (item as Enveloped<Message>)
+					(list,item)=>(list as List<Enveloped<Message>>).Add (item as Enveloped<Message>)
 )
 		];
 
@@ -3067,15 +3085,15 @@ public partial class TransactResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("Bitmask", 
-					(IBinding data, byte[]? value) => {(data as TransactResponse).Bitmask = value;}, 
-					(IBinding data) => (data as TransactResponse).Bitmask ),
+					(data, value) => {(data as TransactResponse).Bitmask = value;}, 
+					data => (data as TransactResponse).Bitmask ),
 		new PropertyListStruct ("Entries", typeof (EntryResponse),
-					(IBinding data, object? value) => {(data as TransactResponse).Entries = value as List<EntryResponse>;}, 
-					(IBinding data) => (data as TransactResponse).Entries,
+					(data, value) => {(data as TransactResponse).Entries = value as List<EntryResponse>;}, 
+					data => (data as TransactResponse).Entries,
 					false, ()=>new  List<EntryResponse>(), ()=>new EntryResponse()),
 		new PropertyStruct ("ConstraintsData", typeof (ConstraintsData),
-					(IBinding data, object? value) => {(data as TransactResponse).ConstraintsData = value as ConstraintsData;}, 
-					(IBinding data) => (data as TransactResponse).ConstraintsData,
+					(data, value) => {(data as TransactResponse).ConstraintsData = value as ConstraintsData;}, 
+					data => (data as TransactResponse).ConstraintsData,
 					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())
 		];
 
@@ -3152,17 +3170,17 @@ public partial class EntryResponse : MeshProtocol {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger64 ("IndexRequest", 
-					(IBinding data, long? value) => {(data as EntryResponse).IndexRequest = value;}, 
-					(IBinding data) => (data as EntryResponse).IndexRequest ),
+					(data, value) => {(data as EntryResponse).IndexRequest = value;}, 
+					data => (data as EntryResponse).IndexRequest ),
 		new PropertyInteger64 ("IndexContainer", 
-					(IBinding data, long? value) => {(data as EntryResponse).IndexContainer = value;}, 
-					(IBinding data) => (data as EntryResponse).IndexContainer ),
+					(data, value) => {(data as EntryResponse).IndexContainer = value;}, 
+					data => (data as EntryResponse).IndexContainer ),
 		new PropertyString ("Result", 
-					(IBinding data, string? value) => {(data as EntryResponse).Result = value;}, 
-					(IBinding data) => (data as EntryResponse).Result ),
+					(data, value) => {(data as EntryResponse).Result = value;}, 
+					data => (data as EntryResponse).Result ),
 		new PropertyStruct ("ConstraintsData", typeof (ConstraintsData),
-					(IBinding data, object? value) => {(data as EntryResponse).ConstraintsData = value as ConstraintsData;}, 
-					(IBinding data) => (data as EntryResponse).ConstraintsData,
+					(data, value) => {(data as EntryResponse).ConstraintsData = value as ConstraintsData;}, 
+					data => (data as EntryResponse).ConstraintsData,
 					false, ()=>new  ConstraintsData(), ()=>new ConstraintsData())
 		];
 
@@ -3250,6 +3268,9 @@ public partial class PostRequest : MeshRequest {
 
 	[JsonPropertyName("Accounts")]
 	public virtual List<string>?					Accounts  {get; set;}
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedMessages")]
 	public virtual List<Enveloped<Message>>?					EnvelopedMessages  {get; set;} 
 
@@ -3264,15 +3285,13 @@ public partial class PostRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListString ("Accounts", 
-					(IBinding data, List<string>? value) => {(data as PostRequest).Accounts = value;}, 
-					(IBinding data) => (data as PostRequest).Accounts ),
-		new PropertyListGStruct ("EnvelopedMessages", /*typeof (Message<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as PostRequest).EnvelopedMessages = value as List<Enveloped<Message>>;},
-					(IBinding data) => (data as PostRequest).EnvelopedMessages,
-					/*(IBinding data, object? value) => {(data as PostRequest).Messages = value as List<Message>;},
-					(IBinding data) => (data as PostRequest).Messages,*/
+					(data, value) => {(data as PostRequest).Accounts = value;}, 
+					data => (data as PostRequest).Accounts ),
+		new PropertyListGStruct ("EnvelopedMessages", typeof (Enveloped),
+					(data, value) => {(data as PostRequest).EnvelopedMessages = value as List<Enveloped<Message>>;},
+					data => (data as PostRequest).EnvelopedMessages,
 					()=>new  List<Enveloped<Message>>(), ()=>new Enveloped<Message>(),
-					(object list,object item)=>(list as List<Enveloped<Message>>).Add (item as Enveloped<Message>)
+					(list,item)=>(list as List<Enveloped<Message>>).Add (item as Enveloped<Message>)
 )
 		];
 
@@ -3350,6 +3369,9 @@ public partial class PostResponse : TransactResponse {
 	/// <summary>
 	/// </summary>
 public partial class ClaimRequest : MeshRequest {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedMessageClaim")]
 	public virtual Enveloped<MessageClaim>?					EnvelopedMessageClaim  {get; set;} 
 
@@ -3363,11 +3385,9 @@ public partial class ClaimRequest : MeshRequest {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedMessageClaim", /*typeof (MessageClaim<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as ClaimRequest).EnvelopedMessageClaim = value as Enveloped<MessageClaim>;},
-					(IBinding data) => (data as ClaimRequest).EnvelopedMessageClaim,
-					/*(IBinding data, object? value) => {(data as ClaimRequest).MessageClaim = value as MessageClaim;},
-					(IBinding data) => (data as ClaimRequest).MessageClaim,*/
+		new PropertyGStruct ("EnvelopedMessageClaim", typeof (Enveloped),
+					(data, value) => {(data as ClaimRequest).EnvelopedMessageClaim = value as Enveloped<MessageClaim>;},
+					data => (data as ClaimRequest).EnvelopedMessageClaim,
 					()=>new  Enveloped<MessageClaim>(), ()=>new Enveloped<MessageClaim>())
 		];
 
@@ -3417,8 +3437,8 @@ public partial class ClaimResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("CatalogedPublication", typeof (CatalogedPublication),
-					(IBinding data, object? value) => {(data as ClaimResponse).CatalogedPublication = value as CatalogedPublication;}, 
-					(IBinding data) => (data as ClaimResponse).CatalogedPublication,
+					(data, value) => {(data as ClaimResponse).CatalogedPublication = value as CatalogedPublication;}, 
+					data => (data as ClaimResponse).CatalogedPublication,
 					false, ()=>new  CatalogedPublication(), ()=>new CatalogedPublication())
 		];
 
@@ -3475,11 +3495,11 @@ public partial class PollClaimRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("PublicationId", 
-					(IBinding data, string? value) => {(data as PollClaimRequest).PublicationId = value;}, 
-					(IBinding data) => (data as PollClaimRequest).PublicationId ),
+					(data, value) => {(data as PollClaimRequest).PublicationId = value;}, 
+					data => (data as PollClaimRequest).PublicationId ),
 		new PropertyString ("TargetAccountAddress", 
-					(IBinding data, string? value) => {(data as PollClaimRequest).TargetAccountAddress = value;}, 
-					(IBinding data) => (data as PollClaimRequest).TargetAccountAddress )
+					(data, value) => {(data as PollClaimRequest).TargetAccountAddress = value;}, 
+					data => (data as PollClaimRequest).TargetAccountAddress )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -3515,6 +3535,9 @@ public partial class PollClaimRequest : MeshRequest {
 	/// <summary>
 	/// </summary>
 public partial class PollClaimResponse : MeshResponse {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedMessage")]
 	public virtual Enveloped<Message>?					EnvelopedMessage  {get; set;} 
 
@@ -3528,11 +3551,9 @@ public partial class PollClaimResponse : MeshResponse {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedMessage", /*typeof (Message<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as PollClaimResponse).EnvelopedMessage = value as Enveloped<Message>;},
-					(IBinding data) => (data as PollClaimResponse).EnvelopedMessage,
-					/*(IBinding data, object? value) => {(data as PollClaimResponse).Message = value as Message;},
-					(IBinding data) => (data as PollClaimResponse).Message,*/
+		new PropertyGStruct ("EnvelopedMessage", typeof (Enveloped),
+					(data, value) => {(data as PollClaimResponse).EnvelopedMessage = value as Enveloped<Message>;},
+					data => (data as PollClaimResponse).EnvelopedMessage,
 					()=>new  Enveloped<Message>(), ()=>new Enveloped<Message>())
 		];
 
@@ -3589,11 +3610,11 @@ abstract public partial class CryptographicOperation : MeshProtocol {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("KeyId", 
-					(IBinding data, string? value) => {(data as CryptographicOperation).KeyId = value;}, 
-					(IBinding data) => (data as CryptographicOperation).KeyId ),
+					(data, value) => {(data as CryptographicOperation).KeyId = value;}, 
+					data => (data as CryptographicOperation).KeyId ),
 		new PropertyBinary ("KeyCoefficient", 
-					(IBinding data, byte[]? value) => {(data as CryptographicOperation).KeyCoefficient = value;}, 
-					(IBinding data) => (data as CryptographicOperation).KeyCoefficient )
+					(data, value) => {(data as CryptographicOperation).KeyCoefficient = value;}, 
+					data => (data as CryptographicOperation).KeyCoefficient )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -3650,11 +3671,11 @@ public partial class CryptographicOperationSign : CryptographicOperation {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("Data", 
-					(IBinding data, byte[]? value) => {(data as CryptographicOperationSign).Data = value;}, 
-					(IBinding data) => (data as CryptographicOperationSign).Data ),
+					(data, value) => {(data as CryptographicOperationSign).Data = value;}, 
+					data => (data as CryptographicOperationSign).Data ),
 		new PropertyBinary ("PartialR", 
-					(IBinding data, byte[]? value) => {(data as CryptographicOperationSign).PartialR = value;}, 
-					(IBinding data) => (data as CryptographicOperationSign).PartialR )
+					(data, value) => {(data as CryptographicOperationSign).PartialR = value;}, 
+					data => (data as CryptographicOperationSign).PartialR )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -3704,8 +3725,8 @@ public partial class CryptographicOperationKeyAgreement : CryptographicOperation
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("PublicKey", typeof (Key), 
-					(IBinding data, object? value) => {(data as CryptographicOperationKeyAgreement).PublicKey = value as Key;}, 
-					(IBinding data) => (data as CryptographicOperationKeyAgreement).PublicKey,
+					(data, value) => {(data as CryptographicOperationKeyAgreement).PublicKey = value as Key;}, 
+					data => (data as CryptographicOperationKeyAgreement).PublicKey,
 					true) 
 		];
 
@@ -3799,11 +3820,11 @@ public partial class CryptographicOperationShare : CryptographicOperation {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger32 ("Threshold", 
-					(IBinding data, int? value) => {(data as CryptographicOperationShare).Threshold = value;}, 
-					(IBinding data) => (data as CryptographicOperationShare).Threshold ),
+					(data, value) => {(data as CryptographicOperationShare).Threshold = value;}, 
+					data => (data as CryptographicOperationShare).Threshold ),
 		new PropertyInteger32 ("Shares", 
-					(IBinding data, int? value) => {(data as CryptographicOperationShare).Shares = value;}, 
-					(IBinding data) => (data as CryptographicOperationShare).Shares )
+					(data, value) => {(data as CryptographicOperationShare).Shares = value;}, 
+					data => (data as CryptographicOperationShare).Shares )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -3852,8 +3873,8 @@ public partial class CryptographicResult : MeshProtocol {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Error", 
-					(IBinding data, string? value) => {(data as CryptographicResult).Error = value;}, 
-					(IBinding data) => (data as CryptographicResult).Error )
+					(data, value) => {(data as CryptographicResult).Error = value;}, 
+					data => (data as CryptographicResult).Error )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -3901,8 +3922,8 @@ public partial class CryptographicResultKeyAgreement : CryptographicResult {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("KeyAgreement", typeof (KeyAgreement), 
-					(IBinding data, object? value) => {(data as CryptographicResultKeyAgreement).KeyAgreement = value as KeyAgreement;}, 
-					(IBinding data) => (data as CryptographicResultKeyAgreement).KeyAgreement,
+					(data, value) => {(data as CryptographicResultKeyAgreement).KeyAgreement = value as KeyAgreement;}, 
+					data => (data as CryptographicResultKeyAgreement).KeyAgreement,
 					true) 
 		];
 
@@ -3996,11 +4017,11 @@ public partial class OperateRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as OperateRequest).AccountAddress = value;}, 
-					(IBinding data) => (data as OperateRequest).AccountAddress ),
+					(data, value) => {(data as OperateRequest).AccountAddress = value;}, 
+					data => (data as OperateRequest).AccountAddress ),
 		new PropertyListStruct ("Operations", typeof (CryptographicOperation), 
-					(IBinding data, object? value) => {(data as OperateRequest).Operations = value as List<CryptographicOperation>;}, 
-					(IBinding data) => (data as OperateRequest).Operations,
+					(data, value) => {(data as OperateRequest).Operations = value as List<CryptographicOperation>;}, 
+					data => (data as OperateRequest).Operations,
 					true, ()=>new List<CryptographicOperation>()
 ) 
 		];
@@ -4050,8 +4071,8 @@ public partial class OperateResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("Results", typeof (CryptographicResult), 
-					(IBinding data, object? value) => {(data as OperateResponse).Results = value as List<CryptographicResult>;}, 
-					(IBinding data) => (data as OperateResponse).Results,
+					(data, value) => {(data as OperateResponse).Results = value as List<CryptographicResult>;}, 
+					data => (data as OperateResponse).Results,
 					true, ()=>new List<CryptographicResult>()
 ) 
 		];
@@ -4118,14 +4139,14 @@ public partial class PublishEarlRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("PreLocator", 
-					(IBinding data, byte[]? value) => {(data as PublishEarlRequest).PreLocator = value;}, 
-					(IBinding data) => (data as PublishEarlRequest).PreLocator ),
+					(data, value) => {(data as PublishEarlRequest).PreLocator = value;}, 
+					data => (data as PublishEarlRequest).PreLocator ),
 		new PropertyBinary ("Data", 
-					(IBinding data, byte[]? value) => {(data as PublishEarlRequest).Data = value;}, 
-					(IBinding data) => (data as PublishEarlRequest).Data ),
+					(data, value) => {(data as PublishEarlRequest).Data = value;}, 
+					data => (data as PublishEarlRequest).Data ),
 		new PropertyDateTime ("Expire", 
-					(IBinding data, DateTime? value) => {(data as PublishEarlRequest).Expire = value;}, 
-					(IBinding data) => (data as PublishEarlRequest).Expire )
+					(data, value) => {(data as PublishEarlRequest).Expire = value;}, 
+					data => (data as PublishEarlRequest).Expire )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -4178,8 +4199,8 @@ public partial class PublishEarlResponse : MeshResponse {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Domain", 
-					(IBinding data, string? value) => {(data as PublishEarlResponse).Domain = value;}, 
-					(IBinding data) => (data as PublishEarlResponse).Domain )
+					(data, value) => {(data as PublishEarlResponse).Domain = value;}, 
+					data => (data as PublishEarlResponse).Domain )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -4230,8 +4251,8 @@ public partial class DeleteEarlRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("PreLocator", 
-					(IBinding data, byte[]? value) => {(data as DeleteEarlRequest).PreLocator = value;}, 
-					(IBinding data) => (data as DeleteEarlRequest).PreLocator )
+					(data, value) => {(data as DeleteEarlRequest).PreLocator = value;}, 
+					data => (data as DeleteEarlRequest).PreLocator )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -4322,8 +4343,8 @@ public partial class PublishDnsRequest : MeshRequest {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("Updates", typeof (DnsUpdate),
-					(IBinding data, object? value) => {(data as PublishDnsRequest).Updates = value as List<DnsUpdate>;}, 
-					(IBinding data) => (data as PublishDnsRequest).Updates,
+					(data, value) => {(data as PublishDnsRequest).Updates = value as List<DnsUpdate>;}, 
+					data => (data as PublishDnsRequest).Updates,
 					false, ()=>new  List<DnsUpdate>(), ()=>new DnsUpdate())
 		];
 
@@ -4390,17 +4411,17 @@ public partial class DnsUpdate : MeshProtocol {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBoolean ("IsAdd", 
-					(IBinding data, bool? value) => {(data as DnsUpdate).IsAdd = value;}, 
-					(IBinding data) => (data as DnsUpdate).IsAdd ),
+					(data, value) => {(data as DnsUpdate).IsAdd = value;}, 
+					data => (data as DnsUpdate).IsAdd ),
 		new PropertyString ("Name", 
-					(IBinding data, string? value) => {(data as DnsUpdate).Name = value;}, 
-					(IBinding data) => (data as DnsUpdate).Name ),
+					(data, value) => {(data as DnsUpdate).Name = value;}, 
+					data => (data as DnsUpdate).Name ),
 		new PropertyInteger32 ("RR", 
-					(IBinding data, int? value) => {(data as DnsUpdate).RR = value;}, 
-					(IBinding data) => (data as DnsUpdate).RR ),
+					(data, value) => {(data as DnsUpdate).RR = value;}, 
+					data => (data as DnsUpdate).RR ),
 		new PropertyBinary ("Record", 
-					(IBinding data, byte[]? value) => {(data as DnsUpdate).Record = value;}, 
-					(IBinding data) => (data as DnsUpdate).Record )
+					(data, value) => {(data as DnsUpdate).Record = value;}, 
+					data => (data as DnsUpdate).Record )
 		];
 
     ///<summary>Implement IBinding</summary> 

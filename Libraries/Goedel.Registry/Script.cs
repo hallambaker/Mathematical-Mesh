@@ -347,6 +347,11 @@ public partial class Script {
         return Builder.ToString();
         }
 
+    /// <summary>
+    /// Increase the current indent by <paramref name="count"/> spaces.
+    /// </summary>
+    /// <param name="count">The number of spaces to increase the indent.</param>
+    /// <returns>The original indent string to allow use in a restore operation.</returns>
     public string Indent(int count) {
         var save = _Indent;
         _Indent = _Indent + new string(' ', count);
@@ -354,6 +359,10 @@ public partial class Script {
         return save;
         }
 
+    /// <summary>
+    /// Restore the indent to the value <paramref name="indent"/>
+    /// </summary>
+    /// <param name="indent">The indent to set.</param>
     public void RestoreIndent(string indent) {
         _Indent = indent;
         }

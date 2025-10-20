@@ -347,7 +347,12 @@ public abstract class DNSContext : Disposable {
     public abstract Task<byte[]> GetResponseRawAsync();
 
 
-
+    /// <summary>
+    /// Publish the record set <paramref name="records"/>
+    /// </summary>
+    /// <param name="records">The records to publish.</param>
+    /// <returns>The DNS service response.</returns>
+    /// <exception cref="NYI"></exception>
     public virtual Task<DNSResponse> PublishRecords(
                             IEnumerable<DNSRecord> records) {
         throw new NYI();

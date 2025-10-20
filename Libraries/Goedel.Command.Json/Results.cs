@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/8/2025 1:32:05 PM
+//  This file was automatically generated at 10/20/2025 6:32:05 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -122,11 +123,11 @@ public partial class ShellResult : JsonShellResult {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBoolean ("Success", 
-					(IBinding data, bool? value) => {(data as ShellResult).Success = value;}, 
-					(IBinding data) => (data as ShellResult).Success ),
+					(data, value) => {(data as ShellResult).Success = value;}, 
+					data => (data as ShellResult).Success ),
 		new PropertyString ("Reason", 
-					(IBinding data, string? value) => {(data as ShellResult).Reason = value;}, 
-					(IBinding data) => (data as ShellResult).Reason )
+					(data, value) => {(data as ShellResult).Reason = value;}, 
+					data => (data as ShellResult).Reason )
 		];
 
     ///<summary>Implement IBinding</summary> 

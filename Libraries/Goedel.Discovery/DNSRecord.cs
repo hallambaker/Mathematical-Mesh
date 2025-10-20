@@ -23,6 +23,9 @@ namespace Goedel.Discovery;
 
 
 
+/// <summary>
+/// Base class for DNS records, queries and updates.
+/// </summary>
 public abstract partial class DNSItem {
 
     /// <summary>The domain name</summary>
@@ -41,6 +44,10 @@ public abstract partial class DNSItem {
     public virtual void Encode(DNSBufferIndex Index) {
         }
 
+    /// <summary>
+    /// Convert the item to a byte array.
+    /// </summary>
+    /// <returns>The byte array.</returns>
     public byte[] GetBytes() {
         var buffer = new DNSBufferIndex();
         Encode(buffer);
@@ -50,8 +57,15 @@ public abstract partial class DNSItem {
     }
 
 
+/// <summary>
+/// Parsed DNS record.
+/// </summary>
+/// <param name="Code">The DNS type code</param>
+/// <param name="Tag">The tag for use in text output.</param>
+/// <param name="Decode">The decoder function.</param>
+/// <param name="Parse">The parser function.</param>
 public record DnsRecordDefinition(
-            DNSTypeCode code,
+            DNSTypeCode Code,
             string Tag,
             Func<DNSBufferIndex, int, DNSRecord> Decode,
             Func<Parse, DNSRecord> Parse
@@ -113,8 +127,18 @@ public abstract partial class DNSRecord : DNSItem {
         return record;
         }
 
+    /// <summary>
+    /// Decode the record data <paramref name="data"/> as a record of type 
+    /// <paramref name="typeCode"/> and return the corresponding parsed record
+    /// with label <paramref name="label"/>.
+    /// </summary>
+    /// <param name="label">The record label.</param>
+    /// <param name="typeCode">The type code.</param>
+    /// <param name="data">The record data.</param>
+    /// <returns>The parsed record.</returns>
+    /// <exception cref="NYI"></exception>
     public static DNSRecord DecodeRData(
-                        string name,
+                        string label,
                         DNSTypeCode typeCode,
                         byte[] data) {
         var buffer = new DNSBufferIndex(data);
@@ -123,7 +147,7 @@ public abstract partial class DNSRecord : DNSItem {
             throw new NYI();
             }
         var record = description.Decode(buffer, data.Length);
-        record.Domain = new Domain(name);
+        record.Domain = new Domain(label);
 
         return record;
         }

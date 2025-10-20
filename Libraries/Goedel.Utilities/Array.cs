@@ -214,9 +214,7 @@ public static class ArrayUtilities {
     /// <param name="value">The value to add</param>
     /// <returns>True if a new entry was added, otherwise false.</returns>
     public static void Replace<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) {
-        if (dictionary.ContainsKey(key)) {
-            dictionary.Remove(key);
-            }
+        dictionary.Remove(key);
         dictionary.Add(key, value);
         }
 
@@ -325,12 +323,13 @@ public static class ArrayUtilities {
     /// </summary>
     /// <param name="first">First array</param>
     /// <param name="second">Second array</param>
+    /// <param name="third">Third array</param>
     /// <returns>result</returns>
     public static byte[] Concat(this byte[] first, byte[] second, byte[] third) {
         var Buffer = new byte[first.Length + second.Length+ third.Length];
         Array.Copy(first, Buffer, first.Length);
         Array.Copy(second, 0, Buffer, first.Length, second.Length);
-        Array.Copy(second, 0, Buffer, first.Length + second.Length, third.Length);
+        Array.Copy(third, 0, Buffer, first.Length + second.Length, third.Length);
         return Buffer;
         }
 

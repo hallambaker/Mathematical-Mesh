@@ -10,6 +10,14 @@
             target language.
             </summary>
         </member>
+        <member name="M:Goedel.Registry.ExtensionMethods.QuotedOrNull(System.String)">
+            <summary>
+            Return the string 'null' if <paramref name="text"/> is null, otherwise,
+            return the value as a quoted string constant.
+            </summary>
+            <param name="text">The text value.</param>
+            <returns>The value <paramref name="text"/> as a string constant.</returns>
+        </member>
         <member name="P:Goedel.Registry.ExtensionMethods.Target">
             <summary>
             Sets the code generation target type. This ensures that labels,
@@ -1227,6 +1235,19 @@
             <param name="Spaces">Number of spaces to indent text</param>
             <param name="Text">Text to add</param>
             <returns>The comment string.</returns>
+        </member>
+        <member name="M:Goedel.Registry.Script.Indent(System.Int32)">
+            <summary>
+            Increase the current indent by <paramref name="count"/> spaces.
+            </summary>
+            <param name="count">The number of spaces to increase the indent.</param>
+            <returns>The original indent string to allow use in a restore operation.</returns>
+        </member>
+        <member name="M:Goedel.Registry.Script.RestoreIndent(System.String)">
+            <summary>
+            Restore the indent to the value <paramref name="indent"/>
+            </summary>
+            <param name="indent">The indent to set.</param>
         </member>
         <member name="T:Goedel.Registry.OutputFormat">
             <summary>

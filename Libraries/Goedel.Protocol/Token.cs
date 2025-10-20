@@ -898,15 +898,11 @@ public record PropertyDictionaryStruct(
 /// <param name="Factory">Factory returning an instance of the object.</param>
 /// <param name="IFactory">For a collection object, factory returning an instance of an
 /// object in the collection.</param>
-/// <param name="Tagged">If true, the property should be tagged.</param>
 public record PropertyGStruct(
             string Tag,
-            //Type GType,
             Type Type,
             Action<IBinding, object?> Set,
             Func<IBinding, object?> Get,
-            //Action<IBinding, object?> SetSub,
-            //Func<IBinding, object?> GetSub,
             Func<object> Factory = null,
             Func<object> IFactory = null) : Property(Tag, false) {
     ///<inheritdoc/>
@@ -946,7 +942,7 @@ public record PropertyGStruct(
 /// <param name="Factory">Factory returning an instance of the object.</param>
 /// <param name="IFactory">For a collection object, factory returning an instance of an
 /// object in the collection.</param>
-/// <param name="Tagged">If true, the property should be tagged.</param>
+/// <param name="ListAdd">Method to add an item to a list of the target type.</param>
 public record PropertyListGStruct(
             string Tag,
             Type Type,
@@ -991,7 +987,6 @@ public record PropertyListGStruct(
 /// <param name="Factory">Factory returning an instance of the object.</param>
 /// <param name="IFactory">For a collection object, factory returning an instance of an
 /// object in the collection.</param>
-/// <param name="Tagged">If true, the property should be tagged.</param>
 /// <param name="Add">Add struct to dictionary</param>
 /// <param name="Enumerator">Returns an enumerator</param>
 public record PropertyDictionaryGStruct(

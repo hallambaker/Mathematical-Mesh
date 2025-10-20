@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/8/2025 1:32:11 PM
+//  This file was automatically generated at 10/20/2025 6:32:12 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -150,20 +151,20 @@ abstract public partial class AccountEntry : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Directory", 
-					(IBinding data, string? value) => {(data as AccountEntry).Directory = value;}, 
-					(IBinding data) => (data as AccountEntry).Directory ),
+					(data, value) => {(data as AccountEntry).Directory = value;}, 
+					data => (data as AccountEntry).Directory ),
 		new PropertyString ("ProfileUdf", 
-					(IBinding data, string? value) => {(data as AccountEntry).ProfileUdf = value;}, 
-					(IBinding data) => (data as AccountEntry).ProfileUdf ),
+					(data, value) => {(data as AccountEntry).ProfileUdf = value;}, 
+					data => (data as AccountEntry).ProfileUdf ),
 		new PropertyInteger32 ("Quota", 
-					(IBinding data, int? value) => {(data as AccountEntry).Quota = value;}, 
-					(IBinding data) => (data as AccountEntry).Quota ),
+					(data, value) => {(data as AccountEntry).Quota = value;}, 
+					data => (data as AccountEntry).Quota ),
 		new PropertyString ("Status", 
-					(IBinding data, string? value) => {(data as AccountEntry).Status = value;}, 
-					(IBinding data) => (data as AccountEntry).Status ),
+					(data, value) => {(data as AccountEntry).Status = value;}, 
+					data => (data as AccountEntry).Status ),
 		new PropertyString ("LocalAddress", 
-					(IBinding data, string? value) => {(data as AccountEntry).LocalAddress = value;}, 
-					(IBinding data) => (data as AccountEntry).LocalAddress )
+					(data, value) => {(data as AccountEntry).LocalAddress = value;}, 
+					data => (data as AccountEntry).LocalAddress )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -204,6 +205,9 @@ abstract public partial class AccountEntry : CatalogedEntry {
 	/// Represents a Mesh Account
 	/// </summary>
 public partial class AccountUser : AccountEntry {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileUser")]
 	public virtual Enveloped<ProfileAccount>?					EnvelopedProfileUser  {get; set;} 
 
@@ -211,6 +215,9 @@ public partial class AccountUser : AccountEntry {
 	/// Wrapped property
     /// </summary>
 	public virtual ProfileAccount?				ProfileUser  => EnvelopedProfileUser.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedAccountHostAssignment")]
 	public virtual Enveloped<AccountHostAssignment>?					EnvelopedAccountHostAssignment  {get; set;} 
 
@@ -224,17 +231,13 @@ public partial class AccountUser : AccountEntry {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedProfileUser", /*typeof (ProfileAccount<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as AccountUser).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;},
-					(IBinding data) => (data as AccountUser).EnvelopedProfileUser,
-					/*(IBinding data, object? value) => {(data as AccountUser).ProfileUser = value as ProfileAccount;},
-					(IBinding data) => (data as AccountUser).ProfileUser,*/
+		new PropertyGStruct ("EnvelopedProfileUser", typeof (Enveloped),
+					(data, value) => {(data as AccountUser).EnvelopedProfileUser = value as Enveloped<ProfileAccount>;},
+					data => (data as AccountUser).EnvelopedProfileUser,
 					()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
-		new PropertyGStruct ("EnvelopedAccountHostAssignment", /*typeof (AccountHostAssignment<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as AccountUser).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
-					(IBinding data) => (data as AccountUser).EnvelopedAccountHostAssignment,
-					/*(IBinding data, object? value) => {(data as AccountUser).AccountHostAssignment = value as AccountHostAssignment;},
-					(IBinding data) => (data as AccountUser).AccountHostAssignment,*/
+		new PropertyGStruct ("EnvelopedAccountHostAssignment", typeof (Enveloped),
+					(data, value) => {(data as AccountUser).EnvelopedAccountHostAssignment = value as Enveloped<AccountHostAssignment>;},
+					data => (data as AccountUser).EnvelopedAccountHostAssignment,
 					()=>new  Enveloped<AccountHostAssignment>(), ()=>new Enveloped<AccountHostAssignment>())
 		];
 
