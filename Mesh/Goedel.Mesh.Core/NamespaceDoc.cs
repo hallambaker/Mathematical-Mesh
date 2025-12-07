@@ -20,8 +20,8 @@
 //  THE SOFTWARE.
 #endregion
 
-global using Goedel.Callsign;
-global using Goedel.Carnet;
+//global using Goedel.Callsign;
+//global using Goedel.Carnet;
 global using Goedel.Cryptography;
 global using Goedel.Cryptography.Dare;
 global using Goedel.Cryptography.Jose;

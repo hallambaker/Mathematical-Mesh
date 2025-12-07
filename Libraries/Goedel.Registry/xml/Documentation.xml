@@ -10,14 +10,6 @@
             target language.
             </summary>
         </member>
-        <member name="M:Goedel.Registry.ExtensionMethods.QuotedOrNull(System.String)">
-            <summary>
-            Return the string 'null' if <paramref name="text"/> is null, otherwise,
-            return the value as a quoted string constant.
-            </summary>
-            <param name="text">The text value.</param>
-            <returns>The value <paramref name="text"/> as a string constant.</returns>
-        </member>
         <member name="P:Goedel.Registry.ExtensionMethods.Target">
             <summary>
             Sets the code generation target type. This ensures that labels,

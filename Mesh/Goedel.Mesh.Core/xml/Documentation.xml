@@ -53,12 +53,6 @@
         <member name="P:Goedel.Mesh.Core.MeshMachineDirect.KeyCollection">
             <inheritdoc/>
         </member>
-        <member name="P:Goedel.Mesh.Core.MeshMachineDirect.ResolverService">
-            <summary>The Callsign resolution service (if bound).</summary> 
-        </member>
-        <member name="P:Goedel.Mesh.Core.MeshMachineDirect.CarnetService">
-            <summary>The Carnet payment service (if bound).</summary> 
-        </member>
         <member name="M:Goedel.Mesh.Core.MeshMachineDirect.CreateKeyPair(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeySecurity,System.Int32,Goedel.Cryptography.KeyUses)">
             <inheritdoc/>
         </member>

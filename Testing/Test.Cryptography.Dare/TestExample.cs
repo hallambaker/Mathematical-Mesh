@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/1/2025 4:58:36 PM
+//  This file was automatically generated at 11/12/2025 11:58:52 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -130,11 +131,11 @@ abstract public partial class TestEntry : TestSchema {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyDateTime ("Created", 
-					(IBinding data, DateTime? value) => {(data as TestEntry).Created = value;}, 
-					(IBinding data) => (data as TestEntry).Created ),
+					(data, value) => {(data as TestEntry).Created = value;}, 
+					data => (data as TestEntry).Created ),
 		new PropertyDateTime ("Modified", 
-					(IBinding data, DateTime? value) => {(data as TestEntry).Modified = value;}, 
-					(IBinding data) => (data as TestEntry).Modified )
+					(data, value) => {(data as TestEntry).Modified = value;}, 
+					data => (data as TestEntry).Modified )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -202,14 +203,14 @@ public partial class TestItem : TestEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountID", 
-					(IBinding data, string? value) => {(data as TestItem).AccountID = value;}, 
-					(IBinding data) => (data as TestItem).AccountID ),
+					(data, value) => {(data as TestItem).AccountID = value;}, 
+					data => (data as TestItem).AccountID ),
 		new PropertyString ("UserProfileUDF", 
-					(IBinding data, string? value) => {(data as TestItem).UserProfileUDF = value;}, 
-					(IBinding data) => (data as TestItem).UserProfileUDF ),
+					(data, value) => {(data as TestItem).UserProfileUDF = value;}, 
+					data => (data as TestItem).UserProfileUDF ),
 		new PropertyString ("Status", 
-					(IBinding data, string? value) => {(data as TestItem).Status = value;}, 
-					(IBinding data) => (data as TestItem).Status )
+					(data, value) => {(data as TestItem).Status = value;}, 
+					data => (data as TestItem).Status )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -299,26 +300,26 @@ public partial class MessageTest : Goedel.Mesh.Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("UniqueId", 
-					(IBinding data, string? value) => {(data as MessageTest).UniqueId = value;}, 
-					(IBinding data) => (data as MessageTest).UniqueId ),
+					(data, value) => {(data as MessageTest).UniqueId = value;}, 
+					data => (data as MessageTest).UniqueId ),
 		new PropertyString ("VersionId", 
-					(IBinding data, string? value) => {(data as MessageTest).VersionId = value;}, 
-					(IBinding data) => (data as MessageTest).VersionId ),
+					(data, value) => {(data as MessageTest).VersionId = value;}, 
+					data => (data as MessageTest).VersionId ),
 		new PropertyString ("Seed", 
-					(IBinding data, string? value) => {(data as MessageTest).Seed = value;}, 
-					(IBinding data) => (data as MessageTest).Seed ),
+					(data, value) => {(data as MessageTest).Seed = value;}, 
+					data => (data as MessageTest).Seed ),
 		new PropertyInteger32 ("Serial", 
-					(IBinding data, int? value) => {(data as MessageTest).Serial = value;}, 
-					(IBinding data) => (data as MessageTest).Serial ),
+					(data, value) => {(data as MessageTest).Serial = value;}, 
+					data => (data as MessageTest).Serial ),
 		new PropertyInteger32 ("Version", 
-					(IBinding data, int? value) => {(data as MessageTest).Version = value;}, 
-					(IBinding data) => (data as MessageTest).Version ),
+					(data, value) => {(data as MessageTest).Version = value;}, 
+					data => (data as MessageTest).Version ),
 		new PropertyInteger32 ("Length", 
-					(IBinding data, int? value) => {(data as MessageTest).Length = value;}, 
-					(IBinding data) => (data as MessageTest).Length ),
+					(data, value) => {(data as MessageTest).Length = value;}, 
+					data => (data as MessageTest).Length ),
 		new PropertyBinary ("Data", 
-					(IBinding data, byte[]? value) => {(data as MessageTest).Data = value;}, 
-					(IBinding data) => (data as MessageTest).Data )
+					(data, value) => {(data as MessageTest).Data = value;}, 
+					data => (data as MessageTest).Data )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -412,26 +413,26 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("UniqueId", 
-					(IBinding data, string? value) => {(data as CatalogEntryTest).UniqueId = value;}, 
-					(IBinding data) => (data as CatalogEntryTest).UniqueId ),
+					(data, value) => {(data as CatalogEntryTest).UniqueId = value;}, 
+					data => (data as CatalogEntryTest).UniqueId ),
 		new PropertyString ("VersionId", 
-					(IBinding data, string? value) => {(data as CatalogEntryTest).VersionId = value;}, 
-					(IBinding data) => (data as CatalogEntryTest).VersionId ),
+					(data, value) => {(data as CatalogEntryTest).VersionId = value;}, 
+					data => (data as CatalogEntryTest).VersionId ),
 		new PropertyString ("Seed", 
-					(IBinding data, string? value) => {(data as CatalogEntryTest).Seed = value;}, 
-					(IBinding data) => (data as CatalogEntryTest).Seed ),
+					(data, value) => {(data as CatalogEntryTest).Seed = value;}, 
+					data => (data as CatalogEntryTest).Seed ),
 		new PropertyInteger32 ("Serial", 
-					(IBinding data, int? value) => {(data as CatalogEntryTest).Serial = value;}, 
-					(IBinding data) => (data as CatalogEntryTest).Serial ),
+					(data, value) => {(data as CatalogEntryTest).Serial = value;}, 
+					data => (data as CatalogEntryTest).Serial ),
 		new PropertyInteger32 ("Version", 
-					(IBinding data, int? value) => {(data as CatalogEntryTest).Version = value;}, 
-					(IBinding data) => (data as CatalogEntryTest).Version ),
+					(data, value) => {(data as CatalogEntryTest).Version = value;}, 
+					data => (data as CatalogEntryTest).Version ),
 		new PropertyInteger32 ("Length", 
-					(IBinding data, int? value) => {(data as CatalogEntryTest).Length = value;}, 
-					(IBinding data) => (data as CatalogEntryTest).Length ),
+					(data, value) => {(data as CatalogEntryTest).Length = value;}, 
+					data => (data as CatalogEntryTest).Length ),
 		new PropertyBinary ("Data", 
-					(IBinding data, byte[]? value) => {(data as CatalogEntryTest).Data = value;}, 
-					(IBinding data) => (data as CatalogEntryTest).Data )
+					(data, value) => {(data as CatalogEntryTest).Data = value;}, 
+					data => (data as CatalogEntryTest).Data )
 		];
 
     ///<summary>Implement IBinding</summary> 

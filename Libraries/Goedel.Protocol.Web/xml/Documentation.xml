@@ -457,10 +457,10 @@
         </member>
         <member name="M:Goedel.Protocol.Web.ParsedMultipart.Parse(System.IO.Stream,Goedel.Protocol.Web.FormData)">
             <summary>
-            Parse data presented in the stream <paramref name="data"/> and record items to
+            Parse data presented in the stream <paramref name="stream"/> and record items to
             <paramref name="formData"/>.
             </summary>
-            <param name="data">The stream to read.</param>
+            <param name="stream">The stream to read.</param>
             <param name="formData">Instance to receive the parsed data.</param>
             <returns>The parser context.</returns>
         </member>

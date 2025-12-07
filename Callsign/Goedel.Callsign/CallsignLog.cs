@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/6/2025 5:08:52 PM
+//  This file was automatically generated at 11/12/2025 11:58:32 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -180,8 +181,8 @@ public partial class ProfileResolver : ProfileService {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("EnvelopedProfileRegistry", typeof (Enveloped<ProfileAccount>),
-					(IBinding data, object? value) => {(data as ProfileResolver).EnvelopedProfileRegistry = value as Enveloped<ProfileAccount>;}, 
-					(IBinding data) => (data as ProfileResolver).EnvelopedProfileRegistry,
+					(data, value) => {(data as ProfileResolver).EnvelopedProfileRegistry = value as Enveloped<ProfileAccount>;}, 
+					data => (data as ProfileResolver).EnvelopedProfileRegistry,
 					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>())
 		];
 
@@ -269,24 +270,24 @@ public partial class Registration : CallsignEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Id", 
-					(IBinding data, string? value) => {(data as Registration).Id = value;}, 
-					(IBinding data) => (data as Registration).Id ),
+					(data, value) => {(data as Registration).Id = value;}, 
+					data => (data as Registration).Id ),
 		new PropertyStruct ("Entry", typeof (Enveloped<CallsignBinding>),
-					(IBinding data, object? value) => {(data as Registration).Entry = value as Enveloped<CallsignBinding>;}, 
-					(IBinding data) => (data as Registration).Entry,
+					(data, value) => {(data as Registration).Entry = value as Enveloped<CallsignBinding>;}, 
+					data => (data as Registration).Entry,
 					false, ()=>new  Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>()),
 		new PropertyDateTime ("Submitted", 
-					(IBinding data, DateTime? value) => {(data as Registration).Submitted = value;}, 
-					(IBinding data) => (data as Registration).Submitted ),
+					(data, value) => {(data as Registration).Submitted = value;}, 
+					data => (data as Registration).Submitted ),
 		new PropertyString ("Registrar", 
-					(IBinding data, string? value) => {(data as Registration).Registrar = value;}, 
-					(IBinding data) => (data as Registration).Registrar ),
+					(data, value) => {(data as Registration).Registrar = value;}, 
+					data => (data as Registration).Registrar ),
 		new PropertyString ("PriorId", 
-					(IBinding data, string? value) => {(data as Registration).PriorId = value;}, 
-					(IBinding data) => (data as Registration).PriorId ),
+					(data, value) => {(data as Registration).PriorId = value;}, 
+					data => (data as Registration).PriorId ),
 		new PropertyString ("Reason", 
-					(IBinding data, string? value) => {(data as Registration).Reason = value;}, 
-					(IBinding data) => (data as Registration).Reason )
+					(data, value) => {(data as Registration).Reason = value;}, 
+					data => (data as Registration).Reason )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -354,14 +355,14 @@ public partial class CatalogedRegistration : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Canonical", 
-					(IBinding data, string? value) => {(data as CatalogedRegistration).Canonical = value;}, 
-					(IBinding data) => (data as CatalogedRegistration).Canonical ),
+					(data, value) => {(data as CatalogedRegistration).Canonical = value;}, 
+					data => (data as CatalogedRegistration).Canonical ),
 		new PropertyString ("Id", 
-					(IBinding data, string? value) => {(data as CatalogedRegistration).Id = value;}, 
-					(IBinding data) => (data as CatalogedRegistration).Id ),
+					(data, value) => {(data as CatalogedRegistration).Id = value;}, 
+					data => (data as CatalogedRegistration).Id ),
 		new PropertyStruct ("EnvelopedRegistration", typeof (Enveloped<Registration>),
-					(IBinding data, object? value) => {(data as CatalogedRegistration).EnvelopedRegistration = value as Enveloped<Registration>;}, 
-					(IBinding data) => (data as CatalogedRegistration).EnvelopedRegistration,
+					(data, value) => {(data as CatalogedRegistration).EnvelopedRegistration = value as Enveloped<Registration>;}, 
+					data => (data as CatalogedRegistration).EnvelopedRegistration,
 					false, ()=>new  Enveloped<Registration>(), ()=>new Enveloped<Registration>())
 		];
 
@@ -425,14 +426,14 @@ public partial class Page : CallsignEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Id", 
-					(IBinding data, string? value) => {(data as Page).Id = value;}, 
-					(IBinding data) => (data as Page).Id ),
+					(data, value) => {(data as Page).Id = value;}, 
+					data => (data as Page).Id ),
 		new PropertyListString ("Allow", 
-					(IBinding data, List<string>? value) => {(data as Page).Allow = value;}, 
-					(IBinding data) => (data as Page).Allow ),
+					(data, value) => {(data as Page).Allow = value;}, 
+					data => (data as Page).Allow ),
 		new PropertyListStruct ("CharacterSpans", typeof (CharacterSpan), 
-					(IBinding data, object? value) => {(data as Page).CharacterSpans = value as List<CharacterSpan>;}, 
-					(IBinding data) => (data as Page).CharacterSpans,
+					(data, value) => {(data as Page).CharacterSpans = value as List<CharacterSpan>;}, 
+					data => (data as Page).CharacterSpans,
 					true, ()=>new List<CharacterSpan>()
 ) 
 		];
@@ -493,11 +494,11 @@ public partial class CharacterSpan : CallsignEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger32 ("First", 
-					(IBinding data, int? value) => {(data as CharacterSpan).First = value;}, 
-					(IBinding data) => (data as CharacterSpan).First ),
+					(data, value) => {(data as CharacterSpan).First = value;}, 
+					data => (data as CharacterSpan).First ),
 		new PropertyInteger32 ("Last", 
-					(IBinding data, int? value) => {(data as CharacterSpan).Last = value;}, 
-					(IBinding data) => (data as CharacterSpan).Last )
+					(data, value) => {(data as CharacterSpan).Last = value;}, 
+					data => (data as CharacterSpan).Last )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -591,8 +592,8 @@ public partial class MapChar : CharacterSpan {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger32 ("Target", 
-					(IBinding data, int? value) => {(data as MapChar).Target = value;}, 
-					(IBinding data) => (data as MapChar).Target )
+					(data, value) => {(data as MapChar).Target = value;}, 
+					data => (data as MapChar).Target )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -645,8 +646,8 @@ public partial class MapString : CharacterSpan {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Target", 
-					(IBinding data, string? value) => {(data as MapString).Target = value;}, 
-					(IBinding data) => (data as MapString).Target )
+					(data, value) => {(data as MapString).Target = value;}, 
+					data => (data as MapString).Target )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -702,12 +703,12 @@ public partial class Notarization : CallsignEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("Entries", typeof (Enveloped<Witness>),
-					(IBinding data, object? value) => {(data as Notarization).Entries = value as List<Enveloped<Witness>>;}, 
-					(IBinding data) => (data as Notarization).Entries,
+					(data, value) => {(data as Notarization).Entries = value as List<Enveloped<Witness>>;}, 
+					data => (data as Notarization).Entries,
 					false, ()=>new  List<Enveloped<Witness>>(), ()=>new Enveloped<Witness>()),
 		new PropertyStruct ("Proof", typeof (Proof),
-					(IBinding data, object? value) => {(data as Notarization).Proof = value as Proof;}, 
-					(IBinding data) => (data as Notarization).Proof,
+					(data, value) => {(data as Notarization).Proof = value as Proof;}, 
+					data => (data as Notarization).Proof,
 					false, ()=>new  Proof(), ()=>new Proof())
 		];
 
@@ -765,11 +766,11 @@ public partial class Challenge : Assertion {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListString ("Subjects", 
-					(IBinding data, List<string>? value) => {(data as Challenge).Subjects = value;}, 
-					(IBinding data) => (data as Challenge).Subjects ),
+					(data, value) => {(data as Challenge).Subjects = value;}, 
+					data => (data as Challenge).Subjects ),
 		new PropertyListString ("Basis", 
-					(IBinding data, List<string>? value) => {(data as Challenge).Basis = value;}, 
-					(IBinding data) => (data as Challenge).Basis )
+					(data, value) => {(data as Challenge).Basis = value;}, 
+					data => (data as Challenge).Basis )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -828,12 +829,12 @@ public partial class CallsignRegistrationRequest : MessageValidated {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("EnvelopedCallsignBinding", typeof (Enveloped<CallsignBinding>),
-					(IBinding data, object? value) => {(data as CallsignRegistrationRequest).EnvelopedCallsignBinding = value as Enveloped<CallsignBinding>;}, 
-					(IBinding data) => (data as CallsignRegistrationRequest).EnvelopedCallsignBinding,
+					(data, value) => {(data as CallsignRegistrationRequest).EnvelopedCallsignBinding = value as Enveloped<CallsignBinding>;}, 
+					data => (data as CallsignRegistrationRequest).EnvelopedCallsignBinding,
 					false, ()=>new  Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>()),
 		new PropertyListStruct ("Profiles", typeof (Enveloped<Profile>),
-					(IBinding data, object? value) => {(data as CallsignRegistrationRequest).Profiles = value as List<Enveloped<Profile>>;}, 
-					(IBinding data) => (data as CallsignRegistrationRequest).Profiles,
+					(data, value) => {(data as CallsignRegistrationRequest).Profiles = value as List<Enveloped<Profile>>;}, 
+					data => (data as CallsignRegistrationRequest).Profiles,
 					false, ()=>new  List<Enveloped<Profile>>(), ()=>new Enveloped<Profile>())
 		];
 
@@ -906,18 +907,18 @@ public partial class CallsignRegistrationResponse : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBoolean ("Registered", 
-					(IBinding data, bool? value) => {(data as CallsignRegistrationResponse).Registered = value;}, 
-					(IBinding data) => (data as CallsignRegistrationResponse).Registered ),
+					(data, value) => {(data as CallsignRegistrationResponse).Registered = value;}, 
+					data => (data as CallsignRegistrationResponse).Registered ),
 		new PropertyStruct ("CatalogedRegistration", typeof (CatalogedRegistration),
-					(IBinding data, object? value) => {(data as CallsignRegistrationResponse).CatalogedRegistration = value as CatalogedRegistration;}, 
-					(IBinding data) => (data as CallsignRegistrationResponse).CatalogedRegistration,
+					(data, value) => {(data as CallsignRegistrationResponse).CatalogedRegistration = value as CatalogedRegistration;}, 
+					data => (data as CallsignRegistrationResponse).CatalogedRegistration,
 					false, ()=>new  CatalogedRegistration(), ()=>new CatalogedRegistration()),
 		new PropertyString ("Reason", 
-					(IBinding data, string? value) => {(data as CallsignRegistrationResponse).Reason = value;}, 
-					(IBinding data) => (data as CallsignRegistrationResponse).Reason ),
+					(data, value) => {(data as CallsignRegistrationResponse).Reason = value;}, 
+					data => (data as CallsignRegistrationResponse).Reason ),
 		new PropertyString ("Callsign", 
-					(IBinding data, string? value) => {(data as CallsignRegistrationResponse).Callsign = value;}, 
-					(IBinding data) => (data as CallsignRegistrationResponse).Callsign )
+					(data, value) => {(data as CallsignRegistrationResponse).Callsign = value;}, 
+					data => (data as CallsignRegistrationResponse).Callsign )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -968,8 +969,8 @@ public partial class ProcessResultCallsignRegistration : ProcessResult {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("CallsignRegistrationResponse", typeof (CallsignRegistrationResponse),
-					(IBinding data, object? value) => {(data as ProcessResultCallsignRegistration).CallsignRegistrationResponse = value as CallsignRegistrationResponse;}, 
-					(IBinding data) => (data as ProcessResultCallsignRegistration).CallsignRegistrationResponse,
+					(data, value) => {(data as ProcessResultCallsignRegistration).CallsignRegistrationResponse = value as CallsignRegistrationResponse;}, 
+					data => (data as ProcessResultCallsignRegistration).CallsignRegistrationResponse,
 					false, ()=>new  CallsignRegistrationResponse(), ()=>new CallsignRegistrationResponse())
 		];
 
@@ -1049,22 +1050,22 @@ public partial class CatalogedApplicationCallsign : CatalogedApplication {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("CallSign", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationCallsign).CallSign = value;}, 
-					(IBinding data) => (data as CatalogedApplicationCallsign).CallSign ),
+					(data, value) => {(data as CatalogedApplicationCallsign).CallSign = value;}, 
+					data => (data as CatalogedApplicationCallsign).CallSign ),
 		new PropertyString ("RequestId", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationCallsign).RequestId = value;}, 
-					(IBinding data) => (data as CatalogedApplicationCallsign).RequestId ),
+					(data, value) => {(data as CatalogedApplicationCallsign).RequestId = value;}, 
+					data => (data as CatalogedApplicationCallsign).RequestId ),
 		new PropertyStruct ("EnvelopedCallsignBinding", typeof (Enveloped<CallsignBinding>),
-					(IBinding data, object? value) => {(data as CatalogedApplicationCallsign).EnvelopedCallsignBinding = value as Enveloped<CallsignBinding>;}, 
-					(IBinding data) => (data as CatalogedApplicationCallsign).EnvelopedCallsignBinding,
+					(data, value) => {(data as CatalogedApplicationCallsign).EnvelopedCallsignBinding = value as Enveloped<CallsignBinding>;}, 
+					data => (data as CatalogedApplicationCallsign).EnvelopedCallsignBinding,
 					false, ()=>new  Enveloped<CallsignBinding>(), ()=>new Enveloped<CallsignBinding>()),
 		new PropertyStruct ("CatalogedRegistration", typeof (CatalogedRegistration),
-					(IBinding data, object? value) => {(data as CatalogedApplicationCallsign).CatalogedRegistration = value as CatalogedRegistration;}, 
-					(IBinding data) => (data as CatalogedApplicationCallsign).CatalogedRegistration,
+					(data, value) => {(data as CatalogedApplicationCallsign).CatalogedRegistration = value as CatalogedRegistration;}, 
+					data => (data as CatalogedApplicationCallsign).CatalogedRegistration,
 					false, ()=>new  CatalogedRegistration(), ()=>new CatalogedRegistration()),
 		new PropertyString ("Reason", 
-					(IBinding data, string? value) => {(data as CatalogedApplicationCallsign).Reason = value;}, 
-					(IBinding data) => (data as CatalogedApplicationCallsign).Reason )
+					(data, value) => {(data as CatalogedApplicationCallsign).Reason = value;}, 
+					data => (data as CatalogedApplicationCallsign).Reason )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1117,8 +1118,8 @@ public partial class ProcessResultCallsign : ProcessResult {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("CatalogedApplicationCallsign", typeof (CatalogedApplicationCallsign),
-					(IBinding data, object? value) => {(data as ProcessResultCallsign).CatalogedApplicationCallsign = value as CatalogedApplicationCallsign;}, 
-					(IBinding data) => (data as ProcessResultCallsign).CatalogedApplicationCallsign,
+					(data, value) => {(data as ProcessResultCallsign).CatalogedApplicationCallsign = value as CatalogedApplicationCallsign;}, 
+					data => (data as ProcessResultCallsign).CatalogedApplicationCallsign,
 					false, ()=>new  CatalogedApplicationCallsign(), ()=>new CatalogedApplicationCallsign())
 		];
 

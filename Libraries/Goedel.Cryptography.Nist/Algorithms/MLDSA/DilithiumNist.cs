@@ -1316,6 +1316,9 @@ public class DilithiumNist(DilithiumParameters param, IShaFactory shaFactory=nul
         Func<int, int> f = value => System.Math.Abs(value.PlusMinusMod(Parameters.Q));
 
 
-        return a.Max(polynomial => polynomial.Max(value => System.Math.Abs(value.PlusMinusMod(Parameters.Q))));
+        return a.Max(polynomial => {
+            Func<int, int> selector = value => System.Math.Abs(value.PlusMinusMod(Parameters.Q));
+            return polynomial.Max(selector);
+        });
         }
     }

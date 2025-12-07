@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/1/2025 4:58:29 PM
+//  This file was automatically generated at 11/12/2025 11:58:41 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -134,15 +135,15 @@ public partial class StoreUpdate : TestSchema {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("SomeString", 
-					(IBinding data, string? value) => {(data as StoreUpdate).SomeString = value;}, 
-					(IBinding data) => (data as StoreUpdate).SomeString ),
+					(data, value) => {(data as StoreUpdate).SomeString = value;}, 
+					data => (data as StoreUpdate).SomeString ),
 		new PropertyStruct ("AnEnvelope", typeof (Enveloped),
-					(IBinding data, object? value) => {(data as StoreUpdate).AnEnvelope = value as Enveloped;}, 
-					(IBinding data) => (data as StoreUpdate).AnEnvelope,
+					(data, value) => {(data as StoreUpdate).AnEnvelope = value as Enveloped;}, 
+					data => (data as StoreUpdate).AnEnvelope,
 					false, ()=>new  Enveloped(), ()=>new Enveloped()),
 		new PropertyListStruct ("Envelopes", typeof (Enveloped),
-					(IBinding data, object? value) => {(data as StoreUpdate).Envelopes = value as List<Enveloped>;}, 
-					(IBinding data) => (data as StoreUpdate).Envelopes,
+					(data, value) => {(data as StoreUpdate).Envelopes = value as List<Enveloped>;}, 
+					data => (data as StoreUpdate).Envelopes,
 					false, ()=>new  List<Enveloped>(), ()=>new Enveloped())
 		];
 
@@ -207,14 +208,14 @@ public partial class TestEnveloped : TestSchema {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Header", 
-					(IBinding data, string? value) => {(data as TestEnveloped).Header = value;}, 
-					(IBinding data) => (data as TestEnveloped).Header ),
+					(data, value) => {(data as TestEnveloped).Header = value;}, 
+					data => (data as TestEnveloped).Header ),
 		new PropertyString ("Body", 
-					(IBinding data, string? value) => {(data as TestEnveloped).Body = value;}, 
-					(IBinding data) => (data as TestEnveloped).Body ),
+					(data, value) => {(data as TestEnveloped).Body = value;}, 
+					data => (data as TestEnveloped).Body ),
 		new PropertyString ("Trailer", 
-					(IBinding data, string? value) => {(data as TestEnveloped).Trailer = value;}, 
-					(IBinding data) => (data as TestEnveloped).Trailer )
+					(data, value) => {(data as TestEnveloped).Trailer = value;}, 
+					data => (data as TestEnveloped).Trailer )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -253,6 +254,9 @@ public partial class TestEnveloped : TestSchema {
 	/// Contains one instance of each type of field.
 	/// </summary>
 public partial class MultiInstance : TestSchema {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("TestEnvelopedGeneric")]
 	public virtual TestEnveloped<MultiInstance>?					TestEnvelopedGeneric  {get; set;} 
 
@@ -308,33 +312,31 @@ public partial class MultiInstance : TestSchema {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("TestEnvelopedGeneric", /*typeof (MultiInstance<>),*/typeof (TestEnveloped),
-					(IBinding data, object? value) => {(data as MultiInstance).TestEnvelopedGeneric = value as TestEnveloped<MultiInstance>;},
-					(IBinding data) => (data as MultiInstance).TestEnvelopedGeneric,
-					/*(IBinding data, object? value) => {(data as MultiInstance).Generic = value as MultiInstance;},
-					(IBinding data) => (data as MultiInstance).Generic,*/
+		new PropertyGStruct ("TestEnvelopedGeneric", typeof (TestEnveloped),
+					(data, value) => {(data as MultiInstance).TestEnvelopedGeneric = value as TestEnveloped<MultiInstance>;},
+					data => (data as MultiInstance).TestEnvelopedGeneric,
 					()=>new  TestEnveloped<MultiInstance>(), ()=>new TestEnveloped<MultiInstance>()),
 		new PropertyStringTag ("Type", 
-					(IBinding data, string? value) => {(data as MultiInstance).Type = value;}, 
-					(IBinding data) => (data as MultiInstance).Type ),
+					(data, value) => {(data as MultiInstance).Type = value;}, 
+					data => (data as MultiInstance).Type ),
 		new PropertyBoolean ("FieldBoolean", 
-					(IBinding data, bool? value) => {(data as MultiInstance).FieldBoolean = value;}, 
-					(IBinding data) => (data as MultiInstance).FieldBoolean ),
+					(data, value) => {(data as MultiInstance).FieldBoolean = value;}, 
+					data => (data as MultiInstance).FieldBoolean ),
 		new PropertyInteger32 ("FieldInteger", 
-					(IBinding data, int? value) => {(data as MultiInstance).FieldInteger = value;}, 
-					(IBinding data) => (data as MultiInstance).FieldInteger ),
+					(data, value) => {(data as MultiInstance).FieldInteger = value;}, 
+					data => (data as MultiInstance).FieldInteger ),
 		new PropertyReal64 ("FieldFloat", 
-					(IBinding data, double? value) => {(data as MultiInstance).FieldFloat = value;}, 
-					(IBinding data) => (data as MultiInstance).FieldFloat ),
+					(data, value) => {(data as MultiInstance).FieldFloat = value;}, 
+					data => (data as MultiInstance).FieldFloat ),
 		new PropertyDateTime ("FieldDateTime", 
-					(IBinding data, DateTime? value) => {(data as MultiInstance).FieldDateTime = value;}, 
-					(IBinding data) => (data as MultiInstance).FieldDateTime ),
+					(data, value) => {(data as MultiInstance).FieldDateTime = value;}, 
+					data => (data as MultiInstance).FieldDateTime ),
 		new PropertyString ("FieldString", 
-					(IBinding data, string? value) => {(data as MultiInstance).FieldString = value;}, 
-					(IBinding data) => (data as MultiInstance).FieldString ),
+					(data, value) => {(data as MultiInstance).FieldString = value;}, 
+					data => (data as MultiInstance).FieldString ),
 		new PropertyBinary ("FieldBinary", 
-					(IBinding data, byte[]? value) => {(data as MultiInstance).FieldBinary = value;}, 
-					(IBinding data) => (data as MultiInstance).FieldBinary )
+					(data, value) => {(data as MultiInstance).FieldBinary = value;}, 
+					data => (data as MultiInstance).FieldBinary )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -414,23 +416,23 @@ public partial class MultiArray : MultiInstance {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListBoolean ("ArrayBoolean", 
-					(IBinding data, List<bool>? value) => {(data as MultiArray).ArrayBoolean = value;}, 
-					(IBinding data) => (data as MultiArray).ArrayBoolean ),
+					(data, value) => {(data as MultiArray).ArrayBoolean = value;}, 
+					data => (data as MultiArray).ArrayBoolean ),
 		new PropertyListInteger32 ("ArrayInteger", 
-					(IBinding data, List<int>? value) => {(data as MultiArray).ArrayInteger = value;}, 
-					(IBinding data) => (data as MultiArray).ArrayInteger ),
+					(data, value) => {(data as MultiArray).ArrayInteger = value;}, 
+					data => (data as MultiArray).ArrayInteger ),
 		new PropertyListReal64 ("ArrayFloat", 
-					(IBinding data, List<double>? value) => {(data as MultiArray).ArrayFloat = value;}, 
-					(IBinding data) => (data as MultiArray).ArrayFloat ),
+					(data, value) => {(data as MultiArray).ArrayFloat = value;}, 
+					data => (data as MultiArray).ArrayFloat ),
 		new PropertyListDateTime ("ArrayDateTime", 
-					(IBinding data, List<DateTime>? value) => {(data as MultiArray).ArrayDateTime = value;}, 
-					(IBinding data) => (data as MultiArray).ArrayDateTime ),
+					(data, value) => {(data as MultiArray).ArrayDateTime = value;}, 
+					data => (data as MultiArray).ArrayDateTime ),
 		new PropertyListString ("ArrayString", 
-					(IBinding data, List<string>? value) => {(data as MultiArray).ArrayString = value;}, 
-					(IBinding data) => (data as MultiArray).ArrayString ),
+					(data, value) => {(data as MultiArray).ArrayString = value;}, 
+					data => (data as MultiArray).ArrayString ),
 		new PropertyListBinary ("ArrayBinary", 
-					(IBinding data, List<byte[]>? value) => {(data as MultiArray).ArrayBinary = value;}, 
-					(IBinding data) => (data as MultiArray).ArrayBinary )
+					(data, value) => {(data as MultiArray).ArrayBinary = value;}, 
+					data => (data as MultiArray).ArrayBinary )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -514,23 +516,23 @@ public partial class DictArray : MultiArray {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyDictionaryBoolean ("DictBoolean", 
-					(IBinding data, Dictionary<string,bool>? value) => {(data as DictArray).DictBoolean = value;}, 
-					(IBinding data) => (data as DictArray).DictBoolean ),
+					(data, value) => {(data as DictArray).DictBoolean = value;}, 
+					data => (data as DictArray).DictBoolean ),
 		new PropertyDictionaryInteger32 ("DictInteger", 
-					(IBinding data, Dictionary<string,int>? value) => {(data as DictArray).DictInteger = value;}, 
-					(IBinding data) => (data as DictArray).DictInteger ),
+					(data, value) => {(data as DictArray).DictInteger = value;}, 
+					data => (data as DictArray).DictInteger ),
 		new PropertyDictionaryReal64 ("DictFloat", 
-					(IBinding data, Dictionary<string,double>? value) => {(data as DictArray).DictFloat = value;}, 
-					(IBinding data) => (data as DictArray).DictFloat ),
+					(data, value) => {(data as DictArray).DictFloat = value;}, 
+					data => (data as DictArray).DictFloat ),
 		new PropertyDictionaryDateTime ("DictDateTime", 
-					(IBinding data, Dictionary<string,DateTime>? value) => {(data as DictArray).DictDateTime = value;}, 
-					(IBinding data) => (data as DictArray).DictDateTime ),
+					(data, value) => {(data as DictArray).DictDateTime = value;}, 
+					data => (data as DictArray).DictDateTime ),
 		new PropertyDictionaryString ("DictString", 
-					(IBinding data, Dictionary<string,string>? value) => {(data as DictArray).DictString = value;}, 
-					(IBinding data) => (data as DictArray).DictString ),
+					(data, value) => {(data as DictArray).DictString = value;}, 
+					data => (data as DictArray).DictString ),
 		new PropertyDictionaryBinary ("DictBinary", 
-					(IBinding data, Dictionary<string,byte[]>? value) => {(data as DictArray).DictBinary = value;}, 
-					(IBinding data) => (data as DictArray).DictBinary )
+					(data, value) => {(data as DictArray).DictBinary = value;}, 
+					data => (data as DictArray).DictBinary )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -600,20 +602,20 @@ public partial class MultiStruct : MultiArray {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("FieldMultiInstance", typeof (MultiInstance),
-					(IBinding data, object? value) => {(data as MultiStruct).FieldMultiInstance = value as MultiInstance;}, 
-					(IBinding data) => (data as MultiStruct).FieldMultiInstance,
+					(data, value) => {(data as MultiStruct).FieldMultiInstance = value as MultiInstance;}, 
+					data => (data as MultiStruct).FieldMultiInstance,
 					false, ()=>new  MultiInstance(), ()=>new MultiInstance()),
 		new PropertyListStruct ("ArrayMultiInstance", typeof (MultiInstance),
-					(IBinding data, object? value) => {(data as MultiStruct).ArrayMultiInstance = value as List<MultiInstance>;}, 
-					(IBinding data) => (data as MultiStruct).ArrayMultiInstance,
+					(data, value) => {(data as MultiStruct).ArrayMultiInstance = value as List<MultiInstance>;}, 
+					data => (data as MultiStruct).ArrayMultiInstance,
 					false, ()=>new  List<MultiInstance>(), ()=>new MultiInstance()),
 		new PropertyStruct ("TFieldMultiInstance", typeof (MultiInstance), 
-					(IBinding data, object? value) => {(data as MultiStruct).TFieldMultiInstance = value as MultiInstance;}, 
-					(IBinding data) => (data as MultiStruct).TFieldMultiInstance,
+					(data, value) => {(data as MultiStruct).TFieldMultiInstance = value as MultiInstance;}, 
+					data => (data as MultiStruct).TFieldMultiInstance,
 					true) ,
 		new PropertyListStruct ("TArrayMultiInstance", typeof (MultiInstance), 
-					(IBinding data, object? value) => {(data as MultiStruct).TArrayMultiInstance = value as List<MultiInstance>;}, 
-					(IBinding data) => (data as MultiStruct).TArrayMultiInstance,
+					(data, value) => {(data as MultiStruct).TArrayMultiInstance = value as List<MultiInstance>;}, 
+					data => (data as MultiStruct).TArrayMultiInstance,
 					true, ()=>new List<MultiInstance>()
 ) 
 		];

@@ -44,26 +44,26 @@ public class ParsedMultipart {
 
     bool complete = false;
 
-    StreamLookaheadReader Stream { get; }
-    MultipartLex Lexer { get; }
-    ParsedMultipart(Stream data) {
+    protected StreamLookaheadReader Stream { get; }
+    protected MultipartLex Lexer { get; }
+    protected ParsedMultipart(Stream data) {
         Stream = new StreamLookaheadReader(data);
         Lexer = new MultipartLex();
         }
 
     /// <summary>
-    /// Parse data presented in the stream <paramref name="data"/> and record items to
+    /// Parse data presented in the stream <paramref name="stream"/> and record items to
     /// <paramref name="formData"/>.
     /// </summary>
-    /// <param name="data">The stream to read.</param>
+    /// <param name="stream">The stream to read.</param>
     /// <param name="formData">Instance to receive the parsed data.</param>
     /// <returns>The parser context.</returns>
     public static ParsedMultipart Parse(
-            Stream data,
+            Stream stream,
             FormData formData) {
 
-        var result = new ParsedMultipart(data);
-        result.Error = !result.ParseSteam(data, formData);
+        var result = new ParsedMultipart(stream);
+        result.Error = !result.ParseSteam(stream, formData);
 
         return result;
         }
@@ -144,7 +144,7 @@ public class ParsedMultipart {
         return true;
         }
 
-    bool GetHeaders(FieldData fieldData) {
+    protected bool GetHeaders(FieldData fieldData) {
         var (result, more) = GetHeader(fieldData);
         if (result != true) { 
             return false; 
@@ -212,7 +212,7 @@ public class ParsedMultipart {
     //    Console.Write(c);
     //    }
 
-    bool GetContent(out byte[]? content) {
+    protected bool GetContent(out byte[]? content) {
         content = null;
 
         var memoryStream = new MemoryStream();
@@ -252,7 +252,7 @@ public class ParsedMultipart {
 
         }
 
-    bool CheckContentEnd() {
+    protected bool CheckContentEnd() {
         var c = Stream.ReadByte();
 
         if (c == dash) {
@@ -276,7 +276,7 @@ public class ParsedMultipart {
         return false;
         }
 
-    bool GetBoundary() {
+    protected bool GetBoundary() {
         var i = 0;
         boundary[i++] = cr;
         boundary[i++] = lf;

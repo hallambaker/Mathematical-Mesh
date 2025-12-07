@@ -1,4 +1,4 @@
-﻿using Goedel.Callsign;
+﻿//using Goedel.Callsign;
 using Goedel.Cryptography.Dare;
 namespace Goedel.Everything;
 

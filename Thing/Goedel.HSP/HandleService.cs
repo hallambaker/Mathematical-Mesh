@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/1/2025 4:58:19 PM
+//  This file was automatically generated at 11/12/2025 11:58:31 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -363,6 +364,9 @@ public partial class MeshHelloRequest : Goedel.Protocol.HelloRequest {
 	/// <summary>
 	/// </summary>
 public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileService")]
 	public virtual Enveloped<ProfileService>?					EnvelopedProfileService  {get; set;} 
 
@@ -376,11 +380,9 @@ public partial class MeshHelloResponse : Goedel.Protocol.HelloResponse {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyGStruct ("EnvelopedProfileService", /*typeof (ProfileService<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as MeshHelloResponse).EnvelopedProfileService = value as Enveloped<ProfileService>;},
-					(IBinding data) => (data as MeshHelloResponse).EnvelopedProfileService,
-					/*(IBinding data, object? value) => {(data as MeshHelloResponse).ProfileService = value as ProfileService;},
-					(IBinding data) => (data as MeshHelloResponse).ProfileService,*/
+		new PropertyGStruct ("EnvelopedProfileService", typeof (Enveloped),
+					(data, value) => {(data as MeshHelloResponse).EnvelopedProfileService = value as Enveloped<ProfileService>;},
+					data => (data as MeshHelloResponse).EnvelopedProfileService,
 					()=>new  Enveloped<ProfileService>(), ()=>new Enveloped<ProfileService>())
 		];
 

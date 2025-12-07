@@ -305,6 +305,11 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Hsp.MeshHelloResponse.EnvelopedProfileService">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
         <member name="P:Goedel.Hsp.MeshHelloResponse.ProfileService">
             <summary>
             Wrapped property

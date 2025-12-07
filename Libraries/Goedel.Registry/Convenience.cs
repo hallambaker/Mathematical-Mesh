@@ -33,15 +33,6 @@ public static partial class ExtensionMethods {
     private static string _Target = "CS";
 
     /// <summary>
-    /// Return the string 'null' if <paramref name="text"/> is null, otherwise,
-    /// return the value as a quoted string constant.
-    /// </summary>
-    /// <param name="text">The text value.</param>
-    /// <returns>The value <paramref name="text"/> as a string constant.</returns>
-    public static string QuotedOrNull (this string? text) =>
-        text is null ? "null" : "\"" + text + "\"";
-
-    /// <summary>
     /// Sets the code generation target type. This ensures that labels,
     /// etc have the correct prefixes and formatting style for the target
     /// language. The default is 'CS' to generate for C#.

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/1/2025 4:58:19 PM
+//  This file was automatically generated at 11/12/2025 11:58:31 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -207,48 +208,48 @@ public partial class JsDevice : ThingDevice {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("ModelName", 
-					(IBinding data, string? value) => {(data as JsDevice).ModelName = value;}, 
-					(IBinding data) => (data as JsDevice).ModelName ),
+					(data, value) => {(data as JsDevice).ModelName = value;}, 
+					data => (data as JsDevice).ModelName ),
 		new PropertyString ("NameHint", 
-					(IBinding data, string? value) => {(data as JsDevice).NameHint = value;}, 
-					(IBinding data) => (data as JsDevice).NameHint ),
+					(data, value) => {(data as JsDevice).NameHint = value;}, 
+					data => (data as JsDevice).NameHint ),
 		new PropertyString ("ModelSerial", 
-					(IBinding data, string? value) => {(data as JsDevice).ModelSerial = value;}, 
-					(IBinding data) => (data as JsDevice).ModelSerial ),
+					(data, value) => {(data as JsDevice).ModelSerial = value;}, 
+					data => (data as JsDevice).ModelSerial ),
 		new PropertyString ("DeviceSerial", 
-					(IBinding data, string? value) => {(data as JsDevice).DeviceSerial = value;}, 
-					(IBinding data) => (data as JsDevice).DeviceSerial ),
+					(data, value) => {(data as JsDevice).DeviceSerial = value;}, 
+					data => (data as JsDevice).DeviceSerial ),
 		new PropertyString ("DeviceIdentifier", 
-					(IBinding data, string? value) => {(data as JsDevice).DeviceIdentifier = value;}, 
-					(IBinding data) => (data as JsDevice).DeviceIdentifier ),
+					(data, value) => {(data as JsDevice).DeviceIdentifier = value;}, 
+					data => (data as JsDevice).DeviceIdentifier ),
 		new PropertyString ("Manufacturer", 
-					(IBinding data, string? value) => {(data as JsDevice).Manufacturer = value;}, 
-					(IBinding data) => (data as JsDevice).Manufacturer ),
+					(data, value) => {(data as JsDevice).Manufacturer = value;}, 
+					data => (data as JsDevice).Manufacturer ),
 		new PropertyString ("CountryOfOrigin", 
-					(IBinding data, string? value) => {(data as JsDevice).CountryOfOrigin = value;}, 
-					(IBinding data) => (data as JsDevice).CountryOfOrigin ),
+					(data, value) => {(data as JsDevice).CountryOfOrigin = value;}, 
+					data => (data as JsDevice).CountryOfOrigin ),
 		new PropertyDateTime ("Manufactured", 
-					(IBinding data, DateTime? value) => {(data as JsDevice).Manufactured = value;}, 
-					(IBinding data) => (data as JsDevice).Manufactured ),
+					(data, value) => {(data as JsDevice).Manufactured = value;}, 
+					data => (data as JsDevice).Manufactured ),
 		new PropertyListStruct ("OfferedServices", typeof (Service),
-					(IBinding data, object? value) => {(data as JsDevice).OfferedServices = value as List<Service>;}, 
-					(IBinding data) => (data as JsDevice).OfferedServices,
+					(data, value) => {(data as JsDevice).OfferedServices = value as List<Service>;}, 
+					data => (data as JsDevice).OfferedServices,
 					false, ()=>new  List<Service>(), ()=>new Service()),
 		new PropertyListStruct ("UsedServices", typeof (Service),
-					(IBinding data, object? value) => {(data as JsDevice).UsedServices = value as List<Service>;}, 
-					(IBinding data) => (data as JsDevice).UsedServices,
+					(data, value) => {(data as JsDevice).UsedServices = value as List<Service>;}, 
+					data => (data as JsDevice).UsedServices,
 					false, ()=>new  List<Service>(), ()=>new Service()),
 		new PropertyListStruct ("Images", typeof (DeviceImage),
-					(IBinding data, object? value) => {(data as JsDevice).Images = value as List<DeviceImage>;}, 
-					(IBinding data) => (data as JsDevice).Images,
+					(data, value) => {(data as JsDevice).Images = value as List<DeviceImage>;}, 
+					data => (data as JsDevice).Images,
 					false, ()=>new  List<DeviceImage>(), ()=>new DeviceImage()),
 		new PropertyListStruct ("Physical", typeof (Physical),
-					(IBinding data, object? value) => {(data as JsDevice).Physical = value as List<Physical>;}, 
-					(IBinding data) => (data as JsDevice).Physical,
+					(data, value) => {(data as JsDevice).Physical = value as List<Physical>;}, 
+					data => (data as JsDevice).Physical,
 					false, ()=>new  List<Physical>(), ()=>new Physical()),
 		new PropertyListStruct ("Storage", typeof (Storage),
-					(IBinding data, object? value) => {(data as JsDevice).Storage = value as List<Storage>;}, 
-					(IBinding data) => (data as JsDevice).Storage,
+					(data, value) => {(data as JsDevice).Storage = value as List<Storage>;}, 
+					data => (data as JsDevice).Storage,
 					false, ()=>new  List<Storage>(), ()=>new Storage())
 		];
 
@@ -324,14 +325,14 @@ public partial class Resource : ThingDevice {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("MediaType", 
-					(IBinding data, string? value) => {(data as Resource).MediaType = value;}, 
-					(IBinding data) => (data as Resource).MediaType ),
+					(data, value) => {(data as Resource).MediaType = value;}, 
+					data => (data as Resource).MediaType ),
 		new PropertyString ("Uri", 
-					(IBinding data, string? value) => {(data as Resource).Uri = value;}, 
-					(IBinding data) => (data as Resource).Uri ),
+					(data, value) => {(data as Resource).Uri = value;}, 
+					data => (data as Resource).Uri ),
 		new PropertyBinary ("Data", 
-					(IBinding data, byte[]? value) => {(data as Resource).Data = value;}, 
-					(IBinding data) => (data as Resource).Data )
+					(data, value) => {(data as Resource).Data = value;}, 
+					data => (data as Resource).Data )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -423,8 +424,8 @@ public partial class DeviceImage : Resource {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("View", 
-					(IBinding data, string? value) => {(data as DeviceImage).View = value;}, 
-					(IBinding data) => (data as DeviceImage).View )
+					(data, value) => {(data as DeviceImage).View = value;}, 
+					data => (data as DeviceImage).View )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -502,20 +503,20 @@ public partial class Service : ThingDevice {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Name", 
-					(IBinding data, string? value) => {(data as Service).Name = value;}, 
-					(IBinding data) => (data as Service).Name ),
+					(data, value) => {(data as Service).Name = value;}, 
+					data => (data as Service).Name ),
 		new PropertyListString ("Requires", 
-					(IBinding data, List<string>? value) => {(data as Service).Requires = value;}, 
-					(IBinding data) => (data as Service).Requires ),
+					(data, value) => {(data as Service).Requires = value;}, 
+					data => (data as Service).Requires ),
 		new PropertyListString ("Profiles", 
-					(IBinding data, List<string>? value) => {(data as Service).Profiles = value;}, 
-					(IBinding data) => (data as Service).Profiles ),
+					(data, value) => {(data as Service).Profiles = value;}, 
+					data => (data as Service).Profiles ),
 		new PropertyListString ("Transports", 
-					(IBinding data, List<string>? value) => {(data as Service).Transports = value;}, 
-					(IBinding data) => (data as Service).Transports ),
+					(data, value) => {(data as Service).Transports = value;}, 
+					data => (data as Service).Transports ),
 		new PropertyListStruct ("Credentials", typeof (DeviceCredential),
-					(IBinding data, object? value) => {(data as Service).Credentials = value as List<DeviceCredential>;}, 
-					(IBinding data) => (data as Service).Credentials,
+					(data, value) => {(data as Service).Credentials = value as List<DeviceCredential>;}, 
+					data => (data as Service).Credentials,
 					false, ()=>new  List<DeviceCredential>(), ()=>new DeviceCredential())
 		];
 
@@ -583,14 +584,14 @@ public partial class Physical : ThingDevice {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Name", 
-					(IBinding data, string? value) => {(data as Physical).Name = value;}, 
-					(IBinding data) => (data as Physical).Name ),
+					(data, value) => {(data as Physical).Name = value;}, 
+					data => (data as Physical).Name ),
 		new PropertyString ("Identifier", 
-					(IBinding data, string? value) => {(data as Physical).Identifier = value;}, 
-					(IBinding data) => (data as Physical).Identifier ),
+					(data, value) => {(data as Physical).Identifier = value;}, 
+					data => (data as Physical).Identifier ),
 		new PropertyListString ("Profiles", 
-					(IBinding data, List<string>? value) => {(data as Physical).Profiles = value;}, 
-					(IBinding data) => (data as Physical).Profiles )
+					(data, value) => {(data as Physical).Profiles = value;}, 
+					data => (data as Physical).Profiles )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -661,17 +662,17 @@ public partial class Storage : ThingDevice {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Purpose", 
-					(IBinding data, string? value) => {(data as Storage).Purpose = value;}, 
-					(IBinding data) => (data as Storage).Purpose ),
+					(data, value) => {(data as Storage).Purpose = value;}, 
+					data => (data as Storage).Purpose ),
 		new PropertyInteger32 ("TypicalUse", 
-					(IBinding data, int? value) => {(data as Storage).TypicalUse = value;}, 
-					(IBinding data) => (data as Storage).TypicalUse ),
+					(data, value) => {(data as Storage).TypicalUse = value;}, 
+					data => (data as Storage).TypicalUse ),
 		new PropertyInteger32 ("TypicalAnnual", 
-					(IBinding data, int? value) => {(data as Storage).TypicalAnnual = value;}, 
-					(IBinding data) => (data as Storage).TypicalAnnual ),
+					(data, value) => {(data as Storage).TypicalAnnual = value;}, 
+					data => (data as Storage).TypicalAnnual ),
 		new PropertyListStruct ("Services", typeof (Service),
-					(IBinding data, object? value) => {(data as Storage).Services = value as List<Service>;}, 
-					(IBinding data) => (data as Storage).Services,
+					(data, value) => {(data as Storage).Services = value as List<Service>;}, 
+					data => (data as Storage).Services,
 					false, ()=>new  List<Service>(), ()=>new Service())
 		];
 

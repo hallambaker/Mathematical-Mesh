@@ -8,7 +8,7 @@ public static partial class Extension {
     /// </summary>
     /// <param name="text">Unescaped string</param>
     /// <returns>Quoted escaped string.</returns>
-    public static string QuotedNull(this string text) => text == null ? "null" : Quoted(text);
+    public static string QuotedOrNull(this string text) => text == null ? "null" : Quoted(text);
 
 
     /// <summary>

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/6/2025 5:08:45 PM
+//  This file was automatically generated at 11/12/2025 11:58:22 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -129,13 +130,13 @@ public partial class DeviceConnect : DeviceData {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("Networks", typeof (NetworkConnect), 
-					(IBinding data, object? value) => {(data as DeviceConnect).Networks = value as List<NetworkConnect>;}, 
-					(IBinding data) => (data as DeviceConnect).Networks,
+					(data, value) => {(data as DeviceConnect).Networks = value as List<NetworkConnect>;}, 
+					data => (data as DeviceConnect).Networks,
 					true, ()=>new List<NetworkConnect>()
 ) ,
 		new PropertyListStruct ("Services", typeof (OnboardingService), 
-					(IBinding data, object? value) => {(data as DeviceConnect).Services = value as List<OnboardingService>;}, 
-					(IBinding data) => (data as DeviceConnect).Services,
+					(data, value) => {(data as DeviceConnect).Services = value as List<OnboardingService>;}, 
+					data => (data as DeviceConnect).Services,
 					true, ()=>new List<OnboardingService>()
 ) 
 		];
@@ -197,11 +198,11 @@ public partial class NetworkConnect : DeviceData {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListString ("Profiles", 
-					(IBinding data, List<string>? value) => {(data as NetworkConnect).Profiles = value;}, 
-					(IBinding data) => (data as NetworkConnect).Profiles ),
+					(data, value) => {(data as NetworkConnect).Profiles = value;}, 
+					data => (data as NetworkConnect).Profiles ),
 		new PropertyString ("ServiceIds", 
-					(IBinding data, string? value) => {(data as NetworkConnect).ServiceIds = value;}, 
-					(IBinding data) => (data as NetworkConnect).ServiceIds )
+					(data, value) => {(data as NetworkConnect).ServiceIds = value;}, 
+					data => (data as NetworkConnect).ServiceIds )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -304,11 +305,11 @@ public partial class NetworkConnectWiFi : NetworkConnect {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("SSID", 
-					(IBinding data, byte[]? value) => {(data as NetworkConnectWiFi).SSID = value;}, 
-					(IBinding data) => (data as NetworkConnectWiFi).SSID ),
+					(data, value) => {(data as NetworkConnectWiFi).SSID = value;}, 
+					data => (data as NetworkConnectWiFi).SSID ),
 		new PropertyString ("Password", 
-					(IBinding data, string? value) => {(data as NetworkConnectWiFi).Password = value;}, 
-					(IBinding data) => (data as NetworkConnectWiFi).Password )
+					(data, value) => {(data as NetworkConnectWiFi).Password = value;}, 
+					data => (data as NetworkConnectWiFi).Password )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -372,14 +373,14 @@ public partial class OnboardingService : DeviceData {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Id", 
-					(IBinding data, string? value) => {(data as OnboardingService).Id = value;}, 
-					(IBinding data) => (data as OnboardingService).Id ),
+					(data, value) => {(data as OnboardingService).Id = value;}, 
+					data => (data as OnboardingService).Id ),
 		new PropertyString ("Protocol", 
-					(IBinding data, string? value) => {(data as OnboardingService).Protocol = value;}, 
-					(IBinding data) => (data as OnboardingService).Protocol ),
+					(data, value) => {(data as OnboardingService).Protocol = value;}, 
+					data => (data as OnboardingService).Protocol ),
 		new PropertyString ("Endpoint", 
-					(IBinding data, string? value) => {(data as OnboardingService).Endpoint = value;}, 
-					(IBinding data) => (data as OnboardingService).Endpoint )
+					(data, value) => {(data as OnboardingService).Endpoint = value;}, 
+					data => (data as OnboardingService).Endpoint )
 		];
 
     ///<summary>Implement IBinding</summary> 

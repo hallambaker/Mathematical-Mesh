@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/6/2025 5:08:58 PM
+//  This file was automatically generated at 11/12/2025 11:58:42 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -251,29 +252,29 @@ public partial class ResultAbout : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("DirectoryKeys", 
-					(IBinding data, string? value) => {(data as ResultAbout).DirectoryKeys = value;}, 
-					(IBinding data) => (data as ResultAbout).DirectoryKeys ),
+					(data, value) => {(data as ResultAbout).DirectoryKeys = value;}, 
+					data => (data as ResultAbout).DirectoryKeys ),
 		new PropertyString ("DirectoryMesh", 
-					(IBinding data, string? value) => {(data as ResultAbout).DirectoryMesh = value;}, 
-					(IBinding data) => (data as ResultAbout).DirectoryMesh ),
+					(data, value) => {(data as ResultAbout).DirectoryMesh = value;}, 
+					data => (data as ResultAbout).DirectoryMesh ),
 		new PropertyString ("AssemblyTitle", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyTitle = value;}, 
-					(IBinding data) => (data as ResultAbout).AssemblyTitle ),
+					(data, value) => {(data as ResultAbout).AssemblyTitle = value;}, 
+					data => (data as ResultAbout).AssemblyTitle ),
 		new PropertyString ("AssemblyDescription", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyDescription = value;}, 
-					(IBinding data) => (data as ResultAbout).AssemblyDescription ),
+					(data, value) => {(data as ResultAbout).AssemblyDescription = value;}, 
+					data => (data as ResultAbout).AssemblyDescription ),
 		new PropertyString ("AssemblyCopyright", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyCopyright = value;}, 
-					(IBinding data) => (data as ResultAbout).AssemblyCopyright ),
+					(data, value) => {(data as ResultAbout).AssemblyCopyright = value;}, 
+					data => (data as ResultAbout).AssemblyCopyright ),
 		new PropertyString ("AssemblyCompany", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyCompany = value;}, 
-					(IBinding data) => (data as ResultAbout).AssemblyCompany ),
+					(data, value) => {(data as ResultAbout).AssemblyCompany = value;}, 
+					data => (data as ResultAbout).AssemblyCompany ),
 		new PropertyString ("AssemblyVersion", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyVersion = value;}, 
-					(IBinding data) => (data as ResultAbout).AssemblyVersion ),
+					(data, value) => {(data as ResultAbout).AssemblyVersion = value;}, 
+					data => (data as ResultAbout).AssemblyVersion ),
 		new PropertyString ("Build", 
-					(IBinding data, string? value) => {(data as ResultAbout).Build = value;}, 
-					(IBinding data) => (data as ResultAbout).Build )
+					(data, value) => {(data as ResultAbout).Build = value;}, 
+					data => (data as ResultAbout).Build )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -373,11 +374,11 @@ public partial class ResultHello : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("ServiceAddress", 
-					(IBinding data, string? value) => {(data as ResultHello).ServiceAddress = value;}, 
-					(IBinding data) => (data as ResultHello).ServiceAddress ),
+					(data, value) => {(data as ResultHello).ServiceAddress = value;}, 
+					data => (data as ResultHello).ServiceAddress ),
 		new PropertyStruct ("Response", typeof (MeshHelloResponse),
-					(IBinding data, object? value) => {(data as ResultHello).Response = value as MeshHelloResponse;}, 
-					(IBinding data) => (data as ResultHello).Response,
+					(data, value) => {(data as ResultHello).Response = value as MeshHelloResponse;}, 
+					data => (data as ResultHello).Response,
 					false, ()=>new  MeshHelloResponse(), ()=>new MeshHelloResponse())
 		];
 
@@ -439,15 +440,15 @@ public partial class ResultSelf : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("Contact", typeof (JsContact),
-					(IBinding data, object? value) => {(data as ResultSelf).Contact = value as JsContact;}, 
-					(IBinding data) => (data as ResultSelf).Contact,
+					(data, value) => {(data as ResultSelf).Contact = value as JsContact;}, 
+					data => (data as ResultSelf).Contact,
 					false, ()=>new  JsContact(), ()=>new JsContact()),
 		new PropertyString ("Locator", 
-					(IBinding data, string? value) => {(data as ResultSelf).Locator = value;}, 
-					(IBinding data) => (data as ResultSelf).Locator ),
+					(data, value) => {(data as ResultSelf).Locator = value;}, 
+					data => (data as ResultSelf).Locator ),
 		new PropertyString ("Earl", 
-					(IBinding data, string? value) => {(data as ResultSelf).Earl = value;}, 
-					(IBinding data) => (data as ResultSelf).Earl )
+					(data, value) => {(data as ResultSelf).Earl = value;}, 
+					data => (data as ResultSelf).Earl )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -547,14 +548,14 @@ public partial class ResultKey : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as ResultKey).Key = value;}, 
-					(IBinding data) => (data as ResultKey).Key ),
+					(data, value) => {(data as ResultKey).Key = value;}, 
+					data => (data as ResultKey).Key ),
 		new PropertyString ("Identifier", 
-					(IBinding data, string? value) => {(data as ResultKey).Identifier = value;}, 
-					(IBinding data) => (data as ResultKey).Identifier ),
+					(data, value) => {(data as ResultKey).Identifier = value;}, 
+					data => (data as ResultKey).Identifier ),
 		new PropertyListString ("Shares", 
-					(IBinding data, List<string>? value) => {(data as ResultKey).Shares = value;}, 
-					(IBinding data) => (data as ResultKey).Shares )
+					(data, value) => {(data as ResultKey).Shares = value;}, 
+					data => (data as ResultKey).Shares )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -616,14 +617,14 @@ public partial class ResultDigest : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Digest", 
-					(IBinding data, string? value) => {(data as ResultDigest).Digest = value;}, 
-					(IBinding data) => (data as ResultDigest).Digest ),
+					(data, value) => {(data as ResultDigest).Digest = value;}, 
+					data => (data as ResultDigest).Digest ),
 		new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as ResultDigest).Key = value;}, 
-					(IBinding data) => (data as ResultDigest).Key ),
+					(data, value) => {(data as ResultDigest).Key = value;}, 
+					data => (data as ResultDigest).Key ),
 		new PropertyBoolean ("Verified", 
-					(IBinding data, bool? value) => {(data as ResultDigest).Verified = value;}, 
-					(IBinding data) => (data as ResultDigest).Verified )
+					(data, value) => {(data as ResultDigest).Verified = value;}, 
+					data => (data as ResultDigest).Verified )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -685,14 +686,14 @@ public partial class ResultFile : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Filename", 
-					(IBinding data, string? value) => {(data as ResultFile).Filename = value;}, 
-					(IBinding data) => (data as ResultFile).Filename ),
+					(data, value) => {(data as ResultFile).Filename = value;}, 
+					data => (data as ResultFile).Filename ),
 		new PropertyInteger64 ("TotalBytes", 
-					(IBinding data, long? value) => {(data as ResultFile).TotalBytes = value;}, 
-					(IBinding data) => (data as ResultFile).TotalBytes ),
+					(data, value) => {(data as ResultFile).TotalBytes = value;}, 
+					data => (data as ResultFile).TotalBytes ),
 		new PropertyBoolean ("Verified", 
-					(IBinding data, bool? value) => {(data as ResultFile).Verified = value;}, 
-					(IBinding data) => (data as ResultFile).Verified )
+					(data, value) => {(data as ResultFile).Verified = value;}, 
+					data => (data as ResultFile).Verified )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -760,17 +761,17 @@ public partial class ResultKeyFile : ResultFile {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Udf", 
-					(IBinding data, string? value) => {(data as ResultKeyFile).Udf = value;}, 
-					(IBinding data) => (data as ResultKeyFile).Udf ),
+					(data, value) => {(data as ResultKeyFile).Udf = value;}, 
+					data => (data as ResultKeyFile).Udf ),
 		new PropertyBoolean ("Private", 
-					(IBinding data, bool? value) => {(data as ResultKeyFile).Private = value;}, 
-					(IBinding data) => (data as ResultKeyFile).Private ),
+					(data, value) => {(data as ResultKeyFile).Private = value;}, 
+					data => (data as ResultKeyFile).Private ),
 		new PropertyString ("Algorithm", 
-					(IBinding data, string? value) => {(data as ResultKeyFile).Algorithm = value;}, 
-					(IBinding data) => (data as ResultKeyFile).Algorithm ),
+					(data, value) => {(data as ResultKeyFile).Algorithm = value;}, 
+					data => (data as ResultKeyFile).Algorithm ),
 		new PropertyString ("Format", 
-					(IBinding data, string? value) => {(data as ResultKeyFile).Format = value;}, 
-					(IBinding data) => (data as ResultKeyFile).Format )
+					(data, value) => {(data as ResultKeyFile).Format = value;}, 
+					data => (data as ResultKeyFile).Format )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -827,11 +828,11 @@ public partial class ResultListLog : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Filename", 
-					(IBinding data, string? value) => {(data as ResultListLog).Filename = value;}, 
-					(IBinding data) => (data as ResultListLog).Filename ),
+					(data, value) => {(data as ResultListLog).Filename = value;}, 
+					data => (data as ResultListLog).Filename ),
 		new PropertyInteger32 ("Count", 
-					(IBinding data, int? value) => {(data as ResultListLog).Count = value;}, 
-					(IBinding data) => (data as ResultListLog).Count )
+					(data, value) => {(data as ResultListLog).Count = value;}, 
+					data => (data as ResultListLog).Count )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -880,8 +881,8 @@ public partial class ResultLog : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger32 ("Count", 
-					(IBinding data, int? value) => {(data as ResultLog).Count = value;}, 
-					(IBinding data) => (data as ResultLog).Count )
+					(data, value) => {(data as ResultLog).Count = value;}, 
+					data => (data as ResultLog).Count )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -946,18 +947,18 @@ public partial class ResultArchive : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("Entries", typeof (FileEntry),
-					(IBinding data, object? value) => {(data as ResultArchive).Entries = value as List<FileEntry>;}, 
-					(IBinding data) => (data as ResultArchive).Entries,
+					(data, value) => {(data as ResultArchive).Entries = value as List<FileEntry>;}, 
+					data => (data as ResultArchive).Entries,
 					false, ()=>new  List<FileEntry>(), ()=>new FileEntry()),
 		new PropertyInteger32 ("Frames", 
-					(IBinding data, int? value) => {(data as ResultArchive).Frames = value;}, 
-					(IBinding data) => (data as ResultArchive).Frames ),
+					(data, value) => {(data as ResultArchive).Frames = value;}, 
+					data => (data as ResultArchive).Frames ),
 		new PropertyInteger32 ("Deleted", 
-					(IBinding data, int? value) => {(data as ResultArchive).Deleted = value;}, 
-					(IBinding data) => (data as ResultArchive).Deleted ),
+					(data, value) => {(data as ResultArchive).Deleted = value;}, 
+					data => (data as ResultArchive).Deleted ),
 		new PropertyInteger32 ("IndexFrame", 
-					(IBinding data, int? value) => {(data as ResultArchive).IndexFrame = value;}, 
-					(IBinding data) => (data as ResultArchive).IndexFrame )
+					(data, value) => {(data as ResultArchive).IndexFrame = value;}, 
+					data => (data as ResultArchive).IndexFrame )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1008,8 +1009,8 @@ public partial class ResultFileDare : ResultFile {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("Envelope", typeof (Enveloped),
-					(IBinding data, object? value) => {(data as ResultFileDare).Envelope = value as Enveloped;}, 
-					(IBinding data) => (data as ResultFileDare).Envelope,
+					(data, value) => {(data as ResultFileDare).Envelope = value as Enveloped;}, 
+					data => (data as ResultFileDare).Envelope,
 					false, ()=>new  Enveloped(), ()=>new Enveloped())
 		];
 
@@ -1082,20 +1083,20 @@ public partial class ResultFileEARL : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Source", 
-					(IBinding data, string? value) => {(data as ResultFileEARL).Source = value;}, 
-					(IBinding data) => (data as ResultFileEARL).Source ),
+					(data, value) => {(data as ResultFileEARL).Source = value;}, 
+					data => (data as ResultFileEARL).Source ),
 		new PropertyString ("Wrapper", 
-					(IBinding data, string? value) => {(data as ResultFileEARL).Wrapper = value;}, 
-					(IBinding data) => (data as ResultFileEARL).Wrapper ),
+					(data, value) => {(data as ResultFileEARL).Wrapper = value;}, 
+					data => (data as ResultFileEARL).Wrapper ),
 		new PropertyString ("Created", 
-					(IBinding data, string? value) => {(data as ResultFileEARL).Created = value;}, 
-					(IBinding data) => (data as ResultFileEARL).Created ),
+					(data, value) => {(data as ResultFileEARL).Created = value;}, 
+					data => (data as ResultFileEARL).Created ),
 		new PropertyString ("URI", 
-					(IBinding data, string? value) => {(data as ResultFileEARL).URI = value;}, 
-					(IBinding data) => (data as ResultFileEARL).URI ),
+					(data, value) => {(data as ResultFileEARL).URI = value;}, 
+					data => (data as ResultFileEARL).URI ),
 		new PropertyString ("NotPresent", 
-					(IBinding data, string? value) => {(data as ResultFileEARL).NotPresent = value;}, 
-					(IBinding data) => (data as ResultFileEARL).NotPresent )
+					(data, value) => {(data as ResultFileEARL).NotPresent = value;}, 
+					data => (data as ResultFileEARL).NotPresent )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1146,8 +1147,8 @@ public partial class ResultDump : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("CatalogedEntries", typeof (CatalogedEntry), 
-					(IBinding data, object? value) => {(data as ResultDump).CatalogedEntries = value as List<CatalogedEntry>;}, 
-					(IBinding data) => (data as ResultDump).CatalogedEntries,
+					(data, value) => {(data as ResultDump).CatalogedEntries = value as List<CatalogedEntry>;}, 
+					data => (data as ResultDump).CatalogedEntries,
 					true, ()=>new List<CatalogedEntry>()
 ) 
 		];
@@ -1201,12 +1202,12 @@ public partial class ResultList : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("CatalogedDevices", typeof (CatalogedDevice),
-					(IBinding data, object? value) => {(data as ResultList).CatalogedDevices = value as List<CatalogedDevice>;}, 
-					(IBinding data) => (data as ResultList).CatalogedDevices,
+					(data, value) => {(data as ResultList).CatalogedDevices = value as List<CatalogedDevice>;}, 
+					data => (data as ResultList).CatalogedDevices,
 					false, ()=>new  List<CatalogedDevice>(), ()=>new CatalogedDevice()),
 		new PropertyListStruct ("Profiles", typeof (Assertion), 
-					(IBinding data, object? value) => {(data as ResultList).Profiles = value as List<Assertion>;}, 
-					(IBinding data) => (data as ResultList).Profiles,
+					(data, value) => {(data as ResultList).Profiles = value as List<Assertion>;}, 
+					data => (data as ResultList).Profiles,
 					true, ()=>new List<Assertion>()
 ) 
 		];
@@ -1257,8 +1258,8 @@ public partial class ResultAccountConnect : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("ProfileDevice", typeof (ProfileDevice),
-					(IBinding data, object? value) => {(data as ResultAccountConnect).ProfileDevice = value as ProfileDevice;}, 
-					(IBinding data) => (data as ResultAccountConnect).ProfileDevice,
+					(data, value) => {(data as ResultAccountConnect).ProfileDevice = value as ProfileDevice;}, 
+					data => (data as ResultAccountConnect).ProfileDevice,
 					false, ()=>new  ProfileDevice(), ()=>new ProfileDevice())
 		];
 
@@ -1307,8 +1308,8 @@ public partial class ResultPublish : ResultCreateDevice {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Uri", 
-					(IBinding data, string? value) => {(data as ResultPublish).Uri = value;}, 
-					(IBinding data) => (data as ResultPublish).Uri )
+					(data, value) => {(data as ResultPublish).Uri = value;}, 
+					data => (data as ResultPublish).Uri )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1374,18 +1375,18 @@ public partial class ResultPublishDevice : ResultCreateDevice {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Uri", 
-					(IBinding data, string? value) => {(data as ResultPublishDevice).Uri = value;}, 
-					(IBinding data) => (data as ResultPublishDevice).Uri ),
+					(data, value) => {(data as ResultPublishDevice).Uri = value;}, 
+					data => (data as ResultPublishDevice).Uri ),
 		new PropertyString ("FileName", 
-					(IBinding data, string? value) => {(data as ResultPublishDevice).FileName = value;}, 
-					(IBinding data) => (data as ResultPublishDevice).FileName ),
+					(data, value) => {(data as ResultPublishDevice).FileName = value;}, 
+					data => (data as ResultPublishDevice).FileName ),
 		new PropertyStruct ("DevicePreconfigurationPublic", typeof (DevicePreconfigurationPublic),
-					(IBinding data, object? value) => {(data as ResultPublishDevice).DevicePreconfigurationPublic = value as DevicePreconfigurationPublic;}, 
-					(IBinding data) => (data as ResultPublishDevice).DevicePreconfigurationPublic,
+					(data, value) => {(data as ResultPublishDevice).DevicePreconfigurationPublic = value as DevicePreconfigurationPublic;}, 
+					data => (data as ResultPublishDevice).DevicePreconfigurationPublic,
 					false, ()=>new  DevicePreconfigurationPublic(), ()=>new DevicePreconfigurationPublic()),
 		new PropertyStruct ("DevicePreconfigurationPrivate", typeof (DevicePreconfigurationPrivate),
-					(IBinding data, object? value) => {(data as ResultPublishDevice).DevicePreconfigurationPrivate = value as DevicePreconfigurationPrivate;}, 
-					(IBinding data) => (data as ResultPublishDevice).DevicePreconfigurationPrivate,
+					(data, value) => {(data as ResultPublishDevice).DevicePreconfigurationPrivate = value as DevicePreconfigurationPrivate;}, 
+					data => (data as ResultPublishDevice).DevicePreconfigurationPrivate,
 					false, ()=>new  DevicePreconfigurationPrivate(), ()=>new DevicePreconfigurationPrivate())
 		];
 
@@ -1449,14 +1450,14 @@ public partial class ResultCreateDevice : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBoolean ("Default", 
-					(IBinding data, bool? value) => {(data as ResultCreateDevice).Default = value;}, 
-					(IBinding data) => (data as ResultCreateDevice).Default ),
+					(data, value) => {(data as ResultCreateDevice).Default = value;}, 
+					data => (data as ResultCreateDevice).Default ),
 		new PropertyString ("DeviceUDF", 
-					(IBinding data, string? value) => {(data as ResultCreateDevice).DeviceUDF = value;}, 
-					(IBinding data) => (data as ResultCreateDevice).DeviceUDF ),
+					(data, value) => {(data as ResultCreateDevice).DeviceUDF = value;}, 
+					data => (data as ResultCreateDevice).DeviceUDF ),
 		new PropertyStruct ("CatalogedDevice", typeof (CatalogedDevice),
-					(IBinding data, object? value) => {(data as ResultCreateDevice).CatalogedDevice = value as CatalogedDevice;}, 
-					(IBinding data) => (data as ResultCreateDevice).CatalogedDevice,
+					(data, value) => {(data as ResultCreateDevice).CatalogedDevice = value as CatalogedDevice;}, 
+					data => (data as ResultCreateDevice).CatalogedDevice,
 					false, ()=>new  CatalogedDevice(), ()=>new CatalogedDevice())
 		];
 
@@ -1507,8 +1508,8 @@ public partial class ResultCreatePersonal : ResultCreateAccount {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("MeshUDF", 
-					(IBinding data, string? value) => {(data as ResultCreatePersonal).MeshUDF = value;}, 
-					(IBinding data) => (data as ResultCreatePersonal).MeshUDF )
+					(data, value) => {(data as ResultCreatePersonal).MeshUDF = value;}, 
+					data => (data as ResultCreatePersonal).MeshUDF )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1562,12 +1563,12 @@ public partial class ResultCreateAccount : ResultCreateDevice {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("ProfileAccount", typeof (ProfileAccount),
-					(IBinding data, object? value) => {(data as ResultCreateAccount).ProfileAccount = value as ProfileAccount;}, 
-					(IBinding data) => (data as ResultCreateAccount).ProfileAccount,
+					(data, value) => {(data as ResultCreateAccount).ProfileAccount = value as ProfileAccount;}, 
+					data => (data as ResultCreateAccount).ProfileAccount,
 					false, ()=>new  ProfileAccount(), ()=>new ProfileAccount()),
 		new PropertyStruct ("ActivationAccount", typeof (ActivationAccount),
-					(IBinding data, object? value) => {(data as ResultCreateAccount).ActivationAccount = value as ActivationAccount;}, 
-					(IBinding data) => (data as ResultCreateAccount).ActivationAccount,
+					(data, value) => {(data as ResultCreateAccount).ActivationAccount = value as ActivationAccount;}, 
+					data => (data as ResultCreateAccount).ActivationAccount,
 					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount())
 		];
 
@@ -1617,8 +1618,8 @@ public partial class ResultDeleteAccount : ResultCreateDevice {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("UDF", 
-					(IBinding data, string? value) => {(data as ResultDeleteAccount).UDF = value;}, 
-					(IBinding data) => (data as ResultDeleteAccount).UDF )
+					(data, value) => {(data as ResultDeleteAccount).UDF = value;}, 
+					data => (data as ResultDeleteAccount).UDF )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1666,8 +1667,8 @@ public partial class ResultRegisterService : ResultCreateAccount {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("AccountAddress", 
-					(IBinding data, string? value) => {(data as ResultRegisterService).AccountAddress = value;}, 
-					(IBinding data) => (data as ResultRegisterService).AccountAddress )
+					(data, value) => {(data as ResultRegisterService).AccountAddress = value;}, 
+					data => (data as ResultRegisterService).AccountAddress )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1754,8 +1755,8 @@ public partial class ResultStatus : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("StatusResponse", typeof (StatusResponse),
-					(IBinding data, object? value) => {(data as ResultStatus).StatusResponse = value as StatusResponse;}, 
-					(IBinding data) => (data as ResultStatus).StatusResponse,
+					(data, value) => {(data as ResultStatus).StatusResponse = value as StatusResponse;}, 
+					data => (data as ResultStatus).StatusResponse,
 					false, ()=>new  StatusResponse(), ()=>new StatusResponse())
 		];
 
@@ -1815,14 +1816,14 @@ public partial class ResultSync : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger64 ("Fetched", 
-					(IBinding data, long? value) => {(data as ResultSync).Fetched = value;}, 
-					(IBinding data) => (data as ResultSync).Fetched ),
+					(data, value) => {(data as ResultSync).Fetched = value;}, 
+					data => (data as ResultSync).Fetched ),
 		new PropertyInteger32 ("ProcessedResults", 
-					(IBinding data, int? value) => {(data as ResultSync).ProcessedResults = value;}, 
-					(IBinding data) => (data as ResultSync).ProcessedResults ),
+					(data, value) => {(data as ResultSync).ProcessedResults = value;}, 
+					data => (data as ResultSync).ProcessedResults ),
 		new PropertyListStruct ("ProcessResults", typeof (ProcessResult), 
-					(IBinding data, object? value) => {(data as ResultSync).ProcessResults = value as List<ProcessResult>;}, 
-					(IBinding data) => (data as ResultSync).ProcessResults,
+					(data, value) => {(data as ResultSync).ProcessResults = value as List<ProcessResult>;}, 
+					data => (data as ResultSync).ProcessResults,
 					true, ()=>new List<ProcessResult>()
 ) 
 		];
@@ -1879,11 +1880,11 @@ public partial class ResultEscrow : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Service", 
-					(IBinding data, string? value) => {(data as ResultEscrow).Service = value;}, 
-					(IBinding data) => (data as ResultEscrow).Service ),
+					(data, value) => {(data as ResultEscrow).Service = value;}, 
+					data => (data as ResultEscrow).Service ),
 		new PropertyListString ("Shares", 
-					(IBinding data, List<string>? value) => {(data as ResultEscrow).Shares = value;}, 
-					(IBinding data) => (data as ResultEscrow).Shares )
+					(data, value) => {(data as ResultEscrow).Shares = value;}, 
+					data => (data as ResultEscrow).Shares )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1931,8 +1932,8 @@ public partial class ResultMachine : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("CatalogedMachines", typeof (CatalogedMachine),
-					(IBinding data, object? value) => {(data as ResultMachine).CatalogedMachines = value as List<CatalogedMachine>;}, 
-					(IBinding data) => (data as ResultMachine).CatalogedMachines,
+					(data, value) => {(data as ResultMachine).CatalogedMachines = value as List<CatalogedMachine>;}, 
+					data => (data as ResultMachine).CatalogedMachines,
 					false, ()=>new  List<CatalogedMachine>(), ()=>new CatalogedMachine())
 		];
 
@@ -1987,12 +1988,12 @@ public partial class ResultPIN : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("MessagePIN", typeof (MessagePin),
-					(IBinding data, object? value) => {(data as ResultPIN).MessagePIN = value as MessagePin;}, 
-					(IBinding data) => (data as ResultPIN).MessagePIN,
+					(data, value) => {(data as ResultPIN).MessagePIN = value as MessagePin;}, 
+					data => (data as ResultPIN).MessagePIN,
 					false, ()=>new  MessagePin(), ()=>new MessagePin()),
 		new PropertyString ("Uri", 
-					(IBinding data, string? value) => {(data as ResultPIN).Uri = value;}, 
-					(IBinding data) => (data as ResultPIN).Uri )
+					(data, value) => {(data as ResultPIN).Uri = value;}, 
+					data => (data as ResultPIN).Uri )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2041,8 +2042,8 @@ public partial class ResultSequence : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("Entries", typeof (LogEntry),
-					(IBinding data, object? value) => {(data as ResultSequence).Entries = value as LogEntry;}, 
-					(IBinding data) => (data as ResultSequence).Entries,
+					(data, value) => {(data as ResultSequence).Entries = value as LogEntry;}, 
+					data => (data as ResultSequence).Entries,
 					false, ()=>new  LogEntry(), ()=>new LogEntry())
 		];
 
@@ -2127,26 +2128,26 @@ public partial class LogEntry : MeshmanShellResult {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as LogEntry).Key = value;}, 
-					(IBinding data) => (data as LogEntry).Key ),
+					(data, value) => {(data as LogEntry).Key = value;}, 
+					data => (data as LogEntry).Key ),
 		new PropertyInteger32 ("Length", 
-					(IBinding data, int? value) => {(data as LogEntry).Length = value;}, 
-					(IBinding data) => (data as LogEntry).Length ),
+					(data, value) => {(data as LogEntry).Length = value;}, 
+					data => (data as LogEntry).Length ),
 		new PropertyBinary ("Digest", 
-					(IBinding data, byte[]? value) => {(data as LogEntry).Digest = value;}, 
-					(IBinding data) => (data as LogEntry).Digest ),
+					(data, value) => {(data as LogEntry).Digest = value;}, 
+					data => (data as LogEntry).Digest ),
 		new PropertyDateTime ("Recorded", 
-					(IBinding data, DateTime? value) => {(data as LogEntry).Recorded = value;}, 
-					(IBinding data) => (data as LogEntry).Recorded ),
+					(data, value) => {(data as LogEntry).Recorded = value;}, 
+					data => (data as LogEntry).Recorded ),
 		new PropertyBoolean ("Encrypted", 
-					(IBinding data, bool? value) => {(data as LogEntry).Encrypted = value;}, 
-					(IBinding data) => (data as LogEntry).Encrypted ),
+					(data, value) => {(data as LogEntry).Encrypted = value;}, 
+					data => (data as LogEntry).Encrypted ),
 		new PropertyBoolean ("Signed", 
-					(IBinding data, bool? value) => {(data as LogEntry).Signed = value;}, 
-					(IBinding data) => (data as LogEntry).Signed ),
+					(data, value) => {(data as LogEntry).Signed = value;}, 
+					data => (data as LogEntry).Signed ),
 		new PropertyBoolean ("KeyExchange", 
-					(IBinding data, bool? value) => {(data as LogEntry).KeyExchange = value;}, 
-					(IBinding data) => (data as LogEntry).KeyExchange )
+					(data, value) => {(data as LogEntry).KeyExchange = value;}, 
+					data => (data as LogEntry).KeyExchange )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2200,8 +2201,8 @@ public partial class ResultEntry : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("CatalogEntry", typeof (CatalogedEntry), 
-					(IBinding data, object? value) => {(data as ResultEntry).CatalogEntry = value as CatalogedEntry;}, 
-					(IBinding data) => (data as ResultEntry).CatalogEntry,
+					(data, value) => {(data as ResultEntry).CatalogEntry = value as CatalogedEntry;}, 
+					data => (data as ResultEntry).CatalogEntry,
 					true) 
 		];
 
@@ -2256,12 +2257,12 @@ public partial class ResultEntrySent : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("CatalogEntry", typeof (CatalogedEntry), 
-					(IBinding data, object? value) => {(data as ResultEntrySent).CatalogEntry = value as CatalogedEntry;}, 
-					(IBinding data) => (data as ResultEntrySent).CatalogEntry,
+					(data, value) => {(data as ResultEntrySent).CatalogEntry = value as CatalogedEntry;}, 
+					data => (data as ResultEntrySent).CatalogEntry,
 					true) ,
 		new PropertyStruct ("Message", typeof (Message),
-					(IBinding data, object? value) => {(data as ResultEntrySent).Message = value as Message;}, 
-					(IBinding data) => (data as ResultEntrySent).Message,
+					(data, value) => {(data as ResultEntrySent).Message = value as Message;}, 
+					data => (data as ResultEntrySent).Message,
 					false, ()=>new  Message(), ()=>new Message())
 		];
 
@@ -2434,12 +2435,12 @@ public partial class ResultSent : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("Message", typeof (Message),
-					(IBinding data, object? value) => {(data as ResultSent).Message = value as Message;}, 
-					(IBinding data) => (data as ResultSent).Message,
+					(data, value) => {(data as ResultSent).Message = value as Message;}, 
+					data => (data as ResultSent).Message,
 					false, ()=>new  Message(), ()=>new Message()),
 		new PropertyString ("Status", 
-					(IBinding data, string? value) => {(data as ResultSent).Status = value;}, 
-					(IBinding data) => (data as ResultSent).Status )
+					(data, value) => {(data as ResultSent).Status = value;}, 
+					data => (data as ResultSent).Status )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2487,8 +2488,8 @@ public partial class ResultPending : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("Messages", typeof (Message),
-					(IBinding data, object? value) => {(data as ResultPending).Messages = value as List<Message>;}, 
-					(IBinding data) => (data as ResultPending).Messages,
+					(data, value) => {(data as ResultPending).Messages = value as List<Message>;}, 
+					data => (data as ResultPending).Messages,
 					false, ()=>new  List<Message>(), ()=>new Message())
 		];
 
@@ -2536,8 +2537,8 @@ public partial class ResultAuthorize : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("Messages", typeof (ProcessResult), 
-					(IBinding data, object? value) => {(data as ResultAuthorize).Messages = value as List<ProcessResult>;}, 
-					(IBinding data) => (data as ResultAuthorize).Messages,
+					(data, value) => {(data as ResultAuthorize).Messages = value as List<ProcessResult>;}, 
+					data => (data as ResultAuthorize).Messages,
 					true, ()=>new List<ProcessResult>()
 ) 
 		];
@@ -2587,8 +2588,8 @@ public partial class ResultProcess : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("ProcessResult", typeof (Message),
-					(IBinding data, object? value) => {(data as ResultProcess).ProcessResult = value as Message;}, 
-					(IBinding data) => (data as ResultProcess).ProcessResult,
+					(data, value) => {(data as ResultProcess).ProcessResult = value as Message;}, 
+					data => (data as ResultProcess).ProcessResult,
 					false, ()=>new  Message(), ()=>new Message())
 		];
 
@@ -2673,32 +2674,32 @@ public partial class ResultConnect : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("Profile", typeof (Profile), 
-					(IBinding data, object? value) => {(data as ResultConnect).Profile = value as Profile;}, 
-					(IBinding data) => (data as ResultConnect).Profile,
+					(data, value) => {(data as ResultConnect).Profile = value as Profile;}, 
+					data => (data as ResultConnect).Profile,
 					true) ,
 		new PropertyStruct ("CatalogedMachine", typeof (CatalogedMachine),
-					(IBinding data, object? value) => {(data as ResultConnect).CatalogedMachine = value as CatalogedMachine;}, 
-					(IBinding data) => (data as ResultConnect).CatalogedMachine,
+					(data, value) => {(data as ResultConnect).CatalogedMachine = value as CatalogedMachine;}, 
+					data => (data as ResultConnect).CatalogedMachine,
 					false, ()=>new  CatalogedMachine(), ()=>new CatalogedMachine()),
 		new PropertyStruct ("ActivationAccount", typeof (ActivationAccount),
-					(IBinding data, object? value) => {(data as ResultConnect).ActivationAccount = value as ActivationAccount;}, 
-					(IBinding data) => (data as ResultConnect).ActivationAccount,
+					(data, value) => {(data as ResultConnect).ActivationAccount = value as ActivationAccount;}, 
+					data => (data as ResultConnect).ActivationAccount,
 					false, ()=>new  ActivationAccount(), ()=>new ActivationAccount()),
 		new PropertyStruct ("ActivationCommon", typeof (ActivationCommon),
-					(IBinding data, object? value) => {(data as ResultConnect).ActivationCommon = value as ActivationCommon;}, 
-					(IBinding data) => (data as ResultConnect).ActivationCommon,
+					(data, value) => {(data as ResultConnect).ActivationCommon = value as ActivationCommon;}, 
+					data => (data as ResultConnect).ActivationCommon,
 					false, ()=>new  ActivationCommon(), ()=>new ActivationCommon()),
 		new PropertyStruct ("RequestConnection", typeof (RequestConnection),
-					(IBinding data, object? value) => {(data as ResultConnect).RequestConnection = value as RequestConnection;}, 
-					(IBinding data) => (data as ResultConnect).RequestConnection,
+					(data, value) => {(data as ResultConnect).RequestConnection = value as RequestConnection;}, 
+					data => (data as ResultConnect).RequestConnection,
 					false, ()=>new  RequestConnection(), ()=>new RequestConnection()),
 		new PropertyStruct ("AcknowledgeConnection", typeof (AcknowledgeConnection),
-					(IBinding data, object? value) => {(data as ResultConnect).AcknowledgeConnection = value as AcknowledgeConnection;}, 
-					(IBinding data) => (data as ResultConnect).AcknowledgeConnection,
+					(data, value) => {(data as ResultConnect).AcknowledgeConnection = value as AcknowledgeConnection;}, 
+					data => (data as ResultConnect).AcknowledgeConnection,
 					false, ()=>new  AcknowledgeConnection(), ()=>new AcknowledgeConnection()),
 		new PropertyStruct ("RespondConnection", typeof (RespondConnection),
-					(IBinding data, object? value) => {(data as ResultConnect).RespondConnection = value as RespondConnection;}, 
-					(IBinding data) => (data as ResultConnect).RespondConnection,
+					(data, value) => {(data as ResultConnect).RespondConnection = value as RespondConnection;}, 
+					data => (data as ResultConnect).RespondConnection,
 					false, ()=>new  RespondConnection(), ()=>new RespondConnection())
 		];
 
@@ -2753,8 +2754,8 @@ public partial class ResultTransactionRequest : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Identifier", 
-					(IBinding data, string? value) => {(data as ResultTransactionRequest).Identifier = value;}, 
-					(IBinding data) => (data as ResultTransactionRequest).Identifier )
+					(data, value) => {(data as ResultTransactionRequest).Identifier = value;}, 
+					data => (data as ResultTransactionRequest).Identifier )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -2808,11 +2809,11 @@ public partial class ResultReceived : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Status", 
-					(IBinding data, string? value) => {(data as ResultReceived).Status = value;}, 
-					(IBinding data) => (data as ResultReceived).Status ),
+					(data, value) => {(data as ResultReceived).Status = value;}, 
+					data => (data as ResultReceived).Status ),
 		new PropertyStruct ("Message", typeof (Message),
-					(IBinding data, object? value) => {(data as ResultReceived).Message = value as Message;}, 
-					(IBinding data) => (data as ResultReceived).Message,
+					(data, value) => {(data as ResultReceived).Message = value as Message;}, 
+					data => (data as ResultReceived).Message,
 					false, ()=>new  Message(), ()=>new Message())
 		];
 
@@ -2862,8 +2863,8 @@ public partial class ResultApplication : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("Application", typeof (CatalogedApplication), 
-					(IBinding data, object? value) => {(data as ResultApplication).Application = value as CatalogedApplication;}, 
-					(IBinding data) => (data as ResultApplication).Application,
+					(data, value) => {(data as ResultApplication).Application = value as CatalogedApplication;}, 
+					data => (data as ResultApplication).Application,
 					true) 
 		];
 
@@ -2911,8 +2912,8 @@ public partial class ResultApplicationList : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("Applications", typeof (CatalogedApplication), 
-					(IBinding data, object? value) => {(data as ResultApplicationList).Applications = value as List<CatalogedApplication>;}, 
-					(IBinding data) => (data as ResultApplicationList).Applications,
+					(data, value) => {(data as ResultApplicationList).Applications = value as List<CatalogedApplication>;}, 
+					data => (data as ResultApplicationList).Applications,
 					true, ()=>new List<CatalogedApplication>()
 ) 
 		];
@@ -2968,12 +2969,12 @@ public partial class ResultCallsign : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("CallsignApplication", typeof (CatalogedApplicationCallsign),
-					(IBinding data, object? value) => {(data as ResultCallsign).CallsignApplication = value as CatalogedApplicationCallsign;}, 
-					(IBinding data) => (data as ResultCallsign).CallsignApplication,
+					(data, value) => {(data as ResultCallsign).CallsignApplication = value as CatalogedApplicationCallsign;}, 
+					data => (data as ResultCallsign).CallsignApplication,
 					false, ()=>new  CatalogedApplicationCallsign(), ()=>new CatalogedApplicationCallsign()),
 		new PropertyStruct ("Message", typeof (Message),
-					(IBinding data, object? value) => {(data as ResultCallsign).Message = value as Message;}, 
-					(IBinding data) => (data as ResultCallsign).Message,
+					(data, value) => {(data as ResultCallsign).Message = value as Message;}, 
+					data => (data as ResultCallsign).Message,
 					false, ()=>new  Message(), ()=>new Message())
 		];
 
@@ -3029,12 +3030,12 @@ public partial class ResultCallsignResolution : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("CallsignRegistration", typeof (Registration),
-					(IBinding data, object? value) => {(data as ResultCallsignResolution).CallsignRegistration = value as Registration;}, 
-					(IBinding data) => (data as ResultCallsignResolution).CallsignRegistration,
+					(data, value) => {(data as ResultCallsignResolution).CallsignRegistration = value as Registration;}, 
+					data => (data as ResultCallsignResolution).CallsignRegistration,
 					false, ()=>new  Registration(), ()=>new Registration()),
 		new PropertyStruct ("Message", typeof (Message),
-					(IBinding data, object? value) => {(data as ResultCallsignResolution).Message = value as Message;}, 
-					(IBinding data) => (data as ResultCallsignResolution).Message,
+					(data, value) => {(data as ResultCallsignResolution).Message = value as Message;}, 
+					data => (data as ResultCallsignResolution).Message,
 					false, ()=>new  Message(), ()=>new Message())
 		];
 
@@ -3083,8 +3084,8 @@ public partial class ResultCallsignList : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("CallsignApplication", typeof (CatalogedApplicationCallsign),
-					(IBinding data, object? value) => {(data as ResultCallsignList).CallsignApplication = value as List<CatalogedApplicationCallsign>;}, 
-					(IBinding data) => (data as ResultCallsignList).CallsignApplication,
+					(data, value) => {(data as ResultCallsignList).CallsignApplication = value as List<CatalogedApplicationCallsign>;}, 
+					data => (data as ResultCallsignList).CallsignApplication,
 					false, ()=>new  List<CatalogedApplicationCallsign>(), ()=>new CatalogedApplicationCallsign())
 		];
 

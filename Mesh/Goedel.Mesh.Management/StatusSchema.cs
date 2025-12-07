@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/6/2025 5:09:04 PM
+//  This file was automatically generated at 11/12/2025 11:58:46 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -518,20 +519,20 @@ public partial class ServiceStatusResponse : WsmpResponse {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyDateTime ("Start", 
-					(IBinding data, DateTime? value) => {(data as ServiceStatusResponse).Start = value;}, 
-					(IBinding data) => (data as ServiceStatusResponse).Start ),
+					(data, value) => {(data as ServiceStatusResponse).Start = value;}, 
+					data => (data as ServiceStatusResponse).Start ),
 		new PropertyDateTime ("End", 
-					(IBinding data, DateTime? value) => {(data as ServiceStatusResponse).End = value;}, 
-					(IBinding data) => (data as ServiceStatusResponse).End ),
+					(data, value) => {(data as ServiceStatusResponse).End = value;}, 
+					data => (data as ServiceStatusResponse).End ),
 		new PropertyInteger32 ("Started", 
-					(IBinding data, int? value) => {(data as ServiceStatusResponse).Started = value;}, 
-					(IBinding data) => (data as ServiceStatusResponse).Started ),
+					(data, value) => {(data as ServiceStatusResponse).Started = value;}, 
+					data => (data as ServiceStatusResponse).Started ),
 		new PropertyInteger32 ("Completed", 
-					(IBinding data, int? value) => {(data as ServiceStatusResponse).Completed = value;}, 
-					(IBinding data) => (data as ServiceStatusResponse).Completed ),
+					(data, value) => {(data as ServiceStatusResponse).Completed = value;}, 
+					data => (data as ServiceStatusResponse).Completed ),
 		new PropertyInteger32 ("Pending", 
-					(IBinding data, int? value) => {(data as ServiceStatusResponse).Pending = value;}, 
-					(IBinding data) => (data as ServiceStatusResponse).Pending )
+					(data, value) => {(data as ServiceStatusResponse).Pending = value;}, 
+					data => (data as ServiceStatusResponse).Pending )
 		];
 
     ///<summary>Implement IBinding</summary> 

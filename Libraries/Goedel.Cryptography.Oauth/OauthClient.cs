@@ -66,23 +66,6 @@ public class OauthClient {
 
     #region // static methods
 
-    ///// <summary>
-    ///// 
-    ///// </summary>
-    ///// <returns></returns>
-    //public static JWKS MakeKeys() {
-
-    //    var OauthClientSignature = OauthClient.GenKey(
-    //                KeyUses.Sign);
-    //    var OauthClientEncryption = OauthClient.GenKey(KeyUses.Encrypt);
-
-    //    var JWKS = new JWKS {
-    //        Keys = [JWK.Factory(OauthClientSignature), JWK.Factory(OauthClientEncryption)]
-    //        };
-
-    //    return JWKS;
-    //    }
-
     /// <summary>
     /// Generate a key for use with OAUTH client.
     /// </summary>

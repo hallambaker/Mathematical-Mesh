@@ -395,7 +395,7 @@
             <param name="stream">Stream to write to.</param>
             <param name="buffer">the data to be written.</param>
         </member>
-        <member name="M:Goedel.Utilities.Extension.QuotedNull(System.String)">
+        <member name="M:Goedel.Utilities.Extension.QuotedOrNull(System.String)">
             <summary>
             Create a quoted, escaped string in the current language
             </summary>

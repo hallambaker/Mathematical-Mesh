@@ -23,7 +23,6 @@
 		<ProjectReference Include="..\Test.Cryptography\Test.Cryptography.csproj" />
 		<ProjectReference Include="..\Test.Discovery\Test.Discovery.csproj" />
 		<ProjectReference Include="..\Test.MakeSiteDocs\Test.MakeSiteDocs.csproj" />
-		<ProjectReference Include="..\Test.Mesh.Presence\Test.Mesh.Presence.csproj" />
 		<ProjectReference Include="..\Test.Mesh.Protocol\Test.Mesh.Protocol.csproj" />
 		<ProjectReference Include="..\Test.Mesh.Shell\Test.Mesh.Shell.csproj" />
 		<ProjectReference Include="..\Test.Mesh.Store\Test.Mesh.Store.csproj" />

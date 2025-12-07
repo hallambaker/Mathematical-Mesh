@@ -75,11 +75,11 @@ public class MeshMachineDirect : Disposable, IMeshMachineClient {
     ///<inheritdoc/>
     public IKeyCollection KeyCollection => MeshMachineClient.KeyCollection;
 
-    ///<summary>The Callsign resolution service (if bound).</summary> 
-    public ResolverService ResolverService { get; private set; }
+    /////<summary>The Callsign resolution service (if bound).</summary> 
+    //public ResolverService ResolverService { get; private set; }
 
-    ///<summary>The Carnet payment service (if bound).</summary> 
-    public CarnetService CarnetService { get; private set; }
+    /////<summary>The Carnet payment service (if bound).</summary> 
+    //public CarnetService CarnetService { get; private set; }
 
 
 
@@ -135,14 +135,14 @@ public class MeshMachineDirect : Disposable, IMeshMachineClient {
         DirectServices.Add(jpcInterface.GetWellKnown, jpcInterface);
 
         switch (jpcInterface) {
-            case ResolverService resolverService: {
-                ResolverService = resolverService;
-                break;
-                }
-            case CarnetService carnetService: {
-                CarnetService = carnetService;
-                break;
-                }
+            //case ResolverService resolverService: {
+            //    ResolverService = resolverService;
+            //    break;
+            //    }
+            //case CarnetService carnetService: {
+            //    CarnetService = carnetService;
+            //    break;
+            //    }
             }
         }
 

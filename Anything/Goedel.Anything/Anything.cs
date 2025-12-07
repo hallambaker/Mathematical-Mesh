@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/1/2025 4:58:19 PM
+//  This file was automatically generated at 11/12/2025 11:58:31 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -269,13 +270,13 @@ public partial class CatalogedIdentity : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyListStruct ("Identities", typeof (Identity), 
-					(IBinding data, object? value) => {(data as CatalogedIdentity).Identities = value as List<Identity>;}, 
-					(IBinding data) => (data as CatalogedIdentity).Identities,
+					(data, value) => {(data as CatalogedIdentity).Identities = value as List<Identity>;}, 
+					data => (data as CatalogedIdentity).Identities,
 					true, ()=>new List<Identity>()
 ) ,
 		new PropertyListBinary ("Certificates", 
-					(IBinding data, List<byte[]>? value) => {(data as CatalogedIdentity).Certificates = value;}, 
-					(IBinding data) => (data as CatalogedIdentity).Certificates )
+					(data, value) => {(data as CatalogedIdentity).Certificates = value;}, 
+					data => (data as CatalogedIdentity).Certificates )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -324,8 +325,8 @@ abstract public partial class Identity : AnythingProtocol {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Name", 
-					(IBinding data, string? value) => {(data as Identity).Name = value;}, 
-					(IBinding data) => (data as Identity).Name )
+					(data, value) => {(data as Identity).Name = value;}, 
+					data => (data as Identity).Name )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -500,14 +501,14 @@ public partial class CatalogedThing : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("DnsPrefix", 
-					(IBinding data, string? value) => {(data as CatalogedThing).DnsPrefix = value;}, 
-					(IBinding data) => (data as CatalogedThing).DnsPrefix ),
+					(data, value) => {(data as CatalogedThing).DnsPrefix = value;}, 
+					data => (data as CatalogedThing).DnsPrefix ),
 		new PropertyListString ("InternalIp", 
-					(IBinding data, List<string>? value) => {(data as CatalogedThing).InternalIp = value;}, 
-					(IBinding data) => (data as CatalogedThing).InternalIp ),
+					(data, value) => {(data as CatalogedThing).InternalIp = value;}, 
+					data => (data as CatalogedThing).InternalIp ),
 		new PropertyListString ("ExternalIp", 
-					(IBinding data, List<string>? value) => {(data as CatalogedThing).ExternalIp = value;}, 
-					(IBinding data) => (data as CatalogedThing).ExternalIp )
+					(data, value) => {(data as CatalogedThing).ExternalIp = value;}, 
+					data => (data as CatalogedThing).ExternalIp )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -550,6 +551,9 @@ public partial class CatalogedAnything : CatalogedEntry {
 	[JsonPropertyName("Key")]
 	public virtual string?					Key  {get; set;} //
 
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedConnectionAddress")]
 	public virtual Enveloped<ConnectionStripped>?					EnvelopedConnectionAddress  {get; set;} 
 
@@ -557,6 +561,9 @@ public partial class CatalogedAnything : CatalogedEntry {
 	/// Wrapped property
     /// </summary>
 	public virtual ConnectionStripped?				ConnectionAddress  => EnvelopedConnectionAddress.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedProfileCarnet")]
 	public virtual Enveloped<ProfileAnything>?					EnvelopedProfileCarnet  {get; set;} 
 
@@ -564,6 +571,9 @@ public partial class CatalogedAnything : CatalogedEntry {
 	/// Wrapped property
     /// </summary>
 	public virtual ProfileAnything?				ProfileCarnet  => EnvelopedProfileCarnet.Decode();
+	/// <summary>
+	/// Wrapped property
+    /// </summary>
 	[JsonPropertyName("EnvelopedActivationCommon")]
 	public virtual Enveloped<ActivationCommon>?					EnvelopedActivationCommon  {get; set;} 
 
@@ -578,25 +588,19 @@ public partial class CatalogedAnything : CatalogedEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Key", 
-					(IBinding data, string? value) => {(data as CatalogedAnything).Key = value;}, 
-					(IBinding data) => (data as CatalogedAnything).Key ),
-		new PropertyGStruct ("EnvelopedConnectionAddress", /*typeof (ConnectionStripped<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedAnything).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;},
-					(IBinding data) => (data as CatalogedAnything).EnvelopedConnectionAddress,
-					/*(IBinding data, object? value) => {(data as CatalogedAnything).ConnectionAddress = value as ConnectionStripped;},
-					(IBinding data) => (data as CatalogedAnything).ConnectionAddress,*/
+					(data, value) => {(data as CatalogedAnything).Key = value;}, 
+					data => (data as CatalogedAnything).Key ),
+		new PropertyGStruct ("EnvelopedConnectionAddress", typeof (Enveloped),
+					(data, value) => {(data as CatalogedAnything).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;},
+					data => (data as CatalogedAnything).EnvelopedConnectionAddress,
 					()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>()),
-		new PropertyGStruct ("EnvelopedProfileCarnet", /*typeof (ProfileAnything<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedAnything).EnvelopedProfileCarnet = value as Enveloped<ProfileAnything>;},
-					(IBinding data) => (data as CatalogedAnything).EnvelopedProfileCarnet,
-					/*(IBinding data, object? value) => {(data as CatalogedAnything).ProfileCarnet = value as ProfileAnything;},
-					(IBinding data) => (data as CatalogedAnything).ProfileCarnet,*/
+		new PropertyGStruct ("EnvelopedProfileCarnet", typeof (Enveloped),
+					(data, value) => {(data as CatalogedAnything).EnvelopedProfileCarnet = value as Enveloped<ProfileAnything>;},
+					data => (data as CatalogedAnything).EnvelopedProfileCarnet,
 					()=>new  Enveloped<ProfileAnything>(), ()=>new Enveloped<ProfileAnything>()),
-		new PropertyGStruct ("EnvelopedActivationCommon", /*typeof (ActivationCommon<>),*/typeof (Enveloped),
-					(IBinding data, object? value) => {(data as CatalogedAnything).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;},
-					(IBinding data) => (data as CatalogedAnything).EnvelopedActivationCommon,
-					/*(IBinding data, object? value) => {(data as CatalogedAnything).ActivationCommon = value as ActivationCommon;},
-					(IBinding data) => (data as CatalogedAnything).ActivationCommon,*/
+		new PropertyGStruct ("EnvelopedActivationCommon", typeof (Enveloped),
+					(data, value) => {(data as CatalogedAnything).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;},
+					data => (data as CatalogedAnything).EnvelopedActivationCommon,
 					()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())
 		];
 

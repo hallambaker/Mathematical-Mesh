@@ -457,12 +457,27 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Anything.CatalogedAnything.EnvelopedConnectionAddress">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
         <member name="P:Goedel.Anything.CatalogedAnything.ConnectionAddress">
             <summary>
             Wrapped property
             </summary>
         </member>
+        <member name="P:Goedel.Anything.CatalogedAnything.EnvelopedProfileCarnet">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
         <member name="P:Goedel.Anything.CatalogedAnything.ProfileCarnet">
+            <summary>
+            Wrapped property
+            </summary>
+        </member>
+        <member name="P:Goedel.Anything.CatalogedAnything.EnvelopedActivationCommon">
             <summary>
             Wrapped property
             </summary>

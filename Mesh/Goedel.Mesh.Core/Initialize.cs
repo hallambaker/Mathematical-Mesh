@@ -44,8 +44,8 @@ public static class Initialization {
     internal static void Initialize() {
 
         Goedel.Mesh.Initialization.Initialized.AssertTrue(NYI.Throw);
-        Goedel.Callsign.Initialization.Initialized.AssertTrue(NYI.Throw);
-        Goedel.Carnet.Initialization.Initialized.AssertTrue(NYI.Throw);
+        //Goedel.Callsign.Initialization.Initialized.AssertTrue(NYI.Throw);
+        //Goedel.Carnet.Initialization.Initialized.AssertTrue(NYI.Throw);
         Goedel.Cryptography.Core.Initialization.Initialized.AssertTrue(NYI.Throw);
 
 

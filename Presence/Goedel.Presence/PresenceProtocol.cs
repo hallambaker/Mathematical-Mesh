@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/6/2025 5:08:52 PM
+//  This file was automatically generated at 11/12/2025 11:58:31 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -243,11 +244,11 @@ public partial class PresenceFromClient : Goedel.Protocol.Request {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger32 ("Serial", 
-					(IBinding data, int? value) => {(data as PresenceFromClient).Serial = value;}, 
-					(IBinding data) => (data as PresenceFromClient).Serial ),
+					(data, value) => {(data as PresenceFromClient).Serial = value;}, 
+					data => (data as PresenceFromClient).Serial ),
 		new PropertyInteger32 ("Acknowledge", 
-					(IBinding data, int? value) => {(data as PresenceFromClient).Acknowledge = value;}, 
-					(IBinding data) => (data as PresenceFromClient).Acknowledge )
+					(data, value) => {(data as PresenceFromClient).Acknowledge = value;}, 
+					data => (data as PresenceFromClient).Acknowledge )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -454,8 +455,8 @@ public partial class PresenceResolveRequest : PresenceFromClient {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("DnsRequest", 
-					(IBinding data, byte[]? value) => {(data as PresenceResolveRequest).DnsRequest = value;}, 
-					(IBinding data) => (data as PresenceResolveRequest).DnsRequest )
+					(data, value) => {(data as PresenceResolveRequest).DnsRequest = value;}, 
+					data => (data as PresenceResolveRequest).DnsRequest )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -518,15 +519,15 @@ public partial class PresenceFromService : Goedel.Protocol.Response {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("EndPoint", typeof (UdpEndpoint),
-					(IBinding data, object? value) => {(data as PresenceFromService).EndPoint = value as UdpEndpoint;}, 
-					(IBinding data) => (data as PresenceFromService).EndPoint,
+					(data, value) => {(data as PresenceFromService).EndPoint = value as UdpEndpoint;}, 
+					data => (data as PresenceFromService).EndPoint,
 					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint()),
 		new PropertyDateTime ("Now", 
-					(IBinding data, DateTime? value) => {(data as PresenceFromService).Now = value;}, 
-					(IBinding data) => (data as PresenceFromService).Now ),
+					(data, value) => {(data as PresenceFromService).Now = value;}, 
+					data => (data as PresenceFromService).Now ),
 		new PropertyInteger32 ("Acknowledge", 
-					(IBinding data, int? value) => {(data as PresenceFromService).Acknowledge = value;}, 
-					(IBinding data) => (data as PresenceFromService).Acknowledge )
+					(data, value) => {(data as PresenceFromService).Acknowledge = value;}, 
+					data => (data as PresenceFromService).Acknowledge )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -580,8 +581,8 @@ public partial class PresenceConnectResponse : PresenceFromService {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger32 ("ConnectionTimeout", 
-					(IBinding data, int? value) => {(data as PresenceConnectResponse).ConnectionTimeout = value;}, 
-					(IBinding data) => (data as PresenceConnectResponse).ConnectionTimeout )
+					(data, value) => {(data as PresenceConnectResponse).ConnectionTimeout = value;}, 
+					data => (data as PresenceConnectResponse).ConnectionTimeout )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -629,8 +630,8 @@ public partial class PresenceErrorInvalidSerial : PresenceFromService {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger32 ("Serial", 
-					(IBinding data, int? value) => {(data as PresenceErrorInvalidSerial).Serial = value;}, 
-					(IBinding data) => (data as PresenceErrorInvalidSerial).Serial )
+					(data, value) => {(data as PresenceErrorInvalidSerial).Serial = value;}, 
+					data => (data as PresenceErrorInvalidSerial).Serial )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -762,11 +763,11 @@ public partial class PresenceNotify : PresenceFromService {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("Bitmask", 
-					(IBinding data, byte[]? value) => {(data as PresenceNotify).Bitmask = value;}, 
-					(IBinding data) => (data as PresenceNotify).Bitmask ),
+					(data, value) => {(data as PresenceNotify).Bitmask = value;}, 
+					data => (data as PresenceNotify).Bitmask ),
 		new PropertyInteger32 ("Serial", 
-					(IBinding data, int? value) => {(data as PresenceNotify).Serial = value;}, 
-					(IBinding data) => (data as PresenceNotify).Serial )
+					(data, value) => {(data as PresenceNotify).Serial = value;}, 
+					data => (data as PresenceNotify).Serial )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -815,8 +816,8 @@ public partial class PresenceResolveResponse : PresenceFromService {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("DnsResponse", 
-					(IBinding data, byte[]? value) => {(data as PresenceResolveResponse).DnsResponse = value;}, 
-					(IBinding data) => (data as PresenceResolveResponse).DnsResponse )
+					(data, value) => {(data as PresenceResolveResponse).DnsResponse = value;}, 
+					data => (data as PresenceResolveResponse).DnsResponse )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -881,18 +882,18 @@ public partial class SessionRequest : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("Protocol", 
-					(IBinding data, string? value) => {(data as SessionRequest).Protocol = value;}, 
-					(IBinding data) => (data as SessionRequest).Protocol ),
+					(data, value) => {(data as SessionRequest).Protocol = value;}, 
+					data => (data as SessionRequest).Protocol ),
 		new PropertyListString ("Options", 
-					(IBinding data, List<string>? value) => {(data as SessionRequest).Options = value;}, 
-					(IBinding data) => (data as SessionRequest).Options ),
+					(data, value) => {(data as SessionRequest).Options = value;}, 
+					data => (data as SessionRequest).Options ),
 		new PropertyStruct ("Inbound", typeof (UdpEndpoint),
-					(IBinding data, object? value) => {(data as SessionRequest).Inbound = value as UdpEndpoint;}, 
-					(IBinding data) => (data as SessionRequest).Inbound,
+					(data, value) => {(data as SessionRequest).Inbound = value as UdpEndpoint;}, 
+					data => (data as SessionRequest).Inbound,
 					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint()),
 		new PropertyDateTime ("Expires", 
-					(IBinding data, DateTime? value) => {(data as SessionRequest).Expires = value;}, 
-					(IBinding data) => (data as SessionRequest).Expires )
+					(data, value) => {(data as SessionRequest).Expires = value;}, 
+					data => (data as SessionRequest).Expires )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -960,17 +961,17 @@ public partial class SessionResponse : Message {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBoolean ("Accept", 
-					(IBinding data, bool? value) => {(data as SessionResponse).Accept = value;}, 
-					(IBinding data) => (data as SessionResponse).Accept ),
+					(data, value) => {(data as SessionResponse).Accept = value;}, 
+					data => (data as SessionResponse).Accept ),
 		new PropertyString ("Protocol", 
-					(IBinding data, string? value) => {(data as SessionResponse).Protocol = value;}, 
-					(IBinding data) => (data as SessionResponse).Protocol ),
+					(data, value) => {(data as SessionResponse).Protocol = value;}, 
+					data => (data as SessionResponse).Protocol ),
 		new PropertyListString ("Options", 
-					(IBinding data, List<string>? value) => {(data as SessionResponse).Options = value;}, 
-					(IBinding data) => (data as SessionResponse).Options ),
+					(data, value) => {(data as SessionResponse).Options = value;}, 
+					data => (data as SessionResponse).Options ),
 		new PropertyStruct ("Inbound", typeof (UdpEndpoint),
-					(IBinding data, object? value) => {(data as SessionResponse).Inbound = value as UdpEndpoint;}, 
-					(IBinding data) => (data as SessionResponse).Inbound,
+					(data, value) => {(data as SessionResponse).Inbound = value as UdpEndpoint;}, 
+					data => (data as SessionResponse).Inbound,
 					false, ()=>new  UdpEndpoint(), ()=>new UdpEndpoint())
 		];
 
@@ -1039,17 +1040,17 @@ public partial class SessionEndpoint : PresenceProtocol {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("IpAddress", 
-					(IBinding data, byte[]? value) => {(data as SessionEndpoint).IpAddress = value;}, 
-					(IBinding data) => (data as SessionEndpoint).IpAddress ),
+					(data, value) => {(data as SessionEndpoint).IpAddress = value;}, 
+					data => (data as SessionEndpoint).IpAddress ),
 		new PropertyInteger32 ("Port", 
-					(IBinding data, int? value) => {(data as SessionEndpoint).Port = value;}, 
-					(IBinding data) => (data as SessionEndpoint).Port ),
+					(data, value) => {(data as SessionEndpoint).Port = value;}, 
+					data => (data as SessionEndpoint).Port ),
 		new PropertyString ("Protocol", 
-					(IBinding data, string? value) => {(data as SessionEndpoint).Protocol = value;}, 
-					(IBinding data) => (data as SessionEndpoint).Protocol ),
+					(data, value) => {(data as SessionEndpoint).Protocol = value;}, 
+					data => (data as SessionEndpoint).Protocol ),
 		new PropertyListString ("Options", 
-					(IBinding data, List<string>? value) => {(data as SessionEndpoint).Options = value;}, 
-					(IBinding data) => (data as SessionEndpoint).Options )
+					(data, value) => {(data as SessionEndpoint).Options = value;}, 
+					data => (data as SessionEndpoint).Options )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1106,11 +1107,11 @@ public partial class UdpEndpoint : PresenceProtocol {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyBinary ("IpAddress", 
-					(IBinding data, byte[]? value) => {(data as UdpEndpoint).IpAddress = value;}, 
-					(IBinding data) => (data as UdpEndpoint).IpAddress ),
+					(data, value) => {(data as UdpEndpoint).IpAddress = value;}, 
+					data => (data as UdpEndpoint).IpAddress ),
 		new PropertyInteger32 ("Port", 
-					(IBinding data, int? value) => {(data as UdpEndpoint).Port = value;}, 
-					(IBinding data) => (data as UdpEndpoint).Port )
+					(data, value) => {(data as UdpEndpoint).Port = value;}, 
+					data => (data as UdpEndpoint).Port )
 		];
 
     ///<summary>Implement IBinding</summary> 

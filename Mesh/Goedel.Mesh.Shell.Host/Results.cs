@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/6/2025 5:09:06 PM
+//  This file was automatically generated at 11/12/2025 11:58:49 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -205,29 +206,29 @@ public partial class ResultAbout : Result {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("DirectoryKeys", 
-					(IBinding data, string? value) => {(data as ResultAbout).DirectoryKeys = value;}, 
-					(IBinding data) => (data as ResultAbout).DirectoryKeys ),
+					(data, value) => {(data as ResultAbout).DirectoryKeys = value;}, 
+					data => (data as ResultAbout).DirectoryKeys ),
 		new PropertyString ("DirectoryMesh", 
-					(IBinding data, string? value) => {(data as ResultAbout).DirectoryMesh = value;}, 
-					(IBinding data) => (data as ResultAbout).DirectoryMesh ),
+					(data, value) => {(data as ResultAbout).DirectoryMesh = value;}, 
+					data => (data as ResultAbout).DirectoryMesh ),
 		new PropertyString ("AssemblyTitle", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyTitle = value;}, 
-					(IBinding data) => (data as ResultAbout).AssemblyTitle ),
+					(data, value) => {(data as ResultAbout).AssemblyTitle = value;}, 
+					data => (data as ResultAbout).AssemblyTitle ),
 		new PropertyString ("AssemblyDescription", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyDescription = value;}, 
-					(IBinding data) => (data as ResultAbout).AssemblyDescription ),
+					(data, value) => {(data as ResultAbout).AssemblyDescription = value;}, 
+					data => (data as ResultAbout).AssemblyDescription ),
 		new PropertyString ("AssemblyCopyright", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyCopyright = value;}, 
-					(IBinding data) => (data as ResultAbout).AssemblyCopyright ),
+					(data, value) => {(data as ResultAbout).AssemblyCopyright = value;}, 
+					data => (data as ResultAbout).AssemblyCopyright ),
 		new PropertyString ("AssemblyCompany", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyCompany = value;}, 
-					(IBinding data) => (data as ResultAbout).AssemblyCompany ),
+					(data, value) => {(data as ResultAbout).AssemblyCompany = value;}, 
+					data => (data as ResultAbout).AssemblyCompany ),
 		new PropertyString ("AssemblyVersion", 
-					(IBinding data, string? value) => {(data as ResultAbout).AssemblyVersion = value;}, 
-					(IBinding data) => (data as ResultAbout).AssemblyVersion ),
+					(data, value) => {(data as ResultAbout).AssemblyVersion = value;}, 
+					data => (data as ResultAbout).AssemblyVersion ),
 		new PropertyString ("Build", 
-					(IBinding data, string? value) => {(data as ResultAbout).Build = value;}, 
-					(IBinding data) => (data as ResultAbout).Build )
+					(data, value) => {(data as ResultAbout).Build = value;}, 
+					data => (data as ResultAbout).Build )
 		];
 
     ///<summary>Implement IBinding</summary> 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/6/2025 5:08:52 PM
+//  This file was automatically generated at 11/12/2025 11:58:31 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -315,16 +316,16 @@ public partial class CatalogedRepository : CatalogedApplication {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("EnvelopedConnectionAddress", typeof (Enveloped<ConnectionStripped>),
-					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, 
-					(IBinding data) => (data as CatalogedRepository).EnvelopedConnectionAddress,
+					(data, value) => {(data as CatalogedRepository).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, 
+					data => (data as CatalogedRepository).EnvelopedConnectionAddress,
 					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>()),
 		new PropertyStruct ("EnvelopedProfileRepository", typeof (Enveloped<ProfileAccount>),
-					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedProfileRepository = value as Enveloped<ProfileAccount>;}, 
-					(IBinding data) => (data as CatalogedRepository).EnvelopedProfileRepository,
+					(data, value) => {(data as CatalogedRepository).EnvelopedProfileRepository = value as Enveloped<ProfileAccount>;}, 
+					data => (data as CatalogedRepository).EnvelopedProfileRepository,
 					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
 		new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
-					(IBinding data, object? value) => {(data as CatalogedRepository).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, 
-					(IBinding data) => (data as CatalogedRepository).EnvelopedActivationCommon,
+					(data, value) => {(data as CatalogedRepository).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, 
+					data => (data as CatalogedRepository).EnvelopedActivationCommon,
 					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())
 		];
 
@@ -391,16 +392,16 @@ public partial class ActivationApplicationRepository : ActivationApplication {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("AccountEncryption", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationRepository).AccountEncryption = value as KeyData;}, 
-					(IBinding data) => (data as ActivationApplicationRepository).AccountEncryption,
+					(data, value) => {(data as ActivationApplicationRepository).AccountEncryption = value as KeyData;}, 
+					data => (data as ActivationApplicationRepository).AccountEncryption,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("AdministratorSignature", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationRepository).AdministratorSignature = value as KeyData;}, 
-					(IBinding data) => (data as ActivationApplicationRepository).AdministratorSignature,
+					(data, value) => {(data as ActivationApplicationRepository).AdministratorSignature = value as KeyData;}, 
+					data => (data as ActivationApplicationRepository).AdministratorSignature,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
-					(IBinding data, object? value) => {(data as ActivationApplicationRepository).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, 
-					(IBinding data) => (data as ActivationApplicationRepository).EnvelopedConnectionService,
+					(data, value) => {(data as ActivationApplicationRepository).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, 
+					data => (data as ActivationApplicationRepository).EnvelopedConnectionService,
 					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())
 		];
 
@@ -451,8 +452,8 @@ public partial class ApplicationEntryRepository : ApplicationEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("EnvelopedActivation", typeof (Enveloped<ActivationApplicationRepository>),
-					(IBinding data, object? value) => {(data as ApplicationEntryRepository).EnvelopedActivation = value as Enveloped<ActivationApplicationRepository>;}, 
-					(IBinding data) => (data as ApplicationEntryRepository).EnvelopedActivation,
+					(data, value) => {(data as ApplicationEntryRepository).EnvelopedActivation = value as Enveloped<ActivationApplicationRepository>;}, 
+					data => (data as ApplicationEntryRepository).EnvelopedActivation,
 					false, ()=>new  Enveloped<ActivationApplicationRepository>(), ()=>new Enveloped<ActivationApplicationRepository>())
 		];
 

@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/6/2025 5:08:52 PM
+//  This file was automatically generated at 11/12/2025 11:58:31 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -395,14 +396,14 @@ public partial class QueryRequest : ResolverRequest {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyString ("CallSign", 
-					(IBinding data, string? value) => {(data as QueryRequest).CallSign = value;}, 
-					(IBinding data) => (data as QueryRequest).CallSign ),
+					(data, value) => {(data as QueryRequest).CallSign = value;}, 
+					data => (data as QueryRequest).CallSign ),
 		new PropertyString ("RegistrationId", 
-					(IBinding data, string? value) => {(data as QueryRequest).RegistrationId = value;}, 
-					(IBinding data) => (data as QueryRequest).RegistrationId ),
+					(data, value) => {(data as QueryRequest).RegistrationId = value;}, 
+					data => (data as QueryRequest).RegistrationId ),
 		new PropertyString ("LogId", 
-					(IBinding data, string? value) => {(data as QueryRequest).LogId = value;}, 
-					(IBinding data) => (data as QueryRequest).LogId )
+					(data, value) => {(data as QueryRequest).LogId = value;}, 
+					data => (data as QueryRequest).LogId )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -462,12 +463,12 @@ public partial class QueryResponse : ResolverResponse {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("Result", typeof (Enveloped<Registration>),
-					(IBinding data, object? value) => {(data as QueryResponse).Result = value as Enveloped<Registration>;}, 
-					(IBinding data) => (data as QueryResponse).Result,
+					(data, value) => {(data as QueryResponse).Result = value as Enveloped<Registration>;}, 
+					data => (data as QueryResponse).Result,
 					false, ()=>new  Enveloped<Registration>(), ()=>new Enveloped<Registration>()),
 		new PropertyStruct ("Notarization", typeof (Enveloped<Notarization>),
-					(IBinding data, object? value) => {(data as QueryResponse).Notarization = value as Enveloped<Notarization>;}, 
-					(IBinding data) => (data as QueryResponse).Notarization,
+					(data, value) => {(data as QueryResponse).Notarization = value as Enveloped<Notarization>;}, 
+					data => (data as QueryResponse).Notarization,
 					false, ()=>new  Enveloped<Notarization>(), ()=>new Enveloped<Notarization>())
 		];
 

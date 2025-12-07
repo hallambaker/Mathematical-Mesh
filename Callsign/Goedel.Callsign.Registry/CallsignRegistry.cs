@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 10/6/2025 5:08:55 PM
+//  This file was automatically generated at 11/12/2025 11:58:36 AM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -30,7 +30,7 @@
 //  
 //      Copyright : © 2015-2021
 //  
-//  Build Platform: Win32NT 10.0.26100.0
+//  Build Platform: Win32NT 10.0.26200.0
 //  
 //  
 using System;
@@ -44,6 +44,7 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
 #pragma warning disable IDE0079
 #pragma warning disable IDE1006
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
@@ -149,22 +150,22 @@ public partial class CatalogedRegistry : CatalogedApplication {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyInteger32 ("MaximumRequestLength", 
-					(IBinding data, int? value) => {(data as CatalogedRegistry).MaximumRequestLength = value;}, 
-					(IBinding data) => (data as CatalogedRegistry).MaximumRequestLength ),
+					(data, value) => {(data as CatalogedRegistry).MaximumRequestLength = value;}, 
+					data => (data as CatalogedRegistry).MaximumRequestLength ),
 		new PropertyInteger32 ("MaximumCallsignLength", 
-					(IBinding data, int? value) => {(data as CatalogedRegistry).MaximumCallsignLength = value;}, 
-					(IBinding data) => (data as CatalogedRegistry).MaximumCallsignLength ),
+					(data, value) => {(data as CatalogedRegistry).MaximumCallsignLength = value;}, 
+					data => (data as CatalogedRegistry).MaximumCallsignLength ),
 		new PropertyStruct ("EnvelopedConnectionAddress", typeof (Enveloped<ConnectionStripped>),
-					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, 
-					(IBinding data) => (data as CatalogedRegistry).EnvelopedConnectionAddress,
+					(data, value) => {(data as CatalogedRegistry).EnvelopedConnectionAddress = value as Enveloped<ConnectionStripped>;}, 
+					data => (data as CatalogedRegistry).EnvelopedConnectionAddress,
 					false, ()=>new  Enveloped<ConnectionStripped>(), ()=>new Enveloped<ConnectionStripped>()),
 		new PropertyStruct ("EnvelopedProfileRegistry", typeof (Enveloped<ProfileAccount>),
-					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedProfileRegistry = value as Enveloped<ProfileAccount>;}, 
-					(IBinding data) => (data as CatalogedRegistry).EnvelopedProfileRegistry,
+					(data, value) => {(data as CatalogedRegistry).EnvelopedProfileRegistry = value as Enveloped<ProfileAccount>;}, 
+					data => (data as CatalogedRegistry).EnvelopedProfileRegistry,
 					false, ()=>new  Enveloped<ProfileAccount>(), ()=>new Enveloped<ProfileAccount>()),
 		new PropertyStruct ("EnvelopedActivationCommon", typeof (Enveloped<ActivationCommon>),
-					(IBinding data, object? value) => {(data as CatalogedRegistry).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, 
-					(IBinding data) => (data as CatalogedRegistry).EnvelopedActivationCommon,
+					(data, value) => {(data as CatalogedRegistry).EnvelopedActivationCommon = value as Enveloped<ActivationCommon>;}, 
+					data => (data as CatalogedRegistry).EnvelopedActivationCommon,
 					false, ()=>new  Enveloped<ActivationCommon>(), ()=>new Enveloped<ActivationCommon>())
 		];
 
@@ -225,12 +226,12 @@ public partial class ActivationApplicationRegistry : ActivationApplication {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("AccountEncryption", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationRegistry).AccountEncryption = value as KeyData;}, 
-					(IBinding data) => (data as ActivationApplicationRegistry).AccountEncryption,
+					(data, value) => {(data as ActivationApplicationRegistry).AccountEncryption = value as KeyData;}, 
+					data => (data as ActivationApplicationRegistry).AccountEncryption,
 					false, ()=>new  KeyData(), ()=>new KeyData()),
 		new PropertyStruct ("AdministratorSignature", typeof (KeyData),
-					(IBinding data, object? value) => {(data as ActivationApplicationRegistry).AdministratorSignature = value as KeyData;}, 
-					(IBinding data) => (data as ActivationApplicationRegistry).AdministratorSignature,
+					(data, value) => {(data as ActivationApplicationRegistry).AdministratorSignature = value as KeyData;}, 
+					data => (data as ActivationApplicationRegistry).AdministratorSignature,
 					false, ()=>new  KeyData(), ()=>new KeyData())
 		];
 
@@ -288,12 +289,12 @@ public partial class ApplicationEntryRegistry : ApplicationEntry {
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
 		new PropertyStruct ("EnvelopedActivation", typeof (Enveloped<ActivationApplicationRegistry>),
-					(IBinding data, object? value) => {(data as ApplicationEntryRegistry).EnvelopedActivation = value as Enveloped<ActivationApplicationRegistry>;}, 
-					(IBinding data) => (data as ApplicationEntryRegistry).EnvelopedActivation,
+					(data, value) => {(data as ApplicationEntryRegistry).EnvelopedActivation = value as Enveloped<ActivationApplicationRegistry>;}, 
+					data => (data as ApplicationEntryRegistry).EnvelopedActivation,
 					false, ()=>new  Enveloped<ActivationApplicationRegistry>(), ()=>new Enveloped<ActivationApplicationRegistry>()),
 		new PropertyStruct ("EnvelopedConnectionService", typeof (Enveloped<ConnectionService>),
-					(IBinding data, object? value) => {(data as ApplicationEntryRegistry).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, 
-					(IBinding data) => (data as ApplicationEntryRegistry).EnvelopedConnectionService,
+					(data, value) => {(data as ApplicationEntryRegistry).EnvelopedConnectionService = value as Enveloped<ConnectionService>;}, 
+					data => (data as ApplicationEntryRegistry).EnvelopedConnectionService,
 					false, ()=>new  Enveloped<ConnectionService>(), ()=>new Enveloped<ConnectionService>())
 		];
 

@@ -288,7 +288,9 @@ public partial class DNSContextUDP : DNSContext {
         IPEndpoints = new IPEndPoint[listIPAddress.Count];
         var index = 0;
         foreach (var address in listIPAddress) {
-            IPEndpoints[index++] = new IPEndPoint(address, 53);
+            if (address.AddressFamily == AddressFamily.InterNetwork) {
+                IPEndpoints[index++] = new IPEndPoint(address, 53);
+                }
             }
 
         UdpClient = HostNetwork.GetUDPClient();
@@ -310,7 +312,7 @@ public partial class DNSContextUDP : DNSContext {
         var ipEndpoint = IPEndpoints[index % IPEndpoints.Length];
         //Console.WriteLine($"DNS request {ipEndpoint}");
 
-        UdpClient.Send(request.Buffer.Buffer, request.Buffer.Length,
+        var x = UdpClient.Send(request.Buffer.Buffer, request.Buffer.Length,
             ipEndpoint);
 
         }
