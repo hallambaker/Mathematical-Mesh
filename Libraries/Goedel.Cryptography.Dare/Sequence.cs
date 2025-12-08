@@ -91,7 +91,7 @@ public interface IInternSequenceIndexEntry {
 /// <summary>
 /// Base class for Sequence file implementations
 /// </summary>
-public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry> {
+public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry>, ISequence {
 
     #region // Properties
     #region // File and stream related
