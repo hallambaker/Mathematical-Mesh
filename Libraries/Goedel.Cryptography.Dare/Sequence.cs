@@ -145,12 +145,12 @@ public abstract class Sequence : Disposable, IEnumerable<SequenceIndexEntry>, IS
     /// <summary>
     /// The cryptography parameters.
     /// </summary>
-    public CryptoParametersSequence CryptoParametersSequence = null;
+    public CryptoParametersSequence CryptoParametersSequence { get; set; } = null;
 
     /// <summary>
     /// The default cryptographic stack
     /// </summary>
-    public CryptoStack CryptoStack = null;
+    public CryptoStack CryptoStack { get; set; } = null;
 
     ///<summary>The key location instance.</summary>
     public IKeyLocate KeyLocate { get; protected set; }

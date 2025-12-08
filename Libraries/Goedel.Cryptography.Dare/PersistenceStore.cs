@@ -225,7 +225,7 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
         Filename = fileName;
         KeyLocate = keyLocate;
         Decrypt = decrypt;
-        sequence = Sequence.Open(
+        sequence = Goedel.Cryptography.Dare.Sequence.Open(
                         fileName,
                         fileStatus,
                         keyLocate,
@@ -252,7 +252,7 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
     /// Reopen the underlying sequence.
     /// </summary>
     protected void Reload() {
-        sequence = Sequence.Open(
+        sequence = Goedel.Cryptography.Dare.Sequence.Open(
                 Filename,
                 FileStatus.ConcurrentLocked,
                 KeyLocate,

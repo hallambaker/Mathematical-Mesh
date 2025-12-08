@@ -5684,12 +5684,12 @@
         <member name="P:Goedel.Cryptography.Dare.Sequence.DigestRequired">
             <summary>If true, the Sequence type requires a digest calculated on the payload.</summary> 
         </member>
-        <member name="F:Goedel.Cryptography.Dare.Sequence.CryptoParametersSequence">
+        <member name="P:Goedel.Cryptography.Dare.Sequence.CryptoParametersSequence">
             <summary>
             The cryptography parameters.
             </summary>
         </member>
-        <member name="F:Goedel.Cryptography.Dare.Sequence.CryptoStack">
+        <member name="P:Goedel.Cryptography.Dare.Sequence.CryptoStack">
             <summary>
             The default cryptographic stack
             </summary>
