@@ -43,6 +43,8 @@ public static class Initialization {
     [ModuleInitializer]
     public static void Initialize() {
 
+        Dare._Initialized.AssertTrue(NYI.Throw);
+
         //Goedel.Mesh.Initialization.Initialized.AssertTrue(NYI.Throw);
         //Goedel.Cryptography.Core.Initialization.Initialized.AssertTrue(NYI.Throw);
 

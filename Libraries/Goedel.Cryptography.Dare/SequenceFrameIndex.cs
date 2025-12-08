@@ -277,6 +277,9 @@ public partial class SequenceIndexEntry : DareEnvelopeLazy {
 
         var frameLength = jbcdStream.FramerOpen(position, previous);
         var headerBytes = jbcdStream.FramerGetData();
+        var headerString = headerBytes.ToUTF8();
+
+
         var header = StreamParseTag<DareHeader>(headerBytes, false);
 
         jbcdStream.FramerGetFrameIndex(out var dataPosition, out var dataLength);
