@@ -84,7 +84,7 @@ public record EarlSet {
             string? authority = null,
             string scheme = "earl",
                 int precision = 140) : this(
-                 EarlEnvelopeWriter.GetBytes(contentMeta, payload), authority, scheme, precision) {
+                 EarlEnvelopeWriter.GetBytes(payload, contentMeta), authority, scheme, precision) {
         }
 
     /// <summary>
@@ -104,9 +104,15 @@ public record EarlSet {
             string scheme = "earl",
                 int precision = 140) {
 
-        var writer = new EarlEnvelopeWriter(contentMeta, signers);
-        writer.Write(payload);
-        var envelope = writer.End(signers);
+
+
+        //var writer = new EarlEnvelopeWriter(signers, contentMeta);
+        //writer.Write(payload);
+        //var envelope = writer.End(signers);
+
+
+        var envelope = EarlEnvelopeWriter.GetBytes(payload, contentMeta, signers);
+
 
         (Earl, Locator, Ciphertext) = Udf.Earl(envelope);
         Scheme = scheme;

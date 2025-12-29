@@ -258,7 +258,19 @@ public partial class EarlEnvelopeReader {
         }
 
 
+    public static (byte[], ContentMeta) Read(
+                string file,
+                TextWriter output = null
+                ) {
+        using var stream = file.OpenFileRead();
+        return Read(stream, output);
+        }
 
+    public static (byte[], ContentMeta) Read(
+        Stream stream,
+                TextWriter output = null) {
+        return(null, null);
+        }
 
 
 

@@ -6,6 +6,17 @@ File Misc
 
 
 File ContainerTypes
+
+	Enum EarlSequenceIndexType "Sequence Index types"
+		Code None					"Simple"
+		Code Terminal				"Terminal"
+		Code Incremental			"Incremental"
+		Code Separate				"Separate"
+
+
+
+
+
 	Enum SequenceType "Sequence types"
 		Code List					"List"
 		Code Digest					"Digest"

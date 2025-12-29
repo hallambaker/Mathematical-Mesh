@@ -988,6 +988,24 @@
             <param name="keyLocate">The key collection to use for decryption of the contents.</param>
             <param name="directory">Directory to extract the archive to.</param>
         </member>
+        <member name="T:Goedel.Cryptography.Dare.EarlSequenceIndexType">
+            <summary>Sequence Index types</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EarlSequenceIndexType.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EarlSequenceIndexType.None">
+            <summary>Simple</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EarlSequenceIndexType.Terminal">
+            <summary>Terminal</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EarlSequenceIndexType.Incremental">
+            <summary>Incremental</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EarlSequenceIndexType.Separate">
+            <summary>Separate</summary>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.SequenceType">
             <summary>Sequence types</summary>
         </member>
@@ -1071,6 +1089,34 @@
         <member name="F:Goedel.Cryptography.Dare.DareConstants.DareSignaturePrefix">
             <summary>
             </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareConstants.EarlSequenceIndexTypeNoneTag">
+            <summary>Jose enumeration tag for EarlSequenceIndexType.None</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareConstants.EarlSequenceIndexTypeTerminalTag">
+            <summary>Jose enumeration tag for EarlSequenceIndexType.Terminal</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareConstants.EarlSequenceIndexTypeIncrementalTag">
+            <summary>Jose enumeration tag for EarlSequenceIndexType.Incremental</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareConstants.EarlSequenceIndexTypeSeparateTag">
+            <summary>Jose enumeration tag for EarlSequenceIndexType.Separate</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareConstants.ToEarlSequenceIndexType(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.DareConstants.ToLabel(Goedel.Cryptography.Dare.EarlSequenceIndexType)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
         </member>
         <member name="F:Goedel.Cryptography.Dare.DareConstants.SequenceTypeListTag">
             <summary>Jose enumeration tag for SequenceType.List</summary>
@@ -1187,6 +1233,12 @@
             <param name="data">The enumerated value.</param>
             <returns>The text value.</returns>
         </member>
+        <member name="F:Goedel.Cryptography.Dare.DareConstants.TypeIdentifierDareEnvelope">
+            <summary>Type identifier for envelopes.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareConstants.TypeIdentifierDareSequence">
+            <summary>Type identifier for sequences.</summary>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.DareRecipient">
             <summary>
             
@@ -1281,6 +1333,21 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.SequenceIndexMode">
+            <summary>Sequence index modes.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.SequenceIndexMode.None">
+            <summary>Sequence is not indexed.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.SequenceIndexMode.LastRecord">
+            <summary>Index is written to the final terminal record.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.SequenceIndexMode.Incremental">
+            <summary>Index is written incrementally.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.SequenceIndexMode.IndexFile">
+            <summary>Index is placed in separate file.</summary>
         </member>
         <member name="T:Goedel.Cryptography.Dare.DareSequence">
             <summary>
@@ -3548,30 +3615,19 @@
         <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Manifest">
             <summary>The envelope manifest</summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.#ctor(System.Byte[],System.Byte[],System.Byte[],System.Byte[])">
-            <summary>
-            Constructor returning an instance with content metadata and payload,
-            <paramref name="contentMeta"/> and <paramref name="payload"/>. With optional
-            uprotected header and trailer sections.
-            </summary>
-            <param name="payload">The payload data</param>
-            <param name="contentMeta">The content metadata.</param>
-            <param name="unprotectedHeader">Optional unprotected header.</param>
-            <param name="trailer">Optional trailer.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.#ctor(Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair},Goedel.Cryptography.CryptoAlgorithmId)">
-            <summary>
-            Constructor creating an instance for an envelope of type 1 with signers 
-            <paramref name="signers"/> and digest identifier <paramref name="digestId"/>.
-            </summary>
-            <param name="contentMeta">The content metadata.</param>
-            <param name="signers">Optional signature keys to be used to sign the envelope data.</param>
-            <param name="digestId">The digest algorithm to use.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.#ctor">
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.#ctor(System.IO.Stream)">
             <summary>
             Constructor creating an instance for an envelope of type 1 (i.e. indeterminate length chunks).
             </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.#ctor(System.IO.Stream,Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair})">
+            <summary>Convenience constructor, begin writing envelope to 
+            <paramref name="output"/> with signed header <paramref name="protectedHeader"/>
+            and signers <paramref name="signers"/>.
+            </summary>
+            <param name="output"></param>
+            <param name="protectedHeader"></param>
+            <param name="signers"></param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Begin(Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair},Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
@@ -3579,7 +3635,7 @@
             </summary>
             <param name="contentMeta">The content metadata.</param>
             <param name="signers">Optional signature keys to be used to sign the envelope data.. MUST match the
-            list given in <see cref="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.End(System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair})"/></param>
+            list given in <see cref="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.End"/></param>
             <param name="digestId">The digest algorithm to use.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Write(System.Byte[])">
@@ -3594,27 +3650,21 @@
             </summary>
             <param name="chunk">The string to write.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.End(System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair})">
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.End">
             <summary>
-            Complete writing the envelope using the optional signature keys <paramref name="signers"/>
+            Complete writing the envelope using the optional signature keys <paramref name="Signers"/>
             </summary>
-            <param name="signers">Optional signature keys to be used to sign the envelope data.. MUST match the
+            <param name="Signers">Optional signature keys to be used to sign the envelope data.. MUST match the
             list given in <see cref="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Begin(Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair},Goedel.Cryptography.CryptoAlgorithmId)"/></param>
             <returns>The envelope bytes.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.ToArray">
-            <summary>
-            Return the writer output as an array of bytes.
-            </summary>
-            <returns>The writer output.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteUnprotected(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteUnsigned(System.Byte[])">
             <summary>
             Write the unprotected header bytes <paramref name="unprotectedHeader"/> to the envelope.
             </summary>
             <param name="unprotectedHeader">The bytes to write.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteContentMeta(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteSigned(System.Byte[])">
             <summary>
             Write the content metadata bytes <paramref name="contentMeta"/> to the envelope.
             </summary>
@@ -3644,19 +3694,7 @@
             <param name="protectedData">Optional additional protected data.</param>
             <returns>The manifest bytes.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.GetBytes(System.Byte[],System.Byte[],System.Byte[],System.Byte[])">
-            <summary>
-            Return an envelope containing the content metadata <paramref name="contentMeta"/> 
-            and payload <paramref name="payload"/> with optional uprotected header
-            <paramref name="unprotectedHeader"/> and trailer <paramref name="trailer"/>.
-            </summary>
-            <param name="contentMeta">The content metadata.</param>
-            <param name="payload">The payload.</param>
-            <param name="unprotectedHeader">Optional unprotected header.</param>
-            <param name="trailer">Optional trailer.</param>
-            <returns>The enveloped bytes</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.GetBytes(Goedel.Cryptography.Dare.ContentMeta,System.Byte[])">
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.GetBytes(System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair})">
             <summary>
             Return an envelope containing the content metadata <paramref name="contentMeta"/> 
             and payload <paramref name="payload"/>
@@ -3674,10 +3712,15 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteBytes(System.IO.Stream,System.Byte[])">
             <summary>
-            
+            Write a varint[data] section to the stream.
             </summary>
             <param name="stream">The stream to write to.</param>
             <param name="data">The data to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequenceReaderWriter.#ctor(System.String)">
+            <summary>
+            Constructor
+            </summary>
         </member>
         <member name="T:Goedel.Cryptography.Dare.EarlSet">
             <summary>

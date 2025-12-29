@@ -1,0 +1,99 @@
+﻿#region // Copyright - MIT License
+//  © 2021 by Phill Hallam-Baker
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+#endregion
+
+using Goedel.Mesh;
+
+using Xunit;
+
+namespace Goedel.XUnit;
+
+public class TestVarintSerialization : UnitTestSet {
+
+    /// <summary>Constructor method</summary>
+    /// <returns>Returns a new instance of the class.</returns>
+    public static TestVarintSerialization Test() => new();
+
+
+    [Theory]
+    [InlineData()]
+    public void TestEnvelope(
+            bool sign=false, 
+            bool encrypt=false,
+            int size=0) {
+
+        Seed = DeterministicSeed.Auto();
+
+        var filename = Seed.GetFilename("JBCD");
+        var data = Seed.GetTestBytes(100, "This is a test");
+
+        // Write file 
+    EarlEnvelopeWriter.Write(filename, data);
+
+        // Read file back
+        var (data2, meta) = EarlEnvelopeReader.Read (filename);
+
+        // check for equality.
+        data.TestEqual(data2);
+        }
+
+    [Theory]
+    [InlineData()]
+    public void TestSequence(
+            bool sign = false,
+            bool encrypt = false,
+            int size = 0,
+            int count = 0,
+            bool variable = false) {
+
+        }
+
+    [Theory]
+    [InlineData()]
+    public void TestArchive(
+            bool sign = false,
+            bool encrypt = false,
+            int size = 0,
+            int count = 0,
+            bool variable = false,
+            SequenceIndexMode index = SequenceIndexMode.None) {
+        }
+
+
+    [Theory]
+    [InlineData()]
+    public void TestCatalog(
+            bool sign = false,
+            bool encrypt = false,
+            int size = 0,
+            int count = 0,
+            bool variable = false,
+            SequenceIndexMode index = SequenceIndexMode.None) {
+        }
+
+    [Fact]
+    public void TestCatalogSingle() {
+
+
+
+        }
+
+    }

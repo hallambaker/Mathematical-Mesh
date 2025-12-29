@@ -168,17 +168,18 @@ public class EarlResults {
         recoveredMeta.TestNull();
 
         // Same but with a protected header
-        ProtectedHeader = EarlEnvelopeWriter.GetProtectedHeader(ProtectedHeaderJson);
-        EnvelopeContentMeta = EarlEnvelopeWriter.GetBytes(Payload, ProtectedHeader);
+        EnvelopeContentMeta = EarlEnvelopeWriter.GetBytes(Payload, ProtectedHeaderJson);
 
         WithMeta = new EarlSet(EnvelopeContentMeta, CreateExamples.AliceService);
-        BytesMeta =Verify(WithMeta, ProtectedHeaderJson, Payload, SigningKeys);
+        BytesMeta = Verify(WithMeta, ProtectedHeaderJson, Payload, SigningKeys);
 
-
-        Unsigned = new(ProtectedHeaderJson, []);
-        Unsigned.Write(FirstChunk);
-        Unsigned.Write(SecondChunk);
-        BytesUnsigned = Unsigned.End([]);
+        using (var stream = new MemoryStream()) {
+            Unsigned = new(stream, ProtectedHeaderJson);
+            Unsigned.Write(FirstChunk);
+            Unsigned.Write(SecondChunk);
+            Unsigned.End();
+            BytesUnsigned = stream.ToArray();
+            }
         WithType1 = new EarlSet(BytesUnsigned, CreateExamples.AliceService);
 
 
@@ -204,17 +205,26 @@ public class EarlResults {
 
         var chunks = (FirstChunk + SecondChunk).ToUTF8();
 
-        Signed25519 = new(ProtectedHeaderJson3, [SignatureEd25519]);
-        Signed25519.Write(FirstChunk);
-        Signed25519.Write(SecondChunk);
-        Bytes25519 = Signed25519.End([SignatureEd25519]);
+        using (var stream1 = new MemoryStream()) {
+            Signed25519 = new(stream1, ProtectedHeaderJson3, signers: [SignatureEd25519]);
+            Signed25519.Write(FirstChunk);
+            Signed25519.Write(SecondChunk);
+            Signed25519.End();
+
+            Bytes25519 = stream1.ToArray();
+            }
+
         With25519 = new EarlSet(Bytes25519, CreateExamples.AliceService);
 
         Verify(With25519, ProtectedHeaderJson3, chunks, SigningKeys);
 
-        SignedEd448 = new(ProtectedHeaderJson4, [SignatureEd448]);
-        SignedEd448.Write(chunks);
-        Bytes448 = SignedEd448.End([SignatureEd448]);
+        using (var stream2 = new MemoryStream()) {
+            SignedEd448 = new(stream2, ProtectedHeaderJson4, signers: [SignatureEd448]);
+            SignedEd448.Write(chunks);
+            SignedEd448.End();
+            Bytes448 = stream2.ToArray();
+            }
+
         WithEd448 = new EarlSet(Bytes448, CreateExamples.AliceService);
 
         Verify(WithEd448, ProtectedHeaderJson4, chunks, SigningKeys);

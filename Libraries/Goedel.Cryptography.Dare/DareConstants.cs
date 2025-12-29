@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 12/8/2025 5:58:45 PM
+//  This file was automatically generated at 12/29/2025 5:25:59 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -21,6 +21,19 @@ using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare ;
 
+
+///<summary>Sequence Index types</summary>
+public enum EarlSequenceIndexType {
+    ///<summary>Undefined type</summary>
+    Unknown = -1,
+    ///<summary>Simple</summary>
+    None,
+    ///<summary>Terminal</summary>
+    Terminal,
+    ///<summary>Incremental</summary>
+    Incremental,
+    ///<summary>Separate</summary>
+    Separate    }
 
 ///<summary>Sequence types</summary>
 public enum SequenceType {
@@ -89,6 +102,46 @@ public static partial class DareConstants {
     public const string DareSignaturePrefix = "DARE Signature v. 3.0";
 
     // File: ContainerTypes
+
+
+    ///<summary>Jose enumeration tag for EarlSequenceIndexType.None</summary>
+    public const string  EarlSequenceIndexTypeNoneTag = "None";
+    ///<summary>Jose enumeration tag for EarlSequenceIndexType.Terminal</summary>
+    public const string  EarlSequenceIndexTypeTerminalTag = "Terminal";
+    ///<summary>Jose enumeration tag for EarlSequenceIndexType.Incremental</summary>
+    public const string  EarlSequenceIndexTypeIncrementalTag = "Incremental";
+    ///<summary>Jose enumeration tag for EarlSequenceIndexType.Separate</summary>
+    public const string  EarlSequenceIndexTypeSeparateTag = "Separate";
+
+    /// <summary>
+    /// Convert the string <paramref name="text"/> to the corresponding enumeration
+    /// value.
+    /// </summary>
+    /// <param name="text">The string to convert.</param>
+    /// <returns>The enumeration value.</returns>
+    public static EarlSequenceIndexType ToEarlSequenceIndexType (this string text) =>
+        text switch {
+            EarlSequenceIndexTypeNoneTag => EarlSequenceIndexType.None,
+            EarlSequenceIndexTypeTerminalTag => EarlSequenceIndexType.Terminal,
+            EarlSequenceIndexTypeIncrementalTag => EarlSequenceIndexType.Incremental,
+            EarlSequenceIndexTypeSeparateTag => EarlSequenceIndexType.Separate,
+            _ => EarlSequenceIndexType.Unknown
+            };
+
+    /// <summary>
+    /// Convert the enumerated value <paramref name="data"/> to the corresponding string
+    /// value.
+    /// </summary>
+    /// <param name="data">The enumerated value.</param>
+    /// <returns>The text value.</returns>
+    public static string ToLabel (this EarlSequenceIndexType data) =>
+        data switch {
+            EarlSequenceIndexType.None => EarlSequenceIndexTypeNoneTag,
+            EarlSequenceIndexType.Terminal => EarlSequenceIndexTypeTerminalTag,
+            EarlSequenceIndexType.Incremental => EarlSequenceIndexTypeIncrementalTag,
+            EarlSequenceIndexType.Separate => EarlSequenceIndexTypeSeparateTag,
+            _ => null
+            };
 
 
     ///<summary>Jose enumeration tag for SequenceType.List</summary>

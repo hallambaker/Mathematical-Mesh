@@ -1245,7 +1245,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             }
 
 
-        var enveloped = EarlEnvelopeWriter.GetBytes(contentMeta, data);
+        var enveloped = EarlEnvelopeWriter.GetBytes(data, contentMeta);
 
 
 

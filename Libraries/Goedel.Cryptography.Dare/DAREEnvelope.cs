@@ -27,6 +27,21 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Cryptography.Dare;
 
+/// <summary>Sequence index modes.</summary>
+public enum SequenceIndexMode {
+    /// <summary>Sequence is not indexed.</summary>
+    None,
+
+    /// <summary>Index is written to the final terminal record.</summary>
+    LastRecord,
+
+    /// <summary>Index is written incrementally.</summary>
+    Incremental,
+
+    /// <summary>Index is placed in separate file.</summary>
+    IndexFile
+    }
+
 
 
 public class DareSequenceWriterII {
