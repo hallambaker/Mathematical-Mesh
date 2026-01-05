@@ -1236,7 +1236,13 @@
         <member name="F:Goedel.Cryptography.Dare.DareConstants.TypeIdentifierDareEnvelope">
             <summary>Type identifier for envelopes.</summary>
         </member>
+        <member name="F:Goedel.Cryptography.Dare.DareConstants.TypeIdentifierDareEnvelopeL">
+            <summary>Type identifier for envelopes.</summary>
+        </member>
         <member name="F:Goedel.Cryptography.Dare.DareConstants.TypeIdentifierDareSequence">
+            <summary>Type identifier for sequences.</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.DareConstants.TypeIdentifierDareSequenceL">
             <summary>Type identifier for sequences.</summary>
         </member>
         <member name="T:Goedel.Cryptography.Dare.DareRecipient">
@@ -1874,6 +1880,15 @@
             <returns></returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.Extensions.WriteVarint(System.IO.Stream,System.Int64)">
+            <summary>
+            Write <paramref name="value"/> to <paramref name="stream"/> as a QUIC 
+            varint.
+            </summary>
+            <param name="stream">The stream to write to.</param>
+            <param name="value">The value to write.</param>
+            <exception cref="T:Goedel.Cryptography.Dare.InvalidLength"></exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.Extensions.WriteVarintAsync(System.IO.Stream,System.Int64)">
             <summary>
             Write <paramref name="value"/> to <paramref name="stream"/> as a QUIC 
             varint.
@@ -3530,16 +3545,19 @@
         <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeReader.Version">
             <summary>The envelope version (0 or 1).</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeReader.UnprotectedHeader">
+        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeReader.UnsignedHeader">
             <summary>The parsed unprotected header.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeReader.ContentMeta">
+        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeReader.SignedHeader">
             <summary>The parsed content metadata header.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeReader.Trailer">
             <summary>The parsed trailer.</summary> 
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.#ctor(System.IO.Stream)">
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.Disposing">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.#ctor(Goedel.Cryptography.Dare.EarlStream)">
             <summary>
             Constructor returning an instance reading from <paramref name="stream"/>.
             Only the initial version number is read from the stream.
@@ -3582,19 +3600,12 @@
             <param name="keyCollection">Key collection to verify signatures.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeReader.ReadBlock(System.IO.Stream)">
-            <summary>
-            Read chunk of payload bytes from <paramref name="stream"/> and return as an array.
-            </summary>
-            <param name="stream">The stream to read.</param>
-            <returns>The bytes read.</returns>
-        </member>
         <member name="T:Goedel.Cryptography.Dare.EarlEnvelopeWriter">
             <summary>
             EARL Envelope Writer
             </summary>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Header">
+        <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Unprotected">
             <summary>The parsed unprotected header.</summary> 
         </member>
         <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Trailer">
@@ -3615,12 +3626,12 @@
         <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Manifest">
             <summary>The envelope manifest</summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.#ctor(System.IO.Stream)">
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.#ctor(Goedel.Cryptography.Dare.EarlStream)">
             <summary>
             Constructor creating an instance for an envelope of type 1 (i.e. indeterminate length chunks).
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.#ctor(System.IO.Stream,Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair})">
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.#ctor(Goedel.Cryptography.Dare.EarlStream,Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair})">
             <summary>Convenience constructor, begin writing envelope to 
             <paramref name="output"/> with signed header <paramref name="protectedHeader"/>
             and signers <paramref name="signers"/>.
@@ -3652,13 +3663,10 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.End">
             <summary>
-            Complete writing the envelope using the optional signature keys <paramref name="Signers"/>
+            Complete writing the envelope using the optional signature keys specified when it was opened.
             </summary>
-            <param name="Signers">Optional signature keys to be used to sign the envelope data.. MUST match the
-            list given in <see cref="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.Begin(Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair},Goedel.Cryptography.CryptoAlgorithmId)"/></param>
-            <returns>The envelope bytes.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteUnsigned(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteUnsigned(Goedel.Cryptography.Dare.Unprotected)">
             <summary>
             Write the unprotected header bytes <paramref name="unprotectedHeader"/> to the envelope.
             </summary>
@@ -3676,7 +3684,7 @@
             </summary>
             <param name="payload">The bytes to write.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteTrailer(System.Byte[])">
+        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteTrailer(Goedel.Cryptography.Dare.Unprotected)">
             <summary>
             Write the trailer bytes <paramref name="trailer"/> to the envelope.
             </summary>
@@ -3703,24 +3711,34 @@
             <param name="payload">The payload.</param>
             <returns>The enveloped bytes</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.GetProtectedHeader(Goedel.Cryptography.Dare.ContentMeta)">
-            <summary>
-            Return the protected header as a byte array.
-            </summary>
-            <param name="contentMeta">The protected header to write.</param>
-            <returns>The converted bytes.</returns>
+        <member name="P:Goedel.Cryptography.Dare.EarlSequence.IndexFirst">
+            <summary>Index record of the first entry in the sequence.</summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlEnvelopeWriter.WriteBytes(System.IO.Stream,System.Byte[])">
-            <summary>
-            Write a varint[data] section to the stream.
-            </summary>
-            <param name="stream">The stream to write to.</param>
-            <param name="data">The data to write.</param>
+        <member name="P:Goedel.Cryptography.Dare.EarlSequence.IndexLast">
+            <summary>Index record of the last entry in the sequence.</summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlSequenceReaderWriter.#ctor(System.String)">
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.Disposing">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.#ctor(Goedel.Cryptography.Dare.EarlStream)">
             <summary>
             Constructor
             </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.CloseStream">
+            <summary>Close the underlying file stream, is used to save file stream 
+            handles.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.ReadEntry(System.Int64)">
+            <summary>Return entry indicated by <paramref name="index"/>.
+            <para>If <paramref name="index"/> is zero, the first item in the sequence is returned. </para>
+            <para>If <paramref name="index"/> is positive, the (<paramref name="index"/>-1)th
+            entry counting from the first is returned.</para>
+            <para>If <paramref name="index"/> is negative, the (<paramref name="index"/>+1)th
+            entry counting from the last and traversing backwards is returned..</para>
+            </summary>
+            <param name="index"></param>
+            <returns>The envelope value.</returns>
         </member>
         <member name="T:Goedel.Cryptography.Dare.EarlSet">
             <summary>
@@ -3792,6 +3810,55 @@
             <param name="authority">The authority section of the EARL URI, a DNS name.</param>
             <param name="locator">The locator key.</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.CloseStream">
+            <summary>Close the underlying file stream, is used to save file stream 
+            handles.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadExactly(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads <paramref name="count"/> number of bytes from the current stream and advances the position within the stream.
+            </summary>
+            <param name="buffer">
+            An array of bytes. When this method returns, the buffer contains the specified byte array with the values
+            between <paramref name="offset"/> and (<paramref name="offset"/> + <paramref name="count"/> - 1) replaced
+            by the bytes read from the current stream.
+            </param>
+            <param name="offset">The byte offset in <paramref name="buffer"/> at which to begin storing the data read from the current stream.</param>
+            <param name="count">The number of bytes to be read from the current stream.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="buffer"/> is <see langword="null"/>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="offset"/> is outside the bounds of <paramref name="buffer"/>.
+            -or-
+            <paramref name="count"/> is negative.
+            -or-
+            The range specified by the combination of <paramref name="offset"/> and <paramref name="count"/> exceeds the
+            length of <paramref name="buffer"/>.
+            </exception>
+            <exception cref="T:System.IO.EndOfStreamException">
+            The end of the stream is reached before reading <paramref name="count"/> number of bytes.
+            </exception>
+            <remarks>
+            When <paramref name="count"/> is 0 (zero), this read operation will be completed without waiting for available data in the stream.
+            </remarks>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.CopyTo(System.IO.Stream,System.UInt64)">
+            <summary>
+            Copy <paramref name="length"/> bytes from the stream to
+            <paramref name="output"/>.
+            </summary>
+            <param name="output">The output stream.</param>
+            <param name="length">Number of bytres to copy.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.HashCopyTo(System.IO.Stream,System.UInt64,System.Security.Cryptography.HashAlgorithm)">
+            <summary>
+            Copy <paramref name="length"/> bytes from the stream to
+            <paramref name="output"/>, presenting each block of data to the digest
+            instance <paramref name="digest"/>.
+            </summary>
+            <param name="output">The output stream.</param>
+            <param name="length">Number of bytres to copy.</param>
+            <param name="digest">The digest algorithm to apply during the copy.</param>
         </member>
         <member name="T:Goedel.Cryptography.Dare.StreamDataCorrupt">
             <summary>

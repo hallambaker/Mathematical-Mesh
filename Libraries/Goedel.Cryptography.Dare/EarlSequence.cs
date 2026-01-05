@@ -19,9 +19,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using System.IO;
+using System.Runtime.InteropServices;
+
 namespace Goedel.Cryptography.Dare;
-
-
 
 
 
@@ -30,7 +31,7 @@ public record EarlEntryIndex(
         long Start,
         long Length,
         long PayloadStart,
-        long PayloadEnd,
+        long PayloadLength,
         string Id) {
 
     public EarlEnvelope? EarlEnvelope { get; set; } = null;
@@ -38,7 +39,7 @@ public record EarlEntryIndex(
     }
 
 
-public  class EarlSequence  {
+public  class EarlSequence : Disposable {
 
     Dictionary<string, EarlEntryIndex> DictionaryById = [];
 
@@ -48,6 +49,8 @@ public  class EarlSequence  {
     long UnreadEnd { get; set; } = long.MaxValue;
 
 
+
+
     /// <summary>Index record of the first entry in the sequence.</summary>
     public EarlEntryIndex? IndexFirst { get; private set; }
 
@@ -55,10 +58,25 @@ public  class EarlSequence  {
     /// <summary>Index record of the last entry in the sequence.</summary>
     public EarlEntryIndex? IndexLast{ get; private set; }
 
-    public string Filename { get; init; }
 
-    Stream Stream => stream ?? OpenStream().CacheValue(out stream);
-    Stream? stream = null;
+    public EarlEnvelope FrameFirst { get; private set; }
+
+
+
+    public EarlEnvelope FrameLast { get; private set; }
+
+    public EarlStream Stream { get; }
+
+    public string Filename => Stream.Filename;
+
+    public long NextFrame { get; set; } = 0;
+
+
+    /// <inheritdoc/>
+    protected override void Disposing() {
+        Stream.Dispose();
+        base.Disposing();
+        }
 
 
 
@@ -66,8 +84,8 @@ public  class EarlSequence  {
     /// Constructor
     /// </summary>
     EarlSequence(
-                string fileName) {
-        Filename = fileName;
+                EarlStream stream) {
+        Stream = stream;
         }
 
 
@@ -76,11 +94,17 @@ public  class EarlSequence  {
     public static EarlSequence Create(
                 string fileName,
                 EarlSequenceIndexType indexType = EarlSequenceIndexType.None) {
-
-        var result = new EarlSequence(fileName);
-        result.Stream.Write(DareConstants.TypeIdentifierDareSequence);
+        var stream = EarlStreamDebug.Create(fileName, DareConstants.TypeIdentifierDareSequence);
+        var result = new EarlSequence(stream);
 
         // Create the initial record
+        var unprotected = new Unprotected();
+        var contentMeta = new ContentMeta();
+        var payload = Array.Empty<byte>();
+        var trailer = new Unprotected();
+
+        var envelope = new EarlEnvelope(unprotected, contentMeta, null, payload);
+        result.Append(envelope);
 
         return result;
         }
@@ -89,39 +113,48 @@ public  class EarlSequence  {
     public static EarlSequence Open(
             string fileName) {
 
-        return null;
+        var stream = EarlStreamDebug.OpenReadWrite(fileName);
+        var sequence = new EarlSequence(stream);
+        sequence.ReadInitial();
+
+        return sequence;
         }
+
+
+    void ReadInitial() {
+        // read the type identifier
+        var version = Stream.ReadTypeIdentifier();
+        (version == DareConstants.TypeIdentifierDareSequenceL).AssertTrue(NYI.Throw);
+
+        // read the first record
+        FrameFirst = Stream.ReadFrameNext(); 
+        //FrameLast = Stream.EOF ? FrameFirst : Stream.ReadFrameLast();
+        }
+
 
     #endregion
 
     #region -- File handling method
 
-    private Stream OpenStream() => Filename.OpenFileReadWrite();
-
 
     /// <summary>Close the underlying file stream, is used to save file stream 
     /// handles.</summary>
     public void CloseStream() {
-        stream?.Close();
-        stream = null;
+        Stream.CloseStream();
         }
 
     #endregion
 
     #region -- Append entry methods
     public EarlEntryIndex Append(
-                EarlEnvelope entry) {
-        
-        // save for later.
-        throw new NYI();
-        }
+                EarlEnvelope entry) => Stream.Append(entry, NextFrame++);
 
     public EarlEntryIndex Append(
-                ContentMeta contentMeta,
                 byte[] entry,
+                ContentMeta contentMeta=null,
                 bool index = false) {
 
-        var result = AppendStart(contentMeta, entry.LongLength, index);
+        var result = AppendStart(entry.LongLength, contentMeta, index);
         AppendPayload(entry);
         AppendEnd();
 
@@ -129,24 +162,16 @@ public  class EarlSequence  {
         }
 
     public EarlEntryIndex AppendStart(
-                ContentMeta contentMeta,
                 long length,
-                bool index = false) {
-
-        return null;
-        }
+                ContentMeta contentMeta = null,
+                bool index = false) => Stream.AppendEntryStart(length, null, contentMeta, 0);
 
 
-    public long AppendPayload(
-                byte[] payload) {
+    public void AppendPayload(
+                byte[] payload) => Stream.AppendEntryPayload(payload);
 
-        return -1;
-        }
+    public void AppendEnd() => Stream.AppendEntryEnd([]);
 
-    public long AppendEnd() {
-
-        return -1;
-        }
     #endregion
     #region -- Read Methods
 
@@ -188,7 +213,7 @@ public  class EarlSequence  {
 
     public EarlEnvelope? ReadNext() {
 
-        return null;
+        return Stream.ReadFrameNext();
         }
 
     public EarlEnvelope? ReadPrevious() {

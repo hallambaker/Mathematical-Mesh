@@ -405,7 +405,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("Unprotected Header =\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, earl.Signed25519.Header);
+			_Output.Write ("{1}\n{0}", _Indent, earl.Signed25519.Unprotected);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 				}
@@ -482,7 +482,7 @@ public partial class CreateExamples : global::Goedel.Registry.Script {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("Unprotected Header =\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, earl.SignedEd448.Header);
+			_Output.Write ("{1}\n{0}", _Indent, earl.SignedEd448.Unprotected);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The private key used to generate the signature in this example is:\n{0}", _Indent);

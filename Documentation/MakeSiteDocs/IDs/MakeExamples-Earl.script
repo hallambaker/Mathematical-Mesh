@@ -290,7 +290,7 @@ access authenticator =
 
 ~~~~
 Unprotected Header =
-#{earl.Signed25519.Header}
+#{earl.Signed25519.Unprotected}
 ~~~~
 
 #end zfile
@@ -340,7 +340,7 @@ higher work factor requires use of a 512 bit digest:
 
 ~~~~
 Unprotected Header =
-#{earl.SignedEd448.Header}
+#{earl.SignedEd448.Unprotected}
 ~~~~
 
 The private key used to generate the signature in this example is:

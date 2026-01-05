@@ -19,24 +19,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using System.IO;
+using System.Threading.Channels;
+
 using Goedel.Protocol;
 
 namespace Goedel.Cryptography.Dare;
 
+
+
 /// <summary>
 /// Envelope Reader
 /// </summary>
-public partial class EarlEnvelopeReader {
-    Stream Stream { get; }
+public partial class EarlEnvelopeReader : Disposable {
+    protected EarlStream Stream { get; }
 
     ///<summary>The envelope version (0 or 1).</summary> 
-    public int Version { get; private set; }
+    public ulong Version { get; private set; }
 
     ///<summary>The parsed unprotected header.</summary> 
-    public Unprotected? UnprotectedHeader { get; private set; } = null;
+    public Unprotected? UnsignedHeader { get; private set; } = null;
 
     ///<summary>The parsed content metadata header.</summary> 
-    public ContentMeta? ContentMeta { get; private set; } = null;
+    public ContentMeta? SignedHeader { get; private set; } = null;
 
     ///<summary>The parsed trailer.</summary> 
     public Unprotected? Trailer { get; private set; } = null;
@@ -45,30 +50,77 @@ public partial class EarlEnvelopeReader {
     CryptoAlgorithmId DigestId;
     byte[]? MetadataDigest = null;
 
+
+    /// <inheritdoc/>
+    protected override void Disposing() {
+        Stream?.Dispose();
+        base.Disposing();
+        }
+
+
+
     /// <summary>
     /// Constructor returning an instance reading from <paramref name="stream"/>.
     /// Only the initial version number is read from the stream.
     /// </summary>
     /// <param name="stream">The stream to read from.</param>
-    public EarlEnvelopeReader(Stream stream) {
+    EarlEnvelopeReader(
+                EarlStream stream) {
         Stream = stream;
-        Version = (int)Stream.ReadVarint();
+        Version = Stream.ReadTypeIdentifier();
+
+        (Version == DareConstants.TypeIdentifierDareEnvelopeL).AssertTrue(NYI.Throw);
+
+        // read the unsigned header
+        UnsignedHeader = ReadJson<Unprotected>();
+
+        // read the signed header
+        SignedHeader = ReadJson<ContentMeta>();
         }
+
+
+    public EarlEnvelope Close () {
+        Trailer = ReadJson<Unprotected>();
+
+        // read the trailer
+        return new EarlEnvelope(UnsignedHeader, SignedHeader, Trailer);
+
+        }
+
+
+    public T ReadJson<T>() where T : JsonObject => Stream.ReadJson<T>();
+
+
+    public virtual byte[] ReadBlock() => Stream.ReadBlock();
+
+
+    public static EarlEnvelope Read(string fileName,
+                TextWriter output = null) {
+        var stream = output == null ? EarlStream.OpenRead(fileName) : EarlStreamDebug.OpenRead(fileName);
+        using var reader = new EarlEnvelopeReader(stream);
+
+        var payload = reader.ReadBlock();
+        var result = reader.Close();
+        result.Payload = payload;
+
+        return result;
+        }
+
+
+
+
 
     /// <summary>
     /// Constructor returning an instance reading from <paramref name="bytes"/>.
     /// Only the initial version number is read from the stream.
     /// </summary>
     /// <param name="bytes">The data to read.</param>
-    public EarlEnvelopeReader(byte[] bytes) : this(new MemoryStream(bytes)) {
-
+    public EarlEnvelopeReader(byte[] bytes) : this(new EarlStream(bytes)) {
         }
 
 
     public static Enveloped GetEnveloped(byte[] bytes,
             KeyCollection? keyCollection = null) {
-
-
         var reader = new EarlEnvelopeReader(bytes);
         return reader.GetEnveloped();
         }
@@ -76,7 +128,7 @@ public partial class EarlEnvelopeReader {
     public Enveloped GetEnveloped() {
 
 
-        var contentMetaBytes = ReadBlock(Stream);
+        var contentMetaBytes = ReadBlock();
         var buffer = new MemoryStream();
         while (CopyPayload(buffer)) {
             }
@@ -91,7 +143,7 @@ public partial class EarlEnvelopeReader {
             };
 
         if (Version == 1) {
-            var trailer = ReadBlock(Stream);
+            var trailer = ReadBlock();
             // Hack: We are chopping off the signatures here because DARE signatures currently
             // use a different format.
             
@@ -123,7 +175,7 @@ public partial class EarlEnvelopeReader {
 
         reader.Verify(keyCollection).AssertTrue(NYI.Throw);
 
-        return (reader.ContentMeta, buffer.ToArray());
+        return (reader.SignedHeader, buffer.ToArray());
         }
 
     /// <summary>
@@ -132,24 +184,24 @@ public partial class EarlEnvelopeReader {
     /// <returns></returns>
     public ContentMeta ReadMetadata() {
         if (Version == 1) {
-            var unprotectedHeader = ReadBlock(Stream);
+            var unprotectedHeader = ReadBlock();
             if (unprotectedHeader.Length > 0) {
-                UnprotectedHeader = JsonObject.StreamParseTag<Unprotected>(unprotectedHeader, false);
-                if (UnprotectedHeader.DigestAlgorithm is not null) {
-                    DigestId = UnprotectedHeader.DigestAlgorithm.ToCryptoAlgorithmID();
+                UnsignedHeader = JsonObject.StreamParseTag<Unprotected>(unprotectedHeader, false);
+                if (UnsignedHeader.DigestAlgorithm is not null) {
+                    DigestId = UnsignedHeader.DigestAlgorithm.ToCryptoAlgorithmID();
                     Digest = DigestId.CreateDigest();
                     }
                 }
             }
-        var contentMeta = ReadBlock(Stream);
+        var contentMeta = ReadBlock();
         if (contentMeta.Length > 0) {
-            ContentMeta = JsonObject.StreamParseTag<ContentMeta>(contentMeta, false);
+            SignedHeader = JsonObject.StreamParseTag<ContentMeta>(contentMeta, false);
             }
         if (Digest is not null) {
             var metaDigest = DigestId.CreateDigest();
             MetadataDigest = metaDigest.ComputeHash(contentMeta);
             }
-        return ContentMeta;
+        return SignedHeader;
         }
 
     /// <summary>
@@ -184,24 +236,24 @@ public partial class EarlEnvelopeReader {
             return true;
             }
 
-        var trailer = ReadBlock(Stream);
+        var trailer = ReadBlock();
         if (trailer.Length > 0) {
             Trailer = JsonObject.StreamParseTag<Unprotected>(trailer, false);
             }
 
-        var signatures = UnprotectedHeader?.Signatures ?? Trailer?.Signatures;
-        if (signatures is null & UnprotectedHeader?.Signers is null) {
+        var signatures = UnsignedHeader?.Signatures ?? Trailer?.Signatures;
+        if (signatures is null & UnsignedHeader?.Signers is null) {
             return true; // There are no signatures to verify.
             }
 
         // Check that there is exactly one Signatures property.
-        (Trailer?.Signatures is null | UnprotectedHeader?.Signatures is null).AssertTrue(NYI.Throw);
+        (Trailer?.Signatures is null | UnsignedHeader?.Signatures is null).AssertTrue(NYI.Throw);
 
-        if (UnprotectedHeader?.Signers is not null) {
-            (UnprotectedHeader.Signers.Count == Trailer.Signatures.Count).AssertTrue(NYI.Throw);
+        if (UnsignedHeader?.Signers is not null) {
+            (UnsignedHeader.Signers.Count == Trailer.Signatures.Count).AssertTrue(NYI.Throw);
 
             foreach (var signature in signatures) {
-                var signer = Find(UnprotectedHeader.Signers, signature.KeyIdentifier);
+                var signer = Find(UnsignedHeader.Signers, signature.KeyIdentifier);
                 signature.Alg ??= signer.Alg;
                 }
             }
@@ -215,7 +267,7 @@ public partial class EarlEnvelopeReader {
         var manifest = EarlEnvelopeWriter.GetManifest(DigestId, MetadataDigest, value);
         //Console.WriteLine($"Manifest Value = {manifest.ToStringBase16FormatHex()}");
 
-        ContentMeta.VerifiedSignatures = [];
+        SignedHeader.VerifiedSignatures = [];
         foreach (var signature in signatures) {
             if (signature?.Value is null) {
                 return false;
@@ -228,7 +280,7 @@ public partial class EarlEnvelopeReader {
                 return false;
                 }
 
-            ContentMeta.VerifiedSignatures.Add(signature);
+            SignedHeader.VerifiedSignatures.Add(signature);
             }
 
         return true;
@@ -245,32 +297,11 @@ public partial class EarlEnvelopeReader {
         throw new NYI();
         }
 
-    /// <summary>
-    /// Read chunk of payload bytes from <paramref name="stream"/> and return as an array.
-    /// </summary>
-    /// <param name="stream">The stream to read.</param>
-    /// <returns>The bytes read.</returns>
-    public static byte[] ReadBlock(Stream stream) {
-        var length = stream.ReadVarint();
-        var buffer = new byte[length];
-        stream.ReadExactly(buffer, 0, (int) length);
-        return buffer;
-        }
 
 
-    public static (byte[], ContentMeta) Read(
-                string file,
-                TextWriter output = null
-                ) {
-        using var stream = file.OpenFileRead();
-        return Read(stream, output);
-        }
 
-    public static (byte[], ContentMeta) Read(
-        Stream stream,
-                TextWriter output = null) {
-        return(null, null);
-        }
+
+
 
 
 

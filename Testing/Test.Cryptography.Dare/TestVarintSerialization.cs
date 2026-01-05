@@ -20,7 +20,11 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Linq;
+
+using Goedel.Cryptography.Dare;
 using Goedel.Mesh;
+using Goedel.Test;
 
 using Xunit;
 
@@ -38,21 +42,21 @@ public class TestVarintSerialization : UnitTestSet {
     public void TestEnvelope(
             bool sign=false, 
             bool encrypt=false,
-            int size=0) {
+            int size=100) {
 
         Seed = DeterministicSeed.Auto();
 
         var filename = Seed.GetFilename("JBCD");
-        var data = Seed.GetTestBytes(100, "This is a test");
+        var data = Seed.GetTestBytes(size, "This is a test");
 
         // Write file 
-    EarlEnvelopeWriter.Write(filename, data);
+        EarlEnvelopeWriter.Write(filename, data);
 
         // Read file back
-        var (data2, meta) = EarlEnvelopeReader.Read (filename);
+        var envelope= EarlEnvelopeReader.Read (filename, Console.Out);
 
         // check for equality.
-        data.TestEqual(data2);
+        data.TestEqual(envelope.Payload);
         }
 
     [Theory]
@@ -60,11 +64,61 @@ public class TestVarintSerialization : UnitTestSet {
     public void TestSequence(
             bool sign = false,
             bool encrypt = false,
-            int size = 0,
+            int size = 100,
             int count = 0,
             bool variable = false) {
 
+        Seed = DeterministicSeed.Auto();
+        var filename = Seed.GetFilename("TestSequence");
+        List<byte[]> dataList = [];
+
+        // create the sequence
+        using var sequence = EarlSequence.Create(filename);
+
+        // add the first item
+        Append(sequence, dataList, size, variable);
+        Verify(sequence, dataList).TestTrue();
+
+        // add four more items without closing the stream.
+        Append(sequence, dataList, size, variable);
+        Append(sequence, dataList, size, variable);
+        Append(sequence, dataList, size, variable);
+        Append(sequence, dataList, size, variable);
+        Verify(sequence, dataList).TestTrue();
+
         }
+
+    bool Append(EarlSequence sequence, List<byte[]> dataList, int size, bool variable) {
+
+        var data = Seed.GetTestBytes(size, "This is a test");
+        dataList.Add(data);
+        sequence.Append(data);
+
+
+        return true;
+        }
+
+
+    bool Verify(EarlSequence sequence1, List<byte[]> dataList) {
+        Console.WriteLine();
+        Console.WriteLine();
+
+        var filename = sequence1.Filename;
+        sequence1.CloseStream(); // close the stream so we can reopen for read.
+
+        using var sequence = EarlSequence.Open(filename);
+        foreach (var data in dataList) {
+            var envelope = sequence.ReadNext();
+            data.TestEqual(envelope.Payload);
+            }
+
+
+        // check that we have read all the elements.
+
+        return true;
+        }
+
+
 
     [Theory]
     [InlineData()]

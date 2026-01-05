@@ -45,8 +45,11 @@ public static partial class Extensions {
         }
 
 
+    public static long TaggedLength(this byte[] data) => 
+        data == null ? TagLength(0) : data.Length + TagLength(data.Length);
+
     public static int TagLength(
-                long value) {
+                    long value) {
         if (value < 64) {
             return 1;
             }
@@ -122,6 +125,68 @@ public static partial class Extensions {
 
         }
 
+
+    /// <summary>
+    /// Write <paramref name="value"/> to <paramref name="stream"/> as a QUIC 
+    /// varint.
+    /// </summary>
+    /// <param name="stream">The stream to write to.</param>
+    /// <param name="value">The value to write.</param>
+    /// <exception cref="InvalidLength"></exception>
+    public static async Task WriteVarintAsync(
+                this Stream stream,
+                long value) {
+
+        var buffer = new byte[8];
+        int index = 0;
+
+        if (value < 64) {
+            buffer[index++] =(byte)value;
+            }
+        else if (value < 16383) {
+            var v2 = (value >> 8);
+
+            buffer[index++] = ((byte)(v2 | 0b0100_0000));
+            buffer[index++] = ((byte)value);
+            }
+        else if(value < 1073741823) {
+            var v2 = (value >> 8);
+            var v3 = (v2 >> 8);
+            var v4 = (v3 >> 8);
+
+            buffer[index++] = ((byte)(v4 | 0b1000_0000));
+            buffer[index++] = ((byte)v3);
+            buffer[index++] = ((byte)v2);
+            buffer[index++] = ((byte)value);
+            }
+        else if(value < 4611686018427387903) {
+            var v2 = (value >> 8);
+            var v3 = (v2 >> 8);
+            var v4 = (v3 >> 8);
+            var v5 = (v4 >> 8);
+            var v6 = (v5 >> 8);
+            var v7 = (v6 >> 8);
+            var v8 = (v7 >> 8);
+
+            buffer[index++] = ((byte)(v8 | 0b1100_0000));
+            buffer[index++] = ((byte)v7);
+            buffer[index++] = ((byte)v6);
+            buffer[index++] = ((byte)v5);
+            buffer[index++] = ((byte)v4);
+            buffer[index++] = ((byte)v3);
+            buffer[index++] = ((byte)v2);
+            buffer[index++] = ((byte)value);
+            }
+        else throw new InvalidLength();
+
+        await stream.WriteAsync(buffer, 0, index);
+
+        }
+
+
+
+
+
     /// <summary>
     /// Write <paramref name="value"/> to <paramref name="stream"/> as a reversed QUIC 
     /// varint.
@@ -186,7 +251,23 @@ public static partial class Extensions {
 
         }
 
+    public static ulong ReadTypeIdentifier(this Stream stream) {
+        ulong result = 0;
+        var length = 0;
 
+        while (true) {
+            var read = ReadByteExact(stream);
+            if (length < 8) {
+                result = (result << 8) + read;
+                length++;
+                }
+
+            if ((read & 1) == 0) {
+                return result;
+                }
+            }
+
+        }
 
 
     /// <summary>

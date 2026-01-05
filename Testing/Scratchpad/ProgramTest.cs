@@ -70,7 +70,7 @@ partial class Program {
         // Not completed
         //ShellTests.Test().TestHandleThing();
 
-        TestVarintSerialization.Test().TestEnvelope();
+        //TestVarintSerialization.Test().TestEnvelope();
         TestVarintSerialization.Test().TestSequence();
 
         // ---------- Problematic still
