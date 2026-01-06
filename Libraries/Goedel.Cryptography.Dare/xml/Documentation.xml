@@ -3441,6 +3441,11 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Unprotected.Frame">
+             <summary>
+            The number of the entry in the sequence.
+             </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.Unprotected._Properties">
             <summary>Implement IBinding</summary> 
         </member>
@@ -3536,6 +3541,127 @@
             </summary>
             <param name="key">The key to sign under.</param>
             <param name="manifest">The manfest to be signed.</param>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.TerminalIndex">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.TerminalIndex.Entries">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.TerminalIndex._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.TerminalIndex._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.TerminalIndex._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.TerminalIndex._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.TerminalIndex._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.TerminalIndex.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.TerminalIndex._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.FileIndex">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.FileIndex.Frame">
+             <summary>
+            The number of the entry in the sequence.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.FileIndex.FrameStart">
+             <summary>
+            Position of the start of the frame
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.FileIndex.FrameLength">
+             <summary>
+            The frame length (including length markers)
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.FileIndex.PayloadStart">
+             <summary>
+            Position of the start of the Payload
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.FileIndex.PayloadLength">
+             <summary>
+            The payload length
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.FileIndex.Filename">
+             <summary>
+            The name of the file on disk
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.FileIndex._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.FileIndex._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.FileIndex._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.FileIndex._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.FileIndex._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.FileIndex.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.FileIndex._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator.#ctor(Goedel.Cryptography.Dare.EarlSequence)">
+            <summary>Default constructor, return an enumerator on the sequence
+            <paramref name="sequence"/>. This is also an enumerable returning itself.</summary>
+            <param name="sequence">The sequence to enumerate.</param>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlEntryEnumerator.Current">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator.MoveNext">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator.Reset">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.Dare.EarlEnvelopeReader">
             <summary>

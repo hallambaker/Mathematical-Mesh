@@ -86,7 +86,11 @@ public class TestVarintSerialization : UnitTestSet {
         Append(sequence, dataList, size, variable);
         Verify(sequence, dataList).TestTrue();
 
+        TestArchive();
         }
+
+
+
 
     bool Append(EarlSequence sequence, List<byte[]> dataList, int size, bool variable) {
 
@@ -129,7 +133,50 @@ public class TestVarintSerialization : UnitTestSet {
             int count = 0,
             bool variable = false,
             SequenceIndexMode index = SequenceIndexMode.None) {
+
+        Seed = DeterministicSeed.Auto();
+        var filename = Seed.GetFilename("TestArchive");
+
+        var testDirectory = "..\\..\\CommonData\\Archive1";
+        var targetArchive = "Unpacked";
+
+        var directoryIndex = DirectoryIndex.ReadDirectory(testDirectory);
+        directoryIndex.IsEqual(directoryIndex).TestTrue();
+
+        // Create Archive
+        using (var archive = EarlArchive.Create(filename)) {
+
+            // Append directory
+            archive.AppendDirectory(testDirectory);
+            archive.AppendIndex();
+
+            directoryIndex.IsEqual(archive.DirectoryIndex);
+
+            }
+
+        // Read back the index
+        using (var archive = EarlArchive.OpenRead(filename)) {
+            archive.ReadIndex();
+            directoryIndex.IsEqual(archive.DirectoryIndex);
+            }
+
+        // Extract and verify files
+        using (var archive = EarlArchive.OpenRead(filename)) {
+            archive.Extract(targetArchive);
+            var unpackedDirectoryIndex = DirectoryIndex.ReadDirectory(testDirectory);
+
+            directoryIndex.IsEqual(archive.DirectoryIndex);
+            directoryIndex.IsEqual(unpackedDirectoryIndex);
+
+            }
+
+
+
+
         }
+
+
+
 
 
     [Theory]

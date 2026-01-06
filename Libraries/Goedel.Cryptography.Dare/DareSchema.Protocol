@@ -479,6 +479,10 @@
 		Struct EarlSignature Signatures
 			Tag "sigs"
 			Multiple
+		Integer Frame
+			Description
+				|The number of the entry in the sequence.
+			LengthBits 64
 
 
 	Structure EarlSignature
@@ -508,4 +512,34 @@
 			Tag "payload"
 		Struct DareTrailer Trailer
 			Tag "trailer"
+
+
+	Structure TerminalIndex
+		Struct FileIndex Entries
+			Multiple
+
+	Structure FileIndex
+		Integer Frame
+			Description
+				|The number of the entry in the sequence.
+			LengthBits 64
+		Integer FrameStart
+			Description
+				|Position of the start of the frame
+			LengthBits 64
+		Integer FrameLength
+			Description
+				|The frame length (including length markers)
+			LengthBits 64
+		Integer PayloadStart
+			Description
+				|Position of the start of the Payload
+			LengthBits 64
+		Integer PayloadLength
+			Description
+				|The payload length
+			LengthBits 64
+		String Filename
+			Description
+				|The name of the file on disk
 

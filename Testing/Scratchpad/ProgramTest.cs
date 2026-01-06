@@ -71,7 +71,7 @@ partial class Program {
         //ShellTests.Test().TestHandleThing();
 
         //TestVarintSerialization.Test().TestEnvelope();
-        TestVarintSerialization.Test().TestSequence();
+        TestVarintSerialization.Test().TestArchive();
 
         // ---------- Problematic still
         //TestContact.Test().ContactHandle();

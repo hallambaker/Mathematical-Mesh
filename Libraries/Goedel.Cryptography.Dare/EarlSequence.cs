@@ -25,20 +25,6 @@ using System.Runtime.InteropServices;
 namespace Goedel.Cryptography.Dare;
 
 
-
-public record EarlEntryIndex(
-        long Frame,
-        long Start,
-        long Length,
-        long PayloadStart,
-        long PayloadLength,
-        string Id) {
-
-    public EarlEnvelope? EarlEnvelope { get; set; } = null;
-
-    }
-
-
 public  class EarlSequence : Disposable {
 
     Dictionary<string, EarlEntryIndex> DictionaryById = [];
@@ -61,7 +47,7 @@ public  class EarlSequence : Disposable {
 
     public EarlEnvelope FrameFirst { get; private set; }
 
-
+    public long StartEntries {get; private set; }
 
     public EarlEnvelope FrameLast { get; private set; }
 
@@ -83,7 +69,7 @@ public  class EarlSequence : Disposable {
     /// <summary>
     /// Constructor
     /// </summary>
-    EarlSequence(
+    protected EarlSequence(
                 EarlStream stream) {
         Stream = stream;
         }
@@ -97,14 +83,7 @@ public  class EarlSequence : Disposable {
         var stream = EarlStreamDebug.Create(fileName, DareConstants.TypeIdentifierDareSequence);
         var result = new EarlSequence(stream);
 
-        // Create the initial record
-        var unprotected = new Unprotected();
-        var contentMeta = new ContentMeta();
-        var payload = Array.Empty<byte>();
-        var trailer = new Unprotected();
-
-        var envelope = new EarlEnvelope(unprotected, contentMeta, null, payload);
-        result.Append(envelope);
+        result.WriteInitial();
 
         return result;
         }
@@ -120,14 +99,28 @@ public  class EarlSequence : Disposable {
         return sequence;
         }
 
+    protected void WriteInitial() {
+        // Create the initial record
+        var unprotected = new Unprotected();
+        var contentMeta = new ContentMeta();
+        var payload = Array.Empty<byte>();
+        var trailer = new Unprotected();
 
-    void ReadInitial() {
+        var envelope = new EarlEnvelope(unprotected, contentMeta, null, payload);
+        Append(envelope);
+        }
+
+
+
+    protected void ReadInitial() {
         // read the type identifier
         var version = Stream.ReadTypeIdentifier();
         (version == DareConstants.TypeIdentifierDareSequenceL).AssertTrue(NYI.Throw);
 
         // read the first record
-        FrameFirst = Stream.ReadFrameNext(); 
+        FrameFirst = Stream.ReadFrameNext();
+        StartEntries = Stream.Position;
+
         //FrameLast = Stream.EOF ? FrameFirst : Stream.ReadFrameLast();
         }
 
@@ -155,22 +148,34 @@ public  class EarlSequence : Disposable {
                 bool index = false) {
 
         var result = AppendStart(entry.LongLength, contentMeta, index);
-        AppendPayload(entry);
+        AppendPayload(entry, 0, entry.Length);
         AppendEnd();
 
         return null;
         }
 
-    public EarlEntryIndex AppendStart(
+    public virtual EarlEntryIndex AppendStart(
                 long length,
                 ContentMeta contentMeta = null,
-                bool index = false) => Stream.AppendEntryStart(length, null, contentMeta, 0);
+                bool index = false) {
+
+        var unprotected = new Unprotected() {
+            Frame = NextFrame++
+            };
+
+        return Stream.AppendEntryStart(length, unprotected, contentMeta, 0);
+        
+        
+        
+        }
 
 
-    public void AppendPayload(
-                byte[] payload) => Stream.AppendEntryPayload(payload);
 
-    public void AppendEnd() => Stream.AppendEntryEnd([]);
+
+    public virtual void AppendPayload(
+                byte[] payload, int offset, int length) => Stream.AppendEntryPayload(payload, offset, length);
+
+    public virtual void AppendEnd() => Stream.AppendEntryEnd([]);
 
     #endregion
     #region -- Read Methods
@@ -269,6 +274,14 @@ public  class EarlSequence : Disposable {
     #endregion
 
 
-    }
 
+
+    #region -- Enumerators
+
+    public IEnumerable<EarlEntryIndex> EntriesForward() => new EarlEntryEnumerator(this);
+
+
+
+    #endregion
+    }
 

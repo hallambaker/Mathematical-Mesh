@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 1/5/2026 3:10:28 PM
+//  This file was automatically generated at 1/6/2026 6:53:55 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -96,7 +96,9 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 	    {typeof(Unprotected), Unprotected._binding},
 	    {typeof(EarlSignature), EarlSignature._binding},
 	    {typeof(DareSequence), DareSequence._binding},
-	    {typeof(DareEnvelope), DareEnvelope._binding}
+	    {typeof(DareEnvelope), DareEnvelope._binding},
+	    {typeof(TerminalIndex), TerminalIndex._binding},
+	    {typeof(FileIndex), FileIndex._binding}
 		};
 
 	///<summary>Variable used to force static initialization</summary> 
@@ -1771,6 +1773,13 @@ public partial class Unprotected : Dare {
 
 	[JsonPropertyName("sigs")]
 	public virtual List<EarlSignature>?					Signatures  {get; set;}
+    /// <summary>
+    ///The number of the entry in the sequence.
+    /// </summary>
+
+	[JsonPropertyName("Frame")]
+	public virtual long?					Frame  {get; set;} //
+
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -1787,7 +1796,10 @@ public partial class Unprotected : Dare {
 		new PropertyListStruct ("sigs", typeof (EarlSignature),
 					(data, value) => {(data as Unprotected).Signatures = value as List<EarlSignature>;}, 
 					data => (data as Unprotected).Signatures,
-					false, ()=>new  List<EarlSignature>(), ()=>new EarlSignature())
+					false, ()=>new  List<EarlSignature>(), ()=>new EarlSignature()),
+		new PropertyInteger64 ("Frame", 
+					(data, value) => {(data as Unprotected).Frame = value;}, 
+					data => (data as Unprotected).Frame )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1798,7 +1810,8 @@ public partial class Unprotected : Dare {
 			new() {
 			{ "dig", _properties [0]},
 			{ "signs", _properties [1]},
-			{ "sigs", _properties [2]}}, __Tag,
+			{ "sigs", _properties [2]},
+			{ "Frame", _properties [3]}}, __Tag,
 		() => new Unprotected(), () => [], () => [], null, Generic: false);
 
 
@@ -2018,6 +2031,160 @@ public partial class DareEnvelope : Dare {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new DareEnvelope();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class TerminalIndex : Dare {
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("Entries")]
+	public virtual List<FileIndex>?					Entries  {get; set;}
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyListStruct ("Entries", typeof (FileIndex),
+					(data, value) => {(data as TerminalIndex).Entries = value as List<FileIndex>;}, 
+					data => (data as TerminalIndex).Entries,
+					false, ()=>new  List<FileIndex>(), ()=>new FileIndex())
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<TerminalIndex> _binding = new (
+			new() {
+			{ "Entries", _properties [0]}}, __Tag,
+		() => new TerminalIndex(), () => [], () => [], null, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "TerminalIndex";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new TerminalIndex();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class FileIndex : Dare {
+    /// <summary>
+    ///The number of the entry in the sequence.
+    /// </summary>
+
+	[JsonPropertyName("Frame")]
+	public virtual long?					Frame  {get; set;} //
+
+    /// <summary>
+    ///Position of the start of the frame
+    /// </summary>
+
+	[JsonPropertyName("FrameStart")]
+	public virtual long?					FrameStart  {get; set;} //
+
+    /// <summary>
+    ///The frame length (including length markers)
+    /// </summary>
+
+	[JsonPropertyName("FrameLength")]
+	public virtual long?					FrameLength  {get; set;} //
+
+    /// <summary>
+    ///Position of the start of the Payload
+    /// </summary>
+
+	[JsonPropertyName("PayloadStart")]
+	public virtual long?					PayloadStart  {get; set;} //
+
+    /// <summary>
+    ///The payload length
+    /// </summary>
+
+	[JsonPropertyName("PayloadLength")]
+	public virtual long?					PayloadLength  {get; set;} //
+
+    /// <summary>
+    ///The name of the file on disk
+    /// </summary>
+
+	[JsonPropertyName("Filename")]
+	public virtual string?					Filename  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyInteger64 ("Frame", 
+					(data, value) => {(data as FileIndex).Frame = value;}, 
+					data => (data as FileIndex).Frame ),
+		new PropertyInteger64 ("FrameStart", 
+					(data, value) => {(data as FileIndex).FrameStart = value;}, 
+					data => (data as FileIndex).FrameStart ),
+		new PropertyInteger64 ("FrameLength", 
+					(data, value) => {(data as FileIndex).FrameLength = value;}, 
+					data => (data as FileIndex).FrameLength ),
+		new PropertyInteger64 ("PayloadStart", 
+					(data, value) => {(data as FileIndex).PayloadStart = value;}, 
+					data => (data as FileIndex).PayloadStart ),
+		new PropertyInteger64 ("PayloadLength", 
+					(data, value) => {(data as FileIndex).PayloadLength = value;}, 
+					data => (data as FileIndex).PayloadLength ),
+		new PropertyString ("Filename", 
+					(data, value) => {(data as FileIndex).Filename = value;}, 
+					data => (data as FileIndex).Filename )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<FileIndex> _binding = new (
+			new() {
+			{ "Frame", _properties [0]},
+			{ "FrameStart", _properties [1]},
+			{ "FrameLength", _properties [2]},
+			{ "PayloadStart", _properties [3]},
+			{ "PayloadLength", _properties [4]},
+			{ "Filename", _properties [5]}}, __Tag,
+		() => new FileIndex(), () => [], () => [], null, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "FileIndex";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new FileIndex();
 
 	}
 

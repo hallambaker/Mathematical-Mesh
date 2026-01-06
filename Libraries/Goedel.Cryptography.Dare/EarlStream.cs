@@ -33,6 +33,11 @@ public class EarlStream : Disposable {
     public bool EOF => Stream.Position >= Stream.Length;
 
 
+    public long Position {
+        get => Stream.Position;
+        set => Stream.Position = value;
+        }
+
     FileMode FileMode { get; }
     FileAccess FileAccess { get; }
 
@@ -126,6 +131,17 @@ public class EarlStream : Disposable {
         Stream.ReadExactly(buffer, 0, (int)length);
         return buffer;
         }
+
+
+    public virtual long ReadBytes(byte[] buffer, int length) => Stream.Read(buffer, 0, length);
+
+    public virtual (long,long) ReadBlockLength() {
+        var length = Stream.ReadVarint();
+        var start = Stream.Position;
+        Stream.Position += (long)length;
+        return (start,(long)length);
+        }
+
 
 
     public T ReadJson<T>() where T : JsonObject {
@@ -273,45 +289,53 @@ public class EarlStream : Disposable {
 
 
     public EarlEntryIndex Append(
-            EarlEnvelope entry, long frame) {
+            EarlEnvelope entry, 
+            long? frame) {
 
-        var trailerBytes = entry.Trailer?.GetBytes(false);
+        var unprotected =  Copy(entry.UnsignedHeader);
+        unprotected.Frame = frame;
+
+        return Append(unprotected, entry.SignedHeader, entry.Payload, entry.Trailer);
+        }
+
+    Unprotected Copy(Unprotected? obj) => obj is null ? new() : new() {
+        DigestAlgorithm = obj.DigestAlgorithm,
+        Signers = obj.Signers,
+        Signatures = obj.Signatures
+        };
+
+
+    public EarlEntryIndex Append(
+        Unprotected unprotected,
+        ContentMeta contentMeta,
+            JsonObject obj,
+        Unprotected trailer) {
+
+        var payloadBytes = obj?.GetBytes(false);
+        return Append(unprotected, contentMeta, payloadBytes, trailer);
+        }
+
+    public EarlEntryIndex Append(
+            Unprotected unprotected,
+            ContentMeta contentMeta,
+            byte[] payloadBytes,
+            Unprotected trailer) {
+
+        var payloadBytesLength = payloadBytes == null ? 0 : payloadBytes.Length;
+
+        var trailerBytes = trailer?.GetBytes(false);
         var trailerBytesLength = trailerBytes == null ? 0 : trailerBytes.Length;
 
-        var index = AppendEntryStart(entry.Payload.LongLength, entry.UnsignedHeader, entry.SignedHeader,
+        var index = AppendEntryStart(payloadBytesLength, unprotected, contentMeta,
            trailerBytesLength);
-        AppendEntryPayload(entry.Payload);
+
+        AppendEntryPayload(payloadBytes, 0, payloadBytes.Length);
         AppendEntryEnd(trailerBytes);
 
         return index;
 
-        //var unprotected = entry.UnsignedHeader?.GetBytes(false);
-        //var contentMeta = entry.SignedHeader?.GetBytes(false);
-        //var trailer = entry.Trailer?.GetBytes(false);
-
-
-        //var totalLength = unprotected.TaggedLength() + contentMeta.TaggedLength() +
-        //    entry.Payload.TaggedLength() + trailer.TaggedLength();
-
-        //// This would be the place to wrap a lock around it.
-        //var start = Stream.Seek(0, SeekOrigin.End);
-
-
-        //WriteVarint(totalLength);
-        //WriteBytes(unprotected);
-        //WriteBytes(contentMeta);
-
-        //var payloadStart = Stream.Position + Extensions.TagLength(entry.Payload.Length);
-        //WriteBytes(entry.Payload);
-        //WriteBytes(trailer);
-        //Stream.WriteTnirav(totalLength);
-
-
-        //var length = Stream.Position-start;
-
-        //return new EarlEntryIndex(
-        //        0, start, length, payloadStart, entry.Payload.Length, null);
         }
+
 
 
     long frameLength;
@@ -352,11 +376,11 @@ public class EarlStream : Disposable {
 
 
     public void AppendEntryPayload(
-                byte[] data) {
-        payloadLength -= data.Length;
+                byte[] data, int offset, int length) {
+        payloadLength -= length;
         (payloadLength >= 0).AssertTrue(NYI.Throw);
 
-        Write(data);
+        Stream.Write(data, offset, length);
         }
 
     public void AppendEntryEnd(
@@ -386,6 +410,33 @@ public class EarlStream : Disposable {
 
         }
 
+    public EarlEntryIndex? ReadIndexNext() {
+        if (EOF) {
+            return null;
+            }
+
+        var start = Stream.Position;
+
+
+
+        var length = Stream.ReadVarint(out var codeLength);
+        var unprotected = ReadJson<Unprotected>();
+        var contentMeta = ReadJson<ContentMeta>();
+        var (payloadStart, payloadLength) = ReadBlockLength();
+        var trailer = ReadJson<Unprotected>();
+        var Framelength = (long)Stream.ReadTnirav(codeLength);
+
+        var end = Stream.Position -start;
+
+        var frame = -1;
+
+
+        var envelope = new EarlEnvelope(unprotected, contentMeta, trailer);
+
+        return new EarlEntryIndex(frame, start, Framelength, payloadStart, payloadLength, "") {
+            EarlEnvelope = envelope
+            };
+        }
 
 
     public EarlEnvelope ReadFrameNext() {
