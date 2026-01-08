@@ -136,6 +136,7 @@ public  class EarlSequence : Disposable {
     /// <summary>Close the underlying file stream, is used to save file stream 
     /// handles.</summary>
     public void CloseStream() {
+
         Stream.CloseStream();
         }
 
@@ -293,9 +294,9 @@ public  class EarlSequence : Disposable {
 
     #region -- Enumerators
 
-    public IEnumerable<EarlEntryIndex> EntriesForward() => new EarlEntryEnumerator(this);
+    public virtual IEnumerable<EarlEntryIndex> EntriesForward() => new EarlEntryEnumerator(this);
 
-
+    public virtual IEnumerable<EarlEntryIndex> EntriesReverse() => new EarlEntryEnumerator(this, false);
 
     #endregion
     }

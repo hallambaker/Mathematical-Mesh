@@ -86,5 +86,19 @@ public class EarlLog<T> : EarlLog where T : JsonObject {
         return Append(item);
         }
 
+
+
+
+
+    public T ReadNextObject() {
+        var envelope = ReadNext();
+
+        var result = JsonObject.StreamParseTag<T>(envelope.Payload);
+        return result;
+
+        }
+
+
+
     }
 

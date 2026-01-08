@@ -19,6 +19,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using System.Data;
+
+using static Goedel.Discovery.ServiceAddressSplitLex;
+
 namespace Goedel.Cryptography.Dare;
 
 public class EarlSpool : EarlSequence {
@@ -63,17 +67,49 @@ public class EarlSpool<T> : EarlSpool where T : JsonObject {
         }
 
     public EarlEntryIndex Add(T item, string state) {
-
-        return Append(item);
+        var contentMeta = new ContentMeta() {
+            UniqueId = item._PrimaryKey,
+            Event = state
+            };
+        return Append(item, contentMeta);
         }
 
     public EarlEntryIndex Update(List<EntryUpdate> updates) {
-
+        var contentMeta = new ContentMeta() {
+            UniqueId = null,
+            Event = "Index"
+            };
         var updateSet = new EntryUpdateSet() {
             Entries = updates
             };
-
-        throw new NotImplementedException();
+        return Append(updateSet);
         }
+
+
+
+    public T GetValue(EarlEntryIndex index) {
+        // check content meta is this a 
+        var position = Stream.Position;
+        var bytes = Stream.GetPayload(index);
+        Stream.Position = position;
+        //var asChar = bytes.ToUTF8();
+
+        return JsonObject.StreamParseTag<T>(bytes, true);
+
+        }
+
+    public bool ProcessEntry(EarlEntryIndex entry) {
+        if (entry.EarlEnvelope.SignedHeader.UniqueId is not null) {
+            return false;
+            }
+        return true;
+
+        }
+
+
+    public virtual IEnumerable<EarlEntryIndex> EntriesReverse() => 
+        new EarlEntryEnumerator(this, false, ProcessEntry);
+
+
 
     }

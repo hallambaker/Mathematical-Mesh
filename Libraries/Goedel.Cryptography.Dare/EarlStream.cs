@@ -38,6 +38,8 @@ public class EarlStream : Disposable {
         set => Stream.Position = value;
         }
 
+
+
     FileMode FileMode { get; }
     FileAccess FileAccess { get; }
 
@@ -110,13 +112,14 @@ public class EarlStream : Disposable {
     /// <summary>Close the underlying file stream, is used to save file stream 
     /// handles.</summary>
     public void CloseStream() {
+        Stream?.Flush();
         stream?.Close();
         stream = null;
         }
 
 
     public void Seek(long position) => Stream.Position = position;
-
+    public void SeekEnd() => Stream.Seek(0,SeekOrigin.End);
 
     #region -- Read methods
 
@@ -142,7 +145,20 @@ public class EarlStream : Disposable {
         return (start,(long)length);
         }
 
+    public byte[]? GetPayload(EarlEntryIndex index) {
+        if (index.PayloadLength == 0) {
+            return null;
+            }
+        if (index.EarlEnvelope.Payload is not null) {
+            return index.EarlEnvelope.Payload;
+            }
 
+        Stream.Position = index.PayloadStart;
+        var buffer = new byte[index.PayloadLength];
+        Stream.ReadExactly(buffer, 0, (int)index.PayloadLength);
+
+        return buffer;
+        }
 
     public T ReadJson<T>() where T : JsonObject {
         var bytes = ReadBlock();
@@ -437,6 +453,23 @@ public class EarlStream : Disposable {
             EarlEnvelope = envelope
             };
         }
+
+    public EarlEntryIndex? ReadIndexPrevious(long last=0) {
+        if (Stream.Position <= last) {
+            return null;
+            }
+
+
+        var length = (long)Stream.ReadTnirav(out var codeLength);
+        Stream.Seek(-(length+codeLength), SeekOrigin.Current);
+        var position = Stream.Position;
+        var result = ReadIndexNext();
+        Stream.Position = position;
+
+        return result;
+        }
+
+
 
 
     public EarlEnvelope ReadFrameNext() {

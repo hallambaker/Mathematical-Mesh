@@ -3153,35 +3153,6 @@
             The authentication key identifier.
             </summary>
         </member>
-        <member name="T:Goedel.Protocol.ObjectEncoding">
-            <summary>
-            Encoding types for unified encoding
-            </summary>
-        </member>
-        <member name="F:Goedel.Protocol.ObjectEncoding.JSON">
-            <summary>JSON encoding</summary>
-        </member>
-        <member name="F:Goedel.Protocol.ObjectEncoding.JSON_A">
-            <summary>JSON-A encoding</summary>
-        </member>
-        <member name="F:Goedel.Protocol.ObjectEncoding.JSON_B">
-            <summary>JSON-B encoding</summary>
-        </member>
-        <member name="F:Goedel.Protocol.ObjectEncoding.JSON_C">
-            <summary>JSON-C encoding</summary>
-        </member>
-        <member name="F:Goedel.Protocol.ObjectEncoding.JSON_D">
-            <summary>JSON-D encoding</summary>
-        </member>
-        <member name="F:Goedel.Protocol.ObjectEncoding.XML">
-            <summary>XML encoding</summary>
-        </member>
-        <member name="F:Goedel.Protocol.ObjectEncoding.ASN">
-            <summary>ASN encoding</summary>
-        </member>
-        <member name="F:Goedel.Protocol.ObjectEncoding.RFC822">
-            <summary>RFC822 header style encoding</summary>
-        </member>
         <member name="T:Goedel.Protocol.JsonFactoryDelegate">
             <summary>
             Factory delegate that returns a JSONObject.
@@ -3358,7 +3329,7 @@
             </summary>
             <param name="indent">Number of indentation units.</param>
         </member>
-        <member name="M:Goedel.Protocol.JsonObject.GetBytes(System.Boolean,Goedel.Protocol.ObjectEncoding)">
+        <member name="M:Goedel.Protocol.JsonObject.GetBytes(System.Boolean,Goedel.Protocol.DataEncoding)">
             <summary>
             Convert object to byte sequence in JSON form.
             </summary>
@@ -3366,7 +3337,7 @@
             <param name="objectEncoding">The object encoding to use for serialization.</param>
             <returns>Data as byte sequence.</returns>
         </member>
-        <member name="M:Goedel.Protocol.JsonObject.GetJsonWriter(Goedel.Protocol.ObjectEncoding,System.IO.Stream)">
+        <member name="M:Goedel.Protocol.JsonObject.GetJsonWriter(Goedel.Protocol.DataEncoding,System.IO.Stream)">
             <summary>
             Return a JsonWriter for the encoding <paramref name="objectEncoding"/>.
             </summary>

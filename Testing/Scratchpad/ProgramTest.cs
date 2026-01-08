@@ -71,10 +71,10 @@ partial class Program {
         //ShellTests.Test().TestHandleThing();
 
         //TestVarintSerialization.Test().TestEnvelope();
-        TestVarintSerialization.Test().TestArchive();
+        //TestVarintSerialization.Test().TestArchive();
 
 
-        TestVarintSerialization.Test().TestLog();
+        //TestVarintSerialization.Test().TestLog();
         TestVarintSerialization.Test().TestSpool();
         TestVarintSerialization.Test().TestCatalog();
 
