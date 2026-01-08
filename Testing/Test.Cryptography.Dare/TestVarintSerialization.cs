@@ -169,11 +169,8 @@ public class TestVarintSerialization : UnitTestSet {
             directoryIndex.IsEqual(unpackedDirectoryIndex);
 
             }
-
-
-
-
         }
+
 
     [Theory]
     [InlineData()]
@@ -191,8 +188,6 @@ public class TestVarintSerialization : UnitTestSet {
 
         // create the sequence
         using var sequence = EarlLog.Create<TestEntry>(filename);
-
-
         }
 
 
@@ -205,6 +200,27 @@ public class TestVarintSerialization : UnitTestSet {
             };
         dataList.Add(entry);
         log.Add(entry);
+
+        return true;
+        }
+
+
+
+    bool Verify(EarlLog<TestEntry> log, List<TestEntry> dataList) {
+        Console.WriteLine();
+        Console.WriteLine();
+
+        //var filename = sequence1.Filename;
+        //sequence1.CloseStream(); // close the stream so we can reopen for read.
+
+        //using var sequence = EarlSequence.Open(filename);
+        //foreach (var data in dataList) {
+        //    var envelope = sequence.ReadNext();
+        //    data.TestEqual(envelope.Payload);
+        //    }
+
+
+        // check that we have read all the elements.
 
         return true;
         }
@@ -227,7 +243,7 @@ public class TestVarintSerialization : UnitTestSet {
         Dictionary<string, MessageTest> dataDictionary = [];
 
         // create the sequence
-        using var spool = EarlSpool<MessageTest>.Create(filename);
+        using var spool = EarlSpool.Create<MessageTest>(filename);
 
         var id1 = Append (spool, dataDictionary, size, variable);
 
@@ -265,6 +281,27 @@ public class TestVarintSerialization : UnitTestSet {
 
         }
 
+    bool Verify(EarlSpool<MessageTest> spool, Dictionary<string, MessageTest> dataDictionary) {
+        Console.WriteLine();
+        Console.WriteLine();
+
+        //var filename = sequence1.Filename;
+        //sequence1.CloseStream(); // close the stream so we can reopen for read.
+
+        //using var sequence = EarlSequence.Open(filename);
+        //foreach (var data in dataList) {
+        //    var envelope = sequence.ReadNext();
+        //    data.TestEqual(envelope.Payload);
+        //    }
+
+
+        // check that we have read all the elements.
+
+        return true;
+        }
+
+
+
 
     [Theory]
     [InlineData()]
@@ -281,7 +318,7 @@ public class TestVarintSerialization : UnitTestSet {
         Dictionary<string, CatalogEntryTest> dataDictionary = [];
 
         // create the sequence
-        using var catalog = EarlCatalog<CatalogEntryTest>.Create(filename);
+        using var catalog = EarlCatalog.Create<CatalogEntryTest>(filename);
         var id = Add(catalog, dataDictionary, size, variable);
 
 
@@ -335,6 +372,26 @@ public class TestVarintSerialization : UnitTestSet {
 
         return true;
         }
+
+    bool Verify(EarlCatalog<CatalogEntryTest> catalog, Dictionary<string, CatalogEntryTest> dataDictionary) {
+        Console.WriteLine();
+        Console.WriteLine();
+
+        //var filename = sequence1.Filename;
+        //sequence1.CloseStream(); // close the stream so we can reopen for read.
+
+        //using var sequence = EarlSequence.Open(filename);
+        //foreach (var data in dataList) {
+        //    var envelope = sequence.ReadNext();
+        //    data.TestEqual(envelope.Payload);
+        //    }
+
+
+        // check that we have read all the elements.
+
+        return true;
+        }
+
 
 
     }

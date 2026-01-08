@@ -19,72 +19,61 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
-using Goedel.Protocol;
-
 namespace Goedel.Cryptography.Dare;
 
+public class EarlSpool : EarlSequence {
 
-public partial class EntryUpdate {
-    public EntryUpdate() {
+    protected EarlSpool(
+        EarlStream stream) : base(stream) {
         }
 
 
-    public EntryUpdate(string id, string status) {
-        Id = id;
-        Event = status;
-        }
-
-    }
-
-public abstract class EarlLog : EarlSequence {
-    protected EarlLog(
-        EarlStream stream,
-            DataEncoding dataEncoding) : base(stream, dataEncoding) {
-        }
-    public static EarlLog<T> Create<T> (
-        string fileName) where T : JsonObject {
+    public static EarlSpool<T> Create<T>(
+    string fileName) where T : JsonObject {
         var stream = EarlStreamDebug.Create(fileName, DareConstants.TypeIdentifierDareSequence);
-        var result = new EarlLog<T>(stream);
+        var result = new EarlSpool<T>(stream);
 
         result.WriteInitial();
 
         return result;
         }
 
-
-    public static EarlLog<T> Open<T>(
-        string fileName) where T : JsonObject {
+    public static EarlSpool<T> Open<T>(
+            string fileName) where T : JsonObject {
 
         var stream = EarlStreamDebug.OpenReadWrite(fileName);
-        var sequence = new EarlLog<T>(stream);
-        sequence.ReadInitial();
+        var spool = new EarlSpool<T>(stream);
+        spool.ReadInitial();
 
-        return sequence;
+        return spool;
         }
-
-
 
     }
 
+/// <summary>Provides a view on a data spool containing a sequence items of 
+/// type T, each oif which has a unique primary key. Each item has an associated 
+/// state which MAY be modified by subsequent entries.</summary>
+/// <typeparam name="T">The type of item stored.</typeparam>
+public class EarlSpool<T> : EarlSpool where T : JsonObject {
 
-/// <summary>Provides a view on a data log containing items of type T.</summary>
-/// <typeparam name="T">The type of item logged.</typeparam>
-public class EarlLog<T> : EarlLog where T : JsonObject {
+    public Dictionary<string, T> StatusDictionary { get; } = [];
 
-
-    internal EarlLog(
-                EarlStream stream,
-            DataEncoding dataEncoding = DataEncoding.JSON) : base(stream, dataEncoding) {
-
+    internal EarlSpool(
+                EarlStream stream) : base(stream) {
         }
 
-    /// <summary>Append an entry to the log constructing the appropriate
-    /// unprotected and protected headers.</summary>
-    /// <param name="item"></param>
-    /// <returns>The entry index.</returns>
-    public EarlEntryIndex Add(T item) {
+    public EarlEntryIndex Add(T item, string state) {
+
         return Append(item);
         }
 
-    }
+    public EarlEntryIndex Update(List<EntryUpdate> updates) {
 
+        var updateSet = new EntryUpdateSet() {
+            Entries = updates
+            };
+
+        throw new NotImplementedException();
+        }
+
+    }
