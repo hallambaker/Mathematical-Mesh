@@ -175,8 +175,95 @@ public class TestVarintSerialization : UnitTestSet {
 
         }
 
+    [Theory]
+    [InlineData()]
+    public void TestLog(
+        bool sign = false,
+        bool encrypt = false,
+        int size = 0,
+        int count = 0,
+        bool variable = false,
+        SequenceIndexMode index = SequenceIndexMode.None) {
+
+        Seed = DeterministicSeed.Auto();
+        var filename = Seed.GetFilename("TestLog");
+        List<TestEntry> dataList = [];
+
+        // create the sequence
+        using var sequence = EarlLog.Create<TestEntry>(filename);
 
 
+        }
+
+
+    bool Append(EarlLog<TestEntry> log, List<TestEntry> dataList, int size, bool variable) {
+
+        var data = Seed.GetTestBytes(size, "This is a test");
+        var entry = new TestItem() {
+            Created = DateTime.Now,
+            Data = data
+            };
+        dataList.Add(entry);
+        log.Add(entry);
+
+        return true;
+        }
+
+
+
+
+    [Theory]
+    [InlineData()]
+    public void TestSpool(
+            bool sign = false,
+            bool encrypt = false,
+            int size = 0,
+            int count = 0,
+            bool variable = false,
+            SequenceIndexMode index = SequenceIndexMode.None) {
+
+        Seed = DeterministicSeed.Auto();
+        var filename = Seed.GetFilename("TestLog");
+        Dictionary<string, MessageTest> dataDictionary = [];
+
+        // create the sequence
+        using var spool = EarlSpool<MessageTest>.Create(filename);
+
+        var id1 = Append (spool, dataDictionary, size, variable);
+
+
+        Update(spool, dataDictionary, [new (id1, MeshConstants.StateSpoolMessageReadTag)]);
+        }
+
+
+
+    string Append(EarlSpool<MessageTest> spool, Dictionary<string, MessageTest> dataDictionary, 
+                    int size, bool variable) {
+
+        var data = Seed.GetTestBytes(size, "This is a test");
+        var entry = new MessageTest() {
+            UniqueId = Udf.Nonce(),
+            Data = data
+            };
+        dataDictionary.Add(entry.UniqueId, entry);
+        spool.Add(entry, MeshConstants.StateSpoolMessageInitialTag);
+        //sequence.Append(data);
+
+
+        return entry.UniqueId;
+        }
+
+    void Update(EarlSpool<MessageTest> spool, 
+        Dictionary<string, MessageTest> dataDictionary,
+        List<EntryUpdate> updates) {
+
+
+        //dataDictionary.Update(id);
+        //sequence.Append(data);
+        spool.Update(updates);
+
+
+        }
 
 
     [Theory]
@@ -188,13 +275,66 @@ public class TestVarintSerialization : UnitTestSet {
             int count = 0,
             bool variable = false,
             SequenceIndexMode index = SequenceIndexMode.None) {
+
+        Seed = DeterministicSeed.Auto();
+        var filename = Seed.GetFilename("TestLog");
+        Dictionary<string, CatalogEntryTest> dataDictionary = [];
+
+        // create the sequence
+        using var catalog = EarlCatalog<CatalogEntryTest>.Create(filename);
+        var id = Add(catalog, dataDictionary, size, variable);
+
+
         }
 
-    [Fact]
-    public void TestCatalogSingle() {
+    string Add(EarlCatalog<CatalogEntryTest> catalog, Dictionary<string,CatalogEntryTest> dataDictionary, int size, bool variable) {
+
+        var data = Seed.GetTestBytes(size, "This is a test");
+        var entry = new CatalogEntryTest() {
+            UniqueId = Udf.Nonce(),
+            Data = data
+            };
+        dataDictionary.Add(entry.UniqueId,entry);
+        var id = catalog.Add(entry);
+        catalog.Update(entry);
+        catalog.Delete(entry.UniqueId);
+
+        //sequence.Append(data);
 
 
-
+        return entry.UniqueId;
         }
+
+    string Update(EarlCatalog<CatalogEntryTest> sequence, Dictionary<string, CatalogEntryTest> dataDictionary, 
+            int size, bool variable, string id) {
+
+
+
+
+        var data = Seed.GetTestBytes(size, "This is a test");
+        var entry = new CatalogEntryTest() {
+            UniqueId = id,
+            Data = data
+            };
+        dataDictionary.Add(entry.UniqueId, entry);
+        //sequence.Append(data);
+
+
+        return entry.UniqueId;
+        }
+
+
+
+
+    bool Delete(EarlCatalog<CatalogEntryTest> sequence, Dictionary<string, CatalogEntryTest> dataDictionary, string id) {
+
+
+        dataDictionary.Remove(id);
+        //sequence.Append(data);
+
+
+        return true;
+        }
+
 
     }

@@ -46,7 +46,7 @@ public abstract class ServiceRequest {
     public const int MaxRequest = 0x1000000;
 
     ///<summary>The object encoding to use.</summary> 
-    public ObjectEncoding ObjectEncoding { get; set; } = ObjectEncoding.JSON_B;
+    public DataEncoding ObjectEncoding { get; set; } = DataEncoding.JSON_B;
 
 
     ///<summary>Specifies a resouce that is under contention, e.g. an account or the 

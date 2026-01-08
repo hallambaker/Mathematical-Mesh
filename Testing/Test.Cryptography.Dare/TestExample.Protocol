@@ -23,6 +23,10 @@
 			|Test account...
 		Inherits TestEntry 
 
+		Binary Data
+			Description
+				|Some binary data
+
 		String AccountID
 			// PrimaryKey
 			Description

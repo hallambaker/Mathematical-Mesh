@@ -73,6 +73,12 @@ partial class Program {
         //TestVarintSerialization.Test().TestEnvelope();
         TestVarintSerialization.Test().TestArchive();
 
+
+        TestVarintSerialization.Test().TestLog();
+        TestVarintSerialization.Test().TestSpool();
+        TestVarintSerialization.Test().TestCatalog();
+
+
         // ---------- Problematic still
         //TestContact.Test().ContactHandle();
         //TestService.Test().MeshServiceFull();

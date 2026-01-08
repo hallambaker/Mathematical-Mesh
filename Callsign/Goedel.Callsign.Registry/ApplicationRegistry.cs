@@ -245,7 +245,7 @@ public partial class CatalogedRegistry {
             Authentication = new KeyData(AccountAuthentication)
             };
         connectionService.Envelope(AdministratorSignatureKey, objectEncoding:
-            ObjectEncoding.JSON_B);
+            DataEncoding.JSON_B);
 
         return new ApplicationEntryRegistry() {
             Identifier = ProfileRegistry.UdfString,

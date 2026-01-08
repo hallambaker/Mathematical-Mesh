@@ -38,30 +38,6 @@ namespace Goedel.Protocol;
 
 
 
-
-
-/// <summary>
-/// Encoding types for unified encoding
-/// </summary>
-public enum ObjectEncoding {
-    /// <summary>JSON encoding</summary>
-    JSON,
-    /// <summary>JSON-A encoding</summary>
-    JSON_A,
-    /// <summary>JSON-B encoding</summary>
-    JSON_B,
-    /// <summary>JSON-C encoding</summary>
-    JSON_C,
-    /// <summary>JSON-D encoding</summary>
-    JSON_D,
-    /// <summary>XML encoding</summary>
-    XML,
-    /// <summary>ASN encoding</summary>
-    ASN,
-    /// <summary>RFC822 header style encoding</summary>
-    RFC822
-    }
-
 /// <summary>
 /// Factory delegate that returns a JSONObject.
 /// </summary>
@@ -349,7 +325,7 @@ public abstract partial class JsonObject : IBinding {
     /// <param name="objectEncoding">The object encoding to use for serialization.</param>
     /// <returns>Data as byte sequence.</returns>
     public virtual byte[] GetBytes(bool tag = true,
-                ObjectEncoding objectEncoding = ObjectEncoding.JSON) {
+                DataEncoding objectEncoding = DataEncoding.JSON) {
 
         var _JSONWriter = GetJsonWriter(objectEncoding);
 
@@ -363,10 +339,10 @@ public abstract partial class JsonObject : IBinding {
     /// <param name="objectEncoding">The object encoding to use for serialization.</param>
     /// <param name="output">The output stream.</param>
     /// <returns>The JsonWriter.</returns>
-    public static JsonWriter GetJsonWriter(ObjectEncoding objectEncoding, Stream output = null) => objectEncoding switch {
-        ObjectEncoding.JSON_B => new JsonBWriter(output),
-        ObjectEncoding.JSON_C => new JsonBWriter(output),
-        ObjectEncoding.JSON_D => new JsonBWriter(output),
+    public static JsonWriter GetJsonWriter(DataEncoding objectEncoding, Stream output = null) => objectEncoding switch {
+        DataEncoding.JSON_B => new JsonBWriter(output),
+        DataEncoding.JSON_C => new JsonBWriter(output),
+        DataEncoding.JSON_D => new JsonBWriter(output),
         _ => new JsonWriter(output)
         };
 

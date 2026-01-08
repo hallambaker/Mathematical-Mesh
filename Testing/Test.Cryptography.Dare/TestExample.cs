@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 1/6/2026 6:54:25 PM
+//  This file was automatically generated at 1/7/2026 2:23:03 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -174,6 +174,13 @@ abstract public partial class TestEntry : TestSchema {
 	/// </summary>
 public partial class TestItem : TestEntry {
     /// <summary>
+    ///Some binary data
+    /// </summary>
+
+	[JsonPropertyName("Data")]
+	public virtual byte[]?					Data  {get; set;} //
+
+    /// <summary>
     ///Assigned account identifier, e.g. 'alice@example.com'. Account names are 
     ///not case sensitive.
     /// </summary>
@@ -202,6 +209,9 @@ public partial class TestItem : TestEntry {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
+		new PropertyBinary ("Data", 
+					(data, value) => {(data as TestItem).Data = value;}, 
+					data => (data as TestItem).Data ),
 		new PropertyString ("AccountID", 
 					(data, value) => {(data as TestItem).AccountID = value;}, 
 					data => (data as TestItem).AccountID ),
@@ -219,9 +229,10 @@ public partial class TestItem : TestEntry {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<TestItem> _binding = new (
 			new() {
-			{ "AccountID", _properties [0]},
-			{ "UserProfileUDF", _properties [1]},
-			{ "Status", _properties [2]}}, __Tag,
+			{ "Data", _properties [0]},
+			{ "AccountID", _properties [1]},
+			{ "UserProfileUDF", _properties [2]},
+			{ "Status", _properties [3]}}, __Tag,
 		() => new TestItem(), () => [], () => [], TestEntry._binding, Generic: false);
 
 

@@ -165,7 +165,7 @@ public partial class ProfileService {
 
         // Strip and sign the device connection.
         connectionDevice.Strip();
-        profileService.Sign(connectionDevice, ObjectEncoding.JSON_B);
+        profileService.Sign(connectionDevice, DataEncoding.JSON_B);
         }
 
 
@@ -190,7 +190,7 @@ public partial class ProfileService {
     /// </summary>
     /// <param name="connection">The connection to sign.</param>
     /// <param name="objectEncoding">The encoding for the connection object.</param>
-    public void Sign(Connection connection, ObjectEncoding objectEncoding) =>
+    public void Sign(Connection connection, DataEncoding objectEncoding) =>
         connection.Envelope(KeySignature, objectEncoding:
                     objectEncoding);
     #endregion

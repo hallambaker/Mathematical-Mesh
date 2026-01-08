@@ -81,7 +81,7 @@ public partial class Message {
                 CryptographicKey signingKey = null,
                 CryptographicKey encryptionKey = null,
                 ContentMeta contentMeta = null,
-                ObjectEncoding objectEncoding = ObjectEncoding.JSON)  {
+                DataEncoding objectEncoding = DataEncoding.JSON)  {
         MessageId ??= Udf.Nonce(); // Add a message ID unless one is already defined.
         contentMeta ??= new();
         contentMeta.MessageType = _Tag;

@@ -165,7 +165,7 @@ public partial class Enveloped : IDisposable{
                 CryptographicKey signingKey = null,
                 CryptographicKey encryptionKey = null,
                 ContentMeta contentMeta = null,
-                ObjectEncoding objectEncoding = ObjectEncoding.JSON) : this(
+                DataEncoding objectEncoding = DataEncoding.JSON) : this(
                     new CryptoParameters(signer: signingKey, recipient: encryptionKey),
                     data.GetBytes(objectEncoding: objectEncoding), contentMeta: contentMeta) {
         data.Envelope = this;

@@ -91,7 +91,7 @@ public abstract class RudConnection : Disposable {
     public Listener Listener { get; protected init; }
 
     ///<summary>The object encoding for use in the connection</summary> 
-    public ObjectEncoding ObjectEncoding { get; set; } = ObjectEncoding.JSON;
+    public DataEncoding ObjectEncoding { get; set; } = DataEncoding.JSON;
 
     List<KeyPairAdvanced> ephemeralsOffered;
 

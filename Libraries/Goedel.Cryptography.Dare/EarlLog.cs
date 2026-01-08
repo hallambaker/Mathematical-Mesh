@@ -19,19 +19,210 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using Goedel.Protocol;
+
 namespace Goedel.Cryptography.Dare;
 
-public class EarlLog : EarlSequence {
 
-
-    EarlLog(
-                EarlStream stream) : base(stream) {
+public partial class EntryUpdate {
+    public EntryUpdate() {
         }
 
 
+    public EntryUpdate(string id, string status) {
+        Id = id;
+        Event = status;
+        }
 
+    }
+
+public abstract class EarlLog : EarlSequence {
+    protected EarlLog(
+        EarlStream stream,
+            DataEncoding dataEncoding) : base(stream, dataEncoding) {
+        }
+    public static EarlLog<T> Create<T> (
+        string fileName) where T : JsonObject {
+        var stream = EarlStreamDebug.Create(fileName, DareConstants.TypeIdentifierDareSequence);
+        var result = new EarlLog<T>(stream);
+
+        result.WriteInitial();
+
+        return result;
+        }
+
+
+    public static EarlLog<T> Open<T>(
+        string fileName) where T : JsonObject {
+
+        var stream = EarlStreamDebug.OpenReadWrite(fileName);
+        var sequence = new EarlLog<T>(stream);
+        sequence.ReadInitial();
+
+        return sequence;
+        }
 
 
 
     }
 
+
+/// <summary>Provides a view on a data log containing items of type T.</summary>
+/// <typeparam name="T">The type of item logged.</typeparam>
+public class EarlLog<T> : EarlLog where T : JsonObject {
+
+
+    internal EarlLog(
+                EarlStream stream,
+            DataEncoding dataEncoding = DataEncoding.JSON) : base(stream, dataEncoding) {
+
+        }
+
+    /// <summary>Append an entry to the log constructing the appropriate
+    /// unprotected and protected headers.</summary>
+    /// <param name="item"></param>
+    /// <returns>The entry index.</returns>
+    public EarlEntryIndex Add(T item) {
+        return Append(item);
+        }
+
+    }
+
+
+public class EarlSpool : EarlSequence {
+
+    protected EarlSpool(
+        EarlStream stream) : base(stream) {
+        }
+
+
+    public static EarlSpool<T> Create<T>(
+    string fileName) where T : JsonObject {
+        var stream = EarlStreamDebug.Create(fileName, DareConstants.TypeIdentifierDareSequence);
+        var result = new EarlSpool<T>(stream);
+
+        result.WriteInitial();
+
+        return result;
+        }
+
+    public static EarlSpool<T> Open<T>(
+            string fileName) where T : JsonObject {
+
+        var stream = EarlStreamDebug.OpenReadWrite(fileName);
+        var spool = new EarlSpool<T>(stream);
+        spool.ReadInitial();
+
+        return spool;
+        }
+
+    }
+
+
+/// <summary>Provides a view on a data spool containing a sequence items of 
+/// type T, each oif which has a unique primary key. Each item has an associated 
+/// state which MAY be modified by subsequent entries.</summary>
+/// <typeparam name="T">The type of item stored.</typeparam>
+public class EarlSpool<T> : EarlSpool where T : JsonObject {
+
+    public Dictionary<string, T> StatusDictionary { get;} = [];
+
+    internal EarlSpool(
+                EarlStream stream) : base(stream) {
+        }
+
+    public EarlEntryIndex Add(T item, string state) {
+
+        return Append(item);
+        }
+
+    public EarlEntryIndex Update(List<EntryUpdate> updates) {
+
+        var updateSet = new EntryUpdateSet() {
+            Entries = updates
+            };
+
+        throw new NotImplementedException();
+        }
+
+    }
+
+
+
+public class EarlCatalog : EarlSequence {
+
+    protected EarlCatalog(
+        EarlStream stream) : base(stream) {
+        }
+
+
+    public static EarlCatalog<T> Create<T>(
+    string fileName) where T : JsonObject {
+        var stream = EarlStreamDebug.Create(fileName, DareConstants.TypeIdentifierDareSequence);
+        var result = new EarlCatalog<T>(stream);
+
+        result.WriteInitial();
+
+        return result;
+        }
+
+    public static EarlCatalog<T> Open<T>(
+            string fileName) where T : JsonObject {
+
+        var stream = EarlStreamDebug.OpenReadWrite(fileName);
+        var spool = new EarlCatalog<T>(stream);
+        spool.ReadInitial();
+
+        return spool;
+        }
+
+
+
+
+    }
+public class EarlCatalog<T> : EarlCatalog where T: JsonObject{
+
+    public Dictionary<string, T> EntriesById { get; } = [];
+
+    internal EarlCatalog(
+                EarlStream stream) : base(stream) {
+        }
+
+    public static EarlCatalog<T> Create(
+        string fileName) {
+        var stream = EarlStreamDebug.Create(fileName, DareConstants.TypeIdentifierDareSequence);
+        var result = new EarlCatalog<T>(stream);
+
+        result.WriteInitial();
+
+        return result;
+        }
+
+    public EarlEntryIndex Add(T item) {
+        var contentMeta = new ContentMeta() {
+            UniqueId = item._PrimaryKey,
+            Event = "Add"
+            };
+        EntriesById.Add(item._PrimaryKey, item);
+        return Append(item, contentMeta);
+        }
+
+    public EarlEntryIndex Update(T item) {
+        var contentMeta = new ContentMeta() {
+            UniqueId = item._PrimaryKey,
+            Event = "Add"
+            };
+        EntriesById.AddSafe(item._PrimaryKey, item);
+        return Append(item, contentMeta);
+        }
+
+    public EarlEntryIndex Delete(string id) {
+        var contentMeta = new ContentMeta() {
+            UniqueId = id,
+            Event = "Delete"
+            };
+        EntriesById.Remove(id);
+        return Append([], contentMeta);
+        }
+
+    }

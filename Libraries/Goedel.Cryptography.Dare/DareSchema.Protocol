@@ -543,3 +543,11 @@
 			Description
 				|The name of the file on disk
 
+	Structure EntryUpdateSet
+		Struct EntryUpdate Entries
+			Multiple
+
+
+	Structure EntryUpdate
+		String Id
+		String Event

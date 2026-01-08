@@ -93,7 +93,7 @@ public partial class Enveloped<T> : Enveloped where T : JsonObject {
                 CryptographicKey signingKey = null,
                 CryptographicKey encryptionKey = null,
                 ContentMeta contentMeta = null,
-                ObjectEncoding objectEncoding = ObjectEncoding.JSON) : base (
+                DataEncoding objectEncoding = DataEncoding.JSON) : base (
                     data, signingKey, encryptionKey, contentMeta, objectEncoding) {
         
         //base(

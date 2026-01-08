@@ -495,7 +495,7 @@ public static partial class Extensions {
                 this JsonObject jsonObject,
                 CryptographicKey signingKey = null,
                 CryptographicKey encryptionKey = null,
-                ObjectEncoding objectEncoding = ObjectEncoding.JSON
+                DataEncoding objectEncoding = DataEncoding.JSON
                 ) {
 
         var cryptoParameters = new CryptoParameters(signer: signingKey, recipient: encryptionKey);
@@ -520,7 +520,7 @@ public static partial class Extensions {
                 this JsonObject jsonObject,
                 List<CryptographicKey> signingKeys,
                 List<CryptographicKey> encryptionKeys = null,
-                ObjectEncoding objectEncoding = ObjectEncoding.JSON,
+                DataEncoding objectEncoding = DataEncoding.JSON,
                 bool includeSignatureKey = false
                 ) {
         var cryptoParameters = new CryptoParameters(encryptionKeys, signingKeys) {
@@ -543,7 +543,7 @@ public static partial class Extensions {
     public static Enveloped Envelope(
                 this JsonObject jsonObject,
                 CryptoParameters cryptoParameters,
-                ObjectEncoding objectEncoding = ObjectEncoding.JSON
+                DataEncoding objectEncoding = DataEncoding.JSON
                 ) {
         jsonObject.Normalize();
 
@@ -582,7 +582,7 @@ public static partial class Extensions {
                 CryptographicKey signingKey = null,
                 CryptographicKey encryptionKey = null,
                 ContentMeta contentMeta = null,
-                ObjectEncoding objectEncoding = ObjectEncoding.JSON) where T : JsonObject =>
+                DataEncoding objectEncoding = DataEncoding.JSON) where T : JsonObject =>
         new Enveloped<T>(data, signingKey, encryptionKey, contentMeta, objectEncoding);
 
 

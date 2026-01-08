@@ -3640,6 +3640,82 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
+        <member name="T:Goedel.Cryptography.Dare.EntryUpdateSet">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EntryUpdateSet.Entries">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EntryUpdateSet._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EntryUpdateSet._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EntryUpdateSet._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EntryUpdateSet._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EntryUpdateSet._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EntryUpdateSet.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EntryUpdateSet._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.EntryUpdate">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EntryUpdate.Id">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EntryUpdate.Event">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EntryUpdate._Properties">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EntryUpdate._properties">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EntryUpdate._Binding">
+            <summary>Implement IBinding</summary> 
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EntryUpdate._binding">
+            <summary>Binding</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EntryUpdate._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Dare.EntryUpdate.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EntryUpdate._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator.Dispose">
             <inheritdoc/>
         </member>
@@ -3836,6 +3912,16 @@
             <param name="contentMeta">The content metadata.</param>
             <param name="payload">The payload.</param>
             <returns>The enveloped bytes</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.EarlLog`1">
+            <summary>Provides a view on a data log containing items of type T.</summary>
+            <typeparam name="T">The type of item logged.</typeparam>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.EarlSpool`1">
+            <summary>Provides a view on a data spool containing a sequence items of 
+            type T, each oif which has a unique primary key. Each item has an associated 
+            state which MAY be modified by subsequent entries.</summary>
+            <typeparam name="T">The type of item stored.</typeparam>
         </member>
         <member name="P:Goedel.Cryptography.Dare.EarlSequence.IndexFirst">
             <summary>Index record of the first entry in the sequence.</summary>

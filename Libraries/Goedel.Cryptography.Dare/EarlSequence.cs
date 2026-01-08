@@ -58,6 +58,8 @@ public  class EarlSequence : Disposable {
     public long NextFrame { get; set; } = 0;
 
 
+    public DataEncoding DataEncoding { get; set; }
+
     /// <inheritdoc/>
     protected override void Disposing() {
         Stream.Dispose();
@@ -70,7 +72,8 @@ public  class EarlSequence : Disposable {
     /// Constructor
     /// </summary>
     protected EarlSequence(
-                EarlStream stream) {
+                EarlStream stream,
+            DataEncoding dataEncoding = DataEncoding.JSON) {
         Stream = stream;
         }
 
@@ -141,6 +144,18 @@ public  class EarlSequence : Disposable {
     #region -- Append entry methods
     public EarlEntryIndex Append(
                 EarlEnvelope entry) => Stream.Append(entry, NextFrame++);
+
+    public EarlEntryIndex Append(
+            JsonObject obj,
+            ContentMeta contentMeta = null,
+            bool index = false,
+            DataEncoding dataEncoding = DataEncoding.Default) {
+
+        dataEncoding.Default(DataEncoding);
+        var bytes = obj.GetBytes(dataEncoding: dataEncoding);
+        return Append (bytes, contentMeta, index);
+        }
+
 
     public EarlEntryIndex Append(
                 byte[] entry,

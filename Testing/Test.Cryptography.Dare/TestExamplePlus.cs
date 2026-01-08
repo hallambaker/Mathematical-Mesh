@@ -104,3 +104,16 @@ public class TestItemContainerPersistenceStore : PersistenceStore {
         }
 
     }
+
+
+public partial class MessageTest {
+
+    public override string _PrimaryKey => UniqueId;
+
+    }
+
+public partial class CatalogEntryTest {
+
+    public override string _PrimaryKey => UniqueId;
+
+    }

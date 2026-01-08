@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 1/6/2026 6:53:55 PM
+//  This file was automatically generated at 1/7/2026 2:22:35 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -98,7 +98,9 @@ public abstract partial class Dare : global::Goedel.Protocol.JsonObject {
 	    {typeof(DareSequence), DareSequence._binding},
 	    {typeof(DareEnvelope), DareEnvelope._binding},
 	    {typeof(TerminalIndex), TerminalIndex._binding},
-	    {typeof(FileIndex), FileIndex._binding}
+	    {typeof(FileIndex), FileIndex._binding},
+	    {typeof(EntryUpdateSet), EntryUpdateSet._binding},
+	    {typeof(EntryUpdate), EntryUpdate._binding}
 		};
 
 	///<summary>Variable used to force static initialization</summary> 
@@ -2185,6 +2187,114 @@ public partial class FileIndex : Dare {
     /// </summary>
     /// <returns>Object of this type</returns>
 	public static new JsonObject _Factory () => new FileIndex();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class EntryUpdateSet : Dare {
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("Entries")]
+	public virtual List<EntryUpdate>?					Entries  {get; set;}
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyListStruct ("Entries", typeof (EntryUpdate),
+					(data, value) => {(data as EntryUpdateSet).Entries = value as List<EntryUpdate>;}, 
+					data => (data as EntryUpdateSet).Entries,
+					false, ()=>new  List<EntryUpdate>(), ()=>new EntryUpdate())
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<EntryUpdateSet> _binding = new (
+			new() {
+			{ "Entries", _properties [0]}}, __Tag,
+		() => new EntryUpdateSet(), () => [], () => [], null, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "EntryUpdateSet";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new EntryUpdateSet();
+
+	}
+
+
+	/// <summary>
+	/// </summary>
+public partial class EntryUpdate : Dare {
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("Id")]
+	public virtual string?					Id  {get; set;} //
+
+    /// <summary>
+    /// </summary>
+
+	[JsonPropertyName("Event")]
+	public virtual string?					Event  {get; set;} //
+
+
+    ///<summary>Implement IBinding</summary> 
+	public override Property[] _Properties => _properties;
+
+	///<summary>Binding</summary> 
+	static readonly Property[] _properties = [
+		new PropertyString ("Id", 
+					(data, value) => {(data as EntryUpdate).Id = value;}, 
+					data => (data as EntryUpdate).Id ),
+		new PropertyString ("Event", 
+					(data, value) => {(data as EntryUpdate).Event = value;}, 
+					data => (data as EntryUpdate).Event )
+		];
+
+    ///<summary>Implement IBinding</summary> 
+	public override Binding _Binding => _binding;
+
+	///<summary>Binding</summary> 
+	public static readonly new Binding<EntryUpdate> _binding = new (
+			new() {
+			{ "Id", _properties [0]},
+			{ "Event", _properties [1]}}, __Tag,
+		() => new EntryUpdate(), () => [], () => [], null, Generic: false);
+
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public override string _Tag => __Tag;
+
+	/// <summary>
+    /// Tag identifying this class
+    /// </summary>
+	public new const string __Tag = "EntryUpdate";
+
+	/// <summary>
+    /// Factory method
+    /// </summary>
+    /// <returns>Object of this type</returns>
+	public static new JsonObject _Factory () => new EntryUpdate();
 
 	}
 
