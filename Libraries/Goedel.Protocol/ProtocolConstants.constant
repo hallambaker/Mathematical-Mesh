@@ -1,0 +1,29 @@
+﻿Namespace Goedel.Protocol ProtocolConstants
+	|Constants specified in hallambaker-mesh-udf
+
+
+File SequenceEvents
+	Enum SequenceEvent "Sequence Events"
+
+		Code Initial				"Initial"
+			Description
+				|Default initial state of entry in a sequence
+		Code Read					"Read"
+			Description
+				|Entry has been read but the contents have not been changed.
+		Code Update					"Update"
+			Description
+				|Entry has been updated.
+		Code Delete					"Delete"
+			Description
+				|Entry has been deleted but the value can still be recovered from the sequence.
+		Code Erase					"Erase"
+			Description
+				|Entry has been deleted and the value erased.
+
+		Code Index					"Index"
+			Description
+				|Entry contains an index
+		Code Witness				"Witness"
+			Description
+				|Entry contains witness values from other logs.

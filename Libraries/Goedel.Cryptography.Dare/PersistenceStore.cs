@@ -373,7 +373,7 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
 
         // Create new Sequence
         var contentInfo = new ContentMeta() {
-            Event = DareConstants.SequenceEventNewTag,
+            Event = ProtocolConstants.SequenceEventInitialTag,
             UniqueId = jsonObject._PrimaryKey,
             KeyValues = jsonObject._KeyValues.ToKeyValues()
             };
@@ -403,7 +403,8 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
 
         // Create new Sequence
         var contentInfo = new ContentMeta() {
-            Event = exists ? DareConstants.SequenceEventUpdateTag : DareConstants.SequenceEventNewTag,
+            Event = exists ? ProtocolConstants.SequenceEventUpdateTag : 
+                    ProtocolConstants.SequenceEventInitialTag,
             UniqueId = jsonObject._PrimaryKey,
             KeyValues = jsonObject._KeyValues.ToKeyValues(),
             };
@@ -428,7 +429,7 @@ public class PersistenceStore : Disposable, IInternSequenceIndexEntry {
 
         // Create new Sequence
         var contentInfo = new ContentMeta() {
-            Event = DareConstants.SequenceEventDeleteTag,
+            Event = ProtocolConstants.SequenceEventDeleteTag,
             UniqueId = uniqueID,
             };
 

@@ -124,7 +124,7 @@ public partial class TestDareArchive {
             Attributes = (int)fileInfo.Attributes
             };
         contentMeta.UniqueId = Path.Combine(directoryPath, fileInfo.Name);
-        contentMeta.Event = DareConstants.SequenceEventNewTag;
+        contentMeta.Event = ProtocolConstants.SequenceEventInitialTag;
 
         using var stream = fileInfo.FullName.OpenFileReadShared();
         return AddFileForce(archive, stream, stream.Length, contentMeta);

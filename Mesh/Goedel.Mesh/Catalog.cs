@@ -141,7 +141,7 @@ public abstract class Catalog<T> : Store, IEnumerable<T>, INotifyCollectionChang
         var catalogedEntry = catalogIndexEntry.JsonObject as T;
 
         switch (catalogIndexEntry.SequenceEvent) {
-            case SequenceEvent.New: {
+            case SequenceEvent.Initial: {
                 NewEntry(catalogedEntry);
                 break;
                 }

@@ -24,6 +24,7 @@ using System.Linq;
 
 using Goedel.Cryptography.Dare;
 using Goedel.Mesh;
+using Goedel.Protocol;
 using Goedel.Test;
 
 using Xunit;
@@ -286,7 +287,7 @@ public class TestVarintSerialization : UnitTestSet {
         var id1 = Append(spool, dataDictionary, size, variable);
         Verify(spool, dataDictionary);
 
-        Update(spool, dataDictionary, [new(id1, MeshConstants.StateSpoolMessageReadTag)]);
+        Update(spool, dataDictionary, [new(id1, SequenceEvent.Read)]);
 
         Verify(spool, dataDictionary);
 
@@ -297,28 +298,26 @@ public class TestVarintSerialization : UnitTestSet {
     string Append(EarlSpool<MessageTest> spool, Dictionary<string, MessageTest> dataDictionary,
                     int size, bool variable) {
 
-        var state = MeshConstants.StateSpoolMessageInitialTag;
 
         var data = Seed.GetTestBytes(size, "This is a test");
         var entry = new MessageTest() {
             UniqueId = Udf.Nonce(),
             Data = data,
-            State = state
             };
         dataDictionary.Add(entry.UniqueId, entry);
-        spool.Add(entry, state);
-
+        spool.Add(entry);
 
         return entry.UniqueId;
         }
 
     void Update(EarlSpool<MessageTest> spool,
-        Dictionary<string, MessageTest> dataDictionary,
-        List<EntryUpdate> updates) {
+                Dictionary<string, MessageTest> dataDictionary,
+                List<EntryUpdate> updates) {
 
-
-        //dataDictionary.Update(id);
-        //sequence.Append(data);
+        foreach (var update in updates) {
+            dataDictionary.TryGetValue(update.Id, out var entry).TestTrue();
+            entry._State = update.Event.ToSequenceEvent();
+            }
         spool.Update(updates);
         }
 
@@ -339,6 +338,8 @@ public class TestVarintSerialization : UnitTestSet {
             if (entry != null) {
                 if (!matched.TryGetValue(entry.UniqueId, out var match)) {
                     dataDictionary.TryGetValue(entry.UniqueId, out match).TestTrue();
+                    (match._State == entry._State).TestTrue();
+
                     count++;
                     // check values are same
                     }

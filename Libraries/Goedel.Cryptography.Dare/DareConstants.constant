@@ -37,10 +37,3 @@ File SignaturePolicies
 		Code Isolated				"Isolated"
 		Code Last					"Last"
 		Code Any					"Any"
-
-File SequenceEvents
-	Enum SequenceEvent "Sequence Events"
-		Code New					"New"
-		Code Update					"Update"
-		Code Delete					"Delete"
-		Code Erase					"Erase"

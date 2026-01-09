@@ -152,10 +152,11 @@ public class EarlStream : Disposable {
         if (index.EarlEnvelope.Payload is not null) {
             return index.EarlEnvelope.Payload;
             }
-
+        var position = Stream.Position;
         Stream.Position = index.PayloadStart;
         var buffer = new byte[index.PayloadLength];
         Stream.ReadExactly(buffer, 0, (int)index.PayloadLength);
+        Stream.Position = position;
 
         return buffer;
         }

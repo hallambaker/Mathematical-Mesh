@@ -129,7 +129,7 @@ public class FileCollection {
             return null; // not a file entry.
             }
 
-        if (dareHeader.ContentMeta?.Event == DareConstants.SequenceEventDeleteTag) {
+        if (dareHeader.ContentMeta?.Event == ProtocolConstants.SequenceEventDeleteTag) {
             DictionaryDeleted.AddSafe(filename, position);
             CountDeleted++;
             return null; // add to the list of deleted entries;

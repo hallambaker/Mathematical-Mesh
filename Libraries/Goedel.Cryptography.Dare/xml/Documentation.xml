@@ -1063,24 +1063,6 @@
         <member name="F:Goedel.Cryptography.Dare.PolicySignature.Any">
             <summary>Any</summary>
         </member>
-        <member name="T:Goedel.Cryptography.Dare.SequenceEvent">
-            <summary>Sequence Events</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.SequenceEvent.Unknown">
-            <summary>Undefined type</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.SequenceEvent.New">
-            <summary>New</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.SequenceEvent.Update">
-            <summary>Update</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.SequenceEvent.Delete">
-            <summary>Delete</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.SequenceEvent.Erase">
-            <summary>Erase</summary>
-        </member>
         <member name="T:Goedel.Cryptography.Dare.DareConstants">
             <summary>
             Constants specified in hallambaker-mesh-udf
@@ -1198,34 +1180,6 @@
             <returns>The enumeration value.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.DareConstants.ToLabel(Goedel.Cryptography.Dare.PolicySignature)">
-            <summary>
-            Convert the enumerated value <paramref name="data"/> to the corresponding string
-            value.
-            </summary>
-            <param name="data">The enumerated value.</param>
-            <returns>The text value.</returns>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareConstants.SequenceEventNewTag">
-            <summary>Jose enumeration tag for SequenceEvent.New</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareConstants.SequenceEventUpdateTag">
-            <summary>Jose enumeration tag for SequenceEvent.Update</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareConstants.SequenceEventDeleteTag">
-            <summary>Jose enumeration tag for SequenceEvent.Delete</summary>
-        </member>
-        <member name="F:Goedel.Cryptography.Dare.DareConstants.SequenceEventEraseTag">
-            <summary>Jose enumeration tag for SequenceEvent.Erase</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareConstants.ToSequenceEvent(System.String)">
-            <summary>
-            Convert the string <paramref name="text"/> to the corresponding enumeration
-            value.
-            </summary>
-            <param name="text">The string to convert.</param>
-            <returns>The enumeration value.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.DareConstants.ToLabel(Goedel.Cryptography.Dare.SequenceEvent)">
             <summary>
             Convert the enumerated value <paramref name="data"/> to the corresponding string
             value.

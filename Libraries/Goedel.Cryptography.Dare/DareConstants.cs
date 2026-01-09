@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 1/8/2026 5:47:11 PM
+//  This file was automatically generated at 1/9/2026 3:47:09 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -75,19 +75,6 @@ public enum PolicySignature {
     Last,
     ///<summary>Any</summary>
     Any    }
-
-///<summary>Sequence Events</summary>
-public enum SequenceEvent {
-    ///<summary>Undefined type</summary>
-    Unknown = -1,
-    ///<summary>New</summary>
-    New,
-    ///<summary>Update</summary>
-    Update,
-    ///<summary>Delete</summary>
-    Delete,
-    ///<summary>Erase</summary>
-    Erase    }
 
 
 ///<summary>
@@ -268,48 +255,6 @@ public static partial class DareConstants {
             PolicySignature.Isolated => PolicySignatureIsolatedTag,
             PolicySignature.Last => PolicySignatureLastTag,
             PolicySignature.Any => PolicySignatureAnyTag,
-            _ => null
-            };
-
-    // File: SequenceEvents
-
-
-    ///<summary>Jose enumeration tag for SequenceEvent.New</summary>
-    public const string  SequenceEventNewTag = "New";
-    ///<summary>Jose enumeration tag for SequenceEvent.Update</summary>
-    public const string  SequenceEventUpdateTag = "Update";
-    ///<summary>Jose enumeration tag for SequenceEvent.Delete</summary>
-    public const string  SequenceEventDeleteTag = "Delete";
-    ///<summary>Jose enumeration tag for SequenceEvent.Erase</summary>
-    public const string  SequenceEventEraseTag = "Erase";
-
-    /// <summary>
-    /// Convert the string <paramref name="text"/> to the corresponding enumeration
-    /// value.
-    /// </summary>
-    /// <param name="text">The string to convert.</param>
-    /// <returns>The enumeration value.</returns>
-    public static SequenceEvent ToSequenceEvent (this string text) =>
-        text switch {
-            SequenceEventNewTag => SequenceEvent.New,
-            SequenceEventUpdateTag => SequenceEvent.Update,
-            SequenceEventDeleteTag => SequenceEvent.Delete,
-            SequenceEventEraseTag => SequenceEvent.Erase,
-            _ => SequenceEvent.Unknown
-            };
-
-    /// <summary>
-    /// Convert the enumerated value <paramref name="data"/> to the corresponding string
-    /// value.
-    /// </summary>
-    /// <param name="data">The enumerated value.</param>
-    /// <returns>The text value.</returns>
-    public static string ToLabel (this SequenceEvent data) =>
-        data switch {
-            SequenceEvent.New => SequenceEventNewTag,
-            SequenceEvent.Update => SequenceEventUpdateTag,
-            SequenceEvent.Delete => SequenceEventDeleteTag,
-            SequenceEvent.Erase => SequenceEventEraseTag,
             _ => null
             };
 

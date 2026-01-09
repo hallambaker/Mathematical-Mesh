@@ -18,6 +18,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Compile Update="ProtocolConstants.cs">
+			<DependentUpon>ProtocolConstants.constant</DependentUpon>
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Exceptions.cs">
 			<DependentUpon>Exceptions.exceptional</DependentUpon>
 			<DesignTime>True</DesignTime>
@@ -31,6 +36,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="ProtocolConstants.constant">
+			<LastGenOutput>ProtocolConstants.cs</LastGenOutput>
+			<Generator>Constant</Generator>
+		</None>
 		<None Update="Exceptions.exceptional">
 			<Generator>exceptional</Generator>
 		</None>

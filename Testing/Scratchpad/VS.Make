@@ -35,7 +35,6 @@ LinkFiles = \
     Test.Cryptography.dll\
     Test.Discovery.dll\
     Test.MakeSiteDocs.dll\
-    Test.Mesh.Presence.dll\
     Test.Mesh.Protocol.dll\
     Test.Mesh.Shell.dll\
     Test.Mesh.Store.dll\

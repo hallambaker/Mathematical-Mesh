@@ -3197,6 +3197,9 @@
             Primary key to use for the object.
             </summary>
         </member>
+        <member name="P:Goedel.Protocol.JsonObject._State">
+            <summary>State of the object in a collection.</summary>
+        </member>
         <member name="F:Goedel.Protocol.JsonObject.Envelope">
             <summary>The enveloped object data.</summary> 
         </member>
@@ -4528,6 +4531,75 @@
             <summary>
             Support library for Web Services and Clients generated using the PROTOGEN tool.
             </summary>
+        </member>
+        <member name="T:Goedel.Protocol.SequenceEvent">
+            <summary>Sequence Events</summary>
+        </member>
+        <member name="F:Goedel.Protocol.SequenceEvent.Unknown">
+            <summary>Undefined type</summary>
+        </member>
+        <member name="F:Goedel.Protocol.SequenceEvent.Initial">
+            <summary>Initial</summary>
+        </member>
+        <member name="F:Goedel.Protocol.SequenceEvent.Read">
+            <summary>Read</summary>
+        </member>
+        <member name="F:Goedel.Protocol.SequenceEvent.Update">
+            <summary>Update</summary>
+        </member>
+        <member name="F:Goedel.Protocol.SequenceEvent.Delete">
+            <summary>Delete</summary>
+        </member>
+        <member name="F:Goedel.Protocol.SequenceEvent.Erase">
+            <summary>Erase</summary>
+        </member>
+        <member name="F:Goedel.Protocol.SequenceEvent.Index">
+            <summary>Index</summary>
+        </member>
+        <member name="F:Goedel.Protocol.SequenceEvent.Witness">
+            <summary>Witness</summary>
+        </member>
+        <member name="T:Goedel.Protocol.ProtocolConstants">
+            <summary>
+            Constants specified in hallambaker-mesh-udf
+            </summary>
+        </member>
+        <member name="F:Goedel.Protocol.ProtocolConstants.SequenceEventInitialTag">
+            <summary>Jose enumeration tag for SequenceEvent.Initial</summary>
+        </member>
+        <member name="F:Goedel.Protocol.ProtocolConstants.SequenceEventReadTag">
+            <summary>Jose enumeration tag for SequenceEvent.Read</summary>
+        </member>
+        <member name="F:Goedel.Protocol.ProtocolConstants.SequenceEventUpdateTag">
+            <summary>Jose enumeration tag for SequenceEvent.Update</summary>
+        </member>
+        <member name="F:Goedel.Protocol.ProtocolConstants.SequenceEventDeleteTag">
+            <summary>Jose enumeration tag for SequenceEvent.Delete</summary>
+        </member>
+        <member name="F:Goedel.Protocol.ProtocolConstants.SequenceEventEraseTag">
+            <summary>Jose enumeration tag for SequenceEvent.Erase</summary>
+        </member>
+        <member name="F:Goedel.Protocol.ProtocolConstants.SequenceEventIndexTag">
+            <summary>Jose enumeration tag for SequenceEvent.Index</summary>
+        </member>
+        <member name="F:Goedel.Protocol.ProtocolConstants.SequenceEventWitnessTag">
+            <summary>Jose enumeration tag for SequenceEvent.Witness</summary>
+        </member>
+        <member name="M:Goedel.Protocol.ProtocolConstants.ToSequenceEvent(System.String)">
+            <summary>
+            Convert the string <paramref name="text"/> to the corresponding enumeration
+            value.
+            </summary>
+            <param name="text">The string to convert.</param>
+            <returns>The enumeration value.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.ProtocolConstants.ToLabel(Goedel.Protocol.SequenceEvent)">
+            <summary>
+            Convert the enumerated value <paramref name="data"/> to the corresponding string
+            value.
+            </summary>
+            <param name="data">The enumerated value.</param>
+            <returns>The text value.</returns>
         </member>
         <member name="T:Goedel.Protocol.Reader">
             <summary>

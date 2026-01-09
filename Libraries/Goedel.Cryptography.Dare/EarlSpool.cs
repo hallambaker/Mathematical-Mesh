@@ -19,6 +19,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using System;
 using System.Data;
 
 using static Goedel.Discovery.ServiceAddressSplitLex;
@@ -60,29 +61,39 @@ public class EarlSpool : EarlSequence {
 /// <typeparam name="T">The type of item stored.</typeparam>
 public class EarlSpool<T> : EarlSpool where T : JsonObject {
 
-    public Dictionary<string, T> StatusDictionary { get; } = [];
+    public Dictionary<string, SequenceEvent> StatusDictionary { get; } = [];
 
     internal EarlSpool(
                 EarlStream stream) : base(stream) {
         }
 
-    public EarlEntryIndex Add(T item, string state) {
+    public EarlEntryIndex Add(T item,
+                SequenceEvent state = SequenceEvent.Initial) {
         var contentMeta = new ContentMeta() {
             UniqueId = item._PrimaryKey,
-            Event = state
+            Event = state.ToLabel()
             };
+        item._State = state;
         return Append(item, contentMeta);
         }
 
     public EarlEntryIndex Update(List<EntryUpdate> updates) {
         var contentMeta = new ContentMeta() {
             UniqueId = null,
-            Event = "Index"
+            Event = ProtocolConstants.SequenceEventIndexTag
             };
+
+        foreach (var update in updates) {
+            if (StatusDictionary.ContainsKey(update.Id)) {
+                StatusDictionary.Remove(update.Id);
+                }
+            StatusDictionary.Add(update.Id, update.SequenceEvent);
+            }
+
         var updateSet = new EntryUpdateSet() {
             Entries = updates
             };
-        return Append(updateSet);
+        return Append(updateSet, contentMeta);
         }
 
 
@@ -94,14 +105,40 @@ public class EarlSpool<T> : EarlSpool where T : JsonObject {
         Stream.Position = position;
         //var asChar = bytes.ToUTF8();
 
-        return JsonObject.StreamParseTag<T>(bytes, true);
+        var result = JsonObject.StreamParseTag<T>(bytes, true);
+        if (StatusDictionary.TryGetValue(result._PrimaryKey, out var value)) {
+            result._State = value;
+            }
+        else {
+            result._State = SequenceEvent.Initial;
+            }
 
+        return result;
         }
 
     public bool ProcessEntry(EarlEntryIndex entry) {
         if (entry.EarlEnvelope.SignedHeader.UniqueId is not null) {
             return false;
             }
+
+        if (entry.EarlEnvelope.SignedHeader.Event ==
+                    ProtocolConstants.SequenceEventIndexTag) {
+            var bytes = Stream.GetPayload(entry);
+            //var bytesAs = bytes.ToUTF8();
+            var updateSet = JsonObject.StreamParseTag<EntryUpdateSet>(bytes, true);
+
+            // we only update the status if this is a new entry
+            foreach (var update in updateSet.Entries) {
+                if (!StatusDictionary.ContainsKey(update.Id)) {
+                    StatusDictionary.Add(update.Id, update.SequenceEvent);
+                    }
+
+                }
+
+            }
+
+
+
         return true;
 
         }

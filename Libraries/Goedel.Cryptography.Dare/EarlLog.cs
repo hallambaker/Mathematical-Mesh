@@ -25,6 +25,9 @@ namespace Goedel.Cryptography.Dare;
 
 
 public partial class EntryUpdate {
+
+    public SequenceEvent SequenceEvent => Event.ToSequenceEvent();
+
     public EntryUpdate() {
         }
 
@@ -33,6 +36,12 @@ public partial class EntryUpdate {
         Id = id;
         Event = status;
         }
+
+    public EntryUpdate(string id, SequenceEvent status) {
+        Id = id;
+        Event = status.ToLabel();
+        }
+
 
     }
 

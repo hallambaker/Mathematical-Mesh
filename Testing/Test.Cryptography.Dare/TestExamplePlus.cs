@@ -110,7 +110,7 @@ public partial class MessageTest {
 
     public override string _PrimaryKey => UniqueId;
 
-    public string State { get; set; }
+    //public string State { get; set; }
 
     }
 

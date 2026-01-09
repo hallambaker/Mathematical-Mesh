@@ -24,8 +24,12 @@ LinkFiles = \
     Goedel.Utilities.dll
 
 ToolTargets = \
+	ProtocolConstants.cs\
 	Exceptions.cs\
 	MessageBase.cs
+ProtocolConstants.cs : ProtocolConstants.constant 
+	constant ProtocolConstants.constant  /cs  ProtocolConstants.cs
+
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 

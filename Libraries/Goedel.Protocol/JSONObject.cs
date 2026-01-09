@@ -74,6 +74,9 @@ public abstract partial class JsonObject : IBinding {
     /// </summary>
     public virtual string _PrimaryKey => null;
 
+    /// <summary>State of the object in a collection.</summary>
+    public virtual SequenceEvent _State { get; set; }
+
     ///<summary>The enveloped object data.</summary> 
     public object Envelope;
 

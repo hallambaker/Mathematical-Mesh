@@ -36,11 +36,11 @@ public class ArchiveIndexEntry : PersistentIndexEntry {
 
     ///<summary>If true, the item has been deleted from the archive. It may be 
     ///possible to recover it if it has not been erased.</summary> 
-    public override bool IsDeleted => IsErased | Event == DareConstants.SequenceEventDeleteTag;
+    public override bool IsDeleted => IsErased | Event == ProtocolConstants.SequenceEventDeleteTag;
 
     ///<summary>If true, the item has been deleted and erased from the archive and 
     ///cannot be recovered.</summary> 
-    public override bool IsErased => Event == DareConstants.SequenceEventEraseTag;
+    public override bool IsErased => Event == ProtocolConstants.SequenceEventEraseTag;
 
     ///<inheritdoc/>
     public override JsonObject JsonObject {
@@ -167,7 +167,7 @@ public class DareArchive : PersistenceStore {
             Attributes = (int)fileInfo.Attributes
             };
         contentMeta.UniqueId = Path.Combine(directoryPath, fileInfo.Name);
-        contentMeta.Event = DareConstants.SequenceEventNewTag;
+        contentMeta.Event = ProtocolConstants.SequenceEventInitialTag;
 
         using var stream = fileInfo.FullName.OpenFileReadShared();
         return AddFile(stream, stream.Length, contentMeta);
