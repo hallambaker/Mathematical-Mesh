@@ -388,7 +388,7 @@ public class EarlStream : Disposable {
 
 
         return new EarlEntryIndex(
-                0, entryStart, length, payloadStart, payloadLength, null);
+                0, entryStart, length, payloadStart, payloadLength);
         }
 
 
@@ -450,8 +450,9 @@ public class EarlStream : Disposable {
 
         var envelope = new EarlEnvelope(unprotected, contentMeta, trailer);
 
-        return new EarlEntryIndex(frame, start, Framelength, payloadStart, payloadLength, "") {
-            EarlEnvelope = envelope
+        return new EarlEntryIndex(frame, start, Framelength, payloadStart, payloadLength) {
+            EarlEnvelope = envelope,
+            Id = contentMeta?.UniqueId
             };
         }
 

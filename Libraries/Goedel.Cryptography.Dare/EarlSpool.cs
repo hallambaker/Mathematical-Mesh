@@ -80,7 +80,7 @@ public class EarlSpool<T> : EarlSpool where T : JsonObject {
     public EarlEntryIndex Update(List<EntryUpdate> updates) {
         var contentMeta = new ContentMeta() {
             UniqueId = null,
-            Event = ProtocolConstants.SequenceEventIndexTag
+            Event = ProtocolConstants.SequenceEventUpdatesTag
             };
 
         foreach (var update in updates) {
@@ -99,13 +99,7 @@ public class EarlSpool<T> : EarlSpool where T : JsonObject {
 
 
     public T GetValue(EarlEntryIndex index) {
-        // check content meta is this a 
-        var position = Stream.Position;
-        var bytes = Stream.GetPayload(index);
-        Stream.Position = position;
-        //var asChar = bytes.ToUTF8();
-
-        var result = JsonObject.StreamParseTag<T>(bytes, true);
+        var result = GetValue<T>(index);
         if (StatusDictionary.TryGetValue(result._PrimaryKey, out var value)) {
             result._State = value;
             }
@@ -122,7 +116,7 @@ public class EarlSpool<T> : EarlSpool where T : JsonObject {
             }
 
         if (entry.EarlEnvelope.SignedHeader.Event ==
-                    ProtocolConstants.SequenceEventIndexTag) {
+                    ProtocolConstants.SequenceEventUpdatesTag) {
             var bytes = Stream.GetPayload(entry);
             //var bytesAs = bytes.ToUTF8();
             var updateSet = JsonObject.StreamParseTag<EntryUpdateSet>(bytes, true);

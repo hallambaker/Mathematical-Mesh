@@ -26,10 +26,15 @@ public record EarlEntryIndex(
         long Start,
         long Length,
         long PayloadStart,
-        long PayloadLength,
-        string Id) {
+        long PayloadLength) {
 
     public EarlEnvelope? EarlEnvelope { get; set; } = null;
+    public string Id { get; set; } = null;
 
+    public JsonObject JsonObject { get; set; } = null;
+
+    public EarlEntryIndex? Previous { get; set; } = null;
+    
+    public bool Deleted { get; set; } = false;
     }
 

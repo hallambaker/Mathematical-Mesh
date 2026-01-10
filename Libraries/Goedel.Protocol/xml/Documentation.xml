@@ -4553,6 +4553,9 @@
         <member name="F:Goedel.Protocol.SequenceEvent.Erase">
             <summary>Erase</summary>
         </member>
+        <member name="F:Goedel.Protocol.SequenceEvent.Updates">
+            <summary>Updates</summary>
+        </member>
         <member name="F:Goedel.Protocol.SequenceEvent.Index">
             <summary>Index</summary>
         </member>
@@ -4578,6 +4581,9 @@
         </member>
         <member name="F:Goedel.Protocol.ProtocolConstants.SequenceEventEraseTag">
             <summary>Jose enumeration tag for SequenceEvent.Erase</summary>
+        </member>
+        <member name="F:Goedel.Protocol.ProtocolConstants.SequenceEventUpdatesTag">
+            <summary>Jose enumeration tag for SequenceEvent.Updates</summary>
         </member>
         <member name="F:Goedel.Protocol.ProtocolConstants.SequenceEventIndexTag">
             <summary>Jose enumeration tag for SequenceEvent.Index</summary>

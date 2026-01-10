@@ -20,7 +20,9 @@ File SequenceEvents
 		Code Erase					"Erase"
 			Description
 				|Entry has been deleted and the value erased.
-
+		Code Updates					"Updates"
+			Description
+				|Entry contains an updates set
 		Code Index					"Index"
 			Description
 				|Entry contains an index

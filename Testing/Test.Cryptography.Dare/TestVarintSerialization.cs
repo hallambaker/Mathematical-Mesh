@@ -29,6 +29,8 @@ using Goedel.Test;
 
 using Xunit;
 
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace Goedel.XUnit;
 
 public class TestVarintSerialization : UnitTestSet {
@@ -339,7 +341,7 @@ public class TestVarintSerialization : UnitTestSet {
                 if (!matched.TryGetValue(entry.UniqueId, out var match)) {
                     dataDictionary.TryGetValue(entry.UniqueId, out match).TestTrue();
                     (match._State == entry._State).TestTrue();
-
+                    entry.Data.TestEqual(match.Data);
                     count++;
                     // check values are same
                     }
@@ -362,7 +364,7 @@ public class TestVarintSerialization : UnitTestSet {
     public void TestCatalog(
             bool sign = false,
             bool encrypt = false,
-            int size = 0,
+            int size = 100,
             int count = 0,
             bool variable = false,
             SequenceIndexMode index = SequenceIndexMode.None) {
@@ -409,15 +411,14 @@ public class TestVarintSerialization : UnitTestSet {
 
     string Add(EarlCatalog<CatalogEntryTest> catalog, Dictionary<string, CatalogEntryTest> dataDictionary,
         int size, bool variable, string id=null) {
-
+        id ??= Udf.Nonce();
         var data = Seed.GetTestBytes(size, "This is a test");
         var entry = new CatalogEntryTest() {
             UniqueId = id,
             Data = data
             };
         dataDictionary.Add(entry.UniqueId, entry);
-        //sequence.Append(data);
-        catalog.Update(entry);
+        catalog.Add(entry);
 
         return entry.UniqueId;
         }
@@ -430,9 +431,8 @@ public class TestVarintSerialization : UnitTestSet {
             UniqueId = id,
             Data = data
             };
-        dataDictionary.Add(entry.UniqueId, entry);
-        //sequence.Append(data);
-        catalog.Delete(entry.UniqueId);
+        dataDictionary.AddSafe(entry.UniqueId, entry);
+        catalog.Update(entry);
 
         return entry.UniqueId;
         }
@@ -443,27 +443,38 @@ public class TestVarintSerialization : UnitTestSet {
     bool Delete(EarlCatalog<CatalogEntryTest> catalog, Dictionary<string, CatalogEntryTest> dataDictionary, string id) {
         
         dataDictionary.Remove(id);
-        //sequence.Append(data);
-
+        catalog.Delete(id);
 
         return true;
         }
 
-    bool Verify(EarlCatalog<CatalogEntryTest> catalog, Dictionary<string, CatalogEntryTest> dataDictionary) {
+    bool Verify(EarlCatalog<CatalogEntryTest> catalogIn, Dictionary<string, CatalogEntryTest> dataDictionary) {
         Console.WriteLine();
         Console.WriteLine();
 
-        //var filename = sequence1.Filename;
-        //sequence1.CloseStream(); // close the stream so we can reopen for read.
-
-        //using var sequence = EarlSequence.Open(filename);
-        //foreach (var data in dataList) {
-        //    var envelope = sequence.ReadNext();
-        //    data.TestEqual(envelope.Payload);
-        //    }
+        var filename = catalogIn.Filename;
+        catalogIn.CloseStream(); // close the stream so we can reopen for read.
 
 
-        // check that we have read all the elements.
+        var matched = new Dictionary<string, CatalogEntryTest>();
+        using var catalog = EarlCatalog.Open<CatalogEntryTest>(filename);
+
+        var count = 0;
+        foreach (var index in catalog.EntriesReverse()) {
+            var entry = catalog.GetValue(index);
+            if (entry != null) {
+                if (!matched.TryGetValue(entry.UniqueId, out var match)) {
+                    dataDictionary.TryGetValue(entry.UniqueId, out match).TestTrue();
+                    entry.Data.TestEqual(match.Data);
+
+                    count++;
+                    // check values are same
+                    }
+                }
+            }
+
+        // check we have the same number of elements
+        dataDictionary.Count.TestEqual(count);
 
         return true;
         }

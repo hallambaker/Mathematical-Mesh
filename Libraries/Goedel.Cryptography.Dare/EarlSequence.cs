@@ -27,9 +27,9 @@ namespace Goedel.Cryptography.Dare;
 
 public  class EarlSequence : Disposable {
 
-    Dictionary<string, EarlEntryIndex> DictionaryById = [];
+    //Dictionary<string, EarlEntryIndex> DictionaryById = [];
 
-    Dictionary<long, EarlEntryIndex> DictionaryByFrame = [];
+    //Dictionary<long, EarlEntryIndex> DictionaryByFrame = [];
 
     long UnreadStart { get; set; } = 0;
     long UnreadEnd { get; set; } = long.MaxValue;
@@ -154,7 +154,10 @@ public  class EarlSequence : Disposable {
 
         dataEncoding.Default(DataEncoding);
         var bytes = obj.GetBytes(dataEncoding: dataEncoding);
-        return Append (bytes, contentMeta, index);
+        var result = Append (bytes, contentMeta, index);
+        result.Id = obj._PrimaryKey;
+        result.JsonObject = obj;
+        return result;
         }
 
 
@@ -167,7 +170,7 @@ public  class EarlSequence : Disposable {
         AppendPayload(entry, 0, entry.Length);
         AppendEnd();
 
-        return null;
+        return result;
         }
 
     public virtual EarlEntryIndex AppendStart(
@@ -247,6 +250,20 @@ public  class EarlSequence : Disposable {
         return null;
         }
 
+    public T GetValue<T>(EarlEntryIndex index) where T : JsonObject{
+        // check content meta is this a 
+
+        var bytes = Stream.GetPayload(index);
+
+        //var asChar = bytes.ToUTF8();
+
+        var result = JsonObject.StreamParseTag<T>(bytes, true);
+        return result;
+        }
+
+
+
+
     #endregion
 
 
@@ -266,20 +283,20 @@ public  class EarlSequence : Disposable {
         return null;
         }
 
-    public virtual bool TryGetEntry(string id, out EarlEntryIndex? index) {
+    //public virtual bool TryGetEntry(string id, out EarlEntryIndex? index) {
 
-        if (DictionaryById.TryGetValue(id, out index)) {
-            return true;
-            }
+    //    if (DictionaryById.TryGetValue(id, out index)) {
+    //        return true;
+    //        }
 
-        if (UnreadStart >= UnreadEnd) {
-            index = null;
-            return false;
-            }
+    //    if (UnreadStart >= UnreadEnd) {
+    //        index = null;
+    //        return false;
+    //        }
 
-        // sequence not read, abort.
-        throw new NYI();
-        }
+    //    // sequence not read, abort.
+    //    throw new NYI();
+    //    }
 
     //public bool TryGetEntry(string key, string value, out EarlEntryIndex? index) {
     //    index = null;

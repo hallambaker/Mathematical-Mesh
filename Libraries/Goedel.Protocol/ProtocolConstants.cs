@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 1/9/2026 3:47:04 PM
+//  This file was automatically generated at 1/9/2026 6:59:49 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -36,6 +36,8 @@ public enum SequenceEvent {
     Delete,
     ///<summary>Erase</summary>
     Erase,
+    ///<summary>Updates</summary>
+    Updates,
     ///<summary>Index</summary>
     Index,
     ///<summary>Witness</summary>
@@ -60,6 +62,8 @@ public static partial class ProtocolConstants {
     public const string  SequenceEventDeleteTag = "Delete";
     ///<summary>Jose enumeration tag for SequenceEvent.Erase</summary>
     public const string  SequenceEventEraseTag = "Erase";
+    ///<summary>Jose enumeration tag for SequenceEvent.Updates</summary>
+    public const string  SequenceEventUpdatesTag = "Updates";
     ///<summary>Jose enumeration tag for SequenceEvent.Index</summary>
     public const string  SequenceEventIndexTag = "Index";
     ///<summary>Jose enumeration tag for SequenceEvent.Witness</summary>
@@ -78,6 +82,7 @@ public static partial class ProtocolConstants {
             SequenceEventUpdateTag => SequenceEvent.Update,
             SequenceEventDeleteTag => SequenceEvent.Delete,
             SequenceEventEraseTag => SequenceEvent.Erase,
+            SequenceEventUpdatesTag => SequenceEvent.Updates,
             SequenceEventIndexTag => SequenceEvent.Index,
             SequenceEventWitnessTag => SequenceEvent.Witness,
             _ => SequenceEvent.Unknown
@@ -96,6 +101,7 @@ public static partial class ProtocolConstants {
             SequenceEvent.Update => SequenceEventUpdateTag,
             SequenceEvent.Delete => SequenceEventDeleteTag,
             SequenceEvent.Erase => SequenceEventEraseTag,
+            SequenceEvent.Updates => SequenceEventUpdatesTag,
             SequenceEvent.Index => SequenceEventIndexTag,
             SequenceEvent.Witness => SequenceEventWitnessTag,
             _ => null

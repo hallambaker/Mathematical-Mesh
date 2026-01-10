@@ -51,7 +51,7 @@ public class EarlCatalog : EarlSequence {
 
 public class EarlCatalog<T> : EarlCatalog where T : JsonObject {
 
-    public Dictionary<string, T> EntriesById { get; } = [];
+    public Dictionary<string, EarlEntryIndex> EntriesById { get; } = [];
 
     internal EarlCatalog(
                 EarlStream stream) : base(stream) {
@@ -67,13 +67,31 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject {
         return result;
         }
 
+
+    public T GetValue(EarlEntryIndex index) {
+
+        // If we already have it, we can return
+        if (index.JsonObject is not null) {
+            return index.JsonObject as T;
+            }
+
+        var result = GetValue<T>(index);
+        index.JsonObject = result;
+
+        return result;
+        }
+
+
+
     public EarlEntryIndex Add(T item) {
         var contentMeta = new ContentMeta() {
             UniqueId = item._PrimaryKey,
             Event = "Add"
             };
-        EntriesById.Add(item._PrimaryKey, item);
-        return Append(item, contentMeta);
+
+        var result = Append(item, contentMeta);
+        EntriesById.Add(item._PrimaryKey, result);
+        return result;
         }
 
     public EarlEntryIndex Update(T item) {
@@ -81,17 +99,45 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject {
             UniqueId = item._PrimaryKey,
             Event = "Add"
             };
-        EntriesById.AddSafe(item._PrimaryKey, item);
-        return Append(item, contentMeta);
+        var result = Append(item, contentMeta);
+        EntriesById.Replace(item._PrimaryKey, result);
+        return result;
         }
 
     public EarlEntryIndex Delete(string id) {
         var contentMeta = new ContentMeta() {
             UniqueId = id,
-            Event = "Delete"
+            Event = ProtocolConstants.SequenceEventDeleteTag
             };
-        EntriesById.Remove(id);
-        return Append([], contentMeta);
+
+        var result = Append([], contentMeta);
+        result.Deleted = true;
+        EntriesById.Replace(id, result);
+        return result;
         }
+
+
+    public bool ProcessEntry(EarlEntryIndex index) {
+
+        var id = index.EarlEnvelope.SignedHeader.UniqueId;
+        if (id is not null) {
+            // Keep searching unless this is the occurrence in the index and not deleted.
+            if (EntriesById.TryGetValue(id, out var entry)) {
+                return entry.Deleted | entry != index;
+                }
+            EntriesById.Add(id, index);
+            index.Deleted = index.EarlEnvelope?.SignedHeader?.Event == ProtocolConstants.SequenceEventDeleteTag;
+            return false;
+            }
+        if (index.EarlEnvelope.SignedHeader.Event ==
+                    ProtocolConstants.SequenceEventUpdatesTag) {
+            }
+        return true;
+        }
+
+
+    public virtual IEnumerable<EarlEntryIndex> EntriesReverse() =>
+        new EarlEntryEnumerator(this, false, ProcessEntry);
+
 
     }

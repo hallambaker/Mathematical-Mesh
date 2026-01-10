@@ -75,7 +75,7 @@ partial class Program {
 
 
         //TestVarintSerialization.Test().TestLog();
-        TestVarintSerialization.Test().TestSpool();
+        //TestVarintSerialization.Test().TestSpool();
         TestVarintSerialization.Test().TestCatalog();
 
 
