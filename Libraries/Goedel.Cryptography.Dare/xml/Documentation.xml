@@ -3693,6 +3693,29 @@
         <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator.System#Collections#IEnumerable#GetEnumerator">
             <inheritdoc/>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator`1.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator`1.#ctor(Goedel.Cryptography.Dare.EarlSequence,System.Boolean,System.Func{Goedel.Cryptography.Dare.EarlEntryIndex{`0},System.Boolean})">
+            <summary>Default constructor, return an enumerator on the sequence
+            <paramref name="sequence"/>. This is also an enumerable returning itself.</summary>
+            <param name="sequence">The sequence to enumerate.</param>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlEntryEnumerator`1.Current">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator`1.MoveNext">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator`1.Reset">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator`1.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator`1.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.EarlEnvelopeReader">
             <summary>
             Envelope Reader

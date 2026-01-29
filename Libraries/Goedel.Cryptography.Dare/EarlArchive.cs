@@ -37,7 +37,7 @@ public class EarlArchive : EarlSequence {
 
     public static EarlArchive Create(
             string fileName) {
-        var stream = EarlStreamDebug.Create(fileName, DareConstants.TypeIdentifierDareSequence);
+        var stream = EarlStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
         var result = new EarlArchive(stream);
 
         result.WriteInitial();
@@ -48,7 +48,7 @@ public class EarlArchive : EarlSequence {
     public static EarlArchive OpenRead(
         string fileName) {
 
-        var stream = EarlStreamDebug.OpenRead(fileName);
+        var stream = EarlStream.OpenRead(fileName);
         var result = new EarlArchive(stream);
         result.ReadInitial();
 
@@ -56,7 +56,7 @@ public class EarlArchive : EarlSequence {
         }
 
 
-    public override EarlEntryIndex AppendStart(
+    public override (long, long, long, long) AppendStart(
             long length,
             ContentMeta contentMeta = null,
             bool index = false) {

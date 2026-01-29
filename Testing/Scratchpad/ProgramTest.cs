@@ -139,7 +139,7 @@ partial class Program {
 
 
         //ShellTests.Test().TestProfileConnectStaticQR();
-        ShellTestsAdmin.Test().TestLog();
+        //ShellTestsAdmin.Test().TestLog();
 
         //ServiceDiscovery.Test().TestDNSMultiple(100);
         //ShellTestsAdmin.Test().TestAccount();
@@ -151,7 +151,7 @@ partial class Program {
 
 
 
-        ShellTestsAdmin.Test().TestAccount();
+        //ShellTestsAdmin.Test().TestAccount();
 
 
         /*

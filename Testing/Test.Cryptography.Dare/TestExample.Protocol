@@ -66,6 +66,8 @@
 			|Generated from the parameters Seed, Serial, Version and Length
 
 		String UniqueId
+		String SecondaryIds
+			Multiple
 		String VersionId
 		String Seed
 		Integer Serial

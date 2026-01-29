@@ -30,7 +30,7 @@ public class EarlCatalog : EarlSequence {
 
     public static EarlCatalog<T> Create<T>(
     string fileName) where T : JsonObject {
-        var stream = EarlStreamDebug.Create(fileName, DareConstants.TypeIdentifierDareSequence);
+        var stream = EarlStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
         var result = new EarlCatalog<T>(stream);
 
         result.WriteInitial();
@@ -41,7 +41,7 @@ public class EarlCatalog : EarlSequence {
     public static EarlCatalog<T> Open<T>(
             string fileName) where T : JsonObject {
 
-        var stream = EarlStreamDebug.OpenReadWrite(fileName);
+        var stream = EarlStream.OpenReadWrite(fileName);
         var spool = new EarlCatalog<T>(stream);
         spool.ReadInitial();
 
@@ -51,7 +51,9 @@ public class EarlCatalog : EarlSequence {
 
 public class EarlCatalog<T> : EarlCatalog where T : JsonObject {
 
-    public Dictionary<string, EarlEntryIndex> EntriesById { get; } = [];
+    public Dictionary<string, EarlEntryIndex<T>> EntriesById { get; } = [];
+
+    public Dictionary<string, EarlEntryIndex<T>> EntriesBySecondaryId { get; } = [];
 
     internal EarlCatalog(
                 EarlStream stream) : base(stream) {
@@ -59,7 +61,7 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject {
 
     public static EarlCatalog<T> Create(
         string fileName) {
-        var stream = EarlStreamDebug.Create(fileName, DareConstants.TypeIdentifierDareSequence);
+        var stream = EarlStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
         var result = new EarlCatalog<T>(stream);
 
         result.WriteInitial();
@@ -67,6 +69,8 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject {
         return result;
         }
 
+
+    public void GetMeta(EarlEntryIndex index) => GetValue(index);
 
     public T GetValue(EarlEntryIndex index) {
 
@@ -83,7 +87,7 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject {
 
 
 
-    public EarlEntryIndex Add(T item) {
+    public EarlEntryIndex<T> Add(T item) {
         var contentMeta = new ContentMeta() {
             UniqueId = item._PrimaryKey,
             Event = "Add"
@@ -91,33 +95,113 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject {
 
         var result = Append(item, contentMeta);
         EntriesById.Add(item._PrimaryKey, result);
+
+        if (item._SecondaryKeys != null) {
+            foreach (var key in item._SecondaryKeys) {
+                EntriesBySecondaryId.Add(key, result);
+                }
+            }
+
         return result;
         }
 
-    public EarlEntryIndex Update(T item) {
+    public EarlEntryIndex<T> Update(T item) {
         var contentMeta = new ContentMeta() {
             UniqueId = item._PrimaryKey,
             Event = "Add"
             };
         var result = Append(item, contentMeta);
+
+        // Remove the old keys
+        if (TryGetMeta(item._PrimaryKey, out var index)) {
+            foreach (var key in index.SecondaryKeys) {
+                EntriesBySecondaryId.Remove(key);
+                }
+            }
+
+        // Add the new keys
         EntriesById.Replace(item._PrimaryKey, result);
+        if (item._SecondaryKeys != null) {
+            foreach (var key in item._SecondaryKeys) {
+                EntriesBySecondaryId.Add(key, result);
+                }
+            }
+
+
         return result;
         }
 
-    public EarlEntryIndex Delete(string id) {
+    public EarlEntryIndex<T> Delete(string id) {
+        if (!TryGetMeta(id, out var index)) {
+            return null;
+            }
+        var meta = index.JsonObject as T;
+
         var contentMeta = new ContentMeta() {
             UniqueId = id,
             Event = ProtocolConstants.SequenceEventDeleteTag
             };
 
-        var result = Append([], contentMeta);
+        var result = Append<T>(null, contentMeta);
         result.Deleted = true;
+
         EntriesById.Replace(id, result);
+
+        if (index.SecondaryKeys != null) {
+            foreach (var key in index.SecondaryKeys) {
+                EntriesBySecondaryId.Remove(id);
+                EntriesBySecondaryId.Add(id, result);
+                }
+            }
+
+
         return result;
         }
 
+    public bool TryGetMeta(string id, out EarlEntryIndex<T> index) {
 
-    public bool ProcessEntry(EarlEntryIndex index) {
+        if (!EntriesById.TryGetValue(id, out index)) {
+            return false;
+            }
+        if (index.Deleted) {
+            return false;
+            }
+
+        GetValue(index);
+        return true;
+        }
+
+
+
+
+    public bool TryGetById(string id, out T? result) {
+        result = null;
+        if (!EntriesById.TryGetValue(id, out var index)) {
+            return false;
+            }
+        if (index.Deleted) {
+            return false;
+            }
+        result = GetValue(index);
+        return true;
+
+        }
+
+    public bool TryGetBySecondaryId(string id, out T? result) {
+        result = null;
+        if (!EntriesBySecondaryId.TryGetValue(id, out var index)) {
+            return false;
+            }
+        if (index.Deleted) {
+            return false;
+            }
+        result = GetValue(index);
+        return true;
+        }
+
+
+
+    public bool ProcessEntry(EarlEntryIndex<T> index) {
 
         var id = index.EarlEnvelope.SignedHeader.UniqueId;
         if (id is not null) {
@@ -127,7 +211,7 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject {
                 }
             EntriesById.Add(id, index);
             index.Deleted = index.EarlEnvelope?.SignedHeader?.Event == ProtocolConstants.SequenceEventDeleteTag;
-            return false;
+            return index.Deleted;
             }
         if (index.EarlEnvelope.SignedHeader.Event ==
                     ProtocolConstants.SequenceEventUpdatesTag) {
@@ -136,8 +220,8 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject {
         }
 
 
-    public virtual IEnumerable<EarlEntryIndex> EntriesReverse() =>
-        new EarlEntryEnumerator(this, false, ProcessEntry);
+    public virtual IEnumerable<EarlEntryIndex<T>> EntriesReverse() =>
+        new EarlEntryEnumerator<T>(this, false, ProcessEntry);
 
 
     }

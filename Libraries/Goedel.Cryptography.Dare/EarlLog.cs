@@ -52,7 +52,7 @@ public abstract class EarlLog : EarlSequence {
         }
     public static EarlLog<T> Create<T> (
         string fileName) where T : JsonObject {
-        var stream = EarlStreamDebug.Create(fileName, DareConstants.TypeIdentifierDareSequence);
+        var stream = EarlStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
         var result = new EarlLog<T>(stream);
 
         result.WriteInitial();
@@ -64,7 +64,7 @@ public abstract class EarlLog : EarlSequence {
     public static EarlLog<T> Open<T>(
         string fileName) where T : JsonObject {
 
-        var stream = EarlStreamDebug.OpenReadWrite(fileName);
+        var stream = EarlStream.OpenReadWrite(fileName);
         var sequence = new EarlLog<T>(stream);
         sequence.ReadInitial();
 

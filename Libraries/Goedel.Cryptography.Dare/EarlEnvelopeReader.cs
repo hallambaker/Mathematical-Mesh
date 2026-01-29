@@ -96,7 +96,7 @@ public partial class EarlEnvelopeReader : Disposable {
 
     public static EarlEnvelope Read(string fileName,
                 TextWriter output = null) {
-        var stream = output == null ? EarlStream.OpenRead(fileName) : EarlStreamDebug.OpenRead(fileName);
+        var stream = output == null ? EarlStream.OpenRead(fileName) : EarlStream.OpenRead(fileName);
         using var reader = new EarlEnvelopeReader(stream);
 
         var payload = reader.ReadBlock();

@@ -83,7 +83,7 @@ public  class EarlSequence : Disposable {
     public static EarlSequence Create(
                 string fileName,
                 EarlSequenceIndexType indexType = EarlSequenceIndexType.None) {
-        var stream = EarlStreamDebug.Create(fileName, DareConstants.TypeIdentifierDareSequence);
+        var stream = EarlStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
         var result = new EarlSequence(stream);
 
         result.WriteInitial();
@@ -95,7 +95,7 @@ public  class EarlSequence : Disposable {
     public static EarlSequence Open(
             string fileName) {
 
-        var stream = EarlStreamDebug.OpenReadWrite(fileName);
+        var stream = EarlStream.OpenReadWrite(fileName);
         var sequence = new EarlSequence(stream);
         sequence.ReadInitial();
 
@@ -146,18 +146,21 @@ public  class EarlSequence : Disposable {
     public EarlEntryIndex Append(
                 EarlEnvelope entry) => Stream.Append(entry, NextFrame++);
 
-    public EarlEntryIndex Append(
-            JsonObject obj,
-            ContentMeta contentMeta = null,
-            bool index = false,
-            DataEncoding dataEncoding = DataEncoding.Default) {
+
+    public EarlEntryIndex<T> Append<T>(
+                T? obj,
+                ContentMeta contentMeta = null,
+                bool index = false,
+                DataEncoding dataEncoding = DataEncoding.Default) where T : JsonObject {
 
         dataEncoding.Default(DataEncoding);
-        var bytes = obj.GetBytes(dataEncoding: dataEncoding);
-        var result = Append (bytes, contentMeta, index);
-        result.Id = obj._PrimaryKey;
-        result.JsonObject = obj;
-        return result;
+        var bytes = obj == null ? [] : obj.GetBytes(dataEncoding: dataEncoding);
+
+        var append = AppendInner(bytes, contentMeta, index);
+        return new EarlEntryIndex<T>(append.Item1, append.Item2, append.Item3,
+                append.Item4, bytes.LongLength) { 
+            JsonObject = obj
+            };
         }
 
 
@@ -166,6 +169,17 @@ public  class EarlSequence : Disposable {
                 ContentMeta contentMeta=null,
                 bool index = false) {
 
+        var append = AppendInner (entry, contentMeta, index);
+        return new(append.Item1, append.Item2, append.Item3,
+                append.Item4, entry.LongLength);
+        }
+
+
+    private (long, long, long, long) AppendInner(
+            byte[] entry,
+            ContentMeta contentMeta = null,
+            bool index = false) {
+
         var result = AppendStart(entry.LongLength, contentMeta, index);
         AppendPayload(entry, 0, entry.Length);
         AppendEnd();
@@ -173,22 +187,20 @@ public  class EarlSequence : Disposable {
         return result;
         }
 
-    public virtual EarlEntryIndex AppendStart(
-                long length,
-                ContentMeta contentMeta = null,
-                bool index = false) {
+
+    public virtual (long, long, long, long) AppendStart(
+            long payloadLength,
+            ContentMeta contentMeta = null,
+            bool index = false) {
 
         var unprotected = new Unprotected() {
             Frame = NextFrame++
             };
 
-        return Stream.AppendEntryStart(length, unprotected, contentMeta, 0);
-        
-        
-        
+        return Stream.AppendEntryStartInner(payloadLength, unprotected, contentMeta, 0);
+
+        //return new EarlEntryIndex<T> (frame, start, length, payloadStart, payloadLength);
         }
-
-
 
 
     public virtual void AppendPayload(

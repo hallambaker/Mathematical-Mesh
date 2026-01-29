@@ -135,7 +135,7 @@ public partial class EarlEnvelopeWriter {
     /// </summary>
     public EarlEnvelopeWriter(EarlStream output) {
         Stream = output;
-        Stream.Write(DareConstants.TypeIdentifierDareEnvelope);
+        //Stream.Write(DareConstants.TypeIdentifierDareEnvelope);
         State = 0;
         }
 
@@ -369,7 +369,7 @@ public partial class EarlEnvelopeWriter {
         byte[] data,
         string contentType=null) {
 
-        using var stream = EarlStream.OpenRead(file);
+        using var stream = EarlStream.Create(file, DareConstants.TypeIdentifierDareEnvelope);
         var contentMeta = new ContentMeta() {
             Nonce = Udf.Nonce (),
             ContentType = contentType

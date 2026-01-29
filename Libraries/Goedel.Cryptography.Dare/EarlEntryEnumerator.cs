@@ -96,3 +96,77 @@ public class EarlEntryEnumerator : IEnumerator<EarlEntryIndex> , IEnumerable<Ear
     #endregion
     }
 
+public class EarlEntryEnumerator<T> : IEnumerator<EarlEntryIndex<T>>, IEnumerable<EarlEntryIndex<T>>
+        where T : JsonObject {
+    EarlSequence Sequence { get; }
+    bool Forward { get; }
+    Func<EarlEntryIndex<T>, bool>? Process { get; }
+
+    #region -- Implement IDispose
+    /// <inheritdoc/>
+    public void Dispose() {
+        }
+
+    #endregion
+    #region --Implement IEnumerator
+    /// <summary>Default constructor, return an enumerator on the sequence
+    /// <paramref name="sequence"/>. This is also an enumerable returning itself.</summary>
+    /// <param name="sequence">The sequence to enumerate.</param>
+    public EarlEntryEnumerator(
+                EarlSequence sequence,
+                bool forward = true,
+                Func<EarlEntryIndex<T>, bool>? process = null
+                ) {
+        Sequence = sequence;
+        Forward = forward;
+        Process = process;
+        Reset();
+        }
+
+    /// <inheritdoc/>
+    public EarlEntryIndex<T>? Current { get; set; }
+    object IEnumerator.Current => Current;
+
+
+
+    /// <inheritdoc/>
+    public bool MoveNext() {
+
+        if (Forward) {
+            Current = Sequence.Stream.ReadIndexNext<T>();
+            }
+        else if (Process == null) {
+            Current = Sequence.Stream.ReadIndexPrevious<T>(Sequence.StartEntries);
+            }
+        else {
+            Current = Sequence.Stream.ReadIndexPrevious<T>(Sequence.StartEntries);
+            while (Current != null && Process(Current)) {
+                Current = Sequence.Stream.ReadIndexPrevious<T>(Sequence.StartEntries);
+                }
+            }
+
+        return Current is not null; ;
+        }
+
+
+    /// <inheritdoc/>
+    public void Reset() {
+        if (Forward) {
+
+            Sequence.Stream.Position = Sequence.StartEntries;
+            }
+        else {
+            Sequence.Stream.SeekEnd();
+            }
+        }
+
+    #endregion
+    #region -- Implement IEnumerable
+    /// <inheritdoc/>
+    public IEnumerator<EarlEntryIndex<T>> GetEnumerator() => this;
+
+    /// <inheritdoc/>
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    #endregion
+    }
+

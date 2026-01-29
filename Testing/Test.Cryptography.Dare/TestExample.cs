@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 1/9/2026 7:00:25 PM
+//  This file was automatically generated at 1/29/2026 4:08:26 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -383,6 +383,11 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
     /// <summary>
     /// </summary>
 
+	[JsonPropertyName("SecondaryIds")]
+	public virtual List<string>?					SecondaryIds  {get; set;}
+    /// <summary>
+    /// </summary>
+
 	[JsonPropertyName("VersionId")]
 	public virtual string?					VersionId  {get; set;} //
 
@@ -426,6 +431,9 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
 		new PropertyString ("UniqueId", 
 					(data, value) => {(data as CatalogEntryTest).UniqueId = value;}, 
 					data => (data as CatalogEntryTest).UniqueId ),
+		new PropertyListString ("SecondaryIds", 
+					(data, value) => {(data as CatalogEntryTest).SecondaryIds = value;}, 
+					data => (data as CatalogEntryTest).SecondaryIds ),
 		new PropertyString ("VersionId", 
 					(data, value) => {(data as CatalogEntryTest).VersionId = value;}, 
 					data => (data as CatalogEntryTest).VersionId ),
@@ -453,12 +461,13 @@ public partial class CatalogEntryTest : Goedel.Mesh.CatalogedEntry {
 	public static readonly new Binding<CatalogEntryTest> _binding = new (
 			new() {
 			{ "UniqueId", _properties [0]},
-			{ "VersionId", _properties [1]},
-			{ "Seed", _properties [2]},
-			{ "Serial", _properties [3]},
-			{ "Version", _properties [4]},
-			{ "Length", _properties [5]},
-			{ "Data", _properties [6]}}, __Tag,
+			{ "SecondaryIds", _properties [1]},
+			{ "VersionId", _properties [2]},
+			{ "Seed", _properties [3]},
+			{ "Serial", _properties [4]},
+			{ "Version", _properties [5]},
+			{ "Length", _properties [6]},
+			{ "Data", _properties [7]}}, __Tag,
 		() => new CatalogEntryTest(), () => [], () => [], Goedel.Mesh.CatalogedEntry._binding, Generic: false);
 
 

@@ -35,7 +35,7 @@ public class EarlSpool : EarlSequence {
 
     public static EarlSpool<T> Create<T>(
     string fileName) where T : JsonObject {
-        var stream = EarlStreamDebug.Create(fileName, DareConstants.TypeIdentifierDareSequence);
+        var stream = EarlStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
         var result = new EarlSpool<T>(stream);
 
         result.WriteInitial();
@@ -46,7 +46,7 @@ public class EarlSpool : EarlSequence {
     public static EarlSpool<T> Open<T>(
             string fileName) where T : JsonObject {
 
-        var stream = EarlStreamDebug.OpenReadWrite(fileName);
+        var stream = EarlStream.OpenReadWrite(fileName);
         var spool = new EarlSpool<T>(stream);
         spool.ReadInitial();
 

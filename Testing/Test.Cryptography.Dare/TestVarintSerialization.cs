@@ -116,8 +116,8 @@ public class TestVarintSerialization : UnitTestSet {
 
 
     bool Verify(EarlSequence sequence1, List<byte[]> dataList) {
-        Console.WriteLine();
-        Console.WriteLine();
+        //Console.WriteLine();
+        //Console.WriteLine();
 
         var filename = sequence1.Filename;
         sequence1.CloseStream(); // close the stream so we can reopen for read.
@@ -244,8 +244,8 @@ public class TestVarintSerialization : UnitTestSet {
 
 
     bool Verify(EarlLog<TestItem> logIn, List<TestItem> dataList) {
-        Console.WriteLine();
-        Console.WriteLine();
+        //Console.WriteLine();
+        //Console.WriteLine();
 
         var filename = logIn.Filename;
         logIn.CloseStream(); // close the stream so we can reopen for read.
@@ -324,8 +324,8 @@ public class TestVarintSerialization : UnitTestSet {
         }
 
     bool Verify(EarlSpool<MessageTest> spoolIn, Dictionary<string, MessageTest> dataDictionary) {
-        Console.WriteLine();
-        Console.WriteLine();
+        //Console.WriteLine();
+        //Console.WriteLine();
 
         var filename = spoolIn.Filename;
         spoolIn.CloseStream(); // close the stream so we can reopen for read.
@@ -382,15 +382,24 @@ public class TestVarintSerialization : UnitTestSet {
         Update(catalog, dataDictionary, size, variable, id1);
         Verify(catalog, dataDictionary);
 
+        CheckById(catalog, dataDictionary, id1).TestTrue() ;
+
         Delete(catalog, dataDictionary, id1);
+        CheckById(catalog, dataDictionary, id1).TestFalse();
+
         Verify(catalog, dataDictionary);
 
+        // Retrieve by ID
 
+
+        // Retrieve by secondary ID
 
         var id2 = Add(catalog, dataDictionary, size, variable);
         var id3 = Add(catalog, dataDictionary, size, variable);
         var id4 = Add(catalog, dataDictionary, size, variable);
         var id5 = Add(catalog, dataDictionary, size, variable);
+
+        CheckById(catalog, dataDictionary, id2).TestTrue();
         Verify(catalog, dataDictionary);
 
         Update(catalog, dataDictionary, size, variable, id2);
@@ -415,6 +424,7 @@ public class TestVarintSerialization : UnitTestSet {
         var data = Seed.GetTestBytes(size, "This is a test");
         var entry = new CatalogEntryTest() {
             UniqueId = id,
+            SecondaryIds = [Udf.Nonce()],
             Data = data
             };
         dataDictionary.Add(entry.UniqueId, entry);
@@ -427,8 +437,12 @@ public class TestVarintSerialization : UnitTestSet {
             int size, bool variable, string id) {
 
         var data = Seed.GetTestBytes(size, "This is a test");
+        // get value
+        dataDictionary.TryGetValue(id, out var old).TestTrue();
+
         var entry = new CatalogEntryTest() {
             UniqueId = id,
+            SecondaryIds = old.SecondaryIds,
             Data = data
             };
         dataDictionary.AddSafe(entry.UniqueId, entry);
@@ -436,6 +450,32 @@ public class TestVarintSerialization : UnitTestSet {
 
         return entry.UniqueId;
         }
+
+
+    bool CheckById(
+                EarlCatalog<CatalogEntryTest> catalog, 
+                Dictionary<string, CatalogEntryTest> dataDictionary, 
+                string id) {
+
+        var inDictionary = dataDictionary.TryGetValue(id, out var dictionaryValue);
+
+        // Check the appearances.
+        (catalog.TryGetById(id, out var catalogValue) == inDictionary).TestTrue();
+        if (inDictionary) {
+            dictionaryValue.ToBytes().TestEqual(catalogValue.ToBytes());
+
+            // verify that we retrieve correctly 
+            if (catalogValue.SecondaryIds != null) {
+                foreach (var sid in catalogValue.SecondaryIds) {
+                    catalog.TryGetBySecondaryId(sid, out catalogValue).TestTrue();
+                    dictionaryValue.ToBytes().TestEqual(catalogValue.ToBytes());
+
+                    }
+                }
+            }
+        return inDictionary;
+        }
+
 
 
 
@@ -449,8 +489,8 @@ public class TestVarintSerialization : UnitTestSet {
         }
 
     bool Verify(EarlCatalog<CatalogEntryTest> catalogIn, Dictionary<string, CatalogEntryTest> dataDictionary) {
-        Console.WriteLine();
-        Console.WriteLine();
+        //Console.WriteLine();
+        //Console.WriteLine();
 
         var filename = catalogIn.Filename;
         catalogIn.CloseStream(); // close the stream so we can reopen for read.

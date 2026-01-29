@@ -38,3 +38,17 @@ public record EarlEntryIndex(
     public bool Deleted { get; set; } = false;
     }
 
+public record EarlEntryIndex<T>(
+        long Frame,
+        long Start,
+        long Length,
+        long PayloadStart,
+        long PayloadLength) : EarlEntryIndex (Frame, Start, Length, PayloadStart, PayloadLength) 
+                where T : JsonObject {
+
+    public T Object => JsonObject as T;
+
+    public string PrimaryKey => Object._PrimaryKey;
+    public IEnumerable<string> SecondaryKeys => Object._SecondaryKeys;
+
+    }

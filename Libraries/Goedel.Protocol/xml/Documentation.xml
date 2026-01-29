@@ -3197,6 +3197,11 @@
             Primary key to use for the object.
             </summary>
         </member>
+        <member name="P:Goedel.Protocol.JsonObject._SecondaryKeys">
+            <summary>
+            Secondary keys to use for the object.
+            </summary>
+        </member>
         <member name="P:Goedel.Protocol.JsonObject._State">
             <summary>State of the object in a collection.</summary>
         </member>
