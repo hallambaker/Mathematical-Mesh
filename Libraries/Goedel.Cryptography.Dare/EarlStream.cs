@@ -30,6 +30,8 @@ public class EarlStream : Disposable {
 
     Stream? stream = null;
 
+    public long Length => Stream.Length;
+
     public bool EOF => Stream.Position >= Stream.Length;
 
 
@@ -84,8 +86,17 @@ public class EarlStream : Disposable {
     //    FileShare fileShare) => new EarlStream(fileName, fileMode, fileAccess, fileShare);
 
 
+    public static EarlStream Open(
+                string fileName,
+                byte[] typeIdentifier) {
+        var fileStream = fileName.OpenFileReadWrite();
+        var stream = new EarlStream(fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read, fileStream);
 
 
+
+        return stream;
+
+        }
     public static EarlStream Create(
                 string fileName,
                 byte[] typeIdentifier) {

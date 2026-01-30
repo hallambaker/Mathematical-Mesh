@@ -19,6 +19,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using System.Runtime.CompilerServices;
+
 namespace Goedel.Cryptography.Dare;
 
 public class EarlCatalog : EarlSequence {
@@ -29,7 +31,7 @@ public class EarlCatalog : EarlSequence {
 
 
     public static EarlCatalog<T> Create<T>(
-    string fileName) where T : JsonObject {
+    string fileName) where T : JsonObject, new() {
         var stream = EarlStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
         var result = new EarlCatalog<T>(stream);
 
@@ -39,7 +41,7 @@ public class EarlCatalog : EarlSequence {
         }
 
     public static EarlCatalog<T> Open<T>(
-            string fileName) where T : JsonObject {
+            string fileName) where T : JsonObject, new() {
 
         var stream = EarlStream.OpenReadWrite(fileName);
         var spool = new EarlCatalog<T>(stream);
@@ -47,26 +49,40 @@ public class EarlCatalog : EarlSequence {
 
         return spool;
         }
+
+
+
+
+
     }
 
-public class EarlCatalog<T> : EarlCatalog where T : JsonObject {
+
+public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
+
+    /// <summary>The content tag for type <typeparam>T</typeparam>.</summary>
+    public readonly string ContentType = GetContentType();
 
     public Dictionary<string, EarlEntryIndex<T>> EntriesById { get; } = [];
 
     public Dictionary<string, EarlEntryIndex<T>> EntriesBySecondaryId { get; } = [];
 
-    internal EarlCatalog(
+    public EarlCatalog(
                 EarlStream stream) : base(stream) {
         }
 
     public static EarlCatalog<T> Create(
-        string fileName) {
+            string fileName) {
         var stream = EarlStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
         var result = new EarlCatalog<T>(stream);
 
         result.WriteInitial();
 
         return result;
+        }
+
+    private static string GetContentType() {
+        var item = new T();
+        return item._Tag;
         }
 
 
@@ -87,7 +103,7 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject {
 
 
 
-    public EarlEntryIndex<T> Add(T item) {
+    public virtual EarlEntryIndex<T> Add(T item) {
         var contentMeta = new ContentMeta() {
             UniqueId = item._PrimaryKey,
             Event = "Add"
@@ -105,7 +121,7 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject {
         return result;
         }
 
-    public EarlEntryIndex<T> Update(T item) {
+    public virtual EarlEntryIndex<T> Update(T item) {
         var contentMeta = new ContentMeta() {
             UniqueId = item._PrimaryKey,
             Event = "Add"
@@ -131,7 +147,7 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject {
         return result;
         }
 
-    public EarlEntryIndex<T> Delete(string id) {
+    public virtual EarlEntryIndex<T> Delete(string id) {
         if (!TryGetMeta(id, out var index)) {
             return null;
             }

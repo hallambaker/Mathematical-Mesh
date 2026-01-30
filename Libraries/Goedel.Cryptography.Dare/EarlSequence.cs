@@ -102,10 +102,21 @@ public  class EarlSequence : Disposable {
         return sequence;
         }
 
-    protected void WriteInitial() {
+
+    protected void Initialize() {
+
+        if (Stream.Length == 0) {
+            WriteInitial();
+            }
+        else {
+            ReadInitial();
+            }
+        }
+
+    protected virtual void WriteInitial() {
         // Create the initial record
         var unprotected = new Unprotected();
-        var contentMeta = new ContentMeta();
+        var contentMeta = GetContentMeta();
         var payload = Array.Empty<byte>();
         var trailer = new Unprotected();
 
@@ -115,7 +126,7 @@ public  class EarlSequence : Disposable {
 
 
 
-    protected void ReadInitial() {
+    protected virtual void ReadInitial() {
         // read the type identifier
         var version = Stream.ReadTypeIdentifier();
         (version == DareConstants.TypeIdentifierDareSequenceL).AssertTrue(NYI.Throw);
@@ -126,6 +137,9 @@ public  class EarlSequence : Disposable {
 
         //FrameLast = Stream.EOF ? FrameFirst : Stream.ReadFrameLast();
         }
+
+    protected virtual ContentMeta GetContentMeta () => new ContentMeta();
+
 
 
     #endregion
