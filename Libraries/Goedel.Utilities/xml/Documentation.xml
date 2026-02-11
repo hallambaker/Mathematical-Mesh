@@ -1847,6 +1847,69 @@
             Extensions class relating to enumerable items
             </summary>
         </member>
+        <member name="M:Goedel.Utilities.Enumerable.IfEnumerable``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>Returns an enumerator for <paramref name="item"/> if not null
+            or a dummy enumerator that always returns a zero length list.</summary>
+            <typeparam name="T">The enumerable type.</typeparam>
+            <param name="item">An enumerable object.</param>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Enumerable.IsEmpty``2(System.Collections.Generic.Dictionary{``0,``1})">
+            <summary>Returns true if <paramref name="item"/> is null or empty.</summary>
+            <typeparam name="T">The dictionary key type.</typeparam>
+            <typeparam name="S">The dictionary value type.</typeparam>
+            <param name="item"></param>
+            <returns>true if <paramref name="item"/> is null or empty, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Enumerable.IsEmpty``1(System.Collections.Generic.List{``0})">
+            <summary>Returns true if <paramref name="item"/> is null or empty.</summary>
+            <typeparam name="T">The list type.</typeparam>
+            <param name="item"></param>
+            <returns>true if <paramref name="item"/> is null or empty, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Utilities.Enumerable.IsEmpty``1(``0[])">
+            <summary>Returns true if <paramref name="item"/> is null or empty.</summary>
+            <typeparam name="T">The array type.</typeparam>
+            <param name="item"></param>
+            <returns>true if <paramref name="item"/> is null or empty, otherwise false.</returns>
+        </member>
+        <member name="T:Goedel.Utilities.SafeEnumerable`1">
+            <summary>Safe enumerator of type <typeparamref name="T"/>.</summary>
+            <typeparam name="T">The enumerable type.</typeparam>
+        </member>
+        <member name="M:Goedel.Utilities.SafeEnumerable`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>Constructor, returns a new instance for the enumerable <paramref name="item"/>.</summary>
+            <param name="item">The object to enumerate.</param>
+        </member>
+        <member name="M:Goedel.Utilities.SafeEnumerable`1.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Utilities.SafeEnumerable`1.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Utilities.NullEnumerator`1">
+            <summary>Null enumerator of type <typeparamref name="T"/>.</summary>
+            <typeparam name="T">The enumerable type.</typeparam>
+        </member>
+        <member name="P:Goedel.Utilities.NullEnumerator`1.Current">
+            <summary>The current value, this is always the default value for 
+            <typeparamref name="T"/>.</summary>
+        </member>
+        <member name="P:Goedel.Utilities.NullEnumerator`1.System#Collections#IEnumerator#Current">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Utilities.NullEnumerator`1.#ctor">
+            <summary>Constructor, returns a new instance.</summary>
+        </member>
+        <member name="M:Goedel.Utilities.NullEnumerator`1.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Utilities.NullEnumerator`1.MoveNext">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Utilities.NullEnumerator`1.Reset">
+            <inheritdoc/>
+        </member>
         <member name="T:Goedel.Utilities.AssertionFail">
             <summary>
             An internal assertion check failed.

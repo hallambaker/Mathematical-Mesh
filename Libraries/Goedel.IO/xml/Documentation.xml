@@ -253,6 +253,14 @@
             <param name="input"></param>
             <param name="fileName"></param>
         </member>
+        <member name="M:Goedel.IO.Extension.ReadBody(System.Net.HttpListenerRequest,System.Int64)">
+            <summary>Read the body of <paramref name="request"/> and return as an array.</summary>
+            <param name="request">The request.</param>
+            <param name="maxRequest">Maximum length request. If greater than 0, requests of
+            this length or greater are rejected.</param>
+            <returns>The request body as an array.</returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
         <member name="T:Goedel.IO.FileStatus">
             <summary>Specify the file status</summary>
         </member>

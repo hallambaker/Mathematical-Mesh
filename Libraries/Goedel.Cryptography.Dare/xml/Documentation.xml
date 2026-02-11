@@ -3670,6 +3670,18 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
+        <member name="F:Goedel.Cryptography.Dare.EarlCatalog`1.ContentType">
+            <summary>The content tag for type <typeparam>T</typeparam>.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlCatalog`1.EntriesForward">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlCatalog`1.EntriesReverse">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlCatalog`1.FillIndex">
+            <summary>Read the entries in the sequence to fill the index.</summary>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator.Dispose">
             <inheritdoc/>
         </member>
@@ -3928,6 +3940,14 @@
             </summary>
             <param name="index"></param>
             <returns>The envelope value.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.EntriesForward">
+            <summary>Return an enumerator over the sequence in the forward direction.</summary>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.EntriesReverse">
+            <summary>Return an enumerator over the sequence in the reverse direction.</summary>
+            <returns>The enumerator.</returns>
         </member>
         <member name="T:Goedel.Cryptography.Dare.EarlSet">
             <summary>

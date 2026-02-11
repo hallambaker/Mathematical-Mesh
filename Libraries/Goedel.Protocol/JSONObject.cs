@@ -77,7 +77,7 @@ public abstract partial class JsonObject : IBinding {
     /// <summary>
     /// Secondary keys to use for the object.
     /// </summary>
-    public virtual IEnumerable<string>? _SecondaryKeys => null;
+    public virtual List<string>? _SecondaryKeys => null;
 
 
     /// <summary>State of the object in a collection.</summary>

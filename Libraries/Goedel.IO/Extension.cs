@@ -435,7 +435,12 @@ public static partial class Extension {
         input.CopyTo(outputStream);
         }
 
-
+    /// <summary>Read the body of <paramref name="request"/> and return as an array.</summary>
+    /// <param name="request">The request.</param>
+    /// <param name="maxRequest">Maximum length request. If greater than 0, requests of
+    /// this length or greater are rejected.</param>
+    /// <returns>The request body as an array.</returns>
+    /// <exception cref="NYI"></exception>
     public static byte[] ReadBody(
                 this HttpListenerRequest request, 
                 long maxRequest = -1) {
@@ -443,7 +448,7 @@ public static partial class Extension {
 
         // if we are not using chunked encoding, we can reject a too
         // long request immediately.
-        if (request.ContentLength64 > maxRequest) {
+        if (request.ContentLength64 >= maxRequest) {
             throw new NYI();
             }
 

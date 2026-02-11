@@ -89,13 +89,17 @@ public class EarlStream : Disposable {
     public static EarlStream Open(
                 string fileName,
                 byte[] typeIdentifier) {
-        var fileStream = fileName.OpenFileReadWrite();
-        var stream = new EarlStream(fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read, fileStream);
+        try {
+            var fileStream = fileName.OpenFileReadWrite();
+            var stream = new EarlStream(fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read, fileStream);
 
 
 
-        return stream;
-
+            return stream;
+            }
+        catch {
+            throw new NYI();
+            }
         }
     public static EarlStream Create(
                 string fileName,
@@ -465,7 +469,7 @@ public class EarlStream : Disposable {
         var length = frameLength + 2 * (Extensions.TagLength(frameLength));
 
         (Stream.Position == entryStart + length).AssertTrue(NYI.Throw);
-
+        Stream.Flush();
         }
 
 

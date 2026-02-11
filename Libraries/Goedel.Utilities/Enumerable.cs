@@ -30,29 +30,54 @@ namespace Goedel.Utilities;
 /// </summary>
 public static class Enumerable {
 
-
+    /// <summary>Returns an enumerator for <paramref name="item"/> if not null
+    /// or a dummy enumerator that always returns a zero length list.</summary>
+    /// <typeparam name="T">The enumerable type.</typeparam>
+    /// <param name="item">An enumerable object.</param>
+    /// <returns>The enumerator.</returns>
     public static IEnumerable<T> IfEnumerable<T>(this IEnumerable<T>? item) =>
         new SafeEnumerable<T>(item);
 
+    /// <summary>Returns true if <paramref name="item"/> is null or empty.</summary>
+    /// <typeparam name="T">The dictionary key type.</typeparam>
+    /// <typeparam name="S">The dictionary value type.</typeparam>
+    /// <param name="item"></param>
+    /// <returns>true if <paramref name="item"/> is null or empty, otherwise false.</returns>
     public static bool IsEmpty<T,S>(this Dictionary<T,S>? item) =>
         (item == null) || (item.Count == 0);
+
+    /// <summary>Returns true if <paramref name="item"/> is null or empty.</summary>
+    /// <typeparam name="T">The list type.</typeparam>
+    /// <param name="item"></param>
+    /// <returns>true if <paramref name="item"/> is null or empty, otherwise false.</returns>
     public static bool IsEmpty<T>(this List<T>? item) =>
         (item == null) || (item.Count == 0);
 
+    /// <summary>Returns true if <paramref name="item"/> is null or empty.</summary>
+    /// <typeparam name="T">The array type.</typeparam>
+    /// <param name="item"></param>
+    /// <returns>true if <paramref name="item"/> is null or empty, otherwise false.</returns>
     public static bool IsEmpty<T>(this T[]? item) =>
             (item == null) || (item.Length == 0);
     }
 
+/// <summary>Safe enumerator of type <typeparamref name="T"/>.</summary>
+/// <typeparam name="T">The enumerable type.</typeparam>
 public class SafeEnumerable<T> : IEnumerable<T> {
 
     IEnumerable<T>? enumerable;
+
+    /// <summary>Constructor, returns a new instance for the enumerable <paramref name="item"/>.</summary>
+    /// <param name="item">The object to enumerate.</param>
     public SafeEnumerable(IEnumerable<T>? item) {
         enumerable = item;
         }
 
+    /// <inheritdoc/>
     public IEnumerator<T> GetEnumerator() => enumerable is null ?
         new NullEnumerator<T>() : enumerable.GetEnumerator();
 
+    /// <inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator() {
         return GetEnumerator();
         }
@@ -61,22 +86,30 @@ public class SafeEnumerable<T> : IEnumerable<T> {
 
 
 
-
+/// <summary>Null enumerator of type <typeparamref name="T"/>.</summary>
+/// <typeparam name="T">The enumerable type.</typeparam>
 
 public class NullEnumerator<T> : IEnumerator<T> {
 
+    /// <summary>The current value, this is always the default value for 
+    /// <typeparamref name="T"/>.</summary>
     public T Current => default;
 
+    /// <inheritdoc/>
     object IEnumerator.Current => Current;
 
+    /// <summary>Constructor, returns a new instance.</summary>
     public NullEnumerator() {
         }
 
+    /// <inheritdoc/>
     public void Dispose() {
         }
 
+    /// <inheritdoc/>
     public bool MoveNext() => false;
 
+    /// <inheritdoc/>
     public void Reset() {
         }
     }

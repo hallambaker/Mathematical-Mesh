@@ -106,7 +106,9 @@ public  class EarlSequence : Disposable {
     protected void Initialize() {
 
         if (Stream.Length == 0) {
+            Stream.Write(DareConstants.TypeIdentifierDareSequence);
             WriteInitial();
+            StartEntries = Stream.Position;
             }
         else {
             ReadInitial();
@@ -120,8 +122,8 @@ public  class EarlSequence : Disposable {
         var payload = Array.Empty<byte>();
         var trailer = new Unprotected();
 
-        var envelope = new EarlEnvelope(unprotected, contentMeta, null, payload);
-        Append(envelope);
+        FrameFirst = new EarlEnvelope(unprotected, contentMeta, null, payload);
+        Append(FrameFirst);
         }
 
 
@@ -134,8 +136,6 @@ public  class EarlSequence : Disposable {
         // read the first record
         FrameFirst = Stream.ReadFrameNext();
         StartEntries = Stream.Position;
-
-        //FrameLast = Stream.EOF ? FrameFirst : Stream.ReadFrameLast();
         }
 
     protected virtual ContentMeta GetContentMeta () => new ContentMeta();
@@ -309,27 +309,6 @@ public  class EarlSequence : Disposable {
         return null;
         }
 
-    //public virtual bool TryGetEntry(string id, out EarlEntryIndex? index) {
-
-    //    if (DictionaryById.TryGetValue(id, out index)) {
-    //        return true;
-    //        }
-
-    //    if (UnreadStart >= UnreadEnd) {
-    //        index = null;
-    //        return false;
-    //        }
-
-    //    // sequence not read, abort.
-    //    throw new NYI();
-    //    }
-
-    //public bool TryGetEntry(string key, string value, out EarlEntryIndex? index) {
-    //    index = null;
-    //    return false;
-    //    }
-
-
     #endregion
 
 
@@ -337,8 +316,12 @@ public  class EarlSequence : Disposable {
 
     #region -- Enumerators
 
+    /// <summary>Return an enumerator over the sequence in the forward direction.</summary>
+    /// <returns>The enumerator.</returns>
     public virtual IEnumerable<EarlEntryIndex> EntriesForward() => new EarlEntryEnumerator(this);
 
+    /// <summary>Return an enumerator over the sequence in the reverse direction.</summary>
+    /// <returns>The enumerator.</returns>
     public virtual IEnumerable<EarlEntryIndex> EntriesReverse() => new EarlEntryEnumerator(this, false);
 
     #endregion

@@ -102,21 +102,54 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
         }
 
 
+    protected virtual void DeleteKeys(EarlEntryIndex<T> index) {
+        EntriesById.Replace(index.PrimaryKey, index);
+        if (index.SecondaryKeys != null) {
+            foreach (var key in index.SecondaryKeys) {
+                EntriesBySecondaryId.Remove(index.PrimaryKey);
+                }
+            }
+        }
+
+    protected virtual void UpdateKeys(EarlEntryIndex<T> index) {
+        if (EntriesById.ContainsKey(index.PrimaryKey)) {
+            foreach (var key in index.SecondaryKeys) {
+                EntriesBySecondaryId.Remove(key);
+                }
+            }
+        CreateKeys(index);
+        }
+
+
+
+    protected virtual void CreateKeys(EarlEntryIndex<T> index) {
+        EntriesById.Replace(index.PrimaryKey, index);
+
+        if (index.SecondaryKeys != null) {
+            foreach (var key in index.SecondaryKeys) {
+                EntriesBySecondaryId.Add(key, index);
+                }
+            }
+        }
 
     public virtual EarlEntryIndex<T> Add(T item) {
         var contentMeta = new ContentMeta() {
             UniqueId = item._PrimaryKey,
-            Event = "Add"
+            Event = "Add",
+            Labels = item._SecondaryKeys
+
             };
 
         var result = Append(item, contentMeta);
-        EntriesById.Add(item._PrimaryKey, result);
+        CreateKeys(result);
 
-        if (item._SecondaryKeys != null) {
-            foreach (var key in item._SecondaryKeys) {
-                EntriesBySecondaryId.Add(key, result);
-                }
-            }
+        //EntriesById.Add(item._PrimaryKey, result);
+
+        //if (item._SecondaryKeys != null) {
+        //    foreach (var key in item._SecondaryKeys) {
+        //        EntriesBySecondaryId.Add(key, result);
+        //        }
+        //    }
 
         return result;
         }
@@ -128,20 +161,22 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
             };
         var result = Append(item, contentMeta);
 
-        // Remove the old keys
-        if (TryGetMeta(item._PrimaryKey, out var index)) {
-            foreach (var key in index.SecondaryKeys) {
-                EntriesBySecondaryId.Remove(key);
-                }
-            }
+        UpdateKeys(result);
 
-        // Add the new keys
-        EntriesById.Replace(item._PrimaryKey, result);
-        if (item._SecondaryKeys != null) {
-            foreach (var key in item._SecondaryKeys) {
-                EntriesBySecondaryId.Add(key, result);
-                }
-            }
+        //// Remove the old keys
+        //if (TryGetMeta(item._PrimaryKey, out var index)) {
+        //    foreach (var key in index.SecondaryKeys) {
+        //        EntriesBySecondaryId.Remove(key);
+        //        }
+        //    }
+
+        //// Add the new keys
+        //EntriesById.Replace(item._PrimaryKey, result);
+        //if (item._SecondaryKeys != null) {
+        //    foreach (var key in item._SecondaryKeys) {
+        //        EntriesBySecondaryId.Add(key, result);
+        //        }
+        //    }
 
 
         return result;
@@ -161,15 +196,7 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
         var result = Append<T>(null, contentMeta);
         result.Deleted = true;
 
-        EntriesById.Replace(id, result);
-
-        if (index.SecondaryKeys != null) {
-            foreach (var key in index.SecondaryKeys) {
-                EntriesBySecondaryId.Remove(id);
-                EntriesBySecondaryId.Add(id, result);
-                }
-            }
-
+        DeleteKeys(result);
 
         return result;
         }
@@ -225,7 +252,8 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
             if (EntriesById.TryGetValue(id, out var entry)) {
                 return entry.Deleted | entry != index;
                 }
-            EntriesById.Add(id, index);
+            UpdateKeys(index);
+            //EntriesById.Add(id, index);
             index.Deleted = index.EarlEnvelope?.SignedHeader?.Event == ProtocolConstants.SequenceEventDeleteTag;
             return index.Deleted;
             }
@@ -235,9 +263,19 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
         return true;
         }
 
+    /// <inheritdoc/>
+    public override IEnumerable<EarlEntryIndex<T>> EntriesForward() => 
+            new EarlEntryEnumerator<T>(this);
 
-    public virtual IEnumerable<EarlEntryIndex<T>> EntriesReverse() =>
+    /// <inheritdoc/>
+    public override IEnumerable<EarlEntryIndex<T>> EntriesReverse() =>
         new EarlEntryEnumerator<T>(this, false, ProcessEntry);
+
+    /// <summary>Read the entries in the sequence to fill the index.</summary>
+    public void FillIndex() {
+        foreach (var item in EntriesForward()) {
+            }
+        }
 
 
     }
