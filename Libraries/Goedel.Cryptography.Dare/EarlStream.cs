@@ -97,7 +97,7 @@ public class EarlStream : Disposable {
 
             return stream;
             }
-        catch {
+        catch (Exception e) {
             throw new NYI();
             }
         }

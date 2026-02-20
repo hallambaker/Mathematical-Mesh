@@ -3679,8 +3679,14 @@
         <member name="M:Goedel.Cryptography.Dare.EarlCatalog`1.EntriesReverse">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlCatalog`1.FillIndex">
-            <summary>Read the entries in the sequence to fill the index.</summary>
+        <member name="M:Goedel.Cryptography.Dare.EarlCatalogEnumerator`1.GetEnumerator">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlCatalogEnumerator`1.MoveNext">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlCatalogEnumerator`1.Reset">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Dare.EarlEntryEnumerator.Dispose">
             <inheritdoc/>

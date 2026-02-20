@@ -261,14 +261,14 @@ public class SessionManager : Disposable {
             result.AuthorizationServerMetadata = 
                 await TryResolveAuthServer(result.ResourceServerMetadata.AuthorizationServers[0]);
             }
-        Screen.WriteLine("# DidDocument");
-        Screen.WriteLine(result.DidDocument.ToString());
+        //Screen.WriteLine("# DidDocument");
+        //Screen.WriteLine(result.DidDocument.ToString());
 
-        Screen.WriteLine("# ResourceServerMetadata");
-        Screen.WriteLine(result.ResourceServerMetadata.ToString());
+        //Screen.WriteLine("# ResourceServerMetadata");
+        //Screen.WriteLine(result.ResourceServerMetadata.ToString());
 
-        Screen.WriteLine("# AuthorizationServerMetadata");
-        Screen.WriteLine(result.AuthorizationServerMetadata.ToString());
+        //Screen.WriteLine("# AuthorizationServerMetadata");
+        //Screen.WriteLine(result.AuthorizationServerMetadata.ToString());
 
         return result;
         }

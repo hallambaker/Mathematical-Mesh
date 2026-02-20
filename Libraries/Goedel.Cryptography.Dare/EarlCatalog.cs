@@ -27,6 +27,7 @@ public class EarlCatalog : EarlSequence {
 
     protected EarlCatalog(
         EarlStream stream) : base(stream) {
+
         }
 
 
@@ -47,9 +48,9 @@ public class EarlCatalog : EarlSequence {
         var spool = new EarlCatalog<T>(stream);
         spool.ReadInitial();
 
+
         return spool;
         }
-
 
 
 
@@ -66,9 +67,26 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
 
     public Dictionary<string, EarlEntryIndex<T>> EntriesBySecondaryId { get; } = [];
 
+    public LinkedList<EarlEntryIndex<T>> Entries { get; } = [];
+
     public EarlCatalog(
                 EarlStream stream) : base(stream) {
         }
+
+
+    //public EarlEntryIndex<T>? Default = null;
+
+    protected override void Initialize() {
+
+        base.Initialize();
+
+        foreach (var item in new EarlEntryEnumerator<T>(this, false, ProcessEntry)) {
+            Entries.AddFirst(item);
+            }
+        }
+
+
+
 
     public static EarlCatalog<T> Create(
             string fileName) {
@@ -123,6 +141,7 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
 
 
     protected virtual void CreateKeys(EarlEntryIndex<T> index) {
+
         EntriesById.Replace(index.PrimaryKey, index);
 
         if (index.SecondaryKeys != null) {
@@ -133,6 +152,8 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
         }
 
     public virtual EarlEntryIndex<T> Add(T item) {
+
+
         var contentMeta = new ContentMeta() {
             UniqueId = item._PrimaryKey,
             Event = "Add",
@@ -141,14 +162,10 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
             };
 
         var result = Append(item, contentMeta);
+        Entries.AddLast(result);
         CreateKeys(result);
-
-        //EntriesById.Add(item._PrimaryKey, result);
-
-        //if (item._SecondaryKeys != null) {
-        //    foreach (var key in item._SecondaryKeys) {
-        //        EntriesBySecondaryId.Add(key, result);
-        //        }
+        //if (item._default) {
+        //    Default = result;
         //    }
 
         return result;
@@ -160,24 +177,9 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
             Event = "Add"
             };
         var result = Append(item, contentMeta);
+        Entries.AddLast(result);
 
         UpdateKeys(result);
-
-        //// Remove the old keys
-        //if (TryGetMeta(item._PrimaryKey, out var index)) {
-        //    foreach (var key in index.SecondaryKeys) {
-        //        EntriesBySecondaryId.Remove(key);
-        //        }
-        //    }
-
-        //// Add the new keys
-        //EntriesById.Replace(item._PrimaryKey, result);
-        //if (item._SecondaryKeys != null) {
-        //    foreach (var key in item._SecondaryKeys) {
-        //        EntriesBySecondaryId.Add(key, result);
-        //        }
-        //    }
-
 
         return result;
         }
@@ -194,6 +196,7 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
             };
 
         var result = Append<T>(null, contentMeta);
+        Entries.AddLast(result);
         result.Deleted = true;
 
         DeleteKeys(result);
@@ -265,17 +268,11 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
 
     /// <inheritdoc/>
     public override IEnumerable<EarlEntryIndex<T>> EntriesForward() => 
-            new EarlEntryEnumerator<T>(this);
+           new EarlCatalogEnumerator<T>(this, true);
 
     /// <inheritdoc/>
     public override IEnumerable<EarlEntryIndex<T>> EntriesReverse() =>
-        new EarlEntryEnumerator<T>(this, false, ProcessEntry);
-
-    /// <summary>Read the entries in the sequence to fill the index.</summary>
-    public void FillIndex() {
-        foreach (var item in EntriesForward()) {
-            }
-        }
+           new EarlCatalogEnumerator<T>(this, false);
 
 
     }

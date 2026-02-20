@@ -48,6 +48,9 @@ public record EarlEntryIndex<T>(
 
     public T Object => JsonObject as T;
 
+    public bool Default { get; set; }
+
+
     public string PrimaryKey => Object?._PrimaryKey ?? EarlEnvelope?.SignedHeader?.UniqueId;
     public List<string> SecondaryKeys => Object?._SecondaryKeys ?? EarlEnvelope?.SignedHeader?.Labels;
 

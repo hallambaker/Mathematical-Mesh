@@ -129,7 +129,7 @@ public class OauthClient {
         // construct the pre-request
         var par = ConstructPar(oauth, state);
         Screen.WriteLine("Pre Authorization Request");
-        Screen.WriteLine(par.ToString());
+        //Screen.WriteLine(par.ToString());
 
 
         var parBytes = par.GetAsKeyValue();
@@ -144,7 +144,7 @@ public class OauthClient {
         var response = JsonObject.StreamParse<PushedAuthorizationResponse>(jsonReader, false);
 
         Screen.WriteLine("Pre Authorization Response");
-        Screen.WriteLine(response.ToString());
+        //Screen.WriteLine(response.ToString());
 
         var redirectFields = new AuthorizationRequest2() {
             ClientId = ClientMetadata.ClientId,
@@ -154,7 +154,7 @@ public class OauthClient {
 
         var redirect = redirectFields.GetAsUrlQuery(oauth.AuthorizationServerMetadata.AuthorizationEndpoint);
         Screen.WriteLine("Redirect Uri");
-        Screen.WriteLine(redirect);
+        //Screen.WriteLine(redirect);
         Screen.Flush();
 
         return new OauthClientResultPreRequest() {
@@ -245,7 +245,7 @@ public class OauthClient {
         var response = WebExtensions.FromUrlQuery<AuthenticationResponse>(responseUri);
 
         Screen.WriteLine("# Redirect URI");
-        Screen.WriteLine($"{responseUri.Query}");
+        //Screen.WriteLine($"{responseUri.Query}");
         Screen.WriteLine($"iss= {iss}");
         Screen.WriteLine($"state= {state}");
         Screen.WriteLine($"code= {code}");

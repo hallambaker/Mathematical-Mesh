@@ -23,6 +23,59 @@ using System.Diagnostics;
 
 namespace Goedel.Cryptography.Dare;
 
+
+
+public class EarlCatalogEnumerator<T> : 
+            IEnumerator<EarlEntryIndex<T>>, IEnumerable<EarlEntryIndex<T>> 
+                where T : JsonObject, new() {
+    public EarlEntryIndex<T>? Current => Node?.Value;
+    object IEnumerator.Current => Current;
+    public void Dispose() {
+        }
+
+    LinkedListNode<EarlEntryIndex<T>>? Node { get; set; }
+
+
+    EarlCatalog<T> Catalog { get; }
+    bool Forward { get; }
+    bool first=true;
+
+    public EarlCatalogEnumerator(EarlCatalog<T> catalog, bool forward) {
+        Catalog = catalog;
+        Forward = forward;
+        }
+
+
+    /// <inheritdoc/>
+    public IEnumerator<EarlEntryIndex<T>> GetEnumerator() => this;
+
+    /// <inheritdoc/>
+    public bool MoveNext() {
+        if (first) {
+            Node = Forward ? Catalog.Entries.First : Catalog.Entries.Last;
+            first = false;
+            }
+        else {
+            Node = Forward ? Node?.Next : Node?.Previous;
+            }
+
+        return Node is not null;
+        }
+
+    /// <inheritdoc/>
+    public void Reset() {
+        first = true;
+
+        }
+
+    IEnumerator IEnumerable.GetEnumerator() {
+        return GetEnumerator();
+        }
+    }
+
+
+
+
 public class EarlEntryEnumerator : IEnumerator<EarlEntryIndex> , IEnumerable<EarlEntryIndex> {
     EarlSequence Sequence { get; }
     bool Forward { get; }

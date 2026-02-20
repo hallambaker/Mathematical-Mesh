@@ -103,7 +103,8 @@ public  class EarlSequence : Disposable {
         }
 
 
-    protected void Initialize() {
+    protected virtual void Initialize() {
+
 
         if (Stream.Length == 0) {
             Stream.Write(DareConstants.TypeIdentifierDareSequence);
