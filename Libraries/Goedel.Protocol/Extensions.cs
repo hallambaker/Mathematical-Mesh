@@ -156,7 +156,25 @@ public static partial class Extensions {
         (jpcConnection == JpcConnection.Direct) | (jpcConnection == JpcConnection.Serialized);
 
 
+    /// <summary>
+    /// Perform a one pass streaming parse on data read from the file <paramref name="filename"/> 
+    /// returning an object of type <paramref name="type"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of the object to return.</typeparam>
+    /// <param name="filename">The data to parse</param>
+    /// <returns>The typed, parsed object.</returns>
+    public static T? ReadFileJson<T>(
+                this string filename) where T : JsonObject => JsonObject.StreamParse<T>(filename, false);
 
+    /// <summary>
+    /// Perform a one pass streaming parse on data read from the file <paramref name="filename"/> 
+    /// returning an object of type <typeparamref name="T"/>. 
+    /// </summary>
+    /// <typeparam name="T">The type of the object to return.</typeparam>
+    /// <param name="filename">The data to parse</param>
+    /// <returns>The typed, parsed object.</returns>
+    public static T? ReadFileTaggedJson<T>(
+            this string filename) where T : JsonObject => JsonObject.StreamParse<T>(filename, true);
 
     /// <summary>
     /// Create a JSONReader for the specified data

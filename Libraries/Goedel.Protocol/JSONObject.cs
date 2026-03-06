@@ -261,15 +261,6 @@ public abstract partial class JsonObject : IBinding {
         }
 
 
-    ///// <summary>The properties of the JsonObject instance.</summary>
-    //public virtual Dictionary<string, Property> _AllProperties => _StaticAllProperties;
-
-    ///// <summary>The properties of the JsonObject instance.</summary>
-    //public virtual Dictionary<string, Property> _Properties => _StaticProperties;
-
-    ///// <summary>The properties of the parent JsonObject instance.</summary>
-    //public virtual Dictionary<string, Property> _ParentProperties => null;
-
     /// <summary>
     /// Base constructor.
     /// </summary>
@@ -467,7 +458,7 @@ public abstract partial class JsonObject : IBinding {
     /// parser does not (currently) support schemas in which a variant object type is
     /// specified by the object property.
     /// </summary>
-    /// <param name="type">The type of the object to return.</param>
+    /// <typeparam name="T">The type of the object to return.</typeparam>
     /// <param name="filename">The data to parse</param>
     /// <param name="tagged">If true, the data object has a typed wrapper.</param>
     /// <param name="collectUparsed">If true, collect unparseable items during the
