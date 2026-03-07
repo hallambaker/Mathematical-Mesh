@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 2/18/2026 4:19:32 PM
+//  This file was automatically generated at 3/7/2026 5:43:40 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -44,9 +44,9 @@ using System.Text.Json.Serialization;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+#pragma warning disable IDE0079 // Don't warn about unnecessary suppressions
 #pragma warning disable IDE0028 // Don't warn collection initialization can be simplified.
-#pragma warning disable IDE0079
-#pragma warning disable IDE1006
+#pragma warning disable IDE1006 // Ignore naming rule violations
 #pragma warning disable CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
 
 

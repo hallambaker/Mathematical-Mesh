@@ -1,9 +1,9 @@
 
-//  This file was automatically generated at 3/6/2026 6:19:54 PM
+//  This file was automatically generated at 3/7/2026 6:01:53 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  constant version 3.0.0.1170
+//  Generator:  constant version 3.0.0.1173
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -65,7 +65,8 @@ public enum StoreType {
     ///<summary>Account Catalog</summary>
     Account,
     ///<summary>Document Catalog</summary>
-    Document    }
+    Document
+    }
 
 ///<summary>Inbound spool message state</summary>
 public enum StateSpoolMessage {
@@ -84,7 +85,8 @@ public enum StateSpoolMessage {
     ///<summary>Transaction associated with the message was completed</summary>
     Closed,
     ///<summary>Transaction associated with the message was completed</summary>
-    Deleted    }
+    Deleted
+    }
 
 ///<summary>Inbound spool message state</summary>
 public enum StateSpoolInbound {
@@ -93,7 +95,8 @@ public enum StateSpoolInbound {
     ///<summary>Initial state (unread)</summary>
     Initial,
     ///<summary>Message was read</summary>
-    Read    }
+    Read
+    }
 
 ///<summary>Outbound spool message state</summary>
 public enum StateSpoolOutbound {
@@ -106,7 +109,8 @@ public enum StateSpoolOutbound {
     ///<summary>Message was sent and receipt acknowledged</summary>
     Received,
     ///<summary>Message was refused</summary>
-    Refused    }
+    Refused
+    }
 
 ///<summary>Local spool message state</summary>
 public enum StateSpoolLocal {
@@ -115,7 +119,8 @@ public enum StateSpoolLocal {
     ///<summary>Initial state (unread)</summary>
     Initial,
     ///<summary>Transaction associated with the message was completed</summary>
-    Closed    }
+    Closed
+    }
 
 ///<summary>Types of cryptographic key that may be created</summary>
 public enum MeshKeyType {
@@ -126,7 +131,8 @@ public enum MeshKeyType {
     ///<summary>Base Key Contribution</summary>
     Base,
     ///<summary>Activation Key Contribution</summary>
-    Activation    }
+    Activation
+    }
 
 ///<summary>Actors for which a cryptographic key may be created</summary>
 public enum MeshActor {
@@ -141,7 +147,8 @@ public enum MeshActor {
     ///<summary>Service Profile</summary>
     Service,
     ///<summary>Host Profile</summary>
-    Host    }
+    Host
+    }
 
 ///<summary>Operations for which a cryptographic key may be created</summary>
 public enum MeshKeyOperation {
@@ -160,7 +167,8 @@ public enum MeshKeyOperation {
     ///<summary>Administrator Signature key</summary>
     AdminSign,
     ///<summary>Escrow Encryption key</summary>
-    Escrow    }
+    Escrow
+    }
 
 ///<summary>Server status codes</summary>
 public enum MeshServerStatus {
@@ -183,7 +191,8 @@ public enum MeshServerStatus {
     ///<summary>Request is too large</summary>
     TooLarge = 8,
     ///<summary>Request timed out</summary>
-    Timeout = 9    }
+    Timeout = 9
+    }
 
 
 ///<summary>

@@ -1,9 +1,9 @@
 
-//  This file was automatically generated at 3/6/2026 6:19:53 PM
+//  This file was automatically generated at 3/7/2026 6:01:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  constant version 3.0.0.1170
+//  Generator:  constant version 3.0.0.1173
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -35,7 +35,8 @@ public enum InitiatorMessageType {
     ///<summary>Initial contact message with key exchange</summary>
     InitiatorExchange = 3,
     ///<summary>Initial contact message with key exchange</summary>
-    InitiatorComplete = 4    }
+    InitiatorComplete = 4
+    }
 
 ///<summary>Host response messages</summary>
 public enum ResponderMessageType {
@@ -48,7 +49,8 @@ public enum ResponderMessageType {
     ///<summary>Host exchange message</summary>
     ResponderChallenge = 2,
     ///<summary>Host challenge type 1</summary>
-    ResponderComplete = 3    }
+    ResponderComplete = 3
+    }
 
 ///<summary>Response error codes</summary>
 public enum ErrorCodes {
@@ -65,7 +67,8 @@ public enum ErrorCodes {
     ///<summary>Too many requests</summary>
     TooManyRequests = 429,
     ///<summary>The service is unavailable</summary>
-    ServiceUnavailable = 503    }
+    ServiceUnavailable = 503
+    }
 
 ///<summary>Stream and packet encryption options</summary>
 public enum EncryptionOptions {
@@ -78,7 +81,8 @@ public enum EncryptionOptions {
     ///<summary>AESheader</summary>
     EncryptPacketHeader,
     ///<summary>OTSIDr</summary>
-    RequireOneTimeId    }
+    RequireOneTimeId
+    }
 
 ///<summary>Presentation extension tags</summary>
 public enum ExtensionTags {
@@ -135,7 +139,8 @@ public enum ExtensionTags {
     ///<summary>Sender</summary>
     StreamSender,
     ///<summary>Service</summary>
-    StreamService    }
+    StreamService
+    }
 
 
 ///<summary>

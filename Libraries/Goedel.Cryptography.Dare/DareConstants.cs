@@ -1,9 +1,9 @@
 
-//  This file was automatically generated at 3/6/2026 6:19:52 PM
+//  This file was automatically generated at 3/7/2026 6:01:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  constant version 3.0.0.1170
+//  Generator:  constant version 3.0.0.1173
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -33,7 +33,8 @@ public enum EarlSequenceIndexType {
     ///<summary>Incremental</summary>
     Incremental,
     ///<summary>Separate</summary>
-    Separate    }
+    Separate
+    }
 
 ///<summary>Sequence types</summary>
 public enum SequenceType {
@@ -48,7 +49,8 @@ public enum SequenceType {
     ///<summary>Tree</summary>
     Tree,
     ///<summary>Merkle</summary>
-    Merkle    }
+    Merkle
+    }
 
 ///<summary>Encryption policies</summary>
 public enum PolicyEncryption {
@@ -61,7 +63,8 @@ public enum PolicyEncryption {
     ///<summary>Isolated</summary>
     Isolated,
     ///<summary>None</summary>
-    None    }
+    None
+    }
 
 ///<summary>Signature policies</summary>
 public enum PolicySignature {
@@ -74,7 +77,8 @@ public enum PolicySignature {
     ///<summary>Last</summary>
     Last,
     ///<summary>Any</summary>
-    Any    }
+    Any
+    }
 
 
 ///<summary>

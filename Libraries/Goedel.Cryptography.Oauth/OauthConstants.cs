@@ -1,9 +1,9 @@
 
-//  This file was automatically generated at 3/6/2026 6:19:52 PM
+//  This file was automatically generated at 3/7/2026 6:01:51 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  constant version 3.0.0.1170
+//  Generator:  constant version 3.0.0.1173
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -29,7 +29,8 @@ public enum ApplicationType {
     ///<summary>web</summary>
     Web = 0,
     ///<summary>native</summary>
-    Native = 1    }
+    Native = 1
+    }
 
 ///<summary>Grant types</summary>
 public enum GrantTypes {
@@ -38,7 +39,8 @@ public enum GrantTypes {
     ///<summary>authorization_code</summary>
     AuthorizationCode = 0,
     ///<summary>refresh_token</summary>
-    RefreshToken = 1    }
+    RefreshToken = 1
+    }
 
 ///<summary>Scope types</summary>
 public enum ScopeTypes {
@@ -49,35 +51,40 @@ public enum ScopeTypes {
     ///<summary>transition:generic</summary>
     Generic = 1,
     ///<summary>transition:chat.bsky</summary>
-    Chat = 2    }
+    Chat = 2
+    }
 
 ///<summary>Response Types</summary>
 public enum ResponseType {
     ///<summary>Undefined type</summary>
     Unknown = -1,
     ///<summary>code</summary>
-    Code = 0    }
+    Code = 0
+    }
 
 ///<summary>Authentication Method</summary>
 public enum AuthenticationMethod {
     ///<summary>Undefined type</summary>
     Unknown = -1,
     ///<summary>private_key_jwt</summary>
-    JWT = 0    }
+    JWT = 0
+    }
 
 ///<summary>Endpoint Signature Algorithm</summary>
 public enum EndpointSignature {
     ///<summary>Undefined type</summary>
     Unknown = -1,
     ///<summary>ES256</summary>
-    ES256 = 0    }
+    ES256 = 0
+    }
 
 ///<summary>Assertion Types</summary>
 public enum AssertionTypes {
     ///<summary>Undefined type</summary>
     Unknown = -1,
     ///<summary>urn:ietf:params:oauth:client-assertion-type:jwt-bearer</summary>
-    Bearer = 0    }
+    Bearer = 0
+    }
 
 
 ///<summary>

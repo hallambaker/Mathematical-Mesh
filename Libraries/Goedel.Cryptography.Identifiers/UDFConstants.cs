@@ -1,9 +1,9 @@
 
-//  This file was automatically generated at 3/6/2026 6:19:49 PM
+//  This file was automatically generated at 3/7/2026 6:01:47 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
-//  Generator:  constant version 3.0.0.1170
+//  Generator:  constant version 3.0.0.1173
 //      Goedel Script Version : 0.1   Generated 
 //      Goedel Schema Version : 0.1   Generated
 //  
@@ -63,7 +63,8 @@ public enum UdfTypeIdentifier {
     ///<summary>Shamir Secret Share</summary>
     ShamirSecret = 144,
     ///<summary>Secret seed</summary>
-    DerivedKey = 200    }
+    DerivedKey = 200
+    }
 
 ///<summary>UDF key derevation algorithm identifier codes</summary>
 public enum UdfAlgorithmIdentifier {
@@ -120,7 +121,8 @@ public enum UdfAlgorithmIdentifier {
     ///<summary>Mesh service profile</summary>
     MeshProfileService = 260,
     ///<summary>Mesh host activation</summary>
-    MeshActivationService = 261    }
+    MeshActivationService = 261
+    }
 
 ///<summary>Udf derrived key uses</summary>
 public enum DerivedKeyUdfDerrivedKeyUses {
@@ -133,12 +135,14 @@ public enum DerivedKeyUdfDerrivedKeyUses {
     ///<summary>Signature</summary>
     Signature = 2,
     ///<summary>Authentication</summary>
-    Authentication = 3    }
+    Authentication = 3
+    }
 
 ///<summary>RSA seed derivation tags</summary>
 public enum DerivedKeyRSATags {
     ///<summary>Undefined type</summary>
-    Unknown = -1    }
+    Unknown = -1
+    }
 
 
 ///<summary>
