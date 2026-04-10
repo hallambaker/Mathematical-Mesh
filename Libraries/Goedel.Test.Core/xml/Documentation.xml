@@ -9,13 +9,30 @@
             Various functions to support unit testing.
             </summary>
         </member>
+        <member name="M:Goedel.Test.Core.RudListenerTest.#ctor(Goedel.Protocol.Presentation.ICredentialPrivate,System.Collections.Generic.List{Goedel.Protocol.Presentation.RudProvider})">
+            <summary>
+            Base constructor, populate the common properties.
+            </summary>
+            <param name="credential">The credential used by the listener.</param>
+            <param name="providers">The service providers to be dispatched to.</param>
+        </member>
+        <member name="M:Goedel.Test.Core.RudListenerTest.GetTemporaryResponder(Goedel.Protocol.Presentation.Packet)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Test.Core.ConnectionResponderTest.#ctor(Goedel.Protocol.Presentation.Listener,Goedel.Protocol.Presentation.Packet)">
+            <summary>
+            Constructor for a connection host instance connected to <paramref name="listener"/>
+            </summary>
+            <param name="listener">The listener this connection is to service.</param>
+            <param name="packetIn">The packet resulting in creation of the responder.</param>
+        </member>
         <member name="T:Goedel.Test.Core.TestSession">
             <summary>
             Test session, a specialization of the serialized class in which the
             request and response messages are captured.
             </summary>
         </member>
-        <member name="M:Goedel.Test.Core.TestSession.#ctor(Goedel.Protocol.JpcInterface,Goedel.Protocol.ICredential,System.Collections.Generic.List{Goedel.Test.Core.Trace})">
+        <member name="M:Goedel.Test.Core.TestSession.#ctor(Goedel.Protocol.JpcInterface,Goedel.Protocol.ICredential,System.Collections.Generic.List{Goedel.Test.Core.TraceTransaction},System.Object)">
             <summary>
             Create a remote session with authentication under the
             specified credential.
@@ -26,6 +43,28 @@
             <param name="UDF">Authentication key identifier.</param>
         </member>
         <member name="M:Goedel.Test.Core.TestSession.Post(System.IO.MemoryStream,Goedel.Protocol.JsonObject)">
+            <summary>
+            Post a request and retrieve the response.
+            </summary>
+            <param name="data">StreamBuffer object containing JSON encoded request.</param>
+            <returns>StreamBuffer object containing JSON encoded response.</returns>
+        </member>
+        <member name="T:Goedel.Test.Core.TestSessionRud">
+            <summary>
+            Expanded test session that captures RUD packet traces.
+            </summary>
+        </member>
+        <member name="M:Goedel.Test.Core.TestSessionRud.#ctor(Goedel.Test.Core.TestServiceRud,Goedel.Protocol.Presentation.ICredentialPrivate,System.Collections.Generic.List{Goedel.Test.Core.TraceTransaction},System.Object)">
+            <summary>
+            Create a remote session with authentication under the
+            specified credential.
+            </summary>
+            <param name="host">The host implementation</param>
+            <param name="Domain">Portal address</param>
+            <param name="Account">User account</param>
+            <param name="UDF">Authentication key identifier.</param>
+        </member>
+        <member name="M:Goedel.Test.Core.TestSessionRud.Post(System.IO.MemoryStream,Goedel.Protocol.JsonObject)">
             <summary>
             Post a request and retrieve the response.
             </summary>

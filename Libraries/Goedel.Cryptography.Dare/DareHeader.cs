@@ -359,6 +359,9 @@ public partial class DareTrailer {
 
 public partial class ContentMeta {
 
+
+    //public override string _PrimaryKey => UniqueId;
+
     ///<summary>List of signatures over the data that have been verified against
     ///the referenced signature key.</summary> 
     public List<EarlSignature> VerifiedSignatures { get; set; } 

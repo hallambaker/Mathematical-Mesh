@@ -121,6 +121,8 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
 
 
     protected virtual void DeleteKeys(EarlEntryIndex<T> index) {
+        //GetMeta(index);
+
         EntriesById.Replace(index.PrimaryKey, index);
         if (index.SecondaryKeys != null) {
             foreach (var key in index.SecondaryKeys) {
@@ -199,7 +201,7 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
         Entries.AddLast(result);
         result.Deleted = true;
 
-        DeleteKeys(result);
+        DeleteKeys(index);
 
         return result;
         }
