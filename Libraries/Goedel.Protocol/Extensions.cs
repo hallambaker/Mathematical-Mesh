@@ -166,6 +166,8 @@ public static partial class Extensions {
     public static T? ReadFileJson<T>(
                 this string filename) where T : JsonObject => JsonObject.StreamParse<T>(filename, false);
 
+
+
     /// <summary>
     /// Perform a one pass streaming parse on data read from the file <paramref name="filename"/> 
     /// returning an object of type <typeparamref name="T"/>. 

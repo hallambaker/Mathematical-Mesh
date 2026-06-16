@@ -17,11 +17,11 @@ public partial class JWK {
     /// </summary>
     /// <param name="keyPair">The key to return the JWK for.</param>
     /// <returns>The created instance.</returns>
-    public static JWK? Factory(KeyPair keyPair) {
+    public static JWK? Factory(KeyPair keyPair, bool privateKey=false) {
         var result = keyPair switch {
-            KeyPairECDHNist keyPairECDHNist => Factory(keyPairECDHNist),
-            KeyPairECDH keyPairECDH => Factory(keyPairECDH),
-            KeyPairBaseRSA baseRSA => Factory(baseRSA),
+            KeyPairECDHNist keyPairECDHNist => Factory(keyPairECDHNist, privateKey),
+            KeyPairECDH keyPairECDH => Factory(keyPairECDH, privateKey),
+            KeyPairBaseRSA baseRSA => Factory(baseRSA, privateKey),
             _ => null
             };
 
@@ -40,21 +40,22 @@ public partial class JWK {
     /// </summary>
     /// <param name="keyPairECDHNist">The key to return the JWK for.</param>
     /// <returns>The created instance.</returns>
-    public static JWK Factory(KeyPairECDHNist keyPairECDHNist) => new JwkEllipticCurve() {
-        //KeyType = "EC",
-        Curve = "P-256",
-        Use = keyPairECDHNist.KeyUses.HasFlag(KeyUses.Sign) ? "sig" : "enc",
-        X = keyPairECDHNist.PublicKey.PublicKey.X.ToByteArrayBigEndian(32).ToStringBase64url(),
-        Y = keyPairECDHNist.PublicKey.PublicKey.Y.ToByteArrayBigEndian(32).ToStringBase64url(),
-        Kid = keyPairECDHNist.KeyIdentifier
-        };
-
+    public static JWK Factory(KeyPairECDHNist keyPairECDHNist, bool privateKey = false) => 
+            new JwkEllipticCurve() {
+                Curve = "P-256",
+                Use = keyPairECDHNist.KeyUses.HasFlag(KeyUses.Sign) ? "sig" : "enc",
+                X = keyPairECDHNist.PublicKey.PublicKey.X.ToByteArrayBigEndian(32).ToStringBase64url(),
+                Y = keyPairECDHNist.PublicKey.PublicKey.Y.ToByteArrayBigEndian(32).ToStringBase64url(),
+                Kid = keyPairECDHNist.KeyIdentifier,
+                D = !privateKey ? null :
+                    keyPairECDHNist.PKIXPrivateKeyECDH.Data.ToStringBase64url()
+                } ;
     /// <summary>
     /// Factory method returning an instance for the Elliptic Cuve key <paramref name="keyPairECDH"/>
     /// </summary>
     /// <param name="keyPairECDH">The key to return the JWK for.</param>
     /// <returns>The created instance.</returns>
-    public static JWK Factory(KeyPairECDH keyPairECDH) => new JwkOctetKeyPairs(){
+    public static JWK Factory(KeyPairECDH keyPairECDH, bool privateKey = false) => new JwkOctetKeyPairs(){
         //KeyType = "OKP",
         Curve = GetCurve(keyPairECDH),
         X = keyPairECDH.PublicData.ToStringBase64url(),
@@ -67,7 +68,7 @@ public partial class JWK {
     /// </summary>
     /// <param name="keyPairRsa">The key to return the JWK for.</param>
     /// <returns>The created instance.</returns>
-    public static JWK Factory(KeyPairBaseRSA keyPairRsa) => new JwkRsa() {
+    public static JWK Factory(KeyPairBaseRSA keyPairRsa, bool privateKey = false) => new JwkRsa() {
         //KeyType = "RSA",
         N = keyPairRsa.PkixPublicKeyRsa.Modulus.ToStringBase64url(),
         E = keyPairRsa.PkixPublicKeyRsa.PublicExponent.ToStringBase64url()

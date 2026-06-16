@@ -72,7 +72,7 @@ public class KeyPairECDHNist : KeyPairECDH, IAgreementData {
     public override byte[] PublicData => PublicKey.EncodingPublicKey;
 
     //readonly KeySecurity KeyType = KeySecurity.Public;
-    readonly byte[] EncodedPrivateKey = null;
+    public readonly byte[] EncodedPrivateKey = null;
 
 
     /*

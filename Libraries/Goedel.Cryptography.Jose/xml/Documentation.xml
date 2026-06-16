@@ -1095,28 +1095,28 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPair,System.Boolean)">
             <summary>
             Factory method returning an instance for the key <paramref name="keyPair"/>
             </summary>
             <param name="keyPair">The key to return the JWK for.</param>
             <returns>The created instance.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPairECDHNist)">
+        <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPairECDHNist,System.Boolean)">
             <summary>
             Factory method returning an instance for the Elliptic Cuve key <paramref name="keyPairECDHNist"/>
             </summary>
             <param name="keyPairECDHNist">The key to return the JWK for.</param>
             <returns>The created instance.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPairECDH)">
+        <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPairECDH,System.Boolean)">
             <summary>
             Factory method returning an instance for the Elliptic Cuve key <paramref name="keyPairECDH"/>
             </summary>
             <param name="keyPairECDH">The key to return the JWK for.</param>
             <returns>The created instance.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPairBaseRSA)">
+        <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPairBaseRSA,System.Boolean)">
             <summary>
             Factory method returning an instance for the RSA key <paramref name="keyPairRsa"/>
             </summary>

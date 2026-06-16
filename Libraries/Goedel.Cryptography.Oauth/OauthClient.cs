@@ -29,6 +29,8 @@ public class OauthClient {
     ///<summary>Encrypted state token manager.</summary> 
     public EncryptedTokenManager EncryptedTokenManager { get; } = new();
 
+    JWK Signature { get; set; }
+    JWK Encryption { get; set; }
 
     /// <summary>
     /// Constructor, returns an instance with client URI <paramref name="clientId"/>, redirect
@@ -36,17 +38,18 @@ public class OauthClient {
     /// </summary>
     /// <param name="clientId">The client identifier.</param>
     /// <param name="redirectUri">The redirect URL</param>
-    /// <param name="keys">The keys for encryption and signature.</param>
+    /// <param name="directory">The diorectory in which private keys for encryption 
+    /// and signature are stored.</param>
     public OauthClient(
                 string clientId,
                 string redirectUri,
-                JWKS keys) {
+                string directory) {
         
         SessionManager = new() {
             DnsClient = DnsClient
             };
         SecretKey = Platform.GetRandomBytes(32);
-
+        var keys = GetKeys(directory);
 
         ScopeTypes scope = ScopeTypes.Atproto;
         bool confidential = false;
@@ -62,6 +65,40 @@ public class OauthClient {
     //    ClientMetadata = clientMetadata;
     //    ClientMetadataBytes = ClientMetadata.ToString().ToUTF8();
     //    }
+
+
+
+    JWKS GetKeys(string directory) {
+        Signature = GetOrCreateKey(directory, "signature", KeyUses.Sign);
+        Encryption = GetOrCreateKey(directory, "encryption", KeyUses.Encrypt);
+
+        return new JWKS {
+            Keys = [Signature, Encryption]
+            };
+
+        }
+
+
+
+    static JWK GetOrCreateKey(string directory, string filename, KeyUses keyUses) {
+        var keyfile = Path.Combine(directory, filename + ".jwk");
+
+        try {
+            var result = keyfile.ReadFileJson<JWK>();
+            return result;
+            }
+        catch {
+            var key = GenKey(keyUses);
+            var result = JWK.Factory(key, true);
+
+            Directory.CreateDirectory(directory);
+            result.ToFile(keyfile);
+
+            return result;
+            }
+
+
+        }
 
 
     #region // static methods
