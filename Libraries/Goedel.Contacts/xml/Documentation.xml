@@ -1806,12 +1806,20 @@
             Returns a new instance.
             </summary>
         </member>
+        <member name="M:Goedel.Contacts.JsContact.#ctor(System.String,System.String)">
+            <summary>Constructor, returning a new instance of <paramref name="kind"/> in
+            language <paramref name="language"/>.</summary>
+            <param name="kind">The kind of contact.</param>
+            <param name="language">The contact language.</param>
+        </member>
         <member name="M:Goedel.Contacts.JsContact.Create(System.String,System.String,System.String)">
             <summary>
             Create a  contact of the specified kind with the Version, Created and Updated
             fields filled.
             </summary>
-            <param name="kind"></param>
+            <param name="kind">Contact kind.</param>
+            <param name="first">The contact's first name.</param>
+            <param name="last">The contact's last name.</param>
             <returns>The created contact.</returns>
         </member>
         <member name="M:Goedel.Contacts.JsContact.Individual(System.String,System.String)">
@@ -1823,6 +1831,87 @@
             <param name="gender">Gender, "masculine", "feminine", "inanimate", "animate", etc. </param>
             <returns>The created card.</returns>
         </member>
+        <member name="M:Goedel.Contacts.JsContact.AddEmail(System.String,System.Byte[],System.Byte[],System.String)">
+            <summary>Add an email address to the contact.</summary>
+            <param name="emailAddress">The email address.</param>
+            <param name="openPgp">The OpenPGP credential.</param>
+            <param name="smime">The S/MIME credential.</param>
+            <param name="id">Unique identifier of the entry.</param>
+            <returns>The created entry</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.AddWeb(System.String,System.Collections.Generic.List{System.String},System.String)">
+            <summary>Add a Web resource to the contact.</summary>
+            <param name="uri">The Web site URI.</param>
+            <param name="contexts">The contexts in which the resource is used.</param>
+            <param name="id">Unique identifier of the entry.</param>
+            <returns>The created entry</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.AddSsh(System.Collections.Generic.List{Goedel.Cryptography.KeyPair},System.Collections.Generic.List{System.String},System.String)">
+            <summary>Add an SSH resource to the contact.</summary>
+            <param name="authenticate">The authentication public keys</param>
+            <param name="contexts">The contexts in which the resource is used.</param>
+            <param name="id">Unique identifier of the entry.</param>
+            <returns>The created entry</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.AddMesh(System.Byte[],System.Collections.Generic.List{System.String},System.String)">
+            <summary>Add a Mesh resource to the contact.</summary>
+            <param name="profile">The Mesh profile</param>
+            <param name="contexts">The contexts in which the resource is used.</param>
+            <param name="id">Unique identifier of the entry.</param>
+            <returns>The created entry</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.AddGit(System.Collections.Generic.List{Goedel.Cryptography.KeyPair},System.Collections.Generic.List{System.String},System.String)">
+            <summary>Add a Git entry to the contact.</summary>
+            <param name="signing">The set of commit siognature keys</param>
+            <param name="contexts">The contexts in which the resource is used.</param>
+            <param name="id">Unique identifier of the entry.</param>
+            <returns>The created entry</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.AddUpdate(System.String,System.String,System.Collections.Generic.List{Goedel.Cryptography.KeyPair},System.Collections.Generic.List{System.String},System.String)">
+            <summary>Add an update entry to the contact</summary>
+            <param name="protocol">The update protocol.</param>
+            <param name="uri">The URI</param>
+            <param name="verification">The verification keys.</param>
+            <param name="contexts">The contexts in which the resource is used.</param>
+            <param name="id">Unique identifier of the entry.</param>
+            <returns>The created entry</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.AddService(System.String,System.Collections.Generic.List{System.String},System.String)">
+            <summary>Add a service entry to the contact.</summary>
+            <param name="protocol">The service protocol.</param>
+            <param name="contexts">The contexts in which the resource is used.</param>
+            <param name="id">Unique identifier of the entry.</param>
+            <returns>The created entry</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.AddCryptoKeys(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.List{Goedel.Cryptography.KeyPair},System.String)">
+            <summary>Add a set of cryptographic keys to the contact.</summary>
+            <param name="cryptoKeyIds">Dictionary mapping resource identifiers to keys..</param>
+            <param name="keys">The keys to add.</param>
+            <param name="use">The use of the key.</param>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.AddCryptoKey(System.Collections.Generic.Dictionary{System.String,System.String},System.String,Goedel.Cryptography.KeyPair,System.Byte[],System.String)">
+            <summary>Add a cryptographic key to the contact.</summary>
+            <param name="cryptoKeyIds">Dictionary mapping resource identifiers to keys..</param>
+            <param name="key">The key to add.</param>
+            <param name="use">The use of the key.</param>
+            <param name="credential">Credential validating the key.</param>
+            <param name="mediaType">The media type of the credential.</param>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.AddMedia(System.String,System.String,System.String)">
+            <summary>Add media to the contact.</summary>
+            <param name="uri"></param>
+            <param name="mediaType"></param>
+            <param name="kind"></param>
+            <returns>The created entry</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.Add(Goedel.Contacts.OnlineService,System.String,System.String,System.Byte[],Goedel.Cryptography.KeyPair)">
+            <summary>Add an online service top the contact.</summary>
+            <param name="service">The service to add</param>
+            <param name="id">Unique identifier of the entry.</param>
+            <param name="kind">Service kind.</param>
+            <param name="data">Service data.</param>
+            <param name="key">The key</param>
+        </member>
         <member name="M:Goedel.Contacts.JsContact.Update">
             <summary>
             Update the contact updated time.
@@ -1832,6 +1921,11 @@
             <summary>
             Analyze the contact to populate the property <see cref="P:Goedel.Contacts.JsContact.Analysis"/>
             </summary>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.MapCryptoKeys(Goedel.Contacts.OnlineService)">
+            <summary></summary>
+            <param name="service"></param>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Contacts.Resource">
             <summary>
@@ -2050,6 +2144,15 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.NameComponent.#ctor">
+            <summary>Default constructor, returns an instance used by the deserializer.</summary>
+        </member>
+        <member name="M:Goedel.Contacts.NameComponent.#ctor(System.String,System.String)">
+            <summary>Return a new name component of <paramref name="kind"/>,
+            <paramref name="value"/>.</summary>
+            <param name="kind">The component kind.</param>
+            <param name="value">The component value.</param>
         </member>
         <member name="T:Goedel.Contacts.NickName">
             <summary>
@@ -4140,6 +4243,14 @@
             <summary>
             Extension methods
             </summary>
+        </member>
+        <member name="M:Goedel.Contacts.Extension.TryGetKey(System.Collections.Generic.Dictionary{System.String,System.String},System.String,System.String@)">
+            <summary>Inverse dictionary lookup, return the first key <paramref name="key"/> that has the value 
+            <paramref name="value"/> in the dictionary <paramref name="keyValuePairs"/>.</summary> 
+            <param name="keyValuePairs">The key value pairs.</param>
+            <param name="value">The value to find.</param>
+            <param name="key">The returned key, null if not found.</param>
+            <returns>True if the value was found, otherwise false.</returns>
         </member>
         <member name="T:Goedel.Contacts.Initialization">
             <summary>Static class whose only function is to contain the initialization 

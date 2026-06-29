@@ -47,7 +47,7 @@ public class TestVarintSerialization : UnitTestSet {
     #region -- Envelope Testing
 
     [Theory]
-    [InlineData()]
+    [InlineData(false, false, 100)]
     public void TestEnvelope(
             bool sign = false,
             bool encrypt = false,
@@ -72,7 +72,7 @@ public class TestVarintSerialization : UnitTestSet {
     #region -- Sequence
 
     [Theory]
-    [InlineData()]
+    [InlineData(false, false, 100, 0, false)]
     public void TestSequence(
             bool sign = false,
             bool encrypt = false,
@@ -139,7 +139,7 @@ public class TestVarintSerialization : UnitTestSet {
     #region -- Archive
 
     [Theory]
-    [InlineData()]
+    [InlineData(false, false, 100,0, false, SequenceIndexMode.None)]
     public void TestArchive(
             bool sign = false,
             bool encrypt = false,
@@ -189,7 +189,7 @@ public class TestVarintSerialization : UnitTestSet {
     #region -- Log
 
     [Theory]
-    [InlineData()]
+    [InlineData(false, false, 100, 0, false, SequenceIndexMode.None)]
     public void TestLog(
         bool sign = false,
         bool encrypt = false,
@@ -270,7 +270,7 @@ public class TestVarintSerialization : UnitTestSet {
     #region -- Spool
 
     [Theory]
-    [InlineData()]
+    [InlineData(false, false, 100, 0, false, SequenceIndexMode.None)]
     public void TestSpool(
             bool sign = false,
             bool encrypt = false,
@@ -360,7 +360,7 @@ public class TestVarintSerialization : UnitTestSet {
     #region -- Catalog
 
     [Theory]
-    [InlineData()]
+    [InlineData(false, false, 100, 0, false, SequenceIndexMode.None)]
     public void TestCatalog(
             bool sign = false,
             bool encrypt = false,

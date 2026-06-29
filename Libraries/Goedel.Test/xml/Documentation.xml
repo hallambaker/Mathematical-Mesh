@@ -10,10 +10,32 @@
             </summary>
             <typeparam name="T">The type of the test specific data.</typeparam>
         </member>
+        <member name="P:Goedel.Test.AcvpTestBinding`1.InternalProjectionFile">
+            <summary>The projection file</summary>
+        </member>
+        <member name="P:Goedel.Test.AcvpTestBinding`1.Tests">
+            <summary>Dictionary maping test number to test</summary>
+        </member>
+        <member name="P:Goedel.Test.AcvpTestBinding`1.TestFile">
+            <summary>The test file.</summary>
+        </member>
+        <member name="M:Goedel.Test.AcvpTestBinding`1.#ctor(System.String)">
+            <summary>Constructor, produce an instance.</summary>
+            <param name="directory">The test directory</param>
+        </member>
+        <member name="M:Goedel.Test.AcvpTestBinding`1.GetText(System.String,System.String)">
+            <summary>Get test text.</summary>
+            <param name="directory">Directory</param>
+            <param name="file">File</param>
+            <returns>The text.</returns>
+        </member>
         <member name="T:Goedel.Test.IExtensionData">
             <summary>
             Interface allowing access to extension data property.
             </summary>
+        </member>
+        <member name="P:Goedel.Test.IExtensionData.ExtensionData">
+            <summary>Extension data dictionary</summary>
         </member>
         <member name="T:Goedel.Test.AcvpTestFile">
             <summary>
@@ -38,6 +60,13 @@
         <member name="P:Goedel.Test.AcvpTestFile.TestGroups">
             <summary>The test groups.</summary> 
         </member>
+        <member name="P:Goedel.Test.AcvpTestFile.ExtensionData">
+            <summary>Additional data.</summary> 
+        </member>
+        <member name="M:Goedel.Test.AcvpTestFile.Add(Goedel.Test.AcvpTestGroup)">
+            <summary>Add <paramref name="group"/></summary>
+            <param name="group">The test group to add.</param>
+        </member>
         <member name="T:Goedel.Test.AcvpTestGroup">
             <summary>
             Group root element, contains a series of tests
@@ -46,7 +75,7 @@
         <member name="P:Goedel.Test.AcvpTestGroup.CachedData">
             <summary>Slot to allow group data to be cached for use.</summary> 
         </member>
-        <member name="P:Goedel.Test.AcvpTestGroup.tgId">
+        <member name="P:Goedel.Test.AcvpTestGroup.TgId">
             <summary>The test group identifier.</summary> 
         </member>
         <member name="P:Goedel.Test.AcvpTestGroup.TestType">
@@ -60,6 +89,13 @@
         </member>
         <member name="P:Goedel.Test.AcvpTestGroup.Tests">
             <summary>The tests.</summary> 
+        </member>
+        <member name="P:Goedel.Test.AcvpTestGroup.ExtensionData">
+            <summary>Additional data.</summary> 
+        </member>
+        <member name="M:Goedel.Test.AcvpTestGroup.Add(Goedel.Test.AcvpTestItem)">
+            <summary>Add <paramref name="item"/></summary>
+            <param name="item">The test item to add.</param>
         </member>
         <member name="T:Goedel.Test.AcvpTestItem">
             <summary>
@@ -75,7 +111,7 @@
         <member name="T:Goedel.Test.AcvpTest">
             <summary>
             The test item, this should be implemented for each specific test type, 
-            binding data from <see cref="!:ExtensionData"/> to local properties in
+            binding data from <see cref="T:Goedel.Test.IExtensionData"/> to local properties in
             <see cref="M:Goedel.Test.AcvpTest.Populate(Goedel.Test.AcvpTestGroup,Goedel.Test.AcvpTestItem)"/>and
             implementing a <see cref="M:Goedel.Test.AcvpTest.Test"/> method.
             </summary>
@@ -108,7 +144,7 @@
         <member name="M:Goedel.Test.AcvpTest.BindBinary(Goedel.Test.IExtensionData,System.String)">
             <summary>
             Convenience method binding data from the field named  <paramref name="key"/>  in
-            <see cref="!:ExtensionData"/> of <paramref name="test"/> 
+            <see cref="T:Goedel.Test.IExtensionData"/> of <paramref name="test"/> 
             </summary>
             <param name="test">The test or group data to search.</param>
             <param name="key">The key to locate</param>
@@ -117,7 +153,7 @@
         <member name="M:Goedel.Test.AcvpTest.BindString(Goedel.Test.IExtensionData,System.String)">
             <summary>
             Convenience method binding data from the field named  <paramref name="key"/>  in
-            <see cref="!:ExtensionData"/> of <paramref name="test"/> 
+            <see cref="T:Goedel.Test.IExtensionData"/> of <paramref name="test"/> 
             </summary>
             <param name="test">The test or group data to search.</param>
             <param name="key">The key to locate</param>
@@ -126,7 +162,7 @@
         <member name="M:Goedel.Test.AcvpTest.BindBool(Goedel.Test.IExtensionData,System.String)">
             <summary>
             Convenience method binding data from the field named  <paramref name="key"/>  in
-            <see cref="!:ExtensionData"/> of <paramref name="test"/> 
+            <see cref="T:Goedel.Test.IExtensionData"/> of <paramref name="test"/> 
             </summary>
             <param name="test">The test or group data to search.</param>
             <param name="key">The key to locate</param>

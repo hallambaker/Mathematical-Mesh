@@ -291,6 +291,27 @@
         <member name="F:Goedel.IO.FileStatus.ConcurrentLocked">
             <summary>Open existing file or create new if it does not exist with shared write permission</summary>
         </member>
+        <member name="T:Goedel.IO.LogFile">
+            <summary>Logfile management class</summary>
+        </member>
+        <member name="P:Goedel.IO.LogFile.Stack">
+            <summary>If true, write stack information to the log.</summary>
+        </member>
+        <member name="P:Goedel.IO.LogFile.Log">
+            <summary>The log file</summary>
+        </member>
+        <member name="M:Goedel.IO.LogFile.Write(System.String)">
+            <summary>Write text to the log</summary>
+            <param name="text">The text to write.</param>
+        </member>
+        <member name="M:Goedel.IO.LogFile.WriteLine(System.String,System.Boolean)">
+            <summary>Write a line of text to the log ending in a new line</summary>
+            <param name="text">The text to write.</param>
+            <param name="trace">If true, include a stack trace.</param>
+        </member>
+        <member name="M:Goedel.IO.LogFile.WriteStack">
+            <summary>Write stack trace to the log.</summary>
+        </member>
         <member name="T:Goedel.IO.NamespaceDoc">
             <summary>
             Various support functions for managing files.

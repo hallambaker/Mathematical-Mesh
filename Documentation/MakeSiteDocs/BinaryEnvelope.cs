@@ -145,7 +145,7 @@ public record BinaryEnvelopeEntry {
 public record BinaryEnvelope : BinaryEnvelopeEntry {
     public byte[] TypeIndicator;
 
-    public List<LengthValue> Payload;
+    public List<LengthValue> Payloads;
 
     public LengthValue Trailer;
 
@@ -157,7 +157,7 @@ public record BinaryEnvelope : BinaryEnvelopeEntry {
             TypeIndicator = [ 1, 0];
             UnsignedHeader = LengthValue.Dummy ("Header");
             SignedHeader = LengthValue.Dummy("Signed");
-            Payload = [
+            Payloads = [
                 LengthValue.Dummy("First"),
                 LengthValue.Dummy("Second")];
             Trailer = LengthValue.Dummy("Trailer");
@@ -168,7 +168,7 @@ public record BinaryEnvelope : BinaryEnvelopeEntry {
         TypeIndicator = parser.GetTypeIndicator();
         UnsignedHeader = parser.GetChunk();
         SignedHeader = parser.GetChunk();
-        Payload = parser.GetChunks();
+        Payloads = parser.GetChunks();
         Trailer = parser.GetChunk();
         }
 
@@ -212,6 +212,7 @@ public class ParseDare {
     public bool IsComplete => Index >= Data.Length;
 
     public ParseDare(byte[] data) {
+        Data = data;
         }
 
     public byte[] GetTypeIndicator() {

@@ -24,7 +24,7 @@ using System.Runtime.InteropServices;
 
 namespace Goedel.Cryptography.Dare;
 
-
+/// <summary>Sequence access support.</summary>
 public  class EarlSequence : Disposable {
 
     //Dictionary<string, EarlEntryIndex> DictionaryById = [];
@@ -44,20 +44,25 @@ public  class EarlSequence : Disposable {
     /// <summary>Index record of the last entry in the sequence.</summary>
     public EarlEntryIndex? IndexLast{ get; private set; }
 
-
+    /// <summary>The first frame in the sequence.</summary>
     public EarlEnvelope FrameFirst { get; private set; }
 
+    /// <summary>The first byte of the sequence entries (after the first frame).</summary>
     public long StartEntries {get; private set; }
 
+    /// <summary>The last frame in the sequence.</summary>
     public EarlEnvelope FrameLast { get; private set; }
 
+    /// <summary>The underlying stream.</summary>
     public EarlStream Stream { get; }
 
+    /// <summary>The file name bound to the underlying stream.</summary>
     public string Filename => Stream.Filename;
 
+    /// <summary>Position of the next frame.</summary>
     public long NextFrame { get; set; } = 0;
 
-
+    /// <summary>The data encoding for the frame mestadata.</summary>
     public DataEncoding DataEncoding { get; set; }
 
     /// <inheritdoc/>
@@ -75,14 +80,20 @@ public  class EarlSequence : Disposable {
                 EarlStream stream,
             DataEncoding dataEncoding = DataEncoding.JSON) {
         Stream = stream;
+        DataEncoding = dataEncoding;
         }
 
 
     #region -- Static factory methods Create or open sequence
 
+    /// <summary>Create a new sequence with file name <paramref name="fileName"/> and of
+    /// type <paramref name="typeIdentifier"/>.</summary>
+    /// <param name="fileName">The file type.</param>
+    /// <param name="typeIdentifier">The type identifier.</param>
+    /// <returns>The <see cref="EarlSequence"/> instance.</returns>
     public static EarlSequence Create(
                 string fileName,
-                EarlSequenceIndexType indexType = EarlSequenceIndexType.None) {
+                EarlSequenceIndexType typeIdentifier = EarlSequenceIndexType.None) {
         var stream = EarlStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
         var result = new EarlSequence(stream);
 
@@ -91,7 +102,9 @@ public  class EarlSequence : Disposable {
         return result;
         }
 
-
+    /// <summary>Open an existing sequene in file <paramref name="fileName"/></summary>
+    /// <param name="fileName">The file type.</param>
+    /// <returns>The <see cref="EarlSequence"/> instance.</returns>
     public static EarlSequence Open(
             string fileName) {
 
@@ -102,7 +115,7 @@ public  class EarlSequence : Disposable {
         return sequence;
         }
 
-
+    /// <summary>Initialize a newly opened sequence.</summary>
     protected virtual void Initialize() {
 
 
@@ -116,19 +129,19 @@ public  class EarlSequence : Disposable {
             }
         }
 
+    /// <summary>Write the initial sequence record.</summary>
     protected virtual void WriteInitial() {
         // Create the initial record
         var unprotected = new Unprotected();
         var contentMeta = GetContentMeta();
         var payload = Array.Empty<byte>();
-        var trailer = new Unprotected();
 
         FrameFirst = new EarlEnvelope(unprotected, contentMeta, null, payload);
         Append(FrameFirst);
         }
 
 
-
+    /// <summary>Read the initial sequence record.</summary>
     protected virtual void ReadInitial() {
         // read the type identifier
         var version = Stream.ReadTypeIdentifier();
@@ -139,7 +152,9 @@ public  class EarlSequence : Disposable {
         StartEntries = Stream.Position;
         }
 
-    protected virtual ContentMeta GetContentMeta () => new ContentMeta();
+    /// <summary>Return an empty <see cref="ContentMeta"/> instance.</summary>
+    /// <returns>The created instance.</returns>
+    protected virtual ContentMeta GetContentMeta () => new ();
 
 
 
@@ -158,10 +173,22 @@ public  class EarlSequence : Disposable {
     #endregion
 
     #region -- Append entry methods
+
+    /// <summary>Append the envelope <paramref name="entry"/> to the sequence.</summary>
+    /// <param name="entry">The entry to append.</param>
+    /// <returns>Index of the entry that was added.</returns>
     public EarlEntryIndex Append(
                 EarlEnvelope entry) => Stream.Append(entry, NextFrame++);
 
-
+    /// <summary>Serialize the object <paramref name="obj"/> as an object of type 
+    /// <typeparamref name="T"/> using encoding <paramref name="dataEncoding"/>
+    /// and append it to the sequece with content metadata <paramref name="contentMeta"/>.</summary>
+    /// <typeparam name="T">The type of the data to add the object as.</typeparam>
+    /// <param name="obj">The object to add.</param>
+    /// <param name="contentMeta">Content metadata.</param>
+    /// <param name="index">If true, index the entry.</param>
+    /// <param name="dataEncoding">The data encoding for the object.</param>
+    /// <returns>The entry index for the added envelope.</returns>
     public EarlEntryIndex<T> Append<T>(
                 T? obj,
                 ContentMeta contentMeta = null,
@@ -178,7 +205,12 @@ public  class EarlSequence : Disposable {
             };
         }
 
-
+    /// <summary>Append the entry data <paramref name="entry"/> to the sequence
+    /// with content metadata <paramref name="contentMeta"/>.</summary>
+    /// <param name="entry">The payload to add.</param>
+    /// <param name="contentMeta">Content metadata.</param>
+    /// <param name="index">If true, index the entry.</param>
+    /// <returns>The entry index for the added envelope.</returns>
     public EarlEntryIndex Append(
                 byte[] entry,
                 ContentMeta contentMeta=null,
@@ -202,7 +234,12 @@ public  class EarlSequence : Disposable {
         return result;
         }
 
-
+    /// <summary>Begin appending an envelope.</summary>
+    /// <param name="payloadLength">The length of the payload section.</param>
+    /// <param name="contentMeta">The content metadata.</param>
+    /// <param name="index">If true, index the entry.</param>
+    /// <returns>The frame number, position of first byte of the frame, total length, position of 
+    /// the first byte of the content.</returns>
     public virtual (long, long, long, long) AppendStart(
             long payloadLength,
             ContentMeta contentMeta = null,
@@ -217,66 +254,77 @@ public  class EarlSequence : Disposable {
         //return new EarlEntryIndex<T> (frame, start, length, payloadStart, payloadLength);
         }
 
-
+    /// <summary>Append the payload after beginning a frame with <see cref="AppendStart"/>.</summary>
+    /// <param name="payload">The data to append.</param>
+    /// <param name="offset">Offset within the data.</param>
+    /// <param name="length">Number of bytes to append.</param>
     public virtual void AppendPayload(
                 byte[] payload, int offset, int length) => Stream.AppendEntryPayload(payload, offset, length);
 
+    /// <summary>Close an entry.</summary>
     public virtual void AppendEnd() => Stream.AppendEntryEnd([]);
 
     #endregion
     #region -- Read Methods
 
-    public EarlEntryIndex? ReadIndexAt (long position, bool includePayload) {
-            throw new NYI(); 
-        }
+    //public EarlEntryIndex? ReadIndexAt (long position, bool includePayload) {
+    //        throw new NYI(); 
+    //    }
 
-    public EarlEnvelope? ReadEntryAt(long position) {
-        var index = ReadIndexAt(position, true);
-        return index?.EarlEnvelope;
-        }
-
-
-
-    public EarlEnvelope ReadFirst() {
-
-        return null;
-        }
-
-    public EarlEnvelope ReadLast() {
-
-        return null;
-        }
+    //public EarlEnvelope? ReadEntryAt(long position) {
+    //    var index = ReadIndexAt(position, true);
+    //    return index?.EarlEnvelope;
+    //    }
 
 
-    /// <summary>Return entry indicated by <paramref name="index"/>.
-    /// <para>If <paramref name="index"/> is zero, the first item in the sequence is returned. </para>
-    /// <para>If <paramref name="index"/> is positive, the (<paramref name="index"/>-1)th
-    /// entry counting from the first is returned.</para>
-    /// <para>If <paramref name="index"/> is negative, the (<paramref name="index"/>+1)th
-    /// entry counting from the last and traversing backwards is returned..</para>
-    /// </summary>
-    /// <param name="index"></param>
-    /// <returns>The envelope value.</returns>
-    public EarlEnvelope? ReadEntry(long index) {
 
-        return null;
-        }
+    //public EarlEnvelope ReadFirst() {
 
+    //    return null;
+    //    }
+
+    //public EarlEnvelope ReadLast() {
+
+    //    return null;
+    //    }
+
+
+    ///// <summary>Return entry indicated by <paramref name="index"/>.
+    ///// <para>If <paramref name="index"/> is zero, the first item in the sequence is returned. </para>
+    ///// <para>If <paramref name="index"/> is positive, the (<paramref name="index"/>-1)th
+    ///// entry counting from the first is returned.</para>
+    ///// <para>If <paramref name="index"/> is negative, the (<paramref name="index"/>+1)th
+    ///// entry counting from the last and traversing backwards is returned..</para>
+    ///// </summary>
+    ///// <param name="index"></param>
+    ///// <returns>The envelope value.</returns>
+    //public EarlEnvelope? ReadEntry(long index) {
+
+    //    return null;
+    //    }
+
+    /// <summary>Read the next entry in the sequence.</summary>
+    /// <returns></returns>
     public EarlEnvelope? ReadNext() {
 
         return Stream.ReadFrameNext();
         }
 
-    public EarlEnvelope? ReadPrevious() {
+    //public EarlEnvelope? ReadPrevious() {
 
-        return null;
-        }
+    //    return null;
+    //    }
 
-    public EarlEnvelope Read(EarlEntryIndex index) {
+    //public EarlEnvelope Read(EarlEntryIndex index) {
 
-        return null;
-        }
+    //    return null;
+    //    }
 
+    /// <summary>Return the payload data for the entry described by <paramref name="index"/>
+    /// parsing it as data of type <typeparamref name="T"/></summary>
+    /// <typeparam name="T">The type to parse the data as.</typeparam>
+    /// <param name="index">The index describing the entry position.</param>
+    /// <returns>The parse result.</returns>
     public T GetValue<T>(EarlEntryIndex index) where T : JsonObject{
         // check content meta is this a 
 
@@ -298,17 +346,17 @@ public  class EarlSequence : Disposable {
 
 
 
-    public EarlEntryIndex? IndexNext(
-                    EarlEntryIndex index,
-                    bool forward=true) {
+    //public EarlEntryIndex? IndexNext(
+    //                EarlEntryIndex index,
+    //                bool forward=true) {
 
-        return null;
-        }
+    //    return null;
+    //    }
 
-    public EarlEntryIndex? IndexPrevious() {
+    //public EarlEntryIndex? IndexPrevious() {
 
-        return null;
-        }
+    //    return null;
+    //    }
 
     #endregion
 

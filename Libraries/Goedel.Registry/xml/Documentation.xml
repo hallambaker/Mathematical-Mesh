@@ -38,6 +38,13 @@
             <param name="text">Input string</param>
             <returns>Character safe label.</returns>
         </member>
+        <member name="M:Goedel.Registry.ExtensionMethods.Uniqueify(System.String)">
+            <summary>Convert <paramref name="text"/> to a unique identifier by 
+            converting to lower case. If the text value was already lower case, an
+            undescore is appended.</summary>
+            <param name="text">The text to uniquify.</param>
+            <returns>The unique version.</returns>
+        </member>
         <member name="M:Goedel.Registry.ExtensionMethods.If(System.String)">
             <summary>
             Return the string value if a condition is met, otherwise return an
@@ -93,6 +100,22 @@
             The separator class prints as one value the first time ToString() is called
             and a different value thereafter.
             </summary>
+            <remarks>
+            Create a separator class.
+            </remarks>
+            <param name="first">String to return on the first call to ToString()</param>
+            <param name="next">String to return after the first call to ToString()</param>
+        </member>
+        <member name="M:Goedel.Registry.Separator.#ctor(System.String,System.String)">
+            <summary>
+            The separator class prints as one value the first time ToString() is called
+            and a different value thereafter.
+            </summary>
+            <remarks>
+            Create a separator class.
+            </remarks>
+            <param name="first">String to return on the first call to ToString()</param>
+            <param name="next">String to return after the first call to ToString()</param>
         </member>
         <member name="P:Goedel.Registry.Separator.First">
             <summary>
@@ -108,13 +131,6 @@
             <summary>
             Is this the first time ToString was called?
             </summary>
-        </member>
-        <member name="M:Goedel.Registry.Separator.#ctor(System.String,System.String)">
-            <summary>
-            Create a separator class.
-            </summary>
-            <param name="first">String to return on the first call to ToString()</param>
-            <param name="next">String to return after the first call to ToString()</param>
         </member>
         <member name="M:Goedel.Registry.Separator.#ctor(System.String)">
             <summary>

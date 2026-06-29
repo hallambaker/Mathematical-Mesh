@@ -33,7 +33,12 @@ namespace Goedel.Contacts;
 public static partial class Extension {
 
 
-
+    /// <summary>Inverse dictionary lookup, return the first key <paramref name="key"/> that has the value 
+    /// <paramref name="value"/> in the dictionary <paramref name="keyValuePairs"/>.</summary> 
+    /// <param name="keyValuePairs">The key value pairs.</param>
+    /// <param name="value">The value to find.</param>
+    /// <param name="key">The returned key, null if not found.</param>
+    /// <returns>True if the value was found, otherwise false.</returns>
     public static bool TryGetKey (
                 this Dictionary<string, string> keyValuePairs, 
                 string value, 

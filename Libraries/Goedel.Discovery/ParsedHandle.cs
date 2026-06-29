@@ -182,7 +182,9 @@ public class ParsedHandle {
 
         }
 
-
+    /// <summary>Get the domain corresonding to <paramref name="handle"/></summary>
+    /// <param name="handle">The handle text representation.</param>
+    /// <returns>The DNS name.</returns>
     public static string GetDomain(string handle) {
 
         var parsedHandle = new ParsedHandle(handle);
@@ -200,7 +202,8 @@ public class ParsedHandle {
     /// Convenience method, resolve the handle <paramref name="handle"/> and
     /// return the the corresponding account service address as a text string.
     /// </summary>
-    /// <param name="handle"></param>
+    /// <param name="dnsClient">The DNS client to use for the query.</param>
+    /// <param name="handle">The handle to perform the query on.</param>
     /// <returns></returns>
     public static string Resolve(DnsClient dnsClient, string handle) {
         var parsed = new ParsedHandle(handle);
@@ -238,11 +241,13 @@ public class ParsedHandle {
             }
         }
 
-
-    public static async Task<byte[]> ResolveContact(string handle) {
-        byte[] result = null;
-        return result;
-        }
+    ///// <summary>Resolve the contact data for <paramref name="handle"/></summary>
+    ///// <param name="handle">Handle to resolve the contact data for</param>
+    ///// <returns>The binary contact data.</returns>
+    //public static async Task<byte[]> ResolveContact(string handle) {
+    //    byte[] result = null;
+    //    return result;
+    //    }
 
     /// <summary>
     /// Return the Account Service handle associated with the handle.
@@ -439,8 +444,8 @@ public abstract record HandleService {
             var index = part.IndexOf('=');
 
             if (index > 0) {
-                var tag = part.Substring(0, index);
-                var rest = part.Substring(index + 1);
+                var tag = part[..index];
+                var rest = part[(index + 1)..];
                 Tags.Add(tag, rest);
                 }
             }

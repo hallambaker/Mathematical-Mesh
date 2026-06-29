@@ -57,7 +57,7 @@ public partial struct DNSGateway {
             _DomainName = null; _IPAddress = value;
             Type = DNSGatewayType.IPv4;
             }
-        get => _IPAddress;
+        readonly get => _IPAddress;
 
         }
     /// <summary>The DNS address of the gateway</summary>
@@ -66,22 +66,25 @@ public partial struct DNSGateway {
             _DomainName = value; _IPAddress = null; Type =
            DNSGatewayType.DomainName;
             }
-        get => _DomainName;
+        readonly get => _DomainName;
         }
 
     }
 
-
+/// <summary>Update codes</summary>
 public enum DNSUpdateCodes {
 
+    ///<summary>Delete all RRsets matching the name</summary>
     DeleteAllRRSets,
 
+    /// <summary>Delete just one record set.</summary>
     DeleteRRSet,
 
+    /// <summary>Delete just the matching RR.</summary>
     DeleteRR,
 
+    /// <summary>Add the RR</summary>
     Add
-
 
     }
 
@@ -145,17 +148,14 @@ public enum DNSClass {
     }
 
 /// <summary>Domain name</summary>
-public class Domain {
+/// <remarks>Constructor from string</remarks>
+/// <param name="Name">The DNS name in UNICODE format.</param>
+public class Domain(string Name) {
     /// <summary>Unicode representation of name</summary>
-    public string Name; // Unicode representation of name
+    public string Name = Name; // Unicode representation of name
 
     /// <summary>DNSClient represenation (punycode)</summary>
     public byte[] Data; // DNSClient represenation (punycode)
-
-
-    /// <summary>Constructor from string</summary>
-    /// <param name="Name">The DNS name in UNICODE format.</param>
-    public Domain(string Name) => this.Name = Name;
     }
 
 
@@ -224,9 +224,7 @@ public class DNSMessage {
         Index.WriteInt16(Authorities.Length);
         Index.WriteInt16(Additional.Length);
 
-        if (Query != null) {
-            Query.Encode(Index);
-            }
+        Query?.Encode(Index);
         foreach (DNSRecord Record in Answers) {
             Record.Encode(Index);
             }
@@ -355,13 +353,17 @@ public class DNSResponse : DNSMessage {
 
 
 /// <summary>DNS Query class</summary>
-public class DNSQuery {
+/// <remarks>Constructor from main components</remarks>
+/// <param name="Domain">Domain name</param>
+/// <param name="QTypeIn">Query type</param>
+/// <param name="QClassIn">Query class</param>
+public class DNSQuery(String Domain, DNSTypeCode QTypeIn, DNSClass QClassIn) {
     /// <summary>The Query name</summary>
-    public String QName;
+    public String QName = Domain;
     /// <summary>The Query Type</summary>
-    public DNSTypeCode QType;
+    public DNSTypeCode QType = QTypeIn;
     /// <summary>The Class</summary>
-    public DNSClass QClass;
+    public DNSClass QClass = QClassIn;
 
     /// <summary>Encode Query</summary>
     /// <param name="Index">Output buffer</param>
@@ -385,17 +387,6 @@ public class DNSQuery {
         return new DNSQuery(QName, QType, QClass);
         }
 
-    // Constructors
-    /// <summary>Constructor from main components</summary>
-    /// <param name="Domain">Domain name</param>
-    /// <param name="QTypeIn">Query type</param>
-    /// <param name="QClassIn">Query class</param>
-    public DNSQuery(String Domain, DNSTypeCode QTypeIn, DNSClass QClassIn) {
-        QName = Domain;
-        QType = QTypeIn;
-        QClass = QClassIn;
-        }
-
     /// <summary>Constructor from main components for internet class</summary>
     /// <param name="Domain">Domain name</param>
     /// <param name="QTypeIn">Query type</param>
@@ -403,6 +394,6 @@ public class DNSQuery {
         this(Domain, QTypeIn, DNSClass.IN) { }
     }
 
-
+/// <summary>DNS u=pdate message.</summary>
 public class DNSUpdate : DNSMessage {
     }

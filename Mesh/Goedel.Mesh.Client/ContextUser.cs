@@ -308,6 +308,9 @@ public partial class ContextUser : ContextAccount {
     #region // Operations requiring OfflineSignatureKey - GrantAdmin, SetService
 
 
+    /// <summary>Bind the account to the contact handle <paramref name="handle"/></summary>
+    /// <param name="handle">The handle to bind to.</param>
+    /// <returns>The EARL URI describing the binding.</returns>
     public async Task<string> BindContactHandle(string handle) {
         TryGetContactSelf(out var contactSelf);
         var jsContact = contactSelf.JsContact;

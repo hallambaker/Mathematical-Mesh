@@ -1148,6 +1148,21 @@
         <member name="P:Goedel.Discovery.DNSGateway.DomainName">
             <summary>The DNS address of the gateway</summary>
         </member>
+        <member name="T:Goedel.Discovery.DNSUpdateCodes">
+            <summary>Update codes</summary>
+        </member>
+        <member name="F:Goedel.Discovery.DNSUpdateCodes.DeleteAllRRSets">
+            <summary>Delete all RRsets matching the name</summary>
+        </member>
+        <member name="F:Goedel.Discovery.DNSUpdateCodes.DeleteRRSet">
+            <summary>Delete just one record set.</summary>
+        </member>
+        <member name="F:Goedel.Discovery.DNSUpdateCodes.DeleteRR">
+            <summary>Delete just the matching RR.</summary>
+        </member>
+        <member name="F:Goedel.Discovery.DNSUpdateCodes.Add">
+            <summary>Add the RR</summary>
+        </member>
         <member name="T:Goedel.Discovery.DNSFlags">
             <summary>DNS Flags</summary>
         </member>
@@ -1216,16 +1231,19 @@
         </member>
         <member name="T:Goedel.Discovery.Domain">
             <summary>Domain name</summary>
+            <remarks>Constructor from string</remarks>
+            <param name="Name">The DNS name in UNICODE format.</param>
+        </member>
+        <member name="M:Goedel.Discovery.Domain.#ctor(System.String)">
+            <summary>Domain name</summary>
+            <remarks>Constructor from string</remarks>
+            <param name="Name">The DNS name in UNICODE format.</param>
         </member>
         <member name="F:Goedel.Discovery.Domain.Name">
             <summary>Unicode representation of name</summary>
         </member>
         <member name="F:Goedel.Discovery.Domain.Data">
             <summary>DNSClient represenation (punycode)</summary>
-        </member>
-        <member name="M:Goedel.Discovery.Domain.#ctor(System.String)">
-            <summary>Constructor from string</summary>
-            <param name="Name">The DNS name in UNICODE format.</param>
         </member>
         <member name="T:Goedel.Discovery.DNSMessage">
             <summary>DNS Message class</summary>
@@ -1319,6 +1337,17 @@
         </member>
         <member name="T:Goedel.Discovery.DNSQuery">
             <summary>DNS Query class</summary>
+            <remarks>Constructor from main components</remarks>
+            <param name="Domain">Domain name</param>
+            <param name="QTypeIn">Query type</param>
+            <param name="QClassIn">Query class</param>
+        </member>
+        <member name="M:Goedel.Discovery.DNSQuery.#ctor(System.String,Goedel.Discovery.DNSTypeCode,Goedel.Discovery.DNSClass)">
+            <summary>DNS Query class</summary>
+            <remarks>Constructor from main components</remarks>
+            <param name="Domain">Domain name</param>
+            <param name="QTypeIn">Query type</param>
+            <param name="QClassIn">Query class</param>
         </member>
         <member name="F:Goedel.Discovery.DNSQuery.QName">
             <summary>The Query name</summary>
@@ -1338,16 +1367,13 @@
             <param name="Index">Input buffer</param>
             <returns>Query</returns>
         </member>
-        <member name="M:Goedel.Discovery.DNSQuery.#ctor(System.String,Goedel.Discovery.DNSTypeCode,Goedel.Discovery.DNSClass)">
-            <summary>Constructor from main components</summary>
-            <param name="Domain">Domain name</param>
-            <param name="QTypeIn">Query type</param>
-            <param name="QClassIn">Query class</param>
-        </member>
         <member name="M:Goedel.Discovery.DNSQuery.#ctor(System.String,Goedel.Discovery.DNSTypeCode)">
             <summary>Constructor from main components for internet class</summary>
             <param name="Domain">Domain name</param>
             <param name="QTypeIn">Query type</param>
+        </member>
+        <member name="T:Goedel.Discovery.DNSUpdate">
+            <summary>DNS u=pdate message.</summary>
         </member>
         <member name="T:Goedel.Discovery.DNSTypeCode">
             <summary>DNT Type codes</summary>
@@ -4039,6 +4065,17 @@
             <param name="space">If true, insert a space between the text segments.</param>
             <returns>The concatenated string.</returns>
         </member>
+        <member name="T:Goedel.Discovery.IDnsPublisher">
+            <summary>DNS Publisher interface.</summary>
+        </member>
+        <member name="M:Goedel.Discovery.IDnsPublisher.PublishRecords(System.Collections.Generic.IEnumerable{Goedel.Discovery.DNSItem})">
+            <summary>Publish multiple records.</summary>
+            <param name="records">The records to publish</param>
+        </member>
+        <member name="M:Goedel.Discovery.IDnsPublisher.PublishRecord(Goedel.Discovery.DNSItem)">
+            <summary>Publish a record</summary>
+            <param name="record">The record to publish</param>
+        </member>
         <member name="T:Goedel.Discovery.NamespaceDoc">
             <summary>
             Provides a hook 
@@ -4338,12 +4375,18 @@
             <param name="handle">The string to parse.</param>
             <exception cref="T:Goedel.Utilities.NYI"></exception>
         </member>
+        <member name="M:Goedel.Discovery.ParsedHandle.GetDomain(System.String)">
+            <summary>Get the domain corresonding to <paramref name="handle"/></summary>
+            <param name="handle">The handle text representation.</param>
+            <returns>The DNS name.</returns>
+        </member>
         <member name="M:Goedel.Discovery.ParsedHandle.Resolve(Goedel.Discovery.DnsClient,System.String)">
             <summary>
             Convenience method, resolve the handle <paramref name="handle"/> and
             return the the corresponding account service address as a text string.
             </summary>
-            <param name="handle"></param>
+            <param name="dnsClient">The DNS client to use for the query.</param>
+            <param name="handle">The handle to perform the query on.</param>
             <returns></returns>
         </member>
         <member name="M:Goedel.Discovery.ParsedHandle.Resolve(Goedel.Discovery.DnsClient)">

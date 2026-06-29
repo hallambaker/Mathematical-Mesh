@@ -99,7 +99,10 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     ///<summary>The Machine context.</summary>
     public IMeshMachineClient MeshMachine => MeshHost.MeshMachine;
 
+    /// <summary>The DNS resolution client</summary>
     public DnsClient DnsClient => MeshMachine.DnsClient;
+
+    /// <summary>The EARL resolution client.</summary>
     public EarlClient EarlClient => MeshMachine.EarlClient;
 
 
@@ -1225,7 +1228,13 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             };
         }
 
-
+    /// <summary>Publ;ish the earl <paramref name="data"/> as scheme <paramref name="scheme"/>
+    /// with content type <paramref name="contentType"/> in context <paramref name="context"/></summary>
+    /// <param name="data">The data to publish.</param>
+    /// <param name="scheme">The URI scheme.</param>
+    /// <param name="contentType">The IANA contant type.</param>
+    /// <param name="context">The envelope context.</param>
+    /// <returns>The result returned by the service.</returns>
     public async Task<PublishEarlResponse> PublishEarl(
                 byte[] data,
                 string scheme,
@@ -1244,10 +1253,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             contentMeta.ReceiptProof = proof;
             }
 
-
         var enveloped = EarlEnvelopeWriter.GetBytes(data, contentMeta);
-
-
 
 
         var(earl, _, ciphertext) = Udf.Earl(enveloped);
@@ -1265,6 +1271,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         }
 
+    /// <summary>Publish the contact <paramref name="jsContact"/> to the envelope
+    /// being built in <paramref name="context"/></summary>
+    /// <param name="jsContact">The contact to publish.</param>
+    /// <param name="context">The envelope builder context</param>
+    /// <returns>The EARL string.</returns>
     public async Task<string> PublishEarl(
                 JsContact jsContact,
                 EarlEnvelopeContext context = null) {
@@ -1273,7 +1284,11 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         return result.Earl;
         }
 
-
+    /// <summary>Publish the device <paramref name="jsDevice"/> to the envelope
+    /// being built in <paramref name="context"/></summary>
+    /// <param name="jsDevice">The device to publish.</param>
+    /// <param name="context">The envelope builder context</param>
+    /// <returns>The EARL string.</returns>
     public async Task<string> PublishEarl(
                 JsDevice jsDevice,
                 EarlEnvelopeContext context = null) {
@@ -1282,7 +1297,9 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
         return result.Earl;
         }
 
-
+    /// <summary>Publish the record set <paramref name="records"/>.</summary>
+    /// <param name="records">The records to publish,</param>
+    /// <returns>The response of the service.</returns>
     public async Task<PublishDnsResponse> PublishDns(
             IEnumerable<DNSRecord> records) {
         var updates = new List<DnsUpdate>();
@@ -1351,13 +1368,21 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     #endregion
     #region // Sign messages
 
-
+    /// <summary>Sign and encrypt the message <paramref name="message"/> and return 
+    /// in an envelope.</summary>
+    /// <param name="message">The message to sign and encrypt</param>
+    /// <param name="profileDevice">The device to send to.</param>
+    /// <returns>The enveloped data.</returns>
     public Enveloped<Message> SignAndEncryptMessage(
                 Message message,
                 ProfileDevice profileDevice) => SignAndEncryptMessage(
                     message, profileDevice.Encryption.CryptoKey);
 
-
+    /// <summary>Sign and encrypt the message <paramref name="message"/> and return 
+    /// in an envelope.</summary>
+    /// <param name="message">The message to sign and encrypt</param>
+    /// <param name="encryptionKey">The recipient encryption key.</param>
+    /// <returns>The enveloped data.</returns>
     public Enveloped<Message> SignAndEncryptMessage(
                     Message message,
                     CryptographicKey encryptionKey) {
@@ -1368,9 +1393,6 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
 
         return result;
         }
-
-
-
 
 
     #endregion

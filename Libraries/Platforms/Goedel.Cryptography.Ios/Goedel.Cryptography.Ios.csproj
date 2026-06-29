@@ -13,7 +13,7 @@
 
 
 	<PropertyGroup>
-		<TargetFramework>net9.0-ios</TargetFramework>
+		<TargetFramework>net10.0-ios</TargetFramework>
 		<RootNamespace>Goedel.Cryptography.Ios</RootNamespace>
 		<Product>Goedel.Cryptography.Ios</Product>
 		<Description>Platform specific Ios libraries.</Description>

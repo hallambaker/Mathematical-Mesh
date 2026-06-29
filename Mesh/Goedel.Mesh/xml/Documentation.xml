@@ -2896,6 +2896,10 @@
             <param name="self">If true, mark as the user's own contact.</param>
             <param name="contact">Dare Envelope containing the contact to create a catalog wrapper for.</param>
         </member>
+        <member name="M:Goedel.Mesh.CatalogedContact.GetMeshContact">
+            <summary>Filter the verified contacts and return the first mesh contact.</summary>
+            <returns>The mesh contact if found.</returns>
+        </member>
         <member name="M:Goedel.Mesh.CatalogedContact.Describe(System.Text.StringBuilder,System.Boolean)">
             <summary>
             Describe the entry, appending the output to <paramref name="builder"/>.
@@ -2964,6 +2968,15 @@
         <member name="T:Goedel.Mesh.MeshContact">
             <summary>
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshContact.#ctor">
+            <summary>Default constructor used in deserialization.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshContact.#ctor(Goedel.Mesh.CatalogedContact,Goedel.Mesh.ProfileAccount)">
+            <summary>Create a Mesh contact in contact <paramref name="catalogedContact"/> for
+            the profile <paramref name="profileAccount"/>.</summary>
+            <param name="catalogedContact">The cataloged contact.</param>
+            <param name="profileAccount">The account profile.</param>
         </member>
         <member name="P:Goedel.Mesh.MeshContact.Verification">
             <summary>

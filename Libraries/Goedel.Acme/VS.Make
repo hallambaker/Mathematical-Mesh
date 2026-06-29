@@ -18,14 +18,12 @@
 MSBuildThisFileDirectory = 
 
 LinkFiles = \
-    Goedel.Acme.dll\
+    Certes.dll\
+    Goedel.Utilities.dll\
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.Jose.dll\
     Goedel.Protocol.Service.dll\
-    Goedel.Protocol.dll\
-    Goedel.Utilities.dll\
-    Certes.dll\
-    Goedel.Thing.dll
+    Goedel.Protocol.dll
 
 ToolTargets = \
 	Exceptions.cs
@@ -47,5 +45,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Thing.Server.dll
+	powershell publishtarget Goedel.Acme.dll
 

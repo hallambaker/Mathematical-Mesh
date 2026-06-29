@@ -6,9 +6,13 @@
 		<Title>Goedel.Test</Title>
 		<DefineConstants>_Github_</DefineConstants>
 		<Documents>false</Documents>
+		<DocumentationFile></DocumentationFile>
 	</PropertyGroup>
 
 	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+	<PropertyGroup>
+		<DocumentationFile></DocumentationFile>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="xunit" Version="2.4.2" />

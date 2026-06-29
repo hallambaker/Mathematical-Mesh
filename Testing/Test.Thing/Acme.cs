@@ -32,6 +32,8 @@ using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Goedel.Thing.Server;
+
 namespace Goedel.XUnit;
 
 public class Acme : UnitTestSet {

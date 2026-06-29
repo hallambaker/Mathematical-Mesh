@@ -4,46 +4,17 @@
         <name>Goedel.Thing.Server</name>
     </assembly>
     <members>
-        <member name="T:Goedel.Acme.AcmeAccount">
-            <summary>
-            ACME account
-            </summary>
-        </member>
-        <member name="P:Goedel.Acme.AcmeAccount.PemKey">
-            <summary>The PEM key</summary> 
-        </member>
-        <member name="P:Goedel.Acme.AcmeAccount.AccountContext">
-            <summary>The Account context</summary> 
-        </member>
-        <member name="P:Goedel.Acme.AcmeAccount.AcmeContext">
-            <summary></summary> 
-        </member>
-        <member name="M:Goedel.Acme.AcmeAccount.Create(System.String,System.Boolean)">
-            <summary>
-            Factory method, returns a new account instance to the service at <paramref name="uri"/>
-            </summary>
-            <param name="uriString">Uri of the CA service.</param>
-            <param name="staging">If true, use the staging/test version of the service.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Acme.AcmeAccount.PlaceOrder(System.Collections.Generic.List{System.String})">
-            <summary>
-            Place an order for a certificate with the domains <paramref name="domains"/>
-            </summary>
-            <param name="domains">List of domains to be included in the certificate.</param>
-            <returns>Task returning the order.</returns>
-        </member>
-        <member name="T:Goedel.Acme.ServiceThingClient">
+        <member name="T:Goedel.Thing.Server.ServiceThingClient">
             <summary>
             Thing service client, interfaces to the DNS and to ACME services.
             </summary>
         </member>
-        <member name="M:Goedel.Acme.ServiceThingClient.#ctor">
+        <member name="M:Goedel.Thing.Server.ServiceThingClient.#ctor">
             <summary>
             Constructor, 
             </summary>
         </member>
-        <member name="M:Goedel.Acme.ServiceThingClient.NewDeviceAsync(System.String,System.Collections.Generic.List{System.Net.IPAddress},System.Collections.Generic.IEnumerable{Goedel.Acme.ServiceDescription})">
+        <member name="M:Goedel.Thing.Server.ServiceThingClient.NewDeviceAsync(System.String,System.Collections.Generic.List{System.Net.IPAddress},System.Collections.Generic.IEnumerable{Goedel.Thing.Server.ServiceDescription})">
             <summary>
             Obtain credentials for a host providing the services <paramref name="services"/>
             from addresses <paramref name="addresses"/> on domain <paramref name="domain"/>
@@ -52,9 +23,9 @@
             <param name="domain">The domain to provision the device to.</param>
             <param name="addresses">The IP addresses of the device.</param>
             <param name="services">The services supported by the device.</param>
-            <returns>Task returning a <see cref="T:Goedel.Acme.ServiceThingResult"/> on completion.</returns>
+            <returns>Task returning a <see cref="T:Goedel.Thing.Server.ServiceThingResult"/> on completion.</returns>
         </member>
-        <member name="M:Goedel.Acme.ServiceThingClient.PrepareAsync(System.String,System.Collections.Generic.List{System.Net.IPAddress},System.Collections.Generic.IEnumerable{Goedel.Acme.ServiceDescription})">
+        <member name="M:Goedel.Thing.Server.ServiceThingClient.PrepareAsync(System.String,System.Collections.Generic.List{System.Net.IPAddress},System.Collections.Generic.IEnumerable{Goedel.Thing.Server.ServiceDescription})">
             <summary>
             Obtain credentials for a host providing the services <paramref name="services"/>
             from addresses <paramref name="addresses"/> on domain <paramref name="domain"/>.
@@ -62,9 +33,9 @@
             <param name="domain">The domain to provision the device to.</param>
             <param name="addresses">The IP addresses of the device.</param>
             <param name="services">The services supported by the device.</param>
-            <returns>Task returning a <see cref="T:Goedel.Acme.ServiceThingResult"/> on completion.</returns>
+            <returns>Task returning a <see cref="T:Goedel.Thing.Server.ServiceThingResult"/> on completion.</returns>
         </member>
-        <member name="M:Goedel.Acme.ServiceThingClient.PrepareAsync(Goedel.Acme.ServiceThingResult)">
+        <member name="M:Goedel.Thing.Server.ServiceThingClient.PrepareAsync(Goedel.Thing.Server.ServiceThingResult)">
             <summary>
             Obtain credentials for a host providing the services
             <paramref name="services"/>. The DNS records to allow service discovery are not
@@ -72,86 +43,15 @@
             discovery record.
             </summary>
             <param name="services">The service descriptions.</param>
-            <returns>Task returning a <see cref="T:Goedel.Acme.ServiceThingResult"/> on completion.</returns>
+            <returns>Task returning a <see cref="T:Goedel.Thing.Server.ServiceThingResult"/> on completion.</returns>
         </member>
-        <member name="M:Goedel.Acme.ServiceThingClient.PublishAsync(Goedel.Acme.ServiceThingResult)">
+        <member name="M:Goedel.Thing.Server.ServiceThingClient.PublishAsync(Goedel.Thing.Server.ServiceThingResult)">
             <summary>
             Publish the DNS settings for the services previously credentialed in 
             <paramref name="services"/>.
             </summary>
             <param name="services">The service descriptions.</param>
-            <returns>Task returning a <see cref="T:Goedel.Acme.ServiceThingResult"/> on completion.</returns>
-        </member>
-        <member name="T:Goedel.Acme.WellKnownService">
-            <summary>
-            Well Known services.
-            </summary>
-        </member>
-        <member name="F:Goedel.Acme.WellKnownService.HTTP">
-            <summary>HTTP</summary> 
-        </member>
-        <member name="F:Goedel.Acme.WellKnownService.HTTPS">
-            <summary>HTTP over TLS.</summary> 
-        </member>
-        <member name="F:Goedel.Acme.WellKnownService.HTTP2">
-            <summary>HTTP/2</summary> 
-        </member>
-        <member name="F:Goedel.Acme.WellKnownService.HTTP3">
-            <summary>HTTP/3</summary> 
-        </member>
-        <member name="F:Goedel.Acme.WellKnownService.Git">
-            <summary>Git</summary> 
-        </member>
-        <member name="F:Goedel.Acme.WellKnownService.SSH">
-            <summary>SSH</summary> 
-        </member>
-        <member name="F:Goedel.Acme.WellKnownService.AFS">
-            <summary>Andrews File System</summary> 
-        </member>
-        <member name="F:Goedel.Acme.WellKnownService.SMB2">
-            <summary>Windows Server Message Block 2 file server</summary> 
-        </member>
-        <member name="F:Goedel.Acme.WellKnownService.SMB3">
-            <summary>Windows Server Message Block 3 file server</summary> 
-        </member>
-        <member name="F:Goedel.Acme.WellKnownService.NFS3">
-            <summary>Network File Server v3</summary> 
-        </member>
-        <member name="F:Goedel.Acme.WellKnownService.NFS4">
-            <summary>Network File Server v4</summary> 
-        </member>
-        <member name="F:Goedel.Acme.WellKnownService.Mesh">
-            <summary>Mathematical Mesh</summary> 
-        </member>
-        <member name="F:Goedel.Acme.WellKnownService.IPP">
-            <summary>Internet Printing Protocol.</summary> 
-        </member>
-        <member name="T:Goedel.Acme.Extensions">
-            <summary>
-            Extensions class.
-            </summary>
-        </member>
-        <member name="M:Goedel.Acme.Extensions.GetProtocol(Goedel.Acme.WellKnownService)">
-            <summary>
-            Return the service prefix for <paramref name="service"/>.
-            </summary>
-            <param name="service">The service to return the information for.</param>
-            <returns>The IANA protocol identifier</returns>
-        </member>
-        <member name="M:Goedel.Acme.Extensions.GetPort(Goedel.Acme.WellKnownService,System.Int32)">
-            <summary>
-            Return the default for <paramref name="service"/>.
-            </summary>
-            <param name="service">The service to return the information for.</param>
-            <returns>The IANA protocol identifier</returns>
-        </member>
-        <member name="M:Goedel.Acme.Extensions.GetConfiguration(Goedel.Acme.WellKnownService,System.String)">
-            <summary>
-            Return the configuration  for <paramref name="service"/>.
-            </summary>
-            <param name="service">The service to return the information for.</param>
-            <param name="configuration">The configuration data.</param>
-            <returns>The IANA protocol identifier</returns>
+            <returns>Task returning a <see cref="T:Goedel.Thing.Server.ServiceThingResult"/> on completion.</returns>
         </member>
         <member name="T:Goedel.Thing.Server.TBS">
             <summary>
@@ -199,6 +99,31 @@
             <summary>
             Extensions class. Provides static convenience extensions.
             </summary>
+            <summary>
+            Extensions class.
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.Server.Extensions.GetProtocol(Goedel.Thing.Server.WellKnownService)">
+            <summary>
+            Return the service prefix for <paramref name="service"/>.
+            </summary>
+            <param name="service">The service to return the information for.</param>
+            <returns>The IANA protocol identifier</returns>
+        </member>
+        <member name="M:Goedel.Thing.Server.Extensions.GetPort(Goedel.Thing.Server.WellKnownService,System.Int32)">
+            <summary>
+            Return the default for <paramref name="service"/>.
+            </summary>
+            <param name="service">The service to return the information for.</param>
+            <returns>The IANA protocol identifier</returns>
+        </member>
+        <member name="M:Goedel.Thing.Server.Extensions.GetConfiguration(Goedel.Thing.Server.WellKnownService,System.String)">
+            <summary>
+            Return the configuration  for <paramref name="service"/>.
+            </summary>
+            <param name="service">The service to return the information for.</param>
+            <param name="configuration">The configuration data.</param>
+            <returns>The IANA protocol identifier</returns>
         </member>
         <member name="T:Goedel.Thing.Server.NamespaceDoc">
             <summary>
@@ -246,6 +171,50 @@
             <param name="GenericHostConfiguration">Generic service configuration.</param>
             <param name="service">The service endpoing.</param>
             <returns>The configuration setting,</returns>
+        </member>
+        <member name="T:Goedel.Thing.Server.WellKnownService">
+            <summary>
+            Well Known services.
+            </summary>
+        </member>
+        <member name="F:Goedel.Thing.Server.WellKnownService.HTTP">
+            <summary>HTTP</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Server.WellKnownService.HTTPS">
+            <summary>HTTP over TLS.</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Server.WellKnownService.HTTP2">
+            <summary>HTTP/2</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Server.WellKnownService.HTTP3">
+            <summary>HTTP/3</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Server.WellKnownService.Git">
+            <summary>Git</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Server.WellKnownService.SSH">
+            <summary>SSH</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Server.WellKnownService.AFS">
+            <summary>Andrews File System</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Server.WellKnownService.SMB2">
+            <summary>Windows Server Message Block 2 file server</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Server.WellKnownService.SMB3">
+            <summary>Windows Server Message Block 3 file server</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Server.WellKnownService.NFS3">
+            <summary>Network File Server v3</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Server.WellKnownService.NFS4">
+            <summary>Network File Server v4</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Server.WellKnownService.Mesh">
+            <summary>Mathematical Mesh</summary> 
+        </member>
+        <member name="F:Goedel.Thing.Server.WellKnownService.IPP">
+            <summary>Internet Printing Protocol.</summary> 
         </member>
     </members>
 </doc>

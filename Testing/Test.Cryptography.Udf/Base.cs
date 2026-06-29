@@ -149,7 +149,7 @@ public class MakeUdf {
         var testId = 1;
         foreach (var (algId, mode) in algIds) {
             var group = new AcvpTestGroup() {
-                tgId = testGroupId++,
+                TgId = testGroupId++,
                 };
             file.Add(group);
 

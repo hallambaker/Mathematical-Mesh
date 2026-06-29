@@ -21,10 +21,8 @@
 #endregion
 using Goedel.Cryptography;
 
-/// <summary>
-/// 
-/// </summary>
 namespace Goedel.Test;
+
 
 
 public static class Extensions {

@@ -18,7 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-namespace Goedel.Acme;
+namespace Goedel.Thing.Server;
 
 /// <summary>
 /// Well Known services.

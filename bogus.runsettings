@@ -3,7 +3,7 @@
 
     <!-- Configurations that affect the Test Framework -->
   <RunConfiguration>
-    <MaxCpuCount>12</MaxCpuCount>
+    <MaxCpuCount>32</MaxCpuCount>
     <!-- Path relative to directory that contains .runsettings file-->
     <ResultsDirectory>.\TestResults</ResultsDirectory>
 

@@ -1,25 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
+		<RootNamespace>Goedel.Acme</RootNamespace>
+		<Product>Goedel.Acme</Product>
+		<Title>Goedel.Acme</Title>
+		<Description>ACME protocol library library.</Description>
+		<Copyright>© 2020-2025 Threshold Secrets LLC</Copyright>
 		<OutputType>Library</OutputType>
-		<Product>Goedel.Callsign.Registrar</Product>
-		<Description>Callsign Registrar Service Library.</Description>
-		<Copyright>© 2022</Copyright>
-		<Title>Goedel.Callsign.Registrar</Title>
 		<BuildPlatform>All</BuildPlatform>
 	</PropertyGroup>
+
 	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
+
 	<ItemGroup>
-		<ProjectReference Include="..\..\Libraries\Goedel.Acme\Goedel.Acme.csproj" />
+		<ProjectReference Include="..\..\Thing\Certes\Certes.csproj" />
+		<ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Dare\Goedel.Cryptography.Dare.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Cryptography.Jose\Goedel.Cryptography.Jose.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Protocol.Service\Goedel.Protocol.Service.csproj" />
 		<ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
-		<ProjectReference Include="..\..\Libraries\Goedel.Utilities\Goedel.Utilities.csproj" />
-		<ProjectReference Include="..\Certes\Certes.csproj" />
-		<ProjectReference Include="..\Goedel.Thing\Goedel.Thing.csproj" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<Compile Update="Exceptions.cs">
 			<DependentUpon>Exceptions.exceptional</DependentUpon>
@@ -27,12 +26,10 @@
 			<AutoGen>True</AutoGen>
 		</Compile>
 	</ItemGroup>
-
 	<ItemGroup>
 		<None Update="Exceptions.exceptional">
 			<LastGenOutput>Exceptions.cs</LastGenOutput>
 			<Generator>exceptional</Generator>
 		</None>
 	</ItemGroup>
-
 </Project>

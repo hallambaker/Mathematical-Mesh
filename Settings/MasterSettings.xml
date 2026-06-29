@@ -20,82 +20,49 @@
 	<Choose>
 		<When Condition=" '$(BuildPlatform)' == 'windows' ">
 			<PropertyGroup>
-				<TargetFramework>net9.0-windows</TargetFramework>
+				<TargetFramework>net10.0-windows</TargetFramework>
 				<DefineConstants>$(DefineConstants);USE_PLATFORM_WINDOWS</DefineConstants>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(BuildPlatform)' == 'linux' ">
 			<PropertyGroup>
-				<TargetFramework>net9.0</TargetFramework>
+				<TargetFramework>net10.0</TargetFramework>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(BuildPlatform)' == 'macos' ">
 			<PropertyGroup>
-				<TargetFramework>net9.0-macos</TargetFramework>
+				<TargetFramework>net10.0-macos</TargetFramework>
 				<RuntimeIdentifiers>osx-x64;osx-arm64</RuntimeIdentifiers>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(BuildPlatform)' == 'android' ">
 			<PropertyGroup>
-				<TargetFramework>net9.0-android</TargetFramework>
+				<TargetFramework>net10.0-android</TargetFramework>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(BuildPlatform)' == 'ios' ">
 			<PropertyGroup>
-				<TargetFramework>net9.0-ios</TargetFramework>
+				<TargetFramework>net10.0-ios</TargetFramework>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(BuildPlatform)' == 'tizen' ">
 			<PropertyGroup>
-				<TargetFramework>net9.0-tizen</TargetFramework>
+				<TargetFramework>net10.0-tizen</TargetFramework>
 			</PropertyGroup>
 		</When>
 		<When Condition=" '$(BuildPlatform)' == 'tvos' ">
 			<PropertyGroup>
-				<TargetFramework>net9.0-tvos</TargetFramework>
+				<TargetFramework>net10.0-tvos</TargetFramework>
 			</PropertyGroup>
 		</When>
 		<Otherwise>
 			<PropertyGroup>
-				<TargetFramework>net9.0</TargetFramework>
+				<TargetFramework>net10.0</TargetFramework>
 			</PropertyGroup>
 		</Otherwise>
 	</Choose>
 
 
-	<!--<Choose>
-		<When Condition=" '$(RuntimeIdentifier)' == 'win-arm64' Or 
-			  '$(RuntimeIdentifier)' == 'win-x64' Or '$(RuntimeIdentifier)' == 'win-x86'">
-			<PropertyGroup>
-				<TargetFramework>net9.0-windows</TargetFramework>
-			</PropertyGroup>
-		</When>
-		<When Condition=" '$(RuntimeIdentifier)' == 'android-arm64' Or '$(RuntimeIdentifier)' == 'android-arm' Or
-			  '$(RuntimeIdentifier)' == 'android-x64' Or '$(RuntimeIdentifier)' == 'android-x86'">
-			<PropertyGroup>
-				<TargetFramework>net9.0-android</TargetFramework>
-			</PropertyGroup>
-		</When>
-		<When Condition=" '$(RuntimeIdentifier)' == 'ios-arm64' Or 
-			  '$(RuntimeIdentifier)' == 'iossimulator-arm64' Or '$(RuntimeIdentifier)' == 'iossimulator-x64'">
-			<PropertyGroup>
-				<TargetFramework>net9.0-ios</TargetFramework>
-			</PropertyGroup>
-		</When>
-		<When Condition=" '$(RuntimeIdentifier)' == 'osx-x64' Or '$(RuntimeIdentifier)' == 'osx-arm64'">
-			<PropertyGroup>
-				<TargetFramework>net9.0-macos</TargetFramework>
-			</PropertyGroup>
-		</When>
-		<When Condition=" '$(RuntimeIdentifier)' == 'linux-arm64' Or '$(RuntimeIdentifier)' == 'linux-arm' Or
-			  '$(RuntimeIdentifier)' == 'linux-x64' Or '$(RuntimeIdentifier)' == 'linux-musl-x64'">
-			<PropertyGroup>
-				<TargetFramework>net9.0</TargetFramework>
-			</PropertyGroup>
-		</When>		
-	</Choose>-->
-	
-	
 	
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(Configuration)'!='Github'">

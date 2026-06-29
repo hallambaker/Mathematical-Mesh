@@ -358,9 +358,11 @@ public static partial class Extensions {
 
 
     /// <summary>
-    /// Read a varint from <paramref name="stream"/> and return as an unsigned 64 bit integer.
+    /// Read a varint from <paramref name="stream"/> in the forward direction and return as an 
+    /// unsigned 64 bit integer.
     /// </summary>
     /// <param name="stream">The stream to read.</param>
+    /// <param name="codeLength">The length of the varint.</param>
     /// <returns>The value read.</returns>
     /// <exception cref="EndOfStreamException"></exception>
     public static ulong ReadTnirav(this Stream stream, int codeLength) {

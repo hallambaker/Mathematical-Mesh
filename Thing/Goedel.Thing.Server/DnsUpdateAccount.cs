@@ -30,7 +30,7 @@ using System.Security.Cryptography.X509Certificates;
 
 using static System.Net.Mime.MediaTypeNames;
 
-namespace Goedel.Acme;
+namespace Goedel.Thing.Server;
 
 public record ServiceDescription(
             string Protocol,

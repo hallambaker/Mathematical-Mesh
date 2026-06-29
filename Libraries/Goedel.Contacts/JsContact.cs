@@ -15,10 +15,14 @@ namespace Goedel.Contacts;
 
 public partial class NameComponent {
 
-
+    /// <summary>Default constructor, returns an instance used by the deserializer.</summary>
     public NameComponent() {
         }
 
+    /// <summary>Return a new name component of <paramref name="kind"/>,
+    /// <paramref name="value"/>.</summary>
+    /// <param name="kind">The component kind.</param>
+    /// <param name="value">The component value.</param>
     public NameComponent(
                 string kind, 
                 string value) {
@@ -45,7 +49,11 @@ public partial class JsContact {
     /// </summary>
     public JsContact() {
         }
-
+    
+    /// <summary>Constructor, returning a new instance of <paramref name="kind"/> in
+    /// language <paramref name="language"/>.</summary>
+    /// <param name="kind">The kind of contact.</param>
+    /// <param name="language">The contact language.</param>
     public JsContact(
                 string kind,
                 string language="en") {
@@ -65,7 +73,9 @@ public partial class JsContact {
     /// Create a  contact of the specified kind with the Version, Created and Updated
     /// fields filled.
     /// </summary>
-    /// <param name="kind"></param>
+    /// <param name="kind">Contact kind.</param>
+    /// <param name="first">The contact's first name.</param>
+    /// <param name="last">The contact's last name.</param>
     /// <returns>The created contact.</returns>
     public static JsContact Create(
                 string kind = "individual",
@@ -145,7 +155,12 @@ public partial class JsContact {
     int count = 0;
     string GetId() => $"id-{count++}";
 
-
+    /// <summary>Add an email address to the contact.</summary>
+    /// <param name="emailAddress">The email address.</param>
+    /// <param name="openPgp">The OpenPGP credential.</param>
+    /// <param name="smime">The S/MIME credential.</param>
+    /// <param name="id">Unique identifier of the entry.</param>
+    /// <returns>The created entry</returns>
     public EmailAddress AddEmail(
                 string emailAddress,
                 byte[] openPgp=null,
@@ -173,6 +188,12 @@ public partial class JsContact {
         return result;
         }
 
+
+    /// <summary>Add a Web resource to the contact.</summary>
+    /// <param name="uri">The Web site URI.</param>
+    /// <param name="contexts">The contexts in which the resource is used.</param>
+    /// <param name="id">Unique identifier of the entry.</param>
+    /// <returns>The created entry</returns>
     public OnlineService AddWeb(
             string uri,
             List<string> contexts=null,
@@ -191,7 +212,11 @@ public partial class JsContact {
         return result;
         }
 
-
+    /// <summary>Add an SSH resource to the contact.</summary>
+    /// <param name="authenticate">The authentication public keys</param>
+    /// <param name="contexts">The contexts in which the resource is used.</param>
+    /// <param name="id">Unique identifier of the entry.</param>
+    /// <returns>The created entry</returns>
     public OnlineService AddSsh(
             List<KeyPair> authenticate = null,
             List<string> contexts = null,
@@ -211,6 +236,11 @@ public partial class JsContact {
         return result;
         }
 
+    /// <summary>Add a Mesh resource to the contact.</summary>
+    /// <param name="profile">The Mesh profile</param>
+    /// <param name="contexts">The contexts in which the resource is used.</param>
+    /// <param name="id">Unique identifier of the entry.</param>
+    /// <returns>The created entry</returns>
     public OnlineService AddMesh(
             byte[] profile,
             List<string> contexts = null,
@@ -230,6 +260,11 @@ public partial class JsContact {
         return result;
         }
 
+    /// <summary>Add a Git entry to the contact.</summary>
+    /// <param name="signing">The set of commit siognature keys</param>
+    /// <param name="contexts">The contexts in which the resource is used.</param>
+    /// <param name="id">Unique identifier of the entry.</param>
+    /// <returns>The created entry</returns>
     public OnlineService AddGit(
             List<KeyPair> signing=null,
             List<string> contexts = null,
@@ -250,7 +285,13 @@ public partial class JsContact {
         return result;
         }
 
-
+    /// <summary>Add an update entry to the contact</summary>
+    /// <param name="protocol">The update protocol.</param>
+    /// <param name="uri">The URI</param>
+    /// <param name="verification">The verification keys.</param>
+    /// <param name="contexts">The contexts in which the resource is used.</param>
+    /// <param name="id">Unique identifier of the entry.</param>
+    /// <returns>The created entry</returns>
     public Update AddUpdate(
             string protocol,
             string uri,
@@ -274,6 +315,11 @@ public partial class JsContact {
         return result;
         }
 
+    /// <summary>Add a service entry to the contact.</summary>
+    /// <param name="protocol">The service protocol.</param>
+    /// <param name="contexts">The contexts in which the resource is used.</param>
+    /// <param name="id">Unique identifier of the entry.</param>
+    /// <returns>The created entry</returns>
     public OnlineService AddService(
             string protocol,
             List<string> contexts = null,
@@ -291,6 +337,10 @@ public partial class JsContact {
         return result;
         }
 
+    /// <summary>Add a set of cryptographic keys to the contact.</summary>
+    /// <param name="cryptoKeyIds">Dictionary mapping resource identifiers to keys..</param>
+    /// <param name="keys">The keys to add.</param>
+    /// <param name="use">The use of the key.</param>
     public void AddCryptoKeys(
             Dictionary<string,string> cryptoKeyIds,
             List<KeyPair> keys,
@@ -300,6 +350,12 @@ public partial class JsContact {
             }
         }
 
+    /// <summary>Add a cryptographic key to the contact.</summary>
+    /// <param name="cryptoKeyIds">Dictionary mapping resource identifiers to keys..</param>
+    /// <param name="key">The key to add.</param>
+    /// <param name="use">The use of the key.</param>
+    /// <param name="credential">Credential validating the key.</param>
+    /// <param name="mediaType">The media type of the credential.</param>
     public CryptoKey AddCryptoKey(
             Dictionary<string, string> cryptoKeyIds,
             string use,
@@ -327,6 +383,11 @@ public partial class JsContact {
         return null;
         }
 
+    /// <summary>Add media to the contact.</summary>
+    /// <param name="uri"></param>
+    /// <param name="mediaType"></param>
+    /// <param name="kind"></param>
+    /// <returns>The created entry</returns>
     public Media AddMedia(
                 string uri,
                 string mediaType=null,
@@ -358,6 +419,12 @@ public partial class JsContact {
         return result;
         }
 
+    /// <summary>Add an online service top the contact.</summary>
+    /// <param name="service">The service to add</param>
+    /// <param name="id">Unique identifier of the entry.</param>
+    /// <param name="kind">Service kind.</param>
+    /// <param name="data">Service data.</param>
+    /// <param name="key">The key</param>
     public void Add(
                 OnlineService service,
                 string id,
@@ -461,7 +528,9 @@ public partial class JsContact {
 
         }
 
-
+    /// <summary></summary>
+    /// <param name="service"></param>
+    /// <returns></returns>
     public bool MapCryptoKeys(
                     OnlineService service) {
 
@@ -524,7 +593,8 @@ public partial class JsContact {
 
         }
 
-
+    /// <summary>Get the first Mesh profile entry.</summary>
+    /// <returns>The mesh profile entry.</returns>
     public OnlineService? GetMesh() {
         foreach (var pair in OnlineServices.IfEnumerable()) {
             if (pair.Value.Service == ContactConstant.OnlineServiceMesh) {
@@ -535,7 +605,8 @@ public partial class JsContact {
         return null;
         }
 
-
+    /// <summary>Construct an EARL over the contact data.</summary>
+    /// <returns>The EARL binary data and URI.</returns>
     public EarlSet GetEarlSet() {
         var contentMeta = new ContentMeta() {
             ContentType = MediaTypes.JSContact
@@ -549,6 +620,7 @@ public partial class JsContact {
 
 public partial class EmailAddress {
 
+    /// <summary>The online service entry.</summary>
     public OnlineService OnlineService { get; set; }
 
     ///<summary>The dictionary key (filled by calling Analyze)</summary> 
@@ -569,18 +641,12 @@ public partial class OnlineService {
     ///<summary>Analysis of the service parent and children.</summary> 
     public AnalysizedContact Analysis { get; set; }
 
-
+    /// <summary>The service groups.</summary>
     public List<ServiceGroup> ServiceGroups { get; } = [];
 
-
+    /// <summary>Default constructor for deserialization.</summary>
     public OnlineService () { }
 
-    public OnlineService(
-                string user) {
-
-        
-        
-        }
 
     }
 
@@ -588,7 +654,7 @@ public partial class OnlineService {
 public partial class JsonWebKeySet {
 
 
-
+    /// <summary>The Mesh profile bytes.</summary>
     public byte[] MeshProfileBytes => Data;
 
     }

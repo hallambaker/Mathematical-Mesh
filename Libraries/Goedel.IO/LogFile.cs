@@ -24,19 +24,30 @@ using System.Diagnostics;
 
 namespace Goedel.IO;
 
+
+// ToDo: eliminate this and merge functionality into some common log mechanism.
+
+/// <summary>Logfile management class</summary>
 public static class LogFile {
 
+    /// <summary>If true, write stack information to the log.</summary>
     public static bool Stack { get; } = false;
 
+    /// <summary>The log file</summary>
     public static TextWriter Log { get; } = "log.txt".OpenTextWriter();
 
 
+    /// <summary>Write text to the log</summary>
+    /// <param name="text">The text to write.</param>
     public static void Write(string text) {
 
         Log.WriteLine(text);
         Log.Flush();
         }
 
+    /// <summary>Write a line of text to the log ending in a new line</summary>
+    /// <param name="text">The text to write.</param>
+    /// <param name="trace">If true, include a stack trace.</param>
     public static void WriteLine(string text, bool trace=false) {
 
         if (trace | Stack) {
@@ -46,8 +57,7 @@ public static class LogFile {
         Write(text);
         }
 
-    public static void WriteStack(string text) => WriteLine(text, true);
-
+    /// <summary>Write stack trace to the log.</summary>
     public static void WriteStack() {
         var stackTrace = new StackTrace();
 

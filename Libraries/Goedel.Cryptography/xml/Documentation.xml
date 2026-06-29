@@ -5460,6 +5460,9 @@
         <member name="P:Goedel.Cryptography.KeyPairECDHNist.PublicData">
             <inheritdoc/>
         </member>
+        <member name="F:Goedel.Cryptography.KeyPairECDHNist.EncodedPrivateKey">
+            <summary>The encoded private key.</summary>
+        </member>
         <member name="M:Goedel.Cryptography.KeyPairECDHNist.#ctor(System.Byte[],Goedel.Cryptography.KeySecurity,Goedel.Cryptography.KeyUses,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Construct a KeyPairEd25519 instance for the specified key data in interchange 

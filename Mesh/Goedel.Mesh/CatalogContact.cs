@@ -467,8 +467,9 @@ public partial class CatalogedContact {
         VerifiedContacts.Add(new MeshContact (this, profile));
         }
 
-
-    public MeshContact GetMeshContact() {
+    /// <summary>Filter the verified contacts and return the first mesh contact.</summary>
+    /// <returns>The mesh contact if found.</returns>
+    public MeshContact? GetMeshContact() {
 
         foreach (var entry in VerifiedContacts.IfEnumerable()) {
             if (entry is MeshContact meshContact) {
@@ -569,9 +570,14 @@ public partial class CatalogedContact {
 public partial class MeshContact {
     public CatalogedContact CatalogedContact { get; set; }
 
+    /// <summary>Default constructor used in deserialization.</summary>
     public MeshContact() {
         }
 
+    /// <summary>Create a Mesh contact in contact <paramref name="catalogedContact"/> for
+    /// the profile <paramref name="profileAccount"/>.</summary>
+    /// <param name="catalogedContact">The cataloged contact.</param>
+    /// <param name="profileAccount">The account profile.</param>
     public MeshContact(
                 CatalogedContact catalogedContact,
                 ProfileAccount profileAccount) {

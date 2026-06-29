@@ -74,11 +74,15 @@ public static partial class ExtensionMethods {
     /// <returns>Character safe label.</returns>
     public static string CS(this object text) => text.ToString();
 
-
+    /// <summary>Convert <paramref name="text"/> to a unique identifier by 
+    /// converting to lower case. If the text value was already lower case, an
+    /// undescore is appended.</summary>
+    /// <param name="text">The text to uniquify.</param>
+    /// <returns>The unique version.</returns>
     public static string Uniqueify(this string text) {
         var result = text.ToLower();
         return result == text ? result + "_" : result;
-        
+
         }
 
 
@@ -125,7 +129,7 @@ public static partial class ExtensionMethods {
     /// </summary>
     /// <param name="value">Value to convert.</param>
     /// <returns>The converted value.</returns>
-    public static string ValueOrNull(this string value) => value == null ? "null" : value;
+    public static string ValueOrNull(this string value) => value ?? "null";
 
     /// <summary>
     /// Returns an empty string if <paramref name="value"/> is null, otherwise the string
@@ -135,7 +139,7 @@ public static partial class ExtensionMethods {
     /// <param name="tag">Optional tag to prefix a non null value.</param>
     /// <returns>The presentation.</returns>
     public static string NotNullTagged(this string value, string? tag) => value == null ? "" :
-        (tag == null ? "" : tag) + value;
+        (tag ?? "") + value;
 
 
     }
@@ -145,32 +149,27 @@ public static partial class ExtensionMethods {
 /// The separator class prints as one value the first time ToString() is called
 /// and a different value thereafter.
 /// </summary>
-public class Separator {
+/// <remarks>
+/// Create a separator class.
+/// </remarks>
+/// <param name="first">String to return on the first call to ToString()</param>
+/// <param name="next">String to return after the first call to ToString()</param>
+public class Separator(string first, string next) {
 
     /// <summary>
     /// Value to return the first time ToString() is called
     /// </summary>
-    public string First { get; set; }
+    public string First { get; set; } = first;
 
     /// <summary>
     /// Value to return after the first time ToString() is called
     /// </summary>
-    public string Next { get; set; }
+    public string Next { get; set; } = next;
 
     /// <summary>
     /// Is this the first time ToString was called?
     /// </summary>
     public bool IsFirst { get; set; } = true;
-
-    /// <summary>
-    /// Create a separator class.
-    /// </summary>
-    /// <param name="first">String to return on the first call to ToString()</param>
-    /// <param name="next">String to return after the first call to ToString()</param>
-    public Separator(string first, string next) {
-        First = first;
-        Next = next;
-        }
 
     /// <summary>
     /// Create a separactor class that returns an empty string the first
@@ -201,20 +200,4 @@ public class Separator {
 
     }
 
-public class Separator2 : Separator {
 
-    public Separator2(string first, string next) :base(first,next) {
-        }
-    public Separator2(string next) : this("", next) {
-        }
-
-    public override string ToString() => "TBS";
-
-    public string To() {
-        if (IsFirst) {
-            IsFirst = false;
-            return First;
-            }
-        return Next;
-        }
-    }

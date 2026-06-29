@@ -61,7 +61,6 @@ public enum TransportType {
 /// <param name="Protocol">Directory to store persistence data.</param>
 /// <param name="Instance">Optional instance tag to allow multiple instances to be run 
 /// for testing etc.</param>
-/// <param name="JpcInterface">The service provider.</param>
 public record Endpoint(
          string? Protocol,
          string? Instance = null) {

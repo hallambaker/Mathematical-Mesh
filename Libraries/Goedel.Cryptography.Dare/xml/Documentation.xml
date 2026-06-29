@@ -1887,9 +1887,11 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.Extensions.ReadTnirav(System.IO.Stream,System.Int32)">
             <summary>
-            Read a varint from <paramref name="stream"/> and return as an unsigned 64 bit integer.
+            Read a varint from <paramref name="stream"/> in the forward direction and return as an 
+            unsigned 64 bit integer.
             </summary>
             <param name="stream">The stream to read.</param>
+            <param name="codeLength">The length of the varint.</param>
             <returns>The value read.</returns>
             <exception cref="T:System.IO.EndOfStreamException"></exception>
         </member>
@@ -3918,11 +3920,35 @@
             <param name="item"></param>
             <returns>The entry index.</returns>
         </member>
+        <member name="T:Goedel.Cryptography.Dare.EarlSequence">
+            <summary>Sequence access support.</summary>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.EarlSequence.IndexFirst">
             <summary>Index record of the first entry in the sequence.</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.EarlSequence.IndexLast">
             <summary>Index record of the last entry in the sequence.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSequence.FrameFirst">
+            <summary>The first frame in the sequence.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSequence.StartEntries">
+            <summary>The first byte of the sequence entries (after the first frame).</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSequence.FrameLast">
+            <summary>The last frame in the sequence.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSequence.Stream">
+            <summary>The underlying stream.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSequence.Filename">
+            <summary>The file name bound to the underlying stream.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSequence.NextFrame">
+            <summary>Position of the next frame.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlSequence.DataEncoding">
+            <summary>The data encoding for the frame mestadata.</summary>
         </member>
         <member name="M:Goedel.Cryptography.Dare.EarlSequence.Disposing">
             <inheritdoc/>
@@ -3932,20 +3958,86 @@
             Constructor
             </summary>
         </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.Create(System.String,Goedel.Cryptography.Dare.EarlSequenceIndexType)">
+            <summary>Create a new sequence with file name <paramref name="fileName"/> and of
+            type <paramref name="typeIdentifier"/>.</summary>
+            <param name="fileName">The file type.</param>
+            <param name="typeIdentifier">The type identifier.</param>
+            <returns>The <see cref="T:Goedel.Cryptography.Dare.EarlSequence"/> instance.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.Open(System.String)">
+            <summary>Open an existing sequene in file <paramref name="fileName"/></summary>
+            <param name="fileName">The file type.</param>
+            <returns>The <see cref="T:Goedel.Cryptography.Dare.EarlSequence"/> instance.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.Initialize">
+            <summary>Initialize a newly opened sequence.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.WriteInitial">
+            <summary>Write the initial sequence record.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.ReadInitial">
+            <summary>Read the initial sequence record.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.GetContentMeta">
+            <summary>Return an empty <see cref="T:Goedel.Cryptography.Dare.ContentMeta"/> instance.</summary>
+            <returns>The created instance.</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.EarlSequence.CloseStream">
             <summary>Close the underlying file stream, is used to save file stream 
             handles.</summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlSequence.ReadEntry(System.Int64)">
-            <summary>Return entry indicated by <paramref name="index"/>.
-            <para>If <paramref name="index"/> is zero, the first item in the sequence is returned. </para>
-            <para>If <paramref name="index"/> is positive, the (<paramref name="index"/>-1)th
-            entry counting from the first is returned.</para>
-            <para>If <paramref name="index"/> is negative, the (<paramref name="index"/>+1)th
-            entry counting from the last and traversing backwards is returned..</para>
-            </summary>
-            <param name="index"></param>
-            <returns>The envelope value.</returns>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.Append(Goedel.Cryptography.Dare.EarlEnvelope)">
+            <summary>Append the envelope <paramref name="entry"/> to the sequence.</summary>
+            <param name="entry">The entry to append.</param>
+            <returns>Index of the entry that was added.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.Append``1(``0,Goedel.Cryptography.Dare.ContentMeta,System.Boolean,Goedel.Protocol.DataEncoding)">
+            <summary>Serialize the object <paramref name="obj"/> as an object of type 
+            <typeparamref name="T"/> using encoding <paramref name="dataEncoding"/>
+            and append it to the sequece with content metadata <paramref name="contentMeta"/>.</summary>
+            <typeparam name="T">The type of the data to add the object as.</typeparam>
+            <param name="obj">The object to add.</param>
+            <param name="contentMeta">Content metadata.</param>
+            <param name="index">If true, index the entry.</param>
+            <param name="dataEncoding">The data encoding for the object.</param>
+            <returns>The entry index for the added envelope.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.Append(System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Boolean)">
+            <summary>Append the entry data <paramref name="entry"/> to the sequence
+            with content metadata <paramref name="contentMeta"/>.</summary>
+            <param name="entry">The payload to add.</param>
+            <param name="contentMeta">Content metadata.</param>
+            <param name="index">If true, index the entry.</param>
+            <returns>The entry index for the added envelope.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.AppendStart(System.Int64,Goedel.Cryptography.Dare.ContentMeta,System.Boolean)">
+            <summary>Begin appending an envelope.</summary>
+            <param name="payloadLength">The length of the payload section.</param>
+            <param name="contentMeta">The content metadata.</param>
+            <param name="index">If true, index the entry.</param>
+            <returns>The frame number, position of first byte of the frame, total length, position of 
+            the first byte of the content.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.AppendPayload(System.Byte[],System.Int32,System.Int32)">
+            <summary>Append the payload after beginning a frame with <see cref="M:Goedel.Cryptography.Dare.EarlSequence.AppendStart(System.Int64,Goedel.Cryptography.Dare.ContentMeta,System.Boolean)"/>.</summary>
+            <param name="payload">The data to append.</param>
+            <param name="offset">Offset within the data.</param>
+            <param name="length">Number of bytes to append.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.AppendEnd">
+            <summary>Close an entry.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.ReadNext">
+            <summary>Read the next entry in the sequence.</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlSequence.GetValue``1(Goedel.Cryptography.Dare.EarlEntryIndex)">
+            <summary>Return the payload data for the entry described by <paramref name="index"/>
+            parsing it as data of type <typeparamref name="T"/></summary>
+            <typeparam name="T">The type to parse the data as.</typeparam>
+            <param name="index">The index describing the entry position.</param>
+            <returns>The parse result.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.EarlSequence.EntriesForward">
             <summary>Return an enumerator over the sequence in the forward direction.</summary>
@@ -4032,9 +4124,111 @@
             state which MAY be modified by subsequent entries.</summary>
             <typeparam name="T">The type of item stored.</typeparam>
         </member>
+        <member name="T:Goedel.Cryptography.Dare.EarlStream">
+            <summary>EARL stream reader/writer class.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlStream.Stream">
+            <summary>The underlying file stream.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlStream.Length">
+            <summary>Length of the stream.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlStream.EOF">
+            <summary>If true, the stream position is at end of file.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlStream.Position">
+            <summary>Get or set the position in the file.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.EarlStream.Filename">
+            <summary>The filename of the underlying stream.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.Disposing">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.#ctor(System.IO.Stream)">
+            <summary>Constructor, return a new instance with underlying stream <paramref name="stream"/>.</summary>
+            <param name="stream">The stream to uas as a constructor.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.#ctor(System.Byte[])">
+            <summary>Constructor, return a new instance reading from the data <paramref name="data"/>.</summary>
+            <param name="data">The data to read.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.#ctor(System.String,System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare,System.IO.Stream)">
+            <summary>Constructor, open a new stream with filename <paramref name="fileName"/>
+            and the specified file stream attributes.</summary>
+            <param name="fileName">The name of the file.</param>
+            <param name="fileMode">The file mode</param>
+            <param name="fileAccess">Specify read, write or read/write access.(</param>
+            <param name="fileShare">The file sharing mode.</param>
+            <param name="stream">The stream to use.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.Create(System.String,System.Byte[])">
+            <summary>Create a new file with name <paramref name="fileName"/> and open an
+            <see cref="T:Goedel.Cryptography.Dare.EarlStream"/> with type identifier <paramref name="typeIdentifier"/>.</summary>
+            <param name="fileName">The file name.</param>
+            <param name="typeIdentifier">The stream type identifier.</param>
+            <returns>The <see cref="T:Goedel.Cryptography.Dare.EarlStream"/> created</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.OpenRead(System.String)">
+            <summary>Open the file <paramref name="fileName"/> to read as an <see cref="T:Goedel.Cryptography.Dare.EarlStream"/>.</summary>
+            <param name="fileName">The file name.</param>
+            <returns>The <see cref="T:Goedel.Cryptography.Dare.EarlStream"/> created</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.OpenWrite(System.String)">
+            <summary>Open the file <paramref name="fileName"/> to write as an <see cref="T:Goedel.Cryptography.Dare.EarlStream"/>.</summary>
+            <param name="fileName">The file name.</param>
+            <returns>The <see cref="T:Goedel.Cryptography.Dare.EarlStream"/> created</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.OpenReadWrite(System.String)">
+            <summary>Open the file <paramref name="fileName"/> to read and write as an <see cref="T:Goedel.Cryptography.Dare.EarlStream"/>.</summary>
+            <param name="fileName">The file name.</param>
+            <returns>The <see cref="T:Goedel.Cryptography.Dare.EarlStream"/> created</returns>
+        </member>
         <member name="M:Goedel.Cryptography.Dare.EarlStream.CloseStream">
             <summary>Close the underlying file stream, is used to save file stream 
             handles.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.Seek(System.Int64)">
+            <summary>Move to <paramref name="position"/> in the file.</summary>
+            <param name="position">The position from the start of the file to move to.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.SeekEnd">
+            <summary>Move to the end of the file.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadTypeIdentifier">
+            <summary>Read the type identifier from the stream.</summary>
+            <returns>The type identifier read.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadVarint">
+            <summary>Read a varint from the stream.</summary>
+            <returns>The varint read.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadBlock">
+            <summary>Read a block of data from the stream.</summary>
+            <returns>The data block read.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadBytes(System.Byte[],System.Int32)">
+            <summary>Read <paramref name="length"/> bytes from the stream and store in
+            <paramref name="buffer"/>.</summary>
+            <param name="buffer">The buffer to store the data that was read.</param>
+            <param name="length">The number of bytes to read.</param>
+            <returns>The number of bytes read.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadBlockLength">
+            <summary>Read the next block in the stream and return the start position and 
+            the block read.</summary>
+            <returns>The start position and the block of data read.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.GetPayload(Goedel.Cryptography.Dare.EarlEntryIndex)">
+            <summary>Return the payload of <paramref name="index"/>.</summary>
+            <param name="index">The entry index.</param>
+            <returns>The payload bytes.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadJson``1">
+            <summary>Read a block of data from the stream, parse as a JSON object
+            of type <typeparamref name="T"/> and return the result.</summary>
+            <typeparam name="T">The type of data to return.</typeparam>
+            <returns>The returned data.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadExactly(System.Byte[],System.Int32,System.Int32)">
             <summary>
@@ -4080,6 +4274,176 @@
             <param name="output">The output stream.</param>
             <param name="length">Number of bytres to copy.</param>
             <param name="digest">The digest algorithm to apply during the copy.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.WriteAsync(System.Byte[])">
+            <summary>Write the data in <paramref name="buffer"/> asynchronously.</summary>
+            <param name="buffer">The data to write.</param>
+            <returns>Task</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.WriteAsync(Goedel.Protocol.JsonObject)">
+            <summary>Write the data in <paramref name="jsonObject"/> asynchronously.</summary>
+            <param name="jsonObject">The data to write.</param>
+            <returns>Task</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.WriteBytesAsync(System.Byte[])">
+            <summary>Write the data in <paramref name="data"/> asynchronously.</summary>
+            <param name="data">The data to write.</param>
+            <returns>Task</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.FlushAsync">
+            <summary>Flush the stream write.</summary>
+            <returns>Task</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.WriteTypeIdentifier(System.Byte[])">
+            <summary>Write a type identifier to the stream.</summary>
+            <param name="bytes">The type identifier bytes.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.WriteVarint(System.Int64)">
+            <summary>Write a varint to the stream</summary>
+            <param name="data">The varint to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.Write(System.Byte[])">
+            <summary>Write binary data to the stream.</summary>
+            <param name="buffer">The data to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.Write(Goedel.Protocol.JsonObject)">
+            <summary>Write a JSON object to the stream.</summary>
+            <param name="jsonObject">The data to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.WriteBytes(System.Byte[])">
+            <summary>Write a byte array to the stream.</summary>
+            <param name="data">The data to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.WritePayloadBytes(System.Byte[])">
+            <summary>Write the payload byte array to the stream.</summary>
+            <param name="data">The data to write.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.Append(Goedel.Cryptography.Dare.EarlEnvelope,System.Nullable{System.Int64})">
+            <summary>Append data from <paramref name="entry"/> to the stream as frame 
+            number <paramref name="frame"/></summary>
+            <param name="entry">The data to write.</param>
+            <param name="frame">The frame number.</param>
+            <returns>The entry index.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.Append(Goedel.Cryptography.Dare.Unprotected,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.JsonObject,Goedel.Cryptography.Dare.Unprotected)">
+            <summary>Append the frame consisting of <paramref name="unprotected"/>,
+            <paramref name="contentMeta"/>, <paramref name="obj"/>, <paramref name="trailer"/>
+            to the stream.</summary>
+            <param name="unprotected">The unprotected header.</param>
+            <param name="contentMeta">The content metadata</param>
+            <param name="obj">The payload.</param>
+            <param name="trailer">The trailer.</param>
+            <returns>The entry index.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.Append(Goedel.Cryptography.Dare.Unprotected,Goedel.Cryptography.Dare.ContentMeta,System.Byte[],Goedel.Cryptography.Dare.Unprotected)">
+            <summary>Append the frame consisting of <paramref name="unprotected"/>,
+            <paramref name="contentMeta"/>, <paramref name="payloadBytes"/>, <paramref name="trailer"/>
+            to the stream.</summary>
+            <param name="unprotected">The unprotected header.</param>
+            <param name="contentMeta">The content metadata</param>
+            <param name="payloadBytes">The payload.</param>
+            <param name="trailer">The trailer.</param>
+            <returns>The entry index.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.AppendEntryStartInner(System.Int64,Goedel.Cryptography.Dare.Unprotected,Goedel.Cryptography.Dare.ContentMeta,System.Int32)">
+            <summary>Start to append an entry of <paramref name="payloadLengthIn"/> payload bytes
+            and <paramref name="trailerLengthIn"/> trailer bytes. </summary>
+            <param name="payloadLengthIn">Length of the payload in bytes.</param>
+            <param name="unprotected">The unprotected header.</param>
+            <param name="contentMeta">The content metadata.</param>
+            <param name="trailerLengthIn">Length of the trailer in bytes.</param>
+            <returns>0, position of first byte of the frame, total length, position of 
+            the first byte of the content.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.AppendEntryStart(System.Int64,Goedel.Cryptography.Dare.Unprotected,Goedel.Cryptography.Dare.ContentMeta,System.Int32)">
+            <summary>Start to append an entry of <paramref name="payloadLengthIn"/> payload bytes
+            and <paramref name="trailerLengthIn"/> trailer bytes. </summary>
+            <param name="payloadLengthIn">Length of the payload in bytes.</param>
+            <param name="unprotected">The unprotected header.</param>
+            <param name="contentMeta">The content metadata.</param>
+            <param name="trailerLengthIn">Length of the trailer in bytes.</param>
+            <returns>Entry index.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.AppendEntryPayload(System.Byte[],System.Int32,System.Int32)">
+            <summary>Append the payload after beginning a frame with <see cref="M:Goedel.Cryptography.Dare.EarlStream.AppendEntryStart(System.Int64,Goedel.Cryptography.Dare.Unprotected,Goedel.Cryptography.Dare.ContentMeta,System.Int32)"/>
+            or <see cref="M:Goedel.Cryptography.Dare.EarlStream.AppendEntryStartInner(System.Int64,Goedel.Cryptography.Dare.Unprotected,Goedel.Cryptography.Dare.ContentMeta,System.Int32)"/>.</summary>
+            <param name="data">The data to append.</param>
+            <param name="offset">Offset within the data.</param>
+            <param name="length">Number of bytes to append.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.AppendEntryEnd(System.Byte[])">
+            <summary>Append the trailer after beginning a frame with AppendEntryStart.</summary>
+            <param name="trailerBytes">The trailer to append.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadIndexNext">
+            <summary>Read the index information for the next frame in the field.</summary>
+            <returns>The index record.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadIndexPrevious(System.Int64)">
+            <summary>Read the index information for the previous frame in the field.</summary>
+            <returns>The index record.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadIndexNext``1">
+            <summary>Read the index information for the next frame in the field.</summary>
+            <typeparam name="T">The type of the underlying data.</typeparam>
+            <returns>The index record.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadIndexPrevious``1(System.Int64)">
+            <summary>Read the index information for the previous frame in the field.</summary>
+            <typeparam name="T">The type of the underlying data.</typeparam>
+            <returns>The index record.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadFrameNext">
+            <summary>Read the next frame.</summary>
+            <returns>The frame data read.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadFramePrev">
+            <summary>Read the previous frame.</summary>
+            <returns>The frame data read.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.ReadFrameLast">
+            <summary>Read the last frame.</summary>
+            <returns>The frame data read.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStream.Flush">
+            <summary>Flush writes to the stream.</summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.EarlStreamDebug">
+            <summary>Debugging version of <see cref="T:Goedel.Cryptography.Dare.EarlStream"/>, emits diagnostic information.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStreamDebug.Create(System.String,System.Byte[])">
+            <summary>Create a new file with name <paramref name="fileName"/> and open an
+            <see cref="T:Goedel.Cryptography.Dare.EarlStreamDebug"/> with type identifier <paramref name="typeIdentifier"/>.</summary>
+            <param name="fileName"></param>
+            <param name="typeIdentifier"></param>
+            <returns>The <see cref="T:Goedel.Cryptography.Dare.EarlStreamDebug"/> created</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStreamDebug.OpenRead(System.String)">
+            <summary>Open the file <paramref name="fileName"/> to read as an <see cref="T:Goedel.Cryptography.Dare.EarlStreamDebug"/>.</summary>
+            <param name="fileName">The file name.</param>
+            <returns>The <see cref="T:Goedel.Cryptography.Dare.EarlStreamDebug"/> created</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStreamDebug.OpenWrite(System.String)">
+            <summary>Open the file <paramref name="fileName"/> to write as an <see cref="T:Goedel.Cryptography.Dare.EarlStreamDebug"/>.</summary>
+            <param name="fileName">The file name.</param>
+            <returns>The <see cref="T:Goedel.Cryptography.Dare.EarlStreamDebug"/> created</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStreamDebug.OpenReadWrite(System.String)">
+            <summary>Open the file <paramref name="fileName"/> to read and write as an <see cref="T:Goedel.Cryptography.Dare.EarlStreamDebug"/>.</summary>
+            <param name="fileName">The file name.</param>
+            <returns>The <see cref="T:Goedel.Cryptography.Dare.EarlStreamDebug"/> created</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStreamDebug.ReadVarint">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStreamDebug.ReadBlock">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStreamDebug.WriteTypeIdentifier(System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.EarlStreamDebug.WriteVarint(System.Int64)">
+            <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.Dare.StreamDataCorrupt">
             <summary>

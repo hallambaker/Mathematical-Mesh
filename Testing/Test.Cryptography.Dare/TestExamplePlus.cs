@@ -117,7 +117,7 @@ public partial class MessageTest {
 public partial class CatalogEntryTest {
 
     public override string _PrimaryKey => UniqueId;
-    public override IEnumerable<string>? _SecondaryKeys => SecondaryIds;
+    public override List<string>? _SecondaryKeys => SecondaryIds;
 
 
     }

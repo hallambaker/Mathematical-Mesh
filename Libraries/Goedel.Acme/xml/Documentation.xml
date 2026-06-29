@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Acme</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Acme.AcmeAccount">
+            <summary>
+            ACME account
+            </summary>
+        </member>
+        <member name="P:Goedel.Acme.AcmeAccount.PemKey">
+            <summary>The PEM key</summary> 
+        </member>
+        <member name="P:Goedel.Acme.AcmeAccount.AccountContext">
+            <summary>The Account context</summary> 
+        </member>
+        <member name="P:Goedel.Acme.AcmeAccount.AcmeContext">
+            <summary></summary> 
+        </member>
+        <member name="M:Goedel.Acme.AcmeAccount.Create(System.String,System.Boolean)">
+            <summary>
+            Factory method, returns a new account instance to the service at <paramref name="uriString"/>
+            </summary>
+            <param name="uriString">Uri of the CA service.</param>
+            <param name="staging">If true, use the staging/test version of the service.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Acme.AcmeAccount.PlaceOrder(System.Collections.Generic.List{System.String})">
+            <summary>
+            Place an order for a certificate with the domains <paramref name="domains"/>
+            </summary>
+            <param name="domains">List of domains to be included in the certificate.</param>
+            <returns>Task returning the order.</returns>
+        </member>
+        <member name="T:Goedel.Acme.AcmeOrder">
+            <summary>Acme order</summary>
+        </member>
+        <member name="P:Goedel.Acme.AcmeOrder.CommonName">
+            <summary>Common name</summary>
+        </member>
+        <member name="P:Goedel.Acme.AcmeOrder.DictionaryZoneToChallenge">
+            <summary>Challenge dictionary.</summary>
+        </member>
+        <member name="P:Goedel.Acme.AcmeOrder.AcmeAccount">
+            <summary>The account</summary>
+        </member>
+        <member name="P:Goedel.Acme.AcmeOrder.OrderContext">
+            <summary>Order</summary>
+        </member>
+        <member name="F:Goedel.Acme.AcmeOrder.Result">
+            <summary>Returned result.</summary>
+        </member>
+        <member name="M:Goedel.Acme.AcmeOrder.TryCompleteOrder(System.String,System.String)">
+            <summary>Attempt to complete an order.</summary>
+            <param name="filename">File containing the order details.</param>
+            <param name="password">Password</param>
+            <returns>True if successful, otherwise, false.</returns>
+        </member>
+        <member name="T:Goedel.Acme.ChallengeState">
+            <summary>The challeng state</summary>
+        </member>
+        <member name="F:Goedel.Acme.ChallengeState.Initial">
+            <summary>Initial state.</summary>
+        </member>
+        <member name="F:Goedel.Acme.ChallengeState.Verified">
+            <summary>Order verified.</summary>
+        </member>
+        <member name="F:Goedel.Acme.ChallengeState.Pending">
+            <summary>Order pending</summary>
+        </member>
+        <member name="F:Goedel.Acme.ChallengeState.Processing">
+            <summary>Processing</summary>
+        </member>
+        <member name="F:Goedel.Acme.ChallengeState.Valid">
+            <summary>Order reported valid</summary>
+        </member>
+        <member name="F:Goedel.Acme.ChallengeState.Invalid">
+            <summary>Order reported invalid</summary>
+        </member>
+        <member name="F:Goedel.Acme.ChallengeState.Fail">
+            <summary>Order failed</summary>
+        </member>
+        <member name="T:Goedel.Acme.DnsChallenge">
+            <summary>ACME DNS challenge.</summary>
+            <param name="Zone">The zone to be challenged.</param>
+            <param name="Text">Challenge text.</param>
+        </member>
+        <member name="M:Goedel.Acme.DnsChallenge.#ctor(System.String,System.String)">
+            <summary>ACME DNS challenge.</summary>
+            <param name="Zone">The zone to be challenged.</param>
+            <param name="Text">Challenge text.</param>
+        </member>
+        <member name="P:Goedel.Acme.DnsChallenge.Zone">
+            <summary>The zone to be challenged.</summary>
+        </member>
+        <member name="P:Goedel.Acme.DnsChallenge.Text">
+            <summary>Challenge text.</summary>
+        </member>
+        <member name="P:Goedel.Acme.DnsChallenge.PrefixedDomain">
+            <summary>The prefixed version of the challenge.</summary>
+        </member>
+        <member name="P:Goedel.Acme.DnsChallenge.ChallengeContext">
+            <summary>Context</summary>
+        </member>
+        <member name="P:Goedel.Acme.DnsChallenge.AuthorizationContext">
+            <summary>Authorization</summary>
+        </member>
+        <member name="F:Goedel.Acme.DnsChallenge.ChallengeState">
+            <summary>Challenge state.</summary>
+        </member>
+        <member name="P:Goedel.Acme.DnsChallenge.Waiting">
+            <summary>If true, waiting on the service.</summary>
+        </member>
+        <member name="P:Goedel.Acme.DnsChallenge.Error">
+            <summary>The returned error string.</summary>
+        </member>
+        <member name="M:Goedel.Acme.DnsChallenge.SetState(System.Nullable{Certes.Acme.Resource.ChallengeStatus})">
+            <summary>Set the state of the challenge.</summary>
+            <param name="status">The status returned.</param>
+        </member>
+        <member name="T:Goedel.Acme.Extensions">
+            <summary>
+            Extensions class. Provides static convenience extensions.
+            </summary>
+        </member>
+        <member name="T:Goedel.Acme.NamespaceDoc">
+            <summary>
+            Desctiption of the 
+            </summary>
+        </member>
+        <member name="T:Goedel.Thing.Server.TBS">
+            <summary>
+            TBS
+            </summary>
+        </member>
+        <member name="P:Goedel.Thing.Server.TBS.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Thing.Server.TBS.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Thing.Server.TBS.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Thing.Server.TBS._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Thing.Server.TBS.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Thing.Server.EventExtensions">
+            <summary>
+            Extensions class defining logging events and convenience methods.
+            </summary>
+        </member>
+        <member name="M:Goedel.Thing.Server.EventExtensions.#cctor">
+            <summary>
+            Static initializer, is called once when the module loads.
+            </summary>
+        </member>
+    </members>
+</doc>

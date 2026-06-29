@@ -157,6 +157,9 @@
              created and posted to a service.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPending.TheProfileDevice">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPending.MessageConnectionResponse">
             <summary>
             Cached convenience accessor returning the decoded <see cref="P:Goedel.Mesh.Client.CatalogedPending.MessageConnectionResponse"/>.
@@ -229,6 +232,9 @@
              Describes a preconfigured Device Profile bound to a remote 
              manufacturer profile.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.TheProfileDevice">
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.EnvelopedProfileDevice">
             <summary>
@@ -364,6 +370,12 @@
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.MeshMachine">
             <summary>The Machine context.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.DnsClient">
+            <summary>The DNS resolution client</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.EarlClient">
+            <summary>The EARL resolution client.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.KeyCollection">
             <summary>The key collection for use with the context.</summary>
@@ -808,6 +820,34 @@
             <param name="accountAddress">The address to be bound.</param>
             <returns>The bindings created.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.PublishEarl(System.Byte[],System.String,System.String,Goedel.Cryptography.Dare.EarlEnvelopeContext)">
+            <summary>Publ;ish the earl <paramref name="data"/> as scheme <paramref name="scheme"/>
+            with content type <paramref name="contentType"/> in context <paramref name="context"/></summary>
+            <param name="data">The data to publish.</param>
+            <param name="scheme">The URI scheme.</param>
+            <param name="contentType">The IANA contant type.</param>
+            <param name="context">The envelope context.</param>
+            <returns>The result returned by the service.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.PublishEarl(Goedel.Contacts.JsContact,Goedel.Cryptography.Dare.EarlEnvelopeContext)">
+            <summary>Publish the contact <paramref name="jsContact"/> to the envelope
+            being built in <paramref name="context"/></summary>
+            <param name="jsContact">The contact to publish.</param>
+            <param name="context">The envelope builder context</param>
+            <returns>The EARL string.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.PublishEarl(Goedel.Contacts.JsDevice,Goedel.Cryptography.Dare.EarlEnvelopeContext)">
+            <summary>Publish the device <paramref name="jsDevice"/> to the envelope
+            being built in <paramref name="context"/></summary>
+            <param name="jsDevice">The device to publish.</param>
+            <param name="context">The envelope builder context</param>
+            <returns>The EARL string.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.PublishDns(System.Collections.Generic.IEnumerable{Goedel.Discovery.DNSRecord})">
+            <summary>Publish the record set <paramref name="records"/>.</summary>
+            <param name="records">The records to publish,</param>
+            <returns>The response of the service.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.BindHandle(System.String,System.String,System.String[])">
             <summary>
             Bind a TXT record to <paramref name="prefix"/>.<paramref name="handle"/>
@@ -817,6 +857,20 @@
             <param name="handle">The authority</param>
             <param name="tagvalues">The tag/value pairs</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SignAndEncryptMessage(Goedel.Mesh.Message,Goedel.Mesh.ProfileDevice)">
+            <summary>Sign and encrypt the message <paramref name="message"/> and return 
+            in an envelope.</summary>
+            <param name="message">The message to sign and encrypt</param>
+            <param name="profileDevice">The device to send to.</param>
+            <returns>The enveloped data.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SignAndEncryptMessage(Goedel.Mesh.Message,Goedel.Cryptography.CryptographicKey)">
+            <summary>Sign and encrypt the message <paramref name="message"/> and return 
+            in an envelope.</summary>
+            <param name="message">The message to sign and encrypt</param>
+            <param name="encryptionKey">The recipient encryption key.</param>
+            <returns>The enveloped data.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.TransactBegin">
             <summary>
@@ -1247,6 +1301,11 @@
             <param name="threshold">Number of shares required to recreate the quorum</param>
             <exception cref="T:Goedel.Mesh.NoMeshSecret">Is thrown if the private key cannot be found.</exception>
             <returns>The encrypted escrow entry and the key shares.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.BindContactHandle(System.String)">
+            <summary>Bind the account to the contact handle <paramref name="handle"/></summary>
+            <param name="handle">The handle to bind to.</param>
+            <returns>The EARL URI describing the binding.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.SetServiceAsync(System.String,Goedel.Contacts.JsContact,System.String,System.String)">
             <summary>

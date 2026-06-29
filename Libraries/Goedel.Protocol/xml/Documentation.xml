@@ -718,7 +718,6 @@
             <param name="Protocol">Directory to store persistence data.</param>
             <param name="Instance">Optional instance tag to allow multiple instances to be run 
             for testing etc.</param>
-            <param name="JpcInterface">The service provider.</param>
         </member>
         <member name="M:Goedel.Protocol.Endpoint.#ctor(System.String,System.String)">
             <summary>
@@ -727,7 +726,6 @@
             <param name="Protocol">Directory to store persistence data.</param>
             <param name="Instance">Optional instance tag to allow multiple instances to be run 
             for testing etc.</param>
-            <param name="JpcInterface">The service provider.</param>
         </member>
         <member name="P:Goedel.Protocol.Endpoint.Protocol">
             <summary>Directory to store persistence data.</summary>
