@@ -155,7 +155,7 @@ public class ContextMeshPending : ContextAccount {
         meshHost.KeyCollection.LocatePrivateKeyPair(
                         profileDevice.Authentication.Udf, out var keyAuthentication);
 
-        requestConnection.Envelope(keyAuthentication);
+        requestConnection.Enveloped(keyAuthentication);
 
         profileDevice.Activate(meshHost.KeyCollection);
         //var meshCredentialPrivate = new MeshCredentialPrivate(profileDevice, null, null,

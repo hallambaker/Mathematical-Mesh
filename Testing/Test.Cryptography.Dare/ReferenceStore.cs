@@ -103,7 +103,7 @@ public record ReferenceStore {
         //var result = GetEnvelopedMessageTest();
         ListContents.Add(envelope);
 
-        message.Envelope();
+        message.Enveloped();
 
         return message.DareEnvelope;
         }
@@ -189,7 +189,7 @@ public record ReferenceEnvelope {
 
     public Enveloped GetEnvelopedMessageTest() {
         var message = GetMessageTest();
-        message.Envelope();
+        message.Enveloped();
 
         return message.DareEnvelope;
         }

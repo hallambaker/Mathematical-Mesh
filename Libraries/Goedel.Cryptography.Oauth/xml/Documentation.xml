@@ -327,11 +327,11 @@
         <member name="M:Goedel.Cryptography.Oauth.OauthClient.#ctor(System.String,System.String,System.String)">
             <summary>
             Constructor, returns an instance with client URI <paramref name="clientId"/>, redirect
-            URI <paramref name="redirectUri"/> and keys <paramref name="keys"/>.
+            URI <paramref name="redirectUri"/> and key directory <paramref name="directory"/>.
             </summary>
             <param name="clientId">The client identifier.</param>
             <param name="redirectUri">The redirect URL</param>
-            <param name="directory">The diorectory in which private keys for encryption 
+            <param name="directory">The directory in which private keys for encryption 
             and signature are stored.</param>
         </member>
         <member name="M:Goedel.Cryptography.Oauth.OauthClient.GenKey(Goedel.Cryptography.KeyUses)">
@@ -1691,6 +1691,9 @@
             <summary>
             Session manager class, supports OAUTH and other login modes.
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Oauth.SessionManager.DnsClient">
+            <summary>The DNS client.</summary>
         </member>
         <member name="M:Goedel.Cryptography.Oauth.SessionManager.#ctor">
             <summary>

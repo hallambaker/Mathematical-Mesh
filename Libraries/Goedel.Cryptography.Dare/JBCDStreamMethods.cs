@@ -56,7 +56,7 @@ public partial class JbcdStream  {
     readonly static byte[] CodeSpaces = new byte[] { 2, 3, 5, 9, 4, 6, 10, 18 };
     readonly static byte[] TagSpaces = new byte[] { 1, 2, 4, 8 };
 
-
+    /// <summary>If true, the stream is version 4.</summary>
     public bool IsVersion4 => Version == 4;
 
 
@@ -701,6 +701,7 @@ public partial class JbcdStream  {
     /// </summary>
     /// <param name="frameData">The payload data that was read.</param>
     /// <param name="frameHeader">The header data that was read.</param>
+    /// <param name="authenticatedHeader">The signed header.</param>
     /// <param name="frameTrailer">The trailer data that was read.</param>
     /// <returns>True if a tag was read or false if EOF was encountered.</returns>
     /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>

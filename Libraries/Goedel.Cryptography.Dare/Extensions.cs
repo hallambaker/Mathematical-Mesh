@@ -34,6 +34,10 @@ namespace Goedel.Cryptography.Dare;
 /// </summary>
 public static partial class Extensions {
 
+    /// <summary>Decode items from <paramref name="enveloped"/> as <typeparamref name="T"/></summary>
+    /// <typeparam name="T">Type of the decoded items</typeparam>
+    /// <param name="enveloped">The list of envelopes.</param>
+    /// <returns>The decoded list.</returns>
     public static List<T> Decode<T>(this List<Enveloped<T>> enveloped) where T : JsonObject{
         var result = new List<T>();
 
@@ -44,10 +48,17 @@ public static partial class Extensions {
         return result;
         }
 
-
+    /// <summary>Return the length of <paramref name="data"/> when tagged as a varing.</summary>
+    /// <param name="data">The data to return the tag length of.</param>
+    /// <returns>The length of the tagged data.</returns>
     public static long TaggedLength(this byte[] data) => 
         data == null ? TagLength(0) : data.Length + TagLength(data.Length);
 
+    /// <summary>Return the length of the tag of a varint encoding of a data segment of
+    /// <paramref name="value"/> bytes.</summary>
+    /// <param name="value">Length of the data section.</param>
+    /// <returns>The tag length.</returns>
+    /// <exception cref="InvalidLength">The length is not valid.</exception>
     public static int TagLength(
                     long value) {
         if (value < 64) {
@@ -251,6 +262,9 @@ public static partial class Extensions {
 
         }
 
+    /// <summary>Read a type identifier sequence from <paramref name="stream"/></summary>
+    /// <param name="stream">The stream to read.</param>
+    /// <returns>The type identifier as a ulong</returns>
     public static ulong ReadTypeIdentifier(this Stream stream) {
         ulong result = 0;
         var length = 0;
@@ -308,6 +322,7 @@ public static partial class Extensions {
     /// Read a varint from <paramref name="stream"/> and return as an unsigned 64 bit integer.
     /// </summary>
     /// <param name="stream">The stream to read.</param>
+    /// <param name="codeLength">The length of the varint.</param>
     /// <returns>The value read.</returns>
     /// <exception cref="EndOfStreamException"></exception>
     public static ulong ReadVarint(this Stream stream, out int codeLength) {
@@ -401,6 +416,7 @@ public static partial class Extensions {
     /// as an unsigned 64 bit integer.
     /// </summary>
     /// <param name="stream">The stream to read.</param>
+    /// <param name="codeLength">The length of the varint.</param>
     /// <returns>The value read.</returns>
     /// <exception cref="EndOfStreamException"></exception>
     public static ulong ReadTnirav(this Stream stream, out int codeLength) {

@@ -378,7 +378,7 @@ public abstract class Transaction<TAccount> : Disposable
         var signingKey = admin ? ContextAccount.KeyAdministratorSign :
             ContextAccount.KeyCommonSignature;
 
-        var envelope = message.Envelope(signingKey, recipientEncryptionKey);
+        var envelope = message.Enveloped(signingKey, recipientEncryptionKey);
 
 #if DEBUG
         envelope.Header.Debug = $"From:{message.Sender} To: {recipientAddress} Type {message.GetType()}";
@@ -402,7 +402,7 @@ public abstract class Transaction<TAccount> : Disposable
             Message message) {
         message.MessageId ??= Udf.Nonce();
         TransactRequest.EnvelopedInbound ??= new List<Enveloped<Message>>();
-        var envelope = message.Envelope(SignInboundMessage); // Todo: Sign, encrypt
+        var envelope = message.Enveloped(SignInboundMessage); // Todo: Sign, encrypt
         envelope.JsonObject = message;
         TransactRequest.EnvelopedInbound.Add(new Enveloped<Message>(envelope));
         }
@@ -421,7 +421,7 @@ public abstract class Transaction<TAccount> : Disposable
 
         //"Fix the encryption of local messages".TaskFunctionality(true);
 
-        var envelope = message.Envelope(SignLocalMessage, keyEncrypt);
+        var envelope = message.Enveloped(SignLocalMessage, keyEncrypt);
         //envelope.Header.EnvelopeId = 
         //envelope.JsonObject = message;
         

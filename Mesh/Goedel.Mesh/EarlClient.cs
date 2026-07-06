@@ -17,8 +17,8 @@ public abstract class EarlClient {
 
     /// <summary>Constructor, returns a new instance using the client <paramref name="dnsClient"/>.</summary>
     /// <param name="dnsClient">The DNS client to use.</param>
-    public EarlClient(DnsClient dnsClient) {
-        DnsClient = dnsClient;
+    public EarlClient(DnsClient dnsClient=null) {
+        DnsClient = dnsClient ?? DnsClient.Default;
         }
 
     /// <summary>

@@ -701,7 +701,15 @@ public class MeshHost : Disposable {
         }
 
 
-
+    /// <summary>Process completion of connection request.</summary>
+    /// <param name="profileDevice">Profile of the device requesting connection.</param>
+    /// <param name="respondConnection">Result of the completion request.</param>
+    /// <returns>User context the device is joined to.</returns>
+    /// <exception cref="ConnectionRefusedException">The connection request was refused.</exception>
+    /// <exception cref="ConnectionPendingException">The connection request is still pending.</exception>
+    /// <exception cref="ConnectionExpiredException">The connection request has expired.</exception>
+    /// <exception cref="ConnectionAccountUnknownException">The connection request was made to an unknown account.</exception>
+    /// <exception cref="RefusedPinInvalidException">The connection request was refused because an invalid PIN was specified.</exception>
     public async Task<ContextUser> ProcessCompletion(
                 ProfileDevice profileDevice,
                 RespondConnection respondConnection) {

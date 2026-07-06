@@ -77,7 +77,8 @@ public partial class Profile {
     ///
     public PrivateKeyUDF SecretSeed { get; set; }
 
-
+    /// <summary>Return the profile as enveloped bytes.</summary>
+    /// <returns>The bytes.</returns>
     public byte[] GetEnvelopedBytes() => (Envelope as Enveloped).GetBytes(false);
 
 
@@ -162,6 +163,8 @@ public partial class Profile {
         Generate();
         }
 
+    /// <summary>Activate the profile using the seed <paramref name="seed"/></summary>
+    /// <param name="seed">The private seed.</param>
     public void Activate(PrivateKeyUDF seed) {
         SecretSeed = seed;
         Generate();

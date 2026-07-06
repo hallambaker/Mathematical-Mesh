@@ -16,6 +16,7 @@ public partial class JWK {
     /// Factory method returning an instance for the key <paramref name="keyPair"/>
     /// </summary>
     /// <param name="keyPair">The key to return the JWK for.</param>
+    /// <param name="privateKey">If true, include the private key.</param>
     /// <returns>The created instance.</returns>
     public static JWK? Factory(KeyPair keyPair, bool privateKey=false) {
         var result = keyPair switch {
@@ -39,6 +40,7 @@ public partial class JWK {
     /// Factory method returning an instance for the Elliptic Cuve key <paramref name="keyPairECDHNist"/>
     /// </summary>
     /// <param name="keyPairECDHNist">The key to return the JWK for.</param>
+    /// <param name="privateKey">If true, include the private key.</param>
     /// <returns>The created instance.</returns>
     public static JWK Factory(KeyPairECDHNist keyPairECDHNist, bool privateKey = false) => 
             new JwkEllipticCurve() {
@@ -54,6 +56,7 @@ public partial class JWK {
     /// Factory method returning an instance for the Elliptic Cuve key <paramref name="keyPairECDH"/>
     /// </summary>
     /// <param name="keyPairECDH">The key to return the JWK for.</param>
+    /// <param name="privateKey">If true, include the private key.</param>
     /// <returns>The created instance.</returns>
     public static JWK Factory(KeyPairECDH keyPairECDH, bool privateKey = false) => new JwkOctetKeyPairs(){
         //KeyType = "OKP",
@@ -67,6 +70,7 @@ public partial class JWK {
     /// Factory method returning an instance for the RSA key <paramref name="keyPairRsa"/>
     /// </summary>
     /// <param name="keyPairRsa">The key to return the JWK for.</param>
+    /// <param name="privateKey">If true, include the private key.</param>
     /// <returns>The created instance.</returns>
     public static JWK Factory(KeyPairBaseRSA keyPairRsa, bool privateKey = false) => new JwkRsa() {
         //KeyType = "RSA",
@@ -94,6 +98,8 @@ public partial class JWK {
 
 public partial class JwkUdfSeed {
 
+    /// <summary>Return the private key seed.</summary>
+    /// <returns>The seed.</returns>
     public PrivateKeyUDF GetPrivateKeyUDF() => new(Seed);
 
 

@@ -554,7 +554,7 @@ public partial class ContextUser : ContextAccount {
 
 
     /// <summary>
-    /// Add the application <paramref name="application"/> to the specified contact(s).
+    /// Add the applications <paramref name="applications"/> to the specified contact(s).
     /// </summary>
     /// <param name="applications">The application to add.</param>
     /// <param name="contacts">If not null, a list of the local names of the self-contacts
@@ -1194,7 +1194,7 @@ public partial class ContextUser : ContextAccount {
         var key = new CryptoKeySymmetricSigner(pin);
         var messageClaim = new MessageClaim(targetAccountAddress, ServiceAddress, pin);
 
-        messageClaim.Envelope(KeyCommonSignature);
+        messageClaim.Enveloped(KeyCommonSignature);
 
 
         var claimClient = MeshMachine.GetMeshClient(
@@ -1349,6 +1349,10 @@ public partial class ContextUser : ContextAccount {
         return respondConnection;
         }
 
+    /// <summary>Accept onboarding of a device asynchronously.</summary>
+    /// <param name="earl">The EARL uri on the device.</param>
+    /// <param name="rights">The rights to grant to the device.</param>
+    /// <returns>Task returning the result of the request.</returns>
     public async Task<Message> AcceptOnboardAsync(
             string earl,
                 List<string> rights = null) {
@@ -1889,7 +1893,9 @@ public partial class ContextUser : ContextAccount {
         return contactMessage;
         }
 
-
+    /// <summary>Add the contact <paramref name="contact"/> asynchronously.</summary>
+    /// <param name="contact">The contact to add.</param>
+    /// <returns>Reult of the transaction request..</returns>
     public async Task<TransactResponse> AddContact(CatalogedContact contact) {
 
         var transaction = TransactBegin();

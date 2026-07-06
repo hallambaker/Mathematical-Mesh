@@ -129,6 +129,7 @@ public class PublicMeshService : MeshService {
     /// <param name="meshServiceConfiguration">Service configuration.</param>
     /// <param name="logService">The transaction logging service.</param>
     /// <param name="presenceServiceProvider">Optional presence service.</param>
+    /// <param name="earlDispatch">Optional EARL resolution service.</param>
     public PublicMeshService(
             IMeshMachine meshMachine,
             GenericHostConfiguration hostConfiguration,
@@ -750,7 +751,10 @@ public class PublicMeshService : MeshService {
             }
         }
 
-
+    /// <summary>Request publication of an EARL package.</summary>
+    /// <param name="request">The request object to send to the host.</param>
+    /// <param name="jpcSession">The authentication binding.</param>
+    /// <returns>The response object from the service</returns>
     public override PublishEarlResponse PublishEarl(
                 PublishEarlRequest request, IJpcSession jpcSession) {
         try {
@@ -766,6 +770,10 @@ public class PublicMeshService : MeshService {
 
         }
 
+    /// <summary>Request deletion of an EARL package.</summary>
+    /// <param name="request">The request object to send to the host.</param>
+    /// <param name="jpcSession">The authentication binding.</param>
+    /// <returns>The response object from the service</returns>
     public override DeleteEarlResponse DeleteEarl(
                 DeleteEarlRequest request, IJpcSession jpcSession) {
         try {
@@ -777,9 +785,13 @@ public class PublicMeshService : MeshService {
 
             }
 
-
         }
 
+
+    /// <summary>Request publication of a DNS record set.</summary>
+    /// <param name="request">The request object to send to the host.</param>
+    /// <param name="jpcSession">The authentication binding.</param>
+    /// <returns>The response object from the service</returns>
     public override PublishDnsResponse PublishDns(PublishDnsRequest request, IJpcSession jpcSession) {
         try {
             request.Updates.AssertNotNull(MeshMissingParameter.Throw);

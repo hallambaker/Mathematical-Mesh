@@ -194,7 +194,8 @@ public partial class PrivateKeyUDF : IActivate {
 
 
 
-
+    /// <summary>Return the seed as a JWK.</summary>
+    /// <returns></returns>
     public JWK GetJWK() => new JwkUdfSeed() {
         Kid = KeyId,
         Seed = PrivateValue

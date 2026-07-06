@@ -4008,12 +4008,6 @@
         <member name="P:Goedel.Cryptography.Dare.EarlEnvelopeContext.SigningKeys">
             <summary>The set of signature keys.</summary>
         </member>
-        <member name="T:Goedel.Cryptography.Dare.EarlSpool`1">
-            <summary>Provides a view on a data spool containing a sequence items of 
-            type T, each oif which has a unique primary key. Each item has an associated 
-            state which MAY be modified by subsequent entries.</summary>
-            <typeparam name="T">The type of item stored.</typeparam>
-        </member>
         <member name="T:Goedel.Cryptography.Dare.EarlStreamDebug">
             <summary>Debugging version of <see cref="T:Goedel.Cryptography.Dare.VDareStream"/>, emits diagnostic information.</summary>
         </member>
@@ -8203,6 +8197,12 @@
         <member name="M:Goedel.Cryptography.Dare.VDareSequence.EntriesReverse">
             <summary>Return an enumerator over the sequence in the reverse direction.</summary>
             <returns>The enumerator.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.EarlSpool`1">
+            <summary>Provides a view on a data spool containing a sequence items of 
+            type T, each oif which has a unique primary key. Each item has an associated 
+            state which MAY be modified by subsequent entries.</summary>
+            <typeparam name="T">The type of item stored.</typeparam>
         </member>
         <member name="T:Goedel.Cryptography.Dare.VDareStream">
             <summary>DARE stream reader/writer class.</summary>

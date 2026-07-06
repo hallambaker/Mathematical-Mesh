@@ -482,6 +482,9 @@
         <member name="P:Goedel.Mesh.Server.MeshConfiguredService.Logger">
             <summary>The logger interface.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Server.MeshConfiguredService.PublicMeshService">
+            <summary>The Mesh service.</summary>
+        </member>
         <member name="P:Goedel.Mesh.Server.MeshConfiguredService.JpcInterface">
             <inheritdoc/>
         </member>
@@ -503,10 +506,43 @@
             <param name="genericHostConfiguration">The host configuration.</param>
             <param name="presenceServiceProvider">The presence service.</param>
         </member>
+        <member name="T:Goedel.Mesh.Server.EarlDispatch">
+            <summary>EARL resolution service dispatch.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EarlDispatch.GetEndpoint">
+            <summary>The dispatch endpoint.</summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EarlDispatch.Add(System.String,System.Byte[])">
+            <summary>Add an EARL entry.</summary>
+            <param name="locator">The locator string.</param>
+            <param name="data">The EARL data.</param>
+            <returns>The DNS domain to which the EARL is registered.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EarlDispatch.Delete(System.String)">
+            <summary>Delete an EARL entry.</summary>
+            <param name="locator">The locator string.</param>
+            <returns>True if found, otherwise fale.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EarlDispatch.TryGetValue(System.String,System.Byte[]@)">
+            <summary>Attempt to locate the EARL <paramref name="locator"/></summary>
+            <param name="locator">The locator string.</param>
+            <param name="data">The EARL data.</param>
+            <returns>True if the data was found, otherwise false.</returns>
+        </member>
         <member name="T:Goedel.Mesh.Server.EarlDispatchCached">
             <summary>
-            Dispatch nubin for EARL resolution service 
+            Dispatch nubin for EARL resolution service using only cached data.
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EarlDispatchCached.#ctor(System.String,System.String)">
+            <summary>Constructor, return a caching EARL repository with DNS address
+            <paramref name="domain"/>.</summary>
+            <param name="domain">The DNS domain of the repository.</param>
+            <param name="instance">Optional instance specifier used in testing.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.EarlDispatchCached.GetEndpoint">
+            <inheritdoc/>
         </member>
         <member name="M:Goedel.Mesh.Server.EarlDispatchCached.Dispatch(System.Net.HttpListenerRequest,System.Net.HttpListenerResponse)">
             <summary>
@@ -530,13 +566,15 @@
             <summary>
             EARL Client resolving direct to the service (for testing);
             </summary>
-            <param name="EarlDispatch"></param>
+            <param name="EarlDispatch">The EARL service dispatch description.</param>
+            <param name="dnsClient">The DNSClient to use.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.EarlClientDirect.#ctor(Goedel.Mesh.Server.EarlDispatch,Goedel.Discovery.DnsClient)">
             <summary>
             EARL Client resolving direct to the service (for testing);
             </summary>
-            <param name="EarlDispatch"></param>
+            <param name="EarlDispatch">The EARL service dispatch description.</param>
+            <param name="dnsClient">The DNSClient to use.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.EarlClientDirect.TryGetValue(System.String,System.String)">
             <inheritdoc/>
@@ -1435,6 +1473,7 @@
             <param name="meshServiceConfiguration">Service configuration.</param>
             <param name="logService">The transaction logging service.</param>
             <param name="presenceServiceProvider">Optional presence service.</param>
+            <param name="earlDispatch">Optional EARL resolution service.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.AddAdministrator(Goedel.Mesh.Client.IMeshMachineClient,System.String,Goedel.Mesh.Server.MeshServiceConfiguration,Goedel.Protocol.GenericHost.DareLoggerConfiguration)">
             <summary>
@@ -1602,6 +1641,24 @@
             <param name="session">The authentication binding.</param>
             <returns>The response object from the service</returns>
         </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.PublishEarl(Goedel.Mesh.PublishEarlRequest,Goedel.Protocol.IJpcSession)">
+            <summary>Request publication of an EARL package.</summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The authentication binding.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.DeleteEarl(Goedel.Mesh.DeleteEarlRequest,Goedel.Protocol.IJpcSession)">
+            <summary>Request deletion of an EARL package.</summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The authentication binding.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.PublishDns(Goedel.Mesh.PublishDnsRequest,Goedel.Protocol.IJpcSession)">
+            <summary>Request publication of a DNS record set.</summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The authentication binding.</param>
+            <returns>The response object from the service</returns>
+        </member>
         <member name="T:Goedel.Mesh.Server.LockedCatalogedEntry`1">
             <summary>
             Wrapper providing a locked accessor to a CatalogedEntry of type <typeparamref name="T"/>.
@@ -1642,6 +1699,9 @@
         <member name="P:Goedel.Mesh.Server.MeshPersist.KeyCollection">
             <summary>The key collection.</summary> 
         </member>
+        <member name="P:Goedel.Mesh.Server.MeshPersist.EarlDispatch">
+            <summary>The dispatch data.</summary>
+        </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.Disposing">
             <inheritdoc/>
         </member>
@@ -1649,6 +1709,7 @@
             <summary>
             Open or create the accounts persistence container.
             </summary>
+            <param name="publicMeshService">The Mesh service.</param>
             <param name="keyCollection">The key collection to be used for decrypting data.</param>
             <param name="directory">The directory in which all the service data is stored.</param>
             <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
@@ -1761,6 +1822,27 @@
             <param name="targetAccount"></param>
             <param name="id"></param>
             <returns>The result of the transaction.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshPersist.PublishEarl(Goedel.Protocol.IJpcSession,System.Byte[],System.Byte[],System.Nullable{System.DateTime})">
+            <summary>Publish an EARL</summary>
+            <param name="jpcSession">The Mesh session.</param>
+            <param name="prelocator">The prelocator</param>
+            <param name="data">The data</param>
+            <param name="expire">Epiry time</param>
+            <returns>The service response</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshPersist.DeleteEarl(Goedel.Protocol.IJpcSession,System.Byte[])">
+            <summary>Delete a published EARL</summary>
+            <param name="jpcSession">The Mesh session.</param>
+            <param name="prelocator">The prelocator</param>
+            <returns>The service response</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshPersist.PublishDns(Goedel.Protocol.IJpcSession,Goedel.Discovery.IDnsPublisher,System.Collections.Generic.List{Goedel.Mesh.DnsUpdate})">
+            <summary>Publish a DNS record set</summary>
+            <param name="jpcSession">The Mesh session.</param>
+            <param name="publisher">The DNS publisher.</param>
+            <param name="updates">The updates to send</param>
+            <returns>The service response</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.GetAccountLocked(System.String)">
             <summary>

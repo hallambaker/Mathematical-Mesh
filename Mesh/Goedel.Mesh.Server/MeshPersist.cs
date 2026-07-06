@@ -99,6 +99,8 @@ public class MeshPersist : Disposable {
     IPresence PresenceService { get; }
 
     PublicMeshService PublicMeshService { get; }
+
+    /// <summary>The dispatch data.</summary>
     public EarlDispatch? EarlDispatch => PublicMeshService.EarlDispatch;
 
     #endregion
@@ -118,6 +120,7 @@ public class MeshPersist : Disposable {
     /// <summary>
     /// Open or create the accounts persistence container.
     /// </summary>
+    /// <param name="publicMeshService">The Mesh service.</param>
     /// <param name="keyCollection">The key collection to be used for decrypting data.</param>
     /// <param name="directory">The directory in which all the service data is stored.</param>
     /// <param name="fileStatus">Specifies whether to create the file if it doesn't exist.</param>
@@ -249,7 +252,7 @@ public class MeshPersist : Disposable {
         // Encrypt: We should probably encrypt here to the device key and the account key.
 
         // the key isn't being filled in on the envelope ???
-        acknowledgeConnection.Envelope(ServiceSignatureKey);
+        acknowledgeConnection.Enveloped(ServiceSignatureKey);
 
 
         var bitmask = new Bitmask();
@@ -770,7 +773,12 @@ public class MeshPersist : Disposable {
 
 
 
-
+    /// <summary>Publish an EARL</summary>
+    /// <param name="jpcSession">The Mesh session.</param>
+    /// <param name="prelocator">The prelocator</param>
+    /// <param name="data">The data</param>
+    /// <param name="expire">Epiry time</param>
+    /// <returns>The service response</returns>
     public PublishEarlResponse PublishEarl(
                 IJpcSession jpcSession,
                 byte[] prelocator,
@@ -789,7 +797,10 @@ public class MeshPersist : Disposable {
         return response;
         }
 
-
+    /// <summary>Delete a published EARL</summary>
+    /// <param name="jpcSession">The Mesh session.</param>
+    /// <param name="prelocator">The prelocator</param>
+    /// <returns>The service response</returns>
     public DeleteEarlResponse DeleteEarl(
                 IJpcSession jpcSession,
                 byte[] prelocator
@@ -800,6 +811,11 @@ public class MeshPersist : Disposable {
         return response;
         }
 
+    /// <summary>Publish a DNS record set</summary>
+    /// <param name="jpcSession">The Mesh session.</param>
+    /// <param name="publisher">The DNS publisher.</param>
+    /// <param name="updates">The updates to send</param>
+    /// <returns>The service response</returns>
     public PublishDnsResponse PublishDns(
                 IJpcSession jpcSession,
                 IDnsPublisher publisher,

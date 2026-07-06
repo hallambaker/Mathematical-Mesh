@@ -35,5 +35,6 @@ public record MeshOnboardData(
             string KeyId
             ) {
 
+    /// <summary>No idea.</summary>
     public JWK KeySeed { get; set; } = null;
     }

@@ -22,6 +22,12 @@
             Machine using a client directly bound to the underlying service.
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Core.MeshMachineDirect.EarlClient">
+            <summary>The EARL client for publishing EARLs.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Core.MeshMachineDirect.DnsClient">
+            <summary>The DNS Client</summary>
+        </member>
         <member name="P:Goedel.Mesh.Core.MeshMachineDirect.DirectServices">
             <summary>Services that are reachable by direct interface.</summary> 
         </member>
@@ -87,6 +93,12 @@
             <summary>
             The  Mesh server.
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshMachineCoreServer.DnsClient">
+            <summary>The DNS Client</summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshMachineCoreServer.EarlClient">
+            <summary>The EARL client for publishing EARLs.</summary>
         </member>
         <member name="P:Goedel.Mesh.MeshMachineCoreServer.Instance">
             <inheritdoc/>

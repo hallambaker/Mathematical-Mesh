@@ -67,17 +67,15 @@ public partial class Message {
 
 
     /// <summary>
-    /// Returns a new typed envelope containing the object <paramref name="data"/>
+    /// Returns a new typed envelope wrapping this instance
     /// optionally encrypted under <paramref name="encryptionKey"/> and signed under
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="data">The object to be enveloped.</param>
     /// <param name="signingKey">The signature key.</param>
     /// <param name="encryptionKey">The encryption key.</param>
     /// <param name="contentMeta">The value of the ContentMeta Header tag.</param>
     /// <param name="objectEncoding">The object encoding to use for the envelope payload.</param>
     /// <returns>The enveloped data</returns>
-    public Enveloped<Message> Envelope(
+    public Enveloped<Message> Enveloped(
                 CryptographicKey signingKey = null,
                 CryptographicKey encryptionKey = null,
                 ContentMeta contentMeta = null,

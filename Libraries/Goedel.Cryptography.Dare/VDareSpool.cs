@@ -26,28 +26,41 @@ using static Goedel.Discovery.ServiceAddressSplitLex;
 
 namespace Goedel.Cryptography.Dare;
 
-public class EarlSpool : VDareSequence {
+/// <summary>Dare spool containing an append only list of messages.</summary>
+public class VDareSpool : VDareSequence {
 
-    protected EarlSpool(
+
+    /// <summary>Constructor from <paramref name="stream"/></summary>
+    /// <param name="stream">The stream to read the spool data from.</param>
+    protected VDareSpool(
         VDareStream stream) : base(stream) {
         }
 
-
-    public static EarlSpool<T> Create<T>(
+    /// <summary>Create a new instance for a spool of type <typeparamref name="T"/>,
+    /// writing to <paramref name="fileName"/></summary>
+    /// <typeparam name="T">The typed log contents.</typeparam>
+    /// <param name="fileName">The file to write to.</param>
+    /// <returns>The instance.</returns>
+    public static VDareSpool<T> Create<T>(
     string fileName) where T : JsonObject {
         var stream = VDareStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
-        var result = new EarlSpool<T>(stream);
+        var result = new VDareSpool<T>(stream);
 
         result.WriteInitial();
 
         return result;
         }
 
-    public static EarlSpool<T> Open<T>(
+    /// <summary>Open an instance for a spool of type <typeparamref name="T"/>,
+    /// writing to <paramref name="fileName"/></summary>
+    /// <typeparam name="T">The typed log contents.</typeparam>
+    /// <param name="fileName">The file to write to.</param>
+    /// <returns>The instance.</returns>
+    public static VDareSpool<T> Open<T>(
             string fileName) where T : JsonObject {
 
         var stream = VDareStream.OpenReadWrite(fileName);
-        var spool = new EarlSpool<T>(stream);
+        var spool = new VDareSpool<T>(stream);
         spool.ReadInitial();
 
         return spool;
@@ -59,14 +72,20 @@ public class EarlSpool : VDareSequence {
 /// type T, each oif which has a unique primary key. Each item has an associated 
 /// state which MAY be modified by subsequent entries.</summary>
 /// <typeparam name="T">The type of item stored.</typeparam>
-public class EarlSpool<T> : EarlSpool where T : JsonObject {
+public class VDareSpool<T> : VDareSpool where T : JsonObject {
 
+    /// <summary>Disctionary returning the message status.</summary>
     public Dictionary<string, SequenceEvent> StatusDictionary { get; } = [];
 
-    internal EarlSpool(
+    internal VDareSpool(
                 VDareStream stream) : base(stream) {
         }
 
+    /// <summary>Append an entry to the log constructing the appropriate
+    /// unprotected and protected headers.</summary>
+    /// <param name="item"></param>
+    /// <param name="state">State to append the item in.</param>
+    /// <returns>The entry index.</returns>
     public VDareEntryIndex Add(T item,
                 SequenceEvent state = SequenceEvent.Initial) {
         var contentMeta = new ContentMeta() {
@@ -77,6 +96,9 @@ public class EarlSpool<T> : EarlSpool where T : JsonObject {
         return Append(item, contentMeta);
         }
 
+    /// <summary>Perform a set of status updates <paramref name="updates"/></summary>
+    /// <param name="updates">The updates to perform.</param>
+    /// <returns>The entry index.</returns>
     public VDareEntryIndex Update(List<EntryUpdate> updates) {
         var contentMeta = new ContentMeta() {
             UniqueId = null,
@@ -97,7 +119,9 @@ public class EarlSpool<T> : EarlSpool where T : JsonObject {
         }
 
 
-
+    /// <summary>Get the value of the spool entry <paramref name="index"/></summary>
+    /// <param name="index">Index of the entry to return.</param>
+    /// <returns>The value.</returns>
     public T GetValue(VDareEntryIndex index) {
         var result = GetValue<T>(index);
         if (StatusDictionary.TryGetValue(result._PrimaryKey, out var value)) {
@@ -110,6 +134,10 @@ public class EarlSpool<T> : EarlSpool where T : JsonObject {
         return result;
         }
 
+    /// <summary>Process the spool entry <paramref name="entry"/> to
+    /// eliminate status updates.</summary>
+    /// <param name="entry">The entry to process</param>
+    /// <returns>The result of processing.</returns>
     public bool ProcessEntry(VDareEntryIndex entry) {
         if (entry.EarlEnvelope.SignedHeader.UniqueId is not null) {
             return false;
@@ -137,8 +165,9 @@ public class EarlSpool<T> : EarlSpool where T : JsonObject {
 
         }
 
-
-    public virtual IEnumerable<VDareEntryIndex> EntriesReverse() => 
+    /// <summary>Enumeration over the spool in the reverse order.</summary>
+    /// <returns>The enumeration.</returns>
+    public override IEnumerable<VDareEntryIndex> EntriesReverse() => 
         new VEntryEnumerator(this, false, ProcessEntry);
 
 

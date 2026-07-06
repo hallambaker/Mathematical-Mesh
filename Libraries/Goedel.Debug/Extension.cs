@@ -26,9 +26,6 @@ using Goedel.Protocol;
 using Goedel.Utilities;
 
 using System.Collections;
-using System.Collections.Generic;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Debug;
 
@@ -38,7 +35,12 @@ namespace Goedel.Debug;
 public static partial class Extension {
 
 
-
+    /// <summary>Write <paramref name="example"/> to the writer <paramref name="example"/>
+    /// with the set of included properties <paramref name="includedProperties"/></summary>
+    /// <param name="output"></param>
+    /// <param name="example"></param>
+    /// <param name="includedProperties"></param>
+    /// <param name="filter"></param>
     public static void Write(
         this TextWriter output,
         JsonObject example,
@@ -91,6 +93,12 @@ public static partial class Extension {
         output.WriteLine();
         }
 
+    /// <summary>Write the data <paramref name="data"/> to <paramref name="writer"/>
+    /// </summary>
+    /// <param name="writer">The writer to output data to.</param>
+    /// <param name="property">The property dictionary.</param>
+    /// <param name="data">The data to write.</param>
+    /// <param name="filter">Filter.</param>
     static void WriteFiltered(
                     JSONDebugWriter writer,
                     PropertyDictionaryStruct property,

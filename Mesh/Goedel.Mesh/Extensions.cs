@@ -43,6 +43,9 @@ namespace Goedel.Mesh;
 /// </summary>
 public static partial class Extensions {
 
+    /// <summary>Return the Mesh onboarding data from <paramref name="jsDevice"/></summary>
+    /// <param name="jsDevice">The device description.</param>
+    /// <returns>The Mesh onboarding profile.</returns>
     public static MeshOnboardData? GetMeshOnboard(this JsDevice jsDevice) {
 
 
@@ -582,7 +585,12 @@ public static partial class Extensions {
 
 
 
-
+    /// <summary>Return the Mesh account profile from <paramref name="contact"/> in the
+    /// online service <paramref name="onlineService"/></summary>
+    /// <param name="contact">The contact description.</param>
+    /// <param name="onlineService">The online service entry describing the
+    /// Mesh profile to extract.</param>
+    /// <returns>The Mesh account profile.</returns>
     public static ProfileAccount GetProfileAccount(this JsContact contact, OnlineService onlineService) {
 
         // get the key recor

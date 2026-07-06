@@ -1,34 +1,47 @@
 ﻿
 
 
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.Mesh.Server;
 
-
+/// <summary>EARL resolution service dispatch.</summary>
 public abstract class EarlDispatch {
 
+    /// <summary>The dispatch endpoint.</summary>
+    /// <returns></returns>
     public abstract Endpoint GetEndpoint();
 
 
-
+    /// <summary>Add an EARL entry.</summary>
+    /// <param name="locator">The locator string.</param>
+    /// <param name="data">The EARL data.</param>
+    /// <returns>The DNS domain to which the EARL is registered.</returns>
     public abstract string Add(
                 string locator,
                 byte[] data);
 
+    /// <summary>Delete an EARL entry.</summary>
+    /// <param name="locator">The locator string.</param>
+    /// <returns>True if found, otherwise fale.</returns>
     public abstract bool Delete(string locator);
 
+    /// <summary>Attempt to locate the EARL <paramref name="locator"/></summary>
+    /// <param name="locator">The locator string.</param>
+    /// <param name="data">The EARL data.</param>
+    /// <returns>True if the data was found, otherwise false.</returns>
     public abstract bool TryGetValue(
                 string locator,
-                out byte[] data);
+                [NotNullWhen(true)]out byte[] data);
 
     }
 
 
 /// <summary>
-/// Dispatch nubin for EARL resolution service 
+/// Dispatch nubin for EARL resolution service using only cached data.
 /// </summary>
 public class EarlDispatchCached: EarlDispatch {
     string Domain { get; }
@@ -37,6 +50,10 @@ public class EarlDispatchCached: EarlDispatch {
 
     string PathPrefix { get; }
 
+    /// <summary>Constructor, return a caching EARL repository with DNS address
+    /// <paramref name="domain"/>.</summary>
+    /// <param name="domain">The DNS domain of the repository.</param>
+    /// <param name="instance">Optional instance specifier used in testing.</param>
     public EarlDispatchCached(string domain, string? instance = null) {
 
 
@@ -45,6 +62,7 @@ public class EarlDispatchCached: EarlDispatch {
         PathPrefix = EarlClient.GetPrefix(Instance);
         }
 
+    /// <inheritdoc/>
     public override Endpoint GetEndpoint() {
         return new HttpEndpoint(Dispatch, "_earl._tcp", Instance);
         }
@@ -97,7 +115,7 @@ public class EarlDispatchCached: EarlDispatch {
     /// <inheritdoc/>
     public override bool TryGetValue(
                 string locator,
-                out byte[] data) => DataDictionary.TryGetValue(locator, out data);
+                [NotNullWhen(true)] out byte[] data) => DataDictionary.TryGetValue(locator, out data);
 
 
     }
@@ -107,8 +125,9 @@ public class EarlDispatchCached: EarlDispatch {
 /// <summary>
 /// EARL Client resolving direct to the service (for testing);
 /// </summary>
-/// <param name="EarlDispatch"></param>
-public  class EarlClientDirect (EarlDispatch EarlDispatch, DnsClient dnsClient) : EarlClient (dnsClient){
+/// <param name="EarlDispatch">The EARL service dispatch description.</param>
+/// <param name="dnsClient">The DNSClient to use.</param>
+public  class EarlClientDirect (EarlDispatch EarlDispatch, DnsClient dnsClient=null) : EarlClient (dnsClient){
 
     /// <inheritdoc/>
     public override Task<byte[]> TryGetValue(

@@ -26,6 +26,22 @@
             Class containing static helper methods.
             </summary>
         </member>
+        <member name="M:Goedel.Debug.Extension.Write(System.IO.TextWriter,Goedel.Protocol.JsonObject,System.Collections.Generic.List{System.String},System.Func{Goedel.Protocol.JsonObject,System.Boolean})">
+            <summary>Write <paramref name="example"/> to the writer <paramref name="example"/>
+            with the set of included properties <paramref name="includedProperties"/></summary>
+            <param name="output"></param>
+            <param name="example"></param>
+            <param name="includedProperties"></param>
+            <param name="filter"></param>
+        </member>
+        <member name="M:Goedel.Debug.Extension.WriteFiltered(Goedel.Protocol.JSONDebugWriter,Goedel.Protocol.PropertyDictionaryStruct,Goedel.Protocol.IBinding,System.Func{Goedel.Protocol.JsonObject,System.Boolean})">
+            <summary>Write the data <paramref name="data"/> to <paramref name="writer"/>
+            </summary>
+            <param name="writer">The writer to output data to.</param>
+            <param name="property">The property dictionary.</param>
+            <param name="data">The data to write.</param>
+            <param name="filter">Filter.</param>
+        </member>
         <member name="M:Goedel.Debug.Extension.InvalidateKey(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyCollection)">
             <summary>
             Generate an invalidated version of the key <paramref name="keyPair"/> and add it

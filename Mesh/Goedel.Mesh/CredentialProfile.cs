@@ -42,6 +42,7 @@ public record CredentialProfile (
             int KeySize = 0
             ) {
 
+    /// <summary>The credential kind.</summary>
     public virtual string Kind => "code";
 
     ///<summary>The platform served by the credential</summary> 

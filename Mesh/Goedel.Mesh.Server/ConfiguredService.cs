@@ -80,6 +80,7 @@ public class MeshConfiguredService : IConfguredService {
     ///<summary>The logger interface.</summary> 
     public ILogger<ManagedListener> Logger { get; }
 
+    /// <summary>The Mesh service.</summary>
     public PublicMeshService PublicMeshService { get; set; }
 
     ///<inheritdoc/>

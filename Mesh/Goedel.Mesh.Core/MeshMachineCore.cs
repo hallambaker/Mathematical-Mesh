@@ -32,9 +32,10 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
 
     #region // Properties
 
+    /// <summary>The DNS Client</summary>
+    public DnsClient DnsClient { get; init; } = DnsClient.Default;
 
-    public DnsClient DnsClient { get; init; }
-
+    /// <summary>The EARL client for publishing EARLs.</summary>
     public EarlClient EarlClient { get; init; } 
 
 

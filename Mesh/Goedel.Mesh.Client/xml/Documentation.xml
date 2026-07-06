@@ -1357,7 +1357,7 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.AddApplications(System.Collections.Generic.List{Goedel.Mesh.CatalogedApplication},System.Collections.Generic.IEnumerable{System.String})">
             <summary>
-            Add the application <paramref name="application"/> to the specified contact(s).
+            Add the applications <paramref name="applications"/> to the specified contact(s).
             </summary>
             <param name="applications">The application to add.</param>
             <param name="contacts">If not null, a list of the local names of the self-contacts
@@ -1575,6 +1575,12 @@
             <param name="rights">The rights to assign.</param>
             <returns>The transaction result</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.AcceptOnboardAsync(System.String,System.Collections.Generic.List{System.String})">
+            <summary>Accept onboarding of a device asynchronously.</summary>
+            <param name="earl">The EARL uri on the device.</param>
+            <param name="rights">The rights to grant to the device.</param>
+            <returns>Task returning the result of the request.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.ProcessAsync(Goedel.Mesh.AcknowledgeConnection,System.Boolean,Goedel.Mesh.MessagePin,System.Collections.Generic.List{System.String})">
             <summary>
             Accept or reject a connection request.
@@ -1693,6 +1699,11 @@
             <param name="localname">Local name for the contact</param>
             <param name="reply">if true, request return of the recpients contact info in reply.</param>
             <param name="message">Optional message to explain the request.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.AddContact(Goedel.Mesh.CatalogedContact)">
+            <summary>Add the contact <paramref name="contact"/> asynchronously.</summary>
+            <param name="contact">The contact to add.</param>
+            <returns>Reult of the transaction request..</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.ContactExchange(System.String,System.Boolean,System.String)">
             <summary>
@@ -3488,6 +3499,17 @@
             Create a new Mesh master profile and account without binding to a service
             </summary>
             <returns>Context for administering the Mesh account</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshHost.ProcessCompletion(Goedel.Mesh.ProfileDevice,Goedel.Mesh.RespondConnection)">
+            <summary>Process completion of connection request.</summary>
+            <param name="profileDevice">Profile of the device requesting connection.</param>
+            <param name="respondConnection">Result of the completion request.</param>
+            <returns>User context the device is joined to.</returns>
+            <exception cref="T:Goedel.Mesh.Client.ConnectionRefusedException">The connection request was refused.</exception>
+            <exception cref="T:Goedel.Mesh.Client.ConnectionPendingException">The connection request is still pending.</exception>
+            <exception cref="T:Goedel.Mesh.Client.ConnectionExpiredException">The connection request has expired.</exception>
+            <exception cref="T:Goedel.Mesh.Client.ConnectionAccountUnknownException">The connection request was made to an unknown account.</exception>
+            <exception cref="T:Goedel.Mesh.Client.RefusedPinInvalidException">The connection request was refused because an invalid PIN was specified.</exception>
         </member>
         <member name="T:Goedel.Mesh.Client.NamespaceDoc">
             <summary>

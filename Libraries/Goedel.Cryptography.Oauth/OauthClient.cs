@@ -35,11 +35,11 @@ public class OauthClient {
 
     /// <summary>
     /// Constructor, returns an instance with client URI <paramref name="clientId"/>, redirect
-    /// URI <paramref name="redirectUri"/> and keys <paramref name="keys"/>.
+    /// URI <paramref name="redirectUri"/> and key directory <paramref name="directory"/>.
     /// </summary>
     /// <param name="clientId">The client identifier.</param>
     /// <param name="redirectUri">The redirect URL</param>
-    /// <param name="directory">The diorectory in which private keys for encryption 
+    /// <param name="directory">The directory in which private keys for encryption 
     /// and signature are stored.</param>
     public OauthClient(
                 string clientId,
@@ -59,14 +59,6 @@ public class OauthClient {
                     scope, confidential, keys);
         ClientMetadataBytes = ClientMetadata.ToString().ToUTF8();
         }
-
-
-    //public OauthClient(
-    //            ClientMetadata clientMetadata) {
-    //    ClientMetadata = clientMetadata;
-    //    ClientMetadataBytes = ClientMetadata.ToString().ToUTF8();
-    //    }
-
 
 
     JWKS GetKeys(string directory) {

@@ -29,12 +29,17 @@ namespace Goedel.Mesh;
 
 public partial class CryptoKeyIndex {
 
-
+    /// <summary>The cataloged contact.</summary>
     public CatalogedContact CatalogedContact { get; set; }
 
+    /// <summary>Constructor used for deserialization.</summary>
     public CryptoKeyIndex() {
         }
 
+    /// <summary>Constructor, retun an instance from <paramref name="service"/> for the
+    /// shae <paramref name="shareId"/></summary>
+    /// <param name="service">The service.</param>
+    /// <param name="shareId">The Key share identifier.</param>
     public CryptoKeyIndex(OnlineService service, string shareId) {
         KeyShareId = shareId;
         foreach (var cryptoId in service.CryptoKeyIds.IfEnumerable()) {
@@ -51,6 +56,10 @@ public partial class CryptoKeyIndex {
             }
         }
 
+    /// <summary>Get keypair for this entry from <paramref name="keyCollection"/></summary>
+    /// <param name="keyCollection">The key collection to search.</param>
+    /// <returns></returns>
+    /// <exception cref="NYI"></exception>
     public KeyPair GetKeyPair(IKeyCollection keyCollection) {
         var contact = CatalogedContact.JsContact;
         if (contact.OnlineServices == null | contact.CryptoKeys == null) {
@@ -77,18 +86,28 @@ public partial class CryptoKeyIndex {
     }
 
 
-
+/// <summary>Private key entry record.</summary>
 public record PrivateKeyEntry  {
 
+    /// <summary>The key identifier.</summary>
     public string KeyId { get; }
+
+    /// <summary>The account</summary>
     public string AccountId { get; }
+
+    /// <summary>The account profile.</summary>
     public ProfileAccount ProfileAccount { get; }
 
+    /// <summary>The online service.</summary>
     public OnlineService Service { get; }
+
+    /// <summary>The JWK</summary>
     public JsonWebKeySet JsonWebKeySet { get; }
 
-    //KeyPair keyPair;
-    //public KeyPair KeyPair => keyPair ?? GetKeyPair().CacheValue(out keyPair);
+    /// <summary>Constructor.</summary>
+    /// <param name="contact"></param>
+    /// <param name="service"></param>
+    /// <param name="jsonWebKeySet"></param>
     public PrivateKeyEntry (
                     JsContact contact,
                     OnlineService service,
@@ -113,19 +132,9 @@ public record PrivateKeyEntry  {
         }
 
 
-
-
-    //public byte[] Decrypt(
-    //                byte[] encryptedKey, 
-    //                IAgreementData ephemeral = null, 
-    //                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, 
-    //                KeyAgreementResult partial = null, 
-    //                byte[] salt = null) {
-    //    return KeyPair.Decrypt(encryptedKey, ephemeral, algorithmID, partial, salt);
-
-    //    throw new NotImplementedException();
-    //    }
-
+    /// <summary>Get keypair for this entry from <paramref name="keyLocate"/></summary>
+    /// <param name="keyLocate">The key collection to search.</param>
+    /// <returns></returns>
 
     public KeyPair GetKeyPair(IKeyCollection keyLocate) {
         //Console.WriteLine(JsonWebKeySet.Data.ToUTF8());

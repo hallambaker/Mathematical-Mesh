@@ -55,9 +55,10 @@ public delegate IMeshMachine GetMachineDelegate();
 /// </summary>
 public interface IMeshMachine {
 
-
+    /// <summary>The EARL resolution client.</summary>
     EarlClient EarlClient { get; }
 
+    /// <summary>The DNS resolution client.</summary>
     DnsClient DnsClient { get; }
 
 

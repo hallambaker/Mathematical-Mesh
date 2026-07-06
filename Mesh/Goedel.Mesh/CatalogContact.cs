@@ -568,6 +568,8 @@ public partial class CatalogedContact {
 
 
 public partial class MeshContact {
+
+    /// <summary>The cataloged contact value.</summary>
     public CatalogedContact CatalogedContact { get; set; }
 
     /// <summary>Default constructor used in deserialization.</summary>

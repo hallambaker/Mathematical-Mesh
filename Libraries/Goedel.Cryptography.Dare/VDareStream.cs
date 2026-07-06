@@ -110,16 +110,11 @@ public class VDareStream : Disposable {
         }
 
 
-    //public static EarlStream Reader(byte[] bytes) {
-    //    }
-
-    //public static EarlStream Factory(
-    //    string fileName,
-    //    FileMode fileMode,
-    //    FileAccess fileAccess,
-    //    FileShare fileShare) => new EarlStream(fileName, fileMode, fileAccess, fileShare);
-
-
+    /// <summary>Open</summary>
+    /// <param name="fileName">Stream to open.</param>
+    /// <param name="typeIdentifier">The identifier type bytes.</param>
+    /// <returns></returns>
+    /// <exception cref="NYI"></exception>
     public static VDareStream Open(
                 string fileName,
                 byte[] typeIdentifier) {
@@ -130,10 +125,10 @@ public class VDareStream : Disposable {
             return stream;
             }
         catch (Exception e) {
+            e.Future();
             throw new NYI();
             }
         }
-
 
 
     /// <summary>Open the file <paramref name="fileName"/> to read as an <see cref="VDareStream"/>.</summary>

@@ -1386,7 +1386,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
     public Enveloped<Message> SignAndEncryptMessage(
                     Message message,
                     CryptographicKey encryptionKey) {
-        var result = message.Envelope(
+        var result = message.Enveloped(
                         signingKey: KeyAdministratorSign, encryptionKey: encryptionKey);
 
         result.Header.Encrypt.AssertTrue(NYI.Throw);

@@ -33,9 +33,10 @@ namespace Goedel.Cryptography.Dare;
 /// </summary>
 public partial class JbcdStream : Disposable {
 
+    /// <summary>The stream version.</summary>
     public int Version { get; private set; }
 
-
+    /// <summary>The position of the start of the first frame.</summary>
     public long StartFirstFrame { get; private set; }
 
     /// <summary>

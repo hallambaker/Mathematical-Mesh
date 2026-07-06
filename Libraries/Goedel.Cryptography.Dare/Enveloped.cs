@@ -206,23 +206,6 @@ public partial class Enveloped : IDisposable{
         return new Enveloped(cryptoParameters, plaintext, contentMeta, cloaked, dataSequences);
         }
 
-    ///// <summary>
-    ///// Encrypt the 
-    ///// </summary>
-    ///// <param name="plaintext"></param>
-    ///// <param name="pin"></param>
-    ///// <param name="contentMeta"></param>
-    ///// <param name="cloaked"></param>
-    ///// <param name="dataSequences"></param>
-    ///// <returns></returns>
-    //public static DareEnvelope Encrypt(byte[] plaintext, string pin,
-    //            ContentMeta contentMeta = null,
-    //            byte[] cloaked = null,
-    //            List<byte[]> dataSequences = null) {
-
-    //    var cryptoStack = new CryptoStack(pin);
-    //    return new DareEnvelope(cryptoStack, plaintext, contentMeta, cloaked, dataSequences);
-    //    }
 
     #endregion
     #region // Convenience accessors
@@ -250,7 +233,10 @@ public partial class Enveloped : IDisposable{
     #endregion
     #region // Payload decoding routines 
 
-
+    /// <summary>Parse the stream to return an object of type <typeparamref name="T"/></summary>
+    /// <typeparam name="T">Type of the payload object to return.</typeparam>
+    /// <param name="keyCollection">Key collection for decryption.</param>
+    /// <returns>Result of the parse.</returns>
     public T StreamParseTag<T>(IKeyLocate keyCollection = null) where T : JsonObject {
 
         var plaintext = (keyCollection == null) ? Body : GetPlaintext(keyCollection);
@@ -664,6 +650,9 @@ public partial class Enveloped : IDisposable{
         return null;
         }
 
+    /// <summary>Gt the signature under the key <paramref name="keyId"/></summary>
+    /// <param name="keyId">Key identifier.</param>
+    /// <returns>The signature.</returns>
     public DareSignature? GetSignature(string keyId) {
         var signatures = Trailer.Signatures;
         if (signatures is null) {

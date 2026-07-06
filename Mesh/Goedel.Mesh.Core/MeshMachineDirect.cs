@@ -33,8 +33,10 @@ public class MeshMachineDirect : Disposable, IMeshMachineClient {
     IMeshMachineClient MeshMachineClient { get; }
     MeshService PublicMeshService { get; }
 
+    /// <summary>The EARL client for publishing EARLs.</summary>
     public EarlClient EarlClient => MeshMachineClient.EarlClient;
 
+    /// <summary>The DNS Client</summary>
     public DnsClient DnsClient => MeshMachineClient.DnsClient;
 
     ///<summary>Services that are reachable by direct interface.</summary> 
@@ -134,16 +136,16 @@ public class MeshMachineDirect : Disposable, IMeshMachineClient {
     public void AddService(JpcInterface jpcInterface) {
         DirectServices.Add(jpcInterface.GetWellKnown, jpcInterface);
 
-        switch (jpcInterface) {
-            //case ResolverService resolverService: {
-            //    ResolverService = resolverService;
-            //    break;
-            //    }
-            //case CarnetService carnetService: {
-            //    CarnetService = carnetService;
-            //    break;
-            //    }
-            }
+        //switch (jpcInterface) {
+        //    //case ResolverService resolverService: {
+        //    //    ResolverService = resolverService;
+        //    //    break;
+        //    //    }
+        //    //case CarnetService carnetService: {
+        //    //    CarnetService = carnetService;
+        //    //    break;
+        //    //    }
+        //    }
         }
 
 

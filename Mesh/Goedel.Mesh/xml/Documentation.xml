@@ -2969,6 +2969,9 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.MeshContact.CatalogedContact">
+            <summary>The cataloged contact value.</summary>
+        </member>
         <member name="M:Goedel.Mesh.MeshContact.#ctor">
             <summary>Default constructor used in deserialization.</summary>
         </member>
@@ -5058,6 +5061,9 @@
         <member name="P:Goedel.Mesh.CredentialProfile.KeySize">
             <summary>The default key size.</summary>
         </member>
+        <member name="P:Goedel.Mesh.CredentialProfile.Kind">
+            <summary>The credential kind.</summary>
+        </member>
         <member name="P:Goedel.Mesh.CredentialProfile.Platforms">
             <summary>The platform served by the credential</summary> 
         </member>
@@ -6427,6 +6433,11 @@
             Static extensions class.
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.Extensions.GetMeshOnboard(Goedel.Contacts.JsDevice)">
+            <summary>Return the Mesh onboarding data from <paramref name="jsDevice"/></summary>
+            <param name="jsDevice">The device description.</param>
+            <returns>The Mesh onboarding profile.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Extensions.IsOpen(Goedel.Mesh.StateSpoolMessage)">
             <summary>
             Returns <code>true</code> if <paramref name="spoolMessageState"/> represents an open
@@ -6613,6 +6624,14 @@
             <param name="serviceId">The Sevice type.</param>
             <param name="keys">Dictionary mapping key identifiers to uses.</param>
             <param name="contexts">The contexts in which the identifier is to be used.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.GetProfileAccount(Goedel.Contacts.JsContact,Goedel.Contacts.OnlineService)">
+            <summary>Return the Mesh account profile from <paramref name="contact"/> in the
+            online service <paramref name="onlineService"/></summary>
+            <param name="contact">The contact description.</param>
+            <param name="onlineService">The online service entry describing the
+            Mesh profile to extract.</param>
+            <returns>The Mesh account profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.Extensions.GetMeshKeyType(Goedel.Cryptography.UdfAlgorithmIdentifier)">
             <summary>
@@ -7311,6 +7330,12 @@
             Interface exposed by all Mesh Machine classes.
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.IMeshMachine.EarlClient">
+            <summary>The EARL resolution client.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.IMeshMachine.DnsClient">
+            <summary>The DNS resolution client.</summary>
+        </member>
         <member name="M:Goedel.Mesh.IMeshMachine.GetFilePath(System.String)">
             <summary>
             Convert the file path <paramref name="filepath"/> to a file path that will be 
@@ -7467,13 +7492,11 @@
             it is set to a random nonce value.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Message.Envelope(Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.DataEncoding)">
+        <member name="M:Goedel.Mesh.Message.Enveloped(Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.CryptographicKey,Goedel.Cryptography.Dare.ContentMeta,Goedel.Protocol.DataEncoding)">
             <summary>
-            Returns a new typed envelope containing the object <paramref name="data"/>
+            Returns a new typed envelope wrapping this instance
             optionally encrypted under <paramref name="encryptionKey"/> and signed under
             </summary>
-            <typeparam name="T"></typeparam>
-            <param name="data">The object to be enveloped.</param>
             <param name="signingKey">The signature key.</param>
             <param name="encryptionKey">The encryption key.</param>
             <param name="contentMeta">The value of the ContentMeta Header tag.</param>
@@ -8354,6 +8377,9 @@
         <member name="P:Goedel.Mesh.MeshOnboardData.KeyId">
             <summary></summary>
         </member>
+        <member name="P:Goedel.Mesh.MeshOnboardData.KeySeed">
+            <summary>No idea.</summary>
+        </member>
         <member name="T:Goedel.Mesh.MeshVerifiedDevice">
             <summary>
             A verified device credential.
@@ -8491,6 +8517,24 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.CryptoKeyIndex.CatalogedContact">
+            <summary>The cataloged contact.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.CryptoKeyIndex.#ctor">
+            <summary>Constructor used for deserialization.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.CryptoKeyIndex.#ctor(Goedel.Contacts.OnlineService,System.String)">
+            <summary>Constructor, retun an instance from <paramref name="service"/> for the
+            shae <paramref name="shareId"/></summary>
+            <param name="service">The service.</param>
+            <param name="shareId">The Key share identifier.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CryptoKeyIndex.GetKeyPair(Goedel.Cryptography.Dare.IKeyCollection)">
+            <summary>Get keypair for this entry from <paramref name="keyCollection"/></summary>
+            <param name="keyCollection">The key collection to search.</param>
+            <returns></returns>
+            <exception cref="T:Goedel.Utilities.NYI"></exception>
+        </member>
         <member name="P:Goedel.Mesh.CryptoKeyIndex.AccountId">
              <summary>
             The public key id
@@ -8533,6 +8577,35 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
+        </member>
+        <member name="T:Goedel.Mesh.PrivateKeyEntry">
+            <summary>Private key entry record.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.PrivateKeyEntry.KeyId">
+            <summary>The key identifier.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.PrivateKeyEntry.AccountId">
+            <summary>The account</summary>
+        </member>
+        <member name="P:Goedel.Mesh.PrivateKeyEntry.ProfileAccount">
+            <summary>The account profile.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.PrivateKeyEntry.Service">
+            <summary>The online service.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.PrivateKeyEntry.JsonWebKeySet">
+            <summary>The JWK</summary>
+        </member>
+        <member name="M:Goedel.Mesh.PrivateKeyEntry.#ctor(Goedel.Contacts.JsContact,Goedel.Contacts.OnlineService,Goedel.Contacts.JsonWebKeySet)">
+            <summary>Constructor.</summary>
+            <param name="contact"></param>
+            <param name="service"></param>
+            <param name="jsonWebKeySet"></param>
+        </member>
+        <member name="M:Goedel.Mesh.PrivateKeyEntry.GetKeyPair(Goedel.Cryptography.Dare.IKeyCollection)">
+            <summary>Get keypair for this entry from <paramref name="keyLocate"/></summary>
+            <param name="keyLocate">The key collection to search.</param>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Mesh.ProcessingResult">
             <summary>
@@ -8716,6 +8789,10 @@
             <summary>The secret seed value used to derrive the private keys.</summary>
             
         </member>
+        <member name="M:Goedel.Mesh.Profile.GetEnvelopedBytes">
+            <summary>Return the profile as enveloped bytes.</summary>
+            <returns>The bytes.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Profile.#ctor">
             <summary>
             Base constructor used for deserialization
@@ -8759,6 +8836,10 @@
             <paramref name="keyLocate"/>.
             </summary>
             <param name="keyLocate">Key collection containing the secret seed.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Profile.Activate(Goedel.Cryptography.Jose.PrivateKeyUDF)">
+            <summary>Activate the profile using the seed <paramref name="seed"/></summary>
+            <param name="seed">The private seed.</param>
         </member>
         <member name="M:Goedel.Mesh.Profile.Generate">
             <summary>

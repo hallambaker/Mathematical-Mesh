@@ -1100,6 +1100,7 @@
             Factory method returning an instance for the key <paramref name="keyPair"/>
             </summary>
             <param name="keyPair">The key to return the JWK for.</param>
+            <param name="privateKey">If true, include the private key.</param>
             <returns>The created instance.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPairECDHNist,System.Boolean)">
@@ -1107,6 +1108,7 @@
             Factory method returning an instance for the Elliptic Cuve key <paramref name="keyPairECDHNist"/>
             </summary>
             <param name="keyPairECDHNist">The key to return the JWK for.</param>
+            <param name="privateKey">If true, include the private key.</param>
             <returns>The created instance.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPairECDH,System.Boolean)">
@@ -1114,6 +1116,7 @@
             Factory method returning an instance for the Elliptic Cuve key <paramref name="keyPairECDH"/>
             </summary>
             <param name="keyPairECDH">The key to return the JWK for.</param>
+            <param name="privateKey">If true, include the private key.</param>
             <returns>The created instance.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Jose.JWK.Factory(Goedel.Cryptography.KeyPairBaseRSA,System.Boolean)">
@@ -1121,6 +1124,7 @@
             Factory method returning an instance for the RSA key <paramref name="keyPairRsa"/>
             </summary>
             <param name="keyPairRsa">The key to return the JWK for.</param>
+            <param name="privateKey">If true, include the private key.</param>
             <returns>The created instance.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Jose.JWK.GetCurve(Goedel.Cryptography.KeyPairECDH)">
@@ -1332,6 +1336,10 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.JwkUdfSeed.GetPrivateKeyUDF">
+            <summary>Return the private key seed.</summary>
+            <returns>The seed.</returns>
         </member>
         <member name="T:Goedel.Cryptography.Jose.JwkOctet">
             <summary>
@@ -2273,6 +2281,10 @@
         </member>
         <member name="M:Goedel.Cryptography.Jose.PrivateKeyUDF.ToString">
             <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Jose.PrivateKeyUDF.GetJWK">
+            <summary>Return the seed as a JWK.</summary>
+            <returns></returns>
         </member>
         <member name="T:Goedel.Cryptography.Jose.KeyAgreement">
              <summary>

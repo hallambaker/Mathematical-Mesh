@@ -79,8 +79,8 @@ public enum ItemResult {
 /// <param name="frameLength">Value for the <see cref="SequenceIndexEntry.FrameLength"/> property.</param>
 /// <param name="dataPosition">Value for the <see cref="SequenceIndexEntry.DataPosition"/> property.</param>
 /// <param name="dataLength">Value for the <see cref="SequenceIndexEntry.DataLength"/> property.</param>
-/// <param name="header">Value for the <see cref="DareEnvelopeSequence.Header"/> property.</param>
-/// <param name="trailer">Value for the <see cref="DareEnvelopeSequence.Trailer"/> property.</param>
+/// <param name="header">Value for the <see cref="DareHeader"/> property.</param>
+/// <param name="trailer">Value for the <see cref="DareTrailer"/> property.</param>
 /// <param name="jsonObject">Value for the <see cref="SequenceIndexEntry.JsonObject"/> property.</param>
 /// <returns></returns>
 public delegate SequenceIndexEntry SequenceIndexEntryFactoryDelegate(
@@ -532,13 +532,13 @@ public class DareEnvelopeLazy : Enveloped {
     ///<inheritdoc/>
     public override void LoadBody() => body ??= GetBodyDelegate();
 
+    /// <summary>Returns a delagate that returns the message body.</summary>
     public Func<byte[]> GetBodyDelegate { get; init; }
 
     /// <summary>
-    /// Constructor, returns an envelope that will only read the body when needed
-    /// using the <paramref name="getbody"/> delegate.
+    /// Constructor, returns an instance.
     /// </summary>
-    /// <param name="getbody">Delegate returning the body of the envelope.</param>
+
     public DareEnvelopeLazy() {
         }
 

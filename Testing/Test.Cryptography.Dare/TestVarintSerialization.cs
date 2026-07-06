@@ -282,7 +282,7 @@ public class TestVarintSerialization : UnitTestSet {
         Dictionary<string, MessageTest> dataDictionary = [];
 
         // create the sequence
-        using var spool = EarlSpool.Create<MessageTest>(filename);
+        using var spool = VDareSpool.Create<MessageTest>(filename);
 
         var id1 = Append(spool, dataDictionary, size, variable);
         Verify(spool, dataDictionary);
@@ -295,7 +295,7 @@ public class TestVarintSerialization : UnitTestSet {
 
 
 
-    string Append(EarlSpool<MessageTest> spool, Dictionary<string, MessageTest> dataDictionary,
+    string Append(VDareSpool<MessageTest> spool, Dictionary<string, MessageTest> dataDictionary,
                     int size, bool variable) {
 
 
@@ -310,7 +310,7 @@ public class TestVarintSerialization : UnitTestSet {
         return entry.UniqueId;
         }
 
-    static void Update(EarlSpool<MessageTest> spool,
+    static void Update(VDareSpool<MessageTest> spool,
                 Dictionary<string, MessageTest> dataDictionary,
                 List<EntryUpdate> updates) {
 
@@ -321,7 +321,7 @@ public class TestVarintSerialization : UnitTestSet {
         spool.Update(updates);
         }
 
-    static bool Verify(EarlSpool<MessageTest> spoolIn, Dictionary<string, MessageTest> dataDictionary) {
+    static bool Verify(VDareSpool<MessageTest> spoolIn, Dictionary<string, MessageTest> dataDictionary) {
         //Console.WriteLine();
         //Console.WriteLine();
 
@@ -330,7 +330,7 @@ public class TestVarintSerialization : UnitTestSet {
 
 
         var matched = new Dictionary<string, MessageTest>();
-        using var spool = EarlSpool.Open<MessageTest>(filename);
+        using var spool = VDareSpool.Open<MessageTest>(filename);
 
         var count = 0;
         foreach (var index in spool.EntriesReverse()) {

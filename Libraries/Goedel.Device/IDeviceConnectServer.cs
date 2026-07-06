@@ -1,6 +1,8 @@
 ﻿
 namespace Goedel.Device;
 
+
+/// <summary>Interface for device connection servers.</summary>
 public interface IDeviceConnectServer {
 
     /// <summary>

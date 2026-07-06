@@ -2613,6 +2613,9 @@
             <summary>Write string.</summary>
             <param name="Data">Elements to write</param>
         </member>
+        <member name="M:Goedel.Protocol.JSONDebugWriter.WriteEllipsis">
+            <summary>Write ellipsis to indicate code is elided.</summary>
+        </member>
         <member name="M:Goedel.Protocol.JSONDebugWriter.WriteBinary(System.Byte[],System.Int32,System.Int32)">
             <summary>Write binary data as Base64Url encoded string.</summary>
             <param name="Data">Elements to write</param>
@@ -2622,10 +2625,20 @@
         </member>
         <member name="M:Goedel.Protocol.JSONDebugWriter.Write(Goedel.Protocol.JsonObject,System.Boolean,System.Int32)">
             <summary>
-            Convert a JSONObject to redacted form.
+            Convert <paramref name="json"/> to a string containing redacted JSON encoding..
             </summary>
             <param name="json">The object to convert</param>
             <param name="tagged">If true, the object is wrapped with its type tag.</param>
+            <param name="indent">Indentation level to carry in.</param>
+            <returns><paramref name="json"/> as a redacted JSON encoded string.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JSONDebugWriter.WriteLine(System.IO.TextWriter,Goedel.Protocol.JsonObject,System.Boolean)">
+            <summary>
+            Write object <paramref name="json"/> in redacted form to <paramref name="output"/>
+            </summary>
+            <param name="json">The object to convert</param>
+            <param name="tagged">If true, the object is wrapped with its type tag.</param>
+            <param name="output">The output stream.</param>
             <returns>The input as a redacted JSON encoded string.</returns>
         </member>
         <member name="M:Goedel.Protocol.JSONDebugWriter.WriteArrayEnd">
@@ -2995,6 +3008,110 @@
         <member name="M:Goedel.Protocol.JbcdValueStringLazy.Unload">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Protocol.JsonElement2">
+            <summary>Base record for Json deserialization output.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElement2.Parse(Goedel.Protocol.JsonReader)">
+            <summary>Parse the stream from <paramref name="jsonReader"/>.</summary>
+            <param name="jsonReader">The reader.</param>
+            <returns>An element tree.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.JsonElementNull">
+            <summary>Null element</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementNull.#ctor">
+            <summary>Null element</summary>
+        </member>
+        <member name="T:Goedel.Protocol.JsonElementBoolean">
+            <summary>JSON boolean element value</summary>
+            <param name="Value">The value of the element.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementBoolean.#ctor(System.Boolean)">
+            <summary>JSON boolean element value</summary>
+            <param name="Value">The value of the element.</param>
+        </member>
+        <member name="P:Goedel.Protocol.JsonElementBoolean.Value">
+            <summary>The value of the element.</summary>
+        </member>
+        <member name="T:Goedel.Protocol.JsonElementString">
+            <summary>JSON string element value</summary>
+            <param name="Value">The value of the element.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementString.#ctor(System.String)">
+            <summary>JSON string element value</summary>
+            <param name="Value">The value of the element.</param>
+        </member>
+        <member name="P:Goedel.Protocol.JsonElementString.Value">
+            <summary>The value of the element.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementString.GetDateTime">
+            <summary>Convert the element value to an RFC 3339 date time.</summary>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementString.GetBinary">
+            <summary>Convert the element value to binary encoded as base64url encoding.</summary>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.JsonElementDateTime">
+            <summary>JSON DateTime element value</summary>
+            <param name="Value">The value of the element.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementDateTime.#ctor(System.DateTime)">
+            <summary>JSON DateTime element value</summary>
+            <param name="Value">The value of the element.</param>
+        </member>
+        <member name="P:Goedel.Protocol.JsonElementDateTime.Value">
+            <summary>The value of the element.</summary>
+        </member>
+        <member name="T:Goedel.Protocol.JsonElementBinary">
+            <summary>JSON binary element value</summary>
+            <param name="Value">The value of the element.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementBinary.#ctor(System.Byte[])">
+            <summary>JSON binary element value</summary>
+            <param name="Value">The value of the element.</param>
+        </member>
+        <member name="P:Goedel.Protocol.JsonElementBinary.Value">
+            <summary>The value of the element.</summary>
+        </member>
+        <member name="T:Goedel.Protocol.JsonElementNumber">
+            <summary>JSON number element value</summary>
+            <param name="Value">The string value of the element.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementNumber.#ctor(System.String)">
+            <summary>JSON number element value</summary>
+            <param name="Value">The string value of the element.</param>
+        </member>
+        <member name="P:Goedel.Protocol.JsonElementNumber.Value">
+            <summary>The string value of the element.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementNumber.GetInt32">
+            <summary>Return the value of the number as a signed 32 bit integer.</summary>
+            <returns>The value of the number as a signed 32 bit integer.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementNumber.GetInt64">
+            <summary>Return the value of the number as a signed 64 bit integer.</summary>
+            <returns>The value of the number as a signed 64 bit integer.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementNumber.GetReal32">
+            <summary>Return the value of the number as a signed 32 bit real.</summary>
+            <returns>The value of the number as a signed 32 bit real.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementNumber.GetReal64">
+            <summary>Return the value of the number as a signed 64 bit real.</summary>
+            <returns>The value of the number as a signed 64 bit real.</returns>
+        </member>
+        <member name="T:Goedel.Protocol.JsonElementInt64">
+            <summary>JSON 64 bit integer number element value</summary>
+            <param name="intValue">The string value of the element.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementInt64.#ctor(System.Int64)">
+            <summary>JSON 64 bit integer number element value</summary>
+            <param name="intValue">The string value of the element.</param>
+        </member>
+        <member name="P:Goedel.Protocol.JsonElementInt64.intValue">
+            <summary>The string value of the element.</summary>
+        </member>
         <member name="M:Goedel.Protocol.JsonElementInt64.GetInt32">
             <inheritdoc/>
         </member>
@@ -3006,6 +3123,17 @@
         </member>
         <member name="M:Goedel.Protocol.JsonElementInt64.GetReal64">
             <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.JsonElementReal32">
+            <summary>JSON 32 bit real number element value</summary>
+            <param name="floatValue">The string value of the element.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementReal32.#ctor(System.Single)">
+            <summary>JSON 32 bit real number element value</summary>
+            <param name="floatValue">The string value of the element.</param>
+        </member>
+        <member name="P:Goedel.Protocol.JsonElementReal32.floatValue">
+            <summary>The string value of the element.</summary>
         </member>
         <member name="M:Goedel.Protocol.JsonElementReal32.GetInt32">
             <inheritdoc/>
@@ -3019,6 +3147,17 @@
         <member name="M:Goedel.Protocol.JsonElementReal32.GetReal64">
             <inheritdoc/>
         </member>
+        <member name="T:Goedel.Protocol.JsonElementReal64">
+            <summary>JSON 64 bit real number element value</summary>
+            <param name="doubleValue">The string value of the element.</param>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementReal64.#ctor(System.Double)">
+            <summary>JSON 64 bit real number element value</summary>
+            <param name="doubleValue">The string value of the element.</param>
+        </member>
+        <member name="P:Goedel.Protocol.JsonElementReal64.doubleValue">
+            <summary>The string value of the element.</summary>
+        </member>
         <member name="M:Goedel.Protocol.JsonElementReal64.GetInt32">
             <inheritdoc/>
         </member>
@@ -3030,6 +3169,44 @@
         </member>
         <member name="M:Goedel.Protocol.JsonElementReal64.GetReal64">
             <inheritdoc/>
+        </member>
+        <member name="T:Goedel.Protocol.JsonElementObject">
+            <summary>JSON object value.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementObject.#ctor">
+            <summary>JSON object value.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementObject.TryGetProperty(System.String,Goedel.Protocol.JsonElement2@)">
+            <summary>Attempt to return a property with tag <paramref name="tag"/></summary>
+            <param name="tag"></param>
+            <param name="element">The element corresponding to the tag.</param>
+            <returns>True if the property is present, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementObject.SoloProperty">
+            <summary>Returns the first property in the object.</summary>
+            <returns>The peoperty tag and element.</returns>
+        </member>
+        <member name="F:Goedel.Protocol.JsonElementObject.Properties">
+            <summary>Dictionary of properties contained in the object.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementObject.#ctor(Goedel.Protocol.JsonReader)">
+            <summary>Constructor, generates an instance by parsing the stream 
+            <paramref name="jsonReader"/></summary>
+            <param name="jsonReader">The stream to parse.</param>
+        </member>
+        <member name="T:Goedel.Protocol.JsonElementArray">
+            <summary>JSON array element.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementArray.#ctor">
+            <summary>JSON array element.</summary>
+        </member>
+        <member name="F:Goedel.Protocol.JsonElementArray.Items">
+            <summary>The items contained in the array.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.JsonElementArray.#ctor(Goedel.Protocol.JsonReader)">
+            <summary>Constructor, generates an instance by parsing the stream 
+            <paramref name="jsonReader"/></summary>
+            <param name="jsonReader">The stream to parse.</param>
         </member>
         <member name="T:Goedel.Protocol.Request">
             <summary>
@@ -3418,7 +3595,7 @@
         <member name="M:Goedel.Protocol.JsonObject.StreamParse``1(System.String,System.Boolean,System.Boolean)">
             <summary>
             Perform a one pass streaming parse on data read from the file <paramref name="filename"/> 
-            returning an object of type <paramref name="type"/>. This
+            returning an object of type <typeparamref name="T"/>. This
             parser does not (currently) support schemas in which a variant object type is
             specified by the object property.
             </summary>
@@ -3476,7 +3653,7 @@
             </summary>
             <typeparam name="T">The type of the object to be returned.</typeparam>
             <param name="data">The data to parse</param>
-            <param name="tagged">If true, the data object has a typed wrapper.</param>
+            <param name="service">The service definition.</param>
             <param name="collectUparsed">If true, collect unparseable items during the
             parse.</param>
             <returns>The typed, parsed object.</returns>
@@ -3489,10 +3666,21 @@
             </summary>
             <typeparam name="T">The type of the object to be returned.</typeparam>
             <param name="data">The data to parse</param>
-            <param name="tagged">If true, the data object has a typed wrapper.</param>
             <param name="collectUparsed">If true, collect unparseable items during the
             parse.</param>
             <returns>The typed, parsed object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.ParseTagged(System.Byte[],System.Boolean)">
+            <summary>Parse <paramref name="data"/> as a tagged JSON object.</summary>
+            <param name="data">The data to parse.</param>
+            <param name="collectUparsed">If true, collect unrecognized properties.</param>
+            <returns>The result of the parse.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.JsonObject.ParseTagged(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>Parse date from <paramref name="reader"/> as a tagged JSON object.</summary>
+            <param name="reader">The data to parse.</param>
+            <param name="collectUparsed">If true, collect unrecognized properties.</param>
+            <returns>The result of the parse.</returns>
         </member>
         <member name="M:Goedel.Protocol.JsonObject.StreamParseCore(System.Type,Goedel.Protocol.JsonReader,System.Boolean,System.Boolean,Goedel.Protocol.JpcInterface)">
             <summary>

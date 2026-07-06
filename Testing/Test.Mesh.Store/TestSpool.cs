@@ -149,7 +149,7 @@ public partial class StoreTests : MeshTestSet {
             Sender = id,
             MessageId = id
             };
-        var result = message.Envelope(signingKey);
+        var result = message.Enveloped(signingKey);
         result.Header.EnvelopeId = Message.GetEnvelopeId(id);
 
         return result;
@@ -167,7 +167,7 @@ public partial class StoreTests : MeshTestSet {
                         }
                     }
             };
-        var envelope = message.Envelope(signingKey);
+        var envelope = message.Enveloped(signingKey);
         envelope.Header.EnvelopeId = Message.GetEnvelopeId(message.MessageId);
         envelope.Header.ContentMeta = new();
         envelope.Header.ContentMeta.MessageType = MessageComplete.__Tag;

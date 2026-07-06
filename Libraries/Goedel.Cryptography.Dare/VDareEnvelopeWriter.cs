@@ -127,6 +127,11 @@ public partial class VDareEnvelopeWriter {
     public VDareEnvelopeWriter(Stream output) : this(new VDareStream(output)) {
         }
 
+    /// <summary>DARE Envelope Writer opening with the unsigned and signed headers 
+    /// as specified by <paramref name="signers"/> and <paramref name="protectedHeader"/>.</summary>
+    /// <param name="output"></param>
+    /// <param name="protectedHeader">The content metadata describing the payload.</param>
+    /// <param name="signers">The set of signers.</param>
     public VDareEnvelopeWriter(Stream output,
             ContentMeta protectedHeader,
             IEnumerable<KeyPair> signers = null) : 
@@ -372,6 +377,11 @@ public partial class VDareEnvelopeWriter {
     #endregion
     #region
 
+    /// <summary>Write <paramref name="data"/> to <paramref name="file"/> in a DARE
+    /// envelope with content metadate <paramref name="contentType"/></summary>
+    /// <param name="file">The filename.</param>
+    /// <param name="data">The file data</param>
+    /// <param name="contentType">The content metadata.</param>
     public static void Write(
         string file,
         byte[] data,
