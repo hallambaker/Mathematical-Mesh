@@ -306,6 +306,9 @@
             An OAUTH client class.
             </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Oauth.OauthClient.DnsClient">
+            <summary>The DNS client to use.</summary>
+        </member>
         <member name="P:Goedel.Cryptography.Oauth.OauthClient.ClientMetadata">
             <summary>Client description.</summary> 
         </member>

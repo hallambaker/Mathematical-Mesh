@@ -336,7 +336,7 @@ public class CurveEdwards448 : CurveEdwards {
         Buffer.Write(A2);
         Buffer.Write(A3);
         var Input = Buffer.ToArray();
-        var Digest = SHAKE256.Process(Input, 114 * 8);
+        var Digest = Shake256.HashData(Input, 114);
         var Result = Digest.BigIntegerLittleEndian();
         Result %= Q;
 
@@ -567,7 +567,7 @@ public class CurveEdwards448Private : CurveEdwardsPrivate, IKeyPrivateECDH {
     public CurveEdwards448Private(byte[] secret, bool exportable = false) {
         Secret = secret;
 
-        var Buffer = SHAKE256.Process(secret, 114 * 8);
+        var Buffer = Shake256.HashData(secret, 114);
         PreSecret = Buffer.Duplicate(0, 57);
         HashPrefix = Buffer.Duplicate(57, 57);
         SecretKey = ExtractPrivate(PreSecret);

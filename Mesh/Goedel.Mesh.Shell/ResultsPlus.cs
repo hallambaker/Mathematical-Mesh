@@ -396,7 +396,7 @@ public partial class ResultFileDare {
 
         builder.Append($"File: {Filename}\n");
         builder.Append($"    Bytes: {TotalBytes}\n");
-        if (Envelope == null) {
+        if (Enveloped == null) {
             builder.Append($"    Error: Not a DARE envelope\n");
             }
         else {
@@ -406,8 +406,8 @@ public partial class ResultFileDare {
         }
 
     void ToString(StringBuilder builder) {
-        var header = Envelope?.Header;
-        var trailer = Envelope?.Trailer;
+        var header = Enveloped?.Header;
+        var trailer = Enveloped?.Trailer;
         if (header?.Encrypt != null) {
             builder.Append($"    Encryption Algorithm: {header.EncryptionAlgorithm}\n");
             if (header.Recipients != null) {

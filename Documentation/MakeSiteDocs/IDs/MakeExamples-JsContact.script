@@ -24,6 +24,7 @@
 #% JSContactSSH(Example);
 #% JSContactCode(Example);
 #% JSContactCommit(Example);
+#% JSContactComplete(Example);
 #end method
 
 
@@ -36,20 +37,74 @@ $$$ Missing data $$$
 #end method
 
 
-
-
-
-
-
 #method2 CardExample string parent JsonObject example
 {
     "@type":"Card",
     ...
     "#{parent}" : #!
-#{JSONDebugWriter.Write(example)},
+#{JSONDebugWriter.Write(example, true, 2)},
     ...
     }
 #end method2
+
+
+#method3 CardExample string parent JsonObject example1 JsonObject example2
+{
+  "@type":"Card",
+  ...
+  "#{parent}" : #!
+#{JSONDebugWriter.Write(example1, true, 2)},
+  ...
+#{JSONDebugWriter.Write(example2, true, 2)},
+  ...
+  }
+~~~~
+#end method3
+
+
+#method StartCard bool ignore=true
+~~~~
+{
+  "@type":"Card",
+  ...
+#end method
+
+#method EndCard bool ignore=true
+  }
+~~~~
+#end method
+
+#zfile CreateExamples JSContactKeys "Examples\\JSContactKeys.md" Example
+#% var jscontact = Example.JSContact;
+#% // For example, Alice has many OpenPGP keys but only one that she uses with her email address alice@example.com
+#% WriteTags (jscontact.Contact, ["email1", "emailKey", "emailKey1"]);
+#end zfile
+
+
+#zfile CreateExamples JSContactJWK "Examples\\JSContactJWK.md" Example
+#% var jscontact = Example.JSContact;
+#% WriteTags (jscontact.Contact, ["ssh1", "sshKey1"]);
+#end zfile
+
+
+
+#zfile CreateExamples JSContactGroups "Examples\\JSContactGroups.md" Example
+#% var jscontact = Example.JSContact;
+#% WriteTags (jscontact.Contact, ["group1", "email1", "git1", "ssh1"]);
+#end zfile
+
+
+
+#zfile CreateExamples JSContactUpdate "Examples\\JSContactUpdate.md" Example
+#% var jscontact = Example.JSContact;
+#% WriteTags (jscontact.Contact, ["update1", "updateKey1"]);
+#end zfile
+
+
+
+
+
+
 
 #zfile CreateExamples JSContactSchema "Examples\\JSContactSchema.md" Example
 #% var jscontact = Example.JSContact;
@@ -61,45 +116,43 @@ The following properties are added to the Card object specified in [RFC9553].
 #% jscontact.AnnotatedSchema.DocumentProperties(_Output, "Card",[ "updates", "serviceGroups"],
 #%        jscontact.Contact);
 
+#### Extension to the EmailAddress Object
 
-#%
-
-#### Extended Objects
-
-The following objects specified in [RFC9553] are extended to add the specified properties.
+The EmailAddress object specified in [RFC9553] is extended to add the specified property.
 
 #% jscontact.AnnotatedSchema.DocumentStructure(_Output, "EmailAddress", ["cryptoKeyIds"], 
-#%      jscontact.EmailAddress);
+#%      jscontact.EmailAddress, writeHeading: false);
+
+#### Extension to the OnlineService Object
+
+The OnlineService object specified in [RFC9553] is extended to add the specified property.
+
 #% jscontact.AnnotatedSchema.DocumentStructure(_Output, "OnlineService", ["cryptoKeyIds"],
-#%      jscontact.OnlineServiceWithKeys);
+#%      jscontact.OnlineServiceWithKeys, writeHeading: false);
 
-#### New Objects
+#### New Object JsonWebKeySet
 
-The following object is defined:
+The JsonWebKeySet object is added to the Card object with the following properties:
 
-#% jscontact.AnnotatedSchema.DocumentStructure(_Output, "JsonWebKeySet", null, jscontact.CryptoKeyWithJwk);
+#% jscontact.AnnotatedSchema.DocumentStructure(_Output, "JsonWebKeySet", null, 
+#%      jscontact.CryptoKeyWithJwk, writeHeading: false);;
 
 #end zfile
 
 
 
-#zfile CreateExamples JSContactKeys "Examples\\JSContactKeys.md" Example
+#zfile CreateExamples JSContactComplete "Examples\\JSContactComplete.md" Example
 #% var jscontact = Example.JSContact;
-#% // For example, Bob is trying to send an encrypted email to Alice, her 
-#% //contact card lists two X.509v3 certificates but only one is an encryption 
-#% // certificate with the JWK use parameter:
+Alice's complete contact card is:
+
 ~~~~
-#!{JSONDebugWriter.Write(jscontact.EmailAddress)}
-#% CardExample ("emails", jscontact.EmailAddress);
+{jscontact.CompleteContact}
 ~~~~
 #end zfile
 
-#zfile CreateExamples JSContactJWK "Examples\\JSContactJWK.md" Example
-#% var jscontact = Example.JSContact;
-~~~~
-#% Write(jscontact.JSContactSmime, true);
-~~~~
-#end zfile
+
+
+
 
 #zfile CreateExamples JSContactEARL "Examples\\JSContactEARL.md" Example
 #% var jscontact = Example.JSContact;
@@ -117,74 +170,81 @@ _jscontact.#{CreateExamples.DnsHandleAlice} TXT "jscontact=#{jscontact.EARL}"
 ~~~~
 #end zfile
 
-#zfile CreateExamples JSContactGroups "Examples\\JSContactGroups.md" Example
-#% var jscontact = Example.JSContact;
-~~~~
-#! {JSONDebugWriter.Write(jscontact.Group)}
-#% CardExample ("groups", jscontact.Group);
-~~~~
 
-Each group identifier is specified as an online service:
-
-~~~~
-#% Write(jscontact.GroupMembers, true);
-~~~~
-#end zfile
-
-#zfile CreateExamples JSContactUpdate "Examples\\JSContactUpdate.md" Example
-#% var jscontact = Example.JSContact;
-~~~~
-{
-    "@type":"Card",
-    ...
-#% WriteUpdates(jscontact.Contact.Updates);
-    ...
-#% WriteCryptoKeys(jscontact.UpdateKeys);
-    ...
-    }
-~~~~
-#end zfile
 
 #zfile CreateExamples JSContactSMIME "Examples\\JSContactSMIME.md" Example
 #% var jscontact = Example.JSContact;
-~~~~
-#% Write(jscontact.JSContactSmime, true);
-~~~~
+#% WriteTags (jscontact.Contact, ["emailKey3", "emailKey4"]);
 #end zfile
 
 #zfile CreateExamples JSContactOpenPGP "Examples\\JSContactOpenPGP.md" Example
 #% var jscontact = Example.JSContact;
-~~~~
-#% Write(jscontact.JSContactOpenpgp, true);
-~~~~
+#% WriteTags (jscontact.Contact, ["emailKey1", "emailKey2"]);
 #end zfile
 
 #zfile CreateExamples JSContactSSH "Examples\\JSContactSSH.md" Example
 #% var jscontact = Example.JSContact;
-~~~~
-#% Write(jscontact.Ssh);
-
-#% Write(jscontact.SshKeys);
-~~~~
+#% WriteTags (jscontact.Contact, ["ssh1", "sshKey1", "sshKey2", "sshKey3"]);
 #end zfile
 
 #zfile CreateExamples JSContactCommit "Examples\\JSContactCommit.md" Example
 #% var jscontact = Example.JSContact;
-~~~~
-#% Write(jscontact.Commit);
-
-#% Write(jscontact.CommitKeys);
-~~~~
+#% WriteTags (jscontact.Contact, ["git1", "gitKey1"]);
 #end zfile
 
 #zfile CreateExamples JSContactCode "Examples\\JSContactCode.md" Example
 #% var jscontact = Example.JSContact;
-~~~~
-#% Write(jscontact.CodeSign);
-
-#% Write(jscontact.CodeSignKeys);
-~~~~
+#% WriteTags (jscontact.Contact, ["code1", "code2","codeSign1", "codeSign2"]);
 #end zfile
+
+
+#method2 WriteTags JsContact contact List<string> include
+#% StartCard ();
+#% var trail = true;
+#% WriteOut ("updates", contact.ServiceGroups, include, ref trail);
+#% WriteOut ("serviceGroups", contact.ServiceGroups, include, ref trail, last:true);
+#% WriteOut ("emails", contact.Emails, include, ref trail);
+#% WriteOut ("onlineServices", contact.OnlineServices, include, ref trail);
+#% WriteOut ("cryptoKeys", contact.CryptoKeys, include, ref trail, last:true);
+#% EndCard ();
+#end method2
+
+
+#block
+#% public void WriteOut<T> (string tag, Dictionary<string,T> entries, 
+#%      List<string> include, ref bool trail, bool last=false) 
+#%      where T : JsonObject {
+#if (JsContactResults.IsEmpty (include, entries)) 
+#! [Suppress #{tag}]
+#if trail
+    ...
+#% trail = false;
+#end if
+#% return;
+#end if
+  "#{tag}" : {
+#% var dots = true;
+#foreach (var entry in entries) 
+#if (JsContactResults.IsIncluded (include, entry.Key)) 
+#% dots = true;
+    "#{entry.Key}" : #!
+#{JSONDebugWriter.Write(entry.Value, false, 3)}
+#elseif (dots) 
+#% dots = false;
+    ...
+#end if
+#end foreach
+#if last
+    }
+#else
+    },
+#end if
+#% }
+#end block
+
+
+
+
 
 #method2 Write Dictionary<string,OnlineService> services bool part=false
 {
@@ -220,12 +280,27 @@ Each group identifier is specified as an online service:
 }
 #end method2
 
+
+
+
+
+#method WriteEmails Dictionary<string,EmailAddress> jsonKeys
+    "emails" : {
+#% var sep = new Separator  (",\n");
+#foreach (var jsonKey in jsonKeys)
+#{sep}#!
+      "#{jsonKey.Key}" : #{JSONDebugWriter.Write(jsonKey.Value, false,4)}#!
+#end foreach
+}
+#end method
+
+
 #method WriteUpdates Dictionary<string,Update> jsonKeys
     "updates" : {
 #% var sep = new Separator  (",\n");
 #foreach (var jsonKey in jsonKeys)
 #{sep}#!
-"#{jsonKey.Key}" : #{JSONDebugWriter.Write(jsonKey.Value, false)}#!
+      "#{jsonKey.Key}" : #{JSONDebugWriter.Write(jsonKey.Value, false,4)}#!
 #end foreach
 }
 #end method
@@ -236,7 +311,7 @@ Each group identifier is specified as an online service:
 #% var sep = new Separator  (",\n");
 #foreach (var jsonKey in jsonKeys)
 #{sep}#!
-"#{jsonKey.Key}" : #{JSONDebugWriter.Write(jsonKey.Value, false)}#!
+      "#{jsonKey.Key}" : #{JSONDebugWriter.Write(jsonKey.Value, false,4)}#!
 #end foreach
 }
 #end method

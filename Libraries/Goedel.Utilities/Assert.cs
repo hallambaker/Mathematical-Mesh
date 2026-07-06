@@ -347,7 +347,7 @@ public static class Assert {
     /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
     /// Condition is true</param>
     /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
-    public static T AssertNotNull<T>([NotNull] this T test, ThrowDelegate throwDelegate,
+    public static T AssertNotNull<T>(this T? test, ThrowDelegate throwDelegate,
                 params object[] args) {
         if (test == null) {
             throw throwDelegate(args);

@@ -70,7 +70,9 @@ public record Endpoint(
 /// <summary>
 /// Record describing a raw HTTP endpoint.
 /// </summary>
-/// <param name="Dispatch"></param>
+/// <param name="Dispatch">The dispatch callback.</param>
+/// <param name="Protocol">The endpoint protocol.</param>
+/// <param name="Instance">Instance specifier, for use in testing.</param>
 public record HttpEndpoint (
             Func<HttpListenerRequest, HttpListenerResponse, HttpStatusCode> Dispatch,
          string? Protocol,

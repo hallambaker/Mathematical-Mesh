@@ -21,37 +21,60 @@
 #endregion
 namespace Goedel.Cryptography.Dare;
 
-public record EarlEntryIndex(
+/// <summary>Index of entry in a DARE Sequence.</summary>
+/// <param name="Frame">The frame number.</param>
+/// <param name="Start">The first byte of the frame</param>
+/// <param name="Length">The number of bytes in the frame.</param>
+/// <param name="PayloadStart">The first byte of the payload.</param>
+/// <param name="PayloadLength">The number of bytes in the payload</param>
+public record VDareEntryIndex(
         long Frame,
         long Start,
         long Length,
         long PayloadStart,
         long PayloadLength) {
 
+    /// <summary>Envelope constructed from the corresponding entry.</summary>
     public EarlEnvelope? EarlEnvelope { get; set; } = null;
+
+    /// <summary>The primary key.</summary>
     public string Id { get; set; } = null;
 
+    /// <summary>The payload as a JSonObject</summary>
     public JsonObject JsonObject { get; set; } = null;
 
-    public EarlEntryIndex? Previous { get; set; } = null;
+    /// <summary>The index of the previous entry.</summary>
+    public VDareEntryIndex? Previous { get; set; } = null;
     
+    /// <summary>If true, the entry object has been deleted.</summary>
     public bool Deleted { get; set; } = false;
     }
 
-public record EarlEntryIndex<T>(
+/// <summary>Typed tndex of entry in a DARE Sequence.</summary>
+/// <param name="Frame">The frame number.</param>
+/// <param name="Start">The first byte of the frame</param>
+/// <param name="Length">The number of bytes in the frame.</param>
+/// <param name="PayloadStart">The first byte of the payload.</param>
+/// <param name="PayloadLength">The number of bytes in the payload</param>
+/// <typeparam name="T">The type of the corresponding entry payload.</typeparam>
+public record VDareEntryIndex<T>(
         long Frame,
         long Start,
         long Length,
         long PayloadStart,
-        long PayloadLength) : EarlEntryIndex (Frame, Start, Length, PayloadStart, PayloadLength) 
+        long PayloadLength) : VDareEntryIndex (Frame, Start, Length, PayloadStart, PayloadLength) 
                 where T : JsonObject {
 
+    /// <summary>The payload as the underlying type.</summary>
     public T Object => JsonObject as T;
 
+    /// <summary>If true, this is the default entry.</summary>
     public bool Default { get; set; }
 
-
+    /// <summary>The primary key.</summary>
     public string PrimaryKey => Object?._PrimaryKey ?? EarlEnvelope?.SignedHeader?.UniqueId;
+
+    /// <summary>The list of secondary keys.</summary>
     public List<string> SecondaryKeys => Object?._SecondaryKeys ?? EarlEnvelope?.SignedHeader?.Labels;
 
     }

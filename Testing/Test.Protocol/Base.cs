@@ -143,6 +143,7 @@ public partial class GoedelProtocol : UnitTestSet {
         CheckEqual(First, Second);
         }
 
+    [Fact]
     public void TestEncodeDecode6() {
         var First = TestDataStruct;
 

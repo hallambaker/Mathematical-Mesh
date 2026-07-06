@@ -1749,6 +1749,8 @@ public partial class ContextUser : ContextAccount {
     /// <param name="expire">Expiry time for the corresponding PIN</param>
     /// <param name="authenticator">If true, insert authenticator to allow automatic acceptance
     /// of the response.</param>
+    /// <param name="automatic">If true, and <paramref name="authenticator"/> is true, the 
+    /// authenticator created will be marked to automatically execute.</param>
     public async Task<string> ContactUri(
                     bool authenticator, 
                     DateTime? expire=null, 
@@ -1773,7 +1775,11 @@ public partial class ContextUser : ContextAccount {
         return earl;
         }
 
-
+    /// <summary>Return a registered PIN.</summary>
+    /// <param name="expire">Expiry instant.</param>
+    /// <param name="automatic">If true, the PIN is marked to execute automatically,
+    /// without additional user input if returned.</param>
+    /// <returns>Task returning the PIN value.</returns>
     public async Task<string> GetRegisteredPin(
                     DateTime? expire = null,
                     bool automatic = true) {

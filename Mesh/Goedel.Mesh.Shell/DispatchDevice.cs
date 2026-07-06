@@ -127,6 +127,9 @@ public partial class Shell {
         }
 
 
+    /// <summary>Onboard the device described by configuration <paramref name="configFile"/></summary>
+    /// <param name="configFile"></param>
+    /// <returns>Result of onboarding the device.</returns>
     public async Task<ShellResult> DeviceOnboardAsync(
                 string configFile) {
 

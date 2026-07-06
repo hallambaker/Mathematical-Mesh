@@ -20,6 +20,7 @@
 //  THE SOFTWARE.
 #endregion
 
+using Goedel.Cryptography.Nist;
 using Goedel.IO;
 
 using System;
@@ -80,6 +81,11 @@ public enum Transport {
 /// DNS client.
 /// </summary>
 public abstract class DnsClient {
+
+    /// <summary>The default DNS client.</summary>
+    public static DnsClient Default { get; } = new DnsClientUDP();
+
+
 
     ///// <summary>Default client context for DNS query (result is cached for reuse)</summary>
     //public static DnsClient Default {

@@ -25,7 +25,7 @@ using System.Runtime.InteropServices;
 namespace Goedel.Cryptography.Dare;
 
 /// <summary>Sequence access support.</summary>
-public  class EarlSequence : Disposable {
+public  class VDareSequence : Disposable {
 
     //Dictionary<string, EarlEntryIndex> DictionaryById = [];
 
@@ -38,11 +38,11 @@ public  class EarlSequence : Disposable {
 
 
     /// <summary>Index record of the first entry in the sequence.</summary>
-    public EarlEntryIndex? IndexFirst { get; private set; }
+    public VDareEntryIndex? IndexFirst { get; private set; }
 
 
     /// <summary>Index record of the last entry in the sequence.</summary>
-    public EarlEntryIndex? IndexLast{ get; private set; }
+    public VDareEntryIndex? IndexLast{ get; private set; }
 
     /// <summary>The first frame in the sequence.</summary>
     public EarlEnvelope FrameFirst { get; private set; }
@@ -54,7 +54,7 @@ public  class EarlSequence : Disposable {
     public EarlEnvelope FrameLast { get; private set; }
 
     /// <summary>The underlying stream.</summary>
-    public EarlStream Stream { get; }
+    public VDareStream Stream { get; }
 
     /// <summary>The file name bound to the underlying stream.</summary>
     public string Filename => Stream.Filename;
@@ -76,8 +76,8 @@ public  class EarlSequence : Disposable {
     /// <summary>
     /// Constructor
     /// </summary>
-    protected EarlSequence(
-                EarlStream stream,
+    protected VDareSequence(
+                VDareStream stream,
             DataEncoding dataEncoding = DataEncoding.JSON) {
         Stream = stream;
         DataEncoding = dataEncoding;
@@ -90,12 +90,12 @@ public  class EarlSequence : Disposable {
     /// type <paramref name="typeIdentifier"/>.</summary>
     /// <param name="fileName">The file type.</param>
     /// <param name="typeIdentifier">The type identifier.</param>
-    /// <returns>The <see cref="EarlSequence"/> instance.</returns>
-    public static EarlSequence Create(
+    /// <returns>The <see cref="VDareSequence"/> instance.</returns>
+    public static VDareSequence Create(
                 string fileName,
                 EarlSequenceIndexType typeIdentifier = EarlSequenceIndexType.None) {
-        var stream = EarlStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
-        var result = new EarlSequence(stream);
+        var stream = VDareStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
+        var result = new VDareSequence(stream);
 
         result.WriteInitial();
 
@@ -104,12 +104,12 @@ public  class EarlSequence : Disposable {
 
     /// <summary>Open an existing sequene in file <paramref name="fileName"/></summary>
     /// <param name="fileName">The file type.</param>
-    /// <returns>The <see cref="EarlSequence"/> instance.</returns>
-    public static EarlSequence Open(
+    /// <returns>The <see cref="VDareSequence"/> instance.</returns>
+    public static VDareSequence Open(
             string fileName) {
 
-        var stream = EarlStream.OpenReadWrite(fileName);
-        var sequence = new EarlSequence(stream);
+        var stream = VDareStream.OpenReadWrite(fileName);
+        var sequence = new VDareSequence(stream);
         sequence.ReadInitial();
 
         return sequence;
@@ -177,7 +177,7 @@ public  class EarlSequence : Disposable {
     /// <summary>Append the envelope <paramref name="entry"/> to the sequence.</summary>
     /// <param name="entry">The entry to append.</param>
     /// <returns>Index of the entry that was added.</returns>
-    public EarlEntryIndex Append(
+    public VDareEntryIndex Append(
                 EarlEnvelope entry) => Stream.Append(entry, NextFrame++);
 
     /// <summary>Serialize the object <paramref name="obj"/> as an object of type 
@@ -189,7 +189,7 @@ public  class EarlSequence : Disposable {
     /// <param name="index">If true, index the entry.</param>
     /// <param name="dataEncoding">The data encoding for the object.</param>
     /// <returns>The entry index for the added envelope.</returns>
-    public EarlEntryIndex<T> Append<T>(
+    public VDareEntryIndex<T> Append<T>(
                 T? obj,
                 ContentMeta contentMeta = null,
                 bool index = false,
@@ -199,7 +199,7 @@ public  class EarlSequence : Disposable {
         var bytes = obj == null ? [] : obj.GetBytes(dataEncoding: dataEncoding);
 
         var append = AppendInner(bytes, contentMeta, index);
-        return new EarlEntryIndex<T>(append.Item1, append.Item2, append.Item3,
+        return new VDareEntryIndex<T>(append.Item1, append.Item2, append.Item3,
                 append.Item4, bytes.LongLength) { 
             JsonObject = obj
             };
@@ -211,7 +211,7 @@ public  class EarlSequence : Disposable {
     /// <param name="contentMeta">Content metadata.</param>
     /// <param name="index">If true, index the entry.</param>
     /// <returns>The entry index for the added envelope.</returns>
-    public EarlEntryIndex Append(
+    public VDareEntryIndex Append(
                 byte[] entry,
                 ContentMeta contentMeta=null,
                 bool index = false) {
@@ -325,7 +325,7 @@ public  class EarlSequence : Disposable {
     /// <typeparam name="T">The type to parse the data as.</typeparam>
     /// <param name="index">The index describing the entry position.</param>
     /// <returns>The parse result.</returns>
-    public T GetValue<T>(EarlEntryIndex index) where T : JsonObject{
+    public T GetValue<T>(VDareEntryIndex index) where T : JsonObject{
         // check content meta is this a 
 
         var bytes = Stream.GetPayload(index);
@@ -367,11 +367,11 @@ public  class EarlSequence : Disposable {
 
     /// <summary>Return an enumerator over the sequence in the forward direction.</summary>
     /// <returns>The enumerator.</returns>
-    public virtual IEnumerable<EarlEntryIndex> EntriesForward() => new EarlEntryEnumerator(this);
+    public virtual IEnumerable<VDareEntryIndex> EntriesForward() => new VEntryEnumerator(this);
 
     /// <summary>Return an enumerator over the sequence in the reverse direction.</summary>
     /// <returns>The enumerator.</returns>
-    public virtual IEnumerable<EarlEntryIndex> EntriesReverse() => new EarlEntryEnumerator(this, false);
+    public virtual IEnumerable<VDareEntryIndex> EntriesReverse() => new VEntryEnumerator(this, false);
 
     #endregion
     }

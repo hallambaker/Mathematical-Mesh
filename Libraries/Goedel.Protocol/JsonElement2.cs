@@ -30,40 +30,13 @@ using System.Text.Json;
 namespace Goedel.Protocol;
 
 
-//public enum JsonValueKind2 {
-//    ///<summary>There is no value (as distinct from Null).</summary> 
-//    Undefined = 0,
 
-//    ///<summary>A JSON object.</summary> 
-//    Object = 1,
-
-//    ///<summary>A JSON array.</summary> 
-//    Array = 2,
-
-//    ///<summary>A JSON string.</summary> 
-//    String = 3,
-
-//    ///<summary>A JSON number.</summary> 
-//    Number = 4,
-
-//    ///<summary>The JSON value true.</summary> 
-//    True = 5,
-
-//    ///<summary>The JSON value false.</summary> 
-//    False = 6,
-
-//    ///<summary>The JSON value null.</summary> 
-//    Null = 7,
-
-//    ///<summary>Binary data</summary> 
-//    Binary = 8,
-
-//    }
-
-
+/// <summary>Base record for Json deserialization output.</summary>
 public abstract record JsonElement2 {
 
-
+    /// <summary>Parse the stream from <paramref name="jsonReader"/>.</summary>
+    /// <param name="jsonReader">The reader.</param>
+    /// <returns>An element tree.</returns>
     public static JsonElement2? Parse(
                     JsonReader jsonReader) {
         jsonReader.GetToken();
@@ -95,47 +68,70 @@ public abstract record JsonElement2 {
 
 
     }
+
+/// <summary>Null element</summary>
 public record JsonElementNull() : JsonElement2 {
 
     }
+
+/// <summary>JSON boolean element value</summary>
+/// <param name="Value">The value of the element.</param>
 public record JsonElementBoolean (
             bool Value) : JsonElement2 {
+        }
 
-    }
-
+/// <summary>JSON string element value</summary>
+/// <param name="Value">The value of the element.</param>
 public record JsonElementString(
             string Value) : JsonElement2 {
 
+    /// <summary>Convert the element value to an RFC 3339 date time.</summary>
+    /// <returns>The result of the conversion.</returns>
     public DateTime GetDateTime() => Value.FromRFC3339();
 
-
+    /// <summary>Convert the element value to binary encoded as base64url encoding.</summary>
+    /// <returns>The result of the conversion.</returns>
     public byte[] GetBinary() => Value.FromBase64();
     }
 
+/// <summary>JSON DateTime element value</summary>
+/// <param name="Value">The value of the element.</param>
 public record JsonElementDateTime(
             DateTime Value) : JsonElement2 {
 
     }
+
+/// <summary>JSON binary element value</summary>
+/// <param name="Value">The value of the element.</param>
 public record JsonElementBinary(
             byte[] Value) : JsonElement2 {
 
     }
 
+/// <summary>JSON number element value</summary>
+/// <param name="Value">The string value of the element.</param>
 public record JsonElementNumber(
             string? Value) : JsonElement2 {
 
+    /// <summary>Return the value of the number as a signed 32 bit integer.</summary>
+    /// <returns>The value of the number as a signed 32 bit integer.</returns>
     public virtual int GetInt32() => Int32.Parse(Value);
 
+    /// <summary>Return the value of the number as a signed 64 bit integer.</summary>
+    /// <returns>The value of the number as a signed 64 bit integer.</returns>
     public virtual long GetInt64() => Int64.Parse(Value);
 
-
+    /// <summary>Return the value of the number as a signed 32 bit real.</summary>
+    /// <returns>The value of the number as a signed 32 bit real.</returns>
     public virtual Single GetReal32() => Single.Parse(Value);
 
-
+    /// <summary>Return the value of the number as a signed 64 bit real.</summary>
+    /// <returns>The value of the number as a signed 64 bit real.</returns>
     public virtual Double GetReal64() => Double.Parse(Value);
     }
 
-
+/// <summary>JSON 64 bit integer number element value</summary>
+/// <param name="intValue">The string value of the element.</param>
 public record JsonElementInt64(
             long intValue) : JsonElementNumber("") {
 
@@ -154,6 +150,8 @@ public record JsonElementInt64(
     }
 
 
+/// <summary>JSON 32 bit real number element value</summary>
+/// <param name="floatValue">The string value of the element.</param>
 public record JsonElementReal32(
             float floatValue) : JsonElementNumber("") {
 
@@ -171,7 +169,8 @@ public record JsonElementReal32(
 
     }
 
-
+/// <summary>JSON 64 bit real number element value</summary>
+/// <param name="doubleValue">The string value of the element.</param>
 public record JsonElementReal64(
             double doubleValue) : JsonElementNumber("") {
 
@@ -193,11 +192,18 @@ public record JsonElementReal64(
 
 
 
-
+/// <summary>JSON object value.</summary>
 public record JsonElementObject() : JsonElement2 {
+
+    /// <summary>Attempt to return a property with tag <paramref name="tag"/></summary>
+    /// <param name="tag"></param>
+    /// <param name="element">The element corresponding to the tag.</param>
+    /// <returns>True if the property is present, otherwise false.</returns>
     public bool TryGetProperty (string tag, out JsonElement2 element) =>
         Properties.TryGetValue (tag, out element);
 
+    /// <summary>Returns the first property in the object.</summary>
+    /// <returns>The peoperty tag and element.</returns>
     public KeyValuePair<string,JsonElement2> SoloProperty() {
         var enumerator = Properties.GetEnumerator();
         if (!enumerator.MoveNext()) {
@@ -205,10 +211,13 @@ public record JsonElementObject() : JsonElement2 {
             }
         return enumerator.Current;
         }
-
-
-
+    
+    /// <summary>Dictionary of properties contained in the object.</summary>
     public Dictionary<string, JsonElement2> Properties = [];
+
+    /// <summary>Constructor, generates an instance by parsing the stream 
+    /// <paramref name="jsonReader"/></summary>
+    /// <param name="jsonReader">The stream to parse.</param>
 
     public JsonElementObject(
                 JsonReader jsonReader) : this() {
@@ -285,9 +294,15 @@ public record JsonElementObject() : JsonElement2 {
         }
     }
 
+/// <summary>JSON array element.</summary>
 public record JsonElementArray() : JsonElement2 {
 
+    /// <summary>The items contained in the array.</summary>
     public List<JsonElement2> Items = [];
+
+    /// <summary>Constructor, generates an instance by parsing the stream 
+    /// <paramref name="jsonReader"/></summary>
+    /// <param name="jsonReader">The stream to parse.</param>
     public JsonElementArray(
         JsonReader jsonReader) : this() {
         var going = true;

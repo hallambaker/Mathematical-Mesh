@@ -44,8 +44,14 @@ public class ParsedMultipart {
 
     bool complete = false;
 
+    /// <summary>Stream reader.</summary>
     protected StreamLookaheadReader Stream { get; }
+
+    /// <summary>Lexer.</summary>
     protected MultipartLex Lexer { get; }
+
+    /// <summary>Constructor, returns a new </summary>
+    /// <param name="data"></param>
     protected ParsedMultipart(Stream data) {
         Stream = new StreamLookaheadReader(data);
         Lexer = new MultipartLex();
@@ -144,6 +150,9 @@ public class ParsedMultipart {
         return true;
         }
 
+    /// <summary>Read headers into <paramref name="fieldData"/></summary>
+    /// <param name="fieldData">Instance to collect headers.</param>
+    /// <returns>true if succeded, otherwise false.</returns>
     protected bool GetHeaders(FieldData fieldData) {
         var (result, more) = GetHeader(fieldData);
         if (result != true) { 
@@ -201,17 +210,10 @@ public class ParsedMultipart {
         }
 
 
-    //void Output(int b) {
-    //    var c = b switch {
-    //        lf => "LF",
-    //        cr => "CR",
-    //        -1 => "EOF",
-    //        _ => ((char)b).ToString()
-    //        };
 
-    //    Console.Write(c);
-    //    }
-
+    /// <summary>Get the content</summary>
+    /// <param name="content">The content returned.</param>
+    /// <returns>true iff successful.</returns>
     protected bool GetContent(out byte[]? content) {
         content = null;
 
@@ -252,6 +254,8 @@ public class ParsedMultipart {
 
         }
 
+    /// <summary>Check if there is more content to come.</summary>
+    /// <returns>True if more content remains, otherwise false.</returns>
     protected bool CheckContentEnd() {
         var c = Stream.ReadByte();
 
@@ -276,6 +280,8 @@ public class ParsedMultipart {
         return false;
         }
 
+    /// <summary>Attempt to read a boundary.</summary>
+    /// <returns>True if a boundary was found.</returns>
     protected bool GetBoundary() {
         var i = 0;
         boundary[i++] = cr;

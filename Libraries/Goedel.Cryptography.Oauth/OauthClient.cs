@@ -11,7 +11,8 @@ namespace Goedel.Cryptography.Oauth;
 /// </summary>
 public class OauthClient {
 
-    public DnsClient DnsClient { get; init; } = new DnsClientUDP();
+    /// <summary>The DNS client to use.</summary>
+    public DnsClient DnsClient { get; init; } = DnsClient.Default;
 
 
     ///<summary>Client description.</summary> 

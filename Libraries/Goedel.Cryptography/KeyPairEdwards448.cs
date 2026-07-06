@@ -265,8 +265,10 @@ public class KeyPairEd448 : KeyPairEdwards, IAgreementData {
                 return result;
                 }
             case CryptoAlgorithmId.Ed448ph: {
-                using var shake256 = new SHAKE256(64 * 8);
-                var digest = shake256.ComputeHash(data);
+                //using var shake256 = new SHAKE256(64 * 8);
+                //var digest = shake256.ComputeHash(data);
+
+                var digest = Shake256.HashData(data, 64);
                 return SignDigest(digest, CryptoAlgorithmId.Ed448ph, context);
                 }
             }
@@ -317,8 +319,10 @@ public class KeyPairEd448 : KeyPairEdwards, IAgreementData {
                 return VerifyManifest(data, signature, CryptoAlgorithmId.Ed448, context);
                 }
             case CryptoAlgorithmId.Ed448ph: {
-                using var shake256 = new SHAKE256(64 * 8);
-                var digest = shake256.ComputeHash(data);
+                //using var shake256 = new SHAKE256(64 * 8);
+                //var digest = shake256.ComputeHash(data);
+
+                var digest = Shake256.HashData(data, 64);
                 return VerifyDigest(digest, signature, CryptoAlgorithmId.Ed448ph, context);
                 }
             }

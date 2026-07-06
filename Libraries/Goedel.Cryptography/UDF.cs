@@ -772,7 +772,7 @@ public record Udf(
     public static string FixedNonce(string seed, int bits=0) {
         bits = bits <= 0 ? DefaultBits - 8 : bits;
 
-        var data = SHAKE256.HashData (seed.ToUTF8 (), 1+ bits/8);
+        var data = Shake256.HashData(seed.ToUTF8 (), 1+ bits/8);
         return TypeBDSToString(UdfTypeIdentifier.Nonce, data, bits + 8);
         }
 
@@ -875,7 +875,7 @@ public record Udf(
     /// <param name="bits">The number of bits precision to specify in the output.</param>
     /// <returns>The key as a Base32 fingerprint.</returns>
     public static string EarlEncryptionKey(byte[] data, int bits = 0) {
-        var digest = SHAKE256.HashData(data);
+        var digest = Shake256.HashData(data,32);
 
         bits = bits < 140 ? 140 : bits;
         var segments = (bits + 19) / 20;
@@ -895,7 +895,7 @@ public record Udf(
     public static byte[] EarlPreLocator(string earl) {
         var source = earl.FromBase32(partial: true);
 
-        var l1 = SHA3Managed.Process256(source);
+        var l1 = SHA3_256.HashData(source);
 
         return l1;
         }
@@ -918,7 +918,7 @@ public record Udf(
     /// <param name="prelocator">The EARL to construct the locator path for.</param>
     /// <returns>The locator.</returns>
     public static string EarlLocator(byte[] prelocator) {
-        var l2 = SHA3Managed.Process256(prelocator);
+        var l2 = SHA3_256.HashData(prelocator);
 
         return l2.ToStringBase64url();
         }
@@ -932,7 +932,7 @@ public record Udf(
     public static string EarlLocator1(string earl) {
         var source = earl.FromBase32(partial: true);
 
-        var l1 = SHA3Managed.Process256(source);
+        var l1 = SHA3_256.HashData(source);
 
 
         return l1.ToStringBase32();
@@ -946,7 +946,7 @@ public record Udf(
     /// <returns>The encryption key.</returns>
     public static byte[] GetEncryptionKey(string udf) {
         var bytes = udf.FromBase32(partial:true);
-        var key = SHAKE256.HashData(bytes, KeyLength256 + AesNonceLength);
+        var key = Shake256.HashData(bytes, KeyLength256 + AesNonceLength);
         return key;
         }
 
@@ -1077,7 +1077,7 @@ public record Udf(
                 break;
                 }
             case CryptoAlgorithmId.SHA_3_512: {
-                provider = SHA3Managed.Create();
+                provider = SHA3_512.Create();
                 id = UdfTypeIdentifier.Digest_SHA_3_512;
                 break;
                 }

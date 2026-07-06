@@ -472,7 +472,7 @@ public class PresenceServer : PresenceService, IPresence {
         message.Destination = endPoint;
         message.Now = System.DateTime.UtcNow;
 
-        message.Packets = message.ToBytes();
+        message.Packets = message.ToPacketBytes();
 
         ImmediateQueue.Post(message);
         }

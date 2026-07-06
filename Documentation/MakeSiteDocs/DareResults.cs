@@ -226,7 +226,7 @@ public class DareResults {
             };
 
         KDFIn = Salt.Concat (ExchangedKey);
-        KDFOut = SHAKE256.HashData(KDFIn, 32 + 12); // need 32 byte key and 12 byte nonce
+        KDFOut = Shake256.HashData(KDFIn, 32 + 12); // need 32 byte key and 12 byte nonce
 
         EncryptionIV = KDFOut.Extract(0, 12);
         EncryptionKey = KDFOut.Extract(12, 32);

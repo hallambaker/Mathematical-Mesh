@@ -158,7 +158,7 @@ public static partial class Extensions {
 
     /// <summary>
     /// Perform a one pass streaming parse on data read from the file <paramref name="filename"/> 
-    /// returning an object of type <paramref name="type"/>.
+    /// returning an object of type <typeparamref name="T"/>.
     /// </summary>
     /// <typeparam name="T">The type of the object to return.</typeparam>
     /// <param name="filename">The data to parse</param>
@@ -166,8 +166,23 @@ public static partial class Extensions {
     public static T? ReadFileJson<T>(
                 this string filename) where T : JsonObject => JsonObject.StreamParse<T>(filename, false);
 
+    /// <summary>
+    /// Perform a one pass streaming parse on data read from the file <paramref name="filename"/> 
+    /// returning an object of type <typeparamref name="T"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of the object to return.</typeparam>
+    /// <param name="filename">The data to parse</param>
+    /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+    /// the read file operation fails.</param>
+    /// <returns>The typed, parsed object.</returns>
+    public static T ReadFileJson<T>(
+                this string filename, ThrowDelegate throwDelegate) where T : JsonObject {
+        var result = JsonObject.StreamParse<T> (filename, false);
 
+        result.AssertNotNull (throwDelegate);
 
+        return result;
+        }
     /// <summary>
     /// Perform a one pass streaming parse on data read from the file <paramref name="filename"/> 
     /// returning an object of type <typeparamref name="T"/>. 

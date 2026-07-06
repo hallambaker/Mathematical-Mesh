@@ -87,7 +87,7 @@ public class MeshMachineCoreServer : Disposable, IMeshMachine {
     /// <param name="directory">Directory to store the server information.</param>
     public MeshMachineCoreServer(string? directory) {
 
-        DnsClient = new DnsClientUDP();
+        DnsClient = DnsClient.Default;
         EarlClient = new EarlClientHttp (DnsClient);
 
         DirectoryRoot = directory;

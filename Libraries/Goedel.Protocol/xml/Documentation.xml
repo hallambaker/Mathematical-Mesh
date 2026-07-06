@@ -738,16 +738,20 @@
             <summary>
             Record describing a raw HTTP endpoint.
             </summary>
-            <param name="Dispatch"></param>
+            <param name="Dispatch">The dispatch callback.</param>
+            <param name="Protocol">The endpoint protocol.</param>
+            <param name="Instance">Instance specifier, for use in testing.</param>
         </member>
         <member name="M:Goedel.Protocol.HttpEndpoint.#ctor(System.Func{System.Net.HttpListenerRequest,System.Net.HttpListenerResponse,System.Net.HttpStatusCode},System.String,System.String)">
             <summary>
             Record describing a raw HTTP endpoint.
             </summary>
-            <param name="Dispatch"></param>
+            <param name="Dispatch">The dispatch callback.</param>
+            <param name="Protocol">The endpoint protocol.</param>
+            <param name="Instance">Instance specifier, for use in testing.</param>
         </member>
         <member name="P:Goedel.Protocol.HttpEndpoint.Dispatch">
-            <summary></summary>
+            <summary>The dispatch callback.</summary>
         </member>
         <member name="T:Goedel.Protocol.WebServiceEndpoint">
             <summary>
@@ -1332,10 +1336,21 @@
         <member name="M:Goedel.Protocol.Extensions.ReadFileJson``1(System.String)">
             <summary>
             Perform a one pass streaming parse on data read from the file <paramref name="filename"/> 
-            returning an object of type <paramref name="type"/>.
+            returning an object of type <typeparamref name="T"/>.
             </summary>
             <typeparam name="T">The type of the object to return.</typeparam>
             <param name="filename">The data to parse</param>
+            <returns>The typed, parsed object.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Extensions.ReadFileJson``1(System.String,Goedel.Utilities.ThrowDelegate)">
+            <summary>
+            Perform a one pass streaming parse on data read from the file <paramref name="filename"/> 
+            returning an object of type <typeparamref name="T"/>.
+            </summary>
+            <typeparam name="T">The type of the object to return.</typeparam>
+            <param name="filename">The data to parse</param>
+            <param name="throwDelegate">Delegate that creates the exception to be thrown if
+            the read file operation fails.</param>
             <returns>The typed, parsed object.</returns>
         </member>
         <member name="M:Goedel.Protocol.Extensions.ReadFileTaggedJson``1(System.String)">
@@ -2576,12 +2591,13 @@
             Create a new JSON Writer.
             </summary>
         </member>
-        <member name="M:Goedel.Protocol.JSONDebugWriter.#ctor(System.IO.MemoryStream)">
+        <member name="M:Goedel.Protocol.JSONDebugWriter.#ctor(System.IO.MemoryStream,System.Int32)">
             <summary>
             Create a new JSON Writer using the specified output buffer. If the buffer has
             an output stream defined, text will be written to the stream.
             </summary>
-            <param name="Output">The output stream.</param>
+            <param name="output">The output stream.</param>
+            <param name="indent">Indent level.</param>
         </member>
         <member name="M:Goedel.Protocol.JSONDebugWriter.NewLine">
             <summary>Write newline character</summary>
@@ -2604,7 +2620,7 @@
             at which to begin copying bytes to the current stream.</param>
             <param name="count">The number of bytes to be written to the current stream.</param> 
         </member>
-        <member name="M:Goedel.Protocol.JSONDebugWriter.Write(Goedel.Protocol.JsonObject,System.Boolean)">
+        <member name="M:Goedel.Protocol.JSONDebugWriter.Write(Goedel.Protocol.JsonObject,System.Boolean,System.Int32)">
             <summary>
             Convert a JSONObject to redacted form.
             </summary>

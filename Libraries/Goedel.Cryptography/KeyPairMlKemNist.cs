@@ -290,7 +290,7 @@ public class KeyPairMlKemNist : KeyPair, IOpaqueBinaryKey {
                     out IAgreementData agreementData,
                     byte[] salt = null) {
 
-        var seed = SHAKE256.HashData(key, 32);
+        var seed = Shake256.HashData(key, 32);
         var (sharedSecret, ciphertext) = PublicKey.Encapsulate(seed);
 
         exchange = Platform.KeyWrapRFC3394.Wrap(sharedSecret, key);

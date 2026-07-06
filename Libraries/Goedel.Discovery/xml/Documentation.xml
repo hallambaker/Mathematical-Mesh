@@ -482,6 +482,9 @@
             DNS client.
             </summary>
         </member>
+        <member name="P:Goedel.Discovery.DnsClient.Default">
+            <summary>The default DNS client.</summary>
+        </member>
         <member name="M:Goedel.Discovery.DnsClient.GetContext">
             <summary>Return a DNS Client Context in which to make a set of queries.
             </summary>

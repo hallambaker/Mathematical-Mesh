@@ -20,11 +20,13 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Security.Cryptography;
+
 using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Algorithms;
-using Goedel.Utilities;
+using Goedel.Cryptography.Dare;
 using Goedel.Test;
+using Goedel.Utilities;
 
 namespace ExampleGenerator;
 
@@ -97,10 +99,10 @@ public class EarlResults {
     public KeyCollection SigningKeys { get; } = new KeyCollectionEphemeral();
 
 
-    public EarlEnvelopeWriter Unsigned { get; }
+    public VDareEnvelopeWriter Unsigned { get; }
 
-    public EarlEnvelopeWriter Signed25519 { get; }
-    public EarlEnvelopeWriter SignedEd448 { get; }
+    public VDareEnvelopeWriter Signed25519 { get; }
+    public VDareEnvelopeWriter SignedEd448 { get; }
 
 
     public EarlSet WithType1 { get; }
@@ -126,8 +128,8 @@ public class EarlResults {
         var checkSet = new EarlSet(null, Payload);
 
 
-        EnvelopeContent = EarlEnvelopeWriter.GetBytes(Payload);
-        ContentDigest = SHAKE256.HashData(EnvelopeContent);
+        EnvelopeContent = VDareEnvelopeWriter.GetBytes(Payload);
+        ContentDigest = Shake256.HashData(EnvelopeContent, 32);
 
         var bytes = (Precision + 7) / 8;
 
@@ -147,13 +149,13 @@ public class EarlResults {
         var recovered = EarlPath.FromBase32(partial: true);
         recovered.TestEqual(copy);
 
-        AesKeyNonce = SHAKE256.HashData(recovered, 44);
+        AesKeyNonce = Shake256.HashData(recovered, 44);
 
         Ciphertext = Udf.EarlCiphertext(EnvelopeContent, EarlPath);
         checkSet.Ciphertext.TestEqual(Ciphertext);
 
-        Locator1 = SHA3Managed.Process256(recovered);
-        Locator2 = SHA3Managed.Process256(Locator1);
+        Locator1 = SHA3_256.HashData(recovered);
+        Locator2 = SHA3_256.HashData(Locator1);
 
         Locator = Locator2.ToStringBase64url();
         LocatorUri = EarlSet.GetWellKnown(CreateExamples.AliceService, Locator);
@@ -163,12 +165,12 @@ public class EarlResults {
         checkSet.Locator.TestEqual(Locator);
 
         var plaintext = Udf.GetDecryptedData(Ciphertext, EarlPath);
-        var (recoveredMeta, recoveredPayload) = EarlEnvelopeReader.Parse(plaintext);
+        var (recoveredMeta, recoveredPayload) = VDareEnvelopeReader.Parse(plaintext);
         recoveredPayload.TestEqual(Payload);
         recoveredMeta.TestNull();
 
         // Same but with a protected header
-        EnvelopeContentMeta = EarlEnvelopeWriter.GetBytes(Payload, ProtectedHeaderJson);
+        EnvelopeContentMeta = VDareEnvelopeWriter.GetBytes(Payload, ProtectedHeaderJson);
 
         WithMeta = new EarlSet(EnvelopeContentMeta, CreateExamples.AliceService);
         BytesMeta = Verify(WithMeta, ProtectedHeaderJson, Payload, SigningKeys);
@@ -187,7 +189,7 @@ public class EarlResults {
 
 
         plaintext = Udf.GetDecryptedData(WithMeta.Ciphertext, WithMeta.Earl);
-        (recoveredMeta, recoveredPayload) = EarlEnvelopeReader.Parse(plaintext);
+        (recoveredMeta, recoveredPayload) = VDareEnvelopeReader.Parse(plaintext);
         recoveredPayload.TestEqual(Payload);
         (recoveredMeta.Nonce == ProtectedHeaderJson.Nonce).TestTrue();
 
@@ -237,7 +239,7 @@ public class EarlResults {
                     byte[] payload,
                     KeyCollection keyCollection) {
         var plaintext = Udf.GetDecryptedData(earlSet.Ciphertext, earlSet.Earl);
-        var (recoveredMeta, recoveredPayload) = EarlEnvelopeReader.Parse(plaintext, SigningKeys);
+        var (recoveredMeta, recoveredPayload) = VDareEnvelopeReader.Parse(plaintext, SigningKeys);
         (recoveredMeta.Nonce == contentMeta.Nonce).TestTrue();
         (recoveredMeta.ContentType == contentMeta.ContentType).TestTrue();
 

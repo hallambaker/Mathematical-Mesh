@@ -43,9 +43,9 @@ public static class Initialization {
 #pragma warning restore CA2255 // The 'ModuleInitializer' attribute should not be used in libraries
     internal static void Initialize() {
         Initialized = Platform.Initialized;
-
-
-        CryptoProviderSHAKE128.Register();
-        CryptoProviderSHAKE256.Register();
+        Shake128.IsSupported.AssertTrue(NYI.Throw);
+        Shake256.IsSupported.AssertTrue(NYI.Throw);
+        //CryptoProviderSHAKE128.Register();
+        //CryptoProviderSHAKE256.Register();
         }
     }

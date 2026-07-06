@@ -43,23 +43,33 @@ public enum SequenceIndexMode {
     }
 
 
-
+/// <summary>Writes a DARE Sequence to the stream specified by the constructor
+/// using the QUIC framing.</summary>
 public class DareSequenceWriterII {
 
 
     Stream Output { get; }
 
+
+    /// <summary>Constructor, returns a new instance writing to the stream 
+    /// <paramref name="output"/>.</summary>
+    /// <param name="output">The stream to write to.</param>
     public DareSequenceWriterII(Stream output) {
         Output = output;
         Output.Write(DareSequence.TypeIdentifier);
         }
 
+
+    /// <summary>Write the sequence of envelopes <paramref name="sequence"/> to the stream.</summary>
+    /// <param name="sequence">The sequence to write.</param>
     public void Write(DareSequence sequence) {
         foreach (var item in sequence.Envelopes) {
             WriteEnvelope(item);
             }
         }
 
+    /// <summary>Write the envelope <paramref name="envelope"/> to the stream.</summary>
+    /// <param name="envelope">The envelope to write.</param>
     public void WriteEnvelope(DareEnvelope envelope) {
 
         // hack, not combining the unsigned/trailer components
@@ -92,22 +102,22 @@ public class DareSequenceWriterII {
 
     }
 
-
+/// <summary>Write a DARE envelope using the QUIC framing.</summary>
 public class DareEnvelopeWriterII {
 
 
     Stream Output { get; }
 
+    /// <summary>Constructor, returns a new instance writing to the stream 
+    /// <paramref name="output"/>.</summary>
+    /// <param name="output">The stream to write to.</param>
     public DareEnvelopeWriterII(Stream output) {
         Output = output;
         Output.Write(DareEnvelope.TypeIdentifier);
         }
 
-
-    public void Write(DareSequence sequence) {
-        }
-
-
+    /// <summary>Write the envelope <paramref name="envelope"/> to the stream.</summary>
+    /// <param name="envelope">The envelope to write.</param>
     public void Write(DareEnvelope envelope) {
         WriteUnsigned(envelope.Unsigned);
         WriteSigned(envelope.Signed);
@@ -115,13 +125,20 @@ public class DareEnvelopeWriterII {
         WriteTrailer(envelope.Trailer);
         }
 
-
+    /// <summary>Write the unsigned metadata to the stream.</summary>
+    /// <param name="unsigned"></param>
     public void WriteUnsigned(DareHeader unsigned) => Write(unsigned?.ToBytes());
 
+    /// <summary>Write the signed metadata to the stream.</summary>
+    /// <param name="signed"></param>
     public void WriteSigned(byte[] signed) => Write(signed);
 
+    /// <summary>Write the payload to the stream.</summary>
+    /// <param name="chunk"></param>
     public void WritePayloadChunk(byte[] chunk) => Write(chunk);
 
+    /// <summary>Write the trailer to the stream.</summary>
+    /// <param name="trailer">The trailer to write.</param>
     public void WriteTrailer(DareTrailer trailer) {
         Output.Write(0);
         Write(trailer?.ToBytes());
@@ -142,26 +159,33 @@ public class DareEnvelopeWriterII {
 
 
 public partial class DareSequence {
+
+    /// <summary>The type identifier for a DARE sequence.</summary>
     public static readonly byte[] TypeIdentifier = [249, 0];
 
+    /// <summary>Read <paramref name="data"/> as a DARE sequence and return the result.</summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
     public static DareSequence Decode(byte[] data) {
         return null;
         }
 
 
-    public byte[] GetBytes() {
-        return null;
-        }
+    //static public byte[] GetBytes() {
+    //    return null;
+    //    }
 
-
+    /// <summary>Add the envelope <paramref name="item"/> to the sequence.</summary>
+    /// <param name="item"></param>
     public void Add (DareEnvelope item) {
         // collapse the trailer and unsigned headers here
 
-        Envelopes ??= new();
+        Envelopes ??= [];
         Envelopes.Add (item);
 
         }
 
+    /// <inheritdoc/>
     public override void Serialize(Writer writer, bool tagged = false) {
         bool first = true;
         writer.WriteArrayStart();
@@ -171,11 +195,15 @@ public partial class DareSequence {
             }
         writer.WriteArrayEnd();
         }
+
+    /// <inheritdoc/>
     public override string ToString() {
         var writer = new JSONDebugWriter();
         Serialize(writer, false);
         return writer.GetUTF8;
         }
+
+    /// <inheritdoc/>
     public byte[] ToArray() {
         var buffer = new MemoryStream();
         var writer = new DareSequenceWriterII(buffer);
@@ -193,13 +221,25 @@ public partial class DareSequence {
 /// </summary>
 public partial class DareEnvelope  {
 
-
+    /// <summary>The type identifier for a DARE envelope.</summary>
     public static readonly byte[] TypeIdentifier = [248];
+
+
+    /// <summary>Constructor, returns a new empty instance.</summary>
     public DareEnvelope() {
         }
 
 
     #region // Static creation methods
+
+    /// <summary>Factory method, returns a new instance with the segments 
+    /// <paramref name="unsignedHeader"/>, <paramref name="signedHeader"/>,
+    /// <paramref name="payload"/> and <paramref name="trailer"/>.</summary>
+    /// <param name="payload">The payload bytes.</param>
+    /// <param name="unsignedHeader">The unsigned metadata.</param>
+    /// <param name="signedHeader">The content metadata.</param>
+    /// <param name="trailer">The trailer</param>
+    /// <returns></returns>
     public static DareEnvelope Create(
         byte[] payload,
         DareHeader unsignedHeader = null,
@@ -211,24 +251,36 @@ public partial class DareEnvelope  {
             Trailer = trailer
             };
 
+    /// <summary></summary>
+    /// <param name="contentMeta">The content metadata.</param>
+    /// <param name="payload">The payload bytes.</param>
+    /// <param name="unsignedHeader">The unsigned metadata.</param>
+    /// <param name="trailer">The trailer</param>
+    /// <returns></returns>
     public static DareEnvelope Create(
                 ContentMeta contentMeta,
                 byte[] payload,
                 DareHeader unsignedHeader = null,
                 DareTrailer trailer = null) => Create(payload, unsignedHeader,
                     contentMeta.ToBytes(), trailer);
-    public static DareEnvelope Decode(byte[] data) {
-        return null;
-        }
+
+
+    //public static DareEnvelope Decode(byte[] data) {
+    //    return null;
+    //    }
 
 
 
     #endregion
     #region // Conversion methods
 
+    /// <summary>Parse the contents of the unsigned frame and return as 
+    /// content metadata.</summary>
+    /// <returns></returns>
     public ContentMeta GetSigned() => StreamParse<ContentMeta>(Signed);
 
-
+    /// <summary>Write the envelope to a byte array.</summary>
+    /// <returns>The encoded envelope.</returns>
     public byte[] ToArray() {
         var buffer = new MemoryStream();
         var writer = new DareEnvelopeWriterII(buffer);
@@ -237,11 +289,11 @@ public partial class DareEnvelope  {
         }
 
 
-    public void WriteBytes(Stream output) {
+    //static public void WriteBytes(Stream output) {
 
-        }
+    //    }
 
-
+    /// <inheritdoc/>
     public override string ToString() {
         var writer = new JSONDebugWriter();
         Serialize(writer, false);
@@ -261,8 +313,8 @@ public partial class DareEnvelope  {
 public partial class DareHeader {
 
 
-    public static DareHeader Create(ContentMeta contentMeta) => new() {
-        ContentMeta = contentMeta
-        };
+    //public static DareHeader Create(ContentMeta contentMeta) => new() {
+    //    ContentMeta = contentMeta
+    //    };
 
     }

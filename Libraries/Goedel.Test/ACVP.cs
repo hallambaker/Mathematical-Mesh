@@ -257,7 +257,7 @@ public abstract class AcvpTest {
     /// <param name="test">The test or group data to search.</param>
     /// <param name="key">The key to locate</param>
     /// <param name="data">The data</param>
-    protected void Bind(IExtensionData test, string key, string? data) {
+    protected static void Bind(IExtensionData test, string key, string? data) {
         if (data is null) {
             return;
             }
@@ -272,7 +272,7 @@ public abstract class AcvpTest {
     /// <param name="test">The test or group data to search.</param>
     /// <param name="key">The key to locate</param>
     /// <param name="data">The data</param>
-    protected void Bind(IExtensionData test, string key, byte[]? data) {
+    protected static void Bind(IExtensionData test, string key, byte[]? data) {
         if (data is null) {
             return;
             }
@@ -288,7 +288,7 @@ public abstract class AcvpTest {
     /// <param name="test">The test or group data to search.</param>
     /// <param name="key">The key to locate</param>
     /// <param name="data">The data</param>
-    protected void Bind(IExtensionData test, string key, bool? data) {
+    protected static void Bind(IExtensionData test, string key, bool? data) {
         if (data is null) {
             return;
             }

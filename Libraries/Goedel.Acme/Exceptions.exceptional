@@ -1,8 +1,5 @@
 ﻿
 Namespace Goedel.Acme
 
-	Exception TBS
-		Console "Exception TBS"
-		Description
-			|TBS
+w
 

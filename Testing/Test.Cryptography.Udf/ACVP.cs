@@ -44,7 +44,7 @@ public class UdfKeyGenTest : AcvpTest {
                     KeyGenTestMode mode,
                     int size = 256,
                     bool keepHints = true) {
-        var data = SHAKE256.Process($"This is a common test seed of {testId}".ToBytes(), size);
+        var data = Shake256.HashData($"This is a common test seed of {testId}".ToBytes(), size/8);
         
         SeedUdf = Udf.DerivedKey(udfAlgorithm, data);
         var (keypair, hints) = Udf.DeriveKeyHints(SeedUdf, null);
@@ -71,7 +71,7 @@ public class UdfKeyGenTest : AcvpTest {
         }
 
 
-    void TestKey(KeyPair keyPair, KeyGenTestMode mode) {
+    static void TestKey(KeyPair keyPair, KeyGenTestMode mode) {
         keyPair.PublicOnly.TestFalse();
 
         switch (mode) {
@@ -92,7 +92,9 @@ public class UdfKeyGenTest : AcvpTest {
 
         }
 
-    void TestKeySign(KeyPair keyPair) {
+    /// <summary>Test key sign.</summary>
+    /// <param name="keyPair">The key to attempt signature with.</param>
+    static void TestKeySign(KeyPair keyPair) {
         // Create test data
         var testData = $"Signature test {keyPair.UDFValue}".ToBytes();
 
@@ -124,7 +126,7 @@ public class UdfKeyGenTest : AcvpTest {
 
         }
 
-    void TestKeyEncrypt(KeyPair keyPair) {
+    static void TestKeyEncrypt(KeyPair keyPair) {
         // Create test data
         var testData = $"Encryption test {keyPair.UDFValue}".ToBytes();
 

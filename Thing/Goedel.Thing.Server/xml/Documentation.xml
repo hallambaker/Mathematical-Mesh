@@ -53,38 +53,6 @@
             <param name="services">The service descriptions.</param>
             <returns>Task returning a <see cref="T:Goedel.Thing.Server.ServiceThingResult"/> on completion.</returns>
         </member>
-        <member name="T:Goedel.Thing.Server.TBS">
-            <summary>
-            TBS
-            </summary>
-        </member>
-        <member name="P:Goedel.Thing.Server.TBS.ExceptionFormatDelegate">
-            <summary>The exception formatting delegate. May be overriden 
-            locally or globally to implement different exception formatting.</summary>
-        </member>
-        <member name="P:Goedel.Thing.Server.TBS.Templates">
-            <summary>Templates for formatting response messages.</summary>
-        </member>
-        <member name="M:Goedel.Thing.Server.TBS.#ctor(System.String,System.Exception,System.Object[])">
-            <summary>
-            Construct instance for exception
-            </summary>		
-            <param name="description">Description of the error, may be used to override the 
-            generated message.</param>	
-            <param name="inner">Inner Exception</param>	
-            <param name="args">Optional list of parameterized arguments.</param>
-        </member>
-        <member name="M:Goedel.Thing.Server.TBS._Throw(System.Object)">
-            <summary>
-            The public fatory delegate
-            </summary>
-            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
-        </member>
-        <member name="P:Goedel.Thing.Server.TBS.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
         <member name="T:Goedel.Thing.Server.EventExtensions">
             <summary>
             Extensions class defining logging events and convenience methods.
@@ -115,6 +83,7 @@
             Return the default for <paramref name="service"/>.
             </summary>
             <param name="service">The service to return the information for.</param>
+            <param name="port">The service port number.</param>
             <returns>The IANA protocol identifier</returns>
         </member>
         <member name="M:Goedel.Thing.Server.Extensions.GetConfiguration(Goedel.Thing.Server.WellKnownService,System.String)">

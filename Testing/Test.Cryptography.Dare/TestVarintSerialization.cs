@@ -33,6 +33,10 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Goedel.XUnit;
 
+
+#pragma warning disable xUnit1026
+#pragma warning disable IDE0060
+
 public class TestVarintSerialization : UnitTestSet {
 
     /// <summary>Constructor method</summary>
@@ -59,10 +63,10 @@ public class TestVarintSerialization : UnitTestSet {
         var data = Seed.GetTestBytes(size, "This is a test");
 
         // Write file 
-        EarlEnvelopeWriter.Write(filename, data);
+        VDareEnvelopeWriter.Write(filename, data);
 
         // Read file back
-        var envelope = EarlEnvelopeReader.Read(filename, Console.Out);
+        var envelope = VDareEnvelopeReader.Read(filename);
 
         // check for equality.
         data.TestEqual(envelope.Payload);
@@ -85,7 +89,7 @@ public class TestVarintSerialization : UnitTestSet {
         List<byte[]> dataList = [];
 
         // create the sequence
-        using var sequence = EarlSequence.Create(filename);
+        using var sequence = VDareSequence.Create(filename);
 
         // add the first item
         Append(sequence, dataList, size, variable);
@@ -104,7 +108,7 @@ public class TestVarintSerialization : UnitTestSet {
 
 
 
-    bool Append(EarlSequence sequence, List<byte[]> dataList, int size, bool variable) {
+    bool Append(VDareSequence sequence, List<byte[]> dataList, int size, bool variable) {
 
         var data = Seed.GetTestBytes(size, "This is a test");
         dataList.Add(data);
@@ -115,21 +119,15 @@ public class TestVarintSerialization : UnitTestSet {
         }
 
 
-    bool Verify(EarlSequence sequence1, List<byte[]> dataList) {
-        //Console.WriteLine();
-        //Console.WriteLine();
-
+    static bool Verify(VDareSequence sequence1, List<byte[]> dataList) {
         var filename = sequence1.Filename;
         sequence1.CloseStream(); // close the stream so we can reopen for read.
 
-        using var sequence = EarlSequence.Open(filename);
+        using var sequence = VDareSequence.Open(filename);
         foreach (var data in dataList) {
             var envelope = sequence.ReadNext();
             data.TestEqual(envelope.Payload);
             }
-
-
-        // check that we have read all the elements.
 
         return true;
         }
@@ -158,7 +156,7 @@ public class TestVarintSerialization : UnitTestSet {
         directoryIndex.IsEqual(directoryIndex).TestTrue();
 
         // Create Archive
-        using (var archive = EarlArchive.Create(filename)) {
+        using (var archive = VDareArchive.Create(filename)) {
 
             // Append directory
             archive.AppendDirectory(testDirectory);
@@ -169,13 +167,13 @@ public class TestVarintSerialization : UnitTestSet {
             }
 
         // Read back the index
-        using (var archive = EarlArchive.OpenRead(filename)) {
+        using (var archive = VDareArchive.OpenRead(filename)) {
             archive.ReadIndex();
             directoryIndex.IsEqual(archive.DirectoryIndex);
             }
 
         // Extract and verify files
-        using (var archive = EarlArchive.OpenRead(filename)) {
+        using (var archive = VDareArchive.OpenRead(filename)) {
             archive.Extract(targetArchive);
             var unpackedDirectoryIndex = DirectoryIndex.ReadDirectory(testDirectory);
 
@@ -203,7 +201,7 @@ public class TestVarintSerialization : UnitTestSet {
         List<TestItem> dataList = [];
 
         // create the sequence
-        using var sequence = EarlLog.Create<TestItem>(filename);
+        using var sequence = VDareLog.Create<TestItem>(filename);
         Append(sequence, dataList, size, variable);
         Verify(sequence, dataList);
 
@@ -228,7 +226,7 @@ public class TestVarintSerialization : UnitTestSet {
         }
 
 
-    bool Append(EarlLog<TestItem> log, List<TestItem> dataList, int size, bool variable) {
+    bool Append(VDareLog<TestItem> log, List<TestItem> dataList, int size, bool variable) {
 
         var data = Seed.GetTestBytes(size, "This is a test");
         var entry = new TestItem() {
@@ -243,14 +241,14 @@ public class TestVarintSerialization : UnitTestSet {
 
 
 
-    bool Verify(EarlLog<TestItem> logIn, List<TestItem> dataList) {
+    static bool Verify(VDareLog<TestItem> logIn, List<TestItem> dataList) {
         //Console.WriteLine();
         //Console.WriteLine();
 
         var filename = logIn.Filename;
         logIn.CloseStream(); // close the stream so we can reopen for read.
 
-        using var log = EarlLog.Open<TestItem>(filename);
+        using var log = VDareLog.Open<TestItem>(filename);
         foreach (var data in dataList) {
             var obj = log.ReadNextObject();
 
@@ -312,7 +310,7 @@ public class TestVarintSerialization : UnitTestSet {
         return entry.UniqueId;
         }
 
-    void Update(EarlSpool<MessageTest> spool,
+    static void Update(EarlSpool<MessageTest> spool,
                 Dictionary<string, MessageTest> dataDictionary,
                 List<EntryUpdate> updates) {
 
@@ -323,7 +321,7 @@ public class TestVarintSerialization : UnitTestSet {
         spool.Update(updates);
         }
 
-    bool Verify(EarlSpool<MessageTest> spoolIn, Dictionary<string, MessageTest> dataDictionary) {
+    static bool Verify(EarlSpool<MessageTest> spoolIn, Dictionary<string, MessageTest> dataDictionary) {
         //Console.WriteLine();
         //Console.WriteLine();
 
@@ -452,7 +450,7 @@ public class TestVarintSerialization : UnitTestSet {
         }
 
 
-    bool CheckById(
+    static bool CheckById(
                 EarlCatalog<CatalogEntryTest> catalog, 
                 Dictionary<string, CatalogEntryTest> dataDictionary, 
                 string id) {
@@ -480,7 +478,7 @@ public class TestVarintSerialization : UnitTestSet {
 
 
 
-    bool Delete(EarlCatalog<CatalogEntryTest> catalog, Dictionary<string, CatalogEntryTest> dataDictionary, string id) {
+    static bool Delete(EarlCatalog<CatalogEntryTest> catalog, Dictionary<string, CatalogEntryTest> dataDictionary, string id) {
         
         dataDictionary.Remove(id);
         catalog.Delete(id);
@@ -488,7 +486,7 @@ public class TestVarintSerialization : UnitTestSet {
         return true;
         }
 
-    bool Verify(EarlCatalog<CatalogEntryTest> catalogIn, Dictionary<string, CatalogEntryTest> dataDictionary) {
+    static bool Verify(EarlCatalog<CatalogEntryTest> catalogIn, Dictionary<string, CatalogEntryTest> dataDictionary) {
         //Console.WriteLine();
         //Console.WriteLine();
 

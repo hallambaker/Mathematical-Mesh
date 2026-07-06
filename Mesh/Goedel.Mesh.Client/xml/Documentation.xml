@@ -1674,6 +1674,15 @@
             <param name="expire">Expiry time for the corresponding PIN</param>
             <param name="authenticator">If true, insert authenticator to allow automatic acceptance
             of the response.</param>
+            <param name="automatic">If true, and <paramref name="authenticator"/> is true, the 
+            authenticator created will be marked to automatically execute.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetRegisteredPin(System.Nullable{System.DateTime},System.Boolean)">
+            <summary>Return a registered PIN.</summary>
+            <param name="expire">Expiry instant.</param>
+            <param name="automatic">If true, the PIN is marked to execute automatically,
+            without additional user input if returned.</param>
+            <returns>Task returning the PIN value.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.ContactRequestAsync(System.String,System.String,System.String,System.Boolean,System.String)">
             <summary>

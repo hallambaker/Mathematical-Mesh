@@ -177,29 +177,29 @@ public static class CryptoStreamFromID {
             CryptoAlgorithmId.SHA_2_256 => SHA256.Create(),
             CryptoAlgorithmId.Default or CryptoAlgorithmId.SHA_2_512 => SHA512.Create(),
             CryptoAlgorithmId.SHA_2_512T128 => SHA512.Create(),
-            CryptoAlgorithmId.SHA_3_256 => new SHA3Managed(256),
-            CryptoAlgorithmId.SHA_3_512 => new SHA3Managed(512),
-            CryptoAlgorithmId.SHAKE_128 => new SHAKE128(),
-            CryptoAlgorithmId.SHAKE_256 => new SHAKE256(),
+            CryptoAlgorithmId.SHA_3_256 => SHA3_256.Create(),
+            CryptoAlgorithmId.SHA_3_512 => SHA3_512.Create(),
+            //CryptoAlgorithmId.SHAKE_128 => new SHAKE128(),
+            //CryptoAlgorithmId.SHAKE_256 => new SHAKE256(),
             _ => null,
             };
         }
 
-    /// <summary>
-    /// Return a shake provider for the algorithm 
-    /// specified by <paramref name="cryptoAlgorithmID"/>.
-    /// </summary>
-    /// <param name="cryptoAlgorithmID">The algorithm.</param>
-    /// <param name="hashBitLength">The number of output bits to generate.</param>
-    /// <returns>The digest provider.</returns>
-    public static HashAlgorithm CreateShake(
-                    CryptoAlgorithmId cryptoAlgorithmID,
-                    int hashBitLength
-                    ) => cryptoAlgorithmID switch {
-                        CryptoAlgorithmId.SHAKE_128 => new SHAKE128(hashBitLength),
-                        CryptoAlgorithmId.SHAKE_256 => new SHAKE256(hashBitLength),
-                        _ => null,
-                        };
+    ///// <summary>
+    ///// Return a shake provider for the algorithm 
+    ///// specified by <paramref name="cryptoAlgorithmID"/>.
+    ///// </summary>
+    ///// <param name="cryptoAlgorithmID">The algorithm.</param>
+    ///// <param name="hashBitLength">The number of output bits to generate.</param>
+    ///// <returns>The digest provider.</returns>
+    //public static HashAlgorithm CreateShake(
+    //                CryptoAlgorithmId cryptoAlgorithmID,
+    //                int hashBitLength
+    //                ) => cryptoAlgorithmID switch {
+    //                    CryptoAlgorithmId.SHAKE_128 => new SHAKE128(hashBitLength),
+    //                    CryptoAlgorithmId.SHAKE_256 => new SHAKE256(hashBitLength),
+    //                    _ => null,
+    //                    };
 
     /// <summary>
     /// Calculate the digest value of the contents of <paramref name="fileName"/> using the algorithm

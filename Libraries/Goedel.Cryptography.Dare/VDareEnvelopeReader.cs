@@ -31,8 +31,10 @@ namespace Goedel.Cryptography.Dare;
 /// <summary>
 /// Envelope Reader
 /// </summary>
-public partial class EarlEnvelopeReader : Disposable {
-    protected EarlStream Stream { get; }
+public partial class VDareEnvelopeReader : Disposable {
+
+    /// <summary>The underlying stream.</summary>
+    protected VDareStream Stream { get; }
 
     ///<summary>The envelope version (0 or 1).</summary> 
     public ulong Version { get; private set; }
@@ -64,8 +66,8 @@ public partial class EarlEnvelopeReader : Disposable {
     /// Only the initial version number is read from the stream.
     /// </summary>
     /// <param name="stream">The stream to read from.</param>
-    EarlEnvelopeReader(
-                EarlStream stream) {
+    VDareEnvelopeReader(
+                VDareStream stream) {
         Stream = stream;
         Version = Stream.ReadTypeIdentifier();
 
@@ -78,7 +80,8 @@ public partial class EarlEnvelopeReader : Disposable {
         SignedHeader = ReadJson<ContentMeta>();
         }
 
-
+    /// <summary>Complete reading the entry, and return the complete envelope.</summary>
+    /// <returns></returns>
     public EarlEnvelope Close () {
         Trailer = ReadJson<Unprotected>();
 
@@ -87,17 +90,21 @@ public partial class EarlEnvelopeReader : Disposable {
 
         }
 
-
+    /// <summary>Read an object of type <typeparamref name="T"/> from the stream.</summary>
+    /// <typeparam name="T">The type of the object to read.</typeparam>
+    /// <returns>The object read.</returns>
     public T ReadJson<T>() where T : JsonObject => Stream.ReadJson<T>();
 
-
+    /// <summary>Read a complete block of data from the stream</summary>
+    /// <returns></returns>
     public virtual byte[] ReadBlock() => Stream.ReadBlock();
 
-
-    public static EarlEnvelope Read(string fileName,
-                TextWriter output = null) {
-        var stream = output == null ? EarlStream.OpenRead(fileName) : EarlStream.OpenRead(fileName);
-        using var reader = new EarlEnvelopeReader(stream);
+    /// <summary>Read a single envelope from the file <paramref name="fileName"/></summary>
+    /// <param name="fileName">The file to read.</param>
+    /// <returns>The envelope read.</returns>
+    public static EarlEnvelope Read(string fileName) {
+        var stream = VDareStream.OpenRead(fileName);
+        using var reader = new VDareEnvelopeReader(stream);
 
         var payload = reader.ReadBlock();
         var result = reader.Close();
@@ -115,16 +122,21 @@ public partial class EarlEnvelopeReader : Disposable {
     /// Only the initial version number is read from the stream.
     /// </summary>
     /// <param name="bytes">The data to read.</param>
-    public EarlEnvelopeReader(byte[] bytes) : this(new EarlStream(bytes)) {
+    public VDareEnvelopeReader(byte[] bytes) : this(new VDareStream(bytes)) {
         }
 
-
+    /// <summary>Returns the enveloped data.</summary>
+    /// <param name="bytes">The envelope to read.</param>
+    /// <param name="keyCollection">Keys to be used to decrypt the contents.</param>
+    /// <returns></returns>
     public static Enveloped GetEnveloped(byte[] bytes,
             KeyCollection? keyCollection = null) {
-        var reader = new EarlEnvelopeReader(bytes);
+        var reader = new VDareEnvelopeReader(bytes);
         return reader.GetEnveloped();
         }
 
+    /// <summary>Return an envelope from the reader.</summary>
+    /// <returns></returns>
     public Enveloped GetEnveloped() {
 
 
@@ -166,7 +178,7 @@ public partial class EarlEnvelopeReader : Disposable {
     public static (ContentMeta, byte[]) Parse(byte[] bytes,
             KeyCollection? keyCollection=null) {
 
-        var reader = new EarlEnvelopeReader(bytes);
+        var reader = new VDareEnvelopeReader(bytes);
         reader.ReadMetadata();
 
         var buffer = new MemoryStream();
@@ -264,7 +276,7 @@ public partial class EarlEnvelopeReader : Disposable {
         var value = Digest.GetValue();
         //Console.WriteLine($"Digest Value = {value.ToStringBase16FormatHex()}");
 
-        var manifest = EarlEnvelopeWriter.GetManifest(DigestId, MetadataDigest, value);
+        var manifest = VDareEnvelopeWriter.GetManifest(DigestId, MetadataDigest, value);
         //Console.WriteLine($"Manifest Value = {manifest.ToStringBase16FormatHex()}");
 
         SignedHeader.VerifiedSignatures = [];

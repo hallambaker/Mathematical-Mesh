@@ -1927,6 +1927,14 @@
             <param name="service"></param>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Contacts.JsContact.GetMesh">
+            <summary>Get the first Mesh profile entry.</summary>
+            <returns>The mesh profile entry.</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsContact.GetEarlSet">
+            <summary>Construct an EARL over the contact data.</summary>
+            <returns>The EARL binary data and URI.</returns>
+        </member>
         <member name="T:Goedel.Contacts.Resource">
             <summary>
             </summary>
@@ -2532,6 +2540,9 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
+        <member name="P:Goedel.Contacts.EmailAddress.OnlineService">
+            <summary>The online service entry.</summary>
+        </member>
         <member name="P:Goedel.Contacts.EmailAddress.Key">
             <summary>The dictionary key (filled by calling Analyze)</summary> 
         </member>
@@ -2620,6 +2631,12 @@
         </member>
         <member name="P:Goedel.Contacts.OnlineService.Analysis">
             <summary>Analysis of the service parent and children.</summary> 
+        </member>
+        <member name="P:Goedel.Contacts.OnlineService.ServiceGroups">
+            <summary>The service groups.</summary>
+        </member>
+        <member name="M:Goedel.Contacts.OnlineService.#ctor">
+            <summary>Default constructor for deserialization.</summary>
         </member>
         <member name="T:Goedel.Contacts.Phone">
             <summary>
@@ -3527,6 +3544,9 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
+        <member name="P:Goedel.Contacts.JsonWebKeySet.MeshProfileBytes">
+            <summary>The Mesh profile bytes.</summary>
+        </member>
         <member name="T:Goedel.Contacts.ServiceGroup">
             <summary>
             </summary>
@@ -3733,6 +3753,11 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsDevice.GetNetworkType(System.String)">
+            <summary>Return the first network entry for a network of type <paramref name="type"/></summary>
+            <param name="type">The network to return.</param>
+            <returns>The network value, if found.</returns>
         </member>
         <member name="T:Goedel.Contacts.Network">
             <summary>
@@ -4223,6 +4248,35 @@
             Factory method
             </summary>
             <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsProvision.#ctor">
+            <summary>Constructor, returns an empty instance.</summary>
+        </member>
+        <member name="M:Goedel.Contacts.JsProvision.#ctor(Goedel.Contacts.JsDevice)">
+            <summary>Constructor returning a provisioning statement using the device template 
+            <paramref name="jsDevice"/>.</summary>
+            <param name="jsDevice">Template describing the common features of the device to be provisioned.</param>
+        </member>
+        <member name="M:Goedel.Contacts.JsProvision.AddPhysicalEthernet(System.String)">
+            <summary>Add a physical ethernet connection with MAC <paramref name="mac"/></summary>
+            <param name="mac">The MAC address to add</param>
+            <returns>The entry identifier.</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsProvision.AddPhysicalWiFi(System.String,System.String)">
+            <summary>Add a physical Wifi connection with SSID <paramref name="ssid"/> and
+            MAC <paramref name="mac"/></summary>
+            <param name="ssid">The SSID the device will listen on.</param>
+            <param name="mac">The MAC address to add</param>
+            <returns>The entry identifier.</returns>
+        </member>
+        <member name="M:Goedel.Contacts.JsProvision.AddOnboarding(System.String,System.Collections.Generic.List{System.String},Goedel.Cryptography.Jose.JWK,System.Byte[],System.String)">
+            <summary>Add an onboarding protocol.</summary>
+            <param name="service">The service name.</param>
+            <param name="endpoints">The endpoint.</param>
+            <param name="keypair">The keypair</param>
+            <param name="credential">The credential</param>
+            <param name="contentType">Content type for the onboarding entry.</param>
+            <returns>The entry identifier.</returns>
         </member>
         <member name="M:Goedel.Contacts.JsProvision.AddCredential(Goedel.Cryptography.Jose.JWK,System.Byte[],System.String)">
             <summary>

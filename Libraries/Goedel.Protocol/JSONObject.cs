@@ -454,7 +454,7 @@ public abstract partial class JsonObject : IBinding {
 
     /// <summary>
     /// Perform a one pass streaming parse on data read from the file <paramref name="filename"/> 
-    /// returning an object of type <paramref name="type"/>. This
+    /// returning an object of type <typeparamref name="T"/>. This
     /// parser does not (currently) support schemas in which a variant object type is
     /// specified by the object property.
     /// </summary>
@@ -534,7 +534,7 @@ public abstract partial class JsonObject : IBinding {
     /// </summary>
     /// <typeparam name="T">The type of the object to be returned.</typeparam>
     /// <param name="data">The data to parse</param>
-    /// <param name="tagged">If true, the data object has a typed wrapper.</param>
+    /// <param name="service">The service definition.</param>
     /// <param name="collectUparsed">If true, collect unparseable items during the
     /// parse.</param>
     /// <returns>The typed, parsed object.</returns>
@@ -553,7 +553,6 @@ public abstract partial class JsonObject : IBinding {
     /// </summary>
     /// <typeparam name="T">The type of the object to be returned.</typeparam>
     /// <param name="data">The data to parse</param>
-    /// <param name="tagged">If true, the data object has a typed wrapper.</param>
     /// <param name="collectUparsed">If true, collect unparseable items during the
     /// parse.</param>
     /// <returns>The typed, parsed object.</returns>
@@ -562,21 +561,24 @@ public abstract partial class JsonObject : IBinding {
                     bool collectUparsed = false) where T : JsonObject =>
                         StreamParseCore(typeof(T), new JsonBcdReader(data), false, collectUparsed) as T;
 
+    /// <summary>Parse <paramref name="data"/> as a tagged JSON object.</summary>
+    /// <param name="data">The data to parse.</param>
+    /// <param name="collectUparsed">If true, collect unrecognized properties.</param>
+    /// <returns>The result of the parse.</returns>
     public static JsonObject ParseTagged(
             byte[] data,
             bool collectUparsed = false) => ParseTagged(new JsonBcdReader(data), collectUparsed);
 
+    /// <summary>Parse date from <paramref name="reader"/> as a tagged JSON object.</summary>
+    /// <param name="reader">The data to parse.</param>
+    /// <param name="collectUparsed">If true, collect unrecognized properties.</param>
+    /// <returns>The result of the parse.</returns>
     public static JsonObject ParseTagged(
                 JsonReader reader,
                 bool collectUparsed = false) {
 
         //var reader = new JsonBcdReader(data);
         var element = JsonElement2.Parse(reader) as JsonElementObject;
-
-        //var document = JsonDocument.Parse(data);
-
-
-
 
         (element.Properties.Count == 1).AssertTrue(NYI.Throw);
         var p1 = element.SoloProperty();

@@ -24,30 +24,44 @@ using System.Diagnostics;
 namespace Goedel.Cryptography.Dare;
 
 
-
-public class EarlCatalogEnumerator<T> : 
-            IEnumerator<EarlEntryIndex<T>>, IEnumerable<EarlEntryIndex<T>> 
+/// <summary>Typed enumerator for catalog entries.</summary>
+/// <typeparam name="T">The type of the catalog entry.</typeparam>
+public class VCatalogEnumerator<T> : 
+            IEnumerator<VDareEntryIndex<T>>, IEnumerable<VDareEntryIndex<T>> 
                 where T : JsonObject, new() {
-    public EarlEntryIndex<T>? Current => Node?.Value;
+
+    /// <inheritdoc/>
+    public VDareEntryIndex<T>? Current => Node?.Value;
+
+
+    /// <inheritdoc/>
     object IEnumerator.Current => Current;
+
+
+    /// <inheritdoc/>
     public void Dispose() {
         }
 
-    LinkedListNode<EarlEntryIndex<T>>? Node { get; set; }
+
+    LinkedListNode<VDareEntryIndex<T>>? Node { get; set; }
 
 
     EarlCatalog<T> Catalog { get; }
     bool Forward { get; }
     bool first=true;
 
-    public EarlCatalogEnumerator(EarlCatalog<T> catalog, bool forward) {
+    /// <summary>Constructor, returns a new instance.</summary>
+    /// <param name="catalog">The catalog to enumerate.</param>
+    /// <param name="forward">If true, enumerate in the forward direction,
+    /// otherwise enumerate in reverse.</param>
+    public VCatalogEnumerator(EarlCatalog<T> catalog, bool forward) {
         Catalog = catalog;
         Forward = forward;
         }
 
 
     /// <inheritdoc/>
-    public IEnumerator<EarlEntryIndex<T>> GetEnumerator() => this;
+    public IEnumerator<VDareEntryIndex<T>> GetEnumerator() => this;
 
     /// <inheritdoc/>
     public bool MoveNext() {
@@ -75,26 +89,32 @@ public class EarlCatalogEnumerator<T> :
 
 
 
-
-public class EarlEntryEnumerator : IEnumerator<EarlEntryIndex> , IEnumerable<EarlEntryIndex> {
-    EarlSequence Sequence { get; }
+/// <summary>Untyped enumerator for untyped catalog index entries.</summary>
+public class VEntryEnumerator : IEnumerator<VDareEntryIndex> , IEnumerable<VDareEntryIndex> {
+    VDareSequence Sequence { get; }
     bool Forward { get; }
-    Func<EarlEntryIndex, bool>? Process { get; }
+    Func<VDareEntryIndex, bool>? Process { get; }
 
     #region -- Implement IDispose
     /// <inheritdoc/>
     public void Dispose() {
         }
-    
+
     #endregion
     #region --Implement IEnumerator
-        /// <summary>Default constructor, return an enumerator on the sequence
+    /// <summary>Default constructor, return an enumerator on the sequence
     /// <paramref name="sequence"/>. This is also an enumerable returning itself.</summary>
     /// <param name="sequence">The sequence to enumerate.</param>
-    public EarlEntryEnumerator(
-                EarlSequence sequence, 
+    /// <param name="forward">If true, enumerate in the forward direction,
+    /// otherwise enumerate in reverse.</param>
+    /// <param name="process">Processing delegate, if present and the value of <paramref name="forward"/>
+    /// is false, the delegate is executed for each entry. If the delegate returns the value 
+    /// false, the entry index is returned, otherwise it is ignored and the previous entry is
+    /// processed.</param>
+    public VEntryEnumerator(
+                VDareSequence sequence, 
                 bool forward=true,
-                Func<EarlEntryIndex, bool>? process=null
+                Func<VDareEntryIndex, bool>? process=null
                 ) {
         Sequence = sequence;
         Forward = forward;
@@ -103,7 +123,7 @@ public class EarlEntryEnumerator : IEnumerator<EarlEntryIndex> , IEnumerable<Ear
         }
 
     /// <inheritdoc/>
-    public EarlEntryIndex? Current { get; set; }
+    public VDareEntryIndex? Current { get; set; }
     object IEnumerator.Current => Current;
 
 
@@ -142,18 +162,20 @@ public class EarlEntryEnumerator : IEnumerator<EarlEntryIndex> , IEnumerable<Ear
     #endregion
     #region -- Implement IEnumerable
     /// <inheritdoc/>
-    public IEnumerator<EarlEntryIndex> GetEnumerator() => this;
+    public IEnumerator<VDareEntryIndex> GetEnumerator() => this;
 
     /// <inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator(); 
     #endregion
     }
 
-public class EarlEntryEnumerator<T> : IEnumerator<EarlEntryIndex<T>>, IEnumerable<EarlEntryIndex<T>>
+/// <summary>Untyped enumerator for catalog index entries of type <typeparamref name="T"/>.</summary>
+/// <typeparam name="T"></typeparam>
+public class VEntryEnumerator<T> : IEnumerator<VDareEntryIndex<T>>, IEnumerable<VDareEntryIndex<T>>
         where T : JsonObject {
-    EarlSequence Sequence { get; }
+    VDareSequence Sequence { get; }
     bool Forward { get; }
-    Func<EarlEntryIndex<T>, bool>? Process { get; }
+    Func<VDareEntryIndex<T>, bool>? Process { get; }
 
     #region -- Implement IDispose
     /// <inheritdoc/>
@@ -165,10 +187,16 @@ public class EarlEntryEnumerator<T> : IEnumerator<EarlEntryIndex<T>>, IEnumerabl
     /// <summary>Default constructor, return an enumerator on the sequence
     /// <paramref name="sequence"/>. This is also an enumerable returning itself.</summary>
     /// <param name="sequence">The sequence to enumerate.</param>
-    public EarlEntryEnumerator(
-                EarlSequence sequence,
+    /// <param name="forward">If true, enumerate in the forward direction,
+    /// otherwise enumerate in reverse.</param>
+    /// <param name="process">Processing delegate, if present and the value of <paramref name="forward"/>
+    /// is false, the delegate is executed for each entry. If the delegate returns the value 
+    /// false, the entry index is returned, otherwise it is ignored and the previous entry is
+    /// processed.</param>
+    public VEntryEnumerator(
+                VDareSequence sequence,
                 bool forward = true,
-                Func<EarlEntryIndex<T>, bool>? process = null
+                Func<VDareEntryIndex<T>, bool>? process = null
                 ) {
         Sequence = sequence;
         Forward = forward;
@@ -177,7 +205,7 @@ public class EarlEntryEnumerator<T> : IEnumerator<EarlEntryIndex<T>>, IEnumerabl
         }
 
     /// <inheritdoc/>
-    public EarlEntryIndex<T>? Current { get; set; }
+    public VDareEntryIndex<T>? Current { get; set; }
     object IEnumerator.Current => Current;
 
 
@@ -216,7 +244,7 @@ public class EarlEntryEnumerator<T> : IEnumerator<EarlEntryIndex<T>>, IEnumerabl
     #endregion
     #region -- Implement IEnumerable
     /// <inheritdoc/>
-    public IEnumerator<EarlEntryIndex<T>> GetEnumerator() => this;
+    public IEnumerator<VDareEntryIndex<T>> GetEnumerator() => this;
 
     /// <inheritdoc/>
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

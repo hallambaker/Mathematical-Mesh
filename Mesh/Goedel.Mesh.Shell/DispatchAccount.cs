@@ -113,8 +113,7 @@ public partial class Shell {
         var contextUser = MeshHost.ConfigureMeshAsync(accountID, localname, dnsHandle).Sync();
 
         if (dnsHandle is not null) {
-
-            contextUser.BindContactHandle(dnsHandle);
+            contextUser.BindContactHandle(dnsHandle).Sync();
             }
 
         return new ResultCreateAccount() {

@@ -21,8 +21,8 @@
 #endregion
 namespace Goedel.Cryptography.Dare;
 
-/// <summary>Debugging version of <see cref="EarlStream"/>, emits diagnostic information.</summary>
-public class EarlStreamDebug : EarlStream {
+/// <summary>Debugging version of <see cref="VDareStream"/>, emits diagnostic information.</summary>
+public class EarlStreamDebug : VDareStream {
 
 
     EarlStreamDebug(

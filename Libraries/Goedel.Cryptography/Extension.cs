@@ -87,7 +87,7 @@ public static class ExtensionMethods {
     /// <param name="file">The file to digest.</param>
     /// <returns>The SHA3-512 digest of the contents of the file.</returns>
     public static byte[] Sha3_512(this string file) {
-        using var provider = new SHA3Managed(512);
+        using var provider = SHA3_512.Create();
         using var stream = file.OpenFileReadShared();
         return provider.ComputeHash(stream);
         }
@@ -99,7 +99,7 @@ public static class ExtensionMethods {
     /// <param name="file">The file to digest.</param>
     /// <returns>The SHA3-256 digest of the contents of the file.</returns>
     public static byte[] Sha3_256(this string file) {
-        using var provider = new SHA3Managed(256);
+        using var provider = SHA3_256.Create();
         using var stream = file.OpenFileReadShared();
         return provider.ComputeHash(stream);
         }

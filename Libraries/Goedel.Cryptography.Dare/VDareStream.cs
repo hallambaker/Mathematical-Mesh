@@ -21,8 +21,8 @@
 #endregion
 namespace Goedel.Cryptography.Dare;
 
-/// <summary>EARL stream reader/writer class.</summary>
-public class EarlStream : Disposable {
+/// <summary>DARE stream reader/writer class.</summary>
+public class VDareStream : Disposable {
 
     /// <summary>The underlying file stream.</summary>
     protected Stream Stream {
@@ -63,13 +63,13 @@ public class EarlStream : Disposable {
 
     /// <summary>Constructor, return a new instance with underlying stream <paramref name="stream"/>.</summary>
     /// <param name="stream">The stream to uas as a constructor.</param>
-    public EarlStream(Stream stream) {
+    public VDareStream(Stream stream) {
         Stream = stream;
         }
 
     /// <summary>Constructor, return a new instance reading from the data <paramref name="data"/>.</summary>
     /// <param name="data">The data to read.</param>
-    public EarlStream(byte[] data) {
+    public VDareStream(byte[] data) {
         stream = new MemoryStream(data);
         }
 
@@ -80,7 +80,7 @@ public class EarlStream : Disposable {
     /// <param name="fileAccess">Specify read, write or read/write access.(</param>
     /// <param name="fileShare">The file sharing mode.</param>
     /// <param name="stream">The stream to use.</param>
-    protected EarlStream(
+    protected VDareStream(
                 string fileName,
                 FileMode fileMode,
                 FileAccess fileAccess,
@@ -94,16 +94,16 @@ public class EarlStream : Disposable {
         }
 
     /// <summary>Create a new file with name <paramref name="fileName"/> and open an
-    /// <see cref="EarlStream"/> with type identifier <paramref name="typeIdentifier"/>.</summary>
+    /// <see cref="VDareStream"/> with type identifier <paramref name="typeIdentifier"/>.</summary>
     /// <param name="fileName">The file name.</param>
     /// <param name="typeIdentifier">The stream type identifier.</param>
-    /// <returns>The <see cref="EarlStream"/> created</returns>
-    public static EarlStream Create(
+    /// <returns>The <see cref="VDareStream"/> created</returns>
+    public static VDareStream Create(
                 string fileName,
                 byte[] typeIdentifier) {
         var fileStream = fileName.OpenFileNew();
 
-        var stream = new EarlStream(fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read, fileStream);
+        var stream = new VDareStream(fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read, fileStream);
         stream.WriteTypeIdentifier(typeIdentifier);
         return stream;
 
@@ -120,12 +120,12 @@ public class EarlStream : Disposable {
     //    FileShare fileShare) => new EarlStream(fileName, fileMode, fileAccess, fileShare);
 
 
-    public static EarlStream Open(
+    public static VDareStream Open(
                 string fileName,
                 byte[] typeIdentifier) {
         try {
             var fileStream = fileName.OpenFileReadWrite();
-            var stream = new EarlStream(fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read, fileStream);
+            var stream = new VDareStream(fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read, fileStream);
 
             return stream;
             }
@@ -136,22 +136,22 @@ public class EarlStream : Disposable {
 
 
 
-    /// <summary>Open the file <paramref name="fileName"/> to read as an <see cref="EarlStream"/>.</summary>
+    /// <summary>Open the file <paramref name="fileName"/> to read as an <see cref="VDareStream"/>.</summary>
     /// <param name="fileName">The file name.</param>
-    /// <returns>The <see cref="EarlStream"/> created</returns>
-    public static EarlStream OpenRead(
+    /// <returns>The <see cref="VDareStream"/> created</returns>
+    public static VDareStream OpenRead(
                 string fileName) => new(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
 
-    /// <summary>Open the file <paramref name="fileName"/> to write as an <see cref="EarlStream"/>.</summary>
+    /// <summary>Open the file <paramref name="fileName"/> to write as an <see cref="VDareStream"/>.</summary>
     /// <param name="fileName">The file name.</param>
-    /// <returns>The <see cref="EarlStream"/> created</returns>
-    public static EarlStream OpenWrite(
+    /// <returns>The <see cref="VDareStream"/> created</returns>
+    public static VDareStream OpenWrite(
             string fileName) => new (fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
 
-    /// <summary>Open the file <paramref name="fileName"/> to read and write as an <see cref="EarlStream"/>.</summary>
+    /// <summary>Open the file <paramref name="fileName"/> to read and write as an <see cref="VDareStream"/>.</summary>
     /// <param name="fileName">The file name.</param>
-    /// <returns>The <see cref="EarlStream"/> created</returns>
-    public static EarlStream OpenReadWrite(
+    /// <returns>The <see cref="VDareStream"/> created</returns>
+    public static VDareStream OpenReadWrite(
             string fileName) => new (fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
 
 
@@ -212,7 +212,7 @@ public class EarlStream : Disposable {
     /// <summary>Return the payload of <paramref name="index"/>.</summary>
     /// <param name="index">The entry index.</param>
     /// <returns>The payload bytes.</returns>
-    public byte[]? GetPayload(EarlEntryIndex index) {
+    public byte[]? GetPayload(VDareEntryIndex index) {
         if (index.PayloadLength == 0) {
             return null;
             }
@@ -402,7 +402,7 @@ public class EarlStream : Disposable {
     /// <param name="entry">The data to write.</param>
     /// <param name="frame">The frame number.</param>
     /// <returns>The entry index.</returns>
-    public EarlEntryIndex Append(
+    public VDareEntryIndex Append(
             EarlEnvelope entry, 
             long? frame) {
 
@@ -427,7 +427,7 @@ public class EarlStream : Disposable {
     /// <param name="obj">The payload.</param>
     /// <param name="trailer">The trailer.</param>
     /// <returns>The entry index.</returns>
-    public EarlEntryIndex Append(
+    public VDareEntryIndex Append(
         Unprotected unprotected,
         ContentMeta contentMeta,
             JsonObject obj,
@@ -445,7 +445,7 @@ public class EarlStream : Disposable {
     /// <param name="payloadBytes">The payload.</param>
     /// <param name="trailer">The trailer.</param>
     /// <returns>The entry index.</returns>
-    public EarlEntryIndex Append(
+    public VDareEntryIndex Append(
             Unprotected unprotected,
             ContentMeta contentMeta,
             byte[] payloadBytes,
@@ -517,7 +517,7 @@ public class EarlStream : Disposable {
     /// <param name="contentMeta">The content metadata.</param>
     /// <param name="trailerLengthIn">Length of the trailer in bytes.</param>
     /// <returns>Entry index.</returns>
-    public EarlEntryIndex AppendEntryStart(
+    public VDareEntryIndex AppendEntryStart(
                 long payloadLengthIn,
                 Unprotected unprotected,
                 ContentMeta contentMeta,
@@ -527,7 +527,7 @@ public class EarlStream : Disposable {
         var (_, entryStart, length, payloadStart) =
             AppendEntryStartInner(payloadLengthIn, unprotected, contentMeta, trailerLengthIn);
 
-        return new EarlEntryIndex(
+        return new VDareEntryIndex(
                 0, entryStart, length, payloadStart, payloadLength);
         }
 
@@ -567,7 +567,7 @@ public class EarlStream : Disposable {
 
     /// <summary>Read the index information for the next frame in the field.</summary>
     /// <returns>The index record.</returns>
-    public EarlEntryIndex? ReadIndexNext() {
+    public VDareEntryIndex? ReadIndexNext() {
         if (EOF) {
             return null;
             }
@@ -589,7 +589,7 @@ public class EarlStream : Disposable {
 
         var envelope = new EarlEnvelope(unprotected, contentMeta, trailer);
 
-        return new EarlEntryIndex(frame, start, (long)framelength, payloadStart, payloadLength) {
+        return new VDareEntryIndex(frame, start, (long)framelength, payloadStart, payloadLength) {
             EarlEnvelope = envelope,
             Id = contentMeta?.UniqueId
             };
@@ -597,7 +597,7 @@ public class EarlStream : Disposable {
 
     /// <summary>Read the index information for the previous frame in the field.</summary>
     /// <returns>The index record.</returns>
-    public EarlEntryIndex? ReadIndexPrevious(long last = 0) {
+    public VDareEntryIndex? ReadIndexPrevious(long last = 0) {
         if (Stream.Position <= last) {
             return null;
             }
@@ -615,7 +615,7 @@ public class EarlStream : Disposable {
     /// <summary>Read the index information for the next frame in the field.</summary>
     /// <typeparam name="T">The type of the underlying data.</typeparam>
     /// <returns>The index record.</returns>
-    public EarlEntryIndex<T>? ReadIndexNext<T>() where T : JsonObject {
+    public VDareEntryIndex<T>? ReadIndexNext<T>() where T : JsonObject {
         if (EOF) {
             return null;
             }
@@ -639,7 +639,7 @@ public class EarlStream : Disposable {
 
         var envelope = new EarlEnvelope(unprotected, contentMeta, trailer);
 
-        return new EarlEntryIndex<T>(frame, start, (long)framelength, payloadStart, payloadLength) {
+        return new VDareEntryIndex<T>(frame, start, (long)framelength, payloadStart, payloadLength) {
             EarlEnvelope = envelope,
             Id = contentMeta?.UniqueId
             };
@@ -648,7 +648,7 @@ public class EarlStream : Disposable {
     /// <summary>Read the index information for the previous frame in the field.</summary>
     /// <typeparam name="T">The type of the underlying data.</typeparam>
     /// <returns>The index record.</returns>
-    public EarlEntryIndex<T>? ReadIndexPrevious<T>(long last=0) where T : JsonObject {
+    public VDareEntryIndex<T>? ReadIndexPrevious<T>(long last=0) where T : JsonObject {
         if (Stream.Position <= last) {
             return null;
             }

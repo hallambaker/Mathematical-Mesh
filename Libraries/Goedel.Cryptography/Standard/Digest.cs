@@ -352,7 +352,8 @@ public class CryptoProviderSHA3_256 : CryptoProviderDigest {
     /// <summary>
     /// Hash algorithm provider.
     /// </summary>
-    public override HashAlgorithm HashAlgorithm() => new SHA3Managed(256);
+    public override HashAlgorithm HashAlgorithm() => SHA3_256.Create();
+        //new SHA3Managed(256);
 
     /// <summary>
     /// Register this provider in the specified crypto catalog. A provider may 
@@ -404,7 +405,8 @@ public class CryptoProviderSHA3_512 : CryptoProviderDigest {
     /// <summary>
     /// Hash algorithm provider.
     /// </summary>
-    public override HashAlgorithm HashAlgorithm() => new SHA3Managed(512);
+    public override HashAlgorithm HashAlgorithm() => SHA3_512.Create();
+    //=> new SHA3Managed(512);
 
     /// <summary>
     /// Register this provider in the specified crypto catalog. A provider may 
@@ -432,102 +434,102 @@ public class CryptoProviderSHA3_512 : CryptoProviderDigest {
 
 
 
-/// <summary>
-/// Provider for the SHA-3 512 bit Hash Algorithm
-/// </summary>
-public class CryptoProviderSHAKE128 : CryptoProviderDigest {
+///// <summary>
+///// Provider for the SHA-3 512 bit Hash Algorithm
+///// </summary>
+//public class CryptoProviderSHAKE128 : CryptoProviderDigest {
 
 
-    static readonly CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHAKE_128;
+//    static readonly CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHAKE_128;
 
-    /// <summary>
-    /// The CryptoAlgorithmID Identifier.
-    /// </summary>
-    public override CryptoAlgorithmId CryptoAlgorithmID => _CryptoAlgorithmID;
+//    /// <summary>
+//    /// The CryptoAlgorithmID Identifier.
+//    /// </summary>
+//    public override CryptoAlgorithmId CryptoAlgorithmID => _CryptoAlgorithmID;
 
-    /// <summary>
-    /// Return a CryptoAlgorithm structure with properties describing this provider.
-    /// </summary>
-    public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
-
-
-    static readonly CryptoAlgorithm _CryptoAlgorithm = new(
-                _CryptoAlgorithmID, _AlgorithmClass, Factory, 128);
-
-    /// <summary>
-    /// Hash algorithm provider.
-    /// </summary>
-    public override HashAlgorithm HashAlgorithm() => new SHAKE128(256);
-
-    /// <summary>
-    /// Register this provider in the specified crypto catalog. A provider may 
-    /// register itself multiple times to describe different configurations that 
-    /// are supported.
-    /// </summary>
-    /// <param name="Catalog">The catalog to register the provider to, if
-    /// null, the default catalog is used.</param>
-    /// <returns>Description of the principal algorithm registration.</returns>
-    public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
-        Catalog ??= CryptoCatalog.Default;
-        return Catalog.Add(_CryptoAlgorithm);
-        }
-
-    /// <summary>
-    /// Default output size.
-    /// </summary>
-    public override int Size => 128;
+//    /// <summary>
+//    /// Return a CryptoAlgorithm structure with properties describing this provider.
+//    /// </summary>
+//    public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
 
-    private static CryptoProvider Factory(int KeySize, CryptoAlgorithmId DigestAlgorithm) => new CryptoProviderSHAKE128();
+//    static readonly CryptoAlgorithm _CryptoAlgorithm = new(
+//                _CryptoAlgorithmID, _AlgorithmClass, Factory, 128);
 
-    }
+//    /// <summary>
+//    /// Hash algorithm provider.
+//    /// </summary>
+//    public override HashAlgorithm HashAlgorithm() => new SHAKE128(256);
+
+//    /// <summary>
+//    /// Register this provider in the specified crypto catalog. A provider may 
+//    /// register itself multiple times to describe different configurations that 
+//    /// are supported.
+//    /// </summary>
+//    /// <param name="Catalog">The catalog to register the provider to, if
+//    /// null, the default catalog is used.</param>
+//    /// <returns>Description of the principal algorithm registration.</returns>
+//    public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
+//        Catalog ??= CryptoCatalog.Default;
+//        return Catalog.Add(_CryptoAlgorithm);
+//        }
+
+//    /// <summary>
+//    /// Default output size.
+//    /// </summary>
+//    public override int Size => 128;
 
 
-/// <summary>
-/// Provider for the SHA-3 512 bit Hash Algorithm
-/// </summary>
-public class CryptoProviderSHAKE256 : CryptoProviderDigest {
+//    private static CryptoProvider Factory(int KeySize, CryptoAlgorithmId DigestAlgorithm) => new CryptoProviderSHAKE128();
+
+//    }
 
 
-    static readonly CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHAKE_256;
-
-    /// <summary>
-    /// The CryptoAlgorithmID Identifier.
-    /// </summary>
-    public override CryptoAlgorithmId CryptoAlgorithmID => _CryptoAlgorithmID;
-
-    /// <summary>
-    /// Return a CryptoAlgorithm structure with properties describing this provider.
-    /// </summary>
-    public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
+///// <summary>
+///// Provider for the SHA-3 512 bit Hash Algorithm
+///// </summary>
+//public class CryptoProviderSHAKE256 : CryptoProviderDigest {
 
 
-    static readonly CryptoAlgorithm _CryptoAlgorithm = new(
-                _CryptoAlgorithmID, _AlgorithmClass, Factory, 256);
+//    static readonly CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHAKE_256;
 
-    /// <summary>
-    /// Hash algorithm provider.
-    /// </summary>
-    public override HashAlgorithm HashAlgorithm() => new SHAKE256(512);
+//    /// <summary>
+//    /// The CryptoAlgorithmID Identifier.
+//    /// </summary>
+//    public override CryptoAlgorithmId CryptoAlgorithmID => _CryptoAlgorithmID;
 
-    /// <summary>
-    /// Register this provider in the specified crypto catalog. A provider may 
-    /// register itself multiple times to describe different configurations that 
-    /// are supported.
-    /// </summary>
-    /// <param name="Catalog">The catalog to register the provider to, if
-    /// null, the default catalog is used.</param>
-    /// <returns>Description of the principal algorithm registration.</returns>
-    public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
-        Catalog ??= CryptoCatalog.Default;
-        return Catalog.Add(_CryptoAlgorithm);
-        }
+//    /// <summary>
+//    /// Return a CryptoAlgorithm structure with properties describing this provider.
+//    /// </summary>
+//    public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
-    /// <summary>
-    /// Default output size.
-    /// </summary>
-    public override int Size => 256;
 
-    private static CryptoProvider Factory(int KeySize, CryptoAlgorithmId DigestAlgorithm) => new CryptoProviderSHAKE256();
+//    static readonly CryptoAlgorithm _CryptoAlgorithm = new(
+//                _CryptoAlgorithmID, _AlgorithmClass, Factory, 256);
 
-    }
+//    /// <summary>
+//    /// Hash algorithm provider.
+//    /// </summary>
+//    public override HashAlgorithm HashAlgorithm() => new SHAKE256(512);
+
+//    /// <summary>
+//    /// Register this provider in the specified crypto catalog. A provider may 
+//    /// register itself multiple times to describe different configurations that 
+//    /// are supported.
+//    /// </summary>
+//    /// <param name="Catalog">The catalog to register the provider to, if
+//    /// null, the default catalog is used.</param>
+//    /// <returns>Description of the principal algorithm registration.</returns>
+//    public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
+//        Catalog ??= CryptoCatalog.Default;
+//        return Catalog.Add(_CryptoAlgorithm);
+//        }
+
+//    /// <summary>
+//    /// Default output size.
+//    /// </summary>
+//    public override int Size => 256;
+
+//    private static CryptoProvider Factory(int KeySize, CryptoAlgorithmId DigestAlgorithm) => new CryptoProviderSHAKE256();
+
+//    }

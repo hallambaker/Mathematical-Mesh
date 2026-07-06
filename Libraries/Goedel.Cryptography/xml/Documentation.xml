@@ -2615,59 +2615,11 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:Goedel.Cryptography.Algorithms.SHA3Managed">
-            <summary>
-            Computes the <see cref="T:System.Security.Cryptography.SHA3" /> hash algorithm for the input data using the managed library.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHA3Managed.#ctor(System.Int32)">
-            <summary>
-            SHA-3 implementation supporting 224, 256, 384 and 512 bits
-            </summary>
-            <param name="hashBitLength"></param>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHA3Managed.Create(System.Int32)">
-            <summary>
-            Factory method returning a provider for hash length <paramref name="hashBitLength"/>/
-            </summary>
-            <param name="hashBitLength">Number of bits.</param>
-            <returns>The provider.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHA3Managed.Process512(System.Byte[])">
-            <summary>
-            Convenience routine to preform one stop processing.
-            </summary>
-            <param name="input">The input data</param>
-            
-            <returns>The digest value</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHA3Managed.Process256(System.Byte[])">
-            <summary>
-            Convenience routine to preform one stop processing.
-            </summary>
-            <param name="input">The input data.</param>
-            <returns>The digest value</returns>
-        </member>
         <member name="T:Goedel.Cryptography.Algorithms.SHAKE128">
             <summary>
             SHAKE128 provider. This digest class supports varying bit size outputs
             in 64 bit increments with a work factor of 2^128
             </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHAKE128.#ctor(System.Int32)">
-            <summary>
-            SHAKE128 provider. This digest class supports varying bit size outputs
-            in 64 bit increments with a work factor of 2^128
-            </summary>
-            <param name="hashBitLength">The number of output bits</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHAKE128.Process(System.Byte[],System.Int32)">
-            <summary>
-            Convenience routine to preform one stop processing.
-            </summary>
-            <param name="input">The input data</param>
-            <param name="hashBitLength">The number of output bits</param>
-            <returns>The digest value</returns>
         </member>
         <member name="M:Goedel.Cryptography.Algorithms.SHAKE128.GetBytes(System.Int32,System.Byte[][])">
             <summary>
@@ -2687,29 +2639,6 @@
             in 64 bit increments with a work factor of 2^256
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHAKE256.#ctor(System.Int32)">
-            <summary>
-            SHAKE128 provider. This digest class supports varying bit size outputs
-            in 64 bit increments with a work factor of 2^256
-            </summary>
-            <param name="hashBitLength">The number of output bits</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHAKE256.HashData(System.Byte[],System.Int32)">
-            <summary>
-            Convenience routine to preform one stop processing.
-            </summary>
-            <param name="input">The input data</param>
-            <param name="hashByteLength">The number of output bytes</param>
-            <returns>The digest value</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHAKE256.Process(System.Byte[],System.Int32)">
-            <summary>
-            Convenience routine to preform one stop processing.
-            </summary>
-            <param name="input">The input data</param>
-            <param name="hashBitLength">The number of output bits</param>
-            <returns>The digest value</returns>
-        </member>
         <member name="M:Goedel.Cryptography.Algorithms.SHAKE256.GetBytes(System.Int32,System.Byte[][])">
             <summary>
             Perform a SHAKE256 operation of the concatenated inputs
@@ -2721,101 +2650,6 @@
             <param name="input">The input data.</param>
             <returns>Byte array of length <paramref name="length"/> bytes containing
             the result.</returns>
-        </member>
-        <member name="T:Goedel.Cryptography.Algorithms.SHAKEExtended">
-            <summary>
-            Extended version of SHA3 used to expose internals of the KeccakR transformation
-            used in Kyber, Dilithium, etc.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Algorithms.SHAKEExtended.HashRate">
-            <summary>The hash rate in bytes.</summary> 
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHAKEExtended.#ctor(System.Int32)">
-            <summary>
-            SHAKE128 provider. This digest class supports varying bit size outputs
-            in 64 bit increments with a work factor of 2^128
-            </summary>
-            <param name="hashBitLength">The number of output bits</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHAKEExtended.Shake128">
-            <summary>
-            Factory method, return new SHAKE128 provider.
-            </summary>
-            <returns>The provider.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHAKEExtended.Shake256">
-            <summary>
-            Factory method, return new SHAKE256 provider.
-            </summary>
-            <returns>The provider.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHAKEExtended.Absorb(System.Byte[])">
-            <summary>
-            Transform the input <paramref name="bytes"/> and return the Keccak state vector
-            using the modified Kyber SHAKE128 absorb function.
-            </summary>
-            <param name="bytes">The input bytes.</param>
-            <returns>The resulting Keccak state vector.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHAKEExtended.Absorb(System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            Perform the Kyber Absorb function using the seed value <paramref name="seed"/>
-            for the element <paramref name="x"/>, <paramref name="y"/>.
-            </summary>
-            <param name="seed">The seed value</param>
-            <param name="x">The x value</param>
-            <param name="y">The y value</param>
-            <returns>The state array (for now).</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHAKEExtended.AbsorbD(System.Byte[],System.Int32)">
-            <summary>
-            Perform the Kyber Absorb function using the seed value <paramref name="seed"/>
-            for the element <paramref name="x"/>.
-            </summary>
-            <param name="seed">The seed value</param>
-            <param name="x">The x value</param>
-            <returns>The state array (for now).</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.SHAKEExtended.Squeeze(System.Byte[],System.Int32,System.Int32)">
-            <summary>
-            Perform the Keccak squeeze function on the current state vector to return
-            <paramref name="nblocks"/> of data in <paramref name="buffer"/> starting
-            at byte <paramref name="index"/>/
-            </summary>
-            <param name="buffer">The output buffer.</param>
-            <param name="nblocks">The number of output blocks to generate.</param>
-            <param name="index">The first byte to write.</param>
-        </member>
-        <member name="T:Goedel.Cryptography.Algorithms.Extensions">
-            <summary>
-            Extension class with convenience methods.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.Extensions.GetBufferFingerprint(System.Byte[])">
-            <summary>
-            
-            </summary>
-            <param name="buffer"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.Extensions.DumpBufferFingerprint(System.Byte[],System.String,System.IO.TextWriter)">
-            <summary>
-            Output SHAKE128 digest of <paramref name="buffer"/> in hexadecimal.
-            </summary>
-            <param name="buffer">The buffer to output.</param>
-            <param name="tag">Optional descriptive tag.</param>
-            <param name="output">Output to write the result to.</param>
-        </member>
-        <member name="M:Goedel.Cryptography.Algorithms.Extensions.DumpBufferHex(System.Byte[],System.String,System.Int32,System.Int32,System.IO.TextWriter)">
-            <summary>
-            Output selected byte values of <paramref name="buffer"/> in hexadecimal.
-            </summary>
-            <param name="buffer">The buffer to write.</param>
-            <param name="tag">Optional descriptive tag.</param>
-            <param name="length">Length to be written (if &lt;0, the entire buffer length)</param>
-            <param name="first">First byte to be written</param>
-            <param name="output">Output to write the result to.</param>
         </member>
         <member name="T:Goedel.Cryptography.Algorithms.ShortBlockPermute">
             <summary>
@@ -3687,15 +3521,6 @@
             specified by <paramref name="cryptoAlgorithmID"/>.
             </summary>
             <param name="cryptoAlgorithmID">The algorithm.</param>
-            <returns>The digest provider.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.CryptoStreamFromID.CreateShake(Goedel.Cryptography.CryptoAlgorithmId,System.Int32)">
-            <summary>
-            Return a shake provider for the algorithm 
-            specified by <paramref name="cryptoAlgorithmID"/>.
-            </summary>
-            <param name="cryptoAlgorithmID">The algorithm.</param>
-            <param name="hashBitLength">The number of output bits to generate.</param>
             <returns>The digest provider.</returns>
         </member>
         <member name="M:Goedel.Cryptography.CryptoStreamFromID.GetDigestOfFile(System.String,Goedel.Cryptography.CryptoAlgorithmId)">
@@ -11989,76 +11814,6 @@
             <returns>Description of the principal algorithm registration.</returns>
         </member>
         <member name="P:Goedel.Cryptography.Standard.CryptoProviderSHA3_512.Size">
-            <summary>
-            Default output size.
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Standard.CryptoProviderSHAKE128">
-            <summary>
-            Provider for the SHA-3 512 bit Hash Algorithm
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Standard.CryptoProviderSHAKE128.CryptoAlgorithmID">
-            <summary>
-            The CryptoAlgorithmID Identifier.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Standard.CryptoProviderSHAKE128.CryptoAlgorithm">
-            <summary>
-            Return a CryptoAlgorithm structure with properties describing this provider.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Standard.CryptoProviderSHAKE128.HashAlgorithm">
-            <summary>
-            Hash algorithm provider.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Standard.CryptoProviderSHAKE128.Register(Goedel.Cryptography.CryptoCatalog)">
-            <summary>
-            Register this provider in the specified crypto catalog. A provider may 
-            register itself multiple times to describe different configurations that 
-            are supported.
-            </summary>
-            <param name="Catalog">The catalog to register the provider to, if
-            null, the default catalog is used.</param>
-            <returns>Description of the principal algorithm registration.</returns>
-        </member>
-        <member name="P:Goedel.Cryptography.Standard.CryptoProviderSHAKE128.Size">
-            <summary>
-            Default output size.
-            </summary>
-        </member>
-        <member name="T:Goedel.Cryptography.Standard.CryptoProviderSHAKE256">
-            <summary>
-            Provider for the SHA-3 512 bit Hash Algorithm
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Standard.CryptoProviderSHAKE256.CryptoAlgorithmID">
-            <summary>
-            The CryptoAlgorithmID Identifier.
-            </summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Standard.CryptoProviderSHAKE256.CryptoAlgorithm">
-            <summary>
-            Return a CryptoAlgorithm structure with properties describing this provider.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Standard.CryptoProviderSHAKE256.HashAlgorithm">
-            <summary>
-            Hash algorithm provider.
-            </summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Standard.CryptoProviderSHAKE256.Register(Goedel.Cryptography.CryptoCatalog)">
-            <summary>
-            Register this provider in the specified crypto catalog. A provider may 
-            register itself multiple times to describe different configurations that 
-            are supported.
-            </summary>
-            <param name="Catalog">The catalog to register the provider to, if
-            null, the default catalog is used.</param>
-            <returns>Description of the principal algorithm registration.</returns>
-        </member>
-        <member name="P:Goedel.Cryptography.Standard.CryptoProviderSHAKE256.Size">
             <summary>
             Default output size.
             </summary>

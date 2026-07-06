@@ -21,6 +21,8 @@
 #endregion
 
 
+using System.CodeDom.Compiler;
+
 using Goedel.Utilities;
 
 namespace Goedel.Protocol;
@@ -46,8 +48,13 @@ public class JSONDebugWriter : JsonWriter {
     /// Create a new JSON Writer using the specified output buffer. If the buffer has
     /// an output stream defined, text will be written to the stream.
     /// </summary>
-    /// <param name="Output">The output stream.</param>
-    public JSONDebugWriter(MemoryStream Output) => this.Output = Output;
+    /// <param name="output">The output stream.</param>
+    /// <param name="indent">Indent level.</param>
+    public JSONDebugWriter(MemoryStream output, int indent = 0) {
+        Output = output;
+        Indent = indent;
+
+        }
 
 
     int OutputCol = 0;
@@ -119,7 +126,7 @@ public class JSONDebugWriter : JsonWriter {
         Output.Write("\"");
         }
 
-
+    /// <summary>Write ellipsis to indicate code is elided.</summary>
     public void WriteEllipsis() {
         NewLine();
         Output.Write("...");
@@ -160,23 +167,31 @@ public class JSONDebugWriter : JsonWriter {
         }
 
     /// <summary>
-    /// Convert a JSONObject to redacted form.
+    /// Convert <paramref name="json"/> to a string containing redacted JSON encoding..
     /// </summary>
     /// <param name="json">The object to convert</param>
     /// <param name="tagged">If true, the object is wrapped with its type tag.</param>
-    /// <returns>The input as a redacted JSON encoded string.</returns>
-    public static string Write(JsonObject json, bool tagged = true) {
+    /// <param name="indent">Indentation level to carry in.</param>
+    /// <returns><paramref name="json"/> as a redacted JSON encoded string.</returns>
+    public static string Write(JsonObject json, bool tagged = true, int indent = 0) {
 
         if (json == null) {
             return "$$$$ Empty $$$$";
             }
 
         var Buffer = new MemoryStream();
-        var JSONWriter = new JSONDebugWriter(Buffer);
+        var JSONWriter = new JSONDebugWriter(Buffer, indent);
         json.Serialize(JSONWriter, tagged);
         return Buffer.ToArray().ToUTF8();
         }
 
+    /// <summary>
+    /// Write object <paramref name="json"/> in redacted form to <paramref name="output"/>
+    /// </summary>
+    /// <param name="json">The object to convert</param>
+    /// <param name="tagged">If true, the object is wrapped with its type tag.</param>
+    /// <param name="output">The output stream.</param>
+    /// <returns>The input as a redacted JSON encoded string.</returns>
     public static void WriteLine(TextWriter output, JsonObject json, bool tagged = false) {
         output.WriteLine(Write(json, tagged));
         }

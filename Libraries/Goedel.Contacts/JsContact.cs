@@ -84,7 +84,7 @@ public partial class JsContact {
         Name name = null;
         if (first != null | last != null) {
             name = new() {
-                Components = new()
+                Components = []
                 };
             }
         if (first != null) {

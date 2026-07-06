@@ -22,7 +22,7 @@
 namespace Goedel.Cryptography.Dare;
 
 /// <summary>
-/// Record returning all the information relating to construction of an EARFL.
+/// Record returning all the information relating to construction of an EARL.
 /// </summary>
 public record EarlSet {
 
@@ -84,7 +84,7 @@ public record EarlSet {
             string? authority = null,
             string scheme = "earl",
                 int precision = 140) : this(
-                 EarlEnvelopeWriter.GetBytes(payload, contentMeta), authority, scheme, precision) {
+                 VDareEnvelopeWriter.GetBytes(payload, contentMeta), authority, scheme, precision) {
         }
 
     /// <summary>
@@ -111,7 +111,7 @@ public record EarlSet {
         //var envelope = writer.End(signers);
 
 
-        var envelope = EarlEnvelopeWriter.GetBytes(payload, contentMeta, signers);
+        var envelope = VDareEnvelopeWriter.GetBytes(payload, contentMeta, signers);
 
 
         (Earl, Locator, Ciphertext) = Udf.Earl(envelope);
@@ -137,13 +137,16 @@ public record EarlSet {
     }
 
 
-
+/// <summary>EARL Envelope context.</summary>
 public record EarlEnvelopeContext {
 
+    /// <summary>Epiry time.</summary>
     public DateTime? Expire { get; set; } = null;
 
+    /// <summary>Optional associated PIN for authenticating a response.</summary>
     public string? Pin { get; set; } = null;
 
+    /// <summary>The set of signature keys.</summary>
     public IEnumerable<string>? SigningKeys { get; set; } = null;
 
 

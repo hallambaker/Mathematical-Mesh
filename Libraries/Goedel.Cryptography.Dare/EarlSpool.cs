@@ -26,16 +26,16 @@ using static Goedel.Discovery.ServiceAddressSplitLex;
 
 namespace Goedel.Cryptography.Dare;
 
-public class EarlSpool : EarlSequence {
+public class EarlSpool : VDareSequence {
 
     protected EarlSpool(
-        EarlStream stream) : base(stream) {
+        VDareStream stream) : base(stream) {
         }
 
 
     public static EarlSpool<T> Create<T>(
     string fileName) where T : JsonObject {
-        var stream = EarlStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
+        var stream = VDareStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
         var result = new EarlSpool<T>(stream);
 
         result.WriteInitial();
@@ -46,7 +46,7 @@ public class EarlSpool : EarlSequence {
     public static EarlSpool<T> Open<T>(
             string fileName) where T : JsonObject {
 
-        var stream = EarlStream.OpenReadWrite(fileName);
+        var stream = VDareStream.OpenReadWrite(fileName);
         var spool = new EarlSpool<T>(stream);
         spool.ReadInitial();
 
@@ -64,10 +64,10 @@ public class EarlSpool<T> : EarlSpool where T : JsonObject {
     public Dictionary<string, SequenceEvent> StatusDictionary { get; } = [];
 
     internal EarlSpool(
-                EarlStream stream) : base(stream) {
+                VDareStream stream) : base(stream) {
         }
 
-    public EarlEntryIndex Add(T item,
+    public VDareEntryIndex Add(T item,
                 SequenceEvent state = SequenceEvent.Initial) {
         var contentMeta = new ContentMeta() {
             UniqueId = item._PrimaryKey,
@@ -77,7 +77,7 @@ public class EarlSpool<T> : EarlSpool where T : JsonObject {
         return Append(item, contentMeta);
         }
 
-    public EarlEntryIndex Update(List<EntryUpdate> updates) {
+    public VDareEntryIndex Update(List<EntryUpdate> updates) {
         var contentMeta = new ContentMeta() {
             UniqueId = null,
             Event = ProtocolConstants.SequenceEventUpdatesTag
@@ -98,7 +98,7 @@ public class EarlSpool<T> : EarlSpool where T : JsonObject {
 
 
 
-    public T GetValue(EarlEntryIndex index) {
+    public T GetValue(VDareEntryIndex index) {
         var result = GetValue<T>(index);
         if (StatusDictionary.TryGetValue(result._PrimaryKey, out var value)) {
             result._State = value;
@@ -110,7 +110,7 @@ public class EarlSpool<T> : EarlSpool where T : JsonObject {
         return result;
         }
 
-    public bool ProcessEntry(EarlEntryIndex entry) {
+    public bool ProcessEntry(VDareEntryIndex entry) {
         if (entry.EarlEnvelope.SignedHeader.UniqueId is not null) {
             return false;
             }
@@ -138,8 +138,8 @@ public class EarlSpool<T> : EarlSpool where T : JsonObject {
         }
 
 
-    public virtual IEnumerable<EarlEntryIndex> EntriesReverse() => 
-        new EarlEntryEnumerator(this, false, ProcessEntry);
+    public virtual IEnumerable<VDareEntryIndex> EntriesReverse() => 
+        new VEntryEnumerator(this, false, ProcessEntry);
 
 
 

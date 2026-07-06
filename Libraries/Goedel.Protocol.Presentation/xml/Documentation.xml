@@ -12,6 +12,9 @@
             Client connection class. Tracks the state of a client connection.
             </summary>
         </member>
+        <member name="P:Goedel.Protocol.Presentation.ConnectionInitiator.DnsClient">
+            <summary>The DNS client to use.</summary>
+        </member>
         <member name="P:Goedel.Protocol.Presentation.ConnectionInitiator.ClientKeyIn">
             <inheritdoc/>
         </member>
@@ -1983,6 +1986,9 @@
             <summary>
             The client side of an RDP transactional stream.
             </summary>
+        </member>
+        <member name="P:Goedel.Protocol.Presentation.RudStreamClient.DnsClient">
+            <summary>The DNS client to use.</summary>
         </member>
         <member name="P:Goedel.Protocol.Presentation.RudStreamClient.TargetAccount">
             <inheritdoc/>

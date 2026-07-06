@@ -117,7 +117,7 @@ public partial class PresenceFromService : Response {
     /// Convert the message to plaintext bytes.
     /// </summary>
     /// <returns></returns>
-    public List<byte[]> ToBytes() {
+    public List<byte[]> ToPacketBytes() {
 
         //Array.Copy (token, result, token.Length);
 

@@ -86,7 +86,7 @@
 
 	Structure ResultFileDare
 		Inherits		ResultFile
-		Struct Enveloped Envelope
+		Struct Enveloped Enveloped
 
 
 

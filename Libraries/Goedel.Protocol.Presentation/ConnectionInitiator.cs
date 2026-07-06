@@ -30,7 +30,8 @@ public partial class ConnectionInitiator : RudConnection {
 
     #region // Properties
 
-    public DnsClient DnsClient { get; init; } = new DnsClientUDP();
+    /// <summary>The DNS client to use.</summary>
+    public DnsClient DnsClient { get; init; } = DnsClient.Default;
 
     ///<inheritdoc/>
     public override byte[] ClientKeyIn => ClientKeyHostToClient;

@@ -1253,7 +1253,7 @@ public abstract partial class ContextAccount : Disposable, IKeyCollection, IMesh
             contentMeta.ReceiptProof = proof;
             }
 
-        var enveloped = EarlEnvelopeWriter.GetBytes(data, contentMeta);
+        var enveloped = VDareEnvelopeWriter.GetBytes(data, contentMeta);
 
 
         var(earl, _, ciphertext) = Udf.Earl(enveloped);

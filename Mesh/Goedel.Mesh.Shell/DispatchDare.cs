@@ -95,7 +95,7 @@ public partial class Shell {
             Verified = true, // Hack: Should test here!!!!
             TotalBytes = result.PayloadLength,
             Filename = inputFile,
-            Envelope = result
+            Enveloped = result
             };
         }
 

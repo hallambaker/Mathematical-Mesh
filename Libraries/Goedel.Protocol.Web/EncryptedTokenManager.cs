@@ -68,9 +68,9 @@ public class EncryptedTokenManager {
 
         // Construct a secure IV
         var preIv = Platform.GetRandomBytes(NonceLength);
-        var nonce = SHAKE128.Process(plaintext, NonceLength*16);
+        var nonce = Shake128.HashData(plaintext, NonceLength*2);
         Array.Copy(nonce, preIv, NonceLength);
-        var iv = SHAKE128.Process(preIv, NonceLength * 8);
+        var iv = Shake128.HashData(preIv, NonceLength);
 
         var plaintextSpan = new ReadOnlySpan<byte>(plaintext);
         var nonceSpan = result.BufferAppendSpan(iv);

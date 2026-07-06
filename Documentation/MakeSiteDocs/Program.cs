@@ -229,7 +229,7 @@ public partial class CreateExamples {
         MeshTestSet.Seed =  DeterministicSeed.Documentation("_Mesh");
         }
 
-
+#pragma warning disable CS0162
 
     public void Examples() {
         var output = Console.Out;
@@ -248,10 +248,10 @@ public partial class CreateExamples {
         GitHub = true;
 
 
-        MakeDare();
+        //MakeDare();
         //MakeJSDevice();
         //MakeEarl();
-        //MakeJSContact();
+        MakeJSContact();
 
 
         if (false) {

@@ -32,12 +32,19 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Goedel.Thing.Server;
 
+/// <summary>Service description record.</summary>
+/// <param name="Protocol">The protocol.</param>
+/// <param name="Port">The port number.</param>
+/// <param name="Configuration">The configuration data.</param>
 public record ServiceDescription(
             string Protocol,
             int Port=0,
             string Configuration=null) {
 
-
+    /// <summary>Constructor returning a new instance for <paramref name="service"/>.</summary>
+    /// <param name="service">A well known service profile.</param>
+    /// <param name="port">The port number.</param>
+    /// <param name="configuration">The configuration data.</param>
     public ServiceDescription(
                 WellKnownService service,
                 int port = 0,
@@ -66,7 +73,10 @@ public class ServiceThingClient {
         }
 
 
-
+    /// <summary>Bind the contact <paramref name="contact"/> to the handle <paramref name="handle"/></summary>
+    /// <param name="handle">The DNS handle.</param>
+    /// <param name="contact">The contact.</param>
+    /// <returns>Result of requesting the binding</returns>
     public async Task<ServiceThingResult> BindContact(
                     string handle,
                     JsContact contact) {
@@ -74,8 +84,11 @@ public class ServiceThingClient {
         throw new NYI();
         }
 
-
-    public string GetName(
+    /// <summary>Return a uniquified name for <paramref name="zone"/></summary>
+    /// <param name="zone">The zone.</param>
+    /// <param name="baseName">Basename, if null, the string 'iot' is used.</param>
+    /// <returns>The name.</returns>
+    public virtual string GetName(
                     string zone,
                     string baseName) => (baseName ?? "iot") + "1." + zone;
 
@@ -167,6 +180,7 @@ public class ServiceThingClient {
     public async Task<ServiceThingResult> NewDeviceHttpsAsync(string domain, string ipaddress) =>
         await NewDeviceAsync(domain, [IPAddress.Parse(ipaddress)], [new(WellKnownService.HTTPS)]);
     }
+
 
 public record ServiceThingResult {
     public string Domain { get; }

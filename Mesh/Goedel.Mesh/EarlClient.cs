@@ -7,16 +7,16 @@ namespace Goedel.Mesh;
 
 
 /// <summary>
-/// Base class for EARL Clients
+/// Base class for EARL resolution Clients
 /// </summary>
 public abstract class EarlClient {
 
-    public DnsClient DnsClient { get; }
+
+    DnsClient DnsClient { get; }
 
 
-    //public static EarlClient Client { get; set; } = new EarlClientHttp();
-
-
+    /// <summary>Constructor, returns a new instance using the client <paramref name="dnsClient"/>.</summary>
+    /// <param name="dnsClient">The DNS client to use.</param>
     public EarlClient(DnsClient dnsClient) {
         DnsClient = dnsClient;
         }
@@ -41,6 +41,11 @@ public abstract class EarlClient {
             string locator);
 
 
+    /// <summary>Attempt to resolve the EARL <paramref name="uriString"/> as a typed JSON
+    /// object asynchronously.</summary>
+    /// <typeparam name="T">The type of the target data.</typeparam>
+    /// <param name="uriString">The EARL uri.</param>
+    /// <returns>Task returning the result.</returns>
     public async Task<T> TryResolveEarl<T>(string uriString) where T : JsonObject{
         //LogFile.WriteLine($"Resolve earl {uriString}");
 
@@ -53,7 +58,7 @@ public abstract class EarlClient {
 
         var plaintext = Udf.GetDecryptedData(ciphertext, earl);
 
-        var enveloped = EarlEnvelopeReader.GetEnveloped(plaintext);
+        var enveloped = VDareEnvelopeReader.GetEnveloped(plaintext);
 
         //Console.WriteLine(enveloped.Body.ToUTF8());
         //LogFile.WriteLine($"Success earl {uriString}");
@@ -63,6 +68,13 @@ public abstract class EarlClient {
         return result;
         }
 
+    /// <summary>Attempt to resolve the DNS handle <paramref name="handle"/> with prefix
+    /// <paramref name="prefix"/> and return the corresponding payload of type <typeparamref name="T"/>
+    /// asynchronously.</summary>
+    /// <typeparam name="T">The type of the payload data.</typeparam>
+    /// <param name="handle">The handle portion.</param>
+    /// <param name="prefix">The DNS prefix.</param>
+    /// <returns>Task returning the value, if found.</returns>
     public async Task<T> TryResolveHandle<T>(string handle, string prefix) where T : JsonObject {
         //LogFile.WriteLine($"Resolve handle {handle}, {prefix}");
 
@@ -106,7 +118,9 @@ public abstract class EarlClient {
         return null;
         }
 
-
+    /// <summary>Attempt to resolve the mesh service for <paramref name="handle"/></summary>
+    /// <param name="handle">Handle of the Mesh Service user.</param>
+    /// <returns>The Mesh service.</returns>
     public async Task<string> ResolveMeshService(string handle) {
 
 
@@ -136,6 +150,9 @@ public abstract class EarlClient {
         return null;
         }
 
+    /// <summary>Attempt to resolve the mesh service for <paramref name="handle"/></summary>
+    /// <param name="handle">Handle of the Mesh Service user.</param>
+    /// <returns>The Mesh service.</returns>
     public async Task<string> ResolveMeshService(ParsedHandle handle) {
         switch (handle.HandleType) {
             // Just return the service component
@@ -164,19 +181,45 @@ public abstract class EarlClient {
         }
 
 
-    public  async Task<T> ResolveHandle<T>(string earl, string prefix) where T : JsonObject =>
-            await TryResolveHandle<T>(earl, prefix);
-    public  async Task<T> ResolveEarl<T>(string earl) where T : JsonObject => 
+    ///// <summary>Attempt to resolve the EARL <paramref name="earl"/> with prefix
+    ///// <paramref name="prefix"/></summary>
+    ///// <typeparam name="T">The object type</typeparam>
+    ///// <param name="earl">The EARL</param>
+    ///// <param name="prefix">The prefix</param>
+    ///// <returns></returns>
+    //public  async Task<T> ResolveHandle<T>(string earl, string prefix) where T : JsonObject =>
+    //        await TryResolveHandle<T>(earl, prefix);
+
+    /// <summary>Attempt to resolve the EARL <paramref name="earl"/> as an object of type
+    /// <typeparamref name="T"/>.</summary>
+    /// <typeparam name="T">The object type</typeparam>
+    /// <param name="earl">The EARL</param>
+    /// <returns>The EARL resolved as a JSON object of type T.</returns>
+    public async Task<T> ResolveEarl<T>(string earl) where T : JsonObject => 
             await TryResolveEarl<T>(earl);
 
-    public  async Task<JsContact> ResolveContactHandle(string earl) => 
-            await TryResolveHandle<JsContact>(earl, MediaTypes.JSContactPrefix);
-    public  async Task<JsContact> ResolveContactEarl(string earl) => 
+    /// <summary>Resolve the handle <paramref name="dns"/> as a JSContact.</summary>
+    /// <param name="dns">The URI of the content.</param>
+    /// <returns>The decoded data</returns>
+    public  async Task<JsContact> ResolveContactHandle(string dns) => 
+            await TryResolveHandle<JsContact>(dns, MediaTypes.JSContactPrefix);
+
+    /// <summary>Resolve the URI <paramref name="earl"/> as a JSContact.</summary>
+    /// <param name="earl">The URI of the content.</param>
+    /// <returns>The decoded data</returns>
+    public async Task<JsContact> ResolveContactEarl(string earl) => 
             await TryResolveEarl<JsContact>(earl);
 
-    public  async Task<JsDevice> ResolveDeviceHandle(string earl) =>
-            await TryResolveHandle<JsDevice>(earl, MediaTypes.JSDevicePrefix);
-    public  async Task<JsDevice> ResolveDeviceEarl(string earl) =>
+    /// <summary>Resolve the handle <paramref name="dns"/> as a JSDevice.</summary>
+    /// <param name="dns">The URI of the content.</param>
+    /// <returns>The decoded data</returns>
+    public async Task<JsDevice> ResolveDeviceHandle(string dns) =>
+            await TryResolveHandle<JsDevice>(dns, MediaTypes.JSDevicePrefix);
+
+    /// <summary>Resolve the URI <paramref name="earl"/> as a JSDevice.</summary>
+    /// <param name="earl">The URI of the content.</param>
+    /// <returns>The decoded data</returns>
+    public async Task<JsDevice> ResolveDeviceEarl(string earl) =>
             await TryResolveEarl<JsDevice>(earl);
 
     }
@@ -184,7 +227,8 @@ public abstract class EarlClient {
 /// <summary>
 /// EARL client resolving via HTTP.
 /// </summary>
-/// <param name="Instance"></param>
+/// <param name="dnsClient">The DNS client.</param>
+/// <param name="Instance">Instance identifier, allows multiple test instances to run concurrently.</param>
 public class EarlClientHttp(DnsClient dnsClient, string? Instance = null) : EarlClient (dnsClient) {
 
 

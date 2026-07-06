@@ -23,37 +23,56 @@ using Goedel.Protocol;
 
 namespace Goedel.Cryptography.Dare;
 
-
+/// <summary>Describes an update to an entry.</summary>
 public partial class EntryUpdate {
 
+    /// <summary>The event type.</summary>
     public SequenceEvent SequenceEvent => Event.ToSequenceEvent();
 
+    /// <summary>Deserialization constructor.</summary>
     public EntryUpdate() {
         }
 
-
+    /// <summary>Constructor, returns an instance with primary key <paramref name="id"/>
+    /// and status <paramref name="status"/></summary>
+    /// <param name="id">The primary key.</param>
+    /// <param name="status">The status value.</param>
     public EntryUpdate(string id, string status) {
         Id = id;
         Event = status;
         }
 
-    public EntryUpdate(string id, SequenceEvent status) {
-        Id = id;
-        Event = status.ToLabel();
+    /// <summary>Constructor, returns an instance with primary key <paramref name="id"/>
+    /// and status <paramref name="status"/></summary>
+    /// <param name="id">The primary key.</param>
+    /// <param name="status">The status value.</param>
+    public EntryUpdate(string id, SequenceEvent status) : this(id, status.ToLabel()) {
         }
-
 
     }
 
-public abstract class EarlLog : EarlSequence {
-    protected EarlLog(
-        EarlStream stream,
+
+/// <summary>A log file in DARE framing.</summary>
+public abstract class VDareLog : VDareSequence {
+
+    /// <summary>Constructor returns a new instance writing to <paramref name="stream"/>
+    /// using encoding <paramref name="dataEncoding"/></summary>
+    /// <param name="stream">The stream to write to.</param>
+    /// <param name="dataEncoding">The encoding to write entries in.</param>
+    protected VDareLog(
+        VDareStream stream,
             DataEncoding dataEncoding) : base(stream, dataEncoding) {
         }
-    public static EarlLog<T> Create<T> (
+
+    /// <summary>Create a new instance for a log of type <typeparamref name="T"/>,
+    /// writing to <paramref name="fileName"/></summary>
+    /// <typeparam name="T">The typed log contents.</typeparam>
+    /// <param name="fileName">The file to write to.</param>
+    /// <returns>The instance.</returns>
+    public static VDareLog<T> Create<T> (
         string fileName) where T : JsonObject {
-        var stream = EarlStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
-        var result = new EarlLog<T>(stream);
+        var stream = VDareStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
+        var result = new VDareLog<T>(stream);
 
         result.WriteInitial();
 
@@ -61,16 +80,20 @@ public abstract class EarlLog : EarlSequence {
         }
 
 
-    public static EarlLog<T> Open<T>(
+    /// <summary>Open an instance for a log of type <typeparamref name="T"/>,
+    /// writing to <paramref name="fileName"/></summary>
+    /// <typeparam name="T">The typed log contents.</typeparam>
+    /// <param name="fileName">The file to write to.</param>
+    /// <returns>The instance.</returns>
+    public static VDareLog<T> Open<T>(
         string fileName) where T : JsonObject {
 
-        var stream = EarlStream.OpenReadWrite(fileName);
-        var sequence = new EarlLog<T>(stream);
+        var stream = VDareStream.OpenReadWrite(fileName);
+        var sequence = new VDareLog<T>(stream);
         sequence.ReadInitial();
 
         return sequence;
         }
-
 
 
     }
@@ -78,11 +101,11 @@ public abstract class EarlLog : EarlSequence {
 
 /// <summary>Provides a view on a data log containing items of type T.</summary>
 /// <typeparam name="T">The type of item logged.</typeparam>
-public class EarlLog<T> : EarlLog where T : JsonObject {
+public class VDareLog<T> : VDareLog where T : JsonObject {
 
 
-    internal EarlLog(
-                EarlStream stream,
+    internal VDareLog(
+                VDareStream stream,
             DataEncoding dataEncoding = DataEncoding.JSON) : base(stream, dataEncoding) {
 
         }
@@ -91,14 +114,15 @@ public class EarlLog<T> : EarlLog where T : JsonObject {
     /// unprotected and protected headers.</summary>
     /// <param name="item"></param>
     /// <returns>The entry index.</returns>
-    public EarlEntryIndex Add(T item) {
+    public VDareEntryIndex Add(T item) {
         return Append(item);
         }
 
 
 
 
-
+    /// <summary>Read the next log entry and return it.</summary>
+    /// <returns>The log entry read.</returns>
     public T ReadNextObject() {
         var envelope = ReadNext();
 

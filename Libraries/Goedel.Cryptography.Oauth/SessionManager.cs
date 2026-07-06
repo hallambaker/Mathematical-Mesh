@@ -134,7 +134,7 @@ public class DocumentCache<K,T> where T: class?{
 public class SessionManager : Disposable {
 
     #region // Properties
-    public DnsClient DnsClient { get; init; } = new DnsClientUDP();
+    public DnsClient DnsClient { get; init; } = DnsClient.Default;
 
     DocumentCache<string, DidDocument> DidDictionary { get; }
     DocumentCache<string, ResourceServerMetadata> ResourceServerDictionary { get; }

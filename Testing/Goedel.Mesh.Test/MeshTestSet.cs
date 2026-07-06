@@ -37,7 +37,7 @@ public record TestServiceStubs (
     }
 
 public class MeshTestSetSerialized : MeshTestSet {
-    public virtual TestEnvironmentBase GetTestEnvironment() =>
+    public override TestEnvironmentBase GetTestEnvironment() =>
             new TestEnvironmentCommon(this) {
                 JpcConnection = Protocol.JpcConnection.Serialized
                 };
@@ -206,7 +206,7 @@ public class MeshTestSet : UnitTestSet {
                 }
             };
 
-        ushort Truncate(int value) => (ushort)value;
+        //ushort Truncate(int value) => (ushort)value;
 
         dummyDns.PublishRecords(records);
         }

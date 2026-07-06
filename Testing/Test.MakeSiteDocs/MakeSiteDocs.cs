@@ -29,7 +29,7 @@ namespace Goedel.XUnit;
 
 public class MakeSiteDocs : CreateExamples {
     public static new MakeSiteDocs Test() => new();
-    MeshTestSet MeshTestSet = new MeshTestSetSerialized();
+    //MeshTestSet MeshTestSet = new MeshTestSetSerialized();
 
     public MakeSiteDocs() {
 

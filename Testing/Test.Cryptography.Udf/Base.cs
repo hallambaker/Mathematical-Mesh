@@ -36,7 +36,7 @@ public class TestUdf : UnitTestSet {
 
 
 
-    public static (UdfAlgorithmIdentifier, KeyGenTestMode)[] AlgIdsML = [
+    public static (UdfAlgorithmIdentifier, KeyGenTestMode)[] AlgIdsML { get; }  = [
             (UdfAlgorithmIdentifier.MLDSA44, KeyGenTestMode.Sign),
             (UdfAlgorithmIdentifier.MLDSA65, KeyGenTestMode.Sign),
             (UdfAlgorithmIdentifier.MLDSA87, KeyGenTestMode.Sign),
@@ -45,20 +45,20 @@ public class TestUdf : UnitTestSet {
             (UdfAlgorithmIdentifier.MLKEM1024, KeyGenTestMode.Encrypt),
             ];
 
-    public static (UdfAlgorithmIdentifier, KeyGenTestMode)[] AlgIdsRSA = [
+    public static (UdfAlgorithmIdentifier, KeyGenTestMode)[] AlgIdsRSA { get; } = [
             (UdfAlgorithmIdentifier.RSA2048, KeyGenTestMode.SignEncrypt),
             (UdfAlgorithmIdentifier.RSA3072, KeyGenTestMode.SignEncrypt),
             (UdfAlgorithmIdentifier.RSA4096, KeyGenTestMode.SignEncrypt)
             ];
 
-    public static (UdfAlgorithmIdentifier, KeyGenTestMode)[] AlgIdsECC = [
+    public static (UdfAlgorithmIdentifier, KeyGenTestMode)[] AlgIdsECC { get; } = [
             (UdfAlgorithmIdentifier.X25519, KeyGenTestMode.Encrypt),
             (UdfAlgorithmIdentifier.X448, KeyGenTestMode.Encrypt),
             (UdfAlgorithmIdentifier.Ed25519, KeyGenTestMode.Sign),
             (UdfAlgorithmIdentifier.Ed448, KeyGenTestMode.Sign)
             ];
 
-    public static (UdfAlgorithmIdentifier, KeyGenTestMode)[] AlgIdsECCP = [
+    public static (UdfAlgorithmIdentifier, KeyGenTestMode)[] AlgIdsECCP { get; } = [
             (UdfAlgorithmIdentifier.P256, KeyGenTestMode.SignEncrypt),
             (UdfAlgorithmIdentifier.P384, KeyGenTestMode.SignEncrypt),
             (UdfAlgorithmIdentifier.P521, KeyGenTestMode.SignEncrypt),
@@ -131,6 +131,13 @@ public class MakeUdf {
         GenerateTests(TestUdf.UdfDirectoryECCP, TestUdf.AlgIdsECCP);
         }
 
+
+    static readonly JsonSerializerOptions CamelCaseSerializeOptions = new () {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        WriteIndented = true
+        };
+
+
     private static void GenerateTests(string directory, 
                     (UdfAlgorithmIdentifier, KeyGenTestMode)[] algIds) {
 
@@ -166,16 +173,13 @@ public class MakeUdf {
                     }
                 }
             }
-        var serializeOptions = new JsonSerializerOptions {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true
-            };
+
 
         var filename = Path.Combine(directory, "internalProjection.json");
         Directory.CreateDirectory(directory);
 
         using var textStream = filename.OpenFileNew();
-        var task = JsonSerializer.SerializeAsync(textStream, file, serializeOptions);
+        var task = JsonSerializer.SerializeAsync(textStream, file, CamelCaseSerializeOptions);
         task.Wait();
 
         }

@@ -62,6 +62,11 @@ public partial class DareConstants {
         }
     }
 
+/// <summary>A DARE envelope with varint framing.</summary>
+/// <param name="UnsignedHeader">The unsigned header.</param>
+/// <param name="SignedHeader">The signed header</param>
+/// <param name="Trailer">The trailer</param>
+/// <param name="payload">The payload data.</param>
 public record EarlEnvelope (
             Unprotected UnsignedHeader,
             ContentMeta SignedHeader,
@@ -69,6 +74,7 @@ public record EarlEnvelope (
             byte[]? payload = null
         ) {
 
+    /// <summary>The payload value.</summary>
     public byte[] Payload { get; set; } = payload;
     }
 
@@ -77,17 +83,15 @@ public record EarlEnvelope (
 /// <summary>
 /// EARL Envelope Writer
 /// </summary>
-public partial class EarlEnvelopeWriter {
+public partial class VDareEnvelopeWriter {
 
 
-    EarlStream Stream { get; set; }
+    VDareStream Stream { get; set; }
 
     bool closeOutput = false;
 
 
     IEnumerable<KeyPair> Signers;
-
-
 
 
     ///<summary>The parsed unprotected header.</summary> 
@@ -118,14 +122,15 @@ public partial class EarlEnvelopeWriter {
 
     #region // Constructors
 
-
-    public EarlEnvelopeWriter(Stream output) : this(new EarlStream(output)) {
+    /// <summary>DARE Envelope Writer.</summary>
+    /// <param name="output"></param>
+    public VDareEnvelopeWriter(Stream output) : this(new VDareStream(output)) {
         }
 
-    public EarlEnvelopeWriter(Stream output,
+    public VDareEnvelopeWriter(Stream output,
             ContentMeta protectedHeader,
             IEnumerable<KeyPair> signers = null) : 
-                this(new EarlStream(output), protectedHeader, signers) {
+                this(new VDareStream(output), protectedHeader, signers) {
         }
 
 
@@ -133,7 +138,7 @@ public partial class EarlEnvelopeWriter {
     /// <summary>
     /// Constructor creating an instance for an envelope of type 1 (i.e. indeterminate length chunks).
     /// </summary>
-    public EarlEnvelopeWriter(EarlStream output) {
+    public VDareEnvelopeWriter(VDareStream output) {
         Stream = output;
         //Stream.Write(DareConstants.TypeIdentifierDareEnvelope);
         State = 0;
@@ -146,8 +151,8 @@ public partial class EarlEnvelopeWriter {
     /// <param name="output"></param>
     /// <param name="protectedHeader"></param>
     /// <param name="signers"></param>
-    public EarlEnvelopeWriter(
-            EarlStream output,
+    public VDareEnvelopeWriter(
+            VDareStream output,
             ContentMeta protectedHeader,
             IEnumerable<KeyPair> signers=null) : this(output) {
         Begin(protectedHeader, signers);
@@ -169,6 +174,8 @@ public partial class EarlEnvelopeWriter {
 
 
         signers ??= [];
+        Signers = signers;
+
         foreach (KeyPair pair in signers) {
             if (pair.CryptoAlgorithmId == CryptoAlgorithmId.Ed448) {
                 digestId = CryptoAlgorithmId.SHA_3_512;
@@ -344,6 +351,7 @@ public partial class EarlEnvelopeWriter {
     /// </summary>
     /// <param name="contentMeta">The content metadata.</param>
     /// <param name="payload">The payload.</param>
+    /// <param name="signers">The set of signing keys.</param>
     /// <returns>The enveloped bytes</returns>
     public static byte[]? GetBytes(
             byte[] payload,
@@ -351,8 +359,8 @@ public partial class EarlEnvelopeWriter {
             IEnumerable<KeyPair> signers=null) {
 
         using var buffer = new MemoryStream();
-        using var stream = new EarlStream(buffer);
-        var writer = new EarlEnvelopeWriter (stream);
+        using var stream = new VDareStream(buffer);
+        var writer = new VDareEnvelopeWriter (stream);
         writer.Begin (contentMeta, signers);
         writer.Write (payload);
         writer.End ();
@@ -369,13 +377,13 @@ public partial class EarlEnvelopeWriter {
         byte[] data,
         string contentType=null) {
 
-        using var stream = EarlStream.Create(file, DareConstants.TypeIdentifierDareEnvelope);
+        using var stream = VDareStream.Create(file, DareConstants.TypeIdentifierDareEnvelope);
         var contentMeta = new ContentMeta() {
             Nonce = Udf.Nonce (),
             ContentType = contentType
             };
 
-        var writer = new EarlEnvelopeWriter(stream, contentMeta);
+        var writer = new VDareEnvelopeWriter(stream, contentMeta);
         writer.Write(data);
         writer.End();
 

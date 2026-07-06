@@ -20,14 +20,15 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Collections.Generic;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+
 using Goedel.Anything;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Discovery;
 using Goedel.Test;
 using Goedel.Utilities;
-
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 #pragma warning disable IDE0059
 
@@ -74,7 +75,7 @@ public partial class ServiceAnything : UnitTestSet {
             };
 
 
-        var tsig = SHAKE256.HashData("Anything TSIG Test Key".ToBytes());
+        var tsig = Shake256.HashData("Anything TSIG Test Key".ToBytes(), 32);
         Console.WriteLine($"TSIG: [{tsig.ToStringBase64()}]");
 
 

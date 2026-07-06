@@ -455,6 +455,16 @@
         <member name="P:Goedel.Protocol.Web.ParsedMultipart.Error">
             <summary>If true, the parse failed.</summary> 
         </member>
+        <member name="P:Goedel.Protocol.Web.ParsedMultipart.Stream">
+            <summary>Stream reader.</summary>
+        </member>
+        <member name="P:Goedel.Protocol.Web.ParsedMultipart.Lexer">
+            <summary>Lexer.</summary>
+        </member>
+        <member name="M:Goedel.Protocol.Web.ParsedMultipart.#ctor(System.IO.Stream)">
+            <summary>Constructor, returns a new </summary>
+            <param name="data"></param>
+        </member>
         <member name="M:Goedel.Protocol.Web.ParsedMultipart.Parse(System.IO.Stream,Goedel.Protocol.Web.FormData)">
             <summary>
             Parse data presented in the stream <paramref name="stream"/> and record items to
@@ -463,6 +473,24 @@
             <param name="stream">The stream to read.</param>
             <param name="formData">Instance to receive the parsed data.</param>
             <returns>The parser context.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Web.ParsedMultipart.GetHeaders(Goedel.Protocol.Web.FieldData)">
+            <summary>Read headers into <paramref name="fieldData"/></summary>
+            <param name="fieldData">Instance to collect headers.</param>
+            <returns>true if succeded, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Web.ParsedMultipart.GetContent(System.Byte[]@)">
+            <summary>Get the content</summary>
+            <param name="content">The content returned.</param>
+            <returns>true iff successful.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Web.ParsedMultipart.CheckContentEnd">
+            <summary>Check if there is more content to come.</summary>
+            <returns>True if more content remains, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Protocol.Web.ParsedMultipart.GetBoundary">
+            <summary>Attempt to read a boundary.</summary>
+            <returns>True if a boundary was found.</returns>
         </member>
         <member name="T:Goedel.Protocol.Web.StreamLookaheadReader">
             <summary>
