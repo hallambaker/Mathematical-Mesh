@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 7/6/2026 6:52:14 PM
+//  This file was automatically generated at 7/10/2026 12:40:46 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -50,6 +50,20 @@ public enum SequenceType {
     Tree,
     ///<summary>Merkle</summary>
     Merkle
+    }
+
+///<summary>Catalog Events</summary>
+public enum CatalogEvents {
+    ///<summary>Undefined type</summary>
+    Unknown = -1,
+    ///<summary>Add</summary>
+    Add,
+    ///<summary>Update</summary>
+    Update,
+    ///<summary>Delete</summary>
+    Delete,
+    ///<summary>Index</summary>
+    Index
     }
 
 ///<summary>Encryption policies</summary>
@@ -175,6 +189,46 @@ public static partial class DareConstants {
             SequenceType.Chain => SequenceTypeChainTag,
             SequenceType.Tree => SequenceTypeTreeTag,
             SequenceType.Merkle => SequenceTypeMerkleTag,
+            _ => null
+            };
+
+
+    ///<summary>Jose enumeration tag for CatalogEvents.Add</summary>
+    public const string  CatalogEventsAddTag = "Add";
+    ///<summary>Jose enumeration tag for CatalogEvents.Update</summary>
+    public const string  CatalogEventsUpdateTag = "Update";
+    ///<summary>Jose enumeration tag for CatalogEvents.Delete</summary>
+    public const string  CatalogEventsDeleteTag = "Delete";
+    ///<summary>Jose enumeration tag for CatalogEvents.Index</summary>
+    public const string  CatalogEventsIndexTag = "Index";
+
+    /// <summary>
+    /// Convert the string <paramref name="text"/> to the corresponding enumeration
+    /// value.
+    /// </summary>
+    /// <param name="text">The string to convert.</param>
+    /// <returns>The enumeration value.</returns>
+    public static CatalogEvents ToCatalogEvents (this string text) =>
+        text switch {
+            CatalogEventsAddTag => CatalogEvents.Add,
+            CatalogEventsUpdateTag => CatalogEvents.Update,
+            CatalogEventsDeleteTag => CatalogEvents.Delete,
+            CatalogEventsIndexTag => CatalogEvents.Index,
+            _ => CatalogEvents.Unknown
+            };
+
+    /// <summary>
+    /// Convert the enumerated value <paramref name="data"/> to the corresponding string
+    /// value.
+    /// </summary>
+    /// <param name="data">The enumerated value.</param>
+    /// <returns>The text value.</returns>
+    public static string ToLabel (this CatalogEvents data) =>
+        data switch {
+            CatalogEvents.Add => CatalogEventsAddTag,
+            CatalogEvents.Update => CatalogEventsUpdateTag,
+            CatalogEvents.Delete => CatalogEventsDeleteTag,
+            CatalogEvents.Index => CatalogEventsIndexTag,
             _ => null
             };
 

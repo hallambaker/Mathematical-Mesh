@@ -430,7 +430,7 @@
         <member name="P:Goedel.Presence.PresenceFromService.Packets">
             <summary>The packets encoding this message.</summary> 
         </member>
-        <member name="M:Goedel.Presence.PresenceFromService.ToBytes">
+        <member name="M:Goedel.Presence.PresenceFromService.ToPacketBytes">
             <summary>
             Convert the message to plaintext bytes.
             </summary>

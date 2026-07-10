@@ -38,14 +38,14 @@ namespace Goedel.Cryptography.Dare;
 public partial class DareConstants {
 
     /// <summary>Type identifier for envelopes.</summary>
-    public static readonly byte[] TypeIdentifierDareEnvelope = { 248 };
+    public static readonly byte[] TypeIdentifierDareEnvelope = [248];
 
     /// <summary>Type identifier for envelopes.</summary>
     public static readonly ulong TypeIdentifierDareEnvelopeL =
             MakeLong(TypeIdentifierDareEnvelope);
 
     /// <summary>Type identifier for sequences.</summary>
-    public static readonly byte[] TypeIdentifierDareSequence = { 249, 00 };
+    public static readonly byte[] TypeIdentifierDareSequence = [249, 00];
 
     /// <summary>Type identifier for sequences.</summary>
     public static readonly ulong TypeIdentifierDareSequenceL = 
@@ -66,16 +66,16 @@ public partial class DareConstants {
 /// <param name="UnsignedHeader">The unsigned header.</param>
 /// <param name="SignedHeader">The signed header</param>
 /// <param name="Trailer">The trailer</param>
-/// <param name="payload">The payload data.</param>
+/// <param name="Payload">The payload data.</param>
 public record EarlEnvelope (
             Unprotected UnsignedHeader,
             ContentMeta SignedHeader,
             Unprotected Trailer,
-            byte[]? payload = null
+            byte[]? Payload = null
         ) {
 
     /// <summary>The payload value.</summary>
-    public byte[] Payload { get; set; } = payload;
+    public byte[] Payload { get; set; } = Payload;
     }
 
 
@@ -83,12 +83,15 @@ public record EarlEnvelope (
 /// <summary>
 /// EARL Envelope Writer
 /// </summary>
-public partial class VDareEnvelopeWriter {
+/// <remarks>
+/// Constructor creating an instance for an envelope of type 1 (i.e. indeterminate length chunks).
+/// </remarks>
+public partial class VDareEnvelopeWriter(VDareStream output) {
 
 
-    VDareStream Stream { get; set; }
+    VDareStream Stream { get; set; } = output;
 
-    bool closeOutput = false;
+    //bool closeOutput = false;
 
 
     IEnumerable<KeyPair> Signers;
@@ -104,7 +107,7 @@ public partial class VDareEnvelopeWriter {
     int Type { get; }
 
     ///<summary>The writer state.</summary> 
-    int State { get; set; }
+    int State { get; set; } = 0;
 
     HashAlgorithm Digest = null;
     CryptoAlgorithmId DigestId;
@@ -136,17 +139,6 @@ public partial class VDareEnvelopeWriter {
             ContentMeta protectedHeader,
             IEnumerable<KeyPair> signers = null) : 
                 this(new VDareStream(output), protectedHeader, signers) {
-        }
-
-
-
-    /// <summary>
-    /// Constructor creating an instance for an envelope of type 1 (i.e. indeterminate length chunks).
-    /// </summary>
-    public VDareEnvelopeWriter(VDareStream output) {
-        Stream = output;
-        //Stream.Write(DareConstants.TypeIdentifierDareEnvelope);
-        State = 0;
         }
 
     /// <summary>Convenience constructor, begin writing envelope to 
@@ -193,7 +185,7 @@ public partial class VDareEnvelopeWriter {
 
         DigestId = digestId;
         var metadataBytes = contentMeta.GetBytes(false);
-        if (signers.Count() > 0) {
+        if (signers.Any()) {
             var metaDigest = DigestId.CreateDigest();
             MetadataDigest = metaDigest.ComputeHash(metadataBytes);
 
@@ -224,9 +216,7 @@ public partial class VDareEnvelopeWriter {
     /// <param name="chunk">The bytes to write.</param>
     public void Write(
             byte[] chunk) {
-        if (Digest is not null) {
-            Digest.Digest(chunk);
-            }
+        Digest?.Digest(chunk);
         WritePayload(chunk);
 
         }

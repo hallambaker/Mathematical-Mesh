@@ -247,8 +247,16 @@
             </summary>
             <returns>Object of this type</returns>
         </member>
+        <member name="T:Goedel.Device.DeviceConnectClient">
+            <summary>Device connection client.</summary>
+        </member>
         <member name="P:Goedel.Device.DeviceConnectClient.DeviceConnectServer">
             <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Device.DeviceConnectClient.#ctor(Goedel.Device.DeviceConnectServer)">
+            <summary>Constructor, return a new client for the server
+            <paramref name="deviceConnectServer"/></summary>
+            <param name="deviceConnectServer">The device connection server.</param>
         </member>
         <member name="M:Goedel.Device.DeviceConnectClient.RequestConnectAsync(System.String,Goedel.Contacts.JsDevice)">
             <inheritdoc/>
@@ -328,6 +336,9 @@
             <param name="earl">The EARL to which the request is posted.</param>
             <param name="device">The JsDevice data (if available).</param>
             <returns>The connection description.</returns>
+        </member>
+        <member name="T:Goedel.Device.IDeviceConnectServer">
+            <summary>Interface for device connection servers.</summary>
         </member>
         <member name="M:Goedel.Device.IDeviceConnectServer.GetBootstrapAsync">
             <summary>

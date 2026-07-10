@@ -395,6 +395,11 @@
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DeviceOnboardAsync(System.String)">
+            <summary>Onboard the device described by configuration <paramref name="configFile"/></summary>
+            <param name="configFile"></param>
+            <returns>Result of onboarding the device.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.DeviceEarl(Goedel.Mesh.Shell.DeviceEarl)">
             <summary>
             Dispatch method
@@ -5891,7 +5896,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultFileDare.Envelope">
+        <member name="P:Goedel.Mesh.Shell.ResultFileDare.Enveloped">
             <summary>
             </summary>
         </member>

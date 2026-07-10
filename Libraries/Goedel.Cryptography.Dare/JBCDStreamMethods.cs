@@ -53,8 +53,8 @@ public partial class JbcdStream  {
     /// <summary>JSON-B Type mask </summary>
     public const byte TypeMask = 0xFC;
 
-    readonly static byte[] CodeSpaces = new byte[] { 2, 3, 5, 9, 4, 6, 10, 18 };
-    readonly static byte[] TagSpaces = new byte[] { 1, 2, 4, 8 };
+    readonly static byte[] CodeSpaces = [2, 3, 5, 9, 4, 6, 10, 18];
+    readonly static byte[] TagSpaces = [1, 2, 4, 8];
 
     /// <summary>If true, the stream is version 4.</summary>
     public bool IsVersion4 => Version == 4;
@@ -655,7 +655,7 @@ public partial class JbcdStream  {
 
         }
 
-    static readonly byte[] Empty = Array.Empty<byte>();
+    static readonly byte[] Empty = [];
 
 
     #endregion
@@ -799,7 +799,7 @@ public partial class JbcdStream  {
     long framerRecordData;
     long framerRecordNext;
     long framerRecordLength;
-    int framerCode;
+    //int framerCode;
 
     /// <summary>
     /// Open a frame reader at the position indicated by <paramref name="position"/>
@@ -937,46 +937,46 @@ public partial class JbcdStream  {
                 long dataLength) =>
         new(StreamRead, dataPosition, dataLength);
 
-    /// <summary>
-    /// Skip all remaining records in the frame and move to the next record.
-    /// The
-    /// </summary>
-    /// <returns>If <code>true</code>, there are more frames to be read. If 
-    /// <code>false</code> the end of the stream has been reached.</returns>
-    public bool FramerNext() {
-        StreamRead.Seek(framerRecordsEnd, System.IO.SeekOrigin.Begin);
-        if ((framerCode & TypeMask) == BFrame) {
-            CheckReversedLength(framerCode, framerFrameLength);
-            }
-        framerFrameStart = StreamRead.Position;
-        return StreamRead.Length > StreamRead.Position;
-        }
+    ///// <summary>
+    ///// Skip all remaining records in the frame and move to the next record.
+    ///// The
+    ///// </summary>
+    ///// <returns>If <code>true</code>, there are more frames to be read. If 
+    ///// <code>false</code> the end of the stream has been reached.</returns>
+    //public bool FramerNext() {
+    //    StreamRead.Seek(framerRecordsEnd, System.IO.SeekOrigin.Begin);
+    //    if ((framerCode & TypeMask) == BFrame) {
+    //        CheckReversedLength(framerCode, framerFrameLength);
+    //        }
+    //    framerFrameStart = StreamRead.Position;
+    //    return StreamRead.Length > StreamRead.Position;
+    //    }
 
 
-    /// <summary>
-    /// Skip all remaining records in the frame and move to the next record.
-    /// The
-    /// </summary>
-    /// <returns>If <code>true</code>, there are more frames to be read. If 
-    /// <code>false</code> the end of the stream has been reached.</returns>
-    public bool FramerPrevious() {
-        StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
-        var success = ReadTagReverse(out var Code, out var length);
-        if (!success) {
-            return false;
-            }
+    ///// <summary>
+    ///// Skip all remaining records in the frame and move to the next record.
+    ///// The
+    ///// </summary>
+    ///// <returns>If <code>true</code>, there are more frames to be read. If 
+    ///// <code>false</code> the end of the stream has been reached.</returns>
+    //public bool FramerPrevious() {
+    //    StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
+    //    var success = ReadTagReverse(out var Code, out var length);
+    //    if (!success) {
+    //        return false;
+    //        }
 
-        // Sanity check
-        var thePosition = PositionRead;
-        Assert.AssertTrue(thePosition >= length, InvalidFileFormatException.Throw);
+    //    // Sanity check
+    //    var thePosition = PositionRead;
+    //    Assert.AssertTrue(thePosition >= length, InvalidFileFormatException.Throw);
 
-        // Make sure we return to the same position.
-        long Start = thePosition - length - TagSpace(Code) - 1;
-        framerFrameStart = Start;
-        PositionRead = Start;
+    //    // Make sure we return to the same position.
+    //    long Start = thePosition - length - TagSpace(Code) - 1;
+    //    framerFrameStart = Start;
+    //    PositionRead = Start;
 
-        return true;
-        }
+    //    return true;
+    //    }
 
 
 

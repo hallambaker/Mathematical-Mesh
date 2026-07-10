@@ -693,7 +693,7 @@ public class VDareStream : Disposable {
     /// <summary>Read the last frame.</summary>
     /// <returns>The frame data read.</returns>
     public EarlEnvelope ReadFrameLast() {
-        Stream.Seek(0, SeekOrigin.End);
+        SeekEnd();
         return ReadFramePrev();
         }
 

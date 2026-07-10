@@ -209,12 +209,10 @@ public abstract partial class JsonObject : IBinding {
 
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static Dictionary<string, Property> _StaticProperties = new() {
-        };
+    public readonly static Dictionary<string, Property> _StaticProperties = [];
 
     ///<summary>Dictionary describing the serializable properties.</summary> 
-    public readonly static Dictionary<string, Property> _StaticAllProperties = new() {
-        };
+    public readonly static Dictionary<string, Property> _StaticAllProperties = [];
 
     ///<summary>Adcditional unparsed properties.</summary> 
     public Dictionary<string, JsonElement> UnparsedProperties { get; set; }
@@ -231,7 +229,7 @@ public abstract partial class JsonObject : IBinding {
             Binding second) {
 
         // attach the description of the child to the parent.
-        first.ChildClasses ??= new();
+        first.ChildClasses ??= [];
         first.ChildClasses.Add(second.Tag, second);
 
         //second.AllProperties = Combine(first.FullProperties, second.Properties);

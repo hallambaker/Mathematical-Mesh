@@ -68,9 +68,7 @@ public partial class TestDigests {
                         new TestVector (SHA_3_224,     "e642824c3f8cf24a d09234ee7d3c766f c9a3a5168d0c94ad 73b46fdf"),
                         new TestVector (SHA_3_256,     "3a985da74fe225b2 045c172d6bd390bd 855f086e3e9d525b 46bfe24511431532"),
                         new TestVector (SHA_3_384,     "ec01498288516fc9 26459f58e2c6ad8d f9b473cb0fc08c25 96da7cf0e49be4b2 98d88cea927ac7f5 39f1edf228376d25"),
-                        new TestVector (SHA_3_512,     "b751850b1a57168a 5693cd924b6b096e 08f621827444f70d 884f5d0240d2712e 10e116e9192af3c9 1a7ec57647e39340 57340b4cf408d5a5 6592f8274eec53f0"),
-                        new TestVector (SHAKE_128,     "5881092dd818bf5c f8a3ddb793fbcba7 4097d5c526a6d35f 97b83351940f2cc8"),
-                        new TestVector (SHAKE_256,     "483366601360a877 1c6863080cc4114d 8db44530f8f1e1ee 4f94ea37e78b5739 d5a15bef186a5386 c75744c0527e1faa 9f8726e462a12a4f eb06bd8801e751e4") },
+                        new TestVector (SHA_3_512,     "b751850b1a57168a 5693cd924b6b096e 08f621827444f70d 884f5d0240d2712e 10e116e9192af3c9 1a7ec57647e39340 57340b4cf408d5a5 6592f8274eec53f0")},
                     };
             yield return new object[] {
                     Message2, 1,
@@ -84,9 +82,7 @@ public partial class TestDigests {
                         new TestVector (SHA_3_224,     "6b4e03423667dbb7 3b6e15454f0eb1ab d4597f9a1b078e3f 5b5a6bc7"),
                         new TestVector (SHA_3_256,     "a7ffc6f8bf1ed766 51c14756a061d662 f580ff4de43b49fa 82d80a4b80f8434a"),
                         new TestVector (SHA_3_384,     "0c63a75b845e4f7d 01107d852e4c2485 c51a50aaaa94fc61 995e71bbee983a2a c3713831264adb47 fb6bd1e058d5f004"),
-                        new TestVector (SHA_3_512,     "a69f73cca23a9ac5 c8b567dc185a756e 97c982164fe25859 e0d1dcc1475c80a6 15b2123af1f5f94c 11e3e9402c3ac558 f500199d95b6d3e3 01758586281dcd26") ,
-                        new TestVector (SHAKE_128,     "7f9c2ba4e88f827d 616045507605853e d73b8093f6efbc88 eb1a6eacfa66ef26"),
-                        new TestVector (SHAKE_256,     "46b9dd2b0ba88d13 233b3feb743eeb24 3fcd52ea62b81b82 b50c27646ed5762f d75dc4ddd8c0f200 cb05019d67b592f6 fc821c49479ab486 40292eacb3b7c4be") },
+                        new TestVector (SHA_3_512,     "a69f73cca23a9ac5 c8b567dc185a756e 97c982164fe25859 e0d1dcc1475c80a6 15b2123af1f5f94c 11e3e9402c3ac558 f500199d95b6d3e3 01758586281dcd26") },
                     };
             yield return new object[] {
                     Message3, 1,
@@ -100,9 +96,7 @@ public partial class TestDigests {
                         new TestVector (SHA_3_224,     "8a24108b154ada21 c9fd5574494479ba 5c7e7ab76ef264ea d0fcce33"),
                         new TestVector (SHA_3_256,     "41c0dba2a9d62408 49100376a8235e2c 82e1b9998a999e21 db32dd97496d3376"),
                         new TestVector (SHA_3_384,     "991c665755eb3a4b 6bbdfb75c78a492e 8c56a22c5c4d7e42 9bfdbc32b9d4ad5a a04a1f076e62fea1 9eef51acd0657c22"),
-                        new TestVector (SHA_3_512,     "04a371e84ecfb5b8 b77cb48610fca818 2dd457ce6f326a0f d3d7ec2f1e91636d ee691fbe0c985302 ba1b0d8dc78c0863 46b533b49c030d99 a27daf1139d6e75e") ,
-                        new TestVector (SHAKE_128,     "1a96182b50fb8c7e 74e0a707788f55e9 8209b8d91fade8f3 2f8dd5cff7bf21f5"),
-                        new TestVector (SHAKE_256,     "4d8c2dd2435a0128 eefbb8c36f6f8713 3a7911e18d979ee1 ae6be5d4fd2e3329 40d8688a4e6a59aa 8060f1f9bc996c05 aca3c696a8b66279 dc672c740bb224ec") },
+                        new TestVector (SHA_3_512,     "04a371e84ecfb5b8 b77cb48610fca818 2dd457ce6f326a0f d3d7ec2f1e91636d ee691fbe0c985302 ba1b0d8dc78c0863 46b533b49c030d99 a27daf1139d6e75e") },
                     };
             yield return new object[] {
                     Message4, 1,
@@ -116,7 +110,40 @@ public partial class TestDigests {
                         new TestVector (SHA_3_224,     "543e6868e1666c1a 643630df77367ae5 a62a85070a51c14c bf665cbc"),
                         new TestVector (SHA_3_256,     "916f6061fe879741 ca6469b43971dfdb 28b1a32dc36cb325 4e812be27aad1d18"),
                         new TestVector (SHA_3_384,     "79407d3b5916b59c 3e30b09822974791 c313fb9ecc849e40 6f23592d04f625dc 8c709b98b43b3852 b337216179aa7fc7"),
-                        new TestVector (SHA_3_512,     "afebb2ef542e6579 c50cad06d2e578f9 f8dd6881d7dc824d 26360feebf18a4fa 73e3261122948efc fd492e74e82e2189 ed0fb440d187f382 270cb455f21dd185"),
+                        new TestVector (SHA_3_512,     "afebb2ef542e6579 c50cad06d2e578f9 f8dd6881d7dc824d 26360feebf18a4fa 73e3261122948efc fd492e74e82e2189 ed0fb440d187f382 270cb455f21dd185") },
+                    };
+            }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+    /// <summary>Test vectors for the SHAKE digests. Since these are used in a different
+    /// fashion that does not require the full digest API, and we are now using the
+    /// dotnet versions, these are currently parked for future work.</summary>
+    public class TestVectors_SHAKE_NIST : IEnumerable<object[]> {
+        // ToDo: Tests for SHAKE digests.
+        public IEnumerator<object[]> GetEnumerator() {
+            yield return new object[] {
+                    Message1, 1,
+                    new List<TestVector> () {
+                        new TestVector (SHAKE_128,     "5881092dd818bf5c f8a3ddb793fbcba7 4097d5c526a6d35f 97b83351940f2cc8"),
+                        new TestVector (SHAKE_256,     "483366601360a877 1c6863080cc4114d 8db44530f8f1e1ee 4f94ea37e78b5739 d5a15bef186a5386 c75744c0527e1faa 9f8726e462a12a4f eb06bd8801e751e4") },
+                    };
+            yield return new object[] {
+                    Message2, 1,
+                    new List<TestVector> () {
+                        new TestVector (SHAKE_128,     "7f9c2ba4e88f827d 616045507605853e d73b8093f6efbc88 eb1a6eacfa66ef26"),
+                        new TestVector (SHAKE_256,     "46b9dd2b0ba88d13 233b3feb743eeb24 3fcd52ea62b81b82 b50c27646ed5762f d75dc4ddd8c0f200 cb05019d67b592f6 fc821c49479ab486 40292eacb3b7c4be") },
+                    };
+            yield return new object[] {
+                    Message3, 1,
+                    new List<TestVector> () {
+                        new TestVector (SHAKE_128,     "1a96182b50fb8c7e 74e0a707788f55e9 8209b8d91fade8f3 2f8dd5cff7bf21f5"),
+                        new TestVector (SHAKE_256,     "4d8c2dd2435a0128 eefbb8c36f6f8713 3a7911e18d979ee1 ae6be5d4fd2e3329 40d8688a4e6a59aa 8060f1f9bc996c05 aca3c696a8b66279 dc672c740bb224ec") },
+                    };
+            yield return new object[] {
+                    Message4, 1,
+                    new List<TestVector> () {
                         new TestVector (SHAKE_128,     "7b6df6ff181173b6 d7898d7ff63fb07b 7c237daf471a5ae5 602adbccef9ccf4b"),
                         new TestVector (SHAKE_256,     "98be04516c04cc73 593fef3ed0352ea9 f6443942d6950e29 a372a681c3deaf45 35423709b0284394 8684e029010badcc 0acd8303fc85fdad 3eabf4f78cae1656")  },
                     };
@@ -124,6 +151,7 @@ public partial class TestDigests {
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
+
 
     public class TestVectors_SHA_NIST_Long : IEnumerable<object[]> {
         public IEnumerator<object[]> GetEnumerator() {

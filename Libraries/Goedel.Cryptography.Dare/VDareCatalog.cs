@@ -19,54 +19,45 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace Goedel.Cryptography.Dare;
 
-/// <summary>DARE Catalog using the EARL encoding scheme.</summary>
-public abstract class EarlCatalog : VDareSequence {
 
-    /// <summary>Constructor, read from the stream <paramref name="stream"/></summary>
-    /// <param name="stream">The stream to read.</param>
-    protected EarlCatalog(
-        VDareStream stream) : base(stream) {
+/// <summary>Typed DARE Catalog using the EARL encoding scheme.</summary>
+public class VDareCatalog<T> : VDareSequence<T> where T : JsonObject, new() {
 
-        }
 
-    /// <summary>Create a new catalog of type <typeparamref name="T"/></summary>
-    /// <typeparam name="T">The type of the catalog data.</typeparam>
+    /// <summary>Create a new catalog in file  <paramref name="fileName"/></summary>
     /// <param name="fileName">The name of the catalog on disk.</param>
     /// <returns>The created catalog instance.</returns>
-    public static EarlCatalog<T> Create<T>(
-    string fileName) where T : JsonObject, new() {
+    public static VDareCatalog<T> Create(
+                    string fileName)  {
         var stream = VDareStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
-        var result = new EarlCatalog<T>(stream);
+        var result = new VDareCatalog<T>(stream);
 
         result.WriteInitial();
 
         return result;
         }
 
-    /// <summary>Open a catalog of type <typeparamref name="T"/></summary>
-    /// <typeparam name="T">The type of the catalog data.</typeparam>
+    /// <summary>Open a catalog in file <paramref name="fileName"/></summary>
     /// <param name="fileName">The name of the catalog on disk.</param>
     /// <returns>The created catalog instance.</returns>
-    public static EarlCatalog<T> Open<T>(
-            string fileName) where T : JsonObject, new() {
+    public static new VDareCatalog<T> Open(
+            string fileName) {
 
         var stream = VDareStream.OpenReadWrite(fileName);
-        var spool = new EarlCatalog<T>(stream);
-        spool.ReadInitial();
+        var result = new VDareCatalog<T>(stream);
+        result.ReadInitial();
 
 
-        return spool;
+        return result;
         }
 
-    }
 
-/// <summary>Typed DARE Catalog using the EARL encoding scheme.</summary>
-public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
 
     /// <summary>The content tag for type <typeparam>T</typeparam>.</summary>
     public readonly string ContentType = GetContentType();
@@ -77,26 +68,50 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
     /// <summary>The entries by the secondary key.</summary>
     public Dictionary<string, VDareEntryIndex<T>> EntriesBySecondaryId { get; } = [];
 
-    /// <summary>The entry descriptors.</summary>
-    public LinkedList<VDareEntryIndex<T>> Entries { get; } = [];
+    ///// <summary>The entry descriptors.</summary>
+    //public LinkedList<VDareEntryIndex<T>> Entries { get; } = [];
 
     /// <summary>Constructor, return a new catalog reading and writing to 
     /// <paramref name="stream"/>.</summary>
     /// <param name="stream">The reader/writer stream.</param>
-    public EarlCatalog(
+    public VDareCatalog(
                 VDareStream stream) : base(stream) {
         }
 
 
-    /// <inheritdoc/>
-    protected override void Initialize() {
+    /// <summary>Read the initial sequence record.</summary>
+    protected override void ReadInitial() {
+        BeginReadInitial();
 
-        base.Initialize();
+        var index = Stream.ReadIndexNext<T>();
+        IndexFirstT = index;
 
-        foreach (var item in new VEntryEnumerator<T>(this, false, ProcessEntry)) {
-            Entries.AddFirst(item);
+        while (index is not null) {
+            Process(index);
+            IndexLastT = index;
+
+            index = Stream.ReadIndexNext<T>();
             }
         }
+
+    /// <summary>Process addition of the entry item <paramref name="index"/></summary>
+    /// <param name="index">Index of the entry to add.</param>
+    protected void Process(VDareEntryIndex<T> index) {
+        switch (index.EarlEnvelope.SignedHeader.Event) {
+            case ProtocolConstants.SequenceEventInitialTag:
+            case ProtocolConstants.SequenceEventUpdateTag: {
+                UpdateKeys(index);
+                break;
+                }
+            case ProtocolConstants.SequenceEventDeleteTag: {
+                DeleteKeys(index);
+                break;
+                }
+            }
+
+        }
+
+
 
     private static string GetContentType() {
         var item = new T();
@@ -127,7 +142,7 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
         EntriesById.Replace(index.PrimaryKey, index);
         if (index.SecondaryKeys != null) {
             foreach (var key in index.SecondaryKeys) {
-                EntriesBySecondaryId.Remove(index.PrimaryKey);
+                EntriesBySecondaryId.Remove(key);
                 }
             }
         }
@@ -157,6 +172,11 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
             }
         }
 
+
+
+
+
+
     /// <summary>Add the new entry <paramref name="item"/>.</summary>
     /// <param name="item">The entry to add.</param>
     /// <returns>The index of the created item.</returns>
@@ -165,13 +185,12 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
 
         var contentMeta = new ContentMeta() {
             UniqueId = item._PrimaryKey,
-            Event = "Add",
+            Event = ProtocolConstants.SequenceEventInitialTag,
             Labels = item._SecondaryKeys
 
             };
 
         var result = Append(item, contentMeta);
-        Entries.AddLast(result);
         CreateKeys(result);
 
         return result;
@@ -183,10 +202,9 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
     public virtual VDareEntryIndex<T> Update(T item) {
         var contentMeta = new ContentMeta() {
             UniqueId = item._PrimaryKey,
-            Event = "Add"
+            Event = ProtocolConstants.SequenceEventUpdateTag
             };
         var result = Append(item, contentMeta);
-        Entries.AddLast(result);
 
         UpdateKeys(result);
 
@@ -208,7 +226,6 @@ public class EarlCatalog<T> : EarlCatalog where T : JsonObject, new() {
             };
 
         var result = Append<T>(null, contentMeta);
-        Entries.AddLast(result);
         result.Deleted = true;
 
         DeleteKeys(index);

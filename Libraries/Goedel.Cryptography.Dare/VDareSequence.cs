@@ -27,22 +27,19 @@ namespace Goedel.Cryptography.Dare;
 /// <summary>Sequence access support.</summary>
 public  class VDareSequence : Disposable {
 
-    //Dictionary<string, EarlEntryIndex> DictionaryById = [];
-
-    //Dictionary<long, EarlEntryIndex> DictionaryByFrame = [];
-
     long UnreadStart { get; set; } = 0;
+
     long UnreadEnd { get; set; } = long.MaxValue;
 
 
 
 
     /// <summary>Index record of the first entry in the sequence.</summary>
-    public VDareEntryIndex? IndexFirst { get; private set; }
+    public virtual VDareEntryIndex? IndexFirst { get; private set; }
 
 
     /// <summary>Index record of the last entry in the sequence.</summary>
-    public VDareEntryIndex? IndexLast{ get; private set; }
+    public virtual VDareEntryIndex? IndexLast{ get; private set; }
 
     /// <summary>The first frame in the sequence.</summary>
     public EarlEnvelope FrameFirst { get; private set; }
@@ -76,6 +73,8 @@ public  class VDareSequence : Disposable {
     /// <summary>
     /// Constructor
     /// </summary>
+    /// <param name="stream">The stream for reads and appends.</param>
+    /// <param name="dataEncoding">The data encoding for control blocks.</param>
     protected VDareSequence(
                 VDareStream stream,
             DataEncoding dataEncoding = DataEncoding.JSON) {
@@ -110,24 +109,24 @@ public  class VDareSequence : Disposable {
 
         var stream = VDareStream.OpenReadWrite(fileName);
         var sequence = new VDareSequence(stream);
-        sequence.ReadInitial();
+        //sequence.ReadInitial(fillIndex);
 
         return sequence;
         }
 
-    /// <summary>Initialize a newly opened sequence.</summary>
-    protected virtual void Initialize() {
+    ///// <summary>Initialize a newly opened sequence.</summary>
+    //protected virtual void Initialize() {
 
 
-        if (Stream.Length == 0) {
-            Stream.Write(DareConstants.TypeIdentifierDareSequence);
-            WriteInitial();
-            StartEntries = Stream.Position;
-            }
-        else {
-            ReadInitial();
-            }
-        }
+    //    if (Stream.Length == 0) {
+    //        Stream.Write(DareConstants.TypeIdentifierDareSequence);
+    //        WriteInitial();
+    //        StartEntries = Stream.Position;
+    //        }
+    //    else {
+    //        ReadInitial();
+    //        }
+    //    }
 
     /// <summary>Write the initial sequence record.</summary>
     protected virtual void WriteInitial() {
@@ -143,6 +142,22 @@ public  class VDareSequence : Disposable {
 
     /// <summary>Read the initial sequence record.</summary>
     protected virtual void ReadInitial() {
+        BeginReadInitial();
+
+
+        if (!Stream.EOF) {
+            IndexFirst = Stream.ReadIndexNext();
+            }
+        if (!Stream.EOF) {
+            Stream.SeekEnd();
+            IndexLast = Stream.ReadIndexPrevious();
+            }
+
+        Stream.Position = StartEntries;
+        }
+
+    /// <summary>Read type identifier and first frame.</summary>
+    protected void BeginReadInitial() {
         // read the type identifier
         var version = Stream.ReadTypeIdentifier();
         (version == DareConstants.TypeIdentifierDareSequenceL).AssertTrue(NYI.Throw);
@@ -151,6 +166,17 @@ public  class VDareSequence : Disposable {
         FrameFirst = Stream.ReadFrameNext();
         StartEntries = Stream.Position;
         }
+
+
+    /// <summary>Fill the index immediately after opening the file.</summary>
+    protected virtual void FillIndex() {
+
+
+        
+
+
+        }
+
 
     /// <summary>Return an empty <see cref="ContentMeta"/> instance.</summary>
     /// <returns>The created instance.</returns>
@@ -267,6 +293,15 @@ public  class VDareSequence : Disposable {
     #endregion
     #region -- Read Methods
 
+
+
+
+
+
+
+
+
+
     //public EarlEntryIndex? ReadIndexAt (long position, bool includePayload) {
     //        throw new NYI(); 
     //    }
@@ -309,6 +344,9 @@ public  class VDareSequence : Disposable {
 
         return Stream.ReadFrameNext();
         }
+
+
+
 
     //public EarlEnvelope? ReadPrevious() {
 
@@ -376,3 +414,62 @@ public  class VDareSequence : Disposable {
     #endregion
     }
 
+
+/// <summary>Typed sequence.</summary>
+/// <typeparam name="T"></typeparam>
+public class VDareSequence<T> : VDareSequence where T : JsonObject {
+
+
+    /// <summary>Index record of the first entry in the sequence.</summary>
+    public override VDareEntryIndex? IndexFirst => IndexFirstT;
+
+    /// <summary>Index record of the first entry in the sequence.</summary>
+    public VDareEntryIndex<T>? IndexFirstT { get; protected set; }
+
+
+    /// <summary>Index record of the last entry in the sequence.</summary>
+    public override VDareEntryIndex? IndexLast => IndexLastT;
+
+
+    /// <summary>Index record of the first entry in the sequence.</summary>
+    public VDareEntryIndex<T>? IndexLastT { get; protected set; }
+
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="stream">The stream for reads and appends.</param>
+    /// <param name="dataEncoding">The data encoding for control blocks.</param>
+    protected VDareSequence(
+                VDareStream stream,
+            DataEncoding dataEncoding = DataEncoding.JSON) : base (stream, dataEncoding) {
+
+        }
+
+    /// <summary>Read the initial sequence record.</summary>
+    protected override void ReadInitial() {
+        BeginReadInitial();
+
+        if (!Stream.EOF) {
+            IndexFirstT = Stream.ReadIndexNext<T>();
+            }
+        if (!Stream.EOF) {
+            Stream.SeekEnd();
+            IndexLastT = Stream.ReadIndexPrevious<T>();
+            }
+        else {
+            IndexLastT = IndexFirstT;
+            }
+
+        Stream.Position = StartEntries;
+        }
+
+
+    //protected void FillIndex() {
+    //    BeginReadInitial();
+
+
+    //    }
+
+
+    }

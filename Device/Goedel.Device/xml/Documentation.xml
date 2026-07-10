@@ -75,10 +75,44 @@
             Mesh client implementation.
             </summary>
         </member>
+        <member name="T:Goedel.Device.Extensions">
+            <summary>Extension methods class.</summary>
+        </member>
+        <member name="M:Goedel.Device.Extensions.GetMeshOnboard(Goedel.Contacts.JsProvision)">
+            <summary>Return the Mesh Onboarding data for <paramref name="jsProvision"/>
+            </summary>
+            <param name="jsProvision"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Device.OnboardingServer">
+            <summary>Onboarding Service.</summary>
+        </member>
         <member name="P:Goedel.Device.OnboardingServer.MaxOnboardingRequest">
             <summary>
             The maximum onboarding request size.
             </summary>
+        </member>
+        <member name="M:Goedel.Device.OnboardingServer.#ctor(Goedel.Mesh.Client.MeshHost,System.String)">
+            <summary>Constructor, returns a new instance.</summary>
+            <param name="meshHost">The Mesh Host.</param>
+            <param name="deviceDescription">The device description.</param>
+        </member>
+        <member name="M:Goedel.Device.OnboardingServer.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Contacts.JsProvision)">
+            <summary>Constructor, returns a new instance.</summary>
+            <param name="meshHost">The Mesh Host.</param>
+            <param name="jsProvision">Provisioning description</param>
+        </member>
+        <member name="M:Goedel.Device.OnboardingServer.WaitOnboardingAsync">
+            <summary>Wait to be onboarded.</summary>
+            <returns>User account the device is bound to.</returns>
+        </member>
+        <member name="M:Goedel.Device.OnboardingServer.InitializeWiFi(Goedel.Contacts.NetworkWiFi)">
+            <summary>Initialize the WiFi</summary>
+            <param name="network"></param>
+        </member>
+        <member name="M:Goedel.Device.OnboardingServer.InitializeEthernet(Goedel.Contacts.NetworkPhysical)">
+            <summary>Initialize the Ethernet</summary>
+            <param name="network"></param>
         </member>
     </members>
 </doc>

@@ -40,10 +40,10 @@ public partial class TestSessionRud : TestSession {
     /// Create a remote session with authentication under the
     /// specified credential.
     /// </summary>
-    /// <param name="host">The host implementation</param>
-    /// <param name="Domain">Portal address</param>
-    /// <param name="Account">User account</param>
-    /// <param name="UDF">Authentication key identifier.</param>
+    /// <param name="testServiceRud">Test service</param>
+    /// <param name="clientCredential">Client credential</param>
+    /// <param name="meshProtocolMessages">Messages</param>
+    /// <param name="machine">Machine</param>
     public TestSessionRud(TestServiceRud testServiceRud, ICredentialPrivate clientCredential,
                 List<TraceTransaction> meshProtocolMessages, object machine) :
                     base(testServiceRud.Host, clientCredential, meshProtocolMessages, machine) {
@@ -64,6 +64,7 @@ public partial class TestSessionRud : TestSession {
     /// Post a request and retrieve the response.
     /// </summary>
     /// <param name="data">StreamBuffer object containing JSON encoded request.</param>
+    /// <param name="Request">The request object.</param>
     /// <returns>StreamBuffer object containing JSON encoded response.</returns>
     public override Stream Post(MemoryStream data, JsonObject Request) {
         var requestBytes = data.ToArray();

@@ -60,9 +60,9 @@ public partial class TestSession : JpcSessionSerialized {
     /// specified credential.
     /// </summary>
     /// <param name="host">The host implementation</param>
-    /// <param name="Domain">Portal address</param>
-    /// <param name="Account">User account</param>
-    /// <param name="UDF">Authentication key identifier.</param>
+    /// <param name="credential">Credential to authenticate under.</param>
+    /// <param name="meshProtocolMessages">Mesasages</param>
+    /// <param name="machine">Target machine.</param>
     public TestSession(JpcInterface host, ICredential credential,
                 List<TraceTransaction> meshProtocolMessages, object machine) :
                     base(host, GetPublic(credential)) {
@@ -75,6 +75,7 @@ public partial class TestSession : JpcSessionSerialized {
     /// Post a request and retrieve the response.
     /// </summary>
     /// <param name="data">StreamBuffer object containing JSON encoded request.</param>
+    /// <param name="Request">The request object.</param>
     /// <returns>StreamBuffer object containing JSON encoded response.</returns>
     public override Stream Post(MemoryStream data, JsonObject Request) {
         var requestBytes = data.ToArray();

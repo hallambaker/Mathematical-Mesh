@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 7/6/2026 5:30:21 PM
+//  This file was automatically generated at 7/10/2026 12:41:08 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -999,7 +999,7 @@ public partial class ResultFileDare : ResultFile {
     /// <summary>
     /// </summary>
 
-	[JsonPropertyName("Envelope")]
+	[JsonPropertyName("Enveloped")]
 	public virtual Enveloped?					Enveloped  {get; set;} //
 
 
@@ -1008,7 +1008,7 @@ public partial class ResultFileDare : ResultFile {
 
 	///<summary>Binding</summary> 
 	static readonly Property[] _properties = [
-		new PropertyStruct ("Envelope", typeof (Enveloped),
+		new PropertyStruct ("Enveloped", typeof (Enveloped),
 					(data, value) => {(data as ResultFileDare).Enveloped = value as Enveloped;}, 
 					data => (data as ResultFileDare).Enveloped,
 					false, ()=>new  Enveloped(), ()=>new Enveloped())
@@ -1020,7 +1020,7 @@ public partial class ResultFileDare : ResultFile {
 	///<summary>Binding</summary> 
 	public static readonly new Binding<ResultFileDare> _binding = new (
 			new() {
-			{ "Envelope", _properties [0]}}, __Tag,
+			{ "Enveloped", _properties [0]}}, __Tag,
 		() => new ResultFileDare(), () => [], () => [], ResultFile._binding, Generic: false);
 
 

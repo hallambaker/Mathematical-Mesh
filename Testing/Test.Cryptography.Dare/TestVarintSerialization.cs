@@ -372,9 +372,11 @@ public class TestVarintSerialization : UnitTestSet {
         Dictionary<string, CatalogEntryTest> dataDictionary = [];
 
         // create the sequence
-        using var catalog = EarlCatalog.Create<CatalogEntryTest>(filename);
+        using var catalog = VDareCatalog<CatalogEntryTest>.Create(filename);
 
         var id1 = Add(catalog, dataDictionary, size, variable);
+
+        // This is failing on enumerating the catalog in reverse.
         Verify(catalog, dataDictionary);
 
         Update(catalog, dataDictionary, size, variable, id1);
@@ -416,7 +418,7 @@ public class TestVarintSerialization : UnitTestSet {
         }
 
 
-    string Add(EarlCatalog<CatalogEntryTest> catalog, Dictionary<string, CatalogEntryTest> dataDictionary,
+    string Add(VDareCatalog<CatalogEntryTest> catalog, Dictionary<string, CatalogEntryTest> dataDictionary,
         int size, bool variable, string id=null) {
         id ??= Udf.Nonce();
         var data = Seed.GetTestBytes(size, "This is a test");
@@ -431,7 +433,7 @@ public class TestVarintSerialization : UnitTestSet {
         return entry.UniqueId;
         }
 
-    string Update(EarlCatalog<CatalogEntryTest> catalog, Dictionary<string, CatalogEntryTest> dataDictionary,
+    string Update(VDareCatalog<CatalogEntryTest> catalog, Dictionary<string, CatalogEntryTest> dataDictionary,
             int size, bool variable, string id) {
 
         var data = Seed.GetTestBytes(size, "This is a test");
@@ -451,7 +453,7 @@ public class TestVarintSerialization : UnitTestSet {
 
 
     static bool CheckById(
-                EarlCatalog<CatalogEntryTest> catalog, 
+                VDareCatalog<CatalogEntryTest> catalog, 
                 Dictionary<string, CatalogEntryTest> dataDictionary, 
                 string id) {
 
@@ -478,7 +480,7 @@ public class TestVarintSerialization : UnitTestSet {
 
 
 
-    static bool Delete(EarlCatalog<CatalogEntryTest> catalog, Dictionary<string, CatalogEntryTest> dataDictionary, string id) {
+    static bool Delete(VDareCatalog<CatalogEntryTest> catalog, Dictionary<string, CatalogEntryTest> dataDictionary, string id) {
         
         dataDictionary.Remove(id);
         catalog.Delete(id);
@@ -486,7 +488,7 @@ public class TestVarintSerialization : UnitTestSet {
         return true;
         }
 
-    static bool Verify(EarlCatalog<CatalogEntryTest> catalogIn, Dictionary<string, CatalogEntryTest> dataDictionary) {
+    static bool Verify(VDareCatalog<CatalogEntryTest> catalogIn, Dictionary<string, CatalogEntryTest> dataDictionary) {
         //Console.WriteLine();
         //Console.WriteLine();
 
@@ -495,7 +497,7 @@ public class TestVarintSerialization : UnitTestSet {
 
 
         var matched = new Dictionary<string, CatalogEntryTest>();
-        using var catalog = EarlCatalog.Open<CatalogEntryTest>(filename);
+        using var catalog = VDareCatalog<CatalogEntryTest>.Open(filename);
 
         var count = 0;
         foreach (var index in catalog.EntriesReverse()) {

@@ -24,6 +24,14 @@ File ContainerTypes
 		Code Tree					"Tree"
 		Code Merkle					"Merkle"
 
+
+	Enum CatalogEvents "Catalog Events"
+		Code Add					"Add"
+		Code Update					"Update"
+		Code Delete					"Delete"
+		Code Index					"Index"
+
+
 File EncryptionPolicies
 	Enum PolicyEncryption "Encryption policies"
 		Code Once					"Once"

@@ -46,7 +46,7 @@ public class VCatalogEnumerator<T> :
     LinkedListNode<VDareEntryIndex<T>>? Node { get; set; }
 
 
-    EarlCatalog<T> Catalog { get; }
+    VDareCatalog<T> Catalog { get; }
     bool Forward { get; }
     bool first=true;
 
@@ -54,7 +54,7 @@ public class VCatalogEnumerator<T> :
     /// <param name="catalog">The catalog to enumerate.</param>
     /// <param name="forward">If true, enumerate in the forward direction,
     /// otherwise enumerate in reverse.</param>
-    public VCatalogEnumerator(EarlCatalog<T> catalog, bool forward) {
+    public VCatalogEnumerator(VDareCatalog<T> catalog, bool forward) {
         Catalog = catalog;
         Forward = forward;
         }
@@ -65,15 +65,17 @@ public class VCatalogEnumerator<T> :
 
     /// <inheritdoc/>
     public bool MoveNext() {
-        if (first) {
-            Node = Forward ? Catalog.Entries.First : Catalog.Entries.Last;
-            first = false;
-            }
-        else {
-            Node = Forward ? Node?.Next : Node?.Previous;
-            }
 
-        return Node is not null;
+        throw new NYI();
+        //if (first) {
+        //    Node = Forward ? Catalog.Entries.First : Catalog.Entries.Last;
+        //    first = false;
+        //    }
+        //else {
+        //    Node = Forward ? Node?.Next : Node?.Previous;
+        //    }
+
+        //return Node is not null;
         }
 
     /// <inheritdoc/>
