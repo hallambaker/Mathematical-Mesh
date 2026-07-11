@@ -35,7 +35,7 @@ public record SerialField(
             string Name,
             FieldType FieldType,
             Action<ISerializable, object?> Setter,
-            Func<ISerializable, object?>? Getter=null,
+            Func<ISerializable, object?> Getter,
             Func<ISerializable>? Factory = null,
             Func<object>? CollectionFactory = null,
             int CborCode = -1
@@ -125,7 +125,7 @@ public  class Serialization {
 
 
     public static string? GetString(JsonNode? node) {
-        if (!(node is JsonValue value)) {
+        if (node is not JsonValue value) {
             return null;
             }
         if (value.GetValueKind() != System.Text.Json.JsonValueKind.String) {
@@ -137,7 +137,7 @@ public  class Serialization {
 
 
     public static List<string?>? GetArrayString(JsonNode? node) {
-        if (!(node is JsonArray array)) {
+        if (node is not JsonArray array) {
             return null;
             }
         var result = new List<string?>();
@@ -155,7 +155,7 @@ public  class Serialization {
 
 
     public static bool? GetBoolean(JsonNode? node) {
-        if (!(node is JsonValue value)) {
+        if (node is not JsonValue value) {
             return null;
             }
 
@@ -165,7 +165,7 @@ public  class Serialization {
         }
 
     public static int? GetInteger(JsonNode? node) {
-        if (!(node is JsonValue value)) {
+        if (node is not JsonValue value) {
             return null;
             }
 
@@ -177,7 +177,7 @@ public  class Serialization {
                     JsonNode? node,
                     object list,
                     Func<ISerializable> factory) {
-        if (!(node is JsonArray array)) {
+        if (node is not JsonArray array) {
             return;
             }
         foreach (var field in array) {
@@ -198,7 +198,7 @@ public  class Serialization {
                 JsonNode? node,
                 object list,
                 Func<ISerializable> factory) {
-        if (!(node is JsonArray array)) {
+        if (node is not JsonArray array ) {
             return;
             }
         foreach (var field in array) {
@@ -206,7 +206,7 @@ public  class Serialization {
             Deserialize(item, field);
 
             var ilist = list as System.Collections.IDictionary;
-            var key = (item as ISerializableKeyed).Key;
+            var key = (item as ISerializableKeyed)?.Key;
 
             if (key != null) {
                 ilist?.Add(key, item);
@@ -225,42 +225,41 @@ public  class Serialization {
 
 
 
-public class Serialization<T> : Serialization where T : ISerializable, new() {
+//public class Serialization<T> : Serialization where T : ISerializable, new() {
 
  
 
 
-    public static void Serialize(
-                T data,
-                TextWriter stream,
-                int indent = 0) {
+//    public static void Serialize(
+//                T data,
+//                TextWriter stream,
+//                int indent = 0) {
 
 
-        }
+//        }
 
 
-    public static T? Deserialize(
-            string text) {
-        var tree = JsonNode.Parse(text);
-        if (tree is JsonObject root) {
-            return Deserialize(root);
-            }
-        return default;
-        }
+//    public static T? Deserialize(
+//            string text) {
+//        var tree = JsonNode.Parse(text);
+//        if (tree is JsonObject root) {
+//            return Deserialize(root);
+//            }
+//        return default;
+//        }
 
 
-    public static T Deserialize(
-                JsonObject? node) {
-        var result = new T();
-        Deserialize(result, node);
-        return result;
-        }
+//    public static T Deserialize(
+//                JsonObject? node) {
+//        var result = new T();
+//        if (node is not null) {
+//            Deserialize(result, node);
+//            }
+//        return result;
+//        }
 
 
-
-
-
-    }
+//    }
 
 
 public static class Extensions {
@@ -268,11 +267,11 @@ public static class Extensions {
 
     static void Indent(StringBuilder builder, int indent, ref bool first) {
         if (!first) {
-            builder.Append(",");
+            builder.Append(',');
             }
         first = false;
         if (indent >= 0) {
-            builder.Append("\n");
+            builder.Append('\n');
             }
         for (int i = 0; i < indent; i++) {
             builder.Append("  ");
@@ -292,7 +291,7 @@ public static class Extensions {
         var builder = new StringBuilder();
 
         //Indent(builder, indent, false);
-        builder.Append("{");
+        builder.Append('{');
         indent = NextIndent(indent);
 
         var first = true;
@@ -300,17 +299,17 @@ public static class Extensions {
             if (field is not null) {
                 switch (field.FieldType) {
                     case FieldType.Integer: {
-                        if (field.Getter(data) is int value) {
+                        if (field?.Getter(data) is int value) {
                             Indent(builder, indent, ref first);
                             builder.Append('"');
                             builder.Append(field.Name);
                             builder.Append("\": ");
-                            builder.Append(value.ToString());
+                            builder.Append(value);
                             }
                         break;
                         }
                     case FieldType.String: {
-                        if (field.Getter(data) is string value) {
+                        if (field?.Getter(data) is string value) {
                             Indent(builder, indent, ref first);
                             builder.Append('"');
                             builder.Append(field.Name);

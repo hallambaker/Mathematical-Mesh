@@ -27,7 +27,11 @@ namespace Goedel.Cryptography.Dare;
 
 
 /// <summary>Typed DARE Catalog using the EARL encoding scheme.</summary>
-public class VDareCatalog<T> : VDareSequence<T> where T : JsonObject, new() {
+/// <remarks>Constructor, return a new catalog reading and writing to 
+/// <paramref name="stream"/>.</remarks>
+/// <param name="stream">The reader/writer stream.</param>
+public class VDareCatalog<T>(
+            VDareStream stream) : VDareSequence<T>(stream) where T : JsonObject, new() {
 
 
     /// <summary>Create a new catalog in file  <paramref name="fileName"/></summary>
@@ -67,16 +71,6 @@ public class VDareCatalog<T> : VDareSequence<T> where T : JsonObject, new() {
 
     /// <summary>The entries by the secondary key.</summary>
     public Dictionary<string, VDareEntryIndex<T>> EntriesBySecondaryId { get; } = [];
-
-    ///// <summary>The entry descriptors.</summary>
-    //public LinkedList<VDareEntryIndex<T>> Entries { get; } = [];
-
-    /// <summary>Constructor, return a new catalog reading and writing to 
-    /// <paramref name="stream"/>.</summary>
-    /// <param name="stream">The reader/writer stream.</param>
-    public VDareCatalog(
-                VDareStream stream) : base(stream) {
-        }
 
 
     /// <summary>Read the initial sequence record.</summary>

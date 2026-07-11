@@ -7741,6 +7741,15 @@
         </member>
         <member name="T:Goedel.Cryptography.Dare.VDareCatalog`1">
             <summary>Typed DARE Catalog using the EARL encoding scheme.</summary>
+            <remarks>Constructor, return a new catalog reading and writing to 
+            <paramref name="stream"/>.</remarks>
+            <param name="stream">The reader/writer stream.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.VDareCatalog`1.#ctor(Goedel.Cryptography.Dare.VDareStream)">
+            <summary>Typed DARE Catalog using the EARL encoding scheme.</summary>
+            <remarks>Constructor, return a new catalog reading and writing to 
+            <paramref name="stream"/>.</remarks>
+            <param name="stream">The reader/writer stream.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.VDareCatalog`1.Create(System.String)">
             <summary>Create a new catalog in file  <paramref name="fileName"/></summary>
@@ -7760,11 +7769,6 @@
         </member>
         <member name="P:Goedel.Cryptography.Dare.VDareCatalog`1.EntriesBySecondaryId">
             <summary>The entries by the secondary key.</summary>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareCatalog`1.#ctor(Goedel.Cryptography.Dare.VDareStream)">
-            <summary>Constructor, return a new catalog reading and writing to 
-            <paramref name="stream"/>.</summary>
-            <param name="stream">The reader/writer stream.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.VDareCatalog`1.ReadInitial">
             <summary>Read the initial sequence record.</summary>
@@ -8715,6 +8719,18 @@
         <member name="T:Goedel.Cryptography.Dare.VCatalogEnumerator`1">
             <summary>Typed enumerator for catalog entries.</summary>
             <typeparam name="T">The type of the catalog entry.</typeparam>
+            <remarks>Constructor, returns a new instance.</remarks>
+            <param name="catalog">The catalog to enumerate.</param>
+            <param name="forward">If true, enumerate in the forward direction,
+            otherwise enumerate in reverse.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.VCatalogEnumerator`1.#ctor(Goedel.Cryptography.Dare.VDareCatalog{`0},System.Boolean)">
+            <summary>Typed enumerator for catalog entries.</summary>
+            <typeparam name="T">The type of the catalog entry.</typeparam>
+            <remarks>Constructor, returns a new instance.</remarks>
+            <param name="catalog">The catalog to enumerate.</param>
+            <param name="forward">If true, enumerate in the forward direction,
+            otherwise enumerate in reverse.</param>
         </member>
         <member name="P:Goedel.Cryptography.Dare.VCatalogEnumerator`1.Current">
             <inheritdoc/>
@@ -8724,12 +8740,6 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.VCatalogEnumerator`1.Dispose">
             <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.VCatalogEnumerator`1.#ctor(Goedel.Cryptography.Dare.VDareCatalog{`0},System.Boolean)">
-            <summary>Constructor, returns a new instance.</summary>
-            <param name="catalog">The catalog to enumerate.</param>
-            <param name="forward">If true, enumerate in the forward direction,
-            otherwise enumerate in reverse.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.VCatalogEnumerator`1.GetEnumerator">
             <inheritdoc/>

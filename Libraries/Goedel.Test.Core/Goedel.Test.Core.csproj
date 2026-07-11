@@ -9,6 +9,9 @@
 	</PropertyGroup>
 	<Import Project="$(SolutionDir)Settings/MasterSettings.xml" />
 
+	<PropertyGroup>
+		<DocumentationFile></DocumentationFile>
+	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Client\Goedel.Mesh.Client.csproj" />
 		<ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />

@@ -26,7 +26,11 @@ namespace Goedel.Cryptography.Dare;
 
 /// <summary>Typed enumerator for catalog entries.</summary>
 /// <typeparam name="T">The type of the catalog entry.</typeparam>
-public class VCatalogEnumerator<T> : 
+/// <remarks>Constructor, returns a new instance.</remarks>
+/// <param name="catalog">The catalog to enumerate.</param>
+/// <param name="forward">If true, enumerate in the forward direction,
+/// otherwise enumerate in reverse.</param>
+public class VCatalogEnumerator<T>(VDareCatalog<T> catalog, bool forward) : 
             IEnumerator<VDareEntryIndex<T>>, IEnumerable<VDareEntryIndex<T>> 
                 where T : JsonObject, new() {
 
@@ -46,18 +50,9 @@ public class VCatalogEnumerator<T> :
     LinkedListNode<VDareEntryIndex<T>>? Node { get; set; }
 
 
-    VDareCatalog<T> Catalog { get; }
-    bool Forward { get; }
+    VDareCatalog<T> Catalog { get; } = catalog;
+    bool Forward { get; } = forward;
     bool first=true;
-
-    /// <summary>Constructor, returns a new instance.</summary>
-    /// <param name="catalog">The catalog to enumerate.</param>
-    /// <param name="forward">If true, enumerate in the forward direction,
-    /// otherwise enumerate in reverse.</param>
-    public VCatalogEnumerator(VDareCatalog<T> catalog, bool forward) {
-        Catalog = catalog;
-        Forward = forward;
-        }
 
 
     /// <inheritdoc/>
@@ -66,15 +61,15 @@ public class VCatalogEnumerator<T> :
     /// <inheritdoc/>
     public bool MoveNext() {
 
-        throw new NYI();
-        //if (first) {
-        //    Node = Forward ? Catalog.Entries.First : Catalog.Entries.Last;
-        //    first = false;
-        //    }
-        //else {
-        //    Node = Forward ? Node?.Next : Node?.Previous;
-        //    }
+        if (first) {
+            //Node = Forward ? Catalog.Entries.First : Catalog.Entries.Last;
+            //first = false;
+            }
+        else {
+            //Node = Forward ? Node?.Next : Node?.Previous;
+            }
 
+        throw new NYI();
         //return Node is not null;
         }
 

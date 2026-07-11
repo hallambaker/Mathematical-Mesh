@@ -237,7 +237,7 @@ public abstract class DescribeEntry {
     /// <summary>Brief description</summary>
     public string Brief { get; set; }
     /// <summary>The default value (if specified)</summary>
-    public string Default { get; set; }
+    public string? Default { get; set; }
     /// <summary>The command line key.</summary>
     public string Key { get; set; }
     /// <summary>The position in the options array.</summary>

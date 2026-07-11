@@ -279,12 +279,8 @@ public static partial class Extensions {
         new KeyValueEnumerable<T>(dict);
 
 
-    private class KeyValueEnumerable<T> : IEnumerable<KeyValuePair<string, object?>> {
-        IEnumerable<KeyValuePair<string, T?>> Typed { get; }
-
-        public KeyValueEnumerable(IEnumerable<KeyValuePair<string, T?>> typed){
-            Typed = typed;
-            }
+    private class KeyValueEnumerable<T>(IEnumerable<KeyValuePair<string, T?>> typed) : IEnumerable<KeyValuePair<string, object?>> {
+        IEnumerable<KeyValuePair<string, T?>> Typed { get; } = typed;
 
         public IEnumerator<KeyValuePair<string, object>> GetEnumerator() => 
                     new KeyValueEnumeration<T>(Typed.GetEnumerator());
@@ -308,15 +304,11 @@ public static partial class Extensions {
             }
         }
 
-    private class KeyValueEnumeration<T> : KeyValueEnumeration {
-        IEnumerator<KeyValuePair<string, T?>> Typed { get; }
+    private class KeyValueEnumeration<T>(IEnumerator<KeyValuePair<string, T?>> typed) : KeyValueEnumeration {
+        IEnumerator<KeyValuePair<string, T?>> Typed { get; } = typed;
 
         public override KeyValuePair<string, object> Current => current;
         KeyValuePair<string, object> current;
-
-        public KeyValueEnumeration(IEnumerator<KeyValuePair<string, T?>> typed) {
-            Typed = typed;
-            }
 
         public override bool MoveNext() {
             var result = Typed.MoveNext();
