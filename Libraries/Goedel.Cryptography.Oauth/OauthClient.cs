@@ -74,7 +74,7 @@ public class OauthClient {
 
 
     static JWK GetOrCreateKey(string directory, string filename, KeyUses keyUses) {
-        var keyfile = Path.Combine(directory, filename + ".jwk");
+        var keyfile = Path.Combine(directory??"", filename + ".jwk");
 
         try {
             var result = keyfile.ReadFileJson<JWK>();

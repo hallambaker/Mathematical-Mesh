@@ -182,15 +182,23 @@
             A character stream reader that takes a TextReader as the input source.
             The input stream is only read in the forward direction.
             </summary>
-        </member>
-        <member name="P:Goedel.Protocol.CharacterStreamTextReader.EOF">
-            <summary>If true, end of file has been reached. </summary>
+            <remarks>
+            Creatre an instance from the specified TextReader.
+            </remarks>
+            <param name="Input">The input stream.</param>
         </member>
         <member name="M:Goedel.Protocol.CharacterStreamTextReader.#ctor(System.IO.TextReader)">
             <summary>
-            Creatre an instance from the specified TextReader.
+            A character stream reader that takes a TextReader as the input source.
+            The input stream is only read in the forward direction.
             </summary>
+            <remarks>
+            Creatre an instance from the specified TextReader.
+            </remarks>
             <param name="Input">The input stream.</param>
+        </member>
+        <member name="P:Goedel.Protocol.CharacterStreamTextReader.EOF">
+            <summary>If true, end of file has been reached. </summary>
         </member>
         <member name="M:Goedel.Protocol.CharacterStreamTextReader.PeekChar">
             <summary>Return the next character in the stream without advancing the stream</summary>
@@ -231,15 +239,22 @@
             <summary>
             A character stream reader that takes a string as the input source.
             </summary>
-        </member>
-        <member name="P:Goedel.Protocol.CharacterStreamStringReader.EOF">
-            <summary>If true, end of file has been reached. </summary>
+            <remarks>
+            Create a CharacterStreamStringReader from the specified string.
+            </remarks>
+            <param name="Input">The string to be read.</param>
         </member>
         <member name="M:Goedel.Protocol.CharacterStreamStringReader.#ctor(System.String)">
             <summary>
-            Create a CharacterStreamStringReader from the specified string.
+            A character stream reader that takes a string as the input source.
             </summary>
+            <remarks>
+            Create a CharacterStreamStringReader from the specified string.
+            </remarks>
             <param name="Input">The string to be read.</param>
+        </member>
+        <member name="P:Goedel.Protocol.CharacterStreamStringReader.EOF">
+            <summary>If true, end of file has been reached. </summary>
         </member>
         <member name="M:Goedel.Protocol.CharacterStreamStringReader.PeekChar">
             <summary>Return the next character in the stream without advancing the stream</summary>
@@ -360,18 +375,27 @@
             A binary and character stream reader that takes a binary stream as the input
             source. The stream is only read in the forward direction.
             </summary>
+            <remarks>
+            Return a CharacterStreamReader for the specified input source which may be
+            any stream source that supports read operations.
+            </remarks>
+            <param name="Input">The stream to be read</param>
+        </member>
+        <member name="M:Goedel.Protocol.CharacterStreamReader.#ctor(System.IO.Stream)">
+            <summary>
+            A binary and character stream reader that takes a binary stream as the input
+            source. The stream is only read in the forward direction.
+            </summary>
+            <remarks>
+            Return a CharacterStreamReader for the specified input source which may be
+            any stream source that supports read operations.
+            </remarks>
+            <param name="Input">The stream to be read</param>
         </member>
         <member name="F:Goedel.Protocol.CharacterStreamReader.Input">
             <summary>
             The underlying input stream.
             </summary>
-        </member>
-        <member name="M:Goedel.Protocol.CharacterStreamReader.#ctor(System.IO.Stream)">
-            <summary>
-            Return a CharacterStreamReader for the specified input source which may be
-            any stream source that supports read operations.
-            </summary>
-            <param name="Input">The stream to be read</param>
         </member>
         <member name="M:Goedel.Protocol.CharacterStreamReader.ReadByte">
             <summary>
@@ -406,12 +430,21 @@
             A binary and character stream reader that takes a binary stream as the input
             source. The stream MUST support the seek operation.
             </summary>
+            <remarks>
+            Return a CharacterStreamReader for the specified input source which must
+            be a stream source that supports seek operations.
+            </remarks>
+            <param name="Input">The stream to be read</param>
         </member>
         <member name="M:Goedel.Protocol.CharacterStreamSeekReader.#ctor(System.IO.Stream)">
             <summary>
+            A binary and character stream reader that takes a binary stream as the input
+            source. The stream MUST support the seek operation.
+            </summary>
+            <remarks>
             Return a CharacterStreamReader for the specified input source which must
             be a stream source that supports seek operations.
-            </summary>
+            </remarks>
             <param name="Input">The stream to be read</param>
         </member>
         <member name="M:Goedel.Protocol.CharacterStreamSeekReader.Mark">
@@ -3449,17 +3482,11 @@
             Factory method used as default for ToString methods.
             </summary>
         </member>
-        <member name="F:Goedel.Protocol.JsonObject.BindingDictionary">
+        <member name="P:Goedel.Protocol.JsonObject.BindingDictionary">
             <summary>Dictionary mapping types to binding definitions.</summary> 
         </member>
-        <member name="F:Goedel.Protocol.JsonObject.BindingNameDictionary">
+        <member name="P:Goedel.Protocol.JsonObject.BindingNameDictionary">
             <summary>Dictionary mapping types to binding definitions.</summary> 
-        </member>
-        <member name="M:Goedel.Protocol.JsonObject.AddDictionary(System.Collections.Generic.Dictionary{System.String,Goedel.Protocol.JsonFactoryDelegate}@)">
-            <summary>
-            Append the values from the tag dictionary of this type to <paramref name="dictionary"/>.
-            </summary>
-            <param name="dictionary">The dictionary to append the values to.</param>
         </member>
         <member name="M:Goedel.Protocol.JsonObject.AddDictionary(System.Collections.Generic.Dictionary{System.Type,Goedel.Protocol.Binding}@)">
             <summary>

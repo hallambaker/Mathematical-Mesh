@@ -52,7 +52,7 @@ public class UnitTestSet : Disposable {
     public static string DeviceConnect1Name => "DeviceConnect1";
 
 
-    public string CallsignAlice => "@alice";
+    public static string CallsignAlice => "@alice";
     public string CallsignBob => "@bob";
     public string CallsignMallet => "@mallet";
     public string CallsignRegistry => "@registry";

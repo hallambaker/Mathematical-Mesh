@@ -175,7 +175,7 @@ public partial class JsonReader : Reader {
         }
 
     /// <summary>Actions to perform on transitions</summary>
-    protected Action[] Actions = {
+    protected Action[] Actions = [
             Action.Ignore,          //  0
             Action.Complete,     //  1
             Action.Complete,     //  2
@@ -204,11 +204,11 @@ public partial class JsonReader : Reader {
             Action.AddComplete,     // 25=16
             Action.AddComplete,     // 26=17
             Action.Ignore           // 27=18
-            };
+            ];
 
 
     /// <summary>Tokens to be returned if the FSR stops in the specified state.</summary>
-    protected Token[] Tokens = {
+    protected Token[] Tokens = [
             Token.Empty,                //  0
             Token.StartObject,          //  1
             Token.EndObject,            //  2
@@ -237,7 +237,7 @@ public partial class JsonReader : Reader {
             Token.Colon,                // 24
             Token.Invalid,               // 25
             Token.EndRecord               // 26
-                                  };
+                                  ];
 
     #endregion
 

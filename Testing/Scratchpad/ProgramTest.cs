@@ -66,9 +66,12 @@ partial class Program {
 
 
 
+        //ShellTests.Test().TestLog();
 
         // Not completed
-        //ShellTests.Test().TestHandleThing();
+        //ServiceDiscovery.Test().TestResoveHandles();
+        ShellTests.Test().NewFileTestOnce(true, false, false);
+
 
         //TestVarintSerialization.Test().TestEnvelope();
         //TestVarintSerialization.Test().TestArchive();
@@ -76,7 +79,7 @@ partial class Program {
 
         //TestVarintSerialization.Test().TestLog();
         //TestVarintSerialization.Test().TestSpool();
-        TestVarintSerialization.Test().TestCatalog();
+        //TestVarintSerialization.Test().TestCatalog();
 
 
         // ---------- Problematic still

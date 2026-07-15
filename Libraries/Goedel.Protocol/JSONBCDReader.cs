@@ -36,7 +36,7 @@ public class JsonBcdReader : JsonReader {
     /// Returns a factory delegate that returns a reader of this type.
     /// </summary>
     public static new JSONReaderFactoryDelegate JSONReaderFactory => ReaderFactoryMethod;
-    static JsonReader ReaderFactoryMethod(byte[] data) => new JsonBcdReader(data);
+    static JsonBcdReader ReaderFactoryMethod(byte[] data) => new(data);
 
 
     IBinaryStream ByteInput => CharacterInput as IBinaryStream;

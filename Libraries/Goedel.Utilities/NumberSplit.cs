@@ -158,7 +158,7 @@ public static class NumberSplit {
     /// <param name="Data">Input</param>
     /// <returns>Output array</returns>
     public static byte[] BigEndian(this int Data) =>
-                new byte[] { Data.Byte3(), Data.Byte2(), Data.Byte1(), Data.Byte0() };
+                [Data.Byte3(), Data.Byte2(), Data.Byte1(), Data.Byte0()];
 
 
     /// <summary>
@@ -174,7 +174,7 @@ public static class NumberSplit {
     /// </summary>
     /// <param name="Data">Input</param>
     /// <returns>Output array</returns>
-    public static byte[] LittleEndian(this int Data) => new byte[] { Data.Byte0(), Data.Byte1(), Data.Byte2(), Data.Byte3() };
+    public static byte[] LittleEndian(this int Data) => [Data.Byte0(), Data.Byte1(), Data.Byte2(), Data.Byte3()];
 
     /// <summary>
     /// Set the values of a byte array from 32 bit integer in big endian order
@@ -359,8 +359,8 @@ public static class NumberSplit {
     /// </summary>
     /// <param name="Data">Input</param>
     /// <returns>Output array</returns>
-    public static byte[] BigEndian(this ulong Data) => new byte[] { Data.Byte7(), Data.Byte6(), Data.Byte5(), Data.Byte4(),
-                Data.Byte3(), Data.Byte2(), Data.Byte1(), Data.Byte0() };
+    public static byte[] BigEndian(this ulong Data) => [ Data.Byte7(), Data.Byte6(), Data.Byte5(), Data.Byte4(),
+                Data.Byte3(), Data.Byte2(), Data.Byte1(), Data.Byte0() ];
 
 
 

@@ -255,22 +255,20 @@ public class DeterministicSeed {
     public void MakeTestFile(string filename, int length, string info = "") {
 
         var bytes = GetTestBytes(length, info);
-        using (var stream = filename.OpenFileNew()) {
-            stream.Write(bytes);
-            }
+        using var stream = filename.OpenFileNew();
+        stream.Write(bytes);
         }
 
     public void CheckTestFile(string filename, int length, string info = "") {
         var bytes = GetTestBytes(length, info);
-        using (var stream = filename.OpenFileRead()) {
-            (stream.Length == length).TestTrue();
+        using var stream = filename.OpenFileRead();
+        (stream.Length == length).TestTrue();
 
-            var read = new byte[length];
+        var read = new byte[length];
 
-            stream.ReadExactly(read, 0, length);
+        stream.ReadExactly(read, 0, length);
 
-            read.TestEqual(bytes);
-            }
+        read.TestEqual(bytes);
         }
 
 
@@ -314,7 +312,7 @@ public class DeterministicSeed {
 
     static byte[] GetTestBytes(byte[] tag, int length, byte[] info) {
         if (length == 0) {
-            return Array.Empty<byte>();
+            return [];
             }
 
         var result = new byte[length];

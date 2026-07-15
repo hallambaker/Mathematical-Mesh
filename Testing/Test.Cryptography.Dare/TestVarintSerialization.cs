@@ -385,7 +385,7 @@ public class TestVarintSerialization : UnitTestSet {
         CheckById(catalog, dataDictionary, id1).TestTrue() ;
 
         Delete(catalog, dataDictionary, id1);
-        CheckById(catalog, dataDictionary, id1).TestFalse();
+        CheckById(catalog, dataDictionary, id1, false).TestFalse();
 
         Verify(catalog, dataDictionary);
 
@@ -455,12 +455,14 @@ public class TestVarintSerialization : UnitTestSet {
     static bool CheckById(
                 VDareCatalog<CatalogEntryTest> catalog, 
                 Dictionary<string, CatalogEntryTest> dataDictionary, 
-                string id) {
+                string id,
+                bool present=true) {
 
         var inDictionary = dataDictionary.TryGetValue(id, out var dictionaryValue);
 
         // Check the appearances.
         (catalog.TryGetById(id, out var catalogValue) == inDictionary).TestTrue();
+        //catalogValue.
         if (inDictionary) {
             dictionaryValue.ToBytes().TestEqual(catalogValue.ToBytes());
 
@@ -500,7 +502,7 @@ public class TestVarintSerialization : UnitTestSet {
         using var catalog = VDareCatalog<CatalogEntryTest>.Open(filename);
 
         var count = 0;
-        foreach (var index in catalog.EntriesReverse()) {
+        foreach (var index in catalog) {
             var entry = catalog.GetValue(index);
             if (entry != null) {
                 if (!matched.TryGetValue(entry.UniqueId, out var match)) {

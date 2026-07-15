@@ -433,20 +433,12 @@ public partial class ServiceDiscovery {
         TestResolve(dnsClient, "maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@alice@example.com",
             "maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@@example.com");
 
-
-
-
-
         // DNS handle
         TestResolve(dnsClient, "@alice.example.net",
             "maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@@example.com");
 
         TestResolve(dnsClient, "@maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@alice.example.net",
             "maua-f6qe-ejui-gbwr-c4bh-4x5o-tlah@@example.com");
-
-
-
-
         }
 
     bool TestResolve(

@@ -128,10 +128,10 @@ public abstract partial class JsonObject : IBinding {
     */
 
     ///<summary>Dictionary mapping types to binding definitions.</summary> 
-    public static Dictionary<Type, Binding> BindingDictionary = [];
+    public static Dictionary<Type, Binding> BindingDictionary { get; } = [];
 
     ///<summary>Dictionary mapping types to binding definitions.</summary> 
-    public static Dictionary<string, Binding> BindingNameDictionary = [];
+    public static Dictionary<string, Binding> BindingNameDictionary { get; } = [];
 
 
     /*
@@ -143,20 +143,20 @@ public abstract partial class JsonObject : IBinding {
                 Dictionary<string, JsonFactoryDelegate> dictionary) => Append(TagDictionary, dictionary);
     */
 
-    /// <summary>
-    /// Append the values from the tag dictionary of this type to <paramref name="dictionary"/>.
-    /// </summary>
-    /// <param name="dictionary">The dictionary to append the values to.</param>
-    public static void AddDictionary(
-                    ref Dictionary<string, JsonFactoryDelegate> dictionary) {
-        /*
-        if (dictionary != TagDictionary) {
-            Append(TagDictionary, dictionary);
-            dictionary = TagDictionary;
-            }
+    ///// <summary>
+    ///// Append the values from the tag dictionary of this type to <paramref name="dictionary"/>.
+    ///// </summary>
+    ///// <param name="dictionary">The dictionary to append the values to.</param>
+    //public static void AddDictionary(
+    //                ref Dictionary<string, JsonFactoryDelegate> dictionary) {
+    //    /*
+    //    if (dictionary != TagDictionary) {
+    //        Append(TagDictionary, dictionary);
+    //        dictionary = TagDictionary;
+    //        }
 
-        */
-        }
+    //    */
+    //    }
 
 
     /// <summary>
@@ -171,15 +171,8 @@ public abstract partial class JsonObject : IBinding {
             var binding = pair.Value;
             //Console.WriteLine($"Add {binding.Tag}");
 
-            if (!BindingDictionary.ContainsKey(pair.Key)) {
-                BindingDictionary.Add (pair.Key, binding);
-                }
-
-            if (!BindingNameDictionary.ContainsKey(binding.Tag)) {
-                BindingNameDictionary.Add(binding.Tag, binding);
-                }
-
-
+            BindingDictionary.TryAdd(pair.Key, binding);
+            BindingNameDictionary.TryAdd(binding.Tag, binding);
             binding.TypeDictionary.Add(binding.Tag, binding);
             AddToParents(binding, binding.Parent);
             }

@@ -7782,9 +7782,10 @@
             <param name="index">The index of the entry to return.</param>
             <returns>The value of the index entry.</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareCatalog`1.DeleteKeys(Goedel.Cryptography.Dare.VDareEntryIndex{`0})">
-            <summary>Delete keys associated with index entry <paramref name="index"/></summary>
-            <param name="index">The index entry whose keys are to be deleted.</param>
+        <member name="M:Goedel.Cryptography.Dare.VDareCatalog`1.DeleteKeys(Goedel.Cryptography.Dare.VDareEntryIndex{`0},Goedel.Cryptography.Dare.VDareEntryIndex{`0})">
+            <summary>Delete keys associated with index entry <paramref name="old"/></summary>
+            <param name="old">The index entry whose keys are to be deleted.</param>
+            <param name="replacement">The deletion entry.</param>
         </member>
         <member name="M:Goedel.Cryptography.Dare.VDareCatalog`1.UpdateKeys(Goedel.Cryptography.Dare.VDareEntryIndex{`0})">
             <summary>Update the index with keys from <paramref name="index"/>.</summary>
@@ -7837,8 +7838,14 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.VDareCatalog`1.EntriesForward">
             <inheritdoc/>
+            <remarks>Since a catalog does not have an implicit ordering on its members, the underlying
+            sequence is always evaluated in reverse order. This allows an index returned in a reverse 
+            search to be used to speed up operations.</remarks>
         </member>
         <member name="M:Goedel.Cryptography.Dare.VDareCatalog`1.EntriesReverse">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.VDareCatalog`1.GetEnumerator">
             <inheritdoc/>
         </member>
         <member name="T:Goedel.Cryptography.Dare.VDareEntryIndex">
@@ -8721,24 +8728,19 @@
             <typeparam name="T">The type of the catalog entry.</typeparam>
             <remarks>Constructor, returns a new instance.</remarks>
             <param name="catalog">The catalog to enumerate.</param>
-            <param name="forward">If true, enumerate in the forward direction,
-            otherwise enumerate in reverse.</param>
+            
         </member>
-        <member name="M:Goedel.Cryptography.Dare.VCatalogEnumerator`1.#ctor(Goedel.Cryptography.Dare.VDareCatalog{`0},System.Boolean)">
+        <member name="M:Goedel.Cryptography.Dare.VCatalogEnumerator`1.#ctor(Goedel.Cryptography.Dare.VDareCatalog{`0})">
             <summary>Typed enumerator for catalog entries.</summary>
             <typeparam name="T">The type of the catalog entry.</typeparam>
             <remarks>Constructor, returns a new instance.</remarks>
             <param name="catalog">The catalog to enumerate.</param>
-            <param name="forward">If true, enumerate in the forward direction,
-            otherwise enumerate in reverse.</param>
+            
         </member>
         <member name="P:Goedel.Cryptography.Dare.VCatalogEnumerator`1.Current">
             <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.VCatalogEnumerator`1.System#Collections#IEnumerator#Current">
-            <inheritdoc/>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.VCatalogEnumerator`1.Dispose">
             <inheritdoc/>
         </member>
         <member name="M:Goedel.Cryptography.Dare.VCatalogEnumerator`1.GetEnumerator">

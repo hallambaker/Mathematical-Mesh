@@ -31,7 +31,7 @@ namespace Goedel.Cryptography.Dare;
 /// <paramref name="stream"/>.</remarks>
 /// <param name="stream">The reader/writer stream.</param>
 public class VDareCatalog<T>(
-            VDareStream stream) : VDareSequence<T>(stream) where T : JsonObject, new() {
+            VDareStream stream) : VDareSequence<T>(stream), IEnumerable<VDareEntryIndex<T>> where T : JsonObject, new(){
 
 
     /// <summary>Create a new catalog in file  <paramref name="fileName"/></summary>
@@ -79,6 +79,7 @@ public class VDareCatalog<T>(
 
         var index = Stream.ReadIndexNext<T>();
         IndexFirstT = index;
+        IndexLastT = index;
 
         while (index is not null) {
             Process(index);
@@ -87,6 +88,10 @@ public class VDareCatalog<T>(
             index = Stream.ReadIndexNext<T>();
             }
         }
+
+
+
+
 
     /// <summary>Process addition of the entry item <paramref name="index"/></summary>
     /// <param name="index">Index of the entry to add.</param>
@@ -98,7 +103,9 @@ public class VDareCatalog<T>(
                 break;
                 }
             case ProtocolConstants.SequenceEventDeleteTag: {
-                DeleteKeys(index);
+                EntriesById.TryGetValue(index.PrimaryKey, out var old);
+                index.Deleted = true;
+                DeleteKeys(old, index);
                 break;
                 }
             }
@@ -128,27 +135,31 @@ public class VDareCatalog<T>(
         return result;
         }
 
-    /// <summary>Delete keys associated with index entry <paramref name="index"/></summary>
-    /// <param name="index">The index entry whose keys are to be deleted.</param>
-    protected virtual void DeleteKeys(VDareEntryIndex<T> index) {
-        //GetMeta(index);
+    void DeleteSecondaries(VDareEntryIndex<T> index) {
 
-        EntriesById.Replace(index.PrimaryKey, index);
         if (index.SecondaryKeys != null) {
-            foreach (var key in index.SecondaryKeys) {
-                EntriesBySecondaryId.Remove(key);
+            foreach (var key2 in index.SecondaryKeys) {
+                EntriesBySecondaryId.Remove(key2);
                 }
             }
+
+        }
+
+    /// <summary>Delete keys associated with index entry <paramref name="old"/></summary>
+    /// <param name="old">The index entry whose keys are to be deleted.</param>
+    /// <param name="replacement">The deletion entry.</param>
+    protected virtual void DeleteKeys(VDareEntryIndex<T> old, VDareEntryIndex<T> replacement) {
+        //GetMeta(index);
+
+
+        DeleteSecondaries(replacement);
+        EntriesById.Replace(old.PrimaryKey, replacement);
         }
 
     /// <summary>Update the index with keys from <paramref name="index"/>.</summary>
     /// <param name="index">The index entry specifying the keys.</param>
     protected virtual void UpdateKeys(VDareEntryIndex<T> index) {
-        if (EntriesById.ContainsKey(index.PrimaryKey)) {
-            foreach (var key in index.SecondaryKeys) {
-                EntriesBySecondaryId.Remove(key);
-                }
-            }
+        DeleteSecondaries(index);
         CreateKeys(index);
         }
 
@@ -212,9 +223,10 @@ public class VDareCatalog<T>(
         if (!TryGetMeta(id, out var index)) {
             return null;
             }
-        var meta = index.JsonObject as T;
+        //var meta = index.JsonObject as T;
 
         var contentMeta = new ContentMeta() {
+           
             UniqueId = id,
             Event = ProtocolConstants.SequenceEventDeleteTag
             };
@@ -222,7 +234,7 @@ public class VDareCatalog<T>(
         var result = Append<T>(null, contentMeta);
         result.Deleted = true;
 
-        DeleteKeys(index);
+        DeleteKeys(index, result);
 
         return result;
         }
@@ -310,12 +322,20 @@ public class VDareCatalog<T>(
         }
 
     /// <inheritdoc/>
+    /// <remarks>Since a catalog does not have an implicit ordering on its members, the underlying
+    /// sequence is always evaluated in reverse order. This allows an index returned in a reverse 
+    /// search to be used to speed up operations.</remarks>
     public override IEnumerable<VDareEntryIndex<T>> EntriesForward() => 
-           new VCatalogEnumerator<T>(this, true);
+           new VCatalogEnumerator<T>(this);
 
     /// <inheritdoc/>
     public override IEnumerable<VDareEntryIndex<T>> EntriesReverse() =>
-           new VCatalogEnumerator<T>(this, false);
+           new VCatalogEnumerator<T>(this);
 
+    /// <inheritdoc/>
+    public IEnumerator<VDareEntryIndex<T>> GetEnumerator() => new VCatalogEnumerator<T>(this);
 
+    IEnumerator IEnumerable.GetEnumerator() {
+        return GetEnumerator();
+        }
     }

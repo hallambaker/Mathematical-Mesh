@@ -30,20 +30,17 @@ namespace Goedel.Protocol;
 /// A character stream reader that takes a TextReader as the input source.
 /// The input stream is only read in the forward direction.
 /// </summary>
-public class CharacterStreamTextReader : ICharacterStream {
+/// <remarks>
+/// Creatre an instance from the specified TextReader.
+/// </remarks>
+/// <param name="Input">The input stream.</param>
+public class CharacterStreamTextReader(TextReader Input) : ICharacterStream {
 
     #region // Properties
     /// <summary>If true, end of file has been reached. </summary>
     public bool EOF { get; private set; } = false;
+
     #endregion
-
-    readonly TextReader Input;
-
-    /// <summary>
-    /// Creatre an instance from the specified TextReader.
-    /// </summary>
-    /// <param name="Input">The input stream.</param>
-    public CharacterStreamTextReader(TextReader Input) => this.Input = Input;
 
     #region // methods
 
@@ -101,21 +98,18 @@ public class CharacterStreamTextReader : ICharacterStream {
 /// <summary>
 /// A character stream reader that takes a string as the input source.
 /// </summary>
-public class CharacterStreamStringReader : ICharacterBufferedStream {
+/// <remarks>
+/// Create a CharacterStreamStringReader from the specified string.
+/// </remarks>
+/// <param name="Input">The string to be read.</param>
+public class CharacterStreamStringReader(string Input) : ICharacterBufferedStream {
 
     #region // Properties
     /// <summary>If true, end of file has been reached. </summary>
     public virtual bool EOF { get; private set; } = false;
+
     #endregion
-
-    readonly string Input;
     int Position = 0;
-
-    /// <summary>
-    /// Create a CharacterStreamStringReader from the specified string.
-    /// </summary>
-    /// <param name="Input">The string to be read.</param>
-    public CharacterStreamStringReader(string Input) => this.Input = Input;
 
     #region // methods
     /// <summary>Return the next character in the stream without advancing the stream</summary>
@@ -288,20 +282,18 @@ public abstract class BinaryStreamReader : IBinaryStream {
 /// A binary and character stream reader that takes a binary stream as the input
 /// source. The stream is only read in the forward direction.
 /// </summary>
-public class CharacterStreamReader : BinaryStreamReader {
+/// <remarks>
+/// Return a CharacterStreamReader for the specified input source which may be
+/// any stream source that supports read operations.
+/// </remarks>
+/// <param name="Input">The stream to be read</param>
+public class CharacterStreamReader(Stream Input) : BinaryStreamReader {
 
 
     /// <summary>
     /// The underlying input stream.
     /// </summary>
-    protected Stream Input;
-
-    /// <summary>
-    /// Return a CharacterStreamReader for the specified input source which may be
-    /// any stream source that supports read operations.
-    /// </summary>
-    /// <param name="Input">The stream to be read</param>
-    public CharacterStreamReader(Stream Input) => this.Input = Input;
+    protected Stream Input = Input;
 
     #region // methods
 
@@ -380,18 +372,12 @@ public class CharacterStreamReader : BinaryStreamReader {
 /// A binary and character stream reader that takes a binary stream as the input
 /// source. The stream MUST support the seek operation.
 /// </summary>
-public class CharacterStreamSeekReader : CharacterStreamReader, IBufferedStream {
-    #region // Properties
-    #endregion
-
-    /// <summary>
-    /// Return a CharacterStreamReader for the specified input source which must
-    /// be a stream source that supports seek operations.
-    /// </summary>
-    /// <param name="Input">The stream to be read</param>
-    public CharacterStreamSeekReader(Stream Input) : base(Input) {
-        }
-
+/// <remarks>
+/// Return a CharacterStreamReader for the specified input source which must
+/// be a stream source that supports seek operations.
+/// </remarks>
+/// <param name="Input">The stream to be read</param>
+public class CharacterStreamSeekReader(Stream Input) : CharacterStreamReader(Input), IBufferedStream {
     long MarkedPosition = -1;
 
     /// <summary>Create a restore point in the stream.</summary>

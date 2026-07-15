@@ -55,7 +55,7 @@ public class DocumentCache<K,T> where T: class?{
     public TimeSpan Expire;
 
     ///<summary>The cached data.</summary> 
-    public Dictionary<K, CachedDocument<T>> Dictionary { get; set; } = new();
+    public Dictionary<K, CachedDocument<T>> Dictionary { get; set; } = [];
 
     ///<summary>Number of cached items.</summary> 
     public int Count => Dictionary.Count;

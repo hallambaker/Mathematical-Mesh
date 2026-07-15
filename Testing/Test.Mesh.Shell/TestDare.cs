@@ -398,7 +398,7 @@ public partial class ShellTests {
 
     //public void TestArchive() => TestSequence();
 
-    readonly int[] counts = { 10, 20 };
+    readonly int[] counts = [10, 20];
 
     [Fact]
     public void TestLog() => LogTest(counts);

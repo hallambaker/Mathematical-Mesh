@@ -28,32 +28,24 @@ namespace Goedel.Cryptography.Dare;
 /// <typeparam name="T">The type of the catalog entry.</typeparam>
 /// <remarks>Constructor, returns a new instance.</remarks>
 /// <param name="catalog">The catalog to enumerate.</param>
-/// <param name="forward">If true, enumerate in the forward direction,
-/// otherwise enumerate in reverse.</param>
-public class VCatalogEnumerator<T>(VDareCatalog<T> catalog, bool forward) : 
+/// 
+public class VCatalogEnumerator<T>(VDareCatalog<T> catalog) : Disposable,
             IEnumerator<VDareEntryIndex<T>>, IEnumerable<VDareEntryIndex<T>> 
                 where T : JsonObject, new() {
 
-    /// <inheritdoc/>
-    public VDareEntryIndex<T>? Current => Node?.Value;
+    IDictionaryEnumerator DictionaryEnumerator { get; set; }
 
+    VDareCatalog<T> Catalog { get; } = catalog;
+
+
+    /// <inheritdoc/>
+    public VDareEntryIndex<T>? Current => (VDareEntryIndex<T>)DictionaryEnumerator.Value;
 
     /// <inheritdoc/>
     object IEnumerator.Current => Current;
 
-
-    /// <inheritdoc/>
-    public void Dispose() {
-        }
-
-
-    LinkedListNode<VDareEntryIndex<T>>? Node { get; set; }
-
-
-    VDareCatalog<T> Catalog { get; } = catalog;
-    bool Forward { get; } = forward;
+    //bool Forward { get; } = forward;
     bool first=true;
-
 
     /// <inheritdoc/>
     public IEnumerator<VDareEntryIndex<T>> GetEnumerator() => this;
@@ -62,15 +54,19 @@ public class VCatalogEnumerator<T>(VDareCatalog<T> catalog, bool forward) :
     public bool MoveNext() {
 
         if (first) {
-            //Node = Forward ? Catalog.Entries.First : Catalog.Entries.Last;
-            //first = false;
-            }
-        else {
-            //Node = Forward ? Node?.Next : Node?.Previous;
+            DictionaryEnumerator = Catalog.EntriesById.GetEnumerator();
+            first = false;
             }
 
-        throw new NYI();
-        //return Node is not null;
+        var next = DictionaryEnumerator.MoveNext();
+        while (next) {
+            if (next && Current?.Deleted != true) {
+                return true;
+                }
+            next = DictionaryEnumerator.MoveNext();
+            }
+
+        return false;
         }
 
     /// <inheritdoc/>

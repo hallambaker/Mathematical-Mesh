@@ -1741,3 +1741,9 @@ Add host1.example.com
    Node A
 Add _mmm._tcp.example.com
    Node SRV
+GetPrefixedTXT _mesh.alice.example.net
+GetPrefixedTXT _mesh.alice.example.net
+GetPrefixedTXT _mesh.alice.example.net
+GetPrefixedTXT _mesh.alice.example.net
+GetPrefixedTXT _mesh.alice.example.net
+GetPrefixedTXT _mesh.alice.example.net

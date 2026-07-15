@@ -2,6 +2,10 @@
 
 
 
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Mime;
+
 using Goedel.Contacts;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
@@ -9,12 +13,17 @@ using Goedel.Cryptography.Jose;
 using Goedel.Discovery;
 using Goedel.IO;
 using Goedel.Mesh;
-
-using System.Collections.Generic;
-using System.Net.Mime;
+using Goedel.Mesh.Test;
 
 namespace Goedel.XUnit;
 public class TestOauth : UnitTestSet {
+
+    //public TestEnvironmentBase TestEnvironment => testEnvironment ??
+    //        GetTestEnvironment().CacheValue(out testEnvironment);
+    //TestEnvironmentBase testEnvironment;
+
+    //public virtual TestEnvironmentBase GetTestEnvironment() =>
+    //        new TestEnvironmentCommon(this);
 
     public DnsClient DnsClient { get; set; } = new DnsClientUDP();
 
@@ -26,7 +35,6 @@ public class TestOauth : UnitTestSet {
     /// </summary>
     static TestOauth() {
         }
-
 
 
     /// <summary>
@@ -64,7 +72,10 @@ public class TestOauth : UnitTestSet {
         }
     [Fact]
     public void TestPAR() {
-        var client = new OauthClient(null, null, null) {
+        Directory.SetCurrentDirectory(Seed.Directory);
+
+
+        var client = new OauthClient(null, null, Seed.Directory) {
             DnsClient = DnsClient
             };
         //var manager = new EncryptedTokenManager();

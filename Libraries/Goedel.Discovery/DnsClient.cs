@@ -271,7 +271,7 @@ public abstract class DNSContext : Disposable {
     //public DnsClient DNSClient = Goedel.Discovery.DNSClient.Default;
 
     /// <summary>Scoreboard of current requests.</summary>
-    readonly List<DNSRequest> pendingRequests = new();
+    readonly List<DNSRequest> pendingRequests = [];
 
     /// <summary>The timeout value</summary>
     readonly int timeout;
