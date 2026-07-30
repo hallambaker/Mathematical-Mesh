@@ -63,6 +63,12 @@ public class VDareCatalog<T>(
 
 
 
+
+
+
+
+
+
     /// <summary>The content tag for type <typeparam>T</typeparam>.</summary>
     public readonly string ContentType = GetContentType();
 

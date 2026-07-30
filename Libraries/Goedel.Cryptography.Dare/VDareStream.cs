@@ -44,7 +44,8 @@ public class VDareStream : Disposable {
         set => Stream.Position = value;
         }
 
-
+    /// <summary>Start of the data section.</summary>
+    public int StartData {get; private set; }
 
     FileMode FileMode { get; }
     FileAccess FileAccess { get; }
@@ -122,6 +123,16 @@ public class VDareStream : Disposable {
             var fileStream = fileName.OpenFileReadWrite();
             var stream = new VDareStream(fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read, fileStream);
 
+
+            //if (stream.Length == 0) {
+            //    stream.WriteTypeIdentifier(typeIdentifier);
+            //    }
+            //else {
+            //    stream.CheckTypeIdentifier(typeIdentifier).AssertTrue(NYI.Throw);
+            //    }
+
+
+
             return stream;
             }
         catch (Exception e) {
@@ -170,6 +181,25 @@ public class VDareStream : Disposable {
 
     #region -- Read methods
 
+    /// <summary>Verify that the stream starts with the sequence <paramref name="bytes"/></summary>
+    /// <param name="bytes">The stream type identifier.</param>
+    /// <returns>True if the initial bytes in the stream match <paramref name="bytes"/>,
+    /// otherwise false.</returns>
+    public virtual bool CheckTypeIdentifier(byte[] bytes) {
+
+        Position = 0;
+        foreach (var t in bytes) {
+            var b = Stream.ReadByte();
+            if (b != t) return false;
+
+            }
+
+        StartData = bytes.Length;
+        return true;
+        }
+    
+    
+    
     /// <summary>Read the type identifier from the stream.</summary>
     /// <returns>The type identifier read.</returns>
     public virtual ulong ReadTypeIdentifier() => Stream.ReadTypeIdentifier();
@@ -339,7 +369,10 @@ public class VDareStream : Disposable {
 
     /// <summary>Write a type identifier to the stream.</summary>
     /// <param name="bytes">The type identifier bytes.</param>
-    public virtual void WriteTypeIdentifier(byte[] bytes) => Stream.Write(bytes);
+    public virtual void WriteTypeIdentifier(byte[] bytes) {
+        Stream.Write(bytes);
+        StartData = bytes.Length;
+        }
 
     /// <summary>Write a varint to the stream</summary>
     /// <param name="data">The varint to write.</param>

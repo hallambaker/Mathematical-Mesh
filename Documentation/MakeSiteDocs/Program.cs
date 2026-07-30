@@ -218,12 +218,16 @@ public partial class CreateExamples {
 
 
 
-    public CreateExamples() {
+    public CreateExamples(bool makeOutputs = true) {
 
         WorkingDirectory = Directory.GetCurrentDirectory();
         SourceDirectory = Path.Combine(WorkingDirectory, "..");
-        Directory.SetCurrentDirectory("..\\Outputs\\Documents");
-        DraftsDirectory = Directory.GetCurrentDirectory();
+
+        if (makeOutputs) {
+            Directory.SetCurrentDirectory("..\\Outputs\\Documents");
+            DraftsDirectory = Directory.GetCurrentDirectory();
+            }
+
 
         MeshTestSet = new();
         MeshTestSet.Seed =  DeterministicSeed.Documentation("_Mesh");

@@ -8447,6 +8447,9 @@
         <member name="P:Goedel.Cryptography.Dare.VDareStream.Position">
             <summary>Get or set the position in the file.</summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.VDareStream.StartData">
+            <summary>Start of the data section.</summary>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.VDareStream.Filename">
             <summary>The filename of the underlying stream.</summary>
         </member>
@@ -8509,6 +8512,12 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.VDareStream.SeekEnd">
             <summary>Move to the end of the file.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.VDareStream.CheckTypeIdentifier(System.Byte[])">
+            <summary>Verify that the stream starts with the sequence <paramref name="bytes"/></summary>
+            <param name="bytes">The stream type identifier.</param>
+            <returns>True if the initial bytes in the stream match <paramref name="bytes"/>,
+            otherwise false.</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.VDareStream.ReadTypeIdentifier">
             <summary>Read the type identifier from the stream.</summary>

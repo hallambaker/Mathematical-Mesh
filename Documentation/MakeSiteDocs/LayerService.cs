@@ -27,25 +27,44 @@ namespace ExampleGenerator;
 
 
 
-public class ExampleSet : CreateExamples {
+public class ExampleSet {
     public CreateExamples CreateExamples;
 
-    public override TestCLI Alice1 => CreateExamples.Alice1;
-    public override TestCLI Alice2 => CreateExamples.Alice2;
-    public override TestCLI Alice3 => CreateExamples.Alice3;
-    public override TestCLI Alice4 => CreateExamples.Alice4;
-    public override TestCLI Bob1 => CreateExamples.Bob1;
-    public override TestCLI Mallet1 => CreateExamples.Mallet1;
-    public override TestCLI Console1 => CreateExamples.Console1;
-    public override TestCLI Maker1 => CreateExamples.Maker1;
+    public  TestCLI Alice1 => CreateExamples.Alice1;
+    public  TestCLI Alice2 => CreateExamples.Alice2;
+    public  TestCLI Alice3 => CreateExamples.Alice3;
+    public  TestCLI Alice4 => CreateExamples.Alice4;
+    public  TestCLI Bob1 => CreateExamples.Bob1;
+    public  TestCLI Mallet1 => CreateExamples.Mallet1;
+    public  TestCLI Console1 => CreateExamples.Console1;
+    public  TestCLI Maker1 => CreateExamples.Maker1;
 
 
-    public override string Secret1 {
+
+    public string TestFile1 => CreateExamples.TestFile1;
+    public string TestFile2 => CreateExamples.TestFile2;
+    public string TestFile3 => CreateExamples.TestFile3;
+    public string TestFile4 => CreateExamples.TestFile4;
+    public string TestDir1 => CreateExamples.TestDir1;
+    public string TestDir2 => CreateExamples.TestDir2;
+    public string AliceAccount => CreateExamples.AliceAccount;
+    public string BobAccount => CreateExamples.BobAccount;
+
+    public string GroupAccount => CreateExamples.GroupAccount;
+
+    public string DareLogEarl => CreateExamples.DareLogEarl;
+    public string EARLService => CreateExamples.EARLService;
+
+
+
+
+
+    public  string Secret1 {
         get => CreateExamples.Secret1;
         set => CreateExamples.Secret1 = value;
         }
 
-    public ExampleSet(CreateExamples createExamples) => CreateExamples = createExamples;
+    public ExampleSet(CreateExamples createExamples)=>CreateExamples = createExamples;
     }
 
 public partial class CreateExamples {

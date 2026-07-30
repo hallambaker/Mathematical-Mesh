@@ -70,6 +70,10 @@ partial class Program {
 
         // Not completed
         //ServiceDiscovery.Test().TestResoveHandles();
+
+        Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
+
+
         ShellTests.Test().NewFileTestOnce(true, false, false);
 
 
