@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 7/30/2026 4:39:56 PM
+//  This file was automatically generated at 11/5/2026 5:46:52 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -764,6 +764,16 @@ public partial class ContentMeta : Dare {
 	[JsonPropertyName("ReceiptProof")]
 	public virtual ReceiptProof?					ReceiptProof  {get; set;} //
 
+    /// <summary>
+    ///Hash of the Salt value used to derrive cryptographic parameters for the content data.
+    ///This is used to
+    ///allow the salt value to be erased (thus rendering the payload content irrecoverable)
+    ///without affecting the ability to calculate the payload digest value.
+    /// </summary>
+
+	[JsonPropertyName("Malt")]
+	public virtual byte[]?					Malt  {get; set;} //
+
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -820,7 +830,10 @@ public partial class ContentMeta : Dare {
 		new PropertyStruct ("ReceiptProof", typeof (ReceiptProof),
 					(data, value) => {(data as ContentMeta).ReceiptProof = value as ReceiptProof;}, 
 					data => (data as ContentMeta).ReceiptProof,
-					false, ()=>new  ReceiptProof(), ()=>new ReceiptProof())
+					false, ()=>new  ReceiptProof(), ()=>new ReceiptProof()),
+		new PropertyBinary ("Malt", 
+					(data, value) => {(data as ContentMeta).Malt = value;}, 
+					data => (data as ContentMeta).Malt )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -844,7 +857,8 @@ public partial class ContentMeta : Dare {
 			{ "First", _properties [12]},
 			{ "Previous", _properties [13]},
 			{ "FileEntry", _properties [14]},
-			{ "ReceiptProof", _properties [15]}}, __Tag,
+			{ "ReceiptProof", _properties [15]},
+			{ "Malt", _properties [16]}}, __Tag,
 		() => new ContentMeta(), () => [], () => [], null, Generic: false);
 
 
@@ -1782,6 +1796,13 @@ public partial class Unprotected : Dare {
 	[JsonPropertyName("Frame")]
 	public virtual long?					Frame  {get; set;} //
 
+    /// <summary>
+    ///Salt value used to derrive cryptographic parameters for the content data.
+    /// </summary>
+
+	[JsonPropertyName("Salt")]
+	public virtual byte[]?					Salt  {get; set;} //
+
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -1801,7 +1822,10 @@ public partial class Unprotected : Dare {
 					false, ()=>new  List<EarlSignature>(), ()=>new EarlSignature()),
 		new PropertyInteger64 ("Frame", 
 					(data, value) => {(data as Unprotected).Frame = value;}, 
-					data => (data as Unprotected).Frame )
+					data => (data as Unprotected).Frame ),
+		new PropertyBinary ("Salt", 
+					(data, value) => {(data as Unprotected).Salt = value;}, 
+					data => (data as Unprotected).Salt )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1813,7 +1837,8 @@ public partial class Unprotected : Dare {
 			{ "dig", _properties [0]},
 			{ "signs", _properties [1]},
 			{ "sigs", _properties [2]},
-			{ "Frame", _properties [3]}}, __Tag,
+			{ "Frame", _properties [3]},
+			{ "Salt", _properties [4]}}, __Tag,
 		() => new Unprotected(), () => [], () => [], null, Generic: false);
 
 

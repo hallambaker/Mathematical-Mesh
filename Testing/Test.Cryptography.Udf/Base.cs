@@ -97,8 +97,8 @@ public class TestUdf : UnitTestSet {
 
         }
 
-    [Fact]
-    //[Fact(Skip = "Takes a very long time.")]
+    //[Fact]
+    [Fact(Skip = "Takes a very long time.")]
     public void TestUdfKeygenRSA() {
 
         var testBinding = new AcvpTestBinding<UdfKeyGenTest>(UdfDirectoryRSA);

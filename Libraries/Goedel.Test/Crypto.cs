@@ -30,6 +30,19 @@ public class CryptoParametersTest : CryptoParameters {
 
     KeyCollection KeyCollection => KeyLocate as KeyCollectionCore;
 
+
+    public CryptoParametersTest(
+            bool sign, bool encrypt) : base(new KeyCollectionCore()){
+
+        if (sign) {
+            AddSign("@alice.example.com");
+            }
+        if (encrypt) {
+            AddEncrypt("@bob.example.com");
+            }
+        }
+
+
     public CryptoParametersTest(
                 List<string> recipients = null,
                 List<string> signers = null,
@@ -40,37 +53,47 @@ public class CryptoParametersTest : CryptoParameters {
 
     protected override void AddEncrypt(string AccountId) => AddEncrypt(AccountId, true);
 
-    public void AddEncrypt(string AccountId, bool Register = true) {
+    public void AddEncrypt(string AccountId, 
+                bool Register = true,
+                CryptoAlgorithmId algorithm = CryptoAlgorithmId.X448) {
         EncryptionKeys ??= new List<CryptographicKey>();
 
-        var Keypair = new KeyPairDH();
-        var Pub = Keypair.KeyPairPublic();
-        var PublicKeyKeypair = Keypair.KeyPairPublic();
-        EncryptionKeys.Add(PublicKeyKeypair);
+        var keypair = KeyPair.Factory(algorithm,
+                KeySecurity.Session, KeyCollection, keyUses: KeyUses.Encrypt);
+
+
+        var pub = keypair.KeyPairPublic();
+        var publicKeyKeypair = keypair.KeyPairPublic();
+        EncryptionKeys.Add(publicKeyKeypair);
 
         //Console.WriteLine($"Keypair is {Keypair.UDF}");
-        //Console.WriteLine($"  Public {Keypair.PKIXPublicKeyDH}");
-        //Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
+
 
         if (Register) {
-            KeyCollection.Add(Keypair);
+            KeyCollection.Add(keypair);
             }
 
         }
 
     protected override void AddSign(string accountId) => AddSign(accountId, true);
-    public void AddSign(string accountId, bool register) {
+    public void AddSign(
+                string accountId, 
+                bool register=true, 
+                CryptoAlgorithmId algorithm =CryptoAlgorithmId.Ed448) {
         SignerKeys ??= new List<CryptographicKey>();
 
-        var Keypair = KeyPair.KeyPairFactoryRSA(keyType: KeySecurity.Ephemeral);
-        var PublicKeyKeypair = Keypair.KeyPairPublic();
-        SignerKeys.Add(Keypair);
+
+        var keypair = KeyPair.Factory(algorithm,
+            KeySecurity.Session, KeyCollection, keyUses: KeyUses.Encrypt);
+
+        //var Keypair = KeyPair.KeyPairFactoryRSA(keyType: KeySecurity.Ephemeral);
+        var publicKeyKeypair = keypair.KeyPairPublic();
+        SignerKeys.Add(keypair);
 
         //Console.WriteLine($"Keypair is {Keypair.UDF}");
-        //Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
 
         if (register) {
-            KeyCollection.Add(Keypair);
+            KeyCollection.Add(keypair);
             }
         }
 

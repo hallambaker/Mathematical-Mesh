@@ -574,6 +574,12 @@
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.BulkTagMask">
             <summary>Mask for Algorithm Type</summary>
         </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.BulkModeMask">
+            <summary>Mask for Bulk Encryption Algorithm Mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.BaseEncryptionMask">
+            <summary>Mask for Bulk Encryption Algorithm Mode</summary>
+        </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.Digest">
             <summary>Flag multiplier</summary>
         </member>
@@ -661,7 +667,16 @@
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeCTS">
             <summary>Flag for Cipher Text Stealing Mode</summary>
         </member>
-        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeGCM">
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeGcm">
+            <summary>Flag for Galois Counter Mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeGcmSiv">
+            <summary>Flag for Galois Counter Mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeGcmChunked">
+            <summary>Flag for Galois Counter Mode</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeGcmChunkedSiv">
             <summary>Flag for Galois Counter Mode</summary>
         </member>
         <member name="F:Goedel.Cryptography.CryptoAlgorithmId.ModeHMAC">
@@ -2467,6 +2482,70 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Cryptography.LimitExceeded">
+            <summary>
+            The operation attempted exceeds the limit of the cryptographic algorithm
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.LimitExceeded.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.LimitExceeded.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.LimitExceeded.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.LimitExceeded._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.LimitExceeded.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.InvalidChunkSize">
+            <summary>
+            An invalid chunk size was specified.
+            </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidChunkSize.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidChunkSize.Templates">
+            <summary>Templates for formatting response messages.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidChunkSize.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.InvalidChunkSize._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="P:Goedel.Cryptography.InvalidChunkSize.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Cryptography.EventExtensions">
             <summary>
             Extensions class defining logging events and convenience methods.
@@ -2595,6 +2674,26 @@
             </summary>
         </member>
         <member name="F:Goedel.Cryptography.JoseConstants.SHA3_512">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.AES128C">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.AES192C">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.AES256C">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.AES256S">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Goedel.Cryptography.JoseConstants.AES256CS">
             <summary>
             </summary>
         </member>

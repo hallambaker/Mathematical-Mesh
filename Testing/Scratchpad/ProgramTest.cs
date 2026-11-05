@@ -21,7 +21,6 @@
 #endregion
 
 
-using ExampleGenerator;
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
@@ -49,11 +48,6 @@ using static Goedel.XUnit.GoedelProtocol;
 namespace Scratchpad;
 
 
-// ToDo: Server logging
-// ToDo: Server status info
-// ToDo: Test write validator, read in all catalogs and check encryption etc. status
-
-
 partial class Program {
 
     static public AssemblyLogger Logger { get; } = new AssemblyLogger();
@@ -64,14 +58,41 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
+        //Goedel.XUnit.TestDare.Test().EnvelopeEncrypted();
+
+        Goedel.XUnit.TestVarintSerialization.Test().TestCoreEncodeDecode(40);
+        Goedel.XUnit.TestVarintSerialization.Test().TestGcmSingle(40);
+
+        Goedel.XUnit.TestVarintSerialization.Test().TestGcmChunked(40);
+        Goedel.XUnit.TestVarintSerialization.Test().TestGcmChunked(5000);
+        Goedel.XUnit.TestVarintSerialization.Test().TestGcmChunked(4096);
+
+        Goedel.XUnit.TestVarintSerialization.Test().TestEnvelope(false, false, 100);
+        Goedel.XUnit.TestVarintSerialization.Test().TestEnvelope(false, true, 100);
+        Goedel.XUnit.TestVarintSerialization.Test().TestEnvelope(true, false, 100);
+        Goedel.XUnit.TestVarintSerialization.Test().TestEnvelope(true, true, 100);
 
 
-        //ShellTests.Test().TestLog();
 
-        // Not completed
-        //ServiceDiscovery.Test().TestResoveHandles();
+        // Single shot
+        // Plaintext, no signature
+        Goedel.XUnit.TestVarintSerialization.Test().TestSequence(false, false, 100, 1, false);
 
-        Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
+        // Encrypt, no signature 
+        Goedel.XUnit.TestVarintSerialization.Test().TestSequence(false, true, 100, 1, false);
+
+        // Plaintext sign
+        Goedel.XUnit.TestVarintSerialization.Test().TestSequence(true, false, 100, 1, false);
+
+        // Encrypt, sign
+        Goedel.XUnit.TestVarintSerialization.Test().TestSequence(true, true, 100, 1, false);
+
+
+
+
+
+
+        //Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
 
 
         ShellTests.Test().NewFileTestOnce(true, false, false);

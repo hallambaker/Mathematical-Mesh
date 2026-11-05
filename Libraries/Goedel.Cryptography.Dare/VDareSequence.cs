@@ -92,7 +92,9 @@ public  class VDareSequence : Disposable {
     /// <returns>The <see cref="VDareSequence"/> instance.</returns>
     public static VDareSequence Create(
                 string fileName,
-                EarlSequenceIndexType typeIdentifier = EarlSequenceIndexType.None) {
+                EarlSequenceIndexType typeIdentifier = EarlSequenceIndexType.None,
+                CryptoParameters cryptoParameters = null
+                ) {
         var stream = VDareStream.Create(fileName, DareConstants.TypeIdentifierDareSequence);
         var result = new VDareSequence(stream);
 
@@ -107,9 +109,9 @@ public  class VDareSequence : Disposable {
     public static VDareSequence Open(
             string fileName) {
 
-        var stream = VDareStream.OpenReadWrite(fileName);
+        var stream = VDareStream.Open(fileName, DareConstants.TypeIdentifierDareSequence);
         var sequence = new VDareSequence(stream);
-        //sequence.ReadInitial(fillIndex);
+        sequence.ReadInitial();
 
         return sequence;
         }
@@ -144,13 +146,16 @@ public  class VDareSequence : Disposable {
     protected virtual void ReadInitial() {
         BeginReadInitial();
 
-
         if (!Stream.EOF) {
             IndexFirst = Stream.ReadIndexNext();
             }
+
         if (!Stream.EOF) {
             Stream.SeekEnd();
             IndexLast = Stream.ReadIndexPrevious();
+            }
+        else {
+            IndexLast = IndexFirst;
             }
 
         Stream.Position = StartEntries;
@@ -159,8 +164,8 @@ public  class VDareSequence : Disposable {
     /// <summary>Read type identifier and first frame.</summary>
     protected void BeginReadInitial() {
         // read the type identifier
-        var version = Stream.ReadTypeIdentifier();
-        (version == DareConstants.TypeIdentifierDareSequenceL).AssertTrue(NYI.Throw);
+        //var version = Stream.ReadTypeIdentifier();
+        //(version == DareConstants.TypeIdentifierDareSequenceL).AssertTrue(NYI.Throw);
 
         // read the first record
         FrameFirst = Stream.ReadFrameNext();

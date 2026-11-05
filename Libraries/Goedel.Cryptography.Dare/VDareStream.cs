@@ -118,18 +118,19 @@ public class VDareStream : Disposable {
     /// <exception cref="NYI"></exception>
     public static VDareStream Open(
                 string fileName,
-                byte[] typeIdentifier) {
+                byte[] typeIdentifier,
+                FileAccess fileAccess = FileAccess.ReadWrite) {
         try {
             var fileStream = fileName.OpenFileReadWrite();
             var stream = new VDareStream(fileName, FileMode.Open, FileAccess.ReadWrite, FileShare.Read, fileStream);
 
 
-            //if (stream.Length == 0) {
-            //    stream.WriteTypeIdentifier(typeIdentifier);
-            //    }
-            //else {
-            //    stream.CheckTypeIdentifier(typeIdentifier).AssertTrue(NYI.Throw);
-            //    }
+            if (stream.Length == 0) {
+                stream.WriteTypeIdentifier(typeIdentifier);
+                }
+            else {
+                stream.CheckTypeIdentifier(typeIdentifier).AssertTrue(NYI.Throw);
+                }
 
 
 
@@ -142,23 +143,23 @@ public class VDareStream : Disposable {
         }
 
 
-    /// <summary>Open the file <paramref name="fileName"/> to read as an <see cref="VDareStream"/>.</summary>
-    /// <param name="fileName">The file name.</param>
-    /// <returns>The <see cref="VDareStream"/> created</returns>
-    public static VDareStream OpenRead(
-                string fileName) => new(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+    ///// <summary>Open the file <paramref name="fileName"/> to read as an <see cref="VDareStream"/>.</summary>
+    ///// <param name="fileName">The file name.</param>
+    ///// <returns>The <see cref="VDareStream"/> created</returns>
+    //public static VDareStream OpenRead(
+    //            string fileName) => new(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
 
-    /// <summary>Open the file <paramref name="fileName"/> to write as an <see cref="VDareStream"/>.</summary>
-    /// <param name="fileName">The file name.</param>
-    /// <returns>The <see cref="VDareStream"/> created</returns>
-    public static VDareStream OpenWrite(
-            string fileName) => new (fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+    ///// <summary>Open the file <paramref name="fileName"/> to write as an <see cref="VDareStream"/>.</summary>
+    ///// <param name="fileName">The file name.</param>
+    ///// <returns>The <see cref="VDareStream"/> created</returns>
+    //public static VDareStream OpenWrite(
+    //        string fileName) => new (fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
 
-    /// <summary>Open the file <paramref name="fileName"/> to read and write as an <see cref="VDareStream"/>.</summary>
-    /// <param name="fileName">The file name.</param>
-    /// <returns>The <see cref="VDareStream"/> created</returns>
-    public static VDareStream OpenReadWrite(
-            string fileName) => new (fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+    ///// <summary>Open the file <paramref name="fileName"/> to read and write as an <see cref="VDareStream"/>.</summary>
+    ///// <param name="fileName">The file name.</param>
+    ///// <returns>The <see cref="VDareStream"/> created</returns>
+    //public static VDareStream OpenReadWrite(
+    //        string fileName) => new (fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
 
 
     private FileStream OpenStream() => new (Filename, FileMode, FileAccess, FileShare);

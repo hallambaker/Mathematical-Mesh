@@ -362,7 +362,12 @@ public static class NumberSplit {
     public static byte[] BigEndian(this ulong Data) => [ Data.Byte7(), Data.Byte6(), Data.Byte5(), Data.Byte4(),
                 Data.Byte3(), Data.Byte2(), Data.Byte1(), Data.Byte0() ];
 
-
+    /// <summary>
+    /// Convert integer to bigendian array. That is with the most significant byte first.
+    /// </summary>
+    /// <param name="Data">Input</param>
+    /// <returns>Output array</returns>
+    public static byte[] NetworkOrder(this ulong Data) => BigEndian(Data);
 
     /// <summary>
     /// Read in a ulong from <paramref name="data"/> starting at index

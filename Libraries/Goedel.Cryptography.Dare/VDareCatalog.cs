@@ -53,7 +53,7 @@ public class VDareCatalog<T>(
     public static new VDareCatalog<T> Open(
             string fileName) {
 
-        var stream = VDareStream.OpenReadWrite(fileName);
+        var stream = VDareStream.Open(fileName, DareConstants.TypeIdentifierDareSequence);
         var result = new VDareCatalog<T>(stream);
         result.ReadInitial();
 
@@ -78,7 +78,7 @@ public class VDareCatalog<T>(
     /// <summary>The entries by the secondary key.</summary>
     public Dictionary<string, VDareEntryIndex<T>> EntriesBySecondaryId { get; } = [];
 
-
+    public virtual string NormalizeSecondaryKey(string key) => key;
     /// <summary>Read the initial sequence record.</summary>
     protected override void ReadInitial() {
         BeginReadInitial();
@@ -178,7 +178,7 @@ public class VDareCatalog<T>(
 
         if (index.SecondaryKeys != null) {
             foreach (var key in index.SecondaryKeys) {
-                EntriesBySecondaryId.Add(key, index);
+                EntriesBySecondaryId.Add(NormalizeSecondaryKey(key), index);
                 }
             }
         }
@@ -294,7 +294,7 @@ public class VDareCatalog<T>(
     /// <returns>true if the entry was found, otherwise null/</returns>
     public bool TryGetBySecondaryId(string id, [NotNullWhen(true)] out T? result) {
         result = null;
-        if (!EntriesBySecondaryId.TryGetValue(id, out var index)) {
+        if (!EntriesBySecondaryId.TryGetValue(NormalizeSecondaryKey(id), out var index)) {
             return false;
             }
         if (index.Deleted) {

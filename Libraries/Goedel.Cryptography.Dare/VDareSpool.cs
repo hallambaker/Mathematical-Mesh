@@ -59,7 +59,7 @@ public class VDareSpool : VDareSequence {
     public static VDareSpool<T> Open<T>(
             string fileName) where T : JsonObject {
 
-        var stream = VDareStream.OpenReadWrite(fileName);
+        var stream = VDareStream.Open(fileName, DareConstants.TypeIdentifierDareSequence);
         var spool = new VDareSpool<T>(stream);
         spool.ReadInitial();
 

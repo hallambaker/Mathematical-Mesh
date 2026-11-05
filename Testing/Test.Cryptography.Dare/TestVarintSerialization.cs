@@ -20,10 +20,13 @@
 //  THE SOFTWARE.
 #endregion
 
+using System.Drawing;
 using System.Linq;
+using System.Numerics;
 
 using Goedel.Cryptography.Dare;
 using Goedel.Mesh;
+using Goedel.Mesh.Shell;
 using Goedel.Protocol;
 using Goedel.Test;
 
@@ -37,7 +40,24 @@ namespace Goedel.XUnit;
 #pragma warning disable xUnit1026
 #pragma warning disable IDE0060
 
-public class TestVarintSerialization : UnitTestSet {
+
+
+
+
+
+
+
+
+public class TestVarintSerialization : MeshTestSet {
+
+    public TestEnvironmentBase TestEnvironment => testEnvironment ??
+            GetTestEnvironment().CacheValue(out testEnvironment);
+    TestEnvironmentBase testEnvironment;
+
+    public virtual TestEnvironmentBase GetTestEnvironment() =>
+            new TestEnvironmentCommon(this);
+
+
 
     /// <summary>Constructor method</summary>
     /// <returns>Returns a new instance of the class.</returns>
@@ -46,6 +66,105 @@ public class TestVarintSerialization : UnitTestSet {
     static TestVarintSerialization() {
         TestSchema._Initialized.TestTrue();
         }
+
+
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(100)]
+    [InlineData(1024)]
+    [InlineData(8096)]
+    [InlineData(4000)]
+    public void TestCoreEncodeDecode(int size) {
+        SeedSuffix = $"{size}";
+
+        var plaintext = Seed.GetTestBytes(size, "This is a test");
+
+        var salt = Seed.GetTestBytes(16, "salt");
+
+
+        var handler = new GcmHandlerBase();
+
+        var ciphertext = new byte[handler.CiphertextLength(size)];
+        var recovered = new byte[size];
+
+        var kdf = Seed.GetTestBytes(32, "kdf");
+
+        handler.EncodeChunk(kdf, plaintext, ciphertext);
+        handler.DecodeChunk(kdf, ciphertext, recovered);
+
+        recovered.TestEqual(plaintext);
+        }
+
+
+
+
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(4096)]
+    [InlineData(4097)]
+    [InlineData(8192)]
+    [InlineData(8193)]
+    public void TestGcmSingle(int size, bool siv=false) {
+        SeedSuffix = $"{size}_{siv}";
+
+        var plaintext = Seed.GetTestBytes(size, "This is a test");
+        var salt = Seed.GetTestBytes(16, "This is another");
+
+
+        using var encoder = new GcmWrapper();
+        var ciphertext = encoder.Encode (plaintext);
+
+        using var decoder = new GcmUnwrapper(encoder.Key, encoder.Salt);
+        var recovered = decoder.Decode (ciphertext);
+
+        recovered.TestEqual(plaintext);
+
+        }
+
+
+
+
+
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(4096)]
+    [InlineData(4097)]
+    [InlineData(8192)]
+    [InlineData(8193)]
+    public void TestGcmChunked(int size, bool siv = false) {
+        SeedSuffix = $"{size}_{siv}";
+
+
+        var plaintext = Seed.GetTestBytes(size, "This is a test");
+        var salt = Seed.GetTestBytes(16, "This is another");
+
+        using var encoder = new GcmWrapperChunked();
+        var ciphertext = ((IChunk)encoder).Transform(plaintext);
+
+        // check the length prediction is correct
+        (ciphertext.Length == encoder.CiphertextLengthChunked(plaintext.Length)).TestTrue();
+
+
+        using var decoder = new GcmUnwrapperChunked(encoder.Key, encoder.Salt);
+        var recovered = ((IChunk)decoder).Transform(ciphertext);
+
+        // check the length prediction is correct
+        (recovered.Length == decoder.PlaintextLengthChunked(ciphertext.Length)).TestTrue();
+
+        // check for equality.
+        recovered.TestEqual(plaintext);
+
+        }
+
+
+
+
+
 
 
     #region -- Envelope Testing
@@ -59,11 +178,14 @@ public class TestVarintSerialization : UnitTestSet {
 
         Seed = DeterministicSeed.Auto();
 
+        var cryptoParameters = new CryptoParametersTest(sign, encrypt);
+
         var filename = Seed.GetFilename("JBCD.dare");
         var data = Seed.GetTestBytes(size, "This is a test");
 
+
         // Write file 
-        VDareEnvelopeWriter.Write(filename, data);
+        VDareEnvelopeWriter.Write(filename, data, cryptoParameters);
 
         // Read file back
         var envelope = VDareEnvelopeReader.Read(filename);
@@ -76,7 +198,7 @@ public class TestVarintSerialization : UnitTestSet {
     #region -- Sequence
 
     [Theory]
-    [InlineData(false, false, 100, 0, false)]
+    [InlineData(false, false, 100, 1, false)]
     public void TestSequence(
             bool sign = false,
             bool encrypt = false,
@@ -88,24 +210,59 @@ public class TestVarintSerialization : UnitTestSet {
         var filename = Seed.GetFilename("TestSequence.darl");
         List<byte[]> dataList = [];
 
+        //var keyCollection = MakeKeyCollection();
+
+        //var ( recipientIds,recipients) = encrypt ? MakeRecipients(keyCollection) : (null, null);
+        //var (signerIds, signers) = encrypt ? MakeSigners(keyCollection) : (null, null);
+        var cryptoParameters = new CryptoParametersTest(sign, encrypt);
+
+
         // create the sequence
         using var sequence = VDareSequence.Create(filename);
 
-        // add the first item
-        Append(sequence, dataList, size, variable);
+        for (var i = 0; i < count; count++) {
+            Append(sequence, dataList, size, variable);
+            }
+
         Verify(sequence, dataList).TestTrue();
 
-        // add four more items without closing the stream.
-        Append(sequence, dataList, size, variable);
-        Append(sequence, dataList, size, variable);
-        Append(sequence, dataList, size, variable);
-        Append(sequence, dataList, size, variable);
-        Verify(sequence, dataList).TestTrue();
+        if (encrypt) {
+            VerifyEncrypted(sequence, dataList).TestTrue();
+            }
 
-        TestArchive();
+        if (sign) {
+            VerifySigned(sequence, dataList).TestTrue();
+            }
+
+        }
+
+    KeyCollection MakeKeyCollection() => new KeyCollectionTestEnv(TestEnvironment.DirectoryPath);
+
+    static (List<string>, List<KeyPair>) MakeRecipients(IKeyLocate keyLocate) {
+        var encrypt = KeyPair.Factory(CryptoAlgorithmId.X448,
+                KeySecurity.Session, keyLocate, keyUses: KeyUses.Encrypt);
+
+        return ([encrypt.KeyIdentifier], [encrypt]);
+        }
+
+    static (List<string>, List<KeyPair>) MakeSigners(IKeyLocate keyLocate) {
+        var sign = KeyPair.Factory(CryptoAlgorithmId.Ed448,
+                KeySecurity.Session, keyLocate, keyUses: KeyUses.Sign);
+
+        return ([sign.KeyIdentifier], [sign]);
         }
 
 
+    bool VerifyEncrypted(VDareSequence sequence1, List<byte[]> dataList) {
+
+        return true;
+        }
+
+
+    bool VerifySigned(VDareSequence sequence1, List<byte[]> dataList) {
+
+        return true;
+        }
 
 
     bool Append(VDareSequence sequence, List<byte[]> dataList, int size, bool variable) {

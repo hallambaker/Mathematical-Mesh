@@ -56,7 +56,7 @@ public class VDareArchive : VDareSequence {
     public static VDareArchive OpenRead(
         string fileName) {
 
-        var stream = VDareStream.OpenRead(fileName);
+        var stream = VDareStream.Open(fileName, DareConstants.TypeIdentifierDareSequence);
         var result = new VDareArchive(stream);
         result.ReadInitial();
 

@@ -1,5 +1,5 @@
 
-//  This file was automatically generated at 7/30/2026 4:39:50 PM
+//  This file was automatically generated at 11/5/2026 5:46:39 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -145,6 +145,26 @@ public static partial class JoseConstants {
     ///<summary>
     ///</summary>
     public const string SHA3_512 = "SHA3512";
+
+    ///<summary>
+    ///</summary>
+    public const string AES128C = "AES128C";
+
+    ///<summary>
+    ///</summary>
+    public const string AES192C = "AES192C";
+
+    ///<summary>
+    ///</summary>
+    public const string AES256C = "AES256C";
+
+    ///<summary>
+    ///</summary>
+    public const string AES256S = "AES256S";
+
+    ///<summary>
+    ///</summary>
+    public const string AES256CS = "AES256CS";
 
     }
 

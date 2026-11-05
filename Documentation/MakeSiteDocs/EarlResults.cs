@@ -170,7 +170,7 @@ public class EarlResults {
         recoveredMeta.TestNull();
 
         // Same but with a protected header
-        EnvelopeContentMeta = VDareEnvelopeWriter.GetBytes(Payload, ProtectedHeaderJson);
+        EnvelopeContentMeta = VDareEnvelopeWriter.GetBytes(Payload, contentMeta: ProtectedHeaderJson);
 
         WithMeta = new EarlSet(EnvelopeContentMeta, CreateExamples.AliceService);
         BytesMeta = Verify(WithMeta, ProtectedHeaderJson, Payload, SigningKeys);

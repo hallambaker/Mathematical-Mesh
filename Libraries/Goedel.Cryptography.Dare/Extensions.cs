@@ -385,7 +385,7 @@ public static partial class Extensions {
         ulong index = 1;
 
         for (var i = 0; i < codeLength-1; i++) {
-            var read = ReadByteExact(stream);
+            var read = stream.ReadByte();
             if (read < 0) {
                 throw new EndOfStreamException();
                 }
@@ -393,7 +393,7 @@ public static partial class Extensions {
             index <<= 8;
             }
 
-        var lastread = ReadByteExact(stream);
+        var lastread = stream.ReadByte();
         var type = lastread & 0b1100_0000;
         result |= ((ulong)lastread & 0b0011_1111) * index;
 

@@ -58,7 +58,7 @@ public class UnitTestSet : Disposable {
     public string CallsignRegistry => "@registry";
 
 
-    public virtual string SeedSuffix => "";
+    public virtual string SeedSuffix { get; set; } = "";
 
     ///<summary>The deterministic seed to be used by the test, may be set explictly
     ///or generated automatically through use in a test method.</summary> 

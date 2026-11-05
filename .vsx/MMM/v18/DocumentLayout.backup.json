@@ -1,0 +1,481 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\hallam\\Code\\mmm\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:2:0:{0FA406E8-EE81-45DA-BCF8-1F72C66A2EA0}|Libraries\\Goedel.Cryptography.Dare\\Goedel.Cryptography.Dare.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography.dare\\vdareenvelopewriter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:2:0:{0FA406E8-EE81-45DA-BCF8-1F72C66A2EA0}|Libraries\\Goedel.Cryptography.Dare\\Goedel.Cryptography.Dare.csproj|solutionrelative:libraries\\goedel.cryptography.dare\\vdareenvelopewriter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:1:0:{0FA406E8-EE81-45DA-BCF8-1F72C66A2EA0}|Libraries\\Goedel.Cryptography.Dare\\Goedel.Cryptography.Dare.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography.dare\\vdareenvelopewriter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:1:0:{0FA406E8-EE81-45DA-BCF8-1F72C66A2EA0}|Libraries\\Goedel.Cryptography.Dare\\Goedel.Cryptography.Dare.csproj|solutionrelative:libraries\\goedel.cryptography.dare\\vdareenvelopewriter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{171F782C-4D04-40BD-8D12-EAD48EEFB79A}|Libraries\\Goedel.Utilities\\Goedel.Utilities.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.utilities\\enumerable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{171F782C-4D04-40BD-8D12-EAD48EEFB79A}|Libraries\\Goedel.Utilities\\Goedel.Utilities.csproj|solutionrelative:libraries\\goedel.utilities\\enumerable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB6C5500-1C30-4929-A0F9-E31AB6564FAF}|Testing\\Test.Cryptography.Dare\\Test.Cryptography.Dare.csproj|c:\\users\\hallam\\code\\mmm\\testing\\test.cryptography.dare\\testvarintserialization.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB6C5500-1C30-4929-A0F9-E31AB6564FAF}|Testing\\Test.Cryptography.Dare\\Test.Cryptography.Dare.csproj|solutionrelative:testing\\test.cryptography.dare\\testvarintserialization.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0842BD6-DF8A-4B36-9CF2-3507682B7C88}|Testing\\Scratchpad\\Scratchpad.csproj|c:\\users\\hallam\\code\\mmm\\testing\\scratchpad\\programtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D0842BD6-DF8A-4B36-9CF2-3507682B7C88}|Testing\\Scratchpad\\Scratchpad.csproj|solutionrelative:testing\\scratchpad\\programtest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:1:0:{0FA406E8-EE81-45DA-BCF8-1F72C66A2EA0}|Libraries\\Goedel.Cryptography.Dare\\Goedel.Cryptography.Dare.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography.dare\\gcmwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:1:0:{0FA406E8-EE81-45DA-BCF8-1F72C66A2EA0}|Libraries\\Goedel.Cryptography.Dare\\Goedel.Cryptography.Dare.csproj|solutionrelative:libraries\\goedel.cryptography.dare\\gcmwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A74D219-ED84-4943-BBA7-E4B00AACBAF4}|Libraries\\Goedel.Test\\Goedel.Test.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.test\\assert.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A74D219-ED84-4943-BBA7-E4B00AACBAF4}|Libraries\\Goedel.Test\\Goedel.Test.csproj|solutionrelative:libraries\\goedel.test\\assert.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A74D219-ED84-4943-BBA7-E4B00AACBAF4}|Libraries\\Goedel.Test\\Goedel.Test.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.test\\unittestset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A74D219-ED84-4943-BBA7-E4B00AACBAF4}|Libraries\\Goedel.Test\\Goedel.Test.csproj|solutionrelative:libraries\\goedel.test\\unittestset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A74D219-ED84-4943-BBA7-E4B00AACBAF4}|Libraries\\Goedel.Test\\Goedel.Test.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.test\\deterministicseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A74D219-ED84-4943-BBA7-E4B00AACBAF4}|Libraries\\Goedel.Test\\Goedel.Test.csproj|solutionrelative:libraries\\goedel.test\\deterministicseed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:2:0:{0FA406E8-EE81-45DA-BCF8-1F72C66A2EA0}|Libraries\\Goedel.Cryptography.Dare\\Goedel.Cryptography.Dare.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography.dare\\gcmwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:2:0:{0FA406E8-EE81-45DA-BCF8-1F72C66A2EA0}|Libraries\\Goedel.Cryptography.Dare\\Goedel.Cryptography.Dare.csproj|solutionrelative:libraries\\goedel.cryptography.dare\\gcmwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D0842BD6-DF8A-4B36-9CF2-3507682B7C88}|Testing\\Scratchpad\\Scratchpad.csproj|c:\\users\\hallam\\code\\mmm\\testing\\scratchpad\\scratchpad.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D0842BD6-DF8A-4B36-9CF2-3507682B7C88}|Testing\\Scratchpad\\Scratchpad.csproj|solutionrelative:testing\\scratchpad\\scratchpad.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{859B7B3E-843E-42AC-B5AC-85DD9BFF38FB}|Libraries\\Goedel.Cryptography.Identifiers\\Goedel.Cryptography.Identifiers.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography.identifiers\\joseconstants.constant||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{859B7B3E-843E-42AC-B5AC-85DD9BFF38FB}|Libraries\\Goedel.Cryptography.Identifiers\\Goedel.Cryptography.Identifiers.csproj|solutionrelative:libraries\\goedel.cryptography.identifiers\\joseconstants.constant||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{859B7B3E-843E-42AC-B5AC-85DD9BFF38FB}|Libraries\\Goedel.Cryptography.Identifiers\\Goedel.Cryptography.Identifiers.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography.identifiers\\cryptoalgorithmid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{859B7B3E-843E-42AC-B5AC-85DD9BFF38FB}|Libraries\\Goedel.Cryptography.Identifiers\\Goedel.Cryptography.Identifiers.csproj|solutionrelative:libraries\\goedel.cryptography.identifiers\\cryptoalgorithmid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2BA97C8A-2FA2-4D02-A977-566848ED2D55}|Libraries\\Goedel.Cryptography.Jose\\Goedel.Cryptography.Jose.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography.jose\\algorithmid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2BA97C8A-2FA2-4D02-A977-566848ED2D55}|Libraries\\Goedel.Cryptography.Jose\\Goedel.Cryptography.Jose.csproj|solutionrelative:libraries\\goedel.cryptography.jose\\algorithmid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{859B7B3E-843E-42AC-B5AC-85DD9BFF38FB}|Libraries\\Goedel.Cryptography.Identifiers\\Goedel.Cryptography.Identifiers.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography.identifiers\\cryptoalgorithmmacro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{859B7B3E-843E-42AC-B5AC-85DD9BFF38FB}|Libraries\\Goedel.Cryptography.Identifiers\\Goedel.Cryptography.Identifiers.csproj|solutionrelative:libraries\\goedel.cryptography.identifiers\\cryptoalgorithmmacro.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8319C05-EA98-405D-94EB-ACB9DE6DA975}|Libraries\\Goedel.Cryptography\\Goedel.Cryptography.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography\\cryptostreamfromid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8319C05-EA98-405D-94EB-ACB9DE6DA975}|Libraries\\Goedel.Cryptography\\Goedel.Cryptography.csproj|solutionrelative:libraries\\goedel.cryptography\\cryptostreamfromid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A8837814-072D-4434-8055-C9AC65782B0B}|Anything\\Goedel.Anything\\Goedel.Anything.csproj|c:\\users\\hallam\\code\\mmm\\anything\\goedel.anything\\profileanything.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A8837814-072D-4434-8055-C9AC65782B0B}|Anything\\Goedel.Anything\\Goedel.Anything.csproj|solutionrelative:anything\\goedel.anything\\profileanything.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{171F782C-4D04-40BD-8D12-EAD48EEFB79A}|Libraries\\Goedel.Utilities\\Goedel.Utilities.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.utilities\\numbersplit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{171F782C-4D04-40BD-8D12-EAD48EEFB79A}|Libraries\\Goedel.Utilities\\Goedel.Utilities.csproj|solutionrelative:libraries\\goedel.utilities\\numbersplit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{859B7B3E-843E-42AC-B5AC-85DD9BFF38FB}|Libraries\\Goedel.Cryptography.Identifiers\\Goedel.Cryptography.Identifiers.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography.identifiers\\exceptions.exceptional||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{859B7B3E-843E-42AC-B5AC-85DD9BFF38FB}|Libraries\\Goedel.Cryptography.Identifiers\\Goedel.Cryptography.Identifiers.csproj|solutionrelative:libraries\\goedel.cryptography.identifiers\\exceptions.exceptional||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0FA406E8-EE81-45DA-BCF8-1F72C66A2EA0}|Libraries\\Goedel.Cryptography.Dare\\Goedel.Cryptography.Dare.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography.dare\\vdaresequence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0FA406E8-EE81-45DA-BCF8-1F72C66A2EA0}|Libraries\\Goedel.Cryptography.Dare\\Goedel.Cryptography.Dare.csproj|solutionrelative:libraries\\goedel.cryptography.dare\\vdaresequence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8319C05-EA98-405D-94EB-ACB9DE6DA975}|Libraries\\Goedel.Cryptography\\Goedel.Cryptography.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography\\vs.make||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{B8319C05-EA98-405D-94EB-ACB9DE6DA975}|Libraries\\Goedel.Cryptography\\Goedel.Cryptography.csproj|solutionrelative:libraries\\goedel.cryptography\\vs.make||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8319C05-EA98-405D-94EB-ACB9DE6DA975}|Libraries\\Goedel.Cryptography\\Goedel.Cryptography.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography\\algorithmid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8319C05-EA98-405D-94EB-ACB9DE6DA975}|Libraries\\Goedel.Cryptography\\Goedel.Cryptography.csproj|solutionrelative:libraries\\goedel.cryptography\\algorithmid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8319C05-EA98-405D-94EB-ACB9DE6DA975}|Libraries\\Goedel.Cryptography\\Goedel.Cryptography.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography\\algorithms\\aesocb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8319C05-EA98-405D-94EB-ACB9DE6DA975}|Libraries\\Goedel.Cryptography\\Goedel.Cryptography.csproj|solutionrelative:libraries\\goedel.cryptography\\algorithms\\aesocb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0FA406E8-EE81-45DA-BCF8-1F72C66A2EA0}|Libraries\\Goedel.Cryptography.Dare\\Goedel.Cryptography.Dare.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography.dare\\earlsignature.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0FA406E8-EE81-45DA-BCF8-1F72C66A2EA0}|Libraries\\Goedel.Cryptography.Dare\\Goedel.Cryptography.Dare.csproj|solutionrelative:libraries\\goedel.cryptography.dare\\earlsignature.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8319C05-EA98-405D-94EB-ACB9DE6DA975}|Libraries\\Goedel.Cryptography\\Goedel.Cryptography.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography\\keypairedwards448.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8319C05-EA98-405D-94EB-ACB9DE6DA975}|Libraries\\Goedel.Cryptography\\Goedel.Cryptography.csproj|solutionrelative:libraries\\goedel.cryptography\\keypairedwards448.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A74D219-ED84-4943-BBA7-E4B00AACBAF4}|Libraries\\Goedel.Test\\Goedel.Test.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.test\\crypto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A74D219-ED84-4943-BBA7-E4B00AACBAF4}|Libraries\\Goedel.Test\\Goedel.Test.csproj|solutionrelative:libraries\\goedel.test\\crypto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EB6C5500-1C30-4929-A0F9-E31AB6564FAF}|Testing\\Test.Cryptography.Dare\\Test.Cryptography.Dare.csproj|c:\\users\\hallam\\code\\mmm\\testing\\test.cryptography.dare\\dareenvelope.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EB6C5500-1C30-4929-A0F9-E31AB6564FAF}|Testing\\Test.Cryptography.Dare\\Test.Cryptography.Dare.csproj|solutionrelative:testing\\test.cryptography.dare\\dareenvelope.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8319C05-EA98-405D-94EB-ACB9DE6DA975}|Libraries\\Goedel.Cryptography\\Goedel.Cryptography.csproj|c:\\users\\hallam\\code\\mmm\\libraries\\goedel.cryptography\\keypairedwards25519.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8319C05-EA98-405D-94EB-ACB9DE6DA975}|Libraries\\Goedel.Cryptography\\Goedel.Cryptography.csproj|solutionrelative:libraries\\goedel.cryptography\\keypairedwards25519.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 239,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 196,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "VDareEnvelopeWriter.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Dare\\VDareEnvelopeWriter.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography.Dare\\VDareEnvelopeWriter.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Dare\\VDareEnvelopeWriter.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography.Dare\\VDareEnvelopeWriter.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAnwGUAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-27T20:55:24.83Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Enumerable.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Utilities\\Enumerable.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Utilities\\Enumerable.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Utilities\\Enumerable.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Utilities\\Enumerable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEIAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-03T18:16:40.569Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DeterministicSeed.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Test\\DeterministicSeed.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Test\\DeterministicSeed.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Test\\DeterministicSeed.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Test\\DeterministicSeed.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAuwCEAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-03T17:59:47.528Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Assert.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Test\\Assert.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Test\\Assert.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Test\\Assert.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Test\\Assert.cs",
+              "ViewState": "AgIAAGYAAAAAAAAAAAArwIYAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-02T23:32:47.321Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "CryptoAlgorithmId.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Identifiers\\CryptoAlgorithmId.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography.Identifiers\\CryptoAlgorithmId.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Identifiers\\CryptoAlgorithmId.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography.Identifiers\\CryptoAlgorithmId.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAIAwwDkAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-30T16:05:20.402Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CryptoAlgorithmMacro.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Identifiers\\CryptoAlgorithmMacro.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography.Identifiers\\CryptoAlgorithmMacro.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Identifiers\\CryptoAlgorithmMacro.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography.Identifiers\\CryptoAlgorithmMacro.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAANoAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-27T21:02:40.436Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "AlgorithmID.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography\\AlgorithmID.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography\\AlgorithmID.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography\\AlgorithmID.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography\\AlgorithmID.cs",
+              "ViewState": "AgIAAAoBAAAAAAAAAAAiwB0BAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-28T20:16:43.32Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TestVarintSerialization.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Testing\\Test.Cryptography.Dare\\TestVarintSerialization.cs",
+              "RelativeDocumentMoniker": "Testing\\Test.Cryptography.Dare\\TestVarintSerialization.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Testing\\Test.Cryptography.Dare\\TestVarintSerialization.cs",
+              "RelativeToolTip": "Testing\\Test.Cryptography.Dare\\TestVarintSerialization.cs",
+              "ViewState": "AgIAAIwAAAAAAAAAAAASwLQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-26T22:03:30.28Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 204,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "VDareEnvelopeWriter.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Dare\\VDareEnvelopeWriter.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography.Dare\\VDareEnvelopeWriter.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Dare\\VDareEnvelopeWriter.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography.Dare\\VDareEnvelopeWriter.cs",
+              "ViewState": "AgIAANYAAAAAAAAAAAAUwN0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-03T20:42:35.437Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GcmWrapper.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Dare\\GcmWrapper.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography.Dare\\GcmWrapper.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Dare\\GcmWrapper.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography.Dare\\GcmWrapper.cs",
+              "ViewState": "AgIAAF4AAAAAAAAAAAArwHEAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-28T21:16:55.963Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UnitTestSet.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Test\\UnitTestSet.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Test\\UnitTestSet.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Test\\UnitTestSet.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Test\\UnitTestSet.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAkwDwAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-03T00:36:06.938Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Scratchpad.csproj",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Testing\\Scratchpad\\Scratchpad.csproj",
+              "RelativeDocumentMoniker": "Testing\\Scratchpad\\Scratchpad.csproj",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Testing\\Scratchpad\\Scratchpad.csproj",
+              "RelativeToolTip": "Testing\\Scratchpad\\Scratchpad.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-11-02T23:07:04.853Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "JoseConstants.constant",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Identifiers\\JoseConstants.constant",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography.Identifiers\\JoseConstants.constant",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Identifiers\\JoseConstants.constant",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography.Identifiers\\JoseConstants.constant",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-10-30T16:16:36.905Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AlgorithmID.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Jose\\AlgorithmID.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography.Jose\\AlgorithmID.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Jose\\AlgorithmID.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography.Jose\\AlgorithmID.cs",
+              "ViewState": "AgIAAJcAAAAAAAAAAAAewLYAAABXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-30T16:12:37.121Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "CryptoStreamFromID.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography\\CryptoStreamFromID.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography\\CryptoStreamFromID.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography\\CryptoStreamFromID.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography\\CryptoStreamFromID.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAswGgAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-30T16:12:25.998Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "NumberSplit.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Utilities\\NumberSplit.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Utilities\\NumberSplit.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Utilities\\NumberSplit.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Utilities\\NumberSplit.cs",
+              "ViewState": "AgIAAEUBAAAAAAAAAAA/wHEBAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-29T20:47:14.605Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GcmWrapper.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Dare\\GcmWrapper.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography.Dare\\GcmWrapper.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Dare\\GcmWrapper.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography.Dare\\GcmWrapper.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAWwCkAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-29T18:20:10.442Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Exceptions.Exceptional",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Identifiers\\Exceptions.Exceptional",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography.Identifiers\\Exceptions.Exceptional",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Identifiers\\Exceptions.Exceptional",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography.Identifiers\\Exceptions.Exceptional",
+              "ViewState": "AgIAAK0AAAAAAAAAAAAgwOMAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-10-28T20:33:02.913Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "VS.Make",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography\\VS.Make",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography\\VS.Make",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography\\VS.Make",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography\\VS.Make",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-10-28T20:32:01.479Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "AESOCB.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography\\Algorithms\\AESOCB.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography\\Algorithms\\AESOCB.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography\\Algorithms\\AESOCB.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography\\Algorithms\\AESOCB.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-27T21:30:06.927Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "KeyPairEdwards448.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography\\KeyPairEdwards448.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography\\KeyPairEdwards448.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography\\KeyPairEdwards448.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography\\KeyPairEdwards448.cs",
+              "ViewState": "AgIAAAcBAAAAAAAAAIAwwCoBAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-27T21:13:29.862Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProgramTest.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Testing\\Scratchpad\\ProgramTest.cs",
+              "RelativeDocumentMoniker": "Testing\\Scratchpad\\ProgramTest.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Testing\\Scratchpad\\ProgramTest.cs",
+              "RelativeToolTip": "Testing\\Scratchpad\\ProgramTest.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAAAEUAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-15T16:56:59.037Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "EarlSignature.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Dare\\EarlSignature.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography.Dare\\EarlSignature.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Dare\\EarlSignature.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography.Dare\\EarlSignature.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-27T21:07:35.051Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "KeyPairEdwards25519.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography\\KeyPairEdwards25519.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography\\KeyPairEdwards25519.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography\\KeyPairEdwards25519.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography\\KeyPairEdwards25519.cs",
+              "ViewState": "AgIAABMBAAAAAAAAAAAkwDQBAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-27T21:02:01.339Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ProfileAnything.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Anything\\Goedel.Anything\\ProfileAnything.cs",
+              "RelativeDocumentMoniker": "Anything\\Goedel.Anything\\ProfileAnything.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Anything\\Goedel.Anything\\ProfileAnything.cs",
+              "RelativeToolTip": "Anything\\Goedel.Anything\\ProfileAnything.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAowFUAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-27T21:01:35.794Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "DareEnvelope.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Testing\\Test.Cryptography.Dare\\DareEnvelope.cs",
+              "RelativeDocumentMoniker": "Testing\\Test.Cryptography.Dare\\DareEnvelope.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Testing\\Test.Cryptography.Dare\\DareEnvelope.cs",
+              "RelativeToolTip": "Testing\\Test.Cryptography.Dare\\DareEnvelope.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-27T20:46:46.532Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Crypto.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Test\\Crypto.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Test\\Crypto.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Test\\Crypto.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Test\\Crypto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwCkAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-27T20:26:08.047Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "VDareSequence.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Dare\\VDareSequence.cs",
+              "RelativeDocumentMoniker": "Libraries\\Goedel.Cryptography.Dare\\VDareSequence.cs",
+              "ToolTip": "C:\\Users\\hallam\\Code\\mmm\\Libraries\\Goedel.Cryptography.Dare\\VDareSequence.cs",
+              "RelativeToolTip": "Libraries\\Goedel.Cryptography.Dare\\VDareSequence.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAowGEAAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-26T22:20:11.943Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

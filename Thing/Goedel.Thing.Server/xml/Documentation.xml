@@ -4,6 +4,33 @@
         <name>Goedel.Thing.Server</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Thing.Server.ServiceDescription">
+            <summary>Service description record.</summary>
+            <param name="Protocol">The protocol.</param>
+            <param name="Port">The port number.</param>
+            <param name="Configuration">The configuration data.</param>
+        </member>
+        <member name="M:Goedel.Thing.Server.ServiceDescription.#ctor(System.String,System.Int32,System.String)">
+            <summary>Service description record.</summary>
+            <param name="Protocol">The protocol.</param>
+            <param name="Port">The port number.</param>
+            <param name="Configuration">The configuration data.</param>
+        </member>
+        <member name="P:Goedel.Thing.Server.ServiceDescription.Protocol">
+            <summary>The protocol.</summary>
+        </member>
+        <member name="P:Goedel.Thing.Server.ServiceDescription.Port">
+            <summary>The port number.</summary>
+        </member>
+        <member name="P:Goedel.Thing.Server.ServiceDescription.Configuration">
+            <summary>The configuration data.</summary>
+        </member>
+        <member name="M:Goedel.Thing.Server.ServiceDescription.#ctor(Goedel.Thing.Server.WellKnownService,System.Int32,System.String)">
+            <summary>Constructor returning a new instance for <paramref name="service"/>.</summary>
+            <param name="service">A well known service profile.</param>
+            <param name="port">The port number.</param>
+            <param name="configuration">The configuration data.</param>
+        </member>
         <member name="T:Goedel.Thing.Server.ServiceThingClient">
             <summary>
             Thing service client, interfaces to the DNS and to ACME services.
@@ -13,6 +40,18 @@
             <summary>
             Constructor, 
             </summary>
+        </member>
+        <member name="M:Goedel.Thing.Server.ServiceThingClient.BindContact(System.String,Goedel.Contacts.JsContact)">
+            <summary>Bind the contact <paramref name="contact"/> to the handle <paramref name="handle"/></summary>
+            <param name="handle">The DNS handle.</param>
+            <param name="contact">The contact.</param>
+            <returns>Result of requesting the binding</returns>
+        </member>
+        <member name="M:Goedel.Thing.Server.ServiceThingClient.GetName(System.String,System.String)">
+            <summary>Return a uniquified name for <paramref name="zone"/></summary>
+            <param name="zone">The zone.</param>
+            <param name="baseName">Basename, if null, the string 'iot' is used.</param>
+            <returns>The name.</returns>
         </member>
         <member name="M:Goedel.Thing.Server.ServiceThingClient.NewDeviceAsync(System.String,System.Collections.Generic.List{System.Net.IPAddress},System.Collections.Generic.IEnumerable{Goedel.Thing.Server.ServiceDescription})">
             <summary>

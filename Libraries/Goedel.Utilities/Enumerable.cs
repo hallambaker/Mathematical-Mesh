@@ -59,6 +59,13 @@ public static class Enumerable {
     /// <returns>true if <paramref name="item"/> is null or empty, otherwise false.</returns>
     public static bool IsEmpty<T>(this T[]? item) =>
             (item == null) || (item.Length == 0);
+
+    ///// <summary>Returns true if <paramref name="item"/> is null or empty.</summary>
+    ///// <typeparam name="T">The array type.</typeparam>
+    ///// <param name="item"></param>
+    ///// <returns>true if <paramref name="item"/> is null or empty, otherwise false.</returns>
+    //public static bool NotEmpty<T>(this IEnumerable<T>? item) =>
+    //        (item != null) && (item.Count > 0);
     }
 
 /// <summary>Safe enumerator of type <typeparamref name="T"/>.</summary>

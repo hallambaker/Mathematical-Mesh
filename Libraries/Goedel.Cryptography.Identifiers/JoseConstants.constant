@@ -40,3 +40,10 @@ File JoseIdentifier
 	String SHA3_512 "SHA3512"
 
 
+	String AES128C "AES128C"
+	String AES192C "AES192C"
+	String AES256C "AES256C"
+
+	String AES256S "AES256S"
+
+	String AES256CS "AES256CS"

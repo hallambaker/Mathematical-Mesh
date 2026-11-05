@@ -197,7 +197,7 @@ public static partial class AlgorithmID {
         (v0 <= 6).AssertTrue(CryptographicException.Throw);
         (v1 <= 40).AssertTrue(CryptographicException.Throw);
 
-        var first = v0*40 + v1;
+        var first = v0 * 40 + v1;
 
         var length = 1;
         for (var i = 2; i < split.Length; i++) {
@@ -216,7 +216,7 @@ public static partial class AlgorithmID {
         return bytes;
 
 
-        int countLen (int value) {
+        int countLen(int value) {
             if (value < 0x80) {
                 return 1;
                 }
@@ -232,13 +232,13 @@ public static partial class AlgorithmID {
             return 5;
             }
 
-        int addValue (int data, byte[] bytes, int pos) {
+        int addValue(int data, byte[] bytes, int pos) {
             if (data < 0x80) {
                 pos = addByte(bytes, data, pos);
                 return pos;
                 }
             if (data < 0x4000) {
-                pos = addByte(bytes, data &0x7f, pos);
+                pos = addByte(bytes, data & 0x7f, pos);
                 pos = addByte(bytes, (data >> 7) | 0x80, pos);
                 return pos;
                 }
@@ -263,7 +263,7 @@ public static partial class AlgorithmID {
             return pos;
             }
 
-        int addByte (byte[] bytes, int value, int pos) {
+        int addByte(byte[] bytes, int value, int pos) {
             bytes[pos++] = (byte)value;
             return pos;
             }
@@ -282,4 +282,43 @@ public static partial class AlgorithmID {
         return Result;
         }
 
+
+    public static int KeySize(this CryptoAlgorithmId id) => id switch {
+        CryptoAlgorithmId.AES256GCM => 256,
+        CryptoAlgorithmId.AES256OCB => 256,
+
+        CryptoAlgorithmId.AES192GCM => 192,
+        CryptoAlgorithmId.AES192OCB => 192,
+        
+        CryptoAlgorithmId.AES128GCM => 128,
+        CryptoAlgorithmId.AES128OCB => 128,
+
+        _ => throw new NYI()
+        };
+
+    public static int TagSize(this CryptoAlgorithmId id) => id switch {
+        CryptoAlgorithmId.AES256GCM => 128,
+        CryptoAlgorithmId.AES256OCB => 128,
+
+        CryptoAlgorithmId.AES192GCM => 128,
+        CryptoAlgorithmId.AES192OCB => 128,
+
+        CryptoAlgorithmId.AES128GCM => 128,
+        CryptoAlgorithmId.AES128OCB => 128,
+
+        _ => throw new NYI()
+        };
+
+    public static int IVSize(this CryptoAlgorithmId id) => id switch {
+        CryptoAlgorithmId.AES256GCM => 96,
+        CryptoAlgorithmId.AES256OCB => 96,
+
+        CryptoAlgorithmId.AES192GCM => 96,
+        CryptoAlgorithmId.AES192OCB => 96,
+
+        CryptoAlgorithmId.AES128GCM => 96,
+        CryptoAlgorithmId.AES128OCB => 96,
+
+        _ => throw new NYI()
+        };
     }

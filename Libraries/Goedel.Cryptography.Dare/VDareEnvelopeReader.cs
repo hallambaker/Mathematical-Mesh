@@ -69,9 +69,9 @@ public partial class VDareEnvelopeReader : Disposable {
     VDareEnvelopeReader(
                 VDareStream stream) {
         Stream = stream;
-        Version = Stream.ReadTypeIdentifier();
+        //Version = Stream.ReadTypeIdentifier();
 
-        (Version == DareConstants.TypeIdentifierDareEnvelopeL).AssertTrue(NYI.Throw);
+        //(Version == DareConstants.TypeIdentifierDareEnvelopeL).AssertTrue(NYI.Throw);
 
         // read the unsigned header
         UnsignedHeader = ReadJson<Unprotected>();
@@ -103,7 +103,7 @@ public partial class VDareEnvelopeReader : Disposable {
     /// <param name="fileName">The file to read.</param>
     /// <returns>The envelope read.</returns>
     public static EarlEnvelope Read(string fileName) {
-        var stream = VDareStream.OpenRead(fileName);
+        var stream = VDareStream.Open(fileName, DareConstants.TypeIdentifierDareEnvelope);
         using var reader = new VDareEnvelopeReader(stream);
 
         var payload = reader.ReadBlock();

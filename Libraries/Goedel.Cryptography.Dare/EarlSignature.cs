@@ -39,7 +39,7 @@ public partial class EarlSignature {
     /// </summary>
     /// <param name="key">The key to sign under.</param>
     public EarlSignature(
-                KeyPair key) {
+                CryptographicKey key) {
         Alg = key.CryptoAlgorithmId.ToJoseID();
         KeyIdentifier = key.KeyIdentifier;
 
@@ -51,7 +51,7 @@ public partial class EarlSignature {
     /// <param name="key">The key to sign under.</param>
     /// <param name="manifest">The manfest to be signed.</param>
     public EarlSignature(
-                KeyPair key,
+                CryptographicKey key,
                 byte[] manifest) {
 
         KeyIdentifier = key.KeyIdentifier;

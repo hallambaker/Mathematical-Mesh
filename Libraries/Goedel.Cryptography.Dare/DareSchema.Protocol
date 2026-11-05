@@ -249,6 +249,12 @@
 		Struct ReceiptProof ReceiptProof
 			Description
 				|Provides a means by which another party can demonstrate they could read the message.
+		Binary Malt
+			Description
+				|Hash of the Salt value used to derrive cryptographic parameters for the content data.
+				|This is used to
+				|allow the salt value to be erased (thus rendering the payload content irrecoverable)
+				|without affecting the ability to calculate the payload digest value.
 
 
 	Structure ReceiptProof
@@ -483,6 +489,9 @@
 			Description
 				|The number of the entry in the sequence.
 			LengthBits 64
+		Binary Salt
+			Description
+				|Salt value used to derrive cryptographic parameters for the content data.
 
 
 	Structure EarlSignature

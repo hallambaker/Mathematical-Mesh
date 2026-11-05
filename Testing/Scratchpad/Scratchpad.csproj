@@ -22,13 +22,11 @@
 		<ProjectReference Include="..\Test.Cryptography.Udf\Test.Cryptography.Udf.csproj" />
 		<ProjectReference Include="..\Test.Cryptography\Test.Cryptography.csproj" />
 		<ProjectReference Include="..\Test.Discovery\Test.Discovery.csproj" />
-		<ProjectReference Include="..\Test.MakeSiteDocs\Test.MakeSiteDocs.csproj" />
 		<ProjectReference Include="..\Test.Mesh.Protocol\Test.Mesh.Protocol.csproj" />
 		<ProjectReference Include="..\Test.Mesh.Shell\Test.Mesh.Shell.csproj" />
 		<ProjectReference Include="..\Test.Mesh.Store\Test.Mesh.Store.csproj" />
 		<ProjectReference Include="..\Test.NotaryCallsign\Test.NotaryCallsign.csproj" />
 		<ProjectReference Include="..\Test.Protocol\Test.Protocol.csproj" />
-		<ProjectReference Include="..\Test.Thing\Test.Thing.csproj" />
 		<ProjectReference Include="..\Test.Utilities\Test.Utilities.csproj" />
 	</ItemGroup>
 

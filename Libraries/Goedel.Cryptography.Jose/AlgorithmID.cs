@@ -145,6 +145,10 @@ public static class AlgorithmID {
             //A256GCM AES GCM using 256-bit key   enc Recommended[IESG]  [RFC7518, Section 5.3]
                 { "A256GCM", CryptoAlgorithmId.AES256GCM },
 
+
+
+
+
             //EdDSA   EdDSA signature algorithms alg Optional[IESG]
             //  [RFC - ietf - jose - cfrg - curves - 06, Section 3.1][RFC - irtf - cfrg - eddsa - 08]
                 { "EdDSA", CryptoAlgorithmId.EdDSA },
@@ -168,11 +172,25 @@ public static class AlgorithmID {
                 { "DH", CryptoAlgorithmId.DH },
                 { "ECDH", CryptoAlgorithmId.ECDH },
 
+            //A128GCM AES GCM using 128-bit key   enc Recommended[IESG]  [RFC7518, Section 5.3]
+                { "A128GCMC", CryptoAlgorithmId.AES128 | CryptoAlgorithmId.ModeGcmChunked},
+            //A256GCM AES GCM using 256-bit key   enc Recommended[IESG]  [RFC7518, Section 5.3]
+                { "A256GCMC", CryptoAlgorithmId.AES256 | CryptoAlgorithmId.ModeGcmChunked},
+
+            //A128GCM AES GCM using 128-bit key   enc Recommended[IESG]  [RFC7518, Section 5.3]
+                { "A128GCMS", CryptoAlgorithmId.AES128 | CryptoAlgorithmId.ModeGcmSiv},
+            //A256GCM AES GCM using 256-bit key   enc Recommended[IESG]  [RFC7518, Section 5.3]
+                { "A256GCMS", CryptoAlgorithmId.AES256 | CryptoAlgorithmId.ModeGcmSiv},
+
+            //A128GCM AES GCM using 128-bit key   enc Recommended[IESG]  [RFC7518, Section 5.3]
+                { "A128GCMCS", CryptoAlgorithmId.AES128 | CryptoAlgorithmId.ModeGcmChunkedSiv },
+            //A256GCM AES GCM using 256-bit key   enc Recommended[IESG]  [RFC7518, Section 5.3]
+                { "A256GCMCS", CryptoAlgorithmId.AES256 | CryptoAlgorithmId.ModeGcmChunkedSiv },
+
             // Special
-
-
             //none    No digital signature or MAC performed   alg Optional[IESG]  [RFC7518, Section 3.6]
                 { "none", CryptoAlgorithmId.NULL }
+
 
             // Not supported
             //HS384   HMAC using SHA-384	alg Optional[IESG]  [RFC7518, Section 3.2]

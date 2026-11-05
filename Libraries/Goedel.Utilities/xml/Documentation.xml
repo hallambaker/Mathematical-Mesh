@@ -2542,6 +2542,13 @@
             <param name="Data">Input</param>
             <returns>Output array</returns>
         </member>
+        <member name="M:Goedel.Utilities.NumberSplit.NetworkOrder(System.UInt64)">
+            <summary>
+            Convert integer to bigendian array. That is with the most significant byte first.
+            </summary>
+            <param name="Data">Input</param>
+            <returns>Output array</returns>
+        </member>
         <member name="M:Goedel.Utilities.NumberSplit.LittleEndian64(System.Byte[],System.Int32)">
             <summary>
             Read in a ulong from <paramref name="data"/> starting at index

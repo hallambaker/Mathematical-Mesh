@@ -1,5 +1,5 @@
 ﻿
-//  This file was automatically generated at 7/30/2026 4:39:50 PM
+//  This file was automatically generated at 11/5/2026 5:46:39 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -2204,6 +2204,110 @@ public partial class NotExportable : CryptographicException {
     /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
     static System.Exception _Throw(object reasons) => new NotExportable(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// The operation attempted exceeds the limit of the cryptographic algorithm
+/// </summary>
+[global::System.Serializable]
+public partial class LimitExceeded : CryptographicException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"The operation attempted exceeds the limit of the cryptographic algorithm"
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public LimitExceeded  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new LimitExceeded(args:reasons) ;
+		
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    public static new global::Goedel.Utilities.ThrowDelegate Throw {get;} = _Throw;
+
+
+    }
+
+
+/// <summary>
+/// An invalid chunk size was specified.
+/// </summary>
+[global::System.Serializable]
+public partial class InvalidChunkSize : CryptographicException {
+
+    ///<summary>The exception formatting delegate. May be overriden 
+	///locally or globally to implement different exception formatting.</summary>
+	public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+			global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+	///<summary>Templates for formatting response messages.</summary>
+	public static new System.Collections.Generic.List<string> Templates {get; set;} = 
+			new () {
+
+			"An invalid chunk size was specified."
+			};
+
+	/// <summary>
+	/// Construct instance for exception
+	/// </summary>		
+	/// <param name="description">Description of the error, may be used to override the 
+	/// generated message.</param>	
+	/// <param name="inner">Inner Exception</param>	
+	/// <param name="args">Optional list of parameterized arguments.</param>
+	public InvalidChunkSize  (string description=null, System.Exception inner=null,
+		params object[] args) : 
+			base (ExceptionFormatDelegate(description, Templates,
+				null, args), inner) {
+		}
+
+
+
+
+
+	/// <summary>
+    /// The public fatory delegate
+    /// </summary>
+    /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+    static System.Exception _Throw(object reasons) => new InvalidChunkSize(args:reasons) ;
 		
 	/// <summary>
     /// The public fatory delegate

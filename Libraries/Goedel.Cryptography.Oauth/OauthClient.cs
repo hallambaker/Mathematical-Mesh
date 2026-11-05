@@ -159,7 +159,7 @@ public class OauthClient {
         // construct the pre-request
         var par = ConstructPar(oauth, state);
         Screen.WriteLine("Pre Authorization Request");
-        //Screen.WriteLine(par.ToString());
+        Screen.WriteLine(par.ToString());
 
 
         var parBytes = par.GetAsKeyValue();
@@ -184,7 +184,7 @@ public class OauthClient {
 
         var redirect = redirectFields.GetAsUrlQuery(oauth.AuthorizationServerMetadata.AuthorizationEndpoint);
         Screen.WriteLine("Redirect Uri");
-        //Screen.WriteLine(redirect);
+        Screen.WriteLine(redirect);
         Screen.Flush();
 
         return new OauthClientResultPreRequest() {

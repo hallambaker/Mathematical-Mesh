@@ -219,3 +219,67 @@ Namespace Goedel.Cryptography
 			Console "The cryptographic provider does not permit export of the private key parameters"
 			Description
 				|The cryptographic provider does not permit export of the private key parameters
+
+		Exception LimitExceeded
+			Console "The operation attempted exceeds the limit of the cryptographic algorithm"
+			Description
+				|The operation attempted exceeds the limit of the cryptographic algorithm
+
+		Exception InvalidChunkSize
+			Console "An invalid chunk size was specified."
+			Description
+				|An invalid chunk size was specified.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,108 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\hallam\\source\\repos\\mmm\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BC20B849-1839-4F07-82C3-E2D705DEBA79}|Documentation\\MakeSiteDocs\\MakeSiteDocs.csproj|c:\\users\\hallam\\source\\repos\\mmm\\documentation\\makesitedocs\\dareresults.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BC20B849-1839-4F07-82C3-E2D705DEBA79}|Documentation\\MakeSiteDocs\\MakeSiteDocs.csproj|solutionrelative:documentation\\makesitedocs\\dareresults.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DB3A82FA-7EC9-4CB8-A315-E6E801C17DEC}|Outputs\\Documents\\Web.csproj|c:\\users\\hallam\\source\\repos\\mmm\\outputs\\documents\\makeonedoc.bat||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{DB3A82FA-7EC9-4CB8-A315-E6E801C17DEC}|Outputs\\Documents\\Web.csproj|solutionrelative:outputs\\documents\\makeonedoc.bat||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BC20B849-1839-4F07-82C3-E2D705DEBA79}|Documentation\\MakeSiteDocs\\MakeSiteDocs.csproj|c:\\users\\hallam\\source\\repos\\mmm\\documentation\\makesitedocs\\ids\\makeexamples-dare.script||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{BC20B849-1839-4F07-82C3-E2D705DEBA79}|Documentation\\MakeSiteDocs\\MakeSiteDocs.csproj|solutionrelative:documentation\\makesitedocs\\ids\\makeexamples-dare.script||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BC20B849-1839-4F07-82C3-E2D705DEBA79}|Documentation\\MakeSiteDocs\\MakeSiteDocs.csproj|c:\\users\\hallam\\source\\repos\\mmm\\documentation\\makesitedocs\\ids\\makeexamples-dare.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BC20B849-1839-4F07-82C3-E2D705DEBA79}|Documentation\\MakeSiteDocs\\MakeSiteDocs.csproj|solutionrelative:documentation\\makesitedocs\\ids\\makeexamples-dare.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BC20B849-1839-4F07-82C3-E2D705DEBA79}|Documentation\\MakeSiteDocs\\MakeSiteDocs.csproj|c:\\users\\hallam\\source\\repos\\mmm\\documentation\\makesitedocs\\binaryenvelope.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BC20B849-1839-4F07-82C3-E2D705DEBA79}|Documentation\\MakeSiteDocs\\MakeSiteDocs.csproj|solutionrelative:documentation\\makesitedocs\\binaryenvelope.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 190,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 198,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MakeExamples-Dare.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\source\\repos\\mmm\\Documentation\\MakeSiteDocs\\IDs\\MakeExamples-Dare.cs",
+              "RelativeDocumentMoniker": "Documentation\\MakeSiteDocs\\IDs\\MakeExamples-Dare.cs",
+              "ToolTip": "C:\\Users\\hallam\\source\\repos\\mmm\\Documentation\\MakeSiteDocs\\IDs\\MakeExamples-Dare.cs",
+              "RelativeToolTip": "Documentation\\MakeSiteDocs\\IDs\\MakeExamples-Dare.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAADwv3gAAAB1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T20:33:44.342Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BinaryEnvelope.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\source\\repos\\mmm\\Documentation\\MakeSiteDocs\\BinaryEnvelope.cs",
+              "RelativeDocumentMoniker": "Documentation\\MakeSiteDocs\\BinaryEnvelope.cs",
+              "ToolTip": "C:\\Users\\hallam\\source\\repos\\mmm\\Documentation\\MakeSiteDocs\\BinaryEnvelope.cs",
+              "RelativeToolTip": "Documentation\\MakeSiteDocs\\BinaryEnvelope.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T19:47:07.421Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DareResults.cs",
+              "DocumentMoniker": "C:\\Users\\hallam\\source\\repos\\mmm\\Documentation\\MakeSiteDocs\\DareResults.cs",
+              "RelativeDocumentMoniker": "Documentation\\MakeSiteDocs\\DareResults.cs",
+              "ToolTip": "C:\\Users\\hallam\\source\\repos\\mmm\\Documentation\\MakeSiteDocs\\DareResults.cs",
+              "RelativeToolTip": "Documentation\\MakeSiteDocs\\DareResults.cs",
+              "ViewState": "AgIAAIUAAAAAAAAAAAAowM4AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-06T18:57:13.697Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 173,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MakeOneDoc.bat",
+              "DocumentMoniker": "C:\\Users\\hallam\\source\\repos\\mmm\\Outputs\\Documents\\MakeOneDoc.bat",
+              "RelativeDocumentMoniker": "Outputs\\Documents\\MakeOneDoc.bat",
+              "ToolTip": "C:\\Users\\hallam\\source\\repos\\mmm\\Outputs\\Documents\\MakeOneDoc.bat",
+              "RelativeToolTip": "Outputs\\Documents\\MakeOneDoc.bat",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000614|",
+              "WhenOpened": "2025-10-06T21:08:21.393Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MakeExamples-Dare.script",
+              "DocumentMoniker": "C:\\Users\\hallam\\source\\repos\\mmm\\Documentation\\MakeSiteDocs\\IDs\\MakeExamples-Dare.script",
+              "RelativeDocumentMoniker": "Documentation\\MakeSiteDocs\\IDs\\MakeExamples-Dare.script",
+              "ToolTip": "C:\\Users\\hallam\\source\\repos\\mmm\\Documentation\\MakeSiteDocs\\IDs\\MakeExamples-Dare.script",
+              "RelativeToolTip": "Documentation\\MakeSiteDocs\\IDs\\MakeExamples-Dare.script",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAAF8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-10-06T18:56:55.083Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

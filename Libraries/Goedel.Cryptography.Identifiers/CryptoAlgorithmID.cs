@@ -54,6 +54,12 @@ public enum CryptoAlgorithmId {
     /// <summary>Mask for Algorithm Type</summary>
     BulkTagMask = 0xFF00,
 
+    /// <summary>Mask for Bulk Encryption Algorithm Mode</summary>
+    BulkModeMask = 0xF,
+
+    /// <summary>Mask for Bulk Encryption Algorithm Mode</summary>
+    BaseEncryptionMask = 0xFFF0,
+
     /// <summary>Flag multiplier</summary>
     Digest = Bulk * 0x100,
 
@@ -153,19 +159,31 @@ public enum CryptoAlgorithmId {
     ModeCTS = 2,
 
     /// <summary>Flag for Galois Counter Mode</summary>
-    ModeGCM = 3,
+    ModeGcm = 3,
+
+    /// <summary>Flag for Galois Counter Mode</summary>
+    ModeGcmSiv = 4,
+
+    /// <summary>Flag for Galois Counter Mode</summary>
+    ModeGcmChunked = 5,
+
+    /// <summary>Flag for Galois Counter Mode</summary>
+    ModeGcmChunkedSiv = 6,
 
     /// <summary>Flag for HMAC SHA-2 Mode</summary>
-    ModeHMAC = 4,
+    ModeHMAC = 7,
 
     /// <summary>Flag for CBC mode with no padding</summary>
-    ModeCBCNone = 5,
+    ModeCBCNone = 8,
 
     /// <summary>Flag for Electronic Code Book Mode</summary>
-    ModeECB = 6,
+    ModeECB = 9,
     
     /// <summary>Flag for OCB Mode</summary>
-    ModeOCB = 7,
+    ModeOCB = 10,
+
+
+
 
 
 
@@ -173,16 +191,16 @@ public enum CryptoAlgorithmId {
     AES128 = Encryption,
 
     /// <summary>AES 256 bit key</summary>
-    AES192 = Encryption + 8,
+    AES192 = Encryption + 16,
 
     /// <summary>AES 256 bit key</summary>
-    AES256 = Encryption + 16,
+    AES256 = Encryption + 32,
 
     /// <summary>AES 128 bit in CBC mode</summary>
     AES128CBC = AES128 + ModeCBC,
 
     /// <summary>AES 128 bit in GCM Mode</summary>
-    AES128GCM = AES128 + ModeGCM,
+    AES128GCM = AES128 + ModeGcm,
 
     /// <summary>AES 128 bit in Cipher Text Stealing (CTS) mode</summary>
     AES128CTS = AES128 + ModeCTS,
@@ -204,7 +222,7 @@ public enum CryptoAlgorithmId {
     AES192CBC = AES192 + ModeCBC,
 
     /// <summary>AES 128 bit in CBC mode</summary>
-    AES192GCM = AES192 + ModeGCM,
+    AES192GCM = AES192 + ModeGcm,
 
     /// <summary>AES 128 bit in CBC mode</summary>
     AES192OCB = AES192 + ModeOCB,
@@ -214,7 +232,7 @@ public enum CryptoAlgorithmId {
     AES256CBC = AES256 + ModeCBC,
 
     /// <summary>AES 256 bit in GCM mode</summary>
-    AES256GCM = AES256 + ModeGCM,
+    AES256GCM = AES256 + ModeGcm,
 
     /// <summary>AES 256 bit in Cipher Text Stealing (CTS) mode</summary>
     AES256CTS = AES256 + ModeCTS,

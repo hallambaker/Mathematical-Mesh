@@ -31,7 +31,7 @@ using System.Text;
 namespace Goedel.Test;
 
 
-public class DeterministicSeed {
+public class DeterministicSeed : Disposable {
     public static readonly string TestPath = "TestPath";
     static readonly string WorkingDirectory = "Deterministic";
 

@@ -1245,6 +1245,9 @@
         <member name="F:Goedel.Cryptography.Dare.DareConstants.TypeIdentifierDareSequenceL">
             <summary>Type identifier for sequences.</summary>
         </member>
+        <member name="F:Goedel.Cryptography.Dare.DareConstants.TypeIdentifierDareSequenceGuarded">
+            <summary>Type identifier for sequences.</summary>
+        </member>
         <member name="T:Goedel.Cryptography.Dare.DareRecipient">
             <summary>
             
@@ -2334,6 +2337,14 @@
         <member name="P:Goedel.Cryptography.Dare.ContentMeta.ReceiptProof">
              <summary>
             Provides a means by which another party can demonstrate they could read the message.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.ContentMeta.Malt">
+             <summary>
+            Hash of the Salt value used to derrive cryptographic parameters for the content data.
+            This is used to
+            allow the salt value to be erased (thus rendering the payload content irrecoverable)
+            without affecting the ability to calculate the payload digest value.
              </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.ContentMeta._Properties">
@@ -3586,6 +3597,11 @@
             The number of the entry in the sequence.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Unprotected.Salt">
+             <summary>
+            Salt value used to derrive cryptographic parameters for the content data.
+             </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.Unprotected._Properties">
             <summary>Implement IBinding</summary> 
         </member>
@@ -3668,14 +3684,14 @@
             Constructor used for deserialization.
             </summary>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlSignature.#ctor(Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Cryptography.Dare.EarlSignature.#ctor(Goedel.Cryptography.CryptographicKey)">
             <summary>
             Constructor returning a signature entry for use in an unprotected header before
             the manifest has been computed.
             </summary>
             <param name="key">The key to sign under.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.EarlSignature.#ctor(Goedel.Cryptography.KeyPair,System.Byte[])">
+        <member name="M:Goedel.Cryptography.Dare.EarlSignature.#ctor(Goedel.Cryptography.CryptographicKey,System.Byte[])">
             <summary>
             Constructor returning a signature entry specifying the signature value..
             </summary>
@@ -4818,6 +4834,125 @@
             Make a Sequence index from the specified values.
             </summary>
             <returns>The created index.</returns>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.GcmHandlerBase.Key">
+            <summary>The primary key</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.GcmHandlerBase.Salt">
+            <summary>The salt valye.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.GcmHandlerBase.Siv">
+            <summary>If true, use SIV mode and insert the IV into each block.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.GcmHandlerBase.SivBytes">
+            <summary>Number of SIV bytes inserted into the stream, is always zero or <see cref="P:Goedel.Cryptography.Dare.GcmHandlerBase.IvBytes"/></summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.GcmHandlerBase.ChunkSize">
+            <summary>Plaintext chnunk size.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.GcmHandlerBase.ChunkSizeCiphertext">
+            <summary>Ciphertext chunk size.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.GcmHandlerBase.PlaintextLength(System.Int64)">
+            <summary>Length of the plaintext recovered from a ciphertext of 
+            <paramref name="ciphertextLength"/> bytes</summary>
+            <param name="ciphertextLength"></param>
+            <returns>The number of bytes.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.GcmHandlerBase.ChunkCount(System.Int64)">
+            <summary>Number of chunks required to encode a plaintext of <paramref name="length"/> bytes.</summary>
+            <param name="length"></param>
+            <returns>The number of chunks.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.GcmHandlerBase.ChunkCountCiphertext(System.Int64)">
+            <summary>Number of chunks required to encode a ciphertext of <paramref name="length"/> bytes.</summary>
+            <param name="length"></param>
+            <returns>The number of chunks.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.GcmHandlerBase.PlaintextLengthChunked(System.Int64)">
+            <summary>Length of the plaintext recovered from a chunked encoding of length
+            <paramref name="ciphertextLength"/> bytes.</summary>
+            <param name="ciphertextLength"></param>
+            <returns>The number of bytes.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.GcmHandlerBase.CiphertextLength(System.Int64,System.Boolean)">
+            <summary>Returns the length of the ciphertext package in the preferred encoding</summary>
+            <param name="plaintext">Length of the plaintext.</param>
+            <param name="siv">If true, compute a synthetic IV per chunk.</param>
+            <returns>The ciphertext length.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.GcmHandlerBase.CiphertextLengthChunked(System.Int64)">
+            <summary>Length of the ciphertext of a chunked encoding of a plaintext of
+            <paramref name="plaintext"/> bytes.</summary>
+            <param name="plaintext"></param>
+            <returns>The number of bytes.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.GcmHandlerBase.#ctor(System.Byte[],System.Byte[],Goedel.Cryptography.CryptoAlgorithmId,System.Int32)">
+            <summary>Constructor for base handler class.</summary>
+            <param name="key">The key.</param>
+            <param name="salt">The salt.</param>
+            <param name="algorithm">The encryption algorithm.</param>
+            <param name="chunkSize">The chunk size.</param>
+            <exception cref="T:Goedel.Cryptography.CipherModeNotSupported">The algorithm <paramref name="algorithm"/>
+            is not supported.</exception>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.GcmHandlerBase.EncodeChunk(System.Byte[],System.ReadOnlySpan{System.Byte},System.Span{System.Byte})">
+            <summary>Encode a data chunk.</summary>
+            <param name="input">The plaintext to encode.</param>
+            <param name="kdfIn">Input to the key schedule</param>
+            <param name="output">Buffer to receive siv mask (if used), ciphertext and tag.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.GcmHandlerBase.DecodeChunk(System.Byte[],System.ReadOnlySpan{System.Byte},System.Span{System.Byte})">
+            <summary>Decode a data chunk.</summary>
+            <param name="input">The ciphertext package to decode.</param>
+            <param name="output">Buffer to receive recovered plaintext.</param>
+            <param name="kdfIn">Input to the key schedule</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.GcmWrapper.Encode(System.ReadOnlySpan{System.Byte})">
+            <summary>Encode <paramref name="plaintext"/> and return the ciphertext 
+            package consisting of the salt, ciphertext and tag encrypted under a new 
+            derrived key.</summary>
+            <param name="plaintext">The plaintext.</param>
+            <param name="salt">Salt value, guarantees uniqueness of key plus IV</param>
+            <returns>The ciphertext package</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Dare.GcmWrapperChunked">
+            <summary>Wrapper class providing chunked GCM encoding.</summary>
+            <param name="digest"></param>
+            <param name="algorithm"></param>
+            <param name="chunkSize">The chunk size. This is intentionally restricted to the 
+            range of a signed 32 bit integer. The internal counter in GCM is 32 bits after
+            which the cipher stream wraps allowing a trivial recovery attack. Thus the 
+            maximum secure chunk size is 2^39-256 bits. Since we expect blocks
+            to be comfortably shorter than 2^31 bytes, specifying the chunk size
+            as an integer enforces this constraint.</param>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.GcmWrapperChunked.InputChunk">
+            <inheritdoc/>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.GcmWrapperChunked.OutputChunk">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.GcmWrapperChunked.Chunk(System.ReadOnlySpan{System.Byte},System.Span{System.Byte})">
+            <summary>Encode the plaintext chunk <paramref name="plaintext"/> and write the
+            resulting plaintext and tag to the stream.</summary>
+            <param name="plaintext">The plaintext to encrypt. MUST be the exact length
+            specified in the constructor.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.GcmWrapperChunked.Finalize(System.ReadOnlySpan{System.Byte},System.Span{System.Byte})">
+            <inheritdoc/>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.GcmUnwrapperChunked.Chunk(System.ReadOnlySpan{System.Byte},System.Span{System.Byte})">
+            <summary>Decrypt the ciphertext chunk <paramref name="ciphertext"/> and write the
+            resulting plaintext and tag to the stream.</summary>
+            <param name="ciphertext">The ciphertext to decrypt. MUST be the exact length
+            specified in the constructor.</param>
+            <param name="plaintext">The corresponding plaintext.</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.GcmUnwrapperChunked.Finalize(System.ReadOnlySpan{System.Byte},System.Span{System.Byte})">
+            <summary>Decode the final ciphertext chunk <paramref name="ciphertext"/> and write the
+            resulting plaintext and tag to the stream.</summary>
+            <param name="ciphertext">The plaintext to encrypt.</param>
         </member>
         <member name="T:Goedel.Cryptography.Dare.EnvelopeValidation">
             <summary>
@@ -8060,39 +8195,25 @@
             Constructor creating an instance for an envelope of type 1 (i.e. indeterminate length chunks).
             </remarks>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.VDareEnvelopeWriter.Unprotected">
-            <summary>The parsed unprotected header.</summary> 
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.VDareEnvelopeWriter.Trailer">
-            <summary>The parsed trailer.</summary>
-        </member>
         <member name="P:Goedel.Cryptography.Dare.VDareEnvelopeWriter.Type">
             <summary>The envelope type, 0 or 1.</summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.VDareEnvelopeWriter.State">
             <summary>The writer state.</summary> 
         </member>
-        <member name="P:Goedel.Cryptography.Dare.VDareEnvelopeWriter.MetadataDigest">
-            <summary>The metadata digest.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.VDareEnvelopeWriter.PayloadDigest">
-            <summary>The payload digest.</summary>
-        </member>
-        <member name="P:Goedel.Cryptography.Dare.VDareEnvelopeWriter.Manifest">
-            <summary>The envelope manifest</summary>
-        </member>
         <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeWriter.#ctor(System.IO.Stream)">
             <summary>DARE Envelope Writer.</summary>
             <param name="output"></param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeWriter.#ctor(System.IO.Stream,Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair})">
+        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeWriter.#ctor(System.IO.Stream,Goedel.Cryptography.Dare.ContentMeta,Goedel.Cryptography.Dare.Unprotected,System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptographicKey},System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptographicKey})">
             <summary>DARE Envelope Writer opening with the unsigned and signed headers 
             as specified by <paramref name="signers"/> and <paramref name="protectedHeader"/>.</summary>
             <param name="output"></param>
             <param name="protectedHeader">The content metadata describing the payload.</param>
             <param name="signers">The set of signers.</param>
+            <param name="recipients"></param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeWriter.#ctor(Goedel.Cryptography.Dare.VDareStream,Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair})">
+        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeWriter.#ctor(Goedel.Cryptography.Dare.VDareStream,Goedel.Cryptography.Dare.ContentMeta,Goedel.Cryptography.Dare.Unprotected,System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptographicKey},System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptographicKey})">
             <summary>Convenience constructor, begin writing envelope to 
             <paramref name="output"/> with signed header <paramref name="protectedHeader"/>
             and signers <paramref name="signers"/>.
@@ -8100,12 +8221,25 @@
             <param name="output"></param>
             <param name="protectedHeader"></param>
             <param name="signers"></param>
+            <param name="recipients"></param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeWriter.Begin(Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair},Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeWriter.Write(Goedel.Cryptography.Dare.ContentMeta,System.Byte[],Goedel.Cryptography.Dare.Unprotected,System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptographicKey},System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptographicKey},Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>Write an envelope as a single shot.</summary>
+            <param name="output"></param>
+            <param name="contentMeta"></param>
+            <param name="data"></param>
+            <param name="unprotected"></param>
+            <param name="recipients"></param>
+            <param name="signers"></param>
+            <param name="digestId"></param>
+            <param name="encryptionId"></param>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeWriter.Begin(Goedel.Cryptography.Dare.ContentMeta,Goedel.Cryptography.Dare.Unprotected,System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptographicKey},System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptographicKey},Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Int32)">
             <summary>
             Begin writing the envelope data.
             </summary>
             <param name="contentMeta">The content metadata.</param>
+            <param name="recipients"></param>
             <param name="signers">Optional signature keys to be used to sign the envelope data.. MUST match the
             list given in <see cref="M:Goedel.Cryptography.Dare.VDareEnvelopeWriter.End"/></param>
             <param name="digestId">The digest algorithm to use.</param>
@@ -8151,19 +8285,7 @@
             </summary>
             <param name="trailer">The bytes to write.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeWriter.GetManifest(Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Byte[],System.Byte[])">
-            <summary>
-            Compute the manifest of  <paramref name="contentMetadataDigest"/>, 
-            <paramref name="payloadDigest"/> and optional <paramref name="protectedData"/> using
-            the digest algorithm <paramref name="digest"/>
-            </summary>
-            <param name="digest">The digest algorithm.</param>
-            <param name="contentMetadataDigest">Digest of the Content Metadata.</param>
-            <param name="payloadDigest">Digest of the payload.</param>
-            <param name="protectedData">Optional additional protected data.</param>
-            <returns>The manifest bytes.</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeWriter.GetBytes(System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Collections.Generic.IEnumerable{Goedel.Cryptography.KeyPair})">
+        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeWriter.GetBytes(System.Byte[],System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptographicKey},System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptographicKey},Goedel.Cryptography.Dare.ContentMeta,Goedel.Cryptography.Dare.CryptoParameters)">
             <summary>
             Return an envelope containing the content metadata <paramref name="contentMeta"/> 
             and payload <paramref name="payload"/>
@@ -8173,11 +8295,12 @@
             <param name="signers">The set of signing keys.</param>
             <returns>The enveloped bytes</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeWriter.Write(System.String,System.Byte[],System.String)">
+        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeWriter.Write(System.String,System.Byte[],Goedel.Cryptography.Dare.CryptoParameters,System.String,System.Int32)">
             <summary>Write <paramref name="data"/> to <paramref name="file"/> in a DARE
             envelope with content metadate <paramref name="contentType"/></summary>
             <param name="file">The filename.</param>
             <param name="data">The file data</param>
+            <param name="cryptoParameters"></param>
             <param name="contentType">The content metadata.</param>
         </member>
         <member name="T:Goedel.Cryptography.Dare.VDareLog">
@@ -8257,7 +8380,7 @@
             <param name="stream">The stream for reads and appends.</param>
             <param name="dataEncoding">The data encoding for control blocks.</param>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareSequence.Create(System.String,Goedel.Cryptography.Dare.EarlSequenceIndexType)">
+        <member name="M:Goedel.Cryptography.Dare.VDareSequence.Create(System.String,Goedel.Cryptography.Dare.EarlSequenceIndexType,Goedel.Cryptography.Dare.CryptoParameters)">
             <summary>Create a new sequence with file name <paramref name="fileName"/> and of
             type <paramref name="typeIdentifier"/>.</summary>
             <param name="fileName">The file type.</param>
@@ -8480,27 +8603,12 @@
             <param name="typeIdentifier">The stream type identifier.</param>
             <returns>The <see cref="T:Goedel.Cryptography.Dare.VDareStream"/> created</returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareStream.Open(System.String,System.Byte[])">
+        <member name="M:Goedel.Cryptography.Dare.VDareStream.Open(System.String,System.Byte[],System.IO.FileAccess)">
             <summary>Open</summary>
             <param name="fileName">Stream to open.</param>
             <param name="typeIdentifier">The identifier type bytes.</param>
             <returns></returns>
             <exception cref="T:Goedel.Utilities.NYI"></exception>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareStream.OpenRead(System.String)">
-            <summary>Open the file <paramref name="fileName"/> to read as an <see cref="T:Goedel.Cryptography.Dare.VDareStream"/>.</summary>
-            <param name="fileName">The file name.</param>
-            <returns>The <see cref="T:Goedel.Cryptography.Dare.VDareStream"/> created</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareStream.OpenWrite(System.String)">
-            <summary>Open the file <paramref name="fileName"/> to write as an <see cref="T:Goedel.Cryptography.Dare.VDareStream"/>.</summary>
-            <param name="fileName">The file name.</param>
-            <returns>The <see cref="T:Goedel.Cryptography.Dare.VDareStream"/> created</returns>
-        </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareStream.OpenReadWrite(System.String)">
-            <summary>Open the file <paramref name="fileName"/> to read and write as an <see cref="T:Goedel.Cryptography.Dare.VDareStream"/>.</summary>
-            <param name="fileName">The file name.</param>
-            <returns>The <see cref="T:Goedel.Cryptography.Dare.VDareStream"/> created</returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.VDareStream.CloseStream">
             <summary>Close the underlying file stream, is used to save file stream 
@@ -8731,6 +8839,33 @@
         </member>
         <member name="M:Goedel.Cryptography.Dare.VDareStream.Flush">
             <summary>Flush writes to the stream.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.VDareWriter.Unprotected">
+            <summary>The parsed unprotected header.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.VDareWriter.ContentMeta">
+            <summary>The parsed unprotected header.</summary> 
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.VDareWriter.Trailer">
+            <summary>The parsed trailer.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.VDareWriter.MetadataDigest">
+            <summary>The metadata digest.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.VDareWriter.PayloadDigest">
+            <summary>The payload digest.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.VDareWriter.GetManifest(Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Byte[],System.Byte[])">
+            <summary>
+            Compute the manifest of  <paramref name="contentMetadataDigest"/>, 
+            <paramref name="payloadDigest"/> and optional <paramref name="protectedData"/> using
+            the digest algorithm <paramref name="digest"/>
+            </summary>
+            <param name="digest">The digest algorithm.</param>
+            <param name="contentMetadataDigest">Digest of the Content Metadata.</param>
+            <param name="payloadDigest">Digest of the payload.</param>
+            <param name="protectedData">Optional additional protected data.</param>
+            <returns>The manifest bytes.</returns>
         </member>
         <member name="T:Goedel.Cryptography.Dare.VCatalogEnumerator`1">
             <summary>Typed enumerator for catalog entries.</summary>

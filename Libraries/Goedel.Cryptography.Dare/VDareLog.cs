@@ -88,7 +88,7 @@ public abstract class VDareLog : VDareSequence {
     public static VDareLog<T> Open<T>(
         string fileName) where T : JsonObject {
 
-        var stream = VDareStream.OpenReadWrite(fileName);
+        var stream = VDareStream.Open(fileName, DareConstants.TypeIdentifierDareSequence);
         var sequence = new VDareLog<T>(stream);
         sequence.ReadInitial();
 

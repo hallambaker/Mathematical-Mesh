@@ -52,6 +52,9 @@ public partial class DareConstants {
             MakeLong(TypeIdentifierDareSequence);
 
 
+    /// <summary>Type identifier for sequences.</summary>
+    public static readonly byte[] TypeIdentifierDareSequenceGuarded = [249, 02];
+
 
     static ulong MakeLong(byte[] identifier) {
         ulong result = 0;
@@ -79,29 +82,19 @@ public record EarlEnvelope (
     }
 
 
-
 /// <summary>
 /// EARL Envelope Writer
 /// </summary>
 /// <remarks>
 /// Constructor creating an instance for an envelope of type 1 (i.e. indeterminate length chunks).
 /// </remarks>
-public partial class VDareEnvelopeWriter(VDareStream output) {
+public partial class VDareEnvelopeWriter(VDareStream output) : VDareWriter{
 
 
-    VDareStream Stream { get; set; } = output;
 
-    //bool closeOutput = false;
-
-
-    IEnumerable<KeyPair> Signers;
+    protected VDareStream Stream { get; set; } = output;
 
 
-    ///<summary>The parsed unprotected header.</summary> 
-    public Unprotected? Unprotected { get; private set; }
-
-    ///<summary>The parsed trailer.</summary>
-    public Unprotected? Trailer { get; private set; }
 
     ///<summary>The envelope type, 0 or 1.</summary>
     int Type { get; }
@@ -109,19 +102,8 @@ public partial class VDareEnvelopeWriter(VDareStream output) {
     ///<summary>The writer state.</summary> 
     int State { get; set; } = 0;
 
-    HashAlgorithm Digest = null;
-    CryptoAlgorithmId DigestId;
 
 
-    ///<summary>The metadata digest.</summary>
-    public byte[]? MetadataDigest { get; private set; } = null;
-
-    ///<summary>The payload digest.</summary>
-    public byte[]? PayloadDigest { get; private set; } = null;
-
-
-    ///<summary>The envelope manifest</summary>
-    public byte[]? Manifest { get; private set; } = null;
 
     #region // Constructors
 
@@ -135,10 +117,13 @@ public partial class VDareEnvelopeWriter(VDareStream output) {
     /// <param name="output"></param>
     /// <param name="protectedHeader">The content metadata describing the payload.</param>
     /// <param name="signers">The set of signers.</param>
+    /// <param name="recipients"></param>
     public VDareEnvelopeWriter(Stream output,
             ContentMeta protectedHeader,
-            IEnumerable<KeyPair> signers = null) : 
-                this(new VDareStream(output), protectedHeader, signers) {
+            Unprotected unprotected=null,
+            IEnumerable<CryptographicKey> recipients = null,
+            IEnumerable<CryptographicKey> signers = null) : 
+                this(new VDareStream(output), protectedHeader, unprotected, recipients, signers) {
         }
 
     /// <summary>Convenience constructor, begin writing envelope to 
@@ -148,65 +133,84 @@ public partial class VDareEnvelopeWriter(VDareStream output) {
     /// <param name="output"></param>
     /// <param name="protectedHeader"></param>
     /// <param name="signers"></param>
+    /// <param name="recipients"></param>
     public VDareEnvelopeWriter(
             VDareStream output,
             ContentMeta protectedHeader,
-            IEnumerable<KeyPair> signers=null) : this(output) {
-        Begin(protectedHeader, signers);
+            Unprotected unprotected,
+            IEnumerable<CryptographicKey> recipients = null,
+            IEnumerable<CryptographicKey> signers = null) : this(output) {
+        Begin(protectedHeader, unprotected, recipients, signers);
         }
 
 
     #endregion
+
+    public void Write(
+        ContentMeta contentMeta,
+        byte[] data,
+        CryptoParameters cryptoParameters,
+        Unprotected unprotected = null,
+        CryptoAlgorithmId digestId = CryptoAlgorithmId.Default,
+        CryptoAlgorithmId encryptionId = CryptoAlgorithmId.Default) =>
+        Write(ContentMeta, data, unprotected, cryptoParameters.EncryptionKeys,
+            cryptoParameters.SignerKeys, cryptoParameters.DigestId, cryptoParameters.EncryptId);
+
+
+
+    /// <summary>Write an envelope as a single shot.</summary>
+    /// <param name="output"></param>
+    /// <param name="contentMeta"></param>
+    /// <param name="data"></param>
+    /// <param name="unprotected"></param>
+    /// <param name="recipients"></param>
+    /// <param name="signers"></param>
+    /// <param name="digestId"></param>
+    /// <param name="encryptionId"></param>
+    public void Write(
+            ContentMeta contentMeta,
+            byte[] data,
+            Unprotected unprotected=null,
+            IEnumerable<CryptographicKey> recipients = null,
+            IEnumerable<CryptographicKey> signers = null,
+            CryptoAlgorithmId digestId = CryptoAlgorithmId.Default,
+            CryptoAlgorithmId encryptionId = CryptoAlgorithmId.Default) {
+
+        Initialize(contentMeta, unprotected, recipients, signers, digestId, encryptionId);
+
+        var payload = GetPayload(data);
+        PayloadDigest = Digest?.ComputeHash(payload);
+        MakeTrailer();
+
+        WriteUnsigned(Unprotected);
+        WriteSigned(MetadataBytes);
+        WritePayload(payload);
+        WriteTrailer(Trailer);
+        }
+
+
+
+
     /// <summary>
     /// Begin writing the envelope data.
     /// </summary>
     /// <param name="contentMeta">The content metadata.</param>
+    /// <param name="recipients"></param>
     /// <param name="signers">Optional signature keys to be used to sign the envelope data.. MUST match the
     /// list given in <see cref="End"/></param>
     /// <param name="digestId">The digest algorithm to use.</param>
     public void Begin(
             ContentMeta contentMeta,
-            IEnumerable<KeyPair> signers=null,
-            CryptoAlgorithmId digestId = CryptoAlgorithmId.Default) {
+            Unprotected unprotected=null,
+            IEnumerable<CryptographicKey> recipients = null,
+            IEnumerable<CryptographicKey> signers = null, 
+            CryptoAlgorithmId digestId = CryptoAlgorithmId.Default,
+            CryptoAlgorithmId encryptionId = CryptoAlgorithmId.Default,
+            int chunkSize = 0) {
 
-
-        signers ??= [];
-        Signers = signers;
-
-        foreach (KeyPair pair in signers) {
-            if (pair.CryptoAlgorithmId == CryptoAlgorithmId.Ed448) {
-                digestId = CryptoAlgorithmId.SHA_3_512;
-                }
-
-            else if (digestId == CryptoAlgorithmId.Default) {
-                digestId = CryptoAlgorithmId.SHA_3_256;
-                }
-            }
-
-        DigestId = digestId;
-        var metadataBytes = contentMeta.GetBytes(false);
-        if (signers.Any()) {
-            var metaDigest = DigestId.CreateDigest();
-            MetadataDigest = metaDigest.ComputeHash(metadataBytes);
-
-            Digest = DigestId.CreateDigest();
-
-            Unprotected = new Unprotected() {
-                DigestAlgorithm = DigestId.ToJoseID(),
-                Signers = []
-                };
-            foreach (var key in signers) {
-                var signer = new EarlSignature(key);
-                Unprotected.Signers.Add(signer);
-                }
-            WriteUnsigned(Unprotected);
-            }
-        else {
-            // No signers, no unprotected header.
-            WriteUnsigned();
-            }
-
-        WriteSigned(metadataBytes);
+        Initialize(contentMeta, unprotected, recipients, signers, digestId, encryptionId);
+        WriteUnsigned(Unprotected);
+        WriteSigned(MetadataBytes);
 
         }
 
@@ -218,7 +222,6 @@ public partial class VDareEnvelopeWriter(VDareStream output) {
             byte[] chunk) {
         Digest?.Digest(chunk);
         WritePayload(chunk);
-
         }
 
     /// <summary>
@@ -233,11 +236,10 @@ public partial class VDareEnvelopeWriter(VDareStream output) {
     /// </summary>
     public void End() {
 
-        if (Digest is not null) {
-            Trailer = new Unprotected();
 
+
+        if (Sign) {
             PayloadDigest = Digest.GetValue();
-            Manifest = GetManifest(DigestId, MetadataDigest, PayloadDigest);
 
             foreach (var key in Signers.IfEnumerable()) {
                 Trailer.Signatures ??= [];
@@ -245,12 +247,10 @@ public partial class VDareEnvelopeWriter(VDareStream output) {
                 var signer = new EarlSignature(key, Manifest);
                 Trailer.Signatures.Add(signer);
                 }
+            }
 
-            WriteTrailer(Trailer);
-            }
-        else {
-            WriteTrailer();
-            }
+
+        WriteTrailer(Trailer);
 
         }
 
@@ -312,33 +312,7 @@ public partial class VDareEnvelopeWriter(VDareStream output) {
     #endregion
     #region // Static convenience routines.
     
-    /// <summary>
-    /// Compute the manifest of  <paramref name="contentMetadataDigest"/>, 
-    /// <paramref name="payloadDigest"/> and optional <paramref name="protectedData"/> using
-    /// the digest algorithm <paramref name="digest"/>
-    /// </summary>
-    /// <param name="digest">The digest algorithm.</param>
-    /// <param name="contentMetadataDigest">Digest of the Content Metadata.</param>
-    /// <param name="payloadDigest">Digest of the payload.</param>
-    /// <param name="protectedData">Optional additional protected data.</param>
-    /// <returns>The manifest bytes.</returns>
-    public static byte[] GetManifest(
-                CryptoAlgorithmId digest,
-                byte[] contentMetadataDigest,
-                byte[] payloadDigest,
-                byte[]? protectedData = null) {
-        var oid = digest.ToOID().ParseOid();
-        var stream = new MemoryStream();
 
-        stream.Write(oid);
-        stream.Write(contentMetadataDigest);
-        stream.Write(payloadDigest);
-        if (protectedData != null) {
-            stream.Write(protectedData);
-            }
-
-        return stream.ToArray();
-        }
 
     /// <summary>
     /// Return an envelope containing the content metadata <paramref name="contentMeta"/> 
@@ -350,17 +324,17 @@ public partial class VDareEnvelopeWriter(VDareStream output) {
     /// <returns>The enveloped bytes</returns>
     public static byte[]? GetBytes(
             byte[] payload,
-            ContentMeta? contentMeta=null,
-            IEnumerable<KeyPair> signers=null) {
+            IEnumerable<CryptographicKey> recipients = null,
+            IEnumerable<CryptographicKey> signers = null, ContentMeta? contentMeta = null,
+            CryptoParameters cryptoParameters = null) {
 
         using var buffer = new MemoryStream();
         using var stream = new VDareStream(buffer);
-        var writer = new VDareEnvelopeWriter (stream);
-        writer.Begin (contentMeta, signers);
-        writer.Write (payload);
-        writer.End ();
+        var writer = new VDareEnvelopeWriter(stream);
 
-        return buffer.ToArray ();
+        writer.Write(contentMeta, payload, signers: signers);
+
+        return buffer.ToArray();
         }
 
 
@@ -371,21 +345,28 @@ public partial class VDareEnvelopeWriter(VDareStream output) {
     /// envelope with content metadate <paramref name="contentType"/></summary>
     /// <param name="file">The filename.</param>
     /// <param name="data">The file data</param>
+    /// <param name="cryptoParameters"></param>
     /// <param name="contentType">The content metadata.</param>
     public static void Write(
         string file,
         byte[] data,
-        string contentType=null) {
+        CryptoParameters cryptoParameters = null, 
+        string contentType = null,
+        int chunkSize = 4096) {
+
+
+
+
 
         using var stream = VDareStream.Create(file, DareConstants.TypeIdentifierDareEnvelope);
         var contentMeta = new ContentMeta() {
-            Nonce = Udf.Nonce (),
+            Nonce = Udf.Nonce(),
             ContentType = contentType
             };
 
-        var writer = new VDareEnvelopeWriter(stream, contentMeta);
-        writer.Write(data);
-        writer.End();
+
+        var writer = new VDareEnvelopeWriter(stream);
+        writer.Write(contentMeta, data, cryptoParameters);
 
         }
 
