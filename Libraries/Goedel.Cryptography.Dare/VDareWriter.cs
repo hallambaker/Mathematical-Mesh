@@ -19,12 +19,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 #endregion
+using Goedel.Cryptography.Nist;
+
 namespace Goedel.Cryptography.Dare;
 
 public class VDareWriter{
 
     protected IEnumerable<CryptographicKey> Signers;
-    protected IEnumerable<CryptographicKey> Recipients;
+    //protected IEnumerable<CryptographicKey> Recipients;
 
     ///<summary>The parsed unprotected header.</summary> 
     public Unprotected? Unprotected { get; protected set; } = null;
@@ -54,7 +56,7 @@ public class VDareWriter{
     public byte[]? PayloadDigest { get; protected set; } = null;
 
     public byte[]? Salt { get; protected set; } = null;
-
+    public byte[]? Malt { get; protected set; } = null;
     public byte[]? Manifest { get; protected set; } = null;
 
 
@@ -112,13 +114,15 @@ public class VDareWriter{
             }
 
         if((DigestId != CryptoAlgorithmId.Default) & (DigestId != CryptoAlgorithmId.NULL)) {
+            Unprotected ??= new();
             Digest = DigestId.CreateDigest();
             MetadataDigest = Digest.ComputeHash(MetadataBytes);
 
             Salt ??= Platform.GetRandomBytes(32);
 
-            Unprotected.DigestAlgorithm = DigestId.ToJoseID();
             Unprotected ??= new();
+            Unprotected.DigestAlgorithm = DigestId.ToJoseID();
+
             Unprotected.Salt = Salt;
             //Unprotected.Malt = metaDigest.ComputeHash(GcmWrapperChunked.Salt);
 
@@ -127,6 +131,7 @@ public class VDareWriter{
 
 
         if (Encrypt) {
+            Unprotected ??= new();
             // The unprotected header must be initialized if encrypting
 
             // set up the algorithm
@@ -137,12 +142,65 @@ public class VDareWriter{
             GcmWrapperChunked = new GcmWrapperChunked(algorithm: EncryptionId, chunkSize: chunkSize);
 
 
+            Console.WriteLine($"Key {GcmWrapperChunked.Key.ToStringBase16FormatHex()}");
+            Console.WriteLine($"Salt {GcmWrapperChunked.Salt.ToStringBase16FormatHex()}");
+
+
+            Unprotected.EncryptionAlgorithm = EncryptionId.ToJoseID();
+            Unprotected.Salt = GcmWrapperChunked.Salt;
+            if (Digest is not null) {
+                Malt = Digest.ComputeHash(Unprotected.Salt);
+                }
+
+            if (chunkSize != 4096) {
+                Unprotected.Chunk = chunkSize;
+                }
+
+            Unprotected.Recipients = KeyExchange(GcmWrapperChunked.Key, recipients);
+            //header.KeyIdentifier = GetKeyIdentifier();
+
+            //cryptoParameters.SetKeyExchange(header);
+
+
+            //if (cryptoParameters is CryptoParametersSequence cryptoParametersContainer) {
+            //    if (cryptoParametersContainer.ReuseKeyExchange((int)header.Index, out var keyExchange)) {
+            //        header.SequenceInfo.ExchangePosition = keyExchange;
+            //        }
+            //    else {
+            //        cryptoParameters.SetKeyExchange(header);
+            //        }
+            //    }
+            //else {
+            //    cryptoParameters.SetKeyExchange(header);
+            //    }
+
+            //if (cloaked != null) {
+            //    header.Cloaked = Encode(cloaked, MakeSalt(saltValue++));
+            //    }
             }
 
 
 
 
         }
+
+    /// <summary>
+    /// Perform a new key exchange and 
+    /// </summary>
+    /// <returns></returns>
+    protected virtual List<DareRecipient> KeyExchange(
+                byte[] key,
+                IEnumerable<CryptographicKey> recipients) {
+
+        // perform a key exchange for each recipient.
+        var result = new List<DareRecipient>();
+        foreach (var encryptionKey in recipients) {
+            result.Add(new DareRecipient(key, encryptionKey));
+            }
+
+        return result;
+        }
+
 
     protected byte[] GetPayload(byte[] data, int chunkSize = 0) =>
         Encrypt ? GcmWrapperChunked.Transform(data) : data;
@@ -188,7 +246,7 @@ public class VDareWriter{
         if (Sign) {
             Trailer ??= new();
             Trailer.Signatures = [];
-            Manifest = GetManifest(DigestId, MetadataDigest, PayloadDigest, Salt);
+            Manifest = GetManifest(DigestId, MetadataDigest, PayloadDigest, Malt);
 
             foreach (var key in Signers.IfEnumerable()) {
                 var signer = new EarlSignature(key, Manifest);

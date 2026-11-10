@@ -3584,6 +3584,11 @@
             The digest algorithm to be used to compute the payload digest.
              </summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.Unprotected.EncryptionAlgorithm">
+             <summary>
+            The encryption algorithm to be used to compute the payload.
+             </summary>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.Unprotected.Signers">
             <summary>
             </summary>
@@ -3591,6 +3596,11 @@
         <member name="P:Goedel.Cryptography.Dare.Unprotected.Signatures">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Unprotected.Recipients">
+             <summary>
+            A list of recipient key exchange information blocks.
+             </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Unprotected.Frame">
              <summary>
@@ -3600,6 +3610,11 @@
         <member name="P:Goedel.Cryptography.Dare.Unprotected.Salt">
              <summary>
             Salt value used to derrive cryptographic parameters for the content data.
+             </summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.Unprotected.Chunk">
+             <summary>
+            The encrypted chunk size (default 4096 bytes);
              </summary>
         </member>
         <member name="P:Goedel.Cryptography.Dare.Unprotected._Properties">
@@ -4835,11 +4850,17 @@
             </summary>
             <returns>The created index.</returns>
         </member>
-        <member name="P:Goedel.Cryptography.Dare.GcmHandlerBase.Key">
+        <member name="P:Goedel.Cryptography.Dare.IChunk.Salt">
+            <summary>The salt valye.</summary>
+        </member>
+        <member name="P:Goedel.Cryptography.Dare.IChunk.Key">
             <summary>The primary key</summary>
         </member>
+        <member name="P:Goedel.Cryptography.Dare.GcmHandlerBase.Key">
+            <inheritdoc/>
+        </member>
         <member name="P:Goedel.Cryptography.Dare.GcmHandlerBase.Salt">
-            <summary>The salt valye.</summary>
+            <inheritdoc/>
         </member>
         <member name="P:Goedel.Cryptography.Dare.GcmHandlerBase.Siv">
             <summary>If true, use SIV mode and insert the IV into each block.</summary>
@@ -8082,7 +8103,7 @@
         <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeReader.Disposing">
             <inheritdoc/>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeReader.#ctor(Goedel.Cryptography.Dare.VDareStream)">
+        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeReader.#ctor(Goedel.Cryptography.Dare.VDareStream,Goedel.Cryptography.Dare.CryptoParameters)">
             <summary>
             Constructor returning an instance reading from <paramref name="stream"/>.
             Only the initial version number is read from the stream.
@@ -8102,7 +8123,7 @@
             <summary>Read a complete block of data from the stream</summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeReader.Read(System.String)">
+        <member name="M:Goedel.Cryptography.Dare.VDareEnvelopeReader.Read(System.String,Goedel.Cryptography.Dare.CryptoParameters)">
             <summary>Read a single envelope from the file <paramref name="fileName"/></summary>
             <param name="fileName">The file to read.</param>
             <returns>The envelope read.</returns>
@@ -8854,6 +8875,12 @@
         </member>
         <member name="P:Goedel.Cryptography.Dare.VDareWriter.PayloadDigest">
             <summary>The payload digest.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Dare.VDareWriter.KeyExchange(System.Byte[],System.Collections.Generic.IEnumerable{Goedel.Cryptography.CryptographicKey})">
+            <summary>
+            Perform a new key exchange and 
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Goedel.Cryptography.Dare.VDareWriter.GetManifest(Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Byte[],System.Byte[])">
             <summary>

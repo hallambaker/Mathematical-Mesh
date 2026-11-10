@@ -84,7 +84,7 @@ public class CryptoParametersTest : CryptoParameters {
 
 
         var keypair = KeyPair.Factory(algorithm,
-            KeySecurity.Session, KeyCollection, keyUses: KeyUses.Encrypt);
+            KeySecurity.Session, KeyCollection, keyUses: KeyUses.Sign);
 
         //var Keypair = KeyPair.KeyPairFactoryRSA(keyType: KeySecurity.Ephemeral);
         var publicKeyKeypair = keypair.KeyPairPublic();
@@ -92,9 +92,9 @@ public class CryptoParametersTest : CryptoParameters {
 
         //Console.WriteLine($"Keypair is {Keypair.UDF}");
 
-        if (register) {
-            KeyCollection.Add(keypair);
-            }
+        //if (register) {
+        //    KeyCollection.Add(keypair);
+        //    }
         }
 
     }

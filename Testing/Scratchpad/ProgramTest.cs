@@ -31,10 +31,10 @@ using Goedel.Cryptography.Dare;
 //using Goedel.Cryptography.Nist;
 //using Goedel.Debug;
 //using Goedel.Cryptography.PQC;
-using Goedel.Mesh;
-using Goedel.Mesh.Test;
-using Goedel.Test;
-using Goedel.Test.Core;
+//using Goedel.Mesh;
+//using Goedel.Mesh.Test;
+//using Goedel.Test;
+//using Goedel.Test.Core;
 using Goedel.Utilities;
 using Goedel.XUnit;
 
@@ -43,7 +43,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
 
-using static Goedel.XUnit.GoedelProtocol;
 
 namespace Scratchpad;
 
@@ -58,6 +57,12 @@ partial class Program {
 
         Logger.LogInformation("Start test {time}", System.DateTime.Now);
 
+        // Encrypt, no signature 
+
+
+        Goedel.XUnit.TestVarintSerialization.Test().TestEnvelope(false, true, 5100);
+
+
         //Goedel.XUnit.TestDare.Test().EnvelopeEncrypted();
 
         Goedel.XUnit.TestVarintSerialization.Test().TestCoreEncodeDecode(40);
@@ -67,10 +72,16 @@ partial class Program {
         Goedel.XUnit.TestVarintSerialization.Test().TestGcmChunked(5000);
         Goedel.XUnit.TestVarintSerialization.Test().TestGcmChunked(4096);
 
+
         Goedel.XUnit.TestVarintSerialization.Test().TestEnvelope(false, false, 100);
         Goedel.XUnit.TestVarintSerialization.Test().TestEnvelope(false, true, 100);
         Goedel.XUnit.TestVarintSerialization.Test().TestEnvelope(true, false, 100);
         Goedel.XUnit.TestVarintSerialization.Test().TestEnvelope(true, true, 100);
+
+        Goedel.XUnit.TestVarintSerialization.Test().TestEnvelope(false, false, 5100);
+        Goedel.XUnit.TestVarintSerialization.Test().TestEnvelope(false, true, 5100);
+        Goedel.XUnit.TestVarintSerialization.Test().TestEnvelope(true, false, 5100);
+        Goedel.XUnit.TestVarintSerialization.Test().TestEnvelope(true, true, 5100);
 
 
 
@@ -95,7 +106,7 @@ partial class Program {
         //Goedel.XUnit.MakeSiteDocs.Test().CreateMail();
 
 
-        ShellTests.Test().NewFileTestOnce(true, false, false);
+        //ShellTests.Test().NewFileTestOnce(true, false, false);
 
 
         //TestVarintSerialization.Test().TestEnvelope();
@@ -194,7 +205,7 @@ partial class Program {
 
         //GoedelProtocol.Test().TestEncodeDecode4();
         //TestDare.Test().EnvelopeSignAtomic();
-        //TestDare.Test().EnvelopePlaintext();
+        TestDare.Test().EnvelopePlaintext();
         //TestDare.Test().EnvelopePlaintextFixed();
         //TestDare.Test().EnvelopePlaintextVariable();
 
@@ -429,7 +440,7 @@ partial class Program {
         /* Documentation */
         //Goedel.XUnit.MakeSiteDocs.Test().FullTest();
 
-        Logger.LogInformation("End test {time}, Fail={Softfail}", System.DateTime.Now, TestCLI.CountSoftFail);
+        //Logger.LogInformation("End test {time}, Fail={Softfail}", System.DateTime.Now, TestCLI.CountSoftFail);
         //Screen.WriteLine($"Total Soft fail {TestCLI.CountSoftFail}");
         }
 
@@ -437,47 +448,47 @@ partial class Program {
 
 
 
-    public static void Debug() {
-        var meshTestSet = new MeshTestSet();
-        var testEnvironmentCommon = new TestEnvironmentCommon(meshTestSet);
-        var meshMachine = new MeshMachineTest(testEnvironmentCommon);
-        var keyCollection = new KeyCollectionTest(meshMachine);
+    //public static void Debug() {
+    //    var meshTestSet = new MeshTestSet();
+    //    var testEnvironmentCommon = new TestEnvironmentCommon(meshTestSet);
+    //    var meshMachine = new MeshMachineTest(testEnvironmentCommon);
+    //    var keyCollection = new KeyCollectionTest(meshMachine);
 
-        var keyEncrypt = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Exportable, keyCollection) as KeyPairX448;
-        var keyService = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device);
-        keyCollection.Add(keyService);
-
-
-        var (keyData, capability) = CatalogAccess.MakeShare(keyEncrypt, "example", keyService, null, null);
+    //    var keyEncrypt = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Exportable, keyCollection) as KeyPairX448;
+    //    var keyService = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Device);
+    //    keyCollection.Add(keyService);
 
 
-        var deviceShare = keyData.GetKeyPair() as KeyPairServiced;
-
-        var ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Ephemeral) as KeyPairX448;
-
-        var agreement1 = ephemeral.Agreement(keyEncrypt);
-        var agreement2 = keyEncrypt.Agreement(ephemeral);
+    //    var (keyData, capability) = CatalogAccess.MakeShare(keyEncrypt, "example", keyService, null, null);
 
 
-        var remoteShare = capability.DecryptShare(keyCollection) as KeyPairServiced;
-        var partial1 = remoteShare.Agreement(ephemeral) as CurveX448Result;
-        var partial2 = deviceShare.Agreement(ephemeral) as CurveX448Result;
+    //    var deviceShare = keyData.GetKeyPair() as KeyPairServiced;
+
+    //    var ephemeral = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Ephemeral) as KeyPairX448;
+
+    //    var agreement1 = ephemeral.Agreement(keyEncrypt);
+    //    var agreement2 = keyEncrypt.Agreement(ephemeral);
 
 
-        //Screen.WriteLine($"Remote {remoteShare.Share.KeyIdentifier} Device {deviceShare.Share.KeyIdentifier}");
+    //    var remoteShare = capability.DecryptShare(keyCollection) as KeyPairServiced;
+    //    var partial1 = remoteShare.Agreement(ephemeral) as CurveX448Result;
+    //    var partial2 = deviceShare.Agreement(ephemeral) as CurveX448Result;
 
 
-        partial2.AgreementX448.Accumulate(partial1.AgreementX448);
-        var aggre3 = new CurveX448Result() { AgreementX448 = partial2.AgreementX448 };
-
-        agreement1.IKM.TestEqual(agreement2.IKM);
-        agreement1.IKM.TestEqual(aggre3.IKM);
+    //    //Screen.WriteLine($"Remote {remoteShare.Share.KeyIdentifier} Device {deviceShare.Share.KeyIdentifier}");
 
 
-        var agreement3 = (deviceShare.Share as KeyPairX448).Agreement(ephemeral, partial1 as CurveX448Result);
+    //    partial2.AgreementX448.Accumulate(partial1.AgreementX448);
+    //    var aggre3 = new CurveX448Result() { AgreementX448 = partial2.AgreementX448 };
 
-        agreement1.IKM.TestEqual(agreement3.IKM);
-        }
+    //    agreement1.IKM.TestEqual(agreement2.IKM);
+    //    agreement1.IKM.TestEqual(aggre3.IKM);
+
+
+    //    var agreement3 = (deviceShare.Share as KeyPairX448).Agreement(ephemeral, partial1 as CurveX448Result);
+
+    //    agreement1.IKM.TestEqual(agreement3.IKM);
+    //    }
 
 
 

@@ -478,6 +478,11 @@
 			Description
 				|The digest algorithm to be used to compute the payload digest.
 
+		String EncryptionAlgorithm
+			Tag "enc"
+			Description
+				|The encryption algorithm to be used to compute the payload.
+
 		Struct EarlSignature Signers
 			Tag "signs"
 			Multiple
@@ -485,6 +490,13 @@
 		Struct EarlSignature Signatures
 			Tag "sigs"
 			Multiple
+
+		Struct DareRecipient Recipients
+			Multiple
+			Tag "recipients"
+			Description
+				|A list of recipient key exchange information blocks.
+
 		Integer Frame
 			Description
 				|The number of the entry in the sequence.
@@ -492,6 +504,10 @@
 		Binary Salt
 			Description
 				|Salt value used to derrive cryptographic parameters for the content data.
+		Integer Chunk
+			Description
+				|The encrypted chunk size (default 4096 bytes);
+
 
 
 	Structure EarlSignature

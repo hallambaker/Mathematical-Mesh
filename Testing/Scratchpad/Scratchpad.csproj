@@ -29,8 +29,7 @@
 		<ProjectReference Include="..\Test.Protocol\Test.Protocol.csproj" />
 		<ProjectReference Include="..\Test.Utilities\Test.Utilities.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
+		<ItemGroup>
 		<Folder Include="Test\" />
 	</ItemGroup>
 

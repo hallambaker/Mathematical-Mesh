@@ -22,6 +22,8 @@
 using System.IO;
 using System.Threading.Channels;
 
+using Goedel.ASN;
+using Goedel.Cryptography.Nist;
 using Goedel.Protocol;
 
 namespace Goedel.Cryptography.Dare;
@@ -39,9 +41,13 @@ public partial class VDareEnvelopeReader : Disposable {
     ///<summary>The envelope version (0 or 1).</summary> 
     public ulong Version { get; private set; }
 
+
+    byte[] UnprotectedBytes;
     ///<summary>The parsed unprotected header.</summary> 
     public Unprotected? UnsignedHeader { get; private set; } = null;
 
+
+    byte[] ProtectedBytes;
     ///<summary>The parsed content metadata header.</summary> 
     public ContentMeta? SignedHeader { get; private set; } = null;
 
@@ -52,6 +58,14 @@ public partial class VDareEnvelopeReader : Disposable {
     CryptoAlgorithmId DigestId;
     byte[]? MetadataDigest = null;
 
+
+
+
+    //protected bool Digest { get; set; } = false;
+    protected bool Encrypt { get; set; } = false;
+    CryptoAlgorithmId EncryptId;
+
+    IChunk? Unwrapper = null;
 
     /// <inheritdoc/>
     protected override void Disposing() {
@@ -67,28 +81,191 @@ public partial class VDareEnvelopeReader : Disposable {
     /// </summary>
     /// <param name="stream">The stream to read from.</param>
     VDareEnvelopeReader(
-                VDareStream stream) {
+                VDareStream stream, 
+                CryptoParameters cryptoParameters=null) {
         Stream = stream;
         //Version = Stream.ReadTypeIdentifier();
 
         //(Version == DareConstants.TypeIdentifierDareEnvelopeL).AssertTrue(NYI.Throw);
-
+        UnprotectedBytes = ReadBlock();
         // read the unsigned header
-        UnsignedHeader = ReadJson<Unprotected>();
+        UnsignedHeader = JsonObject.StreamParseTag<Unprotected>(UnprotectedBytes, false);
 
+
+        ProtectedBytes = ReadBlock();
         // read the signed header
-        SignedHeader = ReadJson<ContentMeta>();
+        SignedHeader = JsonObject.StreamParseTag<ContentMeta>(ProtectedBytes, false);
+
+
+
+
+
+        // Are we calculating the digest?
+        if (UnsignedHeader.DigestAlgorithm is not null) {
+            DigestId = UnsignedHeader.DigestAlgorithm.ToCryptoAlgorithmID();
+            Digest = DigestId.CreateDigest();
+            MetadataDigest = Digest.ComputeHash(ProtectedBytes);
+            }
+
+        // Set up the decryption stack
+        Encrypt = UnsignedHeader.EncryptionAlgorithm != null;
+        if (Encrypt) {
+
+            EncryptId = UnsignedHeader.EncryptionAlgorithm.ToCryptoAlgorithmID();
+
+
+            var key = cryptoParameters.KeyLocate.Decrypt(UnsignedHeader.Recipients, EncryptId);
+
+            int chunk = UnsignedHeader.Chunk ?? 4096;
+
+            Console.WriteLine($"Key {key.ToStringBase16FormatHex()}");
+            Console.WriteLine($"Salt {UnsignedHeader.Salt.ToStringBase16FormatHex()}");
+
+            Unwrapper = new GcmUnwrapperChunked(key, UnsignedHeader.Salt, EncryptId, chunk);
+
+
+            }
+
         }
 
-    /// <summary>Complete reading the entry, and return the complete envelope.</summary>
-    /// <returns></returns>
-    public EarlEnvelope Close () {
-        Trailer = ReadJson<Unprotected>();
-
-        // read the trailer
-        return new EarlEnvelope(UnsignedHeader, SignedHeader, Trailer);
-
+    /// <summary>
+    /// Constructor returning an instance reading from <paramref name="bytes"/>.
+    /// Only the initial version number is read from the stream.
+    /// </summary>
+    /// <param name="bytes">The data to read.</param>
+    public VDareEnvelopeReader(byte[] bytes) : this(new VDareStream(bytes)) {
         }
+
+
+
+
+    public int ReadBlocks(
+                Stream streamOut) {
+
+        var result = 0;
+
+        var length = ReadBlock(streamOut);
+        while (length > 0) {
+            result += length;
+            length = ReadBlock(streamOut);
+            }
+
+
+        return result;
+        }
+
+
+    public int ReadBlock (
+                Stream streamOut) {
+
+        var lengthBlock = (int) Stream.ReadVarint();
+
+        if (lengthBlock == 0) {
+            return lengthBlock; // Nothing to do
+            }
+
+        return Encrypt ? ReadBlockEncrypted(streamOut, lengthBlock) : ReadBlockPlaintext(streamOut, lengthBlock);
+        }
+
+
+
+    int ReadBlockPlaintext(
+                Stream streamOut, int lengthBlock) {
+        int chunk = 4096;
+        var chunkedLength = lengthBlock - chunk;
+        var buffer = new byte[chunk];
+
+        // main chunks
+        int i;
+        for (i = 0; i < chunkedLength; i += chunk) {
+            Stream.ReadExactly(buffer, i, chunk);
+            streamOut.Write(buffer);
+            }
+
+        // last chunk
+        Stream.ReadExactly(buffer, 0, lengthBlock-i);
+        streamOut.Write(buffer, 0, lengthBlock - i);
+
+        return lengthBlock;
+        }
+
+    int ReadBlockEncrypted(
+                Stream streamOut, int lengthBlock) {
+        int chunk = Unwrapper.InputChunk;
+
+        var chunkedLength = (int)lengthBlock - chunk;
+        var ciphertext = new byte[chunk];
+        
+        var plaintext = new byte[Unwrapper.OutputChunk];
+
+        var outLength = 0;
+        // main chunks
+        int i;
+        for (i = 0; i < chunkedLength; i += chunk) {
+            Stream.ReadExactly(ciphertext, i, chunk);
+            Unwrapper.Chunk(ciphertext, plaintext);
+            streamOut.Write(plaintext);
+            outLength += plaintext.Length;
+            }
+
+        // last chunk
+        var ciphertextSpan = new ReadOnlySpan<byte>(ciphertext, 0, lengthBlock - i);
+        var plaintextSpan = new Span<byte>(plaintext, 0, lengthBlock - i + 
+                Unwrapper.OutputChunk - Unwrapper.InputChunk);
+
+        Stream.ReadExactly(ciphertext, 0, lengthBlock - i);
+        Unwrapper.Finalize(ciphertextSpan, plaintextSpan);
+        streamOut.Write(plaintextSpan);
+        outLength += plaintextSpan.Length;
+
+        return outLength;
+        }
+
+    public static EarlEnvelope Read(
+                VDareStream streamIn,
+                CryptoParameters cryptoParameters = null) {
+
+
+        var reader = new VDareEnvelopeReader(streamIn, cryptoParameters);
+        var streamOut = new MemoryStream();
+
+        reader.ReadBlocks(streamOut);
+        var trailer = reader.ReadJson<Unprotected>();
+
+        var result = new EarlEnvelope(reader.UnsignedHeader, reader.SignedHeader, trailer,
+            streamOut.ToArray());
+
+        return result;
+        }
+
+
+
+
+    /// <summary>Read a single envelope from the file <paramref name="fileName"/></summary>
+    /// <param name="fileName">The file to read.</param>
+    /// <returns>The envelope read.</returns>
+    public static EarlEnvelope Read(
+                string fileName,
+                CryptoParameters cryptoParameters = null) {
+        using var stream = VDareStream.Open(fileName, DareConstants.TypeIdentifierDareEnvelope);
+
+        return Read(stream, cryptoParameters);
+        }
+
+
+
+
+
+    ///// <summary>Complete reading the entry, and return the complete envelope.</summary>
+    ///// <returns></returns>
+    //public EarlEnvelope Close () {
+    //    Trailer = ReadJson<Unprotected>();
+
+    //    // read the trailer
+    //    return new EarlEnvelope(UnsignedHeader, SignedHeader, Trailer);
+
+    //    }
+
 
     /// <summary>Read an object of type <typeparamref name="T"/> from the stream.</summary>
     /// <typeparam name="T">The type of the object to read.</typeparam>
@@ -99,31 +276,13 @@ public partial class VDareEnvelopeReader : Disposable {
     /// <returns></returns>
     public virtual byte[] ReadBlock() => Stream.ReadBlock();
 
-    /// <summary>Read a single envelope from the file <paramref name="fileName"/></summary>
-    /// <param name="fileName">The file to read.</param>
-    /// <returns>The envelope read.</returns>
-    public static EarlEnvelope Read(string fileName) {
-        var stream = VDareStream.Open(fileName, DareConstants.TypeIdentifierDareEnvelope);
-        using var reader = new VDareEnvelopeReader(stream);
-
-        var payload = reader.ReadBlock();
-        var result = reader.Close();
-        result.Payload = payload;
-
-        return result;
-        }
 
 
 
 
 
-    /// <summary>
-    /// Constructor returning an instance reading from <paramref name="bytes"/>.
-    /// Only the initial version number is read from the stream.
-    /// </summary>
-    /// <param name="bytes">The data to read.</param>
-    public VDareEnvelopeReader(byte[] bytes) : this(new VDareStream(bytes)) {
-        }
+
+
 
     /// <summary>Returns the enveloped data.</summary>
     /// <param name="bytes">The envelope to read.</param>

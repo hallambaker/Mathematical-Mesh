@@ -20,7 +20,7 @@
 //  THE SOFTWARE.
 //  
 //  
-//  This file was automatically generated at 11/5/2026 5:46:52 PM
+//  This file was automatically generated at 11/10/2026 4:01:42 PM
 //   
 //  Changes to this file may be overwritten without warning
 //  
@@ -1780,6 +1780,13 @@ public partial class Unprotected : Dare {
 	public virtual string?					DigestAlgorithm  {get; set;} //
 
     /// <summary>
+    ///The encryption algorithm to be used to compute the payload.
+    /// </summary>
+
+	[JsonPropertyName("enc")]
+	public virtual string?					EncryptionAlgorithm  {get; set;} //
+
+    /// <summary>
     /// </summary>
 
 	[JsonPropertyName("signs")]
@@ -1789,6 +1796,12 @@ public partial class Unprotected : Dare {
 
 	[JsonPropertyName("sigs")]
 	public virtual List<EarlSignature>?					Signatures  {get; set;}
+    /// <summary>
+    ///A list of recipient key exchange information blocks.
+    /// </summary>
+
+	[JsonPropertyName("recipients")]
+	public virtual List<DareRecipient>?					Recipients  {get; set;}
     /// <summary>
     ///The number of the entry in the sequence.
     /// </summary>
@@ -1803,6 +1816,13 @@ public partial class Unprotected : Dare {
 	[JsonPropertyName("Salt")]
 	public virtual byte[]?					Salt  {get; set;} //
 
+    /// <summary>
+    ///The encrypted chunk size (default 4096 bytes);
+    /// </summary>
+
+	[JsonPropertyName("Chunk")]
+	public virtual int?					Chunk  {get; set;} //
+
 
     ///<summary>Implement IBinding</summary> 
 	public override Property[] _Properties => _properties;
@@ -1812,6 +1832,9 @@ public partial class Unprotected : Dare {
 		new PropertyString ("dig", 
 					(data, value) => {(data as Unprotected).DigestAlgorithm = value;}, 
 					data => (data as Unprotected).DigestAlgorithm ),
+		new PropertyString ("enc", 
+					(data, value) => {(data as Unprotected).EncryptionAlgorithm = value;}, 
+					data => (data as Unprotected).EncryptionAlgorithm ),
 		new PropertyListStruct ("signs", typeof (EarlSignature),
 					(data, value) => {(data as Unprotected).Signers = value as List<EarlSignature>;}, 
 					data => (data as Unprotected).Signers,
@@ -1820,12 +1843,19 @@ public partial class Unprotected : Dare {
 					(data, value) => {(data as Unprotected).Signatures = value as List<EarlSignature>;}, 
 					data => (data as Unprotected).Signatures,
 					false, ()=>new  List<EarlSignature>(), ()=>new EarlSignature()),
+		new PropertyListStruct ("recipients", typeof (DareRecipient),
+					(data, value) => {(data as Unprotected).Recipients = value as List<DareRecipient>;}, 
+					data => (data as Unprotected).Recipients,
+					false, ()=>new  List<DareRecipient>(), ()=>new DareRecipient()),
 		new PropertyInteger64 ("Frame", 
 					(data, value) => {(data as Unprotected).Frame = value;}, 
 					data => (data as Unprotected).Frame ),
 		new PropertyBinary ("Salt", 
 					(data, value) => {(data as Unprotected).Salt = value;}, 
-					data => (data as Unprotected).Salt )
+					data => (data as Unprotected).Salt ),
+		new PropertyInteger32 ("Chunk", 
+					(data, value) => {(data as Unprotected).Chunk = value;}, 
+					data => (data as Unprotected).Chunk )
 		];
 
     ///<summary>Implement IBinding</summary> 
@@ -1835,10 +1865,13 @@ public partial class Unprotected : Dare {
 	public static readonly new Binding<Unprotected> _binding = new (
 			new() {
 			{ "dig", _properties [0]},
-			{ "signs", _properties [1]},
-			{ "sigs", _properties [2]},
-			{ "Frame", _properties [3]},
-			{ "Salt", _properties [4]}}, __Tag,
+			{ "enc", _properties [1]},
+			{ "signs", _properties [2]},
+			{ "sigs", _properties [3]},
+			{ "recipients", _properties [4]},
+			{ "Frame", _properties [5]},
+			{ "Salt", _properties [6]},
+			{ "Chunk", _properties [7]}}, __Tag,
 		() => new Unprotected(), () => [], () => [], null, Generic: false);
 
 

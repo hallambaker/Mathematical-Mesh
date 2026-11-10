@@ -188,7 +188,7 @@ public class TestVarintSerialization : MeshTestSet {
         VDareEnvelopeWriter.Write(filename, data, cryptoParameters);
 
         // Read file back
-        var envelope = VDareEnvelopeReader.Read(filename);
+        var envelope = VDareEnvelopeReader.Read(filename, cryptoParameters);
 
         // check for equality.
         data.TestEqual(envelope.Payload);

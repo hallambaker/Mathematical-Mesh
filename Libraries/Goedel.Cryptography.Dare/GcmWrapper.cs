@@ -24,7 +24,11 @@ public interface IChunk {
 
     public int Finalize(ReadOnlySpan<byte> plaintext, Span<byte> ciphertext);
 
+    /// <summary>The salt valye.</summary>
+    public byte[] Salt { get; }
 
+    /// <summary>The primary key</summary>
+    public byte[] Key { get; }
 
     public byte[] Transform(byte[] input) {
 
@@ -69,10 +73,10 @@ public class GcmHandlerBase : Disposable {
     protected int KeyBytes { get; } = 32;
 
 
-    /// <summary>The primary key</summary>
+    /// <inheritdoc/>
     public byte[] Key { get; }
 
-    /// <summary>The salt valye.</summary>
+    /// <inheritdoc/>
     public byte[] Salt { get; }
 
     /// <summary>If true, use SIV mode and insert the IV into each block.</summary>
@@ -435,7 +439,6 @@ public class GcmUnwrapperChunked : GcmHandlerBase, IChunk {
     public  GcmUnwrapperChunked(
             byte[] key,
             byte[] salt,
-            HashAlgorithm? digest = null,
             CryptoAlgorithmId encrypt = CryptoAlgorithmId.AES256GCM,
             int chunkSize = 4096) : base(key, salt, encrypt, chunkSize) {
 
